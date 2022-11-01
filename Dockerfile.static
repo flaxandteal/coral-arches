@@ -1,0 +1,63 @@
+ARG VERSION
+ARG ARCHES_PROJECT=afs
+ARG ARCHES_BASE=arches_coral_base
+ARG WEB_ROOT=/web_root
+FROM $ARCHES_BASE
+FROM $ARCHES_BASE as arches_static_cache
+
+USER 0
+
+ARG DJANGO_DUMMY_SECRET_KEY
+ARG STATIC_URL
+ARG ARCHES_PROJECT
+RUN useradd arches
+ENV DJANGO_DEBUG=False
+ENV DJANGO_MODE=STATIC
+ENV STATIC_URL=${STATIC_URL}
+ENV STATIC_ROOT=/static_root
+ENV ARCHES_PROJECT=${ARCHES_PROJECT}
+ENV PROJECT_ROOT=${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}
+ENV DJANGO_SECRET_KEY=${DJANGO_DUMMY_SECRET_KEY}
+
+ENV COMPRESS_OFFLINE=True
+ENV PGUSERNAME=postgres
+ENV PGPASSWORD=postgres
+ENV PGDBNAME=arches
+ENV PGHOST=db
+ENV PGPORT=5432
+ENV COUCHDB_HOST=couchdb
+ENV COUCHDB_PORT=5984
+ENV COUCHDB_USER=admin
+ENV COUCHDB_PASS=password
+ENV ESHOST=elasticsearch
+ENV ESPORT=9200
+ENV CELERY_BROKER_URL=amqp://rabbitmq
+ENV DOMAIN_NAMES=localhost
+ENV PYTHONUNBUFFERED=0
+ENV TZ=PST
+ENV DJANGO_SETTINGS_MODULE=${ARCHES_PROJECT}.settings
+RUN mkdir -p /static_root && chown -R arches /static_root
+WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
+
+FROM arches_$ARCHES_PROJECT:$VERSION as arches_dynamic
+FROM arches_static_cache as arches
+ARG WEB_ROOT=/web_root
+ARG ARCHES_PROJECT
+COPY --from=arches_dynamic ${WEB_ROOT}/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
+COPY --from=arches_dynamic ${WEB_ROOT}/${ARCHES_PROJECT}/ /web_root/${ARCHES_PROJECT}/
+COPY --from=arches_dynamic ${WEB_ROOT}/arches/arches/settings_docker.py ${WEB_ROOT}/arches/arches
+
+RUN ${WEB_ROOT}/entrypoint.sh init_yarn_components
+
+# FIXME: To be replaced once per-project settings working
+RUN (echo "\nSTATIC_ROOT='${STATIC_ROOT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT
+
+RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && (. ../ENV/bin/activate && python -c "from arches.settings import ETL_MODULE_LOCATIONS")
+RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh collect_static_real
+
+FROM nginxinc/nginx-unprivileged:1.21.5-alpine
+
+COPY --from=arches /static_root /usr/share/nginx/html
+
+# Must be numeric to verify not root
+USER 33

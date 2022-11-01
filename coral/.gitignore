@@ -1,0 +1,10 @@
+*.pyc
+*.log
+coral/logs
+coral/export_deliverables
+coral/cantaloupe/*
+coral/media/packages
+coral/uploadedfiles/*
+coral/settings_local.py
+.vscode/
+CACHE
