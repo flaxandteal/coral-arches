@@ -1,0 +1,70 @@
+image: node:10
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  DOCKER_DRIVER: overlay
+  DOCKER_HOST: tcp://localhost:2375/
+
+stages:
+  - build
+  - release
+
+services:
+- docker:18.09.7-dind
+
+build:
+  stage: build
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  image: docker:latest
+  environment:
+    name: ${CI_BUILD_REF_NAME}
+    action: prepare
+  script:
+  - echo ${CI_COMMIT_SHA} > afs/commit-sha.txt
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  - docker pull $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-latest || true
+  - docker pull $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-cache || true
+  - docker pull $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-latest || true
+  - echo $ARCHES_PROJECT $TAG_PREFIX
+  - docker build --cache-from $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-latest --build-arg ARCHES_BASE=$ARCHES_BASE --build-arg ARCHES_PROJECT=$ARCHES_PROJECT . -t arches_${ARCHES_PROJECT}
+  - docker build --target arches_static_cache --build-arg ARCHES_BASE=$ARCHES_BASE --cache-from $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-latest -f Dockerfile.static --build-arg ARCHES_PROJECT=$ARCHES_PROJECT --build-arg VERSION=latest . -t arches_${ARCHES_PROJECT}_static_cache
+  - docker tag arches_${ARCHES_PROJECT}_static_cache $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-cache
+  - docker build --build-arg ARCHES_BASE=$ARCHES_BASE --cache-from $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-latest --cache-from arches_${ARCHES_PROJECT}_static_cache -f Dockerfile.static --build-arg ARCHES_PROJECT=$ARCHES_PROJECT --build-arg VERSION=latest . -t arches_${ARCHES_PROJECT}_static
+  - docker build --build-arg ARCHES_BASE=$ARCHES_BASE --cache-from $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-latest -f Dockerfile.static-py --build-arg VERSION=latest --build-arg ARCHES_PROJECT=$ARCHES_PROJECT . -t arches_${ARCHES_PROJECT}_static_py
+  - docker tag arches_${ARCHES_PROJECT}_static_py $CI_REGISTRY_IMAGE:${TAG_PREFIX}$CI_PIPELINE_ID
+  - docker tag arches_${ARCHES_PROJECT}_static $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-$CI_PIPELINE_ID
+  - docker tag arches_${ARCHES_PROJECT}_static_py $CI_REGISTRY_IMAGE:${TAG_PREFIX}latest
+  - docker tag arches_${ARCHES_PROJECT}_static $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-latest
+  - docker tag arches_${ARCHES_PROJECT} $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-latest
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}$CI_PIPELINE_ID
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-$CI_PIPELINE_ID
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}latest
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-latest
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-cache
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-latest
+  only:
+  - master
+  - develop
+
+promote:
+  stage: release
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  image: docker:latest
+  environment:
+    name: ${CI_BUILD_REF_NAME}
+  script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  - docker pull $CI_REGISTRY_IMAGE:${TAG_PREFIX}latest
+  - docker pull $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-latest
+  - docker pull $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-latest
+  - docker tag $CI_REGISTRY_IMAGE:${TAG_PREFIX}latest        $CI_REGISTRY_IMAGE:${TAG_PREFIX}stable
+  - docker tag $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-latest $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-stable
+  - docker tag $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-latest  $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-stable
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}stable
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}static-stable
+  - docker push $CI_REGISTRY_IMAGE:${TAG_PREFIX}debug-stable
+  only:
+  - master
+  when: manual
