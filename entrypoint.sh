@@ -205,6 +205,16 @@ install_yarn_components() {
 	yarn install
 }
 
+run_yarn_start() {
+	echo ""
+	echo ""
+	echo "----- RUNNING YARN SERVER -----"
+	echo ""
+	cd_app_folder
+	cd ${ARCHES_PROJECT}
+	yarn start
+}
+
 
 #### Misc
 
@@ -321,7 +331,6 @@ collect_static_real(){
 	cd_app_folder
 	python manage.py collectstatic --noinput
 	python manage.py compress
-	ls -l /static_root/CACHE/css
 }
 
 
@@ -453,6 +462,9 @@ do
 		;;
 		install_yarn_components)
 			install_yarn_components
+		;;
+		run_yarn)
+			run_yarn_start
 		;;
 		help|-h)
 			display_help

@@ -1,6 +1,18 @@
 {
     "name": "coral",
+    "scripts": {
+        "build_production": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 NODE_ENV=production ./media/node_modules/.bin/webpack --config webpack/webpack.config.prod.js",
+        "build_development": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js",
+        "build_test": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js --env test=true",
+        "start": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack serve --config webpack/webpack.config.dev.js"
+    },
+    "devDependencies": {
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.1.x"
+    },
     "dependencies": {
-        "arches": "archesproject/arches#dev/6.2.x"
+        "arches": "archesproject/arches#dev/7.1.x",
+        "longjohn": "^0.2.12",
+        "webpack": "^5.74.0",
+        "webpack-merge": "^5.8.0"
     }
 }

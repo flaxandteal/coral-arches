@@ -9,6 +9,53 @@ services:
       env_file:
         - ./docker/env_file.env
 
+    arches_frontend:
+      image: arches_${ARCHES_PROJECT:?Must define ARCHES_PROJECT}:latest
+      restart: unless-stopped
+      entrypoint: ["../entrypoint.sh"]
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+        args:
+          - ARCHES_PROJECT=$ARCHES_PROJECT
+      command: run_yarn
+      volumes:
+        - arches-log:/arches/arches/logs
+        - arches-static:/static_root
+        - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
+        - ./entrypoint.sh:/web_root/entrypoint.sh
+        - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
+      environment:
+        - ARCHES_PROJECT=$ARCHES_PROJECT
+        - COMPRESS_OFFLINE=False
+        - INSTALL_DEFAULT_GRAPHS=False
+        - INSTALL_DEFAULT_CONCEPTS=False
+        - PGUSERNAME=postgres
+        - PGPASSWORD=postgres
+        - PGDBNAME=arches
+        - PGHOST=db
+        - PGPORT=5432
+        - COUCHDB_HOST=couchdb
+        - COUCHDB_PORT=5984
+        - COUCHDB_USER=admin
+        - COUCHDB_PASS=password
+        - ESHOST=elasticsearch
+        - ESPORT=9200
+        - CELERY_BROKER_URL=amqp://rabbitmq
+        - DJANGO_MODE=DEV
+        - DJANGO_DEBUG=True
+        # - DJANGO_REMOTE_DEBUG=False
+        - DOMAIN_NAMES=localhost
+        - PYTHONUNBUFFERED=0
+        - TZ=PST
+      ports:
+        - '8080:8080'
+      depends_on:
+        - arches
+        - db
+        - elasticsearch
+        - couchdb
+
     arches:
       image: arches_${ARCHES_PROJECT:?Must define ARCHES_PROJECT}:latest
       restart: unless-stopped
@@ -129,7 +176,7 @@ services:
         - couchdb-log:/usr/local/var/log/couchdb
 
     elasticsearch:
-      image: elasticsearch:7.5.1
+      image: elasticsearch:8.4.0
       volumes:
         - elasticsearch-data:/usr/share/elasticsearch/data
       ports:
@@ -138,7 +185,8 @@ services:
       environment:
         - TZ=PST
         - discovery.type=single-node
-        - discovery.seed_hosts=
+        - discovery.seed_hosts=[]
+        - xpack.security.enabled=false
         - "ES_JAVA_OPTS=-Xms400m -Xmx400m"
 
     rabbitmq:

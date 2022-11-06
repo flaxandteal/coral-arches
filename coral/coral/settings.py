@@ -2,19 +2,30 @@
 Django settings for coral project.
 """
 
+import json
 import os
+import sys
 import arches
 import inspect
 from django.utils.translation import gettext_lazy as _
 
 try:
     from arches.settings import *
-except ImportError as e:
+except ImportError:
     pass
 
 APP_NAME = 'coral'
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-STATICFILES_DIRS =  (os.path.join(APP_ROOT, 'media'),) + STATICFILES_DIRS
+STATICFILES_DIRS =  (
+    os.path.join(APP_ROOT, 'media', 'build'),
+    os.path.join(APP_ROOT, 'media'),
+) + STATICFILES_DIRS
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "STATS_FILE": os.path.join(APP_ROOT, 'webpack/webpack-stats.json'),
+    },
+}
 
 DATATYPE_LOCATIONS.append('coral.datatypes')
 FUNCTION_LOCATIONS.append('coral.functions')
@@ -30,17 +41,24 @@ FILE_TYPE_CHECKING = False
 FILE_TYPES = ["bmp", "gif", "jpg", "jpeg", "pdf", "png", "psd", "rtf", "tif", "tiff", "xlsx", "csv", "zip"]
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i+k)^fkny&#m2ms!1ou4222opkal6wk^-i-3yc120%k&o6p*85'
+SECRET_KEY = 'k#4=ji&8n4n4cy9=h7le4iw1chm=$of&0(sy=(x(tq%b@*=n70'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ROOT_URLCONF = 'coral.urls'
 
+# Modify this line as needed for your project to connect to elasticsearch with a password that you generate
+ELASTICSEARCH_CONNECTION_OPTIONS = {"timeout": 30, "verify_certs": False, "basic_auth": ("elastic", "E1asticSearchforArche5")}
+
 # a prefix to append to all elasticsearch indexes, note: must be lower case
 ELASTICSEARCH_PREFIX = 'coral'
 
 ELASTICSEARCH_CUSTOM_INDEXES = []
+for host in ELASTICSEARCH_HOSTS:
+    host["scheme"] = "http"
+    host["port"] = int(host["port"])
+#ELASTICSEARCH_CONNECTION_OPTIONS = {"hosts": {"scheme": "http"}}
 # [{
 #     'module': 'coral.search_indexes.sample_index.SampleIndex',
 #     'name': 'my_new_custom_index', <-- follow ES index naming rules
@@ -53,6 +71,7 @@ KIBANA_CONFIG_BASEPATH = "kibana"  # must match Kibana config.yml setting (serve
 
 LOAD_DEFAULT_ONTOLOGY = False
 LOAD_PACKAGE_ONTOLOGIES = True
+ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://arches:8000/"
 
 DATABASES = {
     "default": {
@@ -78,6 +97,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    "webpack_loader",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -130,13 +150,13 @@ MEDIA_ROOT =  os.path.join(APP_ROOT)
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/media/'
+STATIC_URL = '/static/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(APP_ROOT, "staticfiles")
 
 # when hosting Arches under a sub path set this value to the sub path eg : "/{sub_path}/"
 FORCE_SCRIPT_NAME = None
@@ -210,14 +230,7 @@ TILE_CACHE_TIMEOUT = 600 #seconds
 CLUSTER_DISTANCE_MAX = 5000 #meters
 GRAPH_MODEL_CACHE_TIMEOUT = None
 
-MOBILE_OAUTH_CLIENT_ID = ''  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
-MOBILE_DEFAULT_ONLINE_BASEMAP = {'default': 'mapbox://styles/mapbox/streets-v9'}
-MOBILE_IMAGE_SIZE_LIMITS = {
-    # These limits are meant to be approximates. Expect to see uploaded sizes range +/- 20%
-    # Not to exceed the limit defined in DATA_UPLOAD_MAX_MEMORY_SIZE
-    "full": min(1500000, DATA_UPLOAD_MAX_MEMORY_SIZE), # ~1.5 Mb
-    "thumb": 400,  # max width/height in pixels, this will maintain the aspect ratio of the original image
-}
+OAUTH_CLIENT_ID = ''  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
 APP_TITLE = 'Arches | Heritage Data Management'
 COPYRIGHT_TEXT = 'All Rights Reserved.'
@@ -312,16 +325,35 @@ LANGUAGES = [
 # override this to permenantly display/hide the language switcher
 SHOW_LANGUAGE_SWITCH = len(LANGUAGES) > 1
 
-
 try:
     from .package_settings import *
 except ImportError:
-    pass
+    try: 
+        from package_settings import *
+    except ImportError as e:
+        pass
 
 try:
     from .settings_local import *
-except ImportError:
-    pass
+except ImportError as e:
+    try: 
+        from settings_local import *
+    except ImportError as e:
+        pass
+
+# returns an output that can be read by NODEJS
+if __name__ == "__main__":
+    print(
+        json.dumps({
+            'ARCHES_NAMESPACE_FOR_DATA_EXPORT': ARCHES_NAMESPACE_FOR_DATA_EXPORT,
+            'STATIC_URL': STATIC_URL,
+            'ROOT_DIR': ROOT_DIR,
+            'APP_ROOT': APP_ROOT,
+            'WEBPACK_DEVELOPMENT_SERVER_PORT': WEBPACK_DEVELOPMENT_SERVER_PORT,
+        })
+    )
+    sys.stdout.flush()
+
 
 from arches.settings_docker import *
 

@@ -52,7 +52,6 @@ RUN ${WEB_ROOT}/entrypoint.sh init_yarn_components
 # FIXME: To be replaced once per-project settings working
 RUN (echo "\nSTATIC_ROOT='${STATIC_ROOT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT
 
-RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && (. ../ENV/bin/activate && python -c "from arches.settings import ETL_MODULE_LOCATIONS")
 RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh collect_static_real
 
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine

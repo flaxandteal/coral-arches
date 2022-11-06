@@ -14,7 +14,8 @@ LOGGING = {
 
 CELERY_BROKER_URL = get_env_variable("CELERY_BROKER_URL")
 MOBILE_OAUTH_CLIENT_ID = get_optional_env_variable("MOBILE_OAUTH_CLIENT_ID")
-STATIC_URL = get_optional_env_variable("STATIC_URL") or "/media/"
+STATIC_URL = get_optional_env_variable("STATIC_URL") or "/static/"
 COMPRESS_OFFLINE = get_optional_env_variable("COMPRESS_OFFLINE")
 COMPRESS_OFFLINE = COMPRESS_OFFLINE and COMPRESS_OFFLINE.lower() == "true"
 COMPRESS_ENABLED = True
+ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://arches:8000/"

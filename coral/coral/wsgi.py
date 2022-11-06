@@ -33,4 +33,4 @@ from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
 from arches.app.models.system_settings import settings
-settings.update_from_db()
+#settings.update_from_db()
