@@ -17,4 +17,5 @@ RUN mkdir -p /static_root && chown -R arches /static_root
 RUN yarn install
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 ENTRYPOINT ../entrypoint.sh
+CMD run_arches
 USER 1000
