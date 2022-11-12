@@ -80,7 +80,8 @@ jobs:
 
       arches:
         image: arches_coral:latest
-        entrypoint: ["../entrypoint.sh", "run_arches"]
+        options:
+          --entrypoint: "['../entrypoint.sh', 'run_arches']"
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
