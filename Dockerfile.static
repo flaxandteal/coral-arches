@@ -39,7 +39,7 @@ ENV DJANGO_SETTINGS_MODULE=${ARCHES_PROJECT}.settings
 RUN mkdir -p /static_root && chown -R arches /static_root
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 
-FROM arches_$ARCHES_PROJECT:$VERSION as arches_dynamic
+FROM flaxandteal/arches_$ARCHES_PROJECT:$VERSION as arches_dynamic
 FROM arches_static_cache as arches
 ARG WEB_ROOT=/web_root
 ARG ARCHES_PROJECT
