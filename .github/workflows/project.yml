@@ -66,7 +66,7 @@ jobs:
       db:
         image: kartoza/postgis:12.0
         volumes:
-            - ${{ GITHUB_WORKFLOW }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+            - ${{ GITHUB_WORKSPACE }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
           - '5432:5432'
         env:
