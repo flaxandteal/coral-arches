@@ -79,10 +79,10 @@ jobs:
           TZ: PST
 
       arches:
-        image: arches_${{ ARCHES_PROJECT }}:latest
+        image: arches_${{ env.ARCHES_PROJECT }}:latest
         entrypoint: ["../entrypoint.sh", "run_arches"]
         env:
-          ARCHES_PROJECT: "$ARCHES_PROJECT"
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
           INSTALL_DEFAULT_GRAPHS: "False"
           INSTALL_DEFAULT_CONCEPTS: "False"
