@@ -42,3 +42,69 @@ jobs:
           build-args: |
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+  Build-Arches-Static:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Build docker backend image
+        run: |
+          docker build --build-arg VERSION=latest --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+        services:
+          elasticsearch:
+            image: elasticsearch:8.4.0
+            ports:
+              - "9200:9200"
+              - "9300:9300"
+            environment:
+              - TZ=PST
+              - discovery.type=single-node
+              - discovery.seed_hosts=[]
+              - xpack.security.enabled=false
+              - "ES_JAVA_OPTS=-Xms400m -Xmx400m"
+          db:
+            image: kartoza/postgis:12.0
+            volumes:
+                - postgres-data:/var/lib/postgresql/data
+                - postgres-log:/var/log/postgresql
+                - ./scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+            ports:
+              - '5432:5432'
+            expose:
+              - '5432'
+            environment:
+              - POSTGRES_USER=postgres
+              - POSTGRES_PASS=postgres
+              - POSTGRES_DB=postgres
+              - POSTGRES_MULTIPLE_EXTENSIONS=postgis,postgis_topology
+              - TZ=PST
+
+          arches:
+            image: arches_${{ ARCHES_PROJECT }}:latest
+            entrypoint: ["../entrypoint.sh", "run_arches"]
+            environment:
+              - ARCHES_PROJECT=$ARCHES_PROJECT
+              - COMPRESS_OFFLINE=False
+              - INSTALL_DEFAULT_GRAPHS=False
+              - INSTALL_DEFAULT_CONCEPTS=False
+              - PGUSERNAME=postgres
+              - PGPASSWORD=postgres
+              - PGDBNAME=arches
+              - PGHOST=db
+              - PGPORT=5432
+              - COUCHDB_HOST=couchdb
+              - COUCHDB_PORT=5984
+              - COUCHDB_USER=admin
+              - COUCHDB_PASS=password
+              - ESHOST=elasticsearch
+              - ESPORT=9200
+              - CELERY_BROKER_URL=amqp://rabbitmq
+              - DJANGO_MODE=DEV
+              - DJANGO_DEBUG=True
+              # - DJANGO_REMOTE_DEBUG=False
+              - DOMAIN_NAMES=localhost
+              - PYTHONUNBUFFERED=0
+              - TZ=PST
+            ports:
+              - '8000:8000'
