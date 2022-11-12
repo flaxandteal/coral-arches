@@ -65,8 +65,8 @@ jobs:
           ES_JAVA_OPTS: "-Xms400m -Xmx400m"
       db:
         image: kartoza/postgis:12.0
-        volumes:
-            - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+        #volumes:
+        #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
           - '5432:5432'
         env:
