@@ -58,11 +58,11 @@ jobs:
           - "9200:9200"
           - "9300:9300"
         env:
-          - TZ=PST
-          - discovery.type=single-node
-          - discovery.seed_hosts=[]
-          - xpack.security.enabled=false
-          - "ES_JAVA_OPTS=-Xms400m -Xmx400m"
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
       db:
         image: kartoza/postgis:12.0
         volumes:
@@ -72,37 +72,36 @@ jobs:
         ports:
           - '5432:5432'
         env:
-          - POSTGRES_USER=postgres
-          - POSTGRES_PASS=postgres
-          - POSTGRES_DB=postgres
-          - POSTGRES_MULTIPLE_EXTENSIONS=postgis,postgis_topology
-          - TZ=PST
+          POSTGRES_USER: postgres
+          POSTGRES_PASS: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
+          TZ: PST
 
       arches:
         image: arches_${{ ARCHES_PROJECT }}:latest
         entrypoint: ["../entrypoint.sh", "run_arches"]
         env:
-          - ARCHES_PROJECT=$ARCHES_PROJECT
-          - COMPRESS_OFFLINE=False
-          - INSTALL_DEFAULT_GRAPHS=False
-          - INSTALL_DEFAULT_CONCEPTS=False
-          - PGUSERNAME=postgres
-          - PGPASSWORD=postgres
-          - PGDBNAME=arches
-          - PGHOST=db
-          - PGPORT=5432
-          - COUCHDB_HOST=couchdb
-          - COUCHDB_PORT=5984
-          - COUCHDB_USER=admin
-          - COUCHDB_PASS=password
-          - ESHOST=elasticsearch
-          - ESPORT=9200
-          - CELERY_BROKER_URL=amqp://rabbitmq
-          - DJANGO_MODE=DEV
-          - DJANGO_DEBUG=True
-          # - DJANGO_REMOTE_DEBUG=False
-          - DOMAIN_NAMES=localhost
-          - PYTHONUNBUFFERED=0
-          - TZ=PST
+          ARCHES_PROJECT: "$ARCHES_PROJECT"
+          COMPRESS_OFFLINE: "False"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
+          DOMAIN_NAMES: "localhost"
+          PYTHONUNBUFFERED: "0"
+          TZ: "PST"
         ports:
           - '8000:8000'

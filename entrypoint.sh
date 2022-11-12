@@ -211,8 +211,31 @@ run_yarn_start() {
 	echo "----- RUNNING YARN SERVER -----"
 	echo ""
 	cd_app_folder
+	sleep 10
 	cd ${ARCHES_PROJECT}
 	yarn start
+}
+
+run_yarn_build_production() {
+	echo ""
+	echo ""
+	echo "----- RUNNING YARN SERVER -----"
+	echo ""
+	cd_app_folder
+	sleep 10
+	cd ${ARCHES_PROJECT}
+	yarn build_production
+}
+
+run_yarn_build_development() {
+	echo ""
+	echo ""
+	echo "----- RUNNING YARN SERVER -----"
+	echo ""
+	cd_app_folder
+	sleep 10
+	cd ${ARCHES_PROJECT}
+	yarn build_development
 }
 
 
@@ -463,7 +486,13 @@ do
 		install_yarn_components)
 			install_yarn_components
 		;;
-		run_yarn)
+		run_yarn_build_development)
+			run_yarn_build_development
+		;;
+		run_yarn_build_production)
+			run_yarn_build_production
+		;;
+		run_yarn_start)
 			run_yarn_start
 		;;
 		help|-h)
