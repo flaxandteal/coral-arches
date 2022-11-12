@@ -1,6 +1,9 @@
 name: Build Arches project
 run-name: Build Arches project
 on: [push]
+env:
+  ARCHES_BASE: flaxandteal/arches_coral_base
+  ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
     runs-on: ubuntu-latest
@@ -16,3 +19,6 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Build docker backend image
+        run: |
+          docker build --build-arg ARCHES_BASE=$ARCHES_BASE --build-arg ARCHES_PROJECT=$ARCHES_PROJECT . -t arches_${ARCHES_PROJECT}
