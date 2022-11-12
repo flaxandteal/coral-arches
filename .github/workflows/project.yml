@@ -57,7 +57,7 @@ jobs:
         ports:
           - "9200:9200"
           - "9300:9300"
-        environment:
+        env:
           - TZ=PST
           - discovery.type=single-node
           - discovery.seed_hosts=[]
@@ -71,9 +71,7 @@ jobs:
             - ./scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
           - '5432:5432'
-        expose:
-          - '5432'
-        environment:
+        env:
           - POSTGRES_USER=postgres
           - POSTGRES_PASS=postgres
           - POSTGRES_DB=postgres
@@ -83,7 +81,7 @@ jobs:
       arches:
         image: arches_${{ ARCHES_PROJECT }}:latest
         entrypoint: ["../entrypoint.sh", "run_arches"]
-        environment:
+        env:
           - ARCHES_PROJECT=$ARCHES_PROJECT
           - COMPRESS_OFFLINE=False
           - INSTALL_DEFAULT_GRAPHS=False
