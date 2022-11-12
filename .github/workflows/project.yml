@@ -39,3 +39,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: ARCHES_BASE=${{ env.ARCHES_BASE }},ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
