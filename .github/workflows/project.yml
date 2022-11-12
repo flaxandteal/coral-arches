@@ -77,7 +77,7 @@ jobs:
           TZ: PST
 
       arches:
-        image: arches_coral:latest
+        image: flaxandteal/arches_coral:latest
         options: "--entrypoint ../entrypoint.sh --cmd run_arches"
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
