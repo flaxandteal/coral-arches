@@ -10,7 +10,7 @@ USER 0
 ARG DJANGO_DUMMY_SECRET_KEY
 ARG STATIC_URL
 ARG ARCHES_PROJECT
-RUN useradd arches
+
 ENV DJANGO_DEBUG=False \
     DJANGO_MODE=STATIC \
     STATIC_URL=${STATIC_URL} \
@@ -35,7 +35,7 @@ ENV DJANGO_DEBUG=False \
     PYTHONUNBUFFERED=0 \
     TZ=PST \
     DJANGO_SETTINGS_MODULE=${ARCHES_PROJECT}.settings
-RUN mkdir -p /static_root && chown -R arches /static_root
+RUN useradd arches && mkdir -p /static_root && chown -R arches /static_root
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 
 FROM flaxandteal/arches_$ARCHES_PROJECT:$VERSION as arches_dynamic
@@ -53,6 +53,12 @@ RUN (echo "\nSTATIC_ROOT='${STATIC_ROOT}'" >> ${WEB_ROOT}/arches/arches/settings
 
 RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn add -D babel-loader html-loader clean-webpack-plugin webpack-cli mini-css-extract-plugin)
 RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn install -D)
+RUN /bin/bash -c ". ../ENV/bin/activate;\
+../entrypoint.sh setup_arches;\
+python manage.py createcachetable;\
+python manage.py packages -o load_package -s coral/pkg/ -y;\
+python manage.py es index_database\
+";
 RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_build_production
 
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine
