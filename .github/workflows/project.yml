@@ -65,7 +65,8 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
     services:
-
+      elasticsearch:
+        image: elasticsearch:8.4.0
         ports:
           - "9200:9200"
           - "9300:9300"
