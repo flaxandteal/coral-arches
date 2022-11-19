@@ -1,0 +1,4 @@
+FROM kartoza/postgis:12.0
+ARG ARCHES_ROOT
+ENV ARCHES_ROOT=${ARCHES_ROOT}
+COPY scripts/init-unix.sql /docker-entrypoint-initdb.d/init.sql
