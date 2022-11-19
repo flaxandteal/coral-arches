@@ -85,6 +85,7 @@ jobs:
             VERSION=feature-ci
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+            ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
     services:
       elasticsearch:
         image: elasticsearch:8.4.0

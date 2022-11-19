@@ -10,11 +10,13 @@ USER 0
 ARG DJANGO_DUMMY_SECRET_KEY
 ARG STATIC_URL
 ARG ARCHES_PROJECT
+ARG ARCHES_NAMESPACE_FOR_DATA_EXPORT
 
 ENV DJANGO_DEBUG=False \
     DJANGO_MODE=STATIC \
     STATIC_URL=${STATIC_URL} \
     STATIC_ROOT=/static_root \
+    ARCHES_NAMESPACE_FOR_DATA_EXPORT=${ARCHES_NAMESPACE_FOR_DATA_EXPORT} \
     ARCHES_PROJECT=${ARCHES_PROJECT} \
     PROJECT_ROOT=${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT} \
     DJANGO_SECRET_KEY=${DJANGO_DUMMY_SECRET_KEY} \
@@ -50,6 +52,7 @@ RUN ${WEB_ROOT}/entrypoint.sh init_yarn_components
 
 # FIXME: To be replaced once per-project settings working
 RUN (echo "\nSTATIC_ROOT='${STATIC_ROOT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT
+RUN (echo "\nARCHES_NAMESPACE_FOR_DATA_EXPORT='${ARCHES_NAMESPACE_FOR_DATA_EXPORT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT
 
 RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn add -D babel-loader html-loader clean-webpack-plugin webpack-cli mini-css-extract-plugin)
 RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn install -D)
