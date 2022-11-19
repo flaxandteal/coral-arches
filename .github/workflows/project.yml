@@ -44,6 +44,7 @@ jobs:
   #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Build-Arches-Static:
     runs-on: [self-hosted]
+    container: ubuntu
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
@@ -53,54 +54,54 @@ jobs:
           curl arches:8000/templates/views/resource/permissions/permissions-manager.htm
         #run: |
         #  docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
-        services:
-          elasticsearch:
-            image: elasticsearch:8.4.0
-            ports:
-              - "9200:9200"
-              - "9300:9300"
-            env:
-              TZ: "PST"
-              discovery.type: "single-node"
-              discovery.seed_hosts: "[]"
-              xpack.security.enabled: "false"
-              ES_JAVA_OPTS: "-Xms400m -Xmx400m"
-          db:
-            image: flaxandteal/arches_coral_postgres
-            #volumes:
-            #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
-            ports:
-              - '5432:5432'
-            env:
-              POSTGRES_USER: postgres
-              POSTGRES_PASS: postgres
-              POSTGRES_DB: postgres
-              POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
-              TZ: PST
+    services:
+      elasticsearch:
+        image: elasticsearch:8.4.0
+        ports:
+          - "9200:9200"
+          - "9300:9300"
+        env:
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+      db:
+        image: flaxandteal/arches_coral_postgres
+        #volumes:
+        #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+        ports:
+          - '5432:5432'
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASS: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
+          TZ: PST
 
-          arches:
-            image: flaxandteal/arches_coral:feature-ci
-            env:
-              ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
-              COMPRESS_OFFLINE: "False"
-              INSTALL_DEFAULT_GRAPHS: "False"
-              INSTALL_DEFAULT_CONCEPTS: "False"
-              PGUSERNAME: "postgres"
-              PGPASSWORD: "postgres"
-              PGDBNAME: "arches"
-              PGHOST: "db"
-              PGPORT: "5432"
-              COUCHDB_HOST: "couchdb"
-              COUCHDB_PORT: "5984"
-              COUCHDB_USER: "admin"
-              COUCHDB_PASS: "password"
-              ESHOST: "elasticsearch"
-              ESPORT: "9200"
-              CELERY_BROKER_URL: "amqp://rabbitmq"
-              DJANGO_MODE: "DEV"
-              DJANGO_DEBUG: "True"
-              DOMAIN_NAMES: "localhost"
-              PYTHONUNBUFFERED: "0"
-              TZ: "PST"
-            ports:
-              - '8000:8000'
+      arches:
+        image: flaxandteal/arches_coral:feature-ci
+        env:
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          COMPRESS_OFFLINE: "False"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
+          DOMAIN_NAMES: "localhost"
+          PYTHONUNBUFFERED: "0"
+          TZ: "PST"
+        ports:
+          - '8000:8000'
