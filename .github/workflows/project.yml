@@ -68,16 +68,19 @@ jobs:
         with:
           version: latest
           endpoint: builders
+          buildkitd-flags: '--allow-insecure-entitlement network.host'
+          driver-opts: |
+              network=host
       - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        id: buildx
+        uses: docker/build-push-action@v2
         with:
           context: .
           push: false
           file: Dockerfile.static
+          network: host
+          allow: network.host
           tags: arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
-          driver-opts: |
-              image=moby/buildkit:master
-              network=host
           build-args: |
             VERSION=feature-ci
             ARCHES_BASE=${{ env.ARCHES_BASE }}
