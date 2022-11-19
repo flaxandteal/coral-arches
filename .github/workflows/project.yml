@@ -50,7 +50,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Build docker backend image
         run: |
-          docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+          curl arches:8000/templates/views/resource/permissions/permissions-manager.htm
+        #run: |
+        #  docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
     services:
       elasticsearch:
         image: elasticsearch:8.4.0
