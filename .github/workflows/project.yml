@@ -44,6 +44,8 @@ jobs:
   #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Build-Arches-Static:
     runs-on: [self-hosted]
+    container:
+      image: docker:dind
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
