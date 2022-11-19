@@ -44,6 +44,9 @@ jobs:
   #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Build-Arches-Static:
     runs-on: [self-hosted]
+    container:
+      image: docker:dind
+
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
@@ -72,6 +75,9 @@ jobs:
           push: false
           file: Dockerfile.static
           tags: arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
+          driver-opts: |
+              image=moby/buildkit:master
+              network=host
           build-args: |
             VERSION=feature-ci
             ARCHES_BASE=${{ env.ARCHES_BASE }}
