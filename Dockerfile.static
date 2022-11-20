@@ -62,7 +62,7 @@ python manage.py createcachetable;\
 #python manage.py packages -o load_package -s coral/pkg/ -y;\
 python manage.py es index_database\
 ";
-RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_build_production
+RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_build_development
 
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine
 
