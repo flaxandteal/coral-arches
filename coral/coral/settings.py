@@ -71,7 +71,7 @@ KIBANA_CONFIG_BASEPATH = "kibana"  # must match Kibana config.yml setting (serve
 
 LOAD_DEFAULT_ONTOLOGY = False
 LOAD_PACKAGE_ONTOLOGIES = True
-ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://arches:8000/"
+ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
 
 DATABASES = {
     "default": {
