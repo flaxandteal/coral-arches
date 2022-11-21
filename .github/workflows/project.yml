@@ -5,43 +5,43 @@ env:
   ARCHES_BASE: flaxandteal/arches_coral_base
   ARCHES_PROJECT: coral
 jobs:
-  #Build-Arches:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-  #    - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-  #    - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-  #    - name: Check out repository code
-  #      uses: actions/checkout@v3
-  #    - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-  #    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-  #    - name: List files in the repository
-  #      run: |
-  #        ls ${{ github.workspace }}
-  #    - run: echo "🍏 This job's status is ${{ job.status }}."
-  #    - name: Build docker backend image
-  #      run: |
-  #        docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
-  #    - name: Log in to Docker Hub
-  #      uses: docker/login-action@v2
-  #      with:
-  #        username: ${{ secrets.DOCKER_USERNAME }}
-  #        password: ${{ secrets.DOCKER_TOKEN }}
-  #    - name: Extract metadata (tags, labels) for Docker
-  #      id: meta
-  #      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-  #      with:
-  #        images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}
-  #    - name: Build and push Docker image
-  #      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-  #      with:
-  #        context: .
-  #        push: true
-  #        tags: ${{ steps.meta.outputs.tags }}
-  #        labels: ${{ steps.meta.outputs.labels }}
-  #        build-args: |
-  #          ARCHES_BASE=${{ env.ARCHES_BASE }}
-  #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+  Build-Arches:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Build docker backend image
+        run: |
+          docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            ARCHES_BASE=${{ env.ARCHES_BASE }}
+            ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Build-Arches-Static:
     runs-on: [self-hosted]
     container:
@@ -76,11 +76,11 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: false
+          push: true
           file: Dockerfile.static
           network: host
           allow: network.host
-          tags: arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
+          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
           build-args: |
             VERSION=feature-ci
             ARCHES_BASE=${{ env.ARCHES_BASE }}
