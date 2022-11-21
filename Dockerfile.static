@@ -65,7 +65,8 @@ python manage.py es index_database\
 RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_build_production
 
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine
-
+ARG WEB_ROOT=/web_root
+ARG ARCHES_PROJECT
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build/* /usr/share/nginx/html
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json /usr/share/nginx/webpack-stats.json
 
