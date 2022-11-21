@@ -67,6 +67,7 @@ RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_bui
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine
 
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build/* /usr/share/nginx/html
+COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json /usr/share/nginx/webpack-stats.json
 
 # Must be numeric to verify not root
 USER 33
