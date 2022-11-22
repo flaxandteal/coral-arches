@@ -17,5 +17,6 @@ MOBILE_OAUTH_CLIENT_ID = get_optional_env_variable("MOBILE_OAUTH_CLIENT_ID")
 STATIC_URL = get_optional_env_variable("STATIC_URL") or "/static/"
 COMPRESS_OFFLINE = get_optional_env_variable("COMPRESS_OFFLINE")
 COMPRESS_OFFLINE = COMPRESS_OFFLINE and COMPRESS_OFFLINE.lower() == "true"
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = get_optional_env_variable("COMPRESS_ENABLED")
+COMPRESS_ENABLED = COMPRESS_ENABLED and COMPRESS_ENABLED.lower() == "true"
 ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
