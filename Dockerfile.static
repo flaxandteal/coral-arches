@@ -73,7 +73,7 @@ ARG ARCHES_PROJECT
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/* /usr/share/nginx/html
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build/js/* /usr/share/nginx/html/js
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json /usr/share/nginx/webpack-stats.json
-RUN mv /usr/share/nginx/html/static/* /usr/share/nginx/html
+#RUN mv /usr/share/nginx/html/static/* /usr/share/nginx/html
 
 # Must be numeric to verify not root
 USER 33
