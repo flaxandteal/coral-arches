@@ -5,199 +5,200 @@ env:
   ARCHES_BASE: flaxandteal/arches_coral_base
   ARCHES_PROJECT: coral
 jobs:
-  Build-Arches:
-    runs-on: [self-hosted]
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      - name: Build docker backend image
-        run: |
-          docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}
-      - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            ARCHES_BASE=${{ env.ARCHES_BASE }}
-            ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
-  Build-Arches-Static:
-    runs-on: [self-hosted]
-    needs: [Build-Arches]
-    container:
-      image: docker:dind
+  #Build-Arches:
+  #  runs-on: [self-hosted]
+  #  steps:
+  #    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+  #    - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+  #    - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+  #    - name: Check out repository code
+  #      uses: actions/checkout@v3
+  #    - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+  #    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+  #    - name: List files in the repository
+  #      run: |
+  #        ls ${{ github.workspace }}
+  #    - run: echo "🍏 This job's status is ${{ job.status }}."
+  #    - name: Build docker backend image
+  #      run: |
+  #        docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
+  #    - name: Log in to Docker Hub
+  #      uses: docker/login-action@v2
+  #      with:
+  #        username: ${{ secrets.DOCKER_USERNAME }}
+  #        password: ${{ secrets.DOCKER_TOKEN }}
+  #    - name: Extract metadata (tags, labels) for Docker
+  #      id: meta
+  #      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+  #      with:
+  #        images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}
+  #    - name: Build and push Docker image
+  #      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+  #      with:
+  #        context: .
+  #        push: true
+  #        tags: ${{ steps.meta.outputs.tags }}
+  #        labels: ${{ steps.meta.outputs.labels }}
+  #        build-args: |
+  #          ARCHES_BASE=${{ env.ARCHES_BASE }}
+  #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+  #Build-Arches-Static:
+  #  runs-on: [self-hosted]
+  #  needs: [Build-Arches]
+  #  container:
+  #    image: docker:dind
 
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      # name: Build docker backend image
-      # run: |
-      #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Set up Docker Context for Buildx
-        id: buildx-context
-        run: |
-          docker context create builders
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-        with:
-          version: latest
-          endpoint: builders
-          buildkitd-flags: '--allow-insecure-entitlement network.host'
-          driver-opts: |
-              network=host
-      - name: Build and push Docker image
-        id: buildx
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          file: Dockerfile.static
-          network: host
-          allow: network.host
-          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
-          build-args: |
-            VERSION=feature-ci
-            ARCHES_ENVIRONMENT=development
-            ARCHES_BASE=${{ env.ARCHES_BASE }}
-            ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
-            ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
-    services:
-      elasticsearch:
-        image: elasticsearch:8.4.0
-        ports:
-          - "9200:9200"
-          - "9300:9300"
-        env:
-          TZ: "PST"
-          discovery.type: "single-node"
-          discovery.seed_hosts: "[]"
-          xpack.security.enabled: "false"
-          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
-      db:
-        image: flaxandteal/arches_coral_postgres
-        #volumes:
-        #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
-        ports:
-          - '5432:5432'
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASS: postgres
-          POSTGRES_DB: postgres
-          POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
-          TZ: PST
+  #  steps:
+  #    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+  #    - name: Check out repository code
+  #      uses: actions/checkout@v3
+  #    # name: Build docker backend image
+  #    # run: |
+  #    #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+  #    - name: Login to Docker Hub
+  #      uses: docker/login-action@v2
+  #      with:
+  #        username: ${{ secrets.DOCKER_USERNAME }}
+  #        password: ${{ secrets.DOCKER_TOKEN }}
+  #    - name: Set up Docker Context for Buildx
+  #      id: buildx-context
+  #      run: |
+  #        docker context create builders
+  #    - name: Set up Docker Buildx
+  #      uses: docker/setup-buildx-action@v2
+  #      with:
+  #        version: latest
+  #        endpoint: builders
+  #        buildkitd-flags: '--allow-insecure-entitlement network.host'
+  #        driver-opts: |
+  #            network=host
+  #    - name: Build and push Docker image
+  #      id: buildx
+  #      uses: docker/build-push-action@v2
+  #      with:
+  #        context: .
+  #        push: true
+  #        file: Dockerfile.static
+  #        network: host
+  #        allow: network.host
+  #        tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
+  #        build-args: |
+  #          VERSION=feature-ci
+  #          ARCHES_ENVIRONMENT=development
+  #          ARCHES_BASE=${{ env.ARCHES_BASE }}
+  #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+  #          ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
+  #  services:
+  #    elasticsearch:
+  #      image: elasticsearch:8.4.0
+  #      ports:
+  #        - "9200:9200"
+  #        - "9300:9300"
+  #      env:
+  #        TZ: "PST"
+  #        discovery.type: "single-node"
+  #        discovery.seed_hosts: "[]"
+  #        xpack.security.enabled: "false"
+  #        ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+  #    db:
+  #      image: flaxandteal/arches_coral_postgres
+  #      #volumes:
+  #      #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+  #      ports:
+  #        - '5432:5432'
+  #      env:
+  #        POSTGRES_USER: postgres
+  #        POSTGRES_PASS: postgres
+  #        POSTGRES_DB: postgres
+  #        POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
+  #        TZ: PST
 
-      arches:
-        image: flaxandteal/arches_coral:feature-ci
-        env:
-          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
-          COMPRESS_OFFLINE: "False"
-          INSTALL_DEFAULT_GRAPHS: "False"
-          INSTALL_DEFAULT_CONCEPTS: "False"
-          PGUSERNAME: "postgres"
-          PGPASSWORD: "postgres"
-          PGDBNAME: "arches"
-          PGHOST: "db"
-          PGPORT: "5432"
-          COUCHDB_HOST: "couchdb"
-          COUCHDB_PORT: "5984"
-          COUCHDB_USER: "admin"
-          COUCHDB_PASS: "password"
-          ESHOST: "elasticsearch"
-          ESPORT: "9200"
-          CELERY_BROKER_URL: "amqp://rabbitmq"
-          DJANGO_MODE: "DEV"
-          DJANGO_DEBUG: "True"
-          DOMAIN_NAMES: "localhost"
-          PYTHONUNBUFFERED: "0"
-          TZ: "PST"
-        ports:
-          - '8000:8000'
-  Build-Arches-Final:
-    needs: [Build-Arches-Static]
-    runs-on: [self-hosted]
-    container:
-      image: docker:dind
+  #    arches:
+  #      image: flaxandteal/arches_coral:feature-ci
+  #      env:
+  #        ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+  #        COMPRESS_OFFLINE: "False"
+  #        INSTALL_DEFAULT_GRAPHS: "False"
+  #        INSTALL_DEFAULT_CONCEPTS: "False"
+  #        PGUSERNAME: "postgres"
+  #        PGPASSWORD: "postgres"
+  #        PGDBNAME: "arches"
+  #        PGHOST: "db"
+  #        PGPORT: "5432"
+  #        COUCHDB_HOST: "couchdb"
+  #        COUCHDB_PORT: "5984"
+  #        COUCHDB_USER: "admin"
+  #        COUCHDB_PASS: "password"
+  #        ESHOST: "elasticsearch"
+  #        ESPORT: "9200"
+  #        CELERY_BROKER_URL: "amqp://rabbitmq"
+  #        DJANGO_MODE: "DEV"
+  #        DJANGO_DEBUG: "True"
+  #        DOMAIN_NAMES: "localhost"
+  #        PYTHONUNBUFFERED: "0"
+  #        TZ: "PST"
+  #      ports:
+  #        - '8000:8000'
+  #Build-Arches-Final:
+  #  needs: [Build-Arches-Static]
+  #  runs-on: [self-hosted]
+  #  container:
+  #    image: docker:dind
 
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      # name: Build docker backend image
-      # run: |
-      #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Set up Docker Context for Buildx
-        id: buildx-context
-        run: |
-          docker context create builders
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-        with:
-          version: latest
-          endpoint: builders
-          buildkitd-flags: '--allow-insecure-entitlement network.host'
-          driver-opts: |
-              network=host
-      - name: Build and push Docker image
-        id: buildx
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          file: Dockerfile.static-py
-          network: host
-          allow: network.host
-          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static_py:feature-ci
-          build-args: |
-            VERSION=feature-ci
-            ARCHES_BASE=${{ env.ARCHES_BASE }}
-            ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+  #  steps:
+  #    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+  #    - name: Check out repository code
+  #      uses: actions/checkout@v3
+  #    # name: Build docker backend image
+  #    # run: |
+  #    #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+  #    - name: Login to Docker Hub
+  #      uses: docker/login-action@v2
+  #      with:
+  #        username: ${{ secrets.DOCKER_USERNAME }}
+  #        password: ${{ secrets.DOCKER_TOKEN }}
+  #    - name: Set up Docker Context for Buildx
+  #      id: buildx-context
+  #      run: |
+  #        docker context create builders
+  #    - name: Set up Docker Buildx
+  #      uses: docker/setup-buildx-action@v2
+  #      with:
+  #        version: latest
+  #        endpoint: builders
+  #        buildkitd-flags: '--allow-insecure-entitlement network.host'
+  #        driver-opts: |
+  #            network=host
+  #    - name: Build and push Docker image
+  #      id: buildx
+  #      uses: docker/build-push-action@v2
+  #      with:
+  #        context: .
+  #        push: true
+  #        file: Dockerfile.static-py
+  #        network: host
+  #        allow: network.host
+  #        tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static_py:feature-ci
+  #        build-args: |
+  #          VERSION=feature-ci
+  #          ARCHES_BASE=${{ env.ARCHES_BASE }}
+  #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
     runs-on: [self-hosted]
     #needs: [Build-Arches-Final]
     container:
-      image: docker:dind
+      image: cypress/browsers:node12.18.3-chrome87-ff82
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
+      - run: npm i cypress
       - name: Cypress run
         uses: cypress-io/github-action@v4.2.1
         with:
           browser: firefox
-          build: yarn build
+          install: false
     services:
       elasticsearch:
         image: elasticsearch:8.4.0
