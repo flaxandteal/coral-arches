@@ -188,14 +188,12 @@ jobs:
     #needs: [Build-Arches-Final]
     container:
       image: cypress/browsers:node12.18.3-chrome87-ff82
-      options: --user 1001
-
+    env:
+      HOME: ""
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
-        with:
-          set-safe-directory: false
       - run: npm i cypress
       - name: Cypress run
         uses: cypress-io/github-action@v4
