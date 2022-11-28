@@ -6,7 +6,7 @@ env:
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -44,6 +44,7 @@ jobs:
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Build-Arches-Static:
     runs-on: [self-hosted]
+    needs: [Build-Arches]
     container:
       image: docker:dind
 
@@ -83,6 +84,7 @@ jobs:
           tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
           build-args: |
             VERSION=feature-ci
+            ARCHES_ENVIRONMENT=development
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
@@ -138,6 +140,7 @@ jobs:
         ports:
           - '8000:8000'
   Build-Arches-Final:
+    needs: [Build-Arches-Static]
     runs-on: [self-hosted]
     container:
       image: docker:dind
@@ -180,3 +183,69 @@ jobs:
             VERSION=feature-ci
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+  Test-Arches:
+    runs-on: [self-hosted]
+    needs: [Build-Arches-Final]
+    container:
+      image: docker:dind
+
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Cypress run
+        uses: cypress-io/github-action@v4.x.x
+        with:
+          browser: firefox
+          build: yarn build
+    services:
+      elasticsearch:
+        image: elasticsearch:8.4.0
+        ports:
+          - "9200:9200"
+          - "9300:9300"
+        env:
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+      db:
+        image: flaxandteal/arches_coral_postgres
+        #volumes:
+        #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+        ports:
+          - '5432:5432'
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASS: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
+          TZ: PST
+
+      arches:
+        image: flaxandteal/arches_coral_static_py:feature-ci
+        env:
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          COMPRESS_OFFLINE: "False"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
+          DOMAIN_NAMES: "localhost"
+          PYTHONUNBUFFERED: "0"
+          TZ: "PST"
+        ports:
+          - '8000:8000'

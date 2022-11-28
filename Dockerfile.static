@@ -2,6 +2,7 @@ ARG VERSION
 ARG ARCHES_PROJECT=afs
 ARG ARCHES_BASE=arches_coral_base
 ARG WEB_ROOT=/web_root
+ARG ARCHES_ENVIRONMENT=production
 FROM $ARCHES_BASE
 FROM $ARCHES_BASE as arches_static_cache
 
@@ -11,6 +12,7 @@ ARG DJANGO_DUMMY_SECRET_KEY
 ARG STATIC_URL
 ARG ARCHES_PROJECT
 ARG ARCHES_NAMESPACE_FOR_DATA_EXPORT
+ARG ARCHES_ENVIRONMENT
 
 ENV DJANGO_DEBUG=False \
     DJANGO_MODE=STATIC \
@@ -63,7 +65,7 @@ python manage.py packages -o load_package -s coral/pkg/ -y;\
 python manage.py es index_database\
 ";
 COPY ./coral/coral/settings.py ${WEB_ROOT}/coral/coral/settings.py
-RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_build_production
+RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_build_${ARCHES_ENVIRONMENT}
 
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine
 ARG WEB_ROOT=/web_root
@@ -71,6 +73,7 @@ ARG ARCHES_PROJECT
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/* /usr/share/nginx/html
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build/js/* /usr/share/nginx/html/js
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json /usr/share/nginx/webpack-stats.json
+RUN mv /usr/share/nginx/html/static/* /usr/share/nginx/html
 
 # Must be numeric to verify not root
 USER 33
