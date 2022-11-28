@@ -231,6 +231,7 @@ jobs:
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
+          INSTALL_CORAL_PACKAGE: "True"
           INSTALL_DEFAULT_GRAPHS: "False"
           INSTALL_DEFAULT_CONCEPTS: "False"
           PGUSERNAME: "postgres"
@@ -247,7 +248,7 @@ jobs:
           CELERY_BROKER_URL: "amqp://rabbitmq"
           DJANGO_MODE: "DEV"
           DJANGO_DEBUG: "True"
-          DOMAIN_NAMES: "localhost"
+          DOMAIN_NAMES: "arches"
           PYTHONUNBUFFERED: "0"
           TZ: "PST"
         ports:

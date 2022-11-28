@@ -134,6 +134,13 @@ setup_arches() {
 	fi
 
 	run_migrations
+
+	if [[ "${INSTALL_CORAL_PACKAGE}" == "True" ]]; then
+		# Import graphs
+		echo "Running: python manage.py packages -o import_graphs"
+		python manage.py packages -o load_package -s coral/pkg/ -y;
+		python manage.py es index_database
+	fi
 }
 
 wait_for_db() {
