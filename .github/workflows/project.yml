@@ -185,7 +185,7 @@ jobs:
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
     runs-on: [self-hosted]
-    needs: [Build-Arches-Final]
+    #needs: [Build-Arches-Final]
     container:
       image: docker:dind
 
