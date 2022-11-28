@@ -200,7 +200,7 @@ jobs:
         with:
           browser: firefox
           install: false
-          wait-on: 'http://localhost:8000'
+          wait-on: 'http://arches:8000'
           wait-on-timeout: 6000
     services:
       elasticsearch:
