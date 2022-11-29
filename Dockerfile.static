@@ -74,7 +74,6 @@ COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/* /usr/
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build/js/* /usr/share/nginx/html/js
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json /usr/share/nginx/webpack-stats.json
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/node_modules/js-cookie/src/js.cookie.js /usr/share/nginx/html/js/js-cookie.js
-./coral/coral/media/node_modules/js-cookie/src/js.cookie.js
 #RUN mv /usr/share/nginx/html/static/* /usr/share/nginx/html
 
 # Must be numeric to verify not root
