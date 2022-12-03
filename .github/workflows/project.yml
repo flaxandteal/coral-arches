@@ -194,7 +194,7 @@ jobs:
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
     runs-on: [self-hosted]
-    needs: [Build-Arches] #RMV
+    needs: [Build-Arches-Final]
     container:
       image: cypress/included:11.2.0
     env:
@@ -236,7 +236,7 @@ jobs:
           TZ: PST
 
       arches:
-        image: flaxandteal/arches_coral:feature-ci
+        image: flaxandteal/arches_coral_static_py:feature-ci
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
