@@ -15,7 +15,6 @@ COPY settings_docker.py ${WEB_ROOT}/arches/arches/
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}
 RUN mkdir -p /static_root && chown -R arches /static_root
 RUN yarn install
-RUN cp ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/node_modules/js-cookie/src/js.cookie.js ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/js/js-cookie.js
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 ENTRYPOINT ../entrypoint.sh
 CMD run_arches
