@@ -194,7 +194,7 @@ jobs:
   #          ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
     runs-on: [self-hosted]
-    needs: [Build-Arches-Final]
+    #needs: [Build-Arches-Final]
     container:
       image: cypress/included:11.2.0
     env:
