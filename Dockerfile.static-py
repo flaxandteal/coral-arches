@@ -6,4 +6,5 @@ FROM flaxandteal/arches_${ARCHES_PROJECT}_static:$VERSION as arches_static
 FROM flaxandteal/arches_${ARCHES_PROJECT}:$VERSION as arches
 
 COPY --from=arches_static /usr/share/nginx/webpack-stats.json ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json
+COPY --from=arches_static /usr/share/nginx/html ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build
 
