@@ -21,6 +21,20 @@ STATICFILES_DIRS =  (
     os.path.join(APP_ROOT, 'media'),
 ) + STATICFILES_DIRS
 
+WELL_KNOWN_RESOURCE_MODELS = [
+    dict(
+        model_name="Monument",
+        __str__=lambda ri: ri.monument_name,
+        graphid="076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        monument_name={
+            "type": str,
+            "lang": "en",
+            "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+            "nodeid": "676d47ff-9c1c-11ea-b07f-f875a44e0e11",
+        },
+    )
+]
+
 WEBPACK_LOADER = {
     "DEFAULT": {
         "STATS_FILE": os.path.join(APP_ROOT, 'webpack/webpack-stats.json'),
@@ -71,7 +85,8 @@ KIBANA_CONFIG_BASEPATH = "kibana"  # must match Kibana config.yml setting (serve
 
 LOAD_DEFAULT_ONTOLOGY = False
 LOAD_PACKAGE_ONTOLOGIES = True
-ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
+ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://arches:8000/"
+SPARQL_ENDPOINT_PROVIDERS = ({"SPARQL_ENDPOINT_PROVIDER": {"en": {"values": "arches.app.utils.data_management.sparql_providers.aat_provider.AAT_Provider"}}},)
 
 DATABASES = {
     "default": {
@@ -150,7 +165,8 @@ MEDIA_ROOT =  os.path.join(APP_ROOT)
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = os.getenv("STATIC_URL", '/static/')
+COMPRESS_URL = os.getenv("COMPRESS_URL", '/static/')
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -342,8 +358,6 @@ except ImportError as e:
         pass
 
 
-from arches.settings_docker import *
-
 
 # returns an output that can be read by NODEJS
 if __name__ == "__main__":
@@ -351,9 +365,13 @@ if __name__ == "__main__":
         json.dumps({
             'ARCHES_NAMESPACE_FOR_DATA_EXPORT': ARCHES_NAMESPACE_FOR_DATA_EXPORT,
             'STATIC_URL': STATIC_URL,
+            'COMPRESS_URL': COMPRESS_URL,
             'ROOT_DIR': ROOT_DIR,
             'APP_ROOT': APP_ROOT,
             'WEBPACK_DEVELOPMENT_SERVER_PORT': WEBPACK_DEVELOPMENT_SERVER_PORT,
         })
     )
     sys.stdout.flush()
+
+from arches.settings_docker import *
+#COMPRESS_PRECOMPILERS = ()

@@ -212,6 +212,26 @@ install_yarn_components() {
 	yarn install
 }
 
+#### Main commands
+run_arches_graphql() {
+
+	if [[ "${DJANGO_MODE}" == "DEV" ]]; then
+		set_dev_mode
+	fi
+
+	run_graphql_server
+}
+
+run_graphql_server() {
+	echo ""
+	echo ""
+	echo "----- *** RUNNING GRAPHQL SERVER *** -----"
+	echo ""
+	cd_app_folder
+	
+        uvicorn --host 0.0.0.0 --port 8000 ${ARCHES_PROJECT}.graph.asgi:app
+}
+
 run_yarn_start() {
 	echo ""
 	echo ""
@@ -481,6 +501,10 @@ do
 		setup_arches)
 			wait_for_db
 			setup_arches
+		;;
+		run_arches_graphql)
+			wait_for_db
+			run_arches_graphql
 		;;
 		run_tests)
 			wait_for_db
