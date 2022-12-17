@@ -210,6 +210,16 @@ jobs:
           install: false
           wait-on: 'http://arches:8000'
           wait-on-timeout: 6000
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
     services:
       elasticsearch:
         image: elasticsearch:8.4.0
