@@ -126,7 +126,9 @@ jobs:
         image: flaxandteal/arches_coral:feature-ci
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          ARCHES_ROOT: "/web_root/arches"
           COMPRESS_OFFLINE: "False"
+          COMPRESS_ENABLED: "False"
           INSTALL_DEFAULT_GRAPHS: "False"
           INSTALL_DEFAULT_CONCEPTS: "False"
           PGUSERNAME: "postgres"
@@ -145,6 +147,9 @@ jobs:
           DJANGO_DEBUG: "True"
           DOMAIN_NAMES: "localhost"
           PYTHONUNBUFFERED: "0"
+          STATIC_URL: "/static/"
+          STATIC_ROOT: "/static_root"
+          WEB_ROOT: "/web_root"
           TZ: "PST"
         ports:
           - '8000:8000'
