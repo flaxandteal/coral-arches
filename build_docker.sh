@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo ${ARCHES_PROJECT}
 ARCHES_PROJECT=${ARCHES_PROJECT} docker-compose build
 
 # The dummy secret key is simply to allow manage.py to run,

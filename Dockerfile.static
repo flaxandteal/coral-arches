@@ -1,6 +1,6 @@
 ARG VERSION
-ARG ARCHES_PROJECT=afs
-ARG ARCHES_BASE=arches_coral_base
+ARG ARCHES_PROJECT=coral
+ARG ARCHES_BASE=flaxandteal/arches_coral_base
 ARG WEB_ROOT=/web_root
 FROM $ARCHES_BASE
 FROM $ARCHES_BASE as arches_static_cache
@@ -39,7 +39,8 @@ ENV DJANGO_SETTINGS_MODULE=${ARCHES_PROJECT}.settings
 RUN mkdir -p /static_root && chown -R arches /static_root
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 
-FROM arches_$ARCHES_PROJECT:$VERSION as arches_dynamic
+# I hardcoded this so that it would work no idea why FROM arches_{ARCHESPROJECT}:latest as arches_dynamic it didn't 
+FROM arches_coral:latest as arches_dynamic
 FROM arches_static_cache as arches
 ARG WEB_ROOT=/web_root
 ARG ARCHES_PROJECT
