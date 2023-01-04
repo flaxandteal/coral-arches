@@ -81,6 +81,10 @@ jobs:
           buildkitd-flags: '--allow-insecure-entitlement network.host'
           driver-opts: |
               network=host
+      - name: Wait for Github
+        uses: ifaxity/wait-on-action
+        with:
+          resource: http://localhost:8080/templates/views/report-templates/map.htm
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
@@ -204,6 +208,7 @@ jobs:
       image: cypress/included:11.2.0
     env:
       HOME: ""
+      CYPRESS_BASE_URL=http://arches:8000
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
