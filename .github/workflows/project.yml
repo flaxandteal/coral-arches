@@ -84,7 +84,7 @@ jobs:
       - name: Wait for Github
         uses: ifaxity/wait-on-action@v1
         with:
-          resource: http://localhost:8080/templates/views/report-templates/map.htm
+          resource: http://arches:8080/templates/views/report-templates/map.htm
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
