@@ -53,7 +53,7 @@ jobs:
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Build-Arches-Static:
     runs-on: [self-hosted]
-    needs: [Build-Arches]
+    #needs: [Build-Arches]
     container:
       image: docker:dind
 
@@ -111,6 +111,11 @@ jobs:
           discovery.seed_hosts: "[]"
           xpack.security.enabled: "false"
           ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+        options: >-
+          --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
       db:
         image: flaxandteal/arches_coral_postgres
         #volumes:
@@ -123,6 +128,11 @@ jobs:
           POSTGRES_DB: postgres
           POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
           TZ: PST
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
       arches:
         image: flaxandteal/arches_coral:feature-ci
@@ -155,6 +165,11 @@ jobs:
           TZ: "PST"
         ports:
           - '8000:8000'
+        options: >-
+          --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 1000
   Build-Arches-Final:
     needs: [Build-Arches-Static]
     runs-on: [self-hosted]
