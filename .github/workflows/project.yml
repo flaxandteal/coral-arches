@@ -208,7 +208,7 @@ jobs:
       image: cypress/included:11.2.0
     env:
       HOME: ""
-      CYPRESS_BASE_URL=http://arches:8000
+      CYPRESS_BASE_URL: http://arches:8000
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
