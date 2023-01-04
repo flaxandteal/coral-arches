@@ -358,6 +358,9 @@ except ImportError as e:
         pass
 
 
+from arches.settings_docker import *
+#COMPRESS_PRECOMPILERS = ()
+
 
 # returns an output that can be read by NODEJS
 if __name__ == "__main__":
@@ -372,6 +375,3 @@ if __name__ == "__main__":
         })
     )
     sys.stdout.flush()
-
-from arches.settings_docker import *
-#COMPRESS_PRECOMPILERS = ()
