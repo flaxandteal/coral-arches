@@ -82,7 +82,7 @@ jobs:
           driver-opts: |
               network=host
       - name: Wait for Github
-        uses: ifaxity/wait-on-action
+        uses: ifaxity/wait-on-action@v1
         with:
           resource: http://localhost:8080/templates/views/report-templates/map.htm
       - name: Build and push Docker image
