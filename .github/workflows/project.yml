@@ -129,10 +129,10 @@ jobs:
           POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
           TZ: PST
         options: >-
-          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d arches"
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d postgres"
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 20
 
       arches:
         image: flaxandteal/arches_coral:feature-ci
