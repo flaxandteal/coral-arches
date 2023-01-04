@@ -12,6 +12,7 @@ RUN . ../ENV/bin/activate \
     && pip install -r ${WEB_ROOT}/${ARCHES_PROJECT}/requirements.txt --no-binary :all:
 
 COPY settings_docker.py ${WEB_ROOT}/arches/arches/
+RUN echo "{}" > ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json
 
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}
 RUN mkdir -p /static_root && chown -R arches /static_root
