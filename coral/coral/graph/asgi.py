@@ -130,30 +130,6 @@ class Mutation(graphene.ObjectType):
 
 _full_mutation_methods = {}
 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
-    ResourceSchema = _resource_model_schemas[wkrm.model_class_name]
-    CreateResource = type(
-        f"Create{wkrm.model_class_name}",
-        (graphene.Mutation,),
-        {
-            "ok": graphene.Boolean(),
-            _convert(wkrm.model_class_name): graphene.Field(ResourceSchema),
-            "mutate": lambda parent, info, **kwargs: mutate(parent, info, **kwargs)
-        },
-        arguments={
-            field: _type_to_graphene_mut(info["type"]) for field, info in wkrm.nodes.items() if "type" in info
-        }
-    )
-    DeleteResource = type(
-        f"Delete{wkrm.model_class_name}",
-        (graphene.Mutation,),
-        {
-            "ok": graphene.Boolean(),
-            "mutate": lambda parent, info, **kwargs: mutate_delete(parent, info, **kwargs)
-        },
-        arguments={
-            "id": graphene.UUID()
-        }
-    )
     async def mutate_create(parent, info, **kwargs):
         resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
         resource = await sync_to_async(resource_cls.create)(**kwargs)
@@ -174,6 +150,30 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         }
         return DeleteResource(**kwargs)
 
+    ResourceSchema = _resource_model_schemas[wkrm.model_class_name]
+    CreateResource = type(
+        f"Create{wkrm.model_class_name}",
+        (graphene.Mutation,),
+        {
+            "ok": graphene.Boolean(),
+            _convert(wkrm.model_class_name): graphene.Field(ResourceSchema),
+            "mutate": lambda parent, info, **kwargs: mutate_create(parent, info, **kwargs)
+        },
+        arguments={
+            field: _type_to_graphene_mut(info["type"]) for field, info in wkrm.nodes.items() if "type" in info
+        }
+    )
+    DeleteResource = type(
+        f"Delete{wkrm.model_class_name}",
+        (graphene.Mutation,),
+        {
+            "ok": graphene.Boolean(),
+            "mutate": lambda parent, info, **kwargs: mutate_delete(parent, info, **kwargs)
+        },
+        arguments={
+            "id": graphene.UUID()
+        }
+    )
     _full_mutation_methods.update({
         f"create_{_convert(wkrm.model_class_name)}": CreateResource.Field(),
         f"delete_{_convert(wkrm.model_class_name)}": DeleteResource.Field()
