@@ -227,13 +227,13 @@ class ResourceModelWrapper:
         resource = self.to_resource(strict=True)
 
     @classmethod
-    def search(cls, text, _total=None, _include_provisional=True):
+    def search(cls, text, fields=None, _total=None, _include_provisional=True):
         # AGPL Arches
         total = _total or 0
         include_provisional = _include_provisional
         se = SearchEngineFactory().create()
         # TODO: permitted_nodegroups = get_permitted_nodegroups(request.user)
-        permitted_nodegroups = [node["nodegroupid"] for node in cls._nodes.values()]
+        permitted_nodegroups = [node["nodegroupid"] for key, node in cls._nodes.items() if (fields is None or key in fields)]
 
         query = Query(se)
         string_filter = Bool()
@@ -284,13 +284,12 @@ class ResourceModelWrapper:
         self.resource.load_tiles()
         for tile in self.resource.tiles:
             for nodeid in tile.data:
-                print(tile.data, nodeid, class_nodes)
                 if nodeid in class_nodes:
                     key = class_nodes[nodeid]
                     typ = cls._nodes[key].get("type", str)
                     lang = cls._nodes[key].get("lang", None)
                     if typ is str:
-                        if lang is not None:
+                        if lang is not None and tile.data[nodeid] is not None:
                             values[key] = tile.data[nodeid][lang]["value"]
                         else:
                             values[key] = tile.data[nodeid]

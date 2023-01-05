@@ -40,12 +40,23 @@ if WELL_KNOWN_MAPPING_FILE:
     with open(WELL_KNOWN_MAPPING_FILE, "r") as wkfd:
         wkrm: dict = {wkrm["model_name"]: wkrm for wkrm in WELL_KNOWN_RESOURCE_MODELS}
         for name, model in json.load(wkfd).items():
-            if "__str__" in model:
-                strattr = model["__str__"]
-                model["__str__"] = lambda ri: getattr(ri, strattr)
+            for fieldname, field in model.items():
+                if fieldname in ("__str__", "model_name", "graphid"):
+                    continue
+                if "__str__" in field:
+                    strattr = field["__str__"]
+                    field["__str__"] = lambda ri: getattr(ri, strattr)
+                if "type" in field:
+                    if field["type"] == "str":
+                        field["type"] = str
+                    elif field["type"] == "int":
+                        field["type"] = int
+                    elif field["type"] == "float":
+                        field["type"] = float
             if name in wkrm:
                 wkrm[name].update(model)
             else:
+                assert "graphid" in model
                 model.setdefault("model_name", name)
                 WELL_KNOWN_RESOURCE_MODELS.append(model)
 

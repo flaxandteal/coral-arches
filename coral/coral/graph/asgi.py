@@ -5,6 +5,7 @@
 import os
 import asyncio
 import django
+import logging
 from asgiref.sync import sync_to_async
 
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
@@ -23,11 +24,19 @@ from coral.resource_model_wrappers import attempt_well_known_resource_model, _WE
 def _type_to_graphene(typ):
     if typ == str:
         return graphene.String()
+    elif typ == float:
+        return graphene.Float()
+    elif typ == int:
+        return graphene.Int()
     return graphene.List(lambda: _resource_model_schemas[typ])
 
 def _type_to_graphene_mut(typ):
     if typ == str:
         return graphene.String()
+    elif typ == float:
+        return graphene.Float()
+    elif typ == int:
+        return graphene.Int()
     return graphene.List(graphene.String)
 
 _resource_model_schemas = {
@@ -52,27 +61,6 @@ class ResourceInstanceLoader(DataLoader):
 ri_loader = ResourceInstanceLoader()
 
 
-class User(graphene.ObjectType):
-    id = graphene.ID()
-    name = graphene.String()
-
-
-
-class ProjectSchema(graphene.ObjectType):
-    id = graphene.ID()
-    basic_info_name = graphene.String()
-    basic_info_language = graphene.String()
-    description_statement = graphene.String()
-    identifier = graphene.String()
-
-class PersonSchema(graphene.ObjectType):
-    id = graphene.ID()
-    name = graphene.String()
-    basic_info_name = graphene.String()
-    statement_description = graphene.String()
-    identifier = graphene.String()
-    related_project = graphene.List(ProjectSchema)
-
 def _convert(class_name):
     return class_name.lower()
 
@@ -80,6 +68,7 @@ _name_map = {
     _convert(wkrm.model_class_name): wkrm.model_class_name
     for wkrm in _WELL_KNOWN_RESOURCE_MODELS
 }
+
 async def resolver(field, root, _, info, **kwargs):
     only_one = False
     try:
@@ -106,7 +95,7 @@ _full_query_methods = {}
 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
     _full_query_methods[_convert(wkrm.model_class_name)] = graphene.List(_resource_model_schemas[wkrm.model_class_name])
     _full_query_methods[f"get_{_convert(wkrm.model_class_name)}"] = graphene.Field(_resource_model_schemas[wkrm.model_class_name], id=graphene.UUID(required=True))
-    _full_query_methods[f"search_{_convert(wkrm.model_class_name)}"] = graphene.List(_resource_model_schemas[wkrm.model_class_name], text=graphene.String())
+    _full_query_methods[f"search_{_convert(wkrm.model_class_name)}"] = graphene.List(_resource_model_schemas[wkrm.model_class_name], text=graphene.String(), fields=graphene.List(graphene.String))
 
 Query = type(
     "Query",
