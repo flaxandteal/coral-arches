@@ -7,6 +7,7 @@ import os
 import sys
 import arches
 import inspect
+import json
 from django.utils.translation import gettext_lazy as _
 
 try:
@@ -21,6 +22,7 @@ STATICFILES_DIRS =  (
     os.path.join(APP_ROOT, 'media'),
 ) + STATICFILES_DIRS
 
+WELL_KNOWN_MAPPING_FILE = os.getenv("WELL_KNOWN_MAPPING_FILE", None)
 WELL_KNOWN_RESOURCE_MODELS = [
     dict(
         model_name="Monument",
@@ -34,6 +36,18 @@ WELL_KNOWN_RESOURCE_MODELS = [
         },
     )
 ]
+if WELL_KNOWN_MAPPING_FILE:
+    with open(WELL_KNOWN_MAPPING_FILE, "r") as wkfd:
+        wkrm: dict = {wkrm["model_name"]: wkrm for wkrm in WELL_KNOWN_RESOURCE_MODELS}
+        for name, model in json.load(wkfd).items():
+            if "__str__" in model:
+                strattr = model["__str__"]
+                model["__str__"] = lambda ri: getattr(ri, strattr)
+            if name in wkrm:
+                wkrm[name].update(model)
+            else:
+                model.setdefault("model_name", name)
+                WELL_KNOWN_RESOURCE_MODELS.append(model)
 
 WEBPACK_LOADER = {
     "DEFAULT": {
