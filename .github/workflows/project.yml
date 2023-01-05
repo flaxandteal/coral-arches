@@ -255,6 +255,12 @@ jobs:
           discovery.seed_hosts: "[]"
           xpack.security.enabled: "false"
           ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
+
       db:
         image: flaxandteal/arches_coral_postgres
         #volumes:
@@ -267,6 +273,11 @@ jobs:
           POSTGRES_DB: postgres
           POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
           TZ: PST
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
 
       arches:
         image: flaxandteal/arches_coral_static_py:feature-ci
@@ -295,3 +306,8 @@ jobs:
           TZ: "PST"
         ports:
           - '8000:8000'
+        options: >-
+          --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 1000
