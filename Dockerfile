@@ -1,4 +1,4 @@
-ARG ARCHES_BASE=arches_coral_base
+ARG ARCHES_BASE=flaxandteal/arches_coral_base
 FROM $ARCHES_BASE
 
 RUN useradd arches

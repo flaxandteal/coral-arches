@@ -1,6 +1,6 @@
 ARG VERSION
-ARG ARCHES_PROJECT=afs
-ARG ARCHES_BASE=arches_coral_base
+ARG ARCHES_PROJECT=coral
+ARG ARCHES_BASE=flaxandteal/arches_coral_base
 ARG WEB_ROOT=/web_root
 ARG ARCHES_ENVIRONMENT=production
 FROM $ARCHES_BASE
@@ -42,7 +42,7 @@ ENV DJANGO_DEBUG=False \
 RUN useradd arches && mkdir -p /static_root && chown -R arches /static_root
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 
-FROM flaxandteal/arches_$ARCHES_PROJECT:$VERSION as arches_dynamic
+FROM flaxandteal/arches_${ARCHES_PROJECT}:$VERSION as arches_dynamic
 FROM arches_static_cache as arches
 ARG WEB_ROOT=/web_root
 ARG ARCHES_PROJECT
