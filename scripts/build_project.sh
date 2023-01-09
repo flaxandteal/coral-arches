@@ -7,8 +7,6 @@ echo "*********************************"
 echo "*********************************"
 echo ''
 cd ../arches
-pip install -r arches/install/requirements.txt
-pip install -r arches/install/requirements_dev.txt
 docker build . -t arches
 if (( $? != 0 )); then
   echo "*****There was an issue building arches*****";
@@ -22,8 +20,8 @@ echo "*********************************"
 echo "*********************************"
 echo ''
 
-cd ../afs
-bash build_docker.sh
+cd ../coral-arches
+docker-compose --env-file docker/env-file.env build
 if (( $? != 0 )); then
   echo "*****There was an issue building afs*****";
   exit 1
