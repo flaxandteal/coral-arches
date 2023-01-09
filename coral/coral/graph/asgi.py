@@ -119,6 +119,16 @@ class Mutation(graphene.ObjectType):
 
 _full_mutation_methods = {}
 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
+    async def mutate_bulk_create(parent, info, field_sets):
+        resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
+        resources = await sync_to_async(resource_cls.create_bulk)(field_sets)
+        ok = True
+        kwargs = {
+            _convert(wkrm.model_class_name) + "s": resources,
+            "ok": ok
+        }
+        return BulkCreateResource(**kwargs)
+
     async def mutate_create(parent, info, **kwargs):
         resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
         resource = await sync_to_async(resource_cls.create)(**kwargs)
@@ -140,6 +150,25 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         return DeleteResource(**kwargs)
 
     ResourceSchema = _resource_model_schemas[wkrm.model_class_name]
+    ResourceInputObjectType = type(
+        f"{wkrm.model_class_name}Input",
+        (graphene.InputObjectType,),
+        {
+            field: _type_to_graphene_mut(info["type"]) for field, info in wkrm.nodes.items() if "type" in info
+        }
+    )
+    BulkCreateResource = type(
+        f"BulkCreate{wkrm.model_class_name}",
+        (graphene.Mutation,),
+        {
+            "ok": graphene.Boolean(),
+            _convert(wkrm.model_class_name) + "s": graphene.Field(graphene.List(ResourceSchema)),
+            "mutate": lambda parent, info, **kwargs: mutate_bulk_create(parent, info, **kwargs)
+        },
+        arguments={
+            "field_sets": graphene.List(ResourceInputObjectType),
+        }
+    )
     CreateResource = type(
         f"Create{wkrm.model_class_name}",
         (graphene.Mutation,),
@@ -165,6 +194,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
     )
     _full_mutation_methods.update({
         f"create_{_convert(wkrm.model_class_name)}": CreateResource.Field(),
+        f"bulk_create_{_convert(wkrm.model_class_name)}": BulkCreateResource.Field(),
         f"delete_{_convert(wkrm.model_class_name)}": DeleteResource.Field()
     })
 

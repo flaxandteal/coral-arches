@@ -1,4 +1,5 @@
 import logging
+from django.db import transaction
 import uuid
 import datetime
 import collections
@@ -203,7 +204,26 @@ class ResourceModelWrapper:
             return key, arg
 
     @classmethod
-    def create(cls, **kwargs):
+    def create_bulk(cls, fields: list):
+        wkrms = [cls.create(_no_save=True, **field_set) for field_set in fields]
+
+        for wkrm in wkrms:
+            wkrm.resource.resourceinstanceid = str(uuid.uuid4())
+            wkrm.id = wkrm.resource.resourceinstanceid
+            for tile in wkrm.resource.get_flattened_tiles():
+                tile.resourceinstance = wkrm.resource
+
+        transaction_id = uuid.uuid1()
+        with transaction.atomic():
+            bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
+            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
+            Resource.bulk_save([wkrm.resource for wkrm in wkrms], transaction_id=transaction_id)
+            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
+
+        return wkrms
+
+    @classmethod
+    def create(cls, _no_save=False, **kwargs):
         values = {}
         for key, arg in kwargs.items():
             if "." not in key:
@@ -215,7 +235,7 @@ class ResourceModelWrapper:
             if "." in key:
                 setattr(inst, key, val)
 
-        inst.to_resource()
+        inst.to_resource(_no_save=_no_save)
 
         return inst
 
@@ -357,9 +377,12 @@ class ResourceModelWrapper:
             for tile in tiles
         ]
 
-    def to_resource(self, verbose=False, strict=False):
+    def to_resource(self, verbose=False, strict=False, _no_save=False, _known_new=False):
         resource = Resource(resourceinstanceid=self.id, graph_id=self.graphid)
-        tiles = {str(tile.nodegroup_id): tile for tile in Tile.objects.filter(resourceinstance=resource)}
+        if _known_new:
+            tiles = {}
+        else:
+            tiles = {str(tile.nodegroup_id): tile for tile in Tile.objects.filter(resourceinstance=resource)}
         relationships = []
         for key, node in self._nodes.items():
             data = {}
@@ -394,12 +417,14 @@ class ResourceModelWrapper:
         #    raise RuntimeError(str(errors))
 
 
+        # FIXME: potential consequences for thread-safety
         # This is required to avoid e.g. missing related models preventing
         # saving (as we cannot import those via CSV on first step)
-        bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
-        system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
-        resource.save()
-        system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
+        if not _no_save:
+            bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
+            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
+            resource.save()
+            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
 
         self.id = resource.resourceinstanceid
         self.resource = resource
