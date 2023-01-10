@@ -3,9 +3,12 @@
 # Copyright (c) 2020 Taku Fukada, 2022 Phil Weir
 
 import os
+import threading
 import asyncio
 import django
 import logging
+from functools import partial
+from datetime import datetime, date
 from asgiref.sync import sync_to_async
 
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
@@ -21,29 +24,128 @@ from starlette_graphene3 import GraphQLApp, make_graphiql_handler
 from aiodataloader import DataLoader
 from coral.resource_model_wrappers import attempt_well_known_resource_model, _WELL_KNOWN_RESOURCE_MODELS, get_well_known_resource_model_by_class_name
 
-def _type_to_graphene(typ):
-    if typ == str:
-        return graphene.String()
-    elif typ == float:
-        return graphene.Float()
-    elif typ == int:
-        return graphene.Int()
-    return graphene.List(lambda: _resource_model_schemas[typ])
+from arches.app.models import models
+from arches.app.models.concept import Concept
+from arches.app.datatypes.concept_types import ConceptDataType
+import asyncio
 
-def _type_to_graphene_mut(typ):
-    if typ == str:
-        return graphene.String()
-    elif typ == float:
-        return graphene.Float()
-    elif typ == int:
-        return graphene.Int()
-    return graphene.List(graphene.String)
+from arches.app.datatypes.datatypes import DataTypeFactory
+
+import slugify
+
+
+def string_to_enum(string):
+    return slugify.slugify(string.replace(" ", "-")).replace("-", " ").title().replace(" ", "")
+
+class DataTypes:
+    node_datatypes = None
+    inited = False
+
+    def __init__(self):
+        self.collections = {}
+        self.remapped = {}
+
+    def remap(self, model, field, value):
+        if (closure := self.remapped.get((model, field), None)):
+            return closure(value)
+        return value
+
+    def init(self):
+        if not self.inited:
+            self.node_datatypes = {str(nodeid): datatype for nodeid, datatype in models.Node.objects.values_list("nodeid", "datatype")}
+            self.datatype_factory = DataTypeFactory()
+
+        for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
+            for field, info in wkrm.nodes.items():
+                if "nodeid" in info:
+                    # AGPL Arches
+                    datatype = self.node_datatypes[info["nodeid"]]
+                    datatype_instance = self.datatype_factory.get_instance(datatype)
+                    if isinstance(datatype_instance, ConceptDataType):
+                        collection = Concept().get_child_collections(models.Node.objects.get(nodeid=info["nodeid"]).config["rdmCollection"], depth_limit=1)
+                        self.collections[info["nodeid"]] = collection
+                        node_id = info["nodeid"]
+                        print(wkrm.model_name, field, self.collections[node_id])
+                        def _get_label(field, node_id, value):
+                            print(node_id, value,)
+                            collection = self.collections[node_id]
+                            for label in self.collections[node_id]:
+                                print(f"{string_to_enum(field)}.{string_to_enum(label[1])}", str(value))
+                                if f"{string_to_enum(field)}.{string_to_enum(label[1])}" == str(value):
+                                    return label[2]
+                            raise RuntimeError("Enum/collection value not found")
+
+                        self.remapped[(wkrm.model_name, field)] = partial(_get_label, field, node_id)
+
+    def to_graphene_mut(self, info, field):
+        if "type" in info:
+            typ = info["type"]
+
+            if typ == str:
+                return graphene.String()
+            elif typ == date:
+                return graphene.String()
+            elif typ == datetime:
+                return graphene.String()
+            elif typ == float:
+                return graphene.Float()
+            elif typ == int:
+                return graphene.Int()
+            elif isinstance(typ, str):
+                return graphene.List(graphene.String())
+
+        if "nodeid" in info:
+            # AGPL Arches
+            datatype = self.node_datatypes[info["nodeid"]]
+            datatype_instance = self.datatype_factory.get_instance(datatype)
+            if isinstance(datatype_instance, ConceptDataType):
+                print([
+                    (value, n) for n, value in enumerate(datatype_instance.value_lookup)
+                ])
+                collection = self.collections[info["nodeid"]]
+                # We lose the conceptid here, so cannot spot duplicates, but the idea is
+                # to restrict transfer to being human-readable.
+                print([
+                    (string_to_enum(value), n) for n, (_, value, _) in enumerate(collection)
+                ])
+                return graphene.Argument(graphene.Enum(string_to_enum(field), [
+                    (string_to_enum(value), n) for n, (_, value, _) in enumerate(collection)
+                ]))
+
+    def to_graphene(self, info):
+        if "type" in info:
+            typ = info["type"]
+
+            if typ == str:
+                return graphene.String()
+            elif typ == date:
+                return graphene.String()
+            elif typ == datetime:
+                return graphene.String()
+            elif typ == float:
+                return graphene.Float()
+            elif typ == int:
+                return graphene.Int()
+            elif isinstance(typ, str):
+                return graphene.List(lambda: _resource_model_schemas[typ])
+
+        if "nodeid" in info:
+            # AGPL Arches
+            datatype = self.node_datatypes[info["nodeid"]]
+            print(info["nodeid"])
+
+data_types = DataTypes()
+
+# Do synchronous data retrieval of "constants". After this, we assume they are available.
+thread = threading.Thread(target=data_types.init)
+thread.start()
+thread.join()
 
 _resource_model_schemas = {
         wkrm.model_class_name: type(
             f"{wkrm.model_class_name}Schema",
             (graphene.ObjectType,),
-            {field: _type_to_graphene(info["type"]) for field, info in ([("id", {"type": str})] + list(wkrm.nodes.items())) if "type" in info}
+            {field: typ for field, typ in ((field, data_types.to_graphene(info)) for field, info in ([("id", {"type": str})] + list(wkrm.nodes.items()))) if typ}
         )
     for wkrm in _WELL_KNOWN_RESOURCE_MODELS
 }
@@ -121,6 +223,7 @@ _full_mutation_methods = {}
 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
     async def mutate_bulk_create(parent, info, field_sets):
         resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
+        fields_sets = [{field: data_types.remap(wkrm.model_name, field, value) for field, value in field_set.items()} for field_set in field_sets]
         resources = await sync_to_async(resource_cls.create_bulk)(field_sets)
         ok = True
         kwargs = {
@@ -131,6 +234,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
 
     async def mutate_create(parent, info, **kwargs):
         resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
+        kwargs = {field: data_types.remap(wkrm.model_name, field, value) for field, value in kwargs.items()}
         resource = await sync_to_async(resource_cls.create)(**kwargs)
         ok = True
         kwargs = {
@@ -154,7 +258,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         f"{wkrm.model_class_name}Input",
         (graphene.InputObjectType,),
         {
-            field: _type_to_graphene_mut(info["type"]) for field, info in wkrm.nodes.items() if "type" in info
+            field: typ for field, typ in ((field, data_types.to_graphene_mut(info, field)) for field, info in wkrm.nodes.items()) if typ
         }
     )
     BulkCreateResource = type(
@@ -178,7 +282,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
             "mutate": lambda parent, info, **kwargs: mutate_create(parent, info, **kwargs)
         },
         arguments={
-            field: _type_to_graphene_mut(info["type"]) for field, info in wkrm.nodes.items() if "type" in info
+            field: typ for field, typ in ((field, data_types.to_graphene_mut(info, field)) for field, info in wkrm.nodes.items()) if typ
         }
     )
     DeleteResource = type(
@@ -205,7 +309,8 @@ FullMutation = type(
 )
 
 
-app = Starlette(debug=DEBUG)
 schema = graphene.Schema(query=Query, mutation=FullMutation)
+
+app = Starlette(debug=DEBUG)
 
 app.mount("/", GraphQLApp(schema, on_get=make_graphiql_handler()))

@@ -1,7 +1,7 @@
 import logging
 from django.db import transaction
 import uuid
-import datetime
+from datetime import datetime, date
 import collections
 from arches.app.search.components.base import SearchFilterFactory
 from arches.app.search.search_engine_factory import SearchEngineFactory
@@ -16,7 +16,7 @@ from django.db.models.signals import post_init, post_delete, pre_save, post_save
 from django.dispatch import receiver
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
-from arches.app.models.models import ResourceXResource, Concept, TileModel, Node
+from arches.app.models.models import ResourceXResource, TileModel, Node
 from arches.app.models.concept import get_preflabel_from_valueid
 from arches.app.models.tile import Tile as TileProxyModel
 from coral import settings
@@ -308,12 +308,19 @@ class ResourceModelWrapper:
                     key = class_nodes[nodeid]
                     typ = cls._nodes[key].get("type", str)
                     lang = cls._nodes[key].get("lang", None)
-                    if typ is str:
-                        if lang is not None and tile.data[nodeid] is not None:
-                            values[key] = tile.data[nodeid][lang]["value"]
-                        else:
+                    if not isinstance(typ, str):
+                        if typ == str:
+                            if lang is not None and tile.data[nodeid] is not None:
+                                values[key] = tile.data[nodeid][lang]["value"]
+                            else:
+                                values[key] = tile.data[nodeid]
+                        elif typ == date:
                             values[key] = tile.data[nodeid]
-                    elif isinstance(typ, str):
+                        elif typ == datetime:
+                            values[key] = tile.data[nodeid]
+                        else:
+                            raise NotImplementedError()
+                    elif typ in _resource_models:
                         if isinstance(tile.data[nodeid], list):
                             values[key] = RelationList(self, key, nodeid, tile.tileid)
                             for datum in tile.data[nodeid]:
@@ -388,6 +395,7 @@ class ResourceModelWrapper:
             data = {}
             if key in self._values:
                 value = self._values[key]
+                typ = node["type"]
                 if value and (isinstance(value, list) or isinstance(value, RelationList)) and isinstance(value[0], ResourceModelWrapper):
                     continue
                     # if value[0]._cross_record:
@@ -397,6 +405,12 @@ class ResourceModelWrapper:
                     #       continue
                 elif key == "basic_info_language":
                     value = [get_preflabel_from_valueid("bc35776b-996f-4fc1-bd25-9f6432c1f349", "en-US")['id']]
+                elif typ == date:
+                    value = datetime.strptime(value, "%Y-%m-%d").strftime("%Y-%m-%d")
+                elif typ == datetime:
+                    value = datetime.fromisoformat(value).isoformat()
+                elif typ == settings.Concept:
+                    pass
                 elif "lang" in node:
                     value = {node["lang"]: {"value": value, "direction": "ltr"}} # FIXME: rtl
                 data[node["nodeid"]] = value
@@ -411,7 +425,7 @@ class ResourceModelWrapper:
         resource.tiles = list(tiles.values())
 
         if not resource.createdtime:
-            resource.createdtime = datetime.datetime.now()
+            resource.createdtime = datetime.now()
         #errors = resource.validate(verbose=verbose, strict=strict)
         #if len(errors):
         #    raise RuntimeError(str(errors))

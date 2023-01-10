@@ -7,12 +7,16 @@ import os
 import sys
 import arches
 import inspect
+from datetime import datetime, date
 import json
 from django.utils.translation import gettext_lazy as _
 
 try:
     from arches.settings import *
 except ImportError:
+    pass
+
+class Concept:
     pass
 
 APP_NAME = 'coral'
@@ -51,6 +55,12 @@ if WELL_KNOWN_MAPPING_FILE:
                         field["type"] = str
                     elif field["type"] == "int":
                         field["type"] = int
+                    elif field["type"] == "date":
+                        field["type"] = date
+                    elif field["type"] == "datetime":
+                        field["type"] = datetime
+                    elif field["type"] == "concept":
+                        field["type"] = Concept
                     elif field["type"] == "float":
                         field["type"] = float
             if name in wkrm:
