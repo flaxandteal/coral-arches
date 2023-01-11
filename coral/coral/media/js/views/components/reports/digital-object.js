@@ -6,9 +6,9 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name.htm',
-    'views/components/reports/scenes/copyright.htm',
-    'views/components/reports/scenes/json.htm'
+    'templates/views/components/reports/scenes/name.htm',
+    'templates/views/components/reports/scenes/copyright.htm',
+    'templates/views/components/reports/scenes/json.htm'
 ], function(digitalobjTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('digital-object-report', {
         viewModel: function(params) {

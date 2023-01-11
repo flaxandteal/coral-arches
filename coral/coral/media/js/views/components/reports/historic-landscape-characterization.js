@@ -6,8 +6,8 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name.htm',
-    'views/components/reports/scenes/json.htm'
+    'templates/views/components/reports/scenes/name.htm',
+    'templates/views/components/reports/scenes/json.htm'
 ], function(historiclandscapeTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('historic-landscape-characterization-report', {
         viewModel: function(params) {

@@ -6,7 +6,7 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name'
+    'templates/views/components/reports/scenes/name.htm'
 ], function(personTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('person-report', {
         viewModel: function(params) {

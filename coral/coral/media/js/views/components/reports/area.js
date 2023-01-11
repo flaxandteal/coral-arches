@@ -6,13 +6,13 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name.htm',
-    'views/components/reports/scenes/assessments.htm',
-    'views/components/reports/scenes/images.htm',
-    'views/components/reports/scenes/people.htm',
-    'views/components/reports/scenes/people.htm',
-    'views/components/reports/scenes/resources.htm',
-    'views/components/reports/scenes/json.htm'
+    'templates/views/components/reports/scenes/name.htm',
+    'templates/views/components/reports/scenes/assessments.htm',
+    'templates/views/components/reports/scenes/images.htm',
+    'templates/views/components/reports/scenes/people.htm',
+    'templates/views/components/reports/scenes/people.htm',
+    'templates/views/components/reports/scenes/resources.htm',
+    'templates/views/components/reports/scenes/json.htm'
 ], function(areaTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('area-report', {
         viewModel: function(params) {

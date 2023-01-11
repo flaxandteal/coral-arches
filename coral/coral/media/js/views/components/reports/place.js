@@ -6,8 +6,8 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name.htm',
-    'views/components/reports/scenes/json.htm'
+    'templates/views/components/reports/scenes/json.htm',
+    'templates/views/components/reports/scenes/name.htm',
 ], function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('place-report', {
         viewModel: function(params) {
