@@ -1,12 +1,13 @@
 define([
+    'templates/views/components/reports/period.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
+    'views/components/reports/scenes/name.htm',
+    'views/components/reports/scenes/json.htm'
 ], function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('period-report', {
         viewModel: function(params) {
@@ -131,6 +132,6 @@ define([
             });
 
         },
-        template: { require: 'text!templates/views/components/reports/period.htm' }
+        template: periodTemplate
     });
 });

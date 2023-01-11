@@ -1,13 +1,14 @@
 define([
+    'templates/views/components/reports/monument.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/name.htm',
+    'views/components/reports/scenes/json.htm'
+], function(monumentTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('monument-report', {
         viewModel: function(params) {
             var self = this;
@@ -134,6 +135,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/monument.htm' }
+        template: monumentTemplate
     });
 });

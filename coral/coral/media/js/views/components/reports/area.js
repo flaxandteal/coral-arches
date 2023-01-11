@@ -1,18 +1,19 @@
 define([
+    'templates/views/components/reports/area.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/assessments',
-    'views/components/reports/scenes/images',
-    'views/components/reports/scenes/people',
-    'views/components/reports/scenes/people',
-    'views/components/reports/scenes/resources',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/name.htm',
+    'views/components/reports/scenes/assessments.htm',
+    'views/components/reports/scenes/images.htm',
+    'views/components/reports/scenes/people.htm',
+    'views/components/reports/scenes/people.htm',
+    'views/components/reports/scenes/resources.htm',
+    'views/components/reports/scenes/json.htm'
+], function(areaTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('area-report', {
         viewModel: function(params) {
             var self = this;
@@ -139,6 +140,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/area.htm' }
+        template: areaTemplate
     });
 });

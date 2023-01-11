@@ -1,15 +1,16 @@
 define([
+    'templates/views/components/reports/bibliographic-source.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/audit',
-    'views/components/reports/scenes/default',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/name.htm',
+    'views/components/reports/scenes/audit.htm',
+    'views/components/reports/scenes/default.htm',
+    'views/components/reports/scenes/json.htm'
+], function(bibliographicTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('bibliographic-source-report', {
         viewModel: function(params) {
             var self = this;
@@ -193,6 +194,6 @@ define([
             });
 
         },
-        template: { require: 'text!templates/views/components/reports/bibliographic-source.htm' }
+        template: bibliographicTemplate
     });
 });

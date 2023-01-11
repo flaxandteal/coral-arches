@@ -1,13 +1,14 @@
 define([
+    'templates/views/components/reports/maritime-vessel.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/name.htm',
+    'views/components/reports/scenes/json.htm'
+], function(maritimeTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('maritime-vessel-report', {
         viewModel: function(params) {
             var self = this;
@@ -254,6 +255,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/maritime-vessel.htm' }
+        template: maritimeTemplate
     });
 });
