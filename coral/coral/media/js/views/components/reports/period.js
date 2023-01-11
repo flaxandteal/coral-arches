@@ -8,7 +8,7 @@ define([
     'utils/report',
     'templates/views/components/reports/scenes/name.htm',
     'templates/views/components/reports/scenes/json.htm'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function(periodTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('period-report', {
         viewModel: function(params) {
             var self = this;
