@@ -1,4 +1,12 @@
-define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable', 'views/components/reports/scenes/map'], function (_, ko, arches, reportUtils) {
+define([
+    'templates/views/components/reports/scenes/location.htm',
+    'underscore', 
+    'knockout', 
+    'arches', 
+    'utils/report', 
+    'bindings/datatable', 
+    'views/components/reports/scenes/map'
+], function (locationTemplate, _, ko, arches, reportUtils) {
     return ko.components.register('views/components/reports/scenes/location', {
         viewModel: function (params) {
             const self = this;
@@ -291,6 +299,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
 
             }
         },
-        template: { require: 'text!templates/views/components/reports/scenes/location.htm' }
+        template: locationTemplate
     });
 });

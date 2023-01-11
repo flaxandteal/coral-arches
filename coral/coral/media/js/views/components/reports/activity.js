@@ -1,19 +1,22 @@
+
 define([
+    'templates/views/components/reports/activity.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/description',
-    'views/components/reports/scenes/json',
-    'views/components/reports/scenes/classifications',
-    'views/components/reports/scenes/location',
-    'views/components/reports/scenes/protection'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'templates/views/components/reports/scenes/name.htm',
+    'templates/views/components/reports/scenes/description.htm',
+    'templates/views/components/reports/scenes/json.htm',
+    'templates/views/components/reports/scenes/classifications.htm',
+    'templates/views/components/reports/scenes/location.htm',
+    'templates/views/components/reports/scenes/protection.htm',
+], function(activityTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('activity-report', {
         viewModel: function(params) {
+            console.log(activityTemplate)
             const self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
@@ -158,8 +161,8 @@ define([
                     files: self.cards?.['associated digital files'],
                 }
             }
-
         },
-        template: { require: 'text!templates/views/components/reports/activity.htm' }
+        template: activityTemplate
+        // template: "./templates/views/components/reports/activity.htm"
     });
 });
