@@ -12,6 +12,7 @@ const { spawn } = require("child_process");
 const { buildTemplateFilePathLookup } = require('./webpack-utils/build-template-filepath-lookup');
 const { buildJavascriptFilepathLookup } = require('./webpack-utils/build-javascript-filepath-lookup');
 const { buildImageFilePathLookup } = require('./webpack-utils/build-image-filepath-lookup');
+// const { buildStyleFilePathLookup } = require('./webpack-utils/build-style-filepath-lookup');
 const { PROJECT_NODE_MODULES_ALIASES } = require('./webpack-node-modules-aliases');
 
 
@@ -29,6 +30,31 @@ module.exports = () => {
             console.log('Data imported from settings.py:', parsedData)
         
             const archesCoreEntryPointConfiguration = buildJavascriptFilepathLookup(Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'js'), {});
+            const templateFilepathLookup = buildTemplateFilePathLookup(
+                Path.resolve(__dirname, ROOT_DIR, 'app', 'templates'),
+                Path.resolve(__dirname, APP_ROOT, 'templates')
+            );
+            
+            /*
+            const styleFilepathLookup = buildStyleFilePathLookup(
+                Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'css'),
+                Path.resolve(__dirname, APP_ROOT, 'media', 'css')
+            );
+            */
+            
+            const imageFilepathLookup = buildImageFilePathLookup(
+                '/static/',
+                Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'img'),
+                Path.resolve(__dirname, APP_ROOT, 'media', 'img')
+            );
+            
+            /*
+            const archesCoreEntryPointConfiguration = {
+                ...buildJavascriptFilepathLookup(Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'js'), {}),
+                ...imageFilepathLookup,
+                ...styleFilepathLookup
+            };
+            */
             const projectEntryPointConfiguration = buildJavascriptFilepathLookup(Path.resolve(__dirname, APP_ROOT, 'media', 'js'), {});
             
             const archesCoreJavascriptRelativeFilepathToAbsoluteFilepathLookup = Object.keys(archesCoreEntryPointConfiguration).reduce((acc, path) => {
@@ -68,17 +94,6 @@ module.exports = () => {
                 ...parsedProjectNodeModulesAliases
             };
             
-            const templateFilepathLookup = buildTemplateFilePathLookup(
-                Path.resolve(__dirname, ROOT_DIR, 'app', 'templates'),
-                Path.resolve(__dirname, APP_ROOT, 'templates')
-            );
-            
-            const imageFilepathLookup = buildImageFilePathLookup(
-                STATIC_URL,
-                Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'img'),
-                Path.resolve(__dirname, APP_ROOT, 'media', 'img')
-            );
-            
             resolve({
                 entry: { 
                     ...archesCoreEntryPointConfiguration,
@@ -114,6 +129,7 @@ module.exports = () => {
                     alias: {
                         ...javascriptRelativeFilepathToAbsoluteFilepathLookup,
                         ...templateFilepathLookup,
+                        ...styleFilepathLookup,
                         ...imageFilepathLookup,
                         ...nodeModulesAliases,
                     },
@@ -142,6 +158,7 @@ module.exports = () => {
                                 },
                                 {
                                     'loader': Path.join(APP_ROOT, 'media', 'node_modules', 'css-loader'),
+                                    // options: {url: false}
                                 },
                                 {
                                     'loader': Path.join(APP_ROOT, 'media', 'node_modules', 'postcss-loader'),
@@ -151,6 +168,13 @@ module.exports = () => {
                                 }
                             ],
                         },
+                        /*
+                        {
+                            test: /\.ttf$/,
+                            'loader': Path.join(APP_ROOT, 'media', 'node_modules', 'url-loader'),
+                            options: {limit: 100000}
+                        },
+                        */
                         {
                             test: /\.html?$/i,
                             loader: Path.join(APP_ROOT, 'media', 'node_modules', 'html-loader'),
