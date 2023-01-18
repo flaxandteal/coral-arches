@@ -28,6 +28,7 @@
     "dependencies": {
         "arches": "archesproject/arches#dev/7.1.x",
         "longjohn": "^0.2.12",
+        "package.json": "^2.0.1",
         "webpack": "^5.74.0",
         "webpack-merge": "^5.8.0"
     }
