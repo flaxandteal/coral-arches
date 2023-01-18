@@ -92,9 +92,9 @@ jobs:
           file: Dockerfile.static
           network: host
           allow: network.host
-          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static:feature-ci
+          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static:feature-graph-api
           build-args: |
-            VERSION=feature-ci
+            VERSION=feature-graph-api
             ARCHES_ENVIRONMENT=development
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
@@ -135,7 +135,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: flaxandteal/arches_coral:feature-ci
+        image: flaxandteal/arches_coral:feature-graph-api
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           ARCHES_ROOT: "/web_root/arches"
@@ -209,9 +209,9 @@ jobs:
           file: Dockerfile.static-py
           network: host
           allow: network.host
-          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static_py:feature-ci
+          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static_py:feature-graph-api
           build-args: |
-            VERSION=feature-ci
+            VERSION=feature-graph-api
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
@@ -280,7 +280,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: flaxandteal/arches_coral_static_py:feature-ci
+        image: flaxandteal/arches_coral_static_py:feature-graph-api
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
