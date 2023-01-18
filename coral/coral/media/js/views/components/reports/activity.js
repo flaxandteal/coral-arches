@@ -18,7 +18,6 @@ define([
 ], function(activityTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('activity-report', {
         viewModel: function(params) {
-            console.log(activityTemplate)
             const self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
