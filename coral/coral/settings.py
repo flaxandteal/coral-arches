@@ -287,6 +287,9 @@ APP_TITLE = 'Arches | Heritage Data Management'
 COPYRIGHT_TEXT = 'All Rights Reserved.'
 COPYRIGHT_YEAR = '2019'
 
+# sign up/in configuration
+ENABLE_USER_SIGNUP=True
+FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION=False
 ENABLE_CAPTCHA = False
 # RECAPTCHA_PUBLIC_KEY = ''
 # RECAPTCHA_PRIVATE_KEY = ''
