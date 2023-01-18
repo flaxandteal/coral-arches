@@ -10,6 +10,9 @@ import logging
 from functools import partial
 from datetime import datetime, date
 import graphene
+from starlette.routing import Route
+from starlette.endpoints import HTTPEndpoint
+from starlette.responses import PlainTextResponse
 from starlette_graphene3 import GraphQLApp, make_graphiql_handler
 from starlette.applications import Starlette
 
@@ -25,8 +28,11 @@ resources_schema = graphene.Schema(query=ResourceQuery, mutation=FullResourceMut
 concept_schema = graphene.Schema(query=ConceptQuery, mutation=FullConceptMutation)
 resource_model_schema = graphene.Schema(query=ResourceModelQuery)
 
-app = Starlette(debug=DEBUG)
+class App(HTTPEndpoint):
+    async def get(self, request):
+        return PlainTextResponse("OK")
 
+app = Starlette(debug=DEBUG, routes=[Route("/", App)])
 app.mount("/resources/", GraphQLApp(resources_schema, on_get=make_graphiql_handler()))
 app.mount("/concepts/", GraphQLApp(concept_schema, on_get=make_graphiql_handler()))
 app.mount("/resource-models/", GraphQLApp(resource_model_schema, on_get=make_graphiql_handler()))
