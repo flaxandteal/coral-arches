@@ -1,4 +1,11 @@
-define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'], function (_, ko, arches, reportUtils) {
+define([
+    'templates/views/components/reports/scenes/assessments.htm',
+    'underscore', 
+    'knockout', 
+    'arches', 
+    'utils/report', 
+    'bindings/datatable'
+], function (assessmentTemplate, _, ko, arches, reportUtils) {
     return ko.components.register('views/components/reports/scenes/assessments', {
         viewModel: function (params) {
             const self = this;
@@ -93,6 +100,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/scenes/assessments.htm' }
+        template: assessmentTemplate
     });
 });

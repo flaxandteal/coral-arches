@@ -1,4 +1,6 @@
+
 define([
+    'templates/views/components/reports/activity.htm',
     'jquery',
     'underscore',
     'knockout',
@@ -10,8 +12,10 @@ define([
     'views/components/reports/scenes/json',
     'views/components/reports/scenes/classifications',
     'views/components/reports/scenes/location',
-    'views/components/reports/scenes/protection'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/protection',
+    'views/components/reports/scenes/default',
+    // 'default-report'
+], function(activityTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('activity-report', {
         viewModel: function(params) {
             const self = this;
@@ -158,8 +162,8 @@ define([
                     files: self.cards?.['associated digital files'],
                 }
             }
-
         },
-        template: { require: 'text!templates/views/components/reports/activity.htm' }
+        template: activityTemplate
+        // template: "./templates/views/components/reports/activity.htm"
     });
 });

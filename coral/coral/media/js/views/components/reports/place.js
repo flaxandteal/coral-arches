@@ -1,13 +1,14 @@
 define([
+    'templates/views/components/reports/place.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'templates/views/components/reports/scenes/json.htm',
+    'templates/views/components/reports/scenes/name.htm',
+], function(placeTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('place-report', {
         viewModel: function(params) {
             var self = this;
@@ -83,6 +84,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/place.htm' }
+        template: placeTemplate
     });
 });

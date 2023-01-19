@@ -1,13 +1,14 @@
 define([
+    'templates/views/components/reports/archive-source.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'templates/views/components/reports/scenes/name.htm',
+    'templates/views/components/reports/scenes/json.htm'
+], function(archivesourceTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('archive-source-report', {
         viewModel: function(params) {
             var self = this;
@@ -168,6 +169,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/archive-source.htm' }
+        template: archivesourceTemplate
     });
 });

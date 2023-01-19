@@ -1,13 +1,14 @@
 define([
+    'templates/views/components/reports/heritage-story.htm',
     'jquery',
     'underscore',
     'knockout',
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'templates/views/components/reports/scenes/name.htm',
+    'templates/views/components/reports/scenes/json.htm'
+], function(heritageTemplate, $, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('heritage-story-report', {
         viewModel: function(params) {
             var self = this;
@@ -101,6 +102,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/heritage-story.htm' }
+        template: heritageTemplate
     });
 });
