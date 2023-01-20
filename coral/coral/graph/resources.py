@@ -24,7 +24,7 @@ from coral.resource_model_wrappers import attempt_well_known_resource_model, _WE
 
 from arches.app.models import models
 from arches.app.models.concept import Concept
-from arches.app.datatypes.concept_types import ConceptDataType
+from arches.app.datatypes.concept_types import ConceptDataType, ConceptListDataType
 import asyncio
 
 from arches.app.datatypes.datatypes import DataTypeFactory
@@ -42,6 +42,14 @@ class DataTypes:
     def __init__(self):
         self.collections = {}
         self.remapped = {}
+        self.demapped = {}
+
+    def demap(self, model, field, value):
+        if value is None:
+            return None
+        if (closure := self.demapped.get((model, field), None)):
+            return closure(value)
+        return value
 
     def remap(self, model, field, value):
         if (closure := self.remapped.get((model, field), None)):
@@ -59,21 +67,19 @@ class DataTypes:
                     # AGPL Arches
                     datatype = self.node_datatypes[info["nodeid"]]
                     datatype_instance = self.datatype_factory.get_instance(datatype)
-                    if isinstance(datatype_instance, ConceptDataType):
-                        collection = Concept().get_child_collections(models.Node.objects.get(nodeid=info["nodeid"]).config["rdmCollection"], depth_limit=1)
-                        self.collections[info["nodeid"]] = collection
-                        node_id = info["nodeid"]
-                        print(wkrm.model_name, field, self.collections[node_id])
-                        def _get_label(field, node_id, value):
-                            print(node_id, value,)
-                            collection = self.collections[node_id]
-                            for label in self.collections[node_id]:
-                                print(f"{string_to_enum(field)}.{string_to_enum(label[1])}", str(value))
-                                if f"{string_to_enum(field)}.{string_to_enum(label[1])}" == str(value):
-                                    return label[2]
-                            raise RuntimeError("Enum/collection value not found")
-
-                        self.remapped[(wkrm.model_name, field)] = partial(_get_label, field, node_id)
+                    if isinstance(datatype_instance, ConceptDataType) or isinstance(datatype_instance, ConceptListDataType):
+                        collection = Concept().get_child_collections(models.Node.objects.get(nodeid=info["nodeid"]).config["rdmCollection"])
+                        self.collections[info["nodeid"]] = {
+                            "forward": {f"{string_to_enum(field)}.{string_to_enum(label[1])}": label[2] for label in collection},
+                            "back": {label[2]: string_to_enum(label[1]) for label in collection}
+                        }
+                        nodeid = info["nodeid"]
+                        if isinstance(datatype_instance, ConceptListDataType):
+                            self.remapped[(wkrm.model_name, field)] = lambda vs: list(map(self.collections[nodeid]["forward"].get, map(str, vs)))
+                            self.demapped[(wkrm.model_name, field)] = lambda vs: list(map(self.collections[nodeid]["back"].get, map(str, vs)))
+                        else:
+                            self.remapped[(wkrm.model_name, field)] = lambda v: self.collections[nodeid]["forward"][str(v)]
+                            self.demapped[(wkrm.model_name, field)] = lambda v: self.collections[nodeid]["back"][str(v)]
 
     def to_graphene_mut(self, info, field):
         if "type" in info:
@@ -96,21 +102,16 @@ class DataTypes:
             # AGPL Arches
             datatype = self.node_datatypes[info["nodeid"]]
             datatype_instance = self.datatype_factory.get_instance(datatype)
-            if isinstance(datatype_instance, ConceptDataType):
-                print([
-                    (value, n) for n, value in enumerate(datatype_instance.value_lookup)
-                ])
+            if isinstance(datatype_instance, ConceptDataType) or isinstance(datatype_instance, ConceptListDataType):
                 collection = self.collections[info["nodeid"]]
                 # We lose the conceptid here, so cannot spot duplicates, but the idea is
                 # to restrict transfer to being human-readable.
-                print([
-                    (string_to_enum(value), n) for n, (_, value, _) in enumerate(collection)
+                raw_type = graphene.Enum(string_to_enum(field), [
+                    (value, n) for n, value in enumerate(collection["back"].values())
                 ])
-                return graphene.Argument(graphene.Enum(string_to_enum(field), [
-                    (string_to_enum(value), n) for n, (_, value, _) in enumerate(collection)
-                ]))
+                return graphene.Argument(graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type)
 
-    def to_graphene(self, info):
+    def to_graphene(self, info, field):
         if "type" in info:
             typ = info["type"]
 
@@ -130,6 +131,16 @@ class DataTypes:
         if "nodeid" in info:
             # AGPL Arches
             datatype = self.node_datatypes[info["nodeid"]]
+            datatype_instance = self.datatype_factory.get_instance(datatype)
+            if isinstance(datatype_instance, ConceptDataType) or isinstance(datatype_instance, ConceptListDataType):
+                collection = self.collections[info["nodeid"]]
+                # We lose the conceptid here, so cannot spot duplicates, but the idea is
+                # to restrict transfer to being human-readable.
+                raw_type = graphene.Enum(string_to_enum(field), [
+                    (value, n) for n, value in enumerate(collection["back"].values())
+                ])
+
+                return graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type
 
 data_types = DataTypes()
 
@@ -138,11 +149,24 @@ thread = threading.Thread(target=data_types.init)
 thread.start()
 thread.join()
 
+def _to_graphene(wkrm):
+    fields = [("id", {"type": str})] + list(wkrm.nodes.items())
+    for field, info in fields:
+        typ = data_types.to_graphene(info, field)
+        if typ:
+            yield (field, typ)
+
+_resource_model_mappers = {
+    wkrm.model_class_name: {
+        field: partial(data_types.demap, wkrm.model_name, field) for field, _ in _to_graphene(wkrm)
+    }
+    for wkrm in _WELL_KNOWN_RESOURCE_MODELS
+}
 _resource_model_schemas = {
         wkrm.model_class_name: type(
             f"{wkrm.model_class_name}Schema",
             (graphene.ObjectType,),
-            {field: typ for field, typ in ((field, data_types.to_graphene(info)) for field, info in ([("id", {"type": str})] + list(wkrm.nodes.items()))) if typ}
+            {field: typ for field, typ in _to_graphene(wkrm)}
         )
     for wkrm in _WELL_KNOWN_RESOURCE_MODELS
 }
@@ -155,7 +179,12 @@ class ResourceInstanceLoader(DataLoader):
 
     def _batch_load_fn_real(self, keys):
         ret = [attempt_well_known_resource_model(key) for key in keys]
-        return ret
+        group = []
+        for wkrm in ret:
+            group.append(
+                {field: mapper(getattr(wkrm, field, None)) for field, mapper in _resource_model_mappers[wkrm.name].items()}
+            )
+        return group
 
 ri_loader = ResourceInstanceLoader()
 

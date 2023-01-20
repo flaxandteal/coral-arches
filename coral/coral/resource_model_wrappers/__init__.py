@@ -318,6 +318,10 @@ class ResourceModelWrapper:
                             values[key] = tile.data[nodeid]
                         elif typ == datetime:
                             values[key] = tile.data[nodeid]
+                        elif typ == settings.Concept:
+                            values[key] = tile.data[nodeid]
+                        elif typ == [settings.Concept]:
+                            values[key] = tile.data[nodeid]
                         else:
                             raise NotImplementedError()
                     elif typ in _resource_models:
@@ -410,6 +414,8 @@ class ResourceModelWrapper:
                 elif typ == datetime:
                     value = datetime.fromisoformat(value).isoformat()
                 elif typ == settings.Concept:
+                    pass
+                elif typ == [settings.Concept]:
                     pass
                 elif "lang" in node:
                     value = {node["lang"]: {"value": value, "direction": "ltr"}} # FIXME: rtl

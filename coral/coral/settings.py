@@ -61,6 +61,8 @@ if WELL_KNOWN_MAPPING_FILE:
                         field["type"] = datetime
                     elif field["type"] == "concept":
                         field["type"] = Concept
+                    elif field["type"] == "[concept]":
+                        field["type"] = [Concept]
                     elif field["type"] == "float":
                         field["type"] = float
             if name in wkrm:
