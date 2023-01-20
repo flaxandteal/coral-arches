@@ -30,7 +30,8 @@ mapping_types_standardization = {
     "datetime": "datetime",
     "text": "str",
     "dropdown": "concept",
-    "[concept]": "[concept]"
+    "[concept]": "[concept]",
+    "option select": "concept",
 }
 
 def update_mapping_new(filename, filename_out):

@@ -75,11 +75,23 @@ class DataTypes:
                         }
                         nodeid = info["nodeid"]
                         if isinstance(datatype_instance, ConceptListDataType):
-                            self.remapped[(wkrm.model_name, field)] = lambda vs: list(map(self.collections[nodeid]["forward"].get, map(str, vs)))
-                            self.demapped[(wkrm.model_name, field)] = lambda vs: list(map(self.collections[nodeid]["back"].get, map(str, vs)))
+                            self.remapped[(wkrm.model_name, field)] = partial(
+                                lambda vs, nodeid: list(map(self.collections[nodeid]["forward"].get, map(str, vs))),
+                                nodeid=nodeid
+                            )
+                            self.demapped[(wkrm.model_name, field)] = partial(
+                                lambda vs, nodeid: list(map(self.collections[nodeid]["back"].get, map(str, vs))),
+                                nodeid=nodeid
+                            )
                         else:
-                            self.remapped[(wkrm.model_name, field)] = lambda v: self.collections[nodeid]["forward"][str(v)]
-                            self.demapped[(wkrm.model_name, field)] = lambda v: self.collections[nodeid]["back"][str(v)]
+                            self.remapped[(wkrm.model_name, field)] = partial(
+                                lambda v, nodeid: self.collections[nodeid]["forward"][str(v)],
+                                nodeid=nodeid
+                            )
+                            self.demapped[(wkrm.model_name, field)] = partial(
+                                lambda v, nodeid: self.collections[nodeid]["back"][str(v)],
+                                nodeid=nodeid
+                            )
 
     def to_graphene_mut(self, info, field):
         if "type" in info:
@@ -140,7 +152,7 @@ class DataTypes:
                     (value, n) for n, value in enumerate(collection["back"].values())
                 ])
 
-                return graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type
+                return graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else graphene.Field(raw_type)
 
 data_types = DataTypes()
 
