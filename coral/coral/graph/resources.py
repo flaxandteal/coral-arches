@@ -118,10 +118,12 @@ class DataTypes:
                 collection = self.collections[info["nodeid"]]
                 # We lose the conceptid here, so cannot spot duplicates, but the idea is
                 # to restrict transfer to being human-readable.
-                pairs = {(value, n) for n, value in enumerate(collection["back"].values())}
+                pairs = {}
+                for n, value in enumerate(collection["back"].values()):
+                    pairs[value] = (value, n)
                 if len(pairs) != len(collection["back"]):
                     print(f"WARNING: duplicate enum entries for {field}")
-                raw_type = graphene.Enum(string_to_enum(field), list(pairs))
+                raw_type = graphene.Enum(string_to_enum(field), list(pairs.values()))
 
                 return graphene.Argument(graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type)
 
@@ -150,10 +152,12 @@ class DataTypes:
                 collection = self.collections[info["nodeid"]]
                 # We lose the conceptid here, so cannot spot duplicates, but the idea is
                 # to restrict transfer to being human-readable.
-                pairs = {(value, n) for n, value in enumerate(collection["back"].values())}
+                pairs = {}
+                for n, value in enumerate(collection["back"].values()):
+                    pairs[value] = (value, n)
                 if len(pairs) != len(collection["back"]):
                     print(f"WARNING: duplicate enum entries for {field}")
-                raw_type = graphene.Enum(string_to_enum(field), list(pairs))
+                raw_type = graphene.Enum(string_to_enum(field), list(pairs.values()))
 
                 return graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else graphene.Field(raw_type)
 
