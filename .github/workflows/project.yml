@@ -28,9 +28,9 @@ jobs:
         with:
           version: latest
           endpoint: builders
-      - name: Build docker backend image
-        run: |
-          docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
+      # name: Build docker backend image
+      # run: |
+      #   docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
