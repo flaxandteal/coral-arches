@@ -11,7 +11,7 @@ from functools import partial
 from datetime import datetime, date
 from asgiref.sync import sync_to_async
 
-from .utils import _convert, string_to_enum
+from .utils import snake, camel, studly, string_to_enum
 
 import graphene
 from graphene_file_upload.scalars import Upload
@@ -27,13 +27,10 @@ from arches.app.models.concept import Concept
 from arches.app.datatypes.concept_types import ConceptDataType, ConceptListDataType
 import asyncio
 
-from arches.app.datatypes.datatypes import DataTypeFactory
+from arches.app.datatypes.datatypes import DataTypeFactory, GeojsonFeatureCollectionDataType
 
 import slugify
 
-
-def string_to_enum(string):
-    return slugify.slugify(string.replace(" ", "-")).replace("-", " ").title().replace(" ", "")
 
 class DataTypes:
     node_datatypes = None
@@ -43,12 +40,14 @@ class DataTypes:
         self.collections = {}
         self.remapped = {}
         self.demapped = {}
+        self.semantic_nodes = {}
 
     def demap(self, model, field, value):
         if value is None:
             return None
         if (closure := self.demapped.get((model, field), None)):
-            return closure(value)
+            res = closure(value)
+            return res
         return value
 
     def remap(self, model, field, value):
@@ -56,42 +55,82 @@ class DataTypes:
             return closure(value)
         return value
 
+    def _build_semantic(self, nodeid, semantic_field, field, field_info, model_name, model_class_name):
+        if nodeid not in self.semantic_nodes:
+            assert str(nodeid) in self.node_datatypes and self.node_datatypes[str(nodeid)] == "semantic"
+            self.semantic_nodes[nodeid] = {}
+            node = models.Node.objects.get(nodeid=nodeid)
+            self.semantic_nodes[nodeid] = {
+                "name": semantic_field,
+                "model_name": model_name,
+                "model_class_name": model_class_name,
+                "fields": []
+            }
+        self.semantic_nodes[nodeid]["fields"].append((field, field_info))
+        assert semantic_field == self.semantic_nodes[nodeid]["name"]
+        assert model_class_name == self.semantic_nodes[nodeid]["model_class_name"]
+        return self.semantic_nodes[nodeid]["name"]
+
     def init(self):
         if not self.inited:
             self.node_datatypes = {str(nodeid): datatype for nodeid, datatype in models.Node.objects.values_list("nodeid", "datatype")}
             self.datatype_factory = DataTypeFactory()
 
-        for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
-            for field, info in wkrm.nodes.items():
-                if "nodeid" in info:
-                    # AGPL Arches
-                    datatype = self.node_datatypes[info["nodeid"]]
-                    datatype_instance = self.datatype_factory.get_instance(datatype)
-                    if isinstance(datatype_instance, ConceptDataType) or isinstance(datatype_instance, ConceptListDataType):
-                        collection = Concept().get_child_collections(models.Node.objects.get(nodeid=info["nodeid"]).config["rdmCollection"])
-                        self.collections[info["nodeid"]] = {
-                            "forward": {f"{string_to_enum(field)}.{string_to_enum(label[1])}": label[2] for label in collection},
-                            "back": {label[2]: string_to_enum(label[1]) for label in collection}
-                        }
-                        nodeid = info["nodeid"]
-                        if isinstance(datatype_instance, ConceptListDataType):
-                            self.remapped[(wkrm.model_name, field)] = partial(
-                                lambda vs, nodeid: list(map(self.collections[nodeid]["forward"].get, map(str, vs))),
-                                nodeid=nodeid
-                            )
-                            self.demapped[(wkrm.model_name, field)] = partial(
-                                lambda vs, nodeid: list(map(self.collections[nodeid]["back"].get, map(str, vs))),
-                                nodeid=nodeid
-                            )
+            for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
+                for field, info in wkrm.nodes.items():
+                    if "nodeid" in info:
+                        if "/" in field:
+                            semantic_field, subfield = field.split("/", -1)
+                            assert "/" not in semantic_field, "Can only have one level of grouping above raw data fields"
+                            self._build_semantic(info["nodegroupid"], semantic_field, subfield, info, wkrm.model_name, wkrm.model_class_name)
+                            model_name = wkrm.model_name
                         else:
-                            self.remapped[(wkrm.model_name, field)] = partial(
-                                lambda v, nodeid: self.collections[nodeid]["forward"][str(v)],
-                                nodeid=nodeid
-                            )
-                            self.demapped[(wkrm.model_name, field)] = partial(
-                                lambda v, nodeid: self.collections[nodeid]["back"][str(v)],
-                                nodeid=nodeid
-                            )
+                            model_name = wkrm.model_name
+                        self._process_field(info["nodeid"], model_name, field)
+                        # AGPL Arches
+            self._process_semantic_fields()
+            self.inited = True
+
+    def _process_semantic_fields(self):
+        for nodeid, node in self.semantic_nodes.items():
+            self.remapped[(node["model_name"], node["name"])] = partial(
+                lambda vs, model_name, name: [{k: self.remap(model_name, f"{name}/{k}", v) for k, v in entry.items()} for entry in vs],
+                model_name=node["model_name"],
+                name=node["name"],
+            )
+            self.demapped[(node["model_name"], node["name"])] = partial(
+                lambda vs, model_name, name: [{k: self.demap(model_name, f"{name}/{k}", v) for k, v in entry.items()} for entry in vs],
+                model_name=node["model_name"],
+                name=node["name"],
+            )
+
+    def _process_field(self, nodeid, model_name, field):
+        datatype = self.node_datatypes[nodeid]
+        datatype_instance = self.datatype_factory.get_instance(datatype)
+        if isinstance(datatype_instance, ConceptDataType) or isinstance(datatype_instance, ConceptListDataType):
+            collection = Concept().get_child_collections(models.Node.objects.get(nodeid=nodeid).config["rdmCollection"])
+            self.collections[nodeid] = {
+                "forward": {f"{string_to_enum(field)}.{string_to_enum(label[1])}": label[2] for label in collection},
+                "back": {label[2]: string_to_enum(label[1]) for label in collection}
+            }
+            if isinstance(datatype_instance, ConceptListDataType):
+                self.remapped[(model_name, field)] = partial(
+                    lambda vs, nodeid: list(map(self.collections[nodeid]["forward"].get, map(str, vs))),
+                    nodeid=nodeid
+                )
+                self.demapped[(model_name, field)] = partial(
+                    lambda vs, nodeid: list(map(self.collections[nodeid]["back"].get, map(str, vs))),
+                    nodeid=nodeid
+                )
+            else:
+                self.remapped[(model_name, field)] = partial(
+                    lambda v, nodeid: self.collections[nodeid]["forward"][str(v)],
+                    nodeid=nodeid
+                )
+                self.demapped[(model_name, field)] = partial(
+                    lambda v, nodeid: self.collections[nodeid]["back"][str(v)],
+                    nodeid=nodeid
+                )
 
     def to_graphene_mut(self, info, field):
         if "type" in info:
@@ -99,6 +138,8 @@ class DataTypes:
 
             if typ == str:
                 return graphene.String()
+            elif typ == [str]:
+                return graphene.List(graphene.String)
             elif typ == date:
                 return graphene.String()
             elif typ == datetime:
@@ -126,6 +167,8 @@ class DataTypes:
                 raw_type = graphene.Enum(string_to_enum(field), list(pairs.values()))
 
                 return graphene.Argument(graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type)
+            elif isinstance(datatype_instance, GeojsonFeatureCollectionDataType):
+                return graphene.JSONString()
 
     def to_graphene(self, info, field):
         if "type" in info:
@@ -133,6 +176,8 @@ class DataTypes:
 
             if typ == str:
                 return graphene.String()
+            elif typ == [str]:
+                return graphene.List(graphene.String)
             elif typ == date:
                 return graphene.String()
             elif typ == datetime:
@@ -160,6 +205,8 @@ class DataTypes:
                 raw_type = graphene.Enum(string_to_enum(field), list(pairs.values()))
 
                 return graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else graphene.Field(raw_type)
+            elif isinstance(datatype_instance, GeojsonFeatureCollectionDataType):
+                return graphene.JSONString()
 
 data_types = DataTypes()
 
@@ -168,11 +215,52 @@ thread = threading.Thread(target=data_types.init)
 thread.start()
 thread.join()
 
+semantic_input_objects = {}
+semantic_schema_objects = {}
+for nodeid, semantic_type in data_types.semantic_nodes.items():
+    semantic = set()
+    args = []
+    fields = []
+    for field, info in semantic_type["fields"]:
+        fullfield = f"{semantic_type['name']}/{field}"
+        args.append((field, data_types.to_graphene_mut(info, fullfield)))
+        fields.append((field, data_types.to_graphene(info, fullfield)))
+
+        SchemaType = type(
+            f"{semantic_type['model_class_name']}{studly(semantic_type['name'])}Schema",
+            (graphene.ObjectType,),
+            {
+                field: typ for field, typ in fields
+            }
+        )
+        InputObjectType = type(
+            f"{semantic_type['model_class_name']}{studly(semantic_type['name'])}Input",
+            (graphene.InputObjectType,),
+            {
+                field: typ for field, typ in args
+            }
+        )
+        semantic_schema_objects[(semantic_type['model_class_name'], semantic_type['name'])] = graphene.List(SchemaType)
+        semantic_input_objects[(semantic_type['model_class_name'], semantic_type['name'])] = graphene.List(InputObjectType)
+
+def _to_graphene_mut(wkrm):
+    fields = [("id", {"type": str})] + list(wkrm.nodes.items())
+    semantic = set()
+    for field, info in fields:
+        if (wkrm.model_class_name, field) in semantic_input_objects:
+            yield (field, graphene.Argument(semantic_input_objects[(wkrm.model_class_name, field)]))
+        elif "/" not in field and (typ := data_types.to_graphene_mut(info, field)):
+            yield (field, typ)
+
 def _to_graphene(wkrm):
     fields = [("id", {"type": str})] + list(wkrm.nodes.items())
+    semantic = set()
     for field, info in fields:
-        typ = data_types.to_graphene(info, field)
-        if typ:
+        # We rely on the first pass having picked up all semantic fields and putting them
+        # in semantic_schema_objects, so we can ignore '/' fields
+        if (wkrm.model_class_name, field) in semantic_schema_objects:
+            yield (field, graphene.Field(semantic_schema_objects[(wkrm.model_class_name, field)]))
+        elif "/" not in field and (typ := data_types.to_graphene(info, field)):
             yield (field, typ)
 
 _resource_model_mappers = {
@@ -208,11 +296,8 @@ class ResourceInstanceLoader(DataLoader):
 ri_loader = ResourceInstanceLoader()
 
 
-def _convert(class_name):
-    return class_name.lower()
-
 _name_map = {
-    _convert(wkrm.model_class_name): wkrm.model_class_name
+    snake(wkrm.model_class_name): wkrm.model_class_name
     for wkrm in _WELL_KNOWN_RESOURCE_MODELS
 }
 
@@ -240,9 +325,9 @@ async def resolver(field, root, _, info, **kwargs):
 
 _full_resource_query_methods = {}
 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
-    _full_resource_query_methods[_convert(wkrm.model_class_name)] = graphene.List(_resource_model_schemas[wkrm.model_class_name])
-    _full_resource_query_methods[f"get_{_convert(wkrm.model_class_name)}"] = graphene.Field(_resource_model_schemas[wkrm.model_class_name], id=graphene.UUID(required=True))
-    _full_resource_query_methods[f"search_{_convert(wkrm.model_class_name)}"] = graphene.List(_resource_model_schemas[wkrm.model_class_name], text=graphene.String(), fields=graphene.List(graphene.String))
+    _full_resource_query_methods[snake(wkrm.model_class_name)] = graphene.List(_resource_model_schemas[wkrm.model_class_name])
+    _full_resource_query_methods[f"get_{snake(wkrm.model_class_name)}"] = graphene.Field(_resource_model_schemas[wkrm.model_class_name], id=graphene.UUID(required=True))
+    _full_resource_query_methods[f"search_{snake(wkrm.model_class_name)}"] = graphene.List(_resource_model_schemas[wkrm.model_class_name], text=graphene.String(), fields=graphene.List(graphene.String))
 
 ResourceQuery = type(
     "ResourceQuery",
@@ -272,7 +357,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         resources = await sync_to_async(resource_cls.create_bulk)(field_sets)
         ok = True
         kwargs = {
-            _convert(wkrm.model_class_name) + "s": resources,
+            snake(wkrm.model_class_name) + "s": resources,
             "ok": ok
         }
         return BulkCreateResource(**kwargs)
@@ -283,7 +368,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         resource = await sync_to_async(resource_cls.create)(**kwargs)
         ok = True
         kwargs = {
-            _convert(wkrm.model_class_name): resource,
+            snake(wkrm.model_class_name): resource,
             "ok": ok
         }
         return CreateResource(**kwargs)
@@ -303,7 +388,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         f"{wkrm.model_class_name}Input",
         (graphene.InputObjectType,),
         {
-            field: typ for field, typ in ((field, data_types.to_graphene_mut(info, field)) for field, info in wkrm.nodes.items()) if typ
+            field: typ for field, typ in _to_graphene_mut(wkrm)
         }
     )
     BulkCreateResource = type(
@@ -311,7 +396,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         (graphene.Mutation,),
         {
             "ok": graphene.Boolean(),
-            _convert(wkrm.model_class_name) + "s": graphene.Field(graphene.List(ResourceSchema)),
+            snake(wkrm.model_class_name) + "s": graphene.Field(graphene.List(ResourceSchema)),
             "mutate": lambda parent, info, **kwargs: mutate_bulk_create(parent, info, **kwargs)
         },
         arguments={
@@ -323,11 +408,11 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         (graphene.Mutation,),
         {
             "ok": graphene.Boolean(),
-            _convert(wkrm.model_class_name): graphene.Field(ResourceSchema),
+            snake(wkrm.model_class_name): graphene.Field(ResourceSchema),
             "mutate": lambda parent, info, **kwargs: mutate_create(parent, info, **kwargs)
         },
         arguments={
-            field: typ for field, typ in ((field, data_types.to_graphene_mut(info, field)) for field, info in wkrm.nodes.items()) if typ
+            field: typ for field, typ in _to_graphene_mut(wkrm)
         }
     )
     DeleteResource = type(
@@ -342,9 +427,9 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         }
     )
     _full_resource_mutation_methods.update({
-        f"create_{_convert(wkrm.model_class_name)}": CreateResource.Field(),
-        f"bulk_create_{_convert(wkrm.model_class_name)}": BulkCreateResource.Field(),
-        f"delete_{_convert(wkrm.model_class_name)}": DeleteResource.Field()
+        f"create_{snake(wkrm.model_class_name)}": CreateResource.Field(),
+        f"bulk_create_{snake(wkrm.model_class_name)}": BulkCreateResource.Field(),
+        f"delete_{snake(wkrm.model_class_name)}": DeleteResource.Field()
     })
 
 FullResourceMutation = type(

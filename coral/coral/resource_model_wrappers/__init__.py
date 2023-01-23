@@ -1,7 +1,7 @@
 import logging
 from django.db import transaction
 import uuid
-from datetime import datetime, date
+from datetime import datetime, date, time
 import collections
 from arches.app.search.components.base import SearchFilterFactory
 from arches.app.search.search_engine_factory import SearchEngineFactory
@@ -10,7 +10,7 @@ from arches.app.models.concept import get_preflabel_from_conceptid
 from arches.app.search.elasticsearch_dsl_builder import Bool, Match, Query, Nested, Terms, MaxAgg, Aggregation
 from tabulate import tabulate
 from dataclasses import dataclass
-from typing import Callable
+from typing import Any, Callable
 from django.dispatch import Signal
 from django.db.models.signals import post_init, post_delete, pre_save, post_save
 from django.dispatch import receiver
@@ -295,7 +295,7 @@ class ResourceModelWrapper:
         return cls.from_resource(resource, x=x)
 
     def fill_from_resource(self, reload=None):
-        values = {}
+        all_values = {}
         cls = self.__class__
         class_nodes = {node["nodeid"]: key for key, node in cls._nodes.items()}
         if reload is True or (reload is None and self._lazy):
@@ -303,27 +303,52 @@ class ResourceModelWrapper:
         tiles = TileModel.objects.filter(resourceinstance_id=self.id)
         self.resource.load_tiles()
         for tile in self.resource.tiles:
+            semantic_values = {}
+            semantic_node = None
             for nodeid in tile.data:
                 if nodeid in class_nodes:
                     key = class_nodes[nodeid]
                     typ = cls._nodes[key].get("type", str)
                     lang = cls._nodes[key].get("lang", None)
+                    if "/" in key:
+                        _semantic_node, key = key.split("/")
+                        if semantic_node is None:
+                            semantic_node = _semantic_node
+                        elif semantic_node != _semantic_node:
+                            raise RuntimeError(
+                                f"We should never end up with node values from two groups (semantic nodes) in a tile: {semantic_node} and {_semantic_node}"
+                            )
+                        if "/" in semantic_node:
+                            raise NotImplementedError("No support for nested semantic nodes currently")
+                        values = semantic_values
+                    else:
+                        values = all_values
+
                     if not isinstance(typ, str):
-                        if typ == str:
+                        if typ == str or typ == [str]:
                             if lang is not None and tile.data[nodeid] is not None:
-                                values[key] = tile.data[nodeid][lang]["value"]
+                                text = tile.data[nodeid][lang]["value"]
                             else:
-                                values[key] = tile.data[nodeid]
+                                text = tile.data[nodeid]
+                            if typ == [str]:
+                                values.setdefault(key, [])
+                                values[key].append(text)
+                            else:
+                                values[key] = text
+                        elif typ == int:
+                            values[key] = tile.data[nodeid]
                         elif typ == date:
                             values[key] = tile.data[nodeid]
                         elif typ == datetime:
+                            values[key] = tile.data[nodeid]
+                        elif typ == settings.GeoJSON:
                             values[key] = tile.data[nodeid]
                         elif typ == settings.Concept:
                             values[key] = tile.data[nodeid]
                         elif typ == [settings.Concept]:
                             values[key] = tile.data[nodeid]
                         else:
-                            raise NotImplementedError()
+                            raise NotImplementedError(f"{key} {typ}")
                     elif typ in _resource_models:
                         if isinstance(tile.data[nodeid], list):
                             values[key] = RelationList(self, key, nodeid, tile.tileid)
@@ -337,7 +362,10 @@ class ResourceModelWrapper:
                             values[key] = get_well_known_resource_model_by_class_name(typ).from_resource(related_resource, lazy=True)
                     else:
                         raise NotImplementedError()
-        self._values.update(values)
+            if semantic_node:
+                all_values.setdefault(semantic_node, [])
+                all_values[semantic_node].append(semantic_values)
+        self._values.update(all_values)
         self._filled = True
 
     @classmethod
@@ -388,19 +416,44 @@ class ResourceModelWrapper:
             for tile in tiles
         ]
 
-    def to_resource(self, verbose=False, strict=False, _no_save=False, _known_new=False):
-        resource = Resource(resourceinstanceid=self.id, graph_id=self.graphid)
-        if _known_new:
-            tiles = {}
-        else:
-            tiles = {str(tile.nodegroup_id): tile for tile in Tile.objects.filter(resourceinstance=resource)}
-        relationships = []
+    def _update_tiles(self, tiles, values, tiles_to_remove, prefix=None):
         for key, node in self._nodes.items():
-            data = {}
-            if key in self._values:
-                value = self._values[key]
+            if prefix is not None:
+                if not key.startswith(prefix):
+                    continue
+                prekey, key = key.split("/", -1)
+                if "/" in prekey:
+                    raise NotImplementedError("Only one level of groupings supported")
+            elif "/" in key:
+                continue
+
+            if key in values:
+                data = {}
+                single = False
+                value: Any = values[key]
                 typ = node["type"]
-                if value and (isinstance(value, list) or isinstance(value, RelationList)) and isinstance(value[0], ResourceModelWrapper):
+                if typ == [settings.Semantic]:
+                    tiles.setdefault(node["nodegroupid"], [])
+                    if "parentnodegroup_id" in node:
+                        parent = tiles.setdefault(node["parentnodegroup_id"], [TileProxyModel(
+                            data={},
+                            nodegroup_id=node["parentnodegroup_id"]
+                        )])[0]
+                    else:
+                        parent = None
+                    for entry in value:
+                        subtiles = {}
+                        if parent:
+                            subtiles[parent.nodegroup_id] = [parent]
+                        self._update_tiles(subtiles, entry, tiles_to_remove, prefix=f"{key}/")
+                        if node["nodegroupid"] in subtiles:
+                            tiles[node["nodegroupid"]] += subtiles[node["nodegroupid"]]
+                    # We do not need to do anything here, because
+                    # the nodegroup (semantic node) has no separate existence from the values
+                    # in the tile in our approach -- if there were values, the appropriate tile(s)
+                    # were added with this nodegroupid. For nesting, this would need to change.
+                    continue
+                elif value and (isinstance(value, list) or isinstance(value, RelationList)) and isinstance(value[0], ResourceModelWrapper):
                     continue
                     # if value[0]._cross_record:
                     #       value = [value[0]._cross_record]
@@ -408,27 +461,81 @@ class ResourceModelWrapper:
                     #       relationships.append((node["nodegroupid"], node["nodeid"], str(value[0].id)))
                     #       continue
                 elif key == "basic_info_language":
+                    single = True
                     value = [get_preflabel_from_valueid("bc35776b-996f-4fc1-bd25-9f6432c1f349", "en-US")['id']]
+                elif typ == int:
+                    single = True
                 elif typ == date:
+                    single = True
                     value = datetime.strptime(value, "%Y-%m-%d").strftime("%Y-%m-%d")
                 elif typ == datetime:
+                    single = True
                     value = datetime.fromisoformat(value).isoformat()
+                elif typ == settings.GeoJSON:
+                    single = True
+                    value["properties"] = {"nodeId": node["nodeid"]}
                 elif typ == settings.Concept:
-                    pass
+                    single = True
                 elif typ == [settings.Concept]:
-                    pass
+                    single = True
                 elif "lang" in node:
-                    value = {node["lang"]: {"value": value, "direction": "ltr"}} # FIXME: rtl
-                data[node["nodeid"]] = value
-                if node["nodegroupid"] in tiles:
-                    tiles[node["nodegroupid"]].data.update(data)
+                    if typ == str:
+                        single = True
+                        value = {node["lang"]: {"value": value, "direction": "ltr"}} # FIXME: rtl
+                    elif typ == [str]:
+                        single = False
+                        value = [{node["lang"]: {"value": text, "direction": "ltr"}} for text in value]
+                    else:
+                        raise NotImplementedError("Unknown type")
+                if single:
+                    multiple_values: list = [value]
                 else:
-                    tiles[node["nodegroupid"]] = TileProxyModel(
-                        data=data,
-                        nodegroup_id=node["nodegroupid"]
-                    )
+                    multiple_values: list = list(value)
 
-        resource.tiles = list(tiles.values())
+                for value in multiple_values:
+                    data = {}
+                    data[node["nodeid"]] = value
+                    if not single and prefix:
+                        raise RuntimeError("Cannot have field multiplicity inside a grouping (semantic node), as it is equivalent to nesting")
+                    if node["nodegroupid"] in tiles:
+                        if single:
+                            tile = tiles[node["nodegroupid"]][0]
+                            if tile in tiles_to_remove:
+                                tiles_to_remove.remove(tile)
+                            tile.data.update(data)
+                            continue
+                    else:
+                        tiles[node["nodegroupid"]] = []
+                    if "parentnodegroup_id" in node:
+                        parents = tiles.setdefault(node["parentnodegroup_id"], [TileProxyModel(
+                            data={},
+                            nodegroup_id=node["parentnodegroup_id"]
+                        )])
+                        parent = parents[0]
+                    else:
+                        parent = None
+                    tile = TileProxyModel(
+                        data=data,
+                        nodegroup_id=node["nodegroupid"],
+                        parenttile=parent
+                    )
+                    if parent:
+                        parent.tiles.append(tile)
+                    tiles[node["nodegroupid"]].append(tile)
+
+    def to_resource(self, verbose=False, strict=False, _no_save=False, _known_new=False):
+        resource = Resource(resourceinstanceid=self.id, graph_id=self.graphid)
+        tiles = {}
+        if not _known_new:
+            for tile in Tile.objects.filter(resourceinstance=resource):
+                tiles.setdefault(tile["nodegroupid"], [])
+                tiles["nodegroupid"].append(tile)
+        relationships = []
+        tiles_to_remove = sum((ts for ts in tiles.values()), [])
+        self._update_tiles(tiles, self._values, tiles_to_remove)
+
+        # parented tiles are saved hierarchically
+        resource.tiles = [t for t in sum((ts for ts in tiles.values()), []) if not t.parenttile]
 
         if not resource.createdtime:
             resource.createdtime = datetime.now()
@@ -443,8 +550,18 @@ class ResourceModelWrapper:
         if not _no_save:
             bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
+            #all_tiles = resource.tiles
+            #parentless_tiles = [tile for tile in all_tiles if not tile.parenttile]
+            ## This only solves the problem for _one_ level of nesting
+            #if len(all_tiles) > len(parentless_tiles):
+            #    resource.tiles = parentless_tiles
+            #    resource.save()
+            #    resource.tiles = all_tiles
+
+            # TODO: remove tiles_to_remove
             resource.save()
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
+        parented = [t.data for t in sum((ts for ts in tiles.values()), []) if t.parenttile]
 
         self.id = resource.resourceinstanceid
         self.resource = resource

@@ -14,7 +14,7 @@ from functools import partial
 from datetime import datetime, date
 from asgiref.sync import sync_to_async
 
-from .utils import _convert, string_to_enum
+from .utils import snake, string_to_enum
 
 import graphene
 from graphene_file_upload.scalars import Upload
@@ -53,7 +53,6 @@ class DataTypes:
             if (allowed_graphs is None or str(pk) in allowed_graphs)
         }
         for graphid in self.graphs.values():
-            print(graphid)
             self.node_concepts.update({
                 str(node_id): config["rdmCollection"]
                 for node_id, config in
@@ -80,7 +79,7 @@ concept_loader = ResourceModelLoader()
 
 
 _name_map = {
-    _convert(key): key
+    snake(key): key
     for key in data_types.graphs
 }
 

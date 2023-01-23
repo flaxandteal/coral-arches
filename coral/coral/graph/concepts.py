@@ -13,7 +13,7 @@ from functools import partial
 from datetime import datetime, date
 from asgiref.sync import sync_to_async
 
-from .utils import _convert, string_to_enum
+from .utils import snake, string_to_enum
 
 import graphene
 from graphene_file_upload.scalars import Upload
@@ -134,7 +134,7 @@ concept_loader = ConceptLoader()
 
 
 _name_map = {
-    _convert(key): key
+    snake(key): key
     for key in data_types.collections.values()
 }
 

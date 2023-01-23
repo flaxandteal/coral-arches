@@ -16,7 +16,13 @@ try:
 except ImportError:
     pass
 
+class Semantic:
+    pass
+
 class Concept:
+    pass
+
+class GeoJSON:
     pass
 
 APP_NAME = 'coral'
@@ -44,6 +50,7 @@ if WELL_KNOWN_MAPPING_FILE:
     with open(WELL_KNOWN_MAPPING_FILE, "r") as wkfd:
         wkrm: dict = {wkrm["model_name"]: wkrm for wkrm in WELL_KNOWN_RESOURCE_MODELS}
         for name, model in json.load(wkfd).items():
+            semantic_fields = {}
             for fieldname, field in model.items():
                 if fieldname in ("__str__", "model_name", "graphid"):
                     continue
@@ -53,10 +60,14 @@ if WELL_KNOWN_MAPPING_FILE:
                 if "type" in field:
                     if field["type"] == "str":
                         field["type"] = str
+                    elif field["type"] == "[str]":
+                        field["type"] = [str]
                     elif field["type"] == "int":
                         field["type"] = int
                     elif field["type"] == "date":
                         field["type"] = date
+                    elif field["type"] == "geojson":
+                        field["type"] = GeoJSON
                     elif field["type"] == "datetime":
                         field["type"] = datetime
                     elif field["type"] == "concept":
@@ -65,6 +76,18 @@ if WELL_KNOWN_MAPPING_FILE:
                         field["type"] = [Concept]
                     elif field["type"] == "float":
                         field["type"] = float
+                if "/" in fieldname:
+                    fieldname, __ = fieldname.split("/", -1)
+                    if "/" in fieldname:
+                        raise NotImplementedError("Cannot currently support nested semantic fields in well-known resource models")
+                    semantic_fields[fieldname] = {
+                        "type": [Semantic],
+                        "nodeid": field["nodegroupid"],
+                        "nodegroupid": field["nodegroupid"],
+                    }
+                    if "parentnodegroup_id" in field:
+                        semantic_fields[fieldname]["parentnodegroup_id"] = field["parentnodegroup_id"]
+            model.update(semantic_fields)
             if name in wkrm:
                 wkrm[name].update(model)
             else:
