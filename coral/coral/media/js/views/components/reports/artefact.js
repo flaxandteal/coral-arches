@@ -5,10 +5,11 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/artefact.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json',
     'views/components/reports/scenes/archive'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, artefactReportTemplate) {
     return ko.components.register('artefact-report', {
         viewModel: function(params) {
             var self = this;
@@ -89,7 +90,6 @@ define([
             self.archiveCards = {};
             self.descriptionCards = {};
             self.classificationCards = {};
-            self.scientificDateCards = {};
             self.peopleCards = {};
             self.locationCards = {};
             self.protectionCards = {};
@@ -147,7 +147,7 @@ define([
                 self.resourcesCards = {
                     activities: self.cards?.['associated activities'],
                     files: self.cards?.['associated digital files'],
-                    assets: self.cards?.['associated monuments, areas and artefacts']
+                    assets: self.cards?.['associated heritage assets, areas and artefacts']
                 };
 
                 self.discoveryCards = {
@@ -215,6 +215,6 @@ define([
 
             }
         },
-        template: { require: 'text!templates/views/components/reports/artefact.htm' }
+        template: artefactReportTemplate
     });
 });

@@ -1,4 +1,12 @@
-define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable', 'views/components/reports/scenes/map'], function(_, ko, arches, reportUtils) {
+define([
+    'underscore',
+    'knockout',
+    'arches',
+    'utils/report',
+    'templates/views/components/reports/scenes/protection.htm',
+    'bindings/datatable',
+    'views/components/reports/scenes/map'
+], function(_, ko, arches, reportUtils, protectionReportTemplate) {
     return ko.components.register('views/components/reports/scenes/protection', {
         viewModel: function(params) {
             const self = this;
@@ -8,7 +16,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable',
                 location: ['location data'],
                 protection: 'designation and protection assignment',
                 landUse: 'land use classification assignment',
-                areaAssignment: ['area assignments', 'area assignment']
+                areaAssignment: ['area', 'area assignments']
             }
 
             self.cards = params.cards || {};
@@ -93,7 +101,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable',
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
             if(params?.compiled){
             } else {
-                const protectionNode = self.getRawNodeValue(params.data(), self.dataConfig.protection);
+                const protectionNode = self.getRawNodeValue(params.data(), self.dataConfig.protection); 
                 if (protectionNode?.length) {
                     this.designations(protectionNode.map(x => {
                         const name = self.getNodeValue(x, 'designation names', 'designation name');
@@ -112,7 +120,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable',
                             displayDate,
                             endDate,
                             geometry,
-                            grade,
+                            grade, 
                             name,
                             protectionType,
                             reference,
@@ -180,6 +188,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable',
                 }
             }
         },
-        template: { require: 'text!templates/views/components/reports/scenes/protection.htm' }
+        template: protectionReportTemplate
     });
 });

@@ -5,9 +5,10 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/archive-source.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, archiveSourceReportTemplate) {
     return ko.components.register('archive-source-report', {
         viewModel: function(params) {
             var self = this;
@@ -92,17 +93,13 @@ define([
                 }
             }
 
-            let archiveHoldingNode = self.getRawNodeValue(self.resource(), 'archive holding');
+            const archiveHoldingNode = self.getRawNodeValue(self.resource(), 'archive holding');
 
-            if(archiveHoldingNode && !Array.isArray(archiveHoldingNode)){
-                archiveHoldingNode = [archiveHoldingNode];
-            }
-
-            if(Array.isArray(archiveHoldingNode)) {
+            if(Array.isArray(archiveHoldingNode) && self.cards?.['archive holding']) {
                 self.archiveHolding(archiveHoldingNode.map(node => {
                     const tileid = self.getTileId(node);
-                    const archiveHoldingTile = self.cards?.['archive holding']?.tiles().find(tile => tile.tileid === tileid);
-                    const archiveHoldingCards = archiveHoldingTile ? self.createCardDictionary(archiveHoldingTile.cards) : null;
+                    const archiveHoldingTile = self.cards?.['archive holding'].tiles().find(tile => tile.tileid === tileid);
+                    const archiveHoldingCards = self.createCardDictionary(archiveHoldingTile.cards);
                     return {
                         tileid,
                         visible: ko.observable(true),
@@ -168,6 +165,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/archive-source.htm' }
+        template: archiveSourceReportTemplate
     });
 });

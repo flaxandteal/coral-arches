@@ -5,13 +5,14 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/activity.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/description',
     'views/components/reports/scenes/json',
     'views/components/reports/scenes/classifications',
     'views/components/reports/scenes/location',
     'views/components/reports/scenes/protection'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, activityTemplate) {
     return ko.components.register('activity-report', {
         viewModel: function(params) {
             const self = this;
@@ -65,7 +66,7 @@ define([
             self.resourceDataConfig = {
                 archive: 'associated archive objects',
                 files: 'digital files',
-                assets: 'associated monuments and areas',
+                assets: 'associated heritage assets and areas',
                 actors: undefined
             }
 
@@ -154,12 +155,12 @@ define([
                     consultations: self.cards?.['associated consultations'],
                     activities: self.cards?.['associated activities'],
                     archive: self.cards?.['associated archive objects'],
-                    assets: self.cards?.['associated monuments and areas'],
+                    assets: self.cards?.['associated heritage assets, areas and artefacts'],
                     files: self.cards?.['associated digital files'],
                 }
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/activity.htm' }
+        template: activityTemplate
     });
 });

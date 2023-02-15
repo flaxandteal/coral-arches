@@ -1,4 +1,11 @@
-define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'], function (_, ko, arches, reportUtils) {
+define([
+    'underscore',
+    'knockout',
+    'arches',
+    'utils/report',
+    'templates/views/components/reports/scenes/resources.htm',
+    'bindings/datatable',
+], function(_, ko, arches, reportUtils, resourcesReportTemplate) {
     return ko.components.register('views/components/reports/scenes/resources', {
         viewModel: function (params) {
             const self = this;
@@ -42,7 +49,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
                 activities: 'associated activities',
                 consultations: 'associated consultations',
                 files: 'associated files',
-                assets: 'associated monuments, areas and artefacts',
+                assets: 'associated heritage assets, areas and artefacts',
                 archive: 'associated archives',
                 actors: 'associated actors'
             }
@@ -144,9 +151,9 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
                 const associatedArtifactsNode = self.getRawNodeValue(params.data(), self.dataConfig.assets);
                 if (associatedArtifactsNode) {
                     if(Array.isArray(associatedArtifactsNode)){
-                        let key = 'Monument, Area or Artefact';
+                        let key = 'Heritage Asset, Area or Artefact';
                         if (!(key in associatedArtifactsNode[0])) {
-                            key = 'Associated Monument, Area or Artefact';
+                            key = 'Associated Heritage Asset, Area or Artefact';
                         }
                         self.assets(associatedArtifactsNode.map(x => {
                             var resource = [];
@@ -238,6 +245,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
 
             }
         },
-        template: { require: 'text!templates/views/components/reports/scenes/resources.htm' }
+        template: resourcesReportTemplate
     });
 });

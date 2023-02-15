@@ -5,9 +5,10 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/consultation.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, consultationReportTemplate) {
     return ko.components.register('consultation-report', {
         viewModel: function(params) {
             var self = this;
@@ -56,7 +57,7 @@ define([
             }
 
             self.resourcesDataConfig = {
-                assets: 'related monuments and areas',
+                assets: 'related heritage assets and areas',
                 files: 'file(s)',
                 relatedApplicationArea: 'consultation area',
                 actors: undefined
@@ -208,7 +209,7 @@ define([
             const proposalNode = self.getRawNodeValue(self.resource(), 'proposal');
             if(Array.isArray(proposalNode)){
                 self.proposal(proposalNode.map(node => {
-                    const proposal = self.getRawNodeValue(node, 'proposal text', '@display_value');
+                    const proposal = self.getNodeValue(node, 'proposal text');
                     const file = self.getNodeValue(node, 'digital file(s)');
                     const fileLink = self.getResourceLink(self.getRawNodeValue(node, 'digital file(s)'));
                     const tileid = self.getTileId(node);
@@ -219,7 +220,7 @@ define([
             const adviceNode = self.getRawNodeValue(self.resource(), 'advice');
             if(Array.isArray(adviceNode)){
                 self.advice(adviceNode.map(node => {
-                    const advice = self.getRawNodeValue(node, 'advice text', '@display_value');
+                    const advice = self.getNodeValue(node, 'advice text');
                     const adviceType = self.getNodeValue(node, 'advice type');
                     const tileid = self.getTileId(node);
                     return {advice, adviceType, tileid};
@@ -229,7 +230,7 @@ define([
             const actionNode = self.getRawNodeValue(self.resource(), 'action');
             if(Array.isArray(actionNode)){
                 self.action(actionNode.map(node => {
-                    const action = self.getRawNodeValue(node, 'action text', '@display_value');
+                    const action = self.getNodeValue(node, 'action text');
                     const actionType = self.getNodeValue(node, 'action type');
                     const relatedAdvice = self.getNodeValue(node, 'related advice');
                     const tileid = self.getTileId(node);
@@ -298,7 +299,7 @@ define([
                         })) : []);
                     const recommendations = ko.observable(Array.isArray(recommendationsNodes) ? (
                         recommendationsNodes.map(recommendationNode => {
-                            const recommendation = self.getRawNodeValue(recommendationNode, 'recommendation', 'recommendation value', '@display_value');
+                            const recommendation = self.getNodeValue(recommendationNode, 'recommendation', 'recommendation value');
                             const recommendedBy = self.getNodeValue(recommendationNode, 'recommended by');
                             const tileid = self.getTileId(recommendationNode);
                             return {recommendation, recommendedBy, tileid};
@@ -387,12 +388,12 @@ define([
                 self.resourcesCards = {
                     consultations: self.cards?.['associated consultations'],
                     activities: self.cards?.['associated activities'],
-                    assets: self.cards?.['associated monuments and areas'],
+                    assets: self.cards?.['associated heritage assets and areas'],
                     files: self.cards?.['associated digital files'],
                     relatedApplicationArea: self.cards?.['consultation location']
                 };
             };
-
+            
             self.consultationLocationDescription = ko.observable({
                 sections:
                     [
@@ -462,6 +463,6 @@ define([
                     ]
             });
         },
-        template: { require: 'text!templates/views/components/reports/consultation.htm' }
+        template: consultationReportTemplate
     });
 });

@@ -5,10 +5,11 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/organization.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/contact',
     'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, organizationReportTemplate) {
     return ko.components.register('organization-report', {
         viewModel: function(params) {
             var self = this;
@@ -91,7 +92,7 @@ define([
 
                 self.resourcesCards = {
                     activities: self.cards?.['associated activities'],
-                    assets: self.cards?.['associated monuments, areas and artefacts']
+                    assets: self.cards?.['associated heritage assets, areas and artefacts']
                 };
 
                 self.classificationCards = {
@@ -149,6 +150,6 @@ define([
             });
 
         },
-        template: { require: 'text!templates/views/components/reports/organization.htm' }
+        template: organizationReportTemplate
     });
 });

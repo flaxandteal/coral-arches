@@ -5,9 +5,10 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/maritime-vessel.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, maritimeVesselReport) {
     return ko.components.register('maritime-vessel-report', {
         viewModel: function(params) {
             var self = this;
@@ -74,7 +75,6 @@ define([
             self.descriptionCards = {};
             self.assessmentCards = {};
             self.classificationCards = {};
-            self.scientificDateCards = {};
             self.imagesCards = {};
             self.peopleCards = {};
             self.locationCards = {};
@@ -123,7 +123,7 @@ define([
                     activities: self.cards?.['associated activities'],
                     consultations: self.cards?.['associated consultations'],
                     files: self.cards?.['associated digital file(s)'],
-                    assets: self.cards?.['associated monuments, areas and artefacts']
+                    assets: self.cards?.['associated heritage assets, areas and artefacts']
                 };
 
                 self.imagesCards = {
@@ -254,6 +254,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/maritime-vessel.htm' }
+        template: maritimeVesselReport
     });
 });

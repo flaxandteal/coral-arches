@@ -19,7 +19,7 @@ module.exports = () => {
     return new Promise((resolve, _reject) => {
         const createWebpackConfig = function(data) {  // reads from application's settings.py
             const parsedData = JSON.parse(data);
-            
+        
             const ROOT_DIR = parsedData['ROOT_DIR'];
             const APP_ROOT = parsedData['APP_ROOT'];
             const STATIC_URL = parsedData['STATIC_URL']

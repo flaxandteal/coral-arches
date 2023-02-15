@@ -5,8 +5,9 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/person.htm',
     'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, personReportTemplate) {
     return ko.components.register('person-report', {
         viewModel: function(params) {
             var self = this;
@@ -147,7 +148,7 @@ define([
                     activities: self.cards?.['associated activities'],
                     consultations: self.cards?.['associated consultations'],
                     files: self.cards?.['associated digital file(s)'],
-                    assets: self.cards?.['associated monuments, areas and artefacts']
+                    assets: self.cards?.['associated heritage assets, areas and artefacts']
                 };
             }
 
@@ -211,6 +212,6 @@ define([
             });
 
         },
-        template: { require: 'text!templates/views/components/reports/person.htm' }
+        template: personReportTemplate
     });
 });
