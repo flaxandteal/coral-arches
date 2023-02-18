@@ -380,7 +380,7 @@ collect_static_real(){
 	echo ""
 	cd_app_folder
 	python manage.py collectstatic --noinput
-	python manage.py compress
+	python manage.py compress --verbosity=3
 }
 
 

@@ -9,7 +9,7 @@ FROM $ARCHES_BASE as arches_static_cache
 USER 0
 
 ARG DJANGO_DUMMY_SECRET_KEY
-ARG STATIC_URL
+ARG STATIC_URL=/static/
 ARG ARCHES_PROJECT
 ARG ARCHES_NAMESPACE_FOR_DATA_EXPORT
 ARG ARCHES_ENVIRONMENT
@@ -20,9 +20,11 @@ ENV DJANGO_DEBUG=False \
     STATIC_ROOT=/static_root \
     ARCHES_NAMESPACE_FOR_DATA_EXPORT=${ARCHES_NAMESPACE_FOR_DATA_EXPORT} \
     ARCHES_PROJECT=${ARCHES_PROJECT} \
+    ARCHES_ENVIRONMENT=${ARCHES_ENVIRONMENT} \
     PROJECT_ROOT=${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT} \
     DJANGO_SECRET_KEY=${DJANGO_DUMMY_SECRET_KEY} \
     COMPRESS_OFFLINE=True \
+    COMPRESS_ENABLED=True \
     PGUSERNAME=postgres \
     PGPASSWORD=postgres \
     PGDBNAME=arches \
@@ -45,6 +47,7 @@ WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 FROM flaxandteal/arches_${ARCHES_PROJECT}:$VERSION as arches_dynamic
 FROM arches_static_cache as arches
 ARG WEB_ROOT=/web_root
+ARG STATIC_ROOT=/static_root
 ARG ARCHES_PROJECT
 COPY --from=arches_dynamic ${WEB_ROOT}/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
 COPY --from=arches_dynamic ${WEB_ROOT}/${ARCHES_PROJECT}/ /web_root/${ARCHES_PROJECT}/
@@ -53,7 +56,7 @@ COPY --from=arches_dynamic ${WEB_ROOT}/arches/arches/settings_docker.py ${WEB_RO
 RUN ${WEB_ROOT}/entrypoint.sh init_yarn_components
 
 # FIXME: To be replaced once per-project settings working
-RUN (echo "\nSTATIC_ROOT='${STATIC_ROOT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT
+RUN (echo "\nSTATIC_ROOT='${STATIC_ROOT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT 
 RUN (echo "\nARCHES_NAMESPACE_FOR_DATA_EXPORT='${ARCHES_NAMESPACE_FOR_DATA_EXPORT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT
 
 RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn add -D babel-loader html-loader clean-webpack-plugin webpack-cli mini-css-extract-plugin stylelint-webpack-plugin eslint-webpack-plugin css-loader postcss-loader sass-loader raw-loader ttf-loader file-loader url-loader)
@@ -71,11 +74,13 @@ RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_bui
 
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine
 ARG WEB_ROOT=/web_root
+ARG STATIC_ROOT=/static_root
 ARG ARCHES_PROJECT
-COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/* /usr/share/nginx/html
-COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build/js/* /usr/share/nginx/html/js
+COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/* /usr/share/nginx/html/
+COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build/js/* /usr/share/nginx/html/js/
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json /usr/share/nginx/webpack-stats.json
 COPY --from=arches ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/node_modules/js-cookie/src/js.cookie.js /usr/share/nginx/html/js/js-cookie.js
+COPY --from=arches ${STATIC_ROOT} /usr/share/nginx/html/static
 #RUN mv /usr/share/nginx/html/static/* /usr/share/nginx/html
 
 # Must be numeric to verify not root
