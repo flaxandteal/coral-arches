@@ -93,7 +93,7 @@ setup_arches() {
 	echo "*** Any existing Arches database will be deleted ***"
 	echo "" && echo ""
 
-	echo "5" && sleep 1 && echo "4" && sleep 1 && echo "3" && sleep 1 && echo "2" && sleep 1 &&	echo "1" &&	sleep 1 && echo "0" && echo ""
+	echo "5" && sleep 10 && echo "4" && sleep 1 && echo "3" && sleep 1 && echo "2" && sleep 1 &&	echo "1" &&	sleep 1 && echo "0" && echo ""
 
 	echo "Running: python manage.py setup_db --force"
 	python ${APP_FOLDER}/manage.py setup_db --force

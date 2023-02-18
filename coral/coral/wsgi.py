@@ -33,4 +33,7 @@ from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
 from arches.app.models.system_settings import settings
+if settings.DEBUG:
+    from django.contrib.staticfiles.handlers import StaticFilesHandler
+    application = StaticFilesHandler(get_wsgi_application())
 #settings.update_from_db()

@@ -66,6 +66,7 @@ python manage.py packages -o load_package -s coral/pkg/ -y;\
 python manage.py es index_database\
 ";
 COPY ./coral/coral/settings.py ${WEB_ROOT}/coral/coral/settings.py
+RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_arches
 RUN echo $WEB_ROOT "|" $ARCHES_PROJECT && ${WEB_ROOT}/entrypoint.sh run_yarn_build_${ARCHES_ENVIRONMENT}
 
 FROM nginxinc/nginx-unprivileged:1.21.5-alpine

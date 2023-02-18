@@ -12,6 +12,7 @@ const { spawn } = require("child_process");
 const { buildTemplateFilePathLookup } = require('./webpack-utils/build-template-filepath-lookup');
 const { buildJavascriptFilepathLookup } = require('./webpack-utils/build-javascript-filepath-lookup');
 const { buildImageFilePathLookup } = require('./webpack-utils/build-image-filepath-lookup');
+const { buildStyleFilePathLookup } = require('./webpack-utils/build-style-filepath-lookup');
 const { PROJECT_NODE_MODULES_ALIASES } = require('./webpack-node-modules-aliases');
 
 
@@ -28,7 +29,16 @@ module.exports = () => {
 
             console.log('Data imported from settings.py:', parsedData)
         
-            const archesCoreEntryPointConfiguration = buildJavascriptFilepathLookup(Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'js'), {});
+            const styleFilepathLookup = buildStyleFilePathLookup(
+                Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'css'),
+                Path.resolve(__dirname, APP_ROOT, 'media', 'css')
+            );
+
+            const archesCoreEntryPointConfiguration = {
+                ...buildJavascriptFilepathLookup(Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'js'), {}),
+                //...styleFilepathLookup
+            };
+
             const projectEntryPointConfiguration = buildJavascriptFilepathLookup(Path.resolve(__dirname, APP_ROOT, 'media', 'js'), {});
             
             const archesCoreJavascriptRelativeFilepathToAbsoluteFilepathLookup = Object.keys(archesCoreEntryPointConfiguration).reduce((acc, path) => {
@@ -114,6 +124,7 @@ module.exports = () => {
                     alias: {
                         ...javascriptRelativeFilepathToAbsoluteFilepathLookup,
                         ...templateFilepathLookup,
+                        ...styleFilepathLookup,
                         ...imageFilepathLookup,
                         ...nodeModulesAliases,
                     },
