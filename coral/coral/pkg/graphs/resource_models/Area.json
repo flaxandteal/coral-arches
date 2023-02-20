@@ -18995,7 +18995,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "area_name_metatype",
+                    "alias": "area_name_metatype_n1",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -19291,7 +19291,7 @@
                     "datatype": "concept",
                     "description": null,
                     "exportable": false,
-                    "fieldname": null,
+                    "fieldname": "Area_Metatype",
                     "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -20013,14 +20013,14 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "area_metatype",
+                    "alias": "area_metatype_l1",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
                     "datatype": "concept",
                     "description": null,
                     "exportable": false,
-                    "fieldname": null,
+                    "fieldname": "Area__Metatype",
                     "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -20403,7 +20403,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "area_type",
+                    "alias": "area_type_l1",
                     "config": {
                         "rdmCollection": "59a0a035-bbd0-4e5e-9528-862790edc610"
                     },
