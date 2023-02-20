@@ -22,7 +22,7 @@ define([
                     layoutSections: [
                         {
                             componentConfigs: [
-                                { 
+                                {
                                     componentName: 'default-card',
                                     uniqueInstanceName: 'app-area-name', /* unique to step */
                                     tilesManaged: 'one',
@@ -32,7 +32,7 @@ define([
                                         renderContext: 'workflow',
                                     },
                                 },
-                            ], 
+                            ],
                         },
                     ],
                 },
@@ -47,7 +47,7 @@ define([
                     layoutSections: [
                         {
                             componentConfigs: [
-                                { 
+                                {
                                     componentName: 'default-card',
                                     uniqueInstanceName: 'location-description', /* unique to step */
                                     tilesManaged: 'one',
@@ -57,7 +57,7 @@ define([
                                         resourceid: "['assign-name']['app-area-name'][0]['resourceid']['resourceInstanceId']",
                                     },
                                 },
-                            ], 
+                            ],
                         },
                     ],
                 },
@@ -74,7 +74,7 @@ define([
                     layoutSections: [
                         {
                             componentConfigs: [
-                                { 
+                                {
                                     componentName: 'map-card',
                                     uniqueInstanceName: 'area-map', /* unique to step */
                                     tilesManaged: 'one',
@@ -84,7 +84,7 @@ define([
                                         resourceid: "['assign-name']['app-area-name'][0]['resourceid']['resourceInstanceId']",
                                     },
                                 },
-                            ], 
+                            ],
                         },
                     ],
                 },
@@ -94,12 +94,12 @@ define([
                     required: false,
                     informationboxdata: {
                         heading: 'Related Heritage Resources',
-                        text: 'Select the other heritage assets, areas, or artefacts related to the current Application Area.',
+                        text: 'Select the other monuments, areas, or artefacts related to the current Application Area.',
                     },
                     layoutSections: [
                         {
                             componentConfigs: [
-                                { 
+                                {
                                     componentName: 'default-card',
                                     uniqueInstanceName: 'related-heritage-resource', /* unique to step */
                                     tilesManaged: 'one',
@@ -109,7 +109,7 @@ define([
                                         resourceid: "['assign-name']['app-area-name'][0]['resourceid']['resourceInstanceId']",
                                     },
                                 },
-                            ], 
+                            ],
                         },
                     ],
                 },
@@ -124,7 +124,7 @@ define([
                     layoutSections: [
                         {
                             componentConfigs: [
-                                { 
+                                {
                                     componentName: 'default-card',
                                     uniqueInstanceName: 'related-heritage-resource', /* unique to step */
                                     tilesManaged: 'one',
@@ -134,7 +134,7 @@ define([
                                         resourceid: "['assign-name']['app-area-name'][0]['resourceid']['resourceInstanceId']",
                                     },
                                 },
-                            ], 
+                            ],
                         },
                     ],
                 },
@@ -150,7 +150,7 @@ define([
                     layoutSections: [
                         {
                             componentConfigs: [
-                                { 
+                                {
                                     componentName: 'default-card',
                                     uniqueInstanceName: 'related-heritage-resource', /* unique to step */
                                     tilesManaged: 'many',
@@ -160,7 +160,7 @@ define([
                                         resourceid: "['assign-name']['app-area-name'][0]['resourceid']['resourceInstanceId']",
                                     },
                                 },
-                            ], 
+                            ],
                         },
                     ],
                 },
@@ -170,7 +170,7 @@ define([
                     layoutSections: [
                         {
                             componentConfigs: [
-                                { 
+                                {
                                     componentName: 'app-area-final-step',
                                     uniqueInstanceName: 'app-area-final', /* unique to step */
                                     tilesManaged: 'none',
@@ -179,7 +179,7 @@ define([
                                         graphid: '42ce82f6-83bf-11ea-b1e8-f875a44e0e11',
                                     },
                                 },
-                            ], 
+                            ],
                         },
                     ],
                     informationboxdata: {

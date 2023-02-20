@@ -864,7 +864,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Heritage Assets, Areas and Artefacts"
+                        "en": "Associated Monuments, Areas and Artefacts"
                     },
                     "nodegroup_id": "f019f44a-8639-11ea-988b-f875a44e0e11",
                     "sortorder": 14,
@@ -907,7 +907,7 @@
                     "constraints": [],
                     "cssclass": null,
                     "description": {
-                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
+                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a findspot where the artefact was discovered. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
                     },
                     "graph_id": "343cc20c-2c5a-11e8-90fa-0242ac120005",
                     "helpenabled": false,
@@ -1618,14 +1618,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Heritage Asset, Area or Artefact",
+                        "label": "Monument, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "1534a8f5-ff23-11ea-9e7a-f875a44e0e11",
                     "label": {
-                        "en": "Heritage Asset, Area or Artefact"
+                        "en": "Monument, Area or Artefact"
                     },
                     "node_id": "b0a53628-b539-11ea-8b11-f875a44e0e11",
                     "sortorder": 0,
@@ -7518,7 +7518,7 @@
                         "label": "Land Use Classification",
                         "options": [],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Asset."
+                            "en": "Use to record a particular status associated with the findspot where the artefact was discovered."
                         }
                     },
                     "id": "f7cd1692-f447-11eb-b186-a87eeabdefba",
@@ -17801,7 +17801,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "heritage_asset_area_or_artefact",
+                    "alias": "monument_area_or_artefact",
                     "config": {
                         "graphs": [
                             {
@@ -17818,12 +17818,12 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Heritage Asset"
+                                "name": "Monument"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
                                 "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P53i_is_former_or_current_location_of",
-                                "name": "Heritage Area",
+                                "name": "Area",
                                 "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location"
                             }
                         ],
@@ -17840,7 +17840,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Heritage Asset, Area or Artefact",
+                    "name": "Monument, Area or Artefact",
                     "nodegroup_id": "f019f44a-8639-11ea-988b-f875a44e0e11",
                     "nodeid": "b0a53628-b539-11ea-8b11-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -19279,7 +19279,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "associated_heritage_assets_areas_and_artefacts",
+                    "alias": "associated_monuments_areas_and_artefacts",
                     "config": {},
                     "datatype": "semantic",
                     "description": null,
@@ -19291,7 +19291,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Heritage Assets, Areas and Artefacts",
+                    "name": "Associated Monuments, Areas and Artefacts",
                     "nodegroup_id": "f019f44a-8639-11ea-988b-f875a44e0e11",
                     "nodeid": "f019f44a-8639-11ea-988b-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -19344,7 +19344,7 @@
                     "alias": "land_use_classification_assignment",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
+                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a findspot where the artefact was discovered. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "343cc20c-2c5a-11e8-90fa-0242ac120005",
@@ -19401,7 +19401,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "area_assignments",
+                    "alias": "area_assignment",
                     "config": {},
                     "datatype": "semantic",
                     "description": "",
@@ -19413,7 +19413,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Area Assignments",
+                    "name": "Area Assignment",
                     "nodegroup_id": "f7cc62a5-f447-11eb-8daa-a87eeabdefba",
                     "nodeid": "f7cc62a5-f447-11eb-8daa-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -23086,7 +23086,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "area",
+                    "alias": "area_assignments",
                     "config": {},
                     "datatype": "semantic",
                     "description": null,
@@ -23098,7 +23098,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Area",
+                    "name": "Area Assignments",
                     "nodegroup_id": "f7cc62b1-f447-11eb-bde0-a87eeabdefba",
                     "nodeid": "f7ccef78-f447-11eb-8948-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",

@@ -42,7 +42,7 @@ define([
                 activities: undefined,
                 consultations: undefined,
                 files: undefined,
-                assets: 'associated heritage assets, areas and artefacts',
+                assets: 'associated monuments, areas and artefacts',
                 translation: 'translation',
                 period: 'temporal coverage',
                 archive: undefined,
@@ -96,7 +96,7 @@ define([
                 self.resourcesCards = {
                     translation: self.cards?.['translation'],
                     period: self.cards?.['temporal coverage'],
-                    assets: self.cards?.['associated heritage assets, areas and artefacts'],
+                    assets: self.cards?.['associated monuments, areas and artefacts'],
                     actors: self.cards?.['associated people and organizations']
                 }
             }

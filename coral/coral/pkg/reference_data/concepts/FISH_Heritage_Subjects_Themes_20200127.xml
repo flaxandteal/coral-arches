@@ -10,7 +10,7 @@
     <skos:inScheme>
       <skos:ConceptScheme rdf:about="http://localhost:8000/cb6b7022-00a8-329a-b42f-816d1567feaf">
         <skos:hasTopConcept rdf:resource="http://localhost:8000/3689f0be-d56f-3487-8415-b64cce6d565e"/>
-        <dcterms:description xml:lang="en">{"id": "255e0afb-61a9-4bed-9b36-5cc5caa0c882", "value": "A thesaurus for describing subjects and themes associated with heritage assets."}</dcterms:description>
+        <dcterms:description xml:lang="en">{"id": "255e0afb-61a9-4bed-9b36-5cc5caa0c882", "value": "A thesaurus for describing subjects and themes associated with monuments."}</dcterms:description>
         <dcterms:title xml:lang="en">{"id": "8b6b6320-6123-4d34-b044-3fce2b9b61f0", "value": "FISH Heritage Subjects and Themes"}</dcterms:title>
         <dcterms:identifier xml:lang="en">{"id": "0b8dbcea-172a-4c4d-a131-f83fbb197c0d", "value": "http://purl.org/heritagedata/schemes/595"}</dcterms:identifier>
         <skos:hasTopConcept rdf:resource="http://localhost:8000/55af9834-011a-356b-a8cd-1c8d94237ffd"/>

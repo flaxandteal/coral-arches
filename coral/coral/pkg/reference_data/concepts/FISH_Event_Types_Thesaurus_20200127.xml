@@ -24,7 +24,7 @@
   <skos:Concept rdf:about="http://localhost:8000/6147865f-3260-3735-ba2c-e1efd6660b4b">
     <skos:inScheme rdf:resource="http://localhost:8000/78b7e400-99dc-386c-a3d4-ba9e012dc3ed"/>
     <skos:prefLabel xml:lang="en">{"id": "123fcc60-ea0a-4c9f-a156-cb498ace7657", "value": "Management Survey"}</skos:prefLabel>
-    <skos:scopeNote xml:lang="en">{"id": "e0d19ace-8f2c-49fe-a6ce-f591e11a839e", "value": "A field and desk based assessment of heritage asset condition and vulnerability so that informed decisions can be made regarding how best to manage the resource."}</skos:scopeNote>
+    <skos:scopeNote xml:lang="en">{"id": "e0d19ace-8f2c-49fe-a6ce-f591e11a839e", "value": "A field and desk based assessment of monument condition and vulnerability so that informed decisions can be made regarding how best to manage the resource."}</skos:scopeNote>
     <dcterms:identifier xml:lang="en">{"id": "5d6da79e-c33d-4eb9-b760-c10d8aa80486", "value": "http://purl.org/heritagedata/schemes/agl_et/concepts/145145"}</dcterms:identifier>
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/4ff2115a-fbcb-38e8-93ce-6e757cf1f590">
@@ -264,7 +264,7 @@
       <skos:Concept rdf:about="http://localhost:8000/45ec48bd-61fe-3830-a07c-ff367fb20929">
         <skos:inScheme rdf:resource="http://localhost:8000/78b7e400-99dc-386c-a3d4-ba9e012dc3ed"/>
         <dcterms:identifier xml:lang="en">{"id": "a3defb45-89a7-4429-b875-193a4c4462f8", "value": "http://purl.org/heritagedata/schemes/agl_et/concepts/145108"}</dcterms:identifier>
-        <skos:scopeNote xml:lang="en">{"id": "445f78d1-7c04-46ad-9342-8dc16eb73cf8", "value": "Airborne survey to discover, record and monitor archaeological sites and other heritage assets. Sites will usually be recorded by aerial photography."}</skos:scopeNote>
+        <skos:scopeNote xml:lang="en">{"id": "445f78d1-7c04-46ad-9342-8dc16eb73cf8", "value": "Airborne survey to discover, record and monitor archaeological sites and other monuments. Sites will usually be recorded by aerial photography."}</skos:scopeNote>
         <skos:narrower rdf:resource="http://localhost:8000/609f837c-8917-3ba4-91a2-ff356cca26d6"/>
         <skos:prefLabel xml:lang="en">{"id": "00966bcb-5665-4d8a-9ed2-9acbac95397c", "value": "Aerial Reconnaissance"}</skos:prefLabel>
         <skos:narrower rdf:resource="http://localhost:8000/ec44df92-b6b9-3e74-90b9-8de0cb2bb33c"/>
@@ -291,7 +291,7 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/176b5afb-1482-32b0-b32f-dfc1a0f96dbf">
     <dcterms:identifier xml:lang="en">{"id": "dfe3098d-ed04-49e5-8fe8-ba9f04416dac", "value": "http://purl.org/heritagedata/schemes/agl_et/concepts/170647"}</dcterms:identifier>
-    <skos:scopeNote xml:lang="en">{"id": "336a78c4-b324-4e2b-bff0-4b269a8c80bc", "value": "Programmes of investigation which assess and record the condition of heritage assets."}</skos:scopeNote>
+    <skos:scopeNote xml:lang="en">{"id": "336a78c4-b324-4e2b-bff0-4b269a8c80bc", "value": "Programmes of investigation which assess and record the condition of monuments."}</skos:scopeNote>
     <skos:prefLabel xml:lang="en">{"id": "cdffefd7-0504-41be-ae53-b1568e03a0de", "value": "Condition Survey"}</skos:prefLabel>
     <skos:inScheme rdf:resource="http://localhost:8000/78b7e400-99dc-386c-a3d4-ba9e012dc3ed"/>
   </skos:Concept>
@@ -438,7 +438,7 @@
   <skos:Concept rdf:about="http://localhost:8000/ead0fa1d-e56e-393d-8582-95dd9d926cb1">
     <dcterms:identifier xml:lang="en">{"id": "3b214211-6b3d-4f35-a297-06e8f61944d3", "value": "http://purl.org/heritagedata/schemes/agl_et/concepts/170650"}</dcterms:identifier>
     <skos:inScheme rdf:resource="http://localhost:8000/78b7e400-99dc-386c-a3d4-ba9e012dc3ed"/>
-    <skos:scopeNote xml:lang="en">{"id": "3690c70e-39f1-4252-a110-79ad6f8b8276", "value": "Programmes of research or investigation which seek to identify the significance of a heritage asset, often to inform proposals for change"}</skos:scopeNote>
+    <skos:scopeNote xml:lang="en">{"id": "3690c70e-39f1-4252-a110-79ad6f8b8276", "value": "Programmes of research or investigation which seek to identify the significance of a monument, often to inform proposals for change"}</skos:scopeNote>
     <skos:prefLabel xml:lang="en">{"id": "f3975f0e-81a4-4438-a26f-7e453028c514", "value": "Heritage Assessment"}</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/46d6e857-9cf8-3ced-aab8-83e77a23df23">
@@ -498,7 +498,7 @@
       <skos:Concept rdf:about="http://localhost:8000/f0a3bf57-d98e-3812-9eaa-3008966e35a6">
         <skos:prefLabel xml:lang="en">{"id": "c204122d-872d-48c1-8a06-425c88f1fe5e", "value": "Thematic Survey"}</skos:prefLabel>
         <dcterms:identifier xml:lang="en">{"id": "3ee85ecc-bc61-4887-9c69-5f7942f115c1", "value": "http://purl.org/heritagedata/schemes/agl_et/concepts/147326"}</dcterms:identifier>
-        <skos:scopeNote xml:lang="en">{"id": "42d35b4c-67ca-4984-88b7-90b3f1baf688", "value": "The investigation of heritage assets along thematic lines, usually to inform the production of a thematic study. Such studies bring specialist insights to bear on the particular area of study, but may not address other aspects of the site's significance."}</skos:scopeNote>
+        <skos:scopeNote xml:lang="en">{"id": "42d35b4c-67ca-4984-88b7-90b3f1baf688", "value": "The investigation of monuments along thematic lines, usually to inform the production of a thematic study. Such studies bring specialist insights to bear on the particular area of study, but may not address other aspects of the site's significance."}</skos:scopeNote>
         <skos:inScheme rdf:resource="http://localhost:8000/78b7e400-99dc-386c-a3d4-ba9e012dc3ed"/>
       </skos:Concept>
     </skos:narrower>
@@ -540,7 +540,7 @@
     <skos:narrower>
       <skos:Concept rdf:about="http://localhost:8000/1b857197-5d9e-395d-b834-c39c2a3cfaf4">
         <skos:inScheme rdf:resource="http://localhost:8000/78b7e400-99dc-386c-a3d4-ba9e012dc3ed"/>
-        <skos:scopeNote xml:lang="en">{"id": "01539b24-d14d-4c9f-8c5c-c944ba786dd2", "value": "An overview of the historical and architectural development, character and heritage assets of a settlement or area.  An HAA may result in the creation, at varying levels of intensity, of individual site-based records informed by area context."}</skos:scopeNote>
+        <skos:scopeNote xml:lang="en">{"id": "01539b24-d14d-4c9f-8c5c-c944ba786dd2", "value": "An overview of the historical and architectural development, character and monuments of a settlement or area.  An HAA may result in the creation, at varying levels of intensity, of individual site-based records informed by area context."}</skos:scopeNote>
         <dcterms:identifier xml:lang="en">{"id": "22724723-546e-4ce5-a269-dbc0db0eb105", "value": "http://purl.org/heritagedata/schemes/agl_et/concepts/147325"}</dcterms:identifier>
         <skos:prefLabel xml:lang="en">{"id": "dfdd455b-7214-4876-9a8f-3893b665c485", "value": "Historic Area Assessment"}</skos:prefLabel>
       </skos:Concept>
@@ -548,7 +548,7 @@
     <skos:narrower>
       <skos:Concept rdf:about="http://localhost:8000/96e31362-e19c-3ece-8937-c18b7d633e2f">
         <dcterms:identifier xml:lang="en">{"id": "8c949854-b512-4104-9876-19b08b848fb3", "value": "http://purl.org/heritagedata/schemes/agl_et/concepts/170648"}</dcterms:identifier>
-        <skos:scopeNote xml:lang="en">{"id": "9c4779d0-5a3a-4b95-abd9-ba2f626d9e17", "value": "Programmes of research or investigation involving the examination of primary documentary material to inform the understanding of heritage assets."}</skos:scopeNote>
+        <skos:scopeNote xml:lang="en">{"id": "9c4779d0-5a3a-4b95-abd9-ba2f626d9e17", "value": "Programmes of research or investigation involving the examination of primary documentary material to inform the understanding of monuments."}</skos:scopeNote>
         <skos:inScheme rdf:resource="http://localhost:8000/78b7e400-99dc-386c-a3d4-ba9e012dc3ed"/>
         <skos:prefLabel xml:lang="en">{"id": "7cfd6013-fb21-4d92-805a-56cc020dfd42", "value": "Documentary Research"}</skos:prefLabel>
       </skos:Concept>

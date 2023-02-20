@@ -86,11 +86,15 @@ define([
 
                 self.cards = self.createCardDictionary(cards)
 
+                Object.assign(self.cards, {
+                    applicationAreas: self.cards?.['associated application areas']
+                })
+
                 self.resourcesCards = {
                     activities: self.cards?.['associated activities'],
                     consultations: self.cards?.['associated consultations'],
                     files: self.cards?.['associated digital files'],
-                    assets: self.cards?.['associated heritage assets'],
+                    assets: self.cards?.['associated monuments'],
                     applicationAreas: self.cards?.['associated application areas']
                 };
 

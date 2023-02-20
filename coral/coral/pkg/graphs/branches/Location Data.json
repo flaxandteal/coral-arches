@@ -256,7 +256,7 @@
                     "constraints": [],
                     "cssclass": null,
                     "description": {
-                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
+                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
                     },
                     "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
                     "helpenabled": false,
@@ -1094,7 +1094,7 @@
                         "label": "Land Use Classification",
                         "options": [],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Asset."
+                            "en": "Use to record a particular status associated with the Area/Artefact/Aircraft/Monument/Vessel."
                         }
                     },
                     "id": "b1d348f8-f446-11eb-8f4b-a87eeabdefba",
@@ -5311,7 +5311,7 @@
                     "alias": "land_use_classification_assignment",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
+                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
@@ -5368,7 +5368,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "area_assignments",
+                    "alias": "area_assignment",
                     "config": {},
                     "datatype": "semantic",
                     "description": "",
@@ -5380,7 +5380,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Area Assignments",
+                    "name": "Area Assignment",
                     "nodegroup_id": "b1d2cd13-f446-11eb-8e20-a87eeabdefba",
                     "nodeid": "b1d2cd13-f446-11eb-8e20-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -9053,7 +9053,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "area",
+                    "alias": "area_assignments",
                     "config": {},
                     "datatype": "semantic",
                     "description": null,
@@ -9065,7 +9065,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Area",
+                    "name": "Area Assignments",
                     "nodegroup_id": "b1d2cd1f-f446-11eb-9bb5-a87eeabdefba",
                     "nodeid": "b1d33559-f446-11eb-80e7-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",

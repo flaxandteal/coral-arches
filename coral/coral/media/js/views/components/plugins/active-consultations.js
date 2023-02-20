@@ -14,7 +14,7 @@ define([
             var self = this;
 
             this.urls = arches.urls;
-            this.resourceEditorURL = '/arches-her' + arches.urls.resource_editor;
+            this.resourceEditorURL = arches.urls.resource_editor;
             this.moment = moment;
             this.layout = ko.observable('grid');
             this.setLayout = function(layout){ self.layout(layout); };
@@ -28,13 +28,23 @@ define([
             this.keywordSearch = function() {
                 if(self.keyword() && self.keyword() != "") {
                     self.orderByOption("");
+                    self.page(1);
                     self.getConsultations();
                     self.searched = true;
                 }
             };
+            this.keywordSearchOnEnter = function(data, event) {
+                if (event.keyCode === 13 || event.key === "Enter") {
+                    self.keywordSearch();
+                }
+                else{
+                    //pass
+                }
+            }
             this.resetKeywordSearch = function() {
                 self.keyword("");
                 self.orderByOption("");
+                self.page(1);
                 self.getConsultations();
                 self.searched = false;
             };
@@ -51,6 +61,8 @@ define([
                 "sort config":{
                     "Log Date: Newest to Oldest":["Log Date",false],
                     "Log Date: Oldest to Newest":["Log Date",true],
+                    "Target Date: Newest to Oldest":["Target Date Start",false],
+                    "Target Date: Oldest to Newest":["Target Date Start",true],
                     "Casework Officer: A to Z":["Casework Officer",false],
                     "Casework Officer: Z to A":["Casework Officer",true],
                     "Consultation Type: A to Z":["Consultation Type",false],

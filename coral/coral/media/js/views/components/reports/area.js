@@ -5,6 +5,7 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/area.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/assessments',
     'views/components/reports/scenes/images',
@@ -12,7 +13,7 @@ define([
     'views/components/reports/scenes/people',
     'views/components/reports/scenes/resources',
     'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, areaReportTemplate) {
     return ko.components.register('area-report', {
         viewModel: function(params) {
             var self = this;
@@ -65,7 +66,7 @@ define([
             self.nameCards = {};
             self.descriptionCards = {};
             self.classificationCards = {};
-            self.scientificDateCards = {};
+            self.assessmentCards = {};
             self.imagesCards = {};
             self.peopleCards = {};
             self.locationCards = {};
@@ -139,6 +140,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/area.htm' }
+        template: areaReportTemplate
     });
 });

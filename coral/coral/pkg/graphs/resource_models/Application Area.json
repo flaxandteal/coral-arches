@@ -195,7 +195,7 @@
                         "overlayConfigs": [],
                         "overviewzoom": 12.890610425716103,
                         "pointradius": 4,
-                        "selectRelatedSource": "select-application-area, select-heritage-asset",
+                        "selectRelatedSource": "select-application-area, select-monument",
                         "selectRelatedSourceLayer": "",
                         "selectSource": "",
                         "selectSourceLayer": "",
@@ -693,7 +693,7 @@
                         "overlayConfigs": [],
                         "overviewzoom": 11,
                         "pointradius": 4,
-                        "selectRelatedSource": "select-heritage-asset",
+                        "selectRelatedSource": "select-monument",
                         "selectRelatedSourceLayer": "",
                         "selectSource": "",
                         "selectSourceLayer": "",
@@ -732,7 +732,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Heritage Assets"
+                        "en": "Associated Monuments and Areas"
                     },
                     "nodegroup_id": "a93c73b4-83d4-11ea-80e6-f875a44e0e11",
                     "sortorder": 12,
@@ -5006,14 +5006,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Heritage Asset, Area or Artefact",
+                        "label": "Associated Monument, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "eb0d0527-83d4-11ea-8c8d-f875a44e0e11",
                     "label": {
-                        "en": "Associated Heritage Asset, Area or Artefact"
+                        "en": "Associated Monument, Area or Artefact"
                     },
                     "node_id": "a93c73b4-83d4-11ea-80e6-f875a44e0e11",
                     "sortorder": 0,
@@ -5152,7 +5152,7 @@
             "deploymentdate": null,
             "deploymentfile": null,
             "description": {
-                "en": "An area of land which is subject to a planning application and as such may have an impact on the historic environment or the setting of heritage assets."
+                "en": "An area of land which is subject to a planning application and as such may have an impact on the historic environment or the setting of monuments."
             },
             "edges": [
                 {
@@ -11727,7 +11727,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "associated_heritage_assets_areas_and_artefacts",
+                    "alias": "associated_monuments_and_areas",
                     "config": {
                         "graphs": [
                             {
@@ -11744,11 +11744,11 @@
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
-                                "name": "Heritage Area"
+                                "name": "Area"
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Heritage Asset"
+                                "name": "Monument"
                             }
                         ],
                         "searchDsl": "",
@@ -11757,14 +11757,14 @@
                     "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "Assoc_HAs",
+                    "fieldname": "Assoc_Mons",
                     "graph_id": "42ce82f6-83bf-11ea-b1e8-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Heritage Assets, Areas and Artefacts",
+                    "name": "Associated Monuments, Areas and Artefacts",
                     "nodegroup_id": "a93c73b4-83d4-11ea-80e6-f875a44e0e11",
                     "nodeid": "a93c73b4-83d4-11ea-80e6-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",

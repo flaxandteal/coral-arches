@@ -133,7 +133,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Heritage Assets, Areas and Artefacts"
+                        "en": "Associated Monuments, Areas and Artefacts"
                     },
                     "nodegroup_id": "135f23db-4514-11eb-b403-f875a44e0e11",
                     "sortorder": 12,
@@ -1467,14 +1467,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Heritage Asset, Area or Artefact",
+                        "label": "Monument, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "135f4af3-4514-11eb-8980-f875a44e0e11",
                     "label": {
-                        "en": "Heritage Asset, Area or Artefact"
+                        "en": "Monument, Area or Artefact"
                     },
                     "node_id": "135f4af0-4514-11eb-b268-f875a44e0e11",
                     "sortorder": 0,
@@ -7071,7 +7071,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "associated_heritage_assets_areas_and_artefacts",
+                    "alias": "associated_monuments_areas_and_artefacts",
                     "config": {},
                     "datatype": "semantic",
                     "description": "",
@@ -7083,7 +7083,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Heritage Assets, Areas and Artefacts",
+                    "name": "Associated Monuments, Areas and Artefacts",
                     "nodegroup_id": "135f23db-4514-11eb-b403-f875a44e0e11",
                     "nodeid": "135f23db-4514-11eb-b403-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -7135,7 +7135,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "heritage_asset_area_or_artefact",
+                    "alias": "monument_area_or_artefact",
                     "config": {
                         "graphs": [
                             {
@@ -7152,12 +7152,12 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Heritage Asset"
+                                "name": "Monument"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
                                 "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P53i_is_former_or_current_location_of",
-                                "name": "Heritage Area",
+                                "name": "Area",
                                 "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location"
                             }
                         ],
@@ -7167,14 +7167,14 @@
                     "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "Assoc_HAs",
+                    "fieldname": "Assoc_Mons",
                     "graph_id": "d4a88461-5463-11e9-90d9-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Heritage Asset, Area or Artefact",
+                    "name": "Monument, Area or Artefact",
                     "nodegroup_id": "135f23db-4514-11eb-b403-f875a44e0e11",
                     "nodeid": "135f4af0-4514-11eb-b268-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",

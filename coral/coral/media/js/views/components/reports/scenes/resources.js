@@ -49,7 +49,7 @@ define([
                 activities: 'associated activities',
                 consultations: 'associated consultations',
                 files: 'associated files',
-                assets: 'associated heritage assets, areas and artefacts',
+                assets: 'associated monuments, areas and artefacts',
                 archive: 'associated archives',
                 actors: 'associated actors'
             }
@@ -151,9 +151,9 @@ define([
                 const associatedArtifactsNode = self.getRawNodeValue(params.data(), self.dataConfig.assets);
                 if (associatedArtifactsNode) {
                     if(Array.isArray(associatedArtifactsNode)){
-                        let key = 'Heritage Asset, Area or Artefact';
+                        let key = 'Monument, Area or Artefact';
                         if (!(key in associatedArtifactsNode[0])) {
-                            key = 'Associated Heritage Asset, Area or Artefact';
+                            key = 'Associated Monument, Area or Artefact';
                         }
                         self.assets(associatedArtifactsNode.map(x => {
                             var resource = [];
@@ -216,10 +216,10 @@ define([
 
                 const translationNode = self.getRawNodeValue(params.data(), self.dataConfig.translation, 'instance_details');
                 if (Array.isArray(translationNode)) {
+                    const tileid = self.getTileId(self.getRawNodeValue(params.data(), self.dataConfig.translation));
                     self.translation(translationNode.map(x => {
                         const resource = self.getNodeValue(x);
                         const resourceLink = self.getResourceLink(self.getRawNodeValue(x));
-                        const tileid = self.getTileId(x);
                         return { resource, resourceLink, tileid };
                     }));
                 }

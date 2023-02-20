@@ -192,7 +192,7 @@
   </skos:Collection>
   <skos:Collection rdf:about="https://keystone.historicengland.org.uk/rdm/616b4738-d35e-46a9-bd58-a4ffff7d41d2">
     <skos:prefLabel xml:lang="en">{"id": "546103fa-bcd3-42c0-aecc-b3a1d2535f8f", "value": "FISH Heritage Subjects and Themes"}</skos:prefLabel>
-    <skos:scopeNote xml:lang="en">{"id": "4fb71847-2cec-465e-a4ae-4b131b157eda", "value": "A thesaurus for describing subjects and themes associated with heritage assets."}</skos:scopeNote>
+    <skos:scopeNote xml:lang="en">{"id": "4fb71847-2cec-465e-a4ae-4b131b157eda", "value": "A thesaurus for describing subjects and themes associated with monuments."}</skos:scopeNote>
     <skos:member>
       <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/55af9834-011a-356b-a8cd-1c8d94237ffd">
         <skos:member rdf:resource="https://keystone.historicengland.org.uk/rdm/fb3fb8cd-dd55-38d9-99bc-d4320b264422"/>

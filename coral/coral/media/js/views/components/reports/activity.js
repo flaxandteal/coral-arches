@@ -66,7 +66,7 @@ define([
             self.resourceDataConfig = {
                 archive: 'associated archive objects',
                 files: 'digital files',
-                assets: 'associated heritage assets and areas',
+                assets: 'associated monuments and areas',
                 actors: undefined
             }
 
@@ -155,7 +155,7 @@ define([
                     consultations: self.cards?.['associated consultations'],
                     activities: self.cards?.['associated activities'],
                     archive: self.cards?.['associated archive objects'],
-                    assets: self.cards?.['associated heritage assets, areas and artefacts'],
+                    assets: self.cards?.['associated monuments and areas'],
                     files: self.cards?.['associated digital files'],
                 }
             }
