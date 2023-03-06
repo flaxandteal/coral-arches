@@ -35,6 +35,7 @@ import slugify
 class DataTypes:
     node_datatypes = None
     inited = False
+    exc = None
 
     def __init__(self):
         self.collections = {}
@@ -73,23 +74,27 @@ class DataTypes:
 
     def init(self):
         if not self.inited:
-            self.node_datatypes = {str(nodeid): datatype for nodeid, datatype in models.Node.objects.values_list("nodeid", "datatype")}
-            self.datatype_factory = DataTypeFactory()
+            try:
+                self.node_datatypes = {str(nodeid): datatype for nodeid, datatype in models.Node.objects.values_list("nodeid", "datatype")}
+                self.datatype_factory = DataTypeFactory()
 
-            for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
-                for field, info in wkrm.nodes.items():
-                    if "nodeid" in info:
-                        if "/" in field:
-                            semantic_field, subfield = field.split("/", -1)
-                            assert "/" not in semantic_field, "Can only have one level of grouping above raw data fields"
-                            self._build_semantic(info["nodegroupid"], semantic_field, subfield, info, wkrm.model_name, wkrm.model_class_name)
-                            model_name = wkrm.model_name
-                        else:
-                            model_name = wkrm.model_name
-                        self._process_field(info["nodeid"], model_name, field)
-                        # AGPL Arches
-            self._process_semantic_fields()
-            self.inited = True
+                for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
+                    for field, info in wkrm.nodes.items():
+                        if "nodeid" in info:
+                            if "/" in field:
+                                semantic_field, subfield = field.split("/", -1)
+                                assert "/" not in semantic_field, "Can only have one level of grouping above raw data fields"
+                                self._build_semantic(info["nodegroupid"], semantic_field, subfield, info, wkrm.model_name, wkrm.model_class_name)
+                                model_name = wkrm.model_name
+                            else:
+                                model_name = wkrm.model_name
+                            self._process_field(info["nodeid"], model_name, field)
+                            # AGPL Arches
+                self._process_semantic_fields()
+                self.inited = True
+            except Exception as exc:
+                self.exc = exc
+                raise exc
 
     def _process_semantic_fields(self):
         for nodeid, node in self.semantic_nodes.items():
@@ -214,6 +219,8 @@ data_types = DataTypes()
 thread = threading.Thread(target=data_types.init)
 thread.start()
 thread.join()
+if data_types.exc:
+    raise data_types.exc
 
 semantic_input_objects = {}
 semantic_schema_objects = {}

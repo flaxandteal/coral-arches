@@ -434,30 +434,26 @@ class ResourceModelWrapper:
                 typ = node["type"]
                 if typ == [settings.Semantic]:
                     tiles.setdefault(node["nodegroupid"], [])
-                    subtiles = {}
                     if "parentnodegroup_id" in node:
-                        parent = tiles.setdefault(node["parentnodegroup_id"], [TileProxyModel(
+                        parent = tiles.setdefault(node["parentnodegroup_id"], [TileProxyModel(dict(
                             data={},
-                            nodegroup_id=node["parentnodegroup_id"]
-                        )])[0]
-                        print("NG", node["parentnodegroup_id"], parent.tileid, key)
-                        subtiles[node["parentnodegroup_id"]] = [parent]
+                            nodegroup_id=node["parentnodegroup_id"], tileid=None
+                        ))])[0]
                     else:
                         parent = None
                     for entry in value:
+                        subtiles = {}
                         if parent:
                             subtiles[parent.nodegroup_id] = [parent]
 
                         # If we have a dataless version of this node, perhaps because it is already
                         # a parent, we allow it to be filled in.
-                        if tiles[node["nodegroupid"]] and not tiles[node["nodegroupid"]][0].data:
+                        if tiles[node["nodegroupid"]] and not tiles[node["nodegroupid"]][0].data and tiles[node["nodegroupid"]][0].tiles:
                             subtiles[node["nodegroupid"]] = [tiles[node["nodegroupid"]][0]]
 
                         self._update_tiles(subtiles, entry, tiles_to_remove, prefix=f"{key}/")
                         if node["nodegroupid"] in subtiles:
                             tiles[node["nodegroupid"]] = list(set(tiles[node["nodegroupid"]]) | set(subtiles[node["nodegroupid"]]))
-                            print(tiles[node["nodegroupid"]])
-                            print(tiles[node["nodegroupid"]][0].data)
                     # We do not need to do anything here, because
                     # the nodegroup (semantic node) has no separate existence from the values
                     # in the tile in our approach -- if there were values, the appropriate tile(s)
@@ -509,10 +505,10 @@ class ResourceModelWrapper:
                         raise RuntimeError("Cannot have field multiplicity inside a grouping (semantic node), as it is equivalent to nesting")
 
                     if "parentnodegroup_id" in node:
-                        parents = tiles.setdefault(node["parentnodegroup_id"], [TileProxyModel(
+                        parents = tiles.setdefault(node["parentnodegroup_id"], [TileProxyModel(dict(
                             data={},
-                            nodegroup_id=node["parentnodegroup_id"]
-                        )])
+                            nodegroup_id=node["parentnodegroup_id"], tileid=None
+                            ))])
                         parent = parents[0]
                     else:
                         parent = None
@@ -531,20 +527,15 @@ class ResourceModelWrapper:
                     #else:
                     #    tiles[node["nodegroupid"]] = []
                     if (tile := tiles.get(str(node["nodegroupid"]), False)) != False:
-                        print("FOUND TILE")
                         tile.data = data
                         if not tile.parenttile:
                             tile.parenttile = parent
                     else:
-                        print("GN", node["nodegroupid"], None, list(tiles.keys()), prefix)
-                        #if prefix == "geometry/":
-                        #    print(tiles[node["nodegroupid"]])
-                        tile = TileProxyModel(
+                        tile = TileProxyModel(dict(
                             data=data,
                             nodegroup_id=node["nodegroupid"],
-                            parenttile=parent
-                        )
-                        print("GN", node["nodegroupid"], tile.tileid, list(tiles.keys()), prefix)
+                            parenttile=parent, tileid=None
+                        ))
                         tiles.setdefault(node["nodegroupid"], [])
                         tiles[node["nodegroupid"]].append(tile)
                     if parent:
@@ -563,7 +554,6 @@ class ResourceModelWrapper:
 
         # parented tiles are saved hierarchically
         resource.tiles = [t for t in sum((ts for ts in tiles.values()), []) if not t.parenttile]
-        print(resource.tiles)
 
         if not resource.createdtime:
             resource.createdtime = datetime.now()
@@ -590,7 +580,6 @@ class ResourceModelWrapper:
             resource.save()
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
         parented = [t.data for t in sum((ts for ts in tiles.values()), []) if t.parenttile]
-        print("\n".join([str((t.tileid, str(t.nodegroup_id), t.parenttile.tileid, str(t.parenttile.nodegroup_id), t.data)) for t in sum((ts for ts in tiles.values()), []) if t.parenttile]))
 
         self.id = resource.resourceinstanceid
         self.resource = resource
