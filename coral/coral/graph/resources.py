@@ -358,7 +358,7 @@ class Mutation(graphene.ObjectType):
 
 _full_resource_mutation_methods = {}
 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
-    async def mutate_bulk_create(parent, info, field_sets):
+    async def mutate_bulk_create(parent, info, wkrm, field_sets):
         resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
         field_sets = [{field: data_types.remap(wkrm.model_name, field, value) for field, value in field_set.items()} for field_set in field_sets]
         resources = await sync_to_async(resource_cls.create_bulk)(field_sets)
@@ -369,7 +369,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         }
         return BulkCreateResource(**kwargs)
 
-    async def mutate_create(parent, info, **kwargs):
+    async def mutate_create(parent, info, wkrm, **kwargs):
         resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
         kwargs = {field: data_types.remap(wkrm.model_name, field, value) for field, value in kwargs.items()}
         resource = await sync_to_async(resource_cls.create)(**kwargs)
@@ -380,7 +380,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         }
         return CreateResource(**kwargs)
 
-    async def mutate_delete(parent, info, id):
+    async def mutate_delete(parent, info, wkrm, id):
         resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
         resource = await sync_to_async(resource_cls.find)(id)
         await sync_to_async(resource.delete)()
@@ -404,7 +404,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         {
             "ok": graphene.Boolean(),
             snake(wkrm.model_class_name) + "s": graphene.Field(graphene.List(ResourceSchema)),
-            "mutate": lambda parent, info, **kwargs: mutate_bulk_create(parent, info, **kwargs)
+            "mutate": partial(mutate_bulk_create, wkrm=wkrm)
         },
         arguments={
             "field_sets": graphene.List(ResourceInputObjectType),
@@ -416,7 +416,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         {
             "ok": graphene.Boolean(),
             snake(wkrm.model_class_name): graphene.Field(ResourceSchema),
-            "mutate": lambda parent, info, **kwargs: mutate_create(parent, info, **kwargs)
+            "mutate": partial(mutate_create, wkrm=wkrm)
         },
         arguments={
             field: typ for field, typ in _to_graphene_mut(wkrm)
@@ -427,7 +427,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         (graphene.Mutation,),
         {
             "ok": graphene.Boolean(),
-            "mutate": lambda parent, info, **kwargs: mutate_delete(parent, info, **kwargs)
+            "mutate": partial(mutate_delete, wkrm=wkrm)
         },
         arguments={
             "id": graphene.UUID()
