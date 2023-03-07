@@ -406,8 +406,9 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
             "ok": graphene.Boolean(),
             snake(wkrm.model_class_name) + "s": graphene.Field(graphene.List(ResourceSchema)),
             "mutate": partial(
-                lambda *args, **kwargs: mutate_bulk_create(*args, mutation=mutations["BulkCreateResource"], **kwargs),
-                wkrm=wkrm
+                lambda *args, mutations=None, **kwargs: mutate_bulk_create(*args, mutation=mutations["BulkCreateResource"], **kwargs),
+                wkrm=wkrm,
+                mutations=mutations
             )
         },
         arguments={
@@ -421,8 +422,9 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
             "ok": graphene.Boolean(),
             snake(wkrm.model_class_name): graphene.Field(ResourceSchema),
             "mutate": partial(
-                lambda *args, **kwargs: mutate_create(*args, mutation=mutations["CreateResource"], **kwargs),
-                wkrm=wkrm
+                lambda *args, mutations=None, **kwargs: mutate_create(*args, mutation=mutations["CreateResource"], **kwargs),
+                wkrm=wkrm,
+                mutations=mutations
             )
         },
         arguments={
@@ -435,8 +437,9 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         {
             "ok": graphene.Boolean(),
             "mutate": partial(
-                lambda *args, **kwargs: mutate_delete(*args, mutation=mutations["DeleteResource"], **kwargs),
-                wkrm=wkrm
+                lambda *args, mutations=None, **kwargs: mutate_delete(*args, mutation=mutations["DeleteResource"], **kwargs),
+                wkrm=wkrm,
+                mutations=mutations
             )
         },
         arguments={
