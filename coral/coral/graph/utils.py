@@ -14,7 +14,7 @@ def string_to_enum(string):
     string = string.replace("& ", "and ")
     if "/" in string:
         return "".join(map(string_to_enum, string.split("/")))
-    return slugify.slugify(string.replace(" ", "-")).replace("-", " ").title().replace(" ", "")
+    return studly(slugify.slugify(string.replace(" ", "-")).replace("-", " "))
 
 
 def camel(string, studly=False):
