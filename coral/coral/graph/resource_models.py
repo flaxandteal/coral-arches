@@ -103,8 +103,6 @@ class ResourceModelQuery(graphene.ObjectType):
                 "datatype": str(data_types.node_datatypes[str(node.pk)]),
                 "alias": node.alias
             }
-            if node.parentnodegroup_id:
-                details["parentnodegroupid"] = node.parentnodegroup_id
             if str(node.pk) in data_types.node_concepts:
                 details["concept"] = data_types.node_concepts[str(node.pk)]
             return details
