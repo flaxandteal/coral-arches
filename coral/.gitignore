@@ -8,6 +8,7 @@ coral/media/packages
 coral/media/node_modules
 coral/media/build/*
 coral/uploadedfiles/*
+!coral/uploadedfiles/.gitkeep
 coral/settings_local.py
 coral/webpack/webpack-stats.json
 coral/webpack/webpack-user-config.js

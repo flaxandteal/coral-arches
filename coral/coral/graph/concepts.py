@@ -7,6 +7,7 @@ import threading
 import asyncio
 import django
 import logging
+import io
 from django.db.models import Q
 import uuid
 from functools import partial
@@ -24,6 +25,7 @@ from starlette_graphene3 import GraphQLApp, make_graphiql_handler
 from aiodataloader import DataLoader
 from coral.resource_model_wrappers import attempt_well_known_resource_model, _WELL_KNOWN_RESOURCE_MODELS, get_well_known_resource_model_by_class_name
 
+from arches.app.utils.skos import SKOSReader
 from arches.app.models import models
 from arches.app.models.concept import Concept
 from arches.app.datatypes.concept_types import ConceptDataType
@@ -258,6 +260,30 @@ class ConceptInput(graphene.InputObjectType):
     id = graphene.UUID(required=False, default=None)
     label = graphene.String(required=False, default=None)
 
+
+class ReplaceFromSKOS(graphene.Mutation):
+    ok = graphene.Boolean()
+
+    class Arguments:
+        file = Upload(required=True)
+
+    async def mutate(self, info, file, **kwargs):
+        def get_result(skosfile):
+            # AGPL Arches
+            skos = SKOSReader()
+            try:
+                rdf = skos.read_file(skosfile)
+                ret = skos.save_concepts_from_skos(rdf, "overwrite")
+                return ret
+            except Exception as e:
+                logging.error(str(e)[0:1000])
+                return False
+
+        file = io.BytesIO(await file.read())
+        result = await sync_to_async(get_result)(file)
+
+        return ReplaceFromSKOS(ok=bool(result))
+
 class AddTerm(graphene.Mutation):
     ok = graphene.Boolean()
 
@@ -326,3 +352,4 @@ class AddTerm(graphene.Mutation):
 
 class FullConceptMutation(graphene.ObjectType):
     add_term = AddTerm.Field()
+    replace_from_skos = ReplaceFromSKOS.Field()

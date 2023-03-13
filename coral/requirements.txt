@@ -16,3 +16,4 @@ uvicorn<=0.14.0
 click<8
 graphene_file_upload
 aiodataloader<0.3.0
+python-multipart<0.0.6
