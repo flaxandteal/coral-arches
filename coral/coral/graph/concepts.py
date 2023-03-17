@@ -273,7 +273,9 @@ class ReplaceFromSKOS(graphene.Mutation):
             skos = SKOSReader()
             try:
                 rdf = skos.read_file(skosfile)
+                logging.error(rdf)
                 ret = skos.save_concepts_from_skos(rdf, "overwrite")
+                logging.error(ret)
                 return ret
             except Exception as e:
                 logging.error(str(e)[0:1000])
