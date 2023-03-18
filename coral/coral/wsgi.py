@@ -37,3 +37,5 @@ if settings.DEBUG:
     from django.contrib.staticfiles.handlers import StaticFilesHandler
     application = StaticFilesHandler(get_wsgi_application())
 #settings.update_from_db()
+
+from coral import resource_model_hooks
