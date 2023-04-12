@@ -129,21 +129,20 @@ class ResourceModelWrapper:
         resource.save()
         system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
 
-    def append(self):
+    def append(self, _no_save=False):
         if not self._cross_record:
             raise NotImplementedError("This method is only implemented for relations")
 
         wkfm = self._cross_record["wkriFrom"]
         key = self._cross_record["wkriFromKey"]
-        wkfm.save()
-        resource = wkfm.to_resource()
+        if not _no_save:
+            wkfm.save()
+            wkfm.to_resource()
+        resource = wkfm.resource
         tile = resource.tiles
         nodeid = wkfm._nodes[key]["nodeid"]
         nodegroupid = wkfm._nodes[key]["nodegroupid"]
         for tile in resource.tiles:
-            logging.warning(tile)
-            logging.warning(tile.nodegroup_id)
-            logging.warning(nodegroupid)
             if nodegroupid == str(tile.nodegroup_id):
                 cross = ResourceXResource(
                     resourceinstanceidfrom=wkfm.resource,
@@ -153,15 +152,16 @@ class ResourceModelWrapper:
                 value = [
                     {"resourceId": str(self.resource.resourceinstanceid), "ontologyProperty": "", "resourceXresourceId": str(cross.resourcexid), "inverseOntologyProperty": ""}
                 ]
-                logging.warning({nodeid: value})
                 tile.data.update({nodeid: value})
 
         # This is required to avoid e.g. missing related models preventing
         # saving (as we cannot import those via CSV on first step)
-        bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
-        system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
-        resource.save()
-        system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
+        if _no_save:
+            bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
+            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
+            resource.save()
+            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
+        return wkfm, cross, resource
 
     def __init__(self, id=None, resource=None, x=None, filled=True, lazy=False, **kwargs):
         self._values = {}
@@ -177,6 +177,18 @@ class ResourceModelWrapper:
             )
         if not filled and not lazy:
             self.fill_from_resource(reload=True)
+
+        for key, value in kwargs.items():
+            if isinstance(value, list) and any(types := [isinstance(entry, ResourceModelWrapper) for entry in value]):
+                if not all(types):
+                    raise NotImplementedError(
+                        "Cannot currently handle mixed ResourceModelWrapper/non-ResourceModelWrapper lists"
+                    )
+                typ = self._nodes[key]["type"]
+                kwargs[key] = RelationList(self, key, self._nodes[key]["nodeid"], None)
+                for resource in value:
+                    kwargs[key].append(resource)
+
         self._values.update(kwargs)
 
     def _set_value(self, key, arg):
@@ -205,25 +217,65 @@ class ResourceModelWrapper:
 
     @classmethod
     def create_bulk(cls, fields: list):
-        wkrms = [cls.create(_no_save=True, **field_set) for field_set in fields]
+        requested_wkrms = [(None, cls.create(_no_save=True, **field_set), None) for field_set in fields]
+        all_wkrms = [requested_wkrms]
+        while (relationships := sum([wkrm._pending_relationships for _, wkrm, _ in all_wkrms[0]], [])):
+            all_wkrms = [relationships] + all_wkrms
 
-        for wkrm in wkrms:
-            wkrm.resource.resourceinstanceid = str(uuid.uuid4())
-            wkrm.id = wkrm.resource.resourceinstanceid
-            for tile in wkrm.resource.get_flattened_tiles():
-                tile.resourceinstance = wkrm.resource
+        crosses = []
+        new_wkrms = []
+        for wkrms in all_wkrms[::-1]:
+            for (value, wkrm_fm, wkrm) in wkrms:
+                if not wkrm_fm.id:
+                    if not wkrm_fm.resource.resourceinstanceid:
+                        wkrm_fm.resource.resourceinstanceid = uuid.uuid4()
+                    wkrm_fm.id = wkrm_fm.resource.resourceinstanceid
+                    new_wkrms.append(wkrm_fm)
+
+                    for tile in wkrm_fm.resource.get_flattened_tiles():
+                        tile.resourceinstance = wkrm_fm.resource
+
+                # TODO: what happens if the cross already exists for some reason?
+                if wkrm:
+                    cross = ResourceXResource(
+                        resourceinstanceidfrom=wkrm_fm.resource,
+                        resourceinstanceidto=wkrm.resource,
+                        resourceinstancefrom_graphid=wkrm_fm.resource.graph,
+                        resourceinstanceto_graphid=wkrm.resource.graph,
+                        created=datetime.now(),
+                        modified=datetime.now()
+                    )
+        # during package/csv load the ResourceInstance models are not always available
+                    crosses.append(cross)
+
+                if value is not None and not value.get("resourceXresourceId", False):
+                    value.update(
+                        {
+                            "resourceId": str(wkrm_fm.resource.resourceinstanceid),
+                            "ontologyProperty": "",
+                            "resourceXresourceId": str(cross.resourcexid),
+                            "inverseOntologyProperty": ""
+                        }
+                    )
 
         transaction_id = uuid.uuid1()
         with transaction.atomic():
             bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
-            Resource.bulk_save([wkrm.resource for wkrm in wkrms], transaction_id=transaction_id)
+            Resource.bulk_save([wkrm.resource for wkrm in new_wkrms], transaction_id=transaction_id)
+            ResourceXResource.objects.bulk_create(crosses)
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
 
-        return wkrms
+        return [wkrm for _, wkrm, _ in requested_wkrms]
 
     @classmethod
     def create(cls, _no_save=False, **kwargs):
+        inst = cls.build(**kwargs)
+        inst.to_resource(_no_save=_no_save)
+        return inst
+
+    @classmethod
+    def build(cls, **kwargs):
         values = {}
         for key, arg in kwargs.items():
             if "." not in key:
@@ -234,8 +286,6 @@ class ResourceModelWrapper:
         for key, val in kwargs.items():
             if "." in key:
                 setattr(inst, key, val)
-
-        inst.to_resource(_no_save=_no_save)
 
         return inst
 
@@ -417,6 +467,7 @@ class ResourceModelWrapper:
         ]
 
     def _update_tiles(self, tiles, values, tiles_to_remove, prefix=None):
+        relationships = []
         for key, node in self._nodes.items():
             if prefix is not None:
                 if not key.startswith(prefix):
@@ -451,7 +502,7 @@ class ResourceModelWrapper:
                         if tiles[node["nodegroupid"]] and not tiles[node["nodegroupid"]][0].data and tiles[node["nodegroupid"]][0].tiles:
                             subtiles[node["nodegroupid"]] = [tiles[node["nodegroupid"]][0]]
 
-                        self._update_tiles(subtiles, entry, tiles_to_remove, prefix=f"{key}/")
+                        relationships += self._update_tiles(subtiles, entry, tiles_to_remove, prefix=f"{key}/")
                         if node["nodegroupid"] in subtiles:
                             tiles[node["nodegroupid"]] = list(set(tiles[node["nodegroupid"]]) | set(subtiles[node["nodegroupid"]]))
                     # We do not need to do anything here, because
@@ -460,6 +511,11 @@ class ResourceModelWrapper:
                     # were added with this nodegroupid. For nesting, this would need to change.
                     continue
                 elif value and (isinstance(value, list) or isinstance(value, RelationList)) and isinstance(value[0], ResourceModelWrapper):
+                    value = [({}, v) for v in value]
+                    relationships += value
+                    value = [[v] for v, _ in value]
+                # FIXME: we should be able to remove entries if appropriate
+                elif (isinstance(value, list) or isinstance(value, RelationList)) and len(value) == 0:
                     continue
                     # if value[0]._cross_record:
                     #       value = [value[0]._cross_record]
@@ -526,31 +582,33 @@ class ResourceModelWrapper:
                             continue
                     #else:
                     #    tiles[node["nodegroupid"]] = []
-                    if (tile := tiles.get(str(node["nodegroupid"]), False)) != False:
-                        tile.data = data
-                        if not tile.parenttile:
-                            tile.parenttile = parent
-                    else:
-                        tile = TileProxyModel(dict(
-                            data=data,
-                            nodegroup_id=node["nodegroupid"],
-                            parenttile=parent, tileid=None
-                        ))
-                        tiles.setdefault(node["nodegroupid"], [])
-                        tiles[node["nodegroupid"]].append(tile)
+                    #if (tile := tiles.get(str(node["nodegroupid"]), False)) != False:
+                    #    logging.error("%s", str(tile))
+                    #    logging.error("%s", str(tiles))
+                    #    tile.data = data
+                    #    if not tile.parenttile:
+                    #        tile.parenttile = parent
+                    #else:
+                    tile = TileProxyModel(dict(
+                        data=data,
+                        nodegroup_id=node["nodegroupid"],
+                        parenttile=parent, tileid=None
+                    ))
+                    tiles.setdefault(node["nodegroupid"], [])
+                    tiles[node["nodegroupid"]].append(tile)
                     if parent:
                         parent.tiles.append(tile)
+        return relationships
 
     def to_resource(self, verbose=False, strict=False, _no_save=False, _known_new=False):
         resource = Resource(resourceinstanceid=self.id, graph_id=self.graphid)
         tiles = {}
         if not _known_new:
             for tile in Tile.objects.filter(resourceinstance=resource):
-                tiles.setdefault(tile["nodegroupid"], [])
-                tiles["nodegroupid"].append(tile)
-        relationships = []
+                tiles.setdefault(tile.nodegroup_id, [])
+                tiles[tile.nodegroup_id].append(tile)
         tiles_to_remove = sum((ts for ts in tiles.values()), [])
-        self._update_tiles(tiles, self._values, tiles_to_remove)
+        relationships = self._update_tiles(tiles, self._values, tiles_to_remove)
 
         # parented tiles are saved hierarchically
         resource.tiles = [t for t in sum((ts for ts in tiles.values()), []) if not t.parenttile]
@@ -565,6 +623,7 @@ class ResourceModelWrapper:
         # FIXME: potential consequences for thread-safety
         # This is required to avoid e.g. missing related models preventing
         # saving (as we cannot import those via CSV on first step)
+        self._pending_relationships = []
         if not _no_save:
             bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
@@ -578,30 +637,35 @@ class ResourceModelWrapper:
 
             # TODO: remove tiles_to_remove
             resource.save()
+            self.id = resource.resourceinstanceid
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
-        parented = [t.data for t in sum((ts for ts in tiles.values()), []) if t.parenttile]
+        elif not resource._state.adding:
+            self.id = resource.resourceinstanceid
 
-        self.id = resource.resourceinstanceid
+        parented = [t.data for t in sum((ts for ts in tiles.values()), []) if t.parenttile]
         self.resource = resource
 
         #for nodegroupid, nodeid, resourceid in relationships:
-        #    cross = ResourceXResource(
-        #        resourceinstanceidfrom=resource,
-        #        resourceinstanceidto=Resource(resourceid)
-        #    )
-        #    cross.save()
-        #    value = [
-        #        {"resourceId": str(resource.resourceinstanceid), "ontologyProperty": "", "resourceXresourceId": str(cross.resourcexid), "inverseOntologyProperty": ""}
-        #    ]
-        #    if nodegroupid in tiles:
-        #        tiles[nodegroupid].data = {nodeid: value}
-        #    else:
-        #        tiles[nodegroupid] = TileProxyModel(
-        #            data={nodeid: value},
-        #            nodegroup_id=node["nodegroupid"]
-        #        )
-
-        # resource.save()
+        for (value, related) in relationships:
+            related.to_resource(verbose=verbose, strict=strict, _no_save=_no_save)
+            if _no_save:
+                self._pending_relationships.append((value, related, self))
+            else:
+                # TODO: what happens if the cross already exists for some reason?
+                cross = ResourceXResource(
+                    resourceinstanceidfrom=resource,
+                    resourceinstanceidto=related.resource
+                )
+                cross.save()
+                value.update(
+                    {
+                        "resourceId": str(resource.resourceinstanceid),
+                        "ontologyProperty": "",
+                        "resourceXresourceId": str(cross.resourcexid),
+                        "inverseOntologyProperty": ""
+                    }
+                )
+                resource.save()
 
         # self.id = resource.resourceinstanceid
 

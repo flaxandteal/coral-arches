@@ -101,13 +101,13 @@ class DataTypes:
                 self.datatype_factory = DataTypeFactory()
                 allowed_graphs = None if ALLOW_NON_WKRM_GRAPHS else {wkrm.graphid for wkrm in _WELL_KNOWN_RESOURCE_MODELS}
                 self.graphs = {
-                    str(pk): studly(str(name)) for pk, name in Graph.objects.values_list("pk", "name")
+                    str(pk): string_to_enum(str(name)) for pk, name in Graph.objects.values_list("pk", "name")
                     if (allowed_graphs is None or str(pk) in allowed_graphs)
                 }
 
                 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
                     if str(wkrm.graphid) in self.graphs:
-                        self.graphs[str(wkrm.graphid)] = wkrm.model_name
+                        self.graphs[str(wkrm.graphid)] = wkrm
                     for field, info in wkrm.nodes.items():
                         if "nodeid" in info:
                             if "/" in field:
@@ -143,6 +143,18 @@ class DataTypes:
         datatype_instance = self.datatype_factory.get_instance(datatype)
         if isinstance(datatype_instance, ResourceInstanceDataType):
             self._build_related(nodeid, field, model_name)
+            def _construct_resource(vs, nodeid, field, model_name, datatype_instance):
+                graphs = self.related_nodes[nodeid]["relatable_graphs"]
+                assert len(graphs) == 1, f"Could not determine a unique type for this subgraph {field} of {model_name}"
+                wkrm = self.graphs[graphs[0]]
+                resources = [_build_resource(wkrm, **v) for v in vs]
+                logging.error("%s", str(resources))
+                return resources
+
+            self.remapped[(model_name, field)] = partial(
+                lambda vs, nodeid: _construct_resource(vs, nodeid, field, model_name, datatype_instance),
+                nodeid=nodeid
+            )
         if isinstance(datatype_instance, ConceptDataType) or isinstance(datatype_instance, ConceptListDataType):
             collection = Concept().get_child_collections(models.Node.objects.get(nodeid=nodeid).config["rdmCollection"])
             self.collections[nodeid] = {
@@ -168,7 +180,7 @@ class DataTypes:
                     nodeid=nodeid
                 )
 
-    def to_graphene_mut(self, info, field, model_name):
+    def to_graphene_mut(self, info, field, model_class_name):
         if "type" in info:
             typ = info["type"]
 
@@ -209,20 +221,20 @@ class DataTypes:
                 assert len(graphs) > 0, "Relations must relate a graph that is well-known"
                 if len(graphs) == 1:
                     graph = graphs[0]
-                    return graphene.Argument(graphene.List(lambda: _resource_model_inputs[self.graphs[graph]]))
+                    return graphene.Argument(graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]))
                 else:
                     union = type(
-                        f"{model_name}{studly(field)}UnionInputType",
+                        f"{model_class_name}{string_to_enum(field)}UnionInputType",
                         (graphene.InputObjectType,),
                         {
-                            self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph]]) for graph in graphs
+                            self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]) for graph in graphs
                         }
                     )
                     return union
             elif isinstance(datatype_instance, GeojsonFeatureCollectionDataType):
                 return graphene.JSONString()
 
-    def to_graphene(self, info, field, model_name):
+    def to_graphene(self, info, field, model_class_name):
         if "type" in info:
             typ = info["type"]
 
@@ -263,15 +275,15 @@ class DataTypes:
                 assert len(graphs) > 0, "Relations must relate a graph that is well-known"
                 if len(graphs) == 1:
                     graph = graphs[0]
-                    return graphene.List(lambda: _resource_model_schemas[self.graphs[graph]])
+                    return graphene.List(lambda: _resource_model_schemas[self.graphs[graph].model_class_name])
                 else:
                     def _make_union(graphs):
                         class Union(graphene.Union):
                             Meta = {
-                                    "types": tuple([_resource_model_schemas[self.graphs[graph]] for graph in graphs])
+                                    "types": tuple([_resource_model_schemas[self.graphs[graph].model_class_name] for graph in graphs])
                             }
                         union = type(
-                            f"{model_name}{studly(field)}Union",
+                            f"{model_class_name}{string_to_enum(field)}Union",
                             (Union,),
                             {}
                         )
@@ -301,14 +313,14 @@ for nodeid, semantic_type in data_types.semantic_nodes.items():
         fields.append((field, data_types.to_graphene(info, fullfield, None)))
 
         SchemaType = type(
-            f"{semantic_type['model_class_name']}{studly(semantic_type['name'])}Schema",
+            f"{semantic_type['model_class_name']}{string_to_enum(semantic_type['name'])}Schema",
             (graphene.ObjectType,),
             {
                 field: typ for field, typ in fields
             }
         )
         InputObjectType = type(
-            f"{semantic_type['model_class_name']}{studly(semantic_type['name'])}Input",
+            f"{semantic_type['model_class_name']}{string_to_enum(semantic_type['name'])}Input",
             (graphene.InputObjectType,),
             {
                 field: typ for field, typ in args
@@ -323,7 +335,7 @@ def _to_graphene_mut(wkrm):
     for field, info in fields:
         if (wkrm.model_class_name, field) in semantic_input_objects:
             yield (field, graphene.Argument(semantic_input_objects[(wkrm.model_class_name, field)]))
-        elif "/" not in field and (typ := data_types.to_graphene_mut(info, field, wkrm.model_name)):
+        elif "/" not in field and (typ := data_types.to_graphene_mut(info, field, wkrm.model_class_name)):
             yield (field, typ)
 
 def _to_graphene(wkrm):
@@ -334,7 +346,7 @@ def _to_graphene(wkrm):
         # in semantic_schema_objects, so we can ignore '/' fields
         if (wkrm.model_class_name, field) in semantic_schema_objects:
             yield (field, graphene.Field(semantic_schema_objects[(wkrm.model_class_name, field)]))
-        elif "/" not in field and (typ := data_types.to_graphene(info, field, wkrm.model_name)):
+        elif "/" not in field and (typ := data_types.to_graphene(info, field, wkrm.model_class_name)):
             yield (field, typ)
 
 _resource_model_mappers = {
@@ -373,7 +385,7 @@ class ResourceInstanceLoader(DataLoader):
         group = []
         for wkrm in ret:
             group.append(
-                {field: mapper(getattr(wkrm, field, None)) for field, mapper in _resource_model_mappers[wkrm.name].items()}
+                {field: mapper(getattr(wkrm, field, None)) for field, mapper in _resource_model_mappers[wkrm._wkrm.model_class_name].items()}
             )
         return group
 
@@ -412,6 +424,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
     _full_resource_query_methods[snake(wkrm.model_class_name)] = graphene.List(_resource_model_schemas[wkrm.model_class_name])
     _full_resource_query_methods[f"get_{snake(wkrm.model_class_name)}"] = graphene.Field(_resource_model_schemas[wkrm.model_class_name], id=graphene.UUID(required=True))
     _full_resource_query_methods[f"search_{snake(wkrm.model_class_name)}"] = graphene.List(_resource_model_schemas[wkrm.model_class_name], text=graphene.String(), fields=graphene.List(graphene.String))
+    _full_resource_query_methods[f"list_{snake(wkrm.model_class_name)}"] = graphene.List(_resource_model_schemas[wkrm.model_class_name])
 
 ResourceQuery = type(
     "ResourceQuery",
@@ -445,15 +458,20 @@ async def mutate_bulk_create(parent, info, mutation, wkrm, field_sets):
     return mutation(**kwargs)
 
 async def mutate_create(parent, info, mutation, wkrm, **kwargs):
-    resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
-    kwargs = {field: data_types.remap(wkrm.model_name, field, value) for field, value in kwargs.items()}
-    resource = await sync_to_async(resource_cls.create)(**kwargs)
+    resource = _build_resource(wkrm, **kwargs)
+    await sync_to_async(resource.to_resource)()
     ok = True
     kwargs = {
         snake(wkrm.model_class_name): resource,
         "ok": ok
     }
     return mutation(**kwargs)
+
+def _build_resource(wkrm, **kwargs):
+    resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
+    kwargs = {field: data_types.remap(wkrm.model_name, field, value) for field, value in kwargs.items()}
+    resource = resource_cls.build(**kwargs)
+    return resource
 
 async def mutate_delete(parent, info, mutation, wkrm, id):
     resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
