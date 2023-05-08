@@ -18,7 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from arches.app.models import models
 from arches.app.models.system_settings import settings
-from arches_her.settings import APP_TITLE
+from coral.settings import APP_TITLE
 from arches.app.models.resource import Resource
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 from django.shortcuts import render

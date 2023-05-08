@@ -23,6 +23,8 @@ from coral import settings
 from arches.app.models.system_settings import settings as system_settings
 #from arches.app.models import TileModel
 
+STAGING_TEST = False
+
 
 class RelationList(collections.UserList):
     def __init__(self, related_to, key, nodeid, tileid, *args, **kwargs):
@@ -262,7 +264,69 @@ class ResourceModelWrapper:
         with transaction.atomic():
             bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
+
             Resource.bulk_save([wkrm.resource for wkrm in new_wkrms], transaction_id=transaction_id)
+
+            tiles = []
+            for wkrm in new_wkrms:
+                resource = wkrm.resource
+                resource.tiles = resource.get_flattened_tiles()
+                tiles.extend(resource.tiles)
+            #Resource.objects.bulk_create(resources)
+            #TileModel.objects.bulk_create(tiles)
+            #for resource in resources:
+            #    resource.save_edit(edit_type="create", transaction_id=transaction_id)
+
+            #resources[0].tiles[0].save_edit(
+            #    note=f"Bulk created: {len(tiles)} for {len(resources)} resources.", edit_type="bulk_create", transaction_id=transaction_id
+            #)
+
+            #print("Time to save resource edits: %s" % datetime.timedelta(seconds=time() - start))
+
+            #for resource in resources:
+            #    start = time()
+            #    document, terms = resource.get_documents_to_index(
+            #        fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
+            #    )
+
+            #    documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
+
+            #    for term in terms:
+            #        term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
+
+            #se.bulk_index(documents)
+            #se.bulk_index(term_list)
+            #
+            #TODO loadid = int(time.time())
+            #TODO for tile in tiles:
+            #TODO     cursor.execute(
+            #TODO         """
+            #TODO         INSERT INTO load_staging (
+            #TODO             nodegroupid,
+            #TODO             legacyid,
+            #TODO             resourceid,
+            #TODO             tileid,
+            #TODO             value,
+            #TODO             loadid,
+            #TODO             nodegroup_depth,
+            #TODO             source_description,
+            #TODO             passes_validation
+            #TODO         ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+            #TODO         (
+            #TODO             nodegroup,
+            #TODO             legacyid,
+            #TODO             resourceid,
+            #TODO             tileid,
+            #TODO             tile_value_json,
+            #TODO             loadid,
+            #TODO             node_depth,
+            #TODO             csv_file_name,
+            #TODO             passes_validation,
+            #TODO         ),
+            #TODO     )
+
+            #TODO cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [loadid])
+
             ResourceXResource.objects.bulk_create(crosses)
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
 

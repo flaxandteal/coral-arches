@@ -27,6 +27,7 @@ class GeoJSON:
 
 APP_NAME = 'coral'
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+APP_PATHNAME = os.getenv("APP_PATHNAME", "")
 STATICFILES_DIRS =  (
     os.path.join(APP_ROOT, 'media', 'build'),
     os.path.join(APP_ROOT, 'media'),

@@ -47,7 +47,12 @@ define([
             return {
                 tileid: self.tileid(),
                 date: self.date(),
-                subject: self.subject(),
+                subject: {
+                    "en": {
+                        "direction": "ltr",
+                        "value": self.subject()
+                    }
+                },
                 type: self.type(),
                 resourceid: self.resourceid()
             };

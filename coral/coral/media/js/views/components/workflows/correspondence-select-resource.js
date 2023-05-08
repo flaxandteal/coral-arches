@@ -101,7 +101,12 @@ define([
                     }
                 }).done(function(data) {
                     let today = new Date().toLocaleDateString()
-                    nameTemplate.data["c61ab16c-9513-11ea-89a4-f875a44e0e11"] = today + " Letter for " + data.displayname;
+                    nameTemplate.data["c61ab16c-9513-11ea-89a4-f875a44e0e11"] = {
+                        "en": {
+                            "direction": "ltr",
+                            "value": today + " Letter for " + data.displayname
+                        }
+                    };
 
                     $.ajax({ //saving the digital resource name
                         url: arches.urls.api_tiles(uuid.generate()),

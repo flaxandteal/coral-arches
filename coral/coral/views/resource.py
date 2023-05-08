@@ -24,7 +24,7 @@ from arches.app.utils.response import JSONResponse
 from arches.app.search.search_engine_factory import SearchEngineFactory
 from arches.app.datatypes.datatypes import DataTypeFactory
 from arches.app.models.system_settings import settings
-from arches_her.views.active_consultations import build_resource_dict
+from coral.views.active_consultations import build_resource_dict
 import logging
 
 logger = logging.getLogger(__name__)

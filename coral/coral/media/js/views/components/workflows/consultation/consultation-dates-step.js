@@ -46,7 +46,7 @@ define([
             } else {
                 nameCardTile = nameCard.tiles()[0];
             }
-            nameCardTile.data[self.consultationNameNodeId](self.concatName());
+            nameCardTile.data[self.consultationNameNodeId]({"en": {"direction": "ltr", "value": self.concatName()}});
             nameCardTile.transactionId = self.workflowId;
             return nameCardTile.save();
         };
