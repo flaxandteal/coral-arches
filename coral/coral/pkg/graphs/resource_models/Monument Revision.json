@@ -8,7 +8,14 @@
                     "cardid": "42632b18-eabf-11ed-9e22-72d420f37f11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "42632b18-eabf-11ed-9e22-72d420f37f11",
+                            "constraintid": "fc847524-11e9-4c40-9bf0-631df65b19b9",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": null,
                     "graph_id": "4262df46-eabf-11ed-9e22-72d420f37f11",
@@ -22,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Descriptions"
                     },
@@ -49,7 +56,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Consultations"
                     },
@@ -62,7 +69,14 @@
                     "cardid": "42633fd6-eabf-11ed-9e22-72d420f37f11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "42633fd6-eabf-11ed-9e22-72d420f37f11",
+                            "constraintid": "4bd4baf9-aa87-4ecb-8839-85fef25b1c82",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "4262df46-eabf-11ed-9e22-72d420f37f11",
@@ -76,7 +90,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -157,7 +171,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Components"
                     },
@@ -184,7 +198,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -211,7 +225,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Images"
                     },
@@ -294,7 +308,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Scientific Date Assignment"
                     },
@@ -377,7 +391,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Monument Names"
                     },
@@ -413,7 +427,7 @@
                     "instructions": {
                         "en": "Use to record any designation or protection regimes directly associated with the application area."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Designation and Protection Assignment"
                     },
@@ -440,7 +454,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Construction Phases"
                     },
@@ -469,7 +483,7 @@
                     "instructions": {
                         "en": "Administrative, geopolitical areas, localities, and other areas (e.g.: Research or zoning areas)  "
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Localities/Administrative Areas"
                     },
@@ -498,7 +512,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Land Use Classification Assignment"
                     },
@@ -534,7 +548,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Geometry"
                     },
@@ -588,7 +602,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Area Assignments"
                     },
@@ -615,7 +629,7 @@
                     "instructions": {
                         "en": "Used to record the postal address of a resource."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Addresses"
                     },
@@ -684,7 +698,14 @@
                     "cardid": "42640682-eabf-11ed-9e22-72d420f37f11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "42640682-eabf-11ed-9e22-72d420f37f11",
+                            "constraintid": "4ed85acd-87d7-43a3-90f0-fbde35f6a1d7",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "4262df46-eabf-11ed-9e22-72d420f37f11",
@@ -698,7 +719,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Data"
                     },
@@ -725,7 +746,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Spatial Record Authorization"
                     },
@@ -860,7 +881,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Spatial Metadata Descriptions"
                     },
@@ -887,7 +908,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Current Base Map"
                     },
@@ -941,7 +962,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Archives"
                     },
@@ -995,7 +1016,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Bibliographic Source Citation"
                     },
@@ -1022,7 +1043,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Use Phase"
                     },
@@ -13250,7 +13271,7 @@
             "functions_x_graphs": [],
             "graphid": "4262df46-eabf-11ed-9e22-72d420f37f11",
             "iconclass": "fa fa-bank",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -13258,7 +13279,7 @@
             },
             "nodegroups": [
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "4262ef4a-eabf-11ed-9e22-72d420f37f11",
                     "parentnodegroup_id": null
@@ -13270,7 +13291,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "42633a18-eabf-11ed-9e22-72d420f37f11",
                     "parentnodegroup_id": null
@@ -13354,7 +13375,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "4263afc0-eabf-11ed-9e22-72d420f37f11",
                     "parentnodegroup_id": "426401a0-eabf-11ed-9e22-72d420f37f11"
@@ -13402,7 +13423,7 @@
                     "parentnodegroup_id": "426401a0-eabf-11ed-9e22-72d420f37f11"
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "426401a0-eabf-11ed-9e22-72d420f37f11",
                     "parentnodegroup_id": null
@@ -19046,10 +19067,10 @@
                         },
                         "options": [
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             },
                             {
@@ -19060,10 +19081,10 @@
                                 }
                             },
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             }
                         ]
@@ -19247,10 +19268,10 @@
                         },
                         "options": [
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             },
                             {
@@ -19261,10 +19282,10 @@
                                 }
                             },
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             }
                         ]
@@ -22976,7 +22997,13 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": null,
+            "publication": {
+                "graph_id": "4262df46-eabf-11ed-9e22-72d420f37f11",
+                "notes": "cardinality for administrative areas",
+                "publicationid": "0ef6c4b2-f0bc-11ed-a02a-72d420f37f11",
+                "published_time": "2023-05-12T11:56:41.392",
+                "user_id": 1
+            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
