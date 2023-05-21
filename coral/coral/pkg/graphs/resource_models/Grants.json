@@ -508,49 +508,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "fa48a9e4-ec07-11ed-b9ad-72d420f37f11",
-                    "component_id": "2f9054d8-de57-45cd-8a9c-58bbb1619030",
-                    "config": {
-                        "groupedCardIds": [
-                            "54df7cb6-8895-11ea-9e13-f875a44e0e11",
-                            "7400751c-8895-11ea-9130-f875a44e0e11",
-                            "599d7e71-eec2-11eb-89d0-a87eeabdefba"
-                        ],
-                        "sortedWidgetIds": [
-                            "771bb1e2-8895-11ea-8446-f875a44e0e11",
-                            "976c86a4-9528-11ea-b735-f875a44e0e11",
-                            "54de6acc-8895-11ea-9067-f875a44e0e11",
-                            "dd3a3dec-952b-11ea-963b-f875a44e0e11",
-                            "73fdfe62-8895-11ea-a058-f875a44e0e11",
-                            "06e3237a-952c-11ea-b727-f875a44e0e11",
-                            "599d7e73-eec2-11eb-b6cc-a87eeabdefba",
-                            "599d7e72-eec2-11eb-b7e5-a87eeabdefba"
-                        ]
-                    },
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": null,
-                    "graph_id": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "Consultation Type"
-                    },
-                    "nodegroup_id": "fa48a318-ec07-11ed-b9ad-72d420f37f11",
-                    "sortorder": 10,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "fa48b38a-ec07-11ed-b9ad-72d420f37f11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -4245,84 +4202,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "fa48a9e4-ec07-11ed-b9ad-72d420f37f11",
-                    "config": {
-                        "defaultValue": null,
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Consultation Type",
-                        "options": [
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "6fa135d9-b04f-4bcc-a7b2-acd23ca6c6de",
-                                "id": "149cfc01-b873-4ab6-b674-d0fd496697cb",
-                                "sortorder": "",
-                                "text": "Condition Application"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "288d42c2-24a8-4939-8d65-504a3b4875f0",
-                                "id": "aa300ced-4a3c-4f14-b285-fc203910a374",
-                                "sortorder": "",
-                                "text": "Non-Planning Application"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "eaf2a776-9555-47b1-b1c4-3da0a01046dc",
-                                "id": "efffa84c-2bdd-415a-b099-c7a436d34e5e",
-                                "sortorder": "",
-                                "text": "Post-Application"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "2492b491-969b-4996-942c-79661c48cfc0",
-                                "id": "4769c40b-9bae-496b-aec1-8148db6ad172",
-                                "sortorder": "",
-                                "text": "Pre-Application"
-                            }
-                        ],
-                        "placeholder": {
-                            "en": "Select an option"
-                        },
-                        "url": "/concepts/dropdown?conceptid=14339cdc-46db-4ee6-b359-93e5e5bae5fb"
-                    },
-                    "id": "fa4ba55e-ec07-11ed-b9ad-72d420f37f11",
-                    "label": {
-                        "en": "Consultation Type"
-                    },
-                    "node_id": "fa48a318-ec07-11ed-b9ad-72d420f37f11",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000009"
-                },
-                {
-                    "card_id": "fa48a9e4-ec07-11ed-b9ad-72d420f37f11",
-                    "config": {
-                        "defaultValue": "33bc5cb8-8b69-4626-addb-5219adb5e467",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Consultation Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "fa4ba860-ec07-11ed-b9ad-72d420f37f11",
-                    "label": {
-                        "en": "Consultation Metatype"
-                    },
-                    "node_id": "fa4a52a8-ec07-11ed-b9ad-72d420f37f11",
-                    "sortorder": 1,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
                     "card_id": "fa48b38a-ec07-11ed-b9ad-72d420f37f11",
                     "config": {
                         "defaultValue": null,
@@ -7461,53 +7340,6 @@
             ],
             "color": "rgba(159,29,34,1)",
             "config": {
-                "activeTabIndex": 0,
-                "tabs": [
-                    {
-                        "header_component": "report-header-map",
-                        "icon": "fa fa-tags",
-                        "name": "Summary Report",
-                        "nodegroup_ids": [
-                            "8d41e4ba-a250-11e9-9b20-00224800b26d",
-                            "8d41e4c0-a250-11e9-a7e3-00224800b26d",
-                            "8d41e4a8-a250-11e9-aff0-00224800b26d",
-                            "58a2b98f-a255-11e9-9a30-00224800b26d",
-                            "8d41e4b7-a250-11e9-9b6c-00224800b26d",
-                            "c32c7b62-a30f-11e9-a8f2-00224800b26d",
-                            "8d41e4b1-a250-11e9-96d3-00224800b26d"
-                        ],
-                        "side_component": "consultations-status"
-                    },
-                    {
-                        "icon": "fa fa-building",
-                        "name": "Conditions/Mitigations",
-                        "nodegroup_ids": [
-                            "8d41e4bd-a250-11e9-89e8-00224800b26d",
-                            "8d41e49f-a250-11e9-b6b3-00224800b26d",
-                            "8d41e4ae-a250-11e9-8c00-00224800b26d"
-                        ],
-                        "side_component": "consultations-conditions-mitigations"
-                    },
-                    {
-                        "empty_component": "consultations-site-visit-empty",
-                        "icon": "fa fa-clipboard",
-                        "main_component": "consultations-site-visit-main",
-                        "name": "Site Visits",
-                        "nodegroup_ids": [
-                            "066cb8f0-a251-11e9-85d5-00224800b26d"
-                        ],
-                        "side_component": "consultations-site-visits-summary"
-                    },
-                    {
-                        "icon": "fa fa-comment",
-                        "name": "Communications",
-                        "nodegroup_ids": [
-                            "caf5bff1-a3d7-11e9-aa28-00224800b26d",
-                            "8d41e4b4-a250-11e9-993d-00224800b26d"
-                        ],
-                        "side_component": "consultations-communications-summary"
-                    }
-                ]
             },
             "deploymentdate": null,
             "deploymentfile": null,
@@ -10346,242 +10178,242 @@
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "066cb8f0-a251-11e9-85d5-00224800b26d",
+                    "nodegroupid": "2e4aee02-8205-40b9-9bf2-8b3db079fa4a",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "152aa058-936d-11ea-b517-f875a44e0e11",
+                    "nodegroupid": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
+                    "nodegroupid": "f7e3c09e-bc2b-4138-bdc6-ad14fdc865dc",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "22657c39-ee0e-11eb-aa25-a87eeabdefba",
+                    "nodegroupid": "e16a2903-1619-4dc0-a097-4e94044f41a7",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "3a79a0dd-4535-11eb-b88f-f875a44e0e11",
-                    "parentnodegroup_id": "066cb8f0-a251-11e9-85d5-00224800b26d"
+                    "nodegroupid": "35e990c1-0745-4c76-a36b-0ec9e0e6d9bb",
+                    "parentnodegroup_id": "2e4aee02-8205-40b9-9bf2-8b3db079fa4a"
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "3b500555-eec2-11eb-b785-a87eeabdefba",
+                    "nodegroupid": "6dcaab3e-aecb-46ea-a680-ae3a77ecb673",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
+                    "nodegroupid": "1448d37d-9ae1-4df7-9040-7699a1ffc9bf",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "44532175-2007-11ea-9976-c4d9877d154e",
+                    "nodegroupid": "9761109f-dcaf-4588-9a5f-47c2be583441",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "4912e29f-edf2-11eb-bf42-a87eeabdefba",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "n",
-                    "legacygroupid": null,
-                    "nodegroupid": "4ad66f55-951f-11ea-b2e2-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "54de6acc-8895-11ea-9067-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "599d7da2-eec2-11eb-9575-a87eeabdefba",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "6246123b-3ee4-11eb-bc52-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "6a773228-db20-11e9-b6dd-784f435179ea",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "73fdfe62-8895-11ea-a058-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "771bb1e2-8895-11ea-8446-f875a44e0e11",
+                    "nodegroupid": "6bb6d383-a0af-486d-9319-a2914ead6307",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
+                    "nodegroupid": "b76b3d4a-4f18-43c6-83ce-26f86155868a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "a97ca2c0-af31-4958-8af1-c3fee15fcdd2",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "5040e264-bda2-4df7-b60e-eb48b961f7a5",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "00b238aa-7047-48e2-af42-6a8d76d3dd2c",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "2f3a3c81-7de5-47e0-b5e3-607501ebf883",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "b900b8d7-4ce0-4c17-bf4c-d07a95c4267a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "5041e923-4605-4e86-a53c-9d129be77b11",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "546585fe-8328-4085-83ac-e0498dfdb5c5",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "750dc935-3b02-4fff-bb2f-29ac580d6b70",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "8d41e49f-a250-11e9-b6b3-00224800b26d",
+                    "nodegroupid": "81e5feee-96e0-4cd8-82d2-8dbab40b18a2",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "8d41e4a2-a250-11e9-82f1-00224800b26d",
+                    "nodegroupid": "2e985b76-49e7-414c-aa91-975a89c6f239",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "8d41e4b4-a250-11e9-993d-00224800b26d",
+                    "nodegroupid": "6284fc19-ac92-4084-b5d2-edb399993675",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "8d41e4b7-a250-11e9-9b6c-00224800b26d",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "8d41e4c3-a250-11e9-b348-00224800b26d",
+                    "nodegroupid": "29bc2743-ab9e-448a-a473-8587b4ccc956",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "a2b47f25-938d-11ea-82cb-f875a44e0e11",
-                    "parentnodegroup_id": "066cb8f0-a251-11e9-85d5-00224800b26d"
-                },
-                {
-                    "cardinality": "n",
-                    "legacygroupid": null,
-                    "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "n",
-                    "legacygroupid": null,
-                    "nodegroupid": "ab622f1f-a251-11e9-bda5-00224800b26d",
-                    "parentnodegroup_id": "066cb8f0-a251-11e9-85d5-00224800b26d"
-                },
-                {
-                    "cardinality": "n",
-                    "legacygroupid": null,
-                    "nodegroupid": "b31a7fe3-d2c8-11ec-8614-a87eeabdefba",
+                    "nodegroupid": "4b6c36e2-506d-4d94-9a48-290d00acc35e",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b3addca4-8882-11ea-acc1-f875a44e0e11",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b948de31-184f-11eb-87d5-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b948de3c-184f-11eb-8cdb-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b948de3e-184f-11eb-9663-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b9490519-184f-11eb-81e6-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b949051c-184f-11eb-b462-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b9490523-184f-11eb-bd34-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b9490529-184f-11eb-9ada-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b9490532-184f-11eb-9877-f875a44e0e11",
-                    "parentnodegroup_id": "152aa058-936d-11ea-b517-f875a44e0e11"
-                },
-                {
-                    "cardinality": "n",
-                    "legacygroupid": null,
-                    "nodegroupid": "caf5bff1-a3d7-11e9-aa28-00224800b26d",
+                    "nodegroupid": "b57a88d9-3d2f-44b3-88d7-df0d71de39f5",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "f5ecfbca-938b-11ea-865d-f875a44e0e11",
-                    "parentnodegroup_id": "066cb8f0-a251-11e9-85d5-00224800b26d"
+                    "nodegroupid": "210094ac-ab36-42aa-9e06-33bbdd88b0fc",
+                    "parentnodegroup_id": "2e4aee02-8205-40b9-9bf2-8b3db079fa4a"
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "e7071687-564f-440f-b9bb-b5c5188ca490",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "c29fcdcd-8df1-4fe4-b405-d97ba908db71",
+                    "parentnodegroup_id": "2e4aee02-8205-40b9-9bf2-8b3db079fa4a"
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "8dfdd97e-20b3-4fff-85a1-992d72acab53",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "42971f44-17aa-4c41-9149-07ab4445a8b4",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "b689eeeb-f162-44ec-b5cf-220c8795ba00",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "215c2ddb-d8b8-458f-8b10-e836e4cf7be8",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "44af16c4-7152-4e5f-b5b0-b7f6f3f34396",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "022056f8-600a-47d4-a46c-f5b987a6d59e",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "c2ce6668-f761-4edd-bed7-da2cfb6e81fd",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "76889179-f819-4914-afa5-45228b312cc7",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "9661379e-f48e-4d11-99fc-cf84abc5bc5e",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "43275fd2-3feb-4c5d-a9b4-82d82f15ff3b",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "d03a8e4f-4748-4820-8410-4d32f0ff0011",
+                    "parentnodegroup_id": "ff0264fb-abec-47ee-acb6-b3a4d9a6733c"
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "852b3124-2305-430e-9ea3-f86db49fcc03",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "dc99ee97-906a-41a1-ac1f-8cff3633b50f",
+                    "parentnodegroup_id": "2e4aee02-8205-40b9-9bf2-8b3db079fa4a"
                 }
             ],
             "nodes": [
@@ -17598,13 +17430,6 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": {
-                "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                "notes": null,
-                "publicationid": "a848851a-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:39:01.934",
-                "user_id": 1
-            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
