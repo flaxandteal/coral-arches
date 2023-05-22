@@ -200,6 +200,9 @@ class ResourceModelWrapper:
         if "." in key:
             node, prop = key.split(".")
             typ = self._nodes[node]["type"]
+            if not typ.startswith("@"):
+                raise RuntimeError("Relationship must be with a resource model, not e.g. a primitive type")
+            typ = typ[1:]
             datum = {}
             datum["wkriFrom"] = self
             datum["wkriFromKey"] = node
@@ -427,6 +430,7 @@ class ResourceModelWrapper:
             self.resource = Resource.objects.get(resourceinstanceid=self.id)
         tiles = TileModel.objects.filter(resourceinstance_id=self.id)
         self.resource.load_tiles()
+        datatype_factory = DataTypeFactory()
         for tile in self.resource.tiles:
             semantic_values = {}
             semantic_node = None
@@ -449,46 +453,51 @@ class ResourceModelWrapper:
                     else:
                         values = all_values
 
-                    if not isinstance(typ, str):
-                        if typ == str or typ == [str]:
-                            if lang is not None and tile.data[nodeid] is not None:
-                                text = tile.data[nodeid][lang]["value"]
-                            else:
-                                text = tile.data[nodeid]
-                            if typ == [str]:
-                                values.setdefault(key, [])
-                                values[key].append(text)
-                            else:
-                                values[key] = text
-                        elif typ == int:
-                            values[key] = tile.data[nodeid]
-                        elif typ == date:
-                            values[key] = tile.data[nodeid]
-                        elif typ == datetime:
-                            values[key] = tile.data[nodeid]
-                        elif typ == EDTFDataType:
-                            values[key] = tile.data[nodeid]
-                        elif typ == settings.GeoJSON:
-                            values[key] = tile.data[nodeid]
-                        elif typ == settings.Concept:
-                            values[key] = tile.data[nodeid]
-                        elif typ == [settings.Concept]:
-                            values[key] = tile.data[nodeid]
+                    if typ == str or typ == [str]:
+                        if lang is not None and tile.data[nodeid] is not None:
+                            text = tile.data[nodeid][lang]["value"]
                         else:
-                            raise NotImplementedError(f"{key} {typ}")
-                    elif typ in _resource_models:
-                        if isinstance(tile.data[nodeid], list):
-                            values[key] = RelationList(self, key, nodeid, tile.tileid)
-                            for datum in tile.data[nodeid]:
-                                related_resource = Resource(datum["resourceId"])
-                                values[key].append(
-                                    get_well_known_resource_model_by_class_name(typ).from_resource(related_resource, x=datum, lazy=True)
-                                )
-                        elif tile.data[nodeid]:
-                            related_resource = Resource(tile.data[nodeid])
-                            values[key] = get_well_known_resource_model_by_class_name(typ).from_resource(related_resource, lazy=True)
+                            text = tile.data[nodeid]
+                        if typ == [str]:
+                            values.setdefault(key, [])
+                            values[key].append(text)
+                        else:
+                            values[key] = text
+                    elif typ == int:
+                        values[key] = tile.data[nodeid]
+                    elif typ == date:
+                        values[key] = tile.data[nodeid]
+                    elif typ == datetime:
+                        values[key] = tile.data[nodeid]
+                    elif typ == EDTFDataType:
+                        values[key] = tile.data[nodeid]
+                    elif typ == settings.GeoJSON:
+                        values[key] = tile.data[nodeid]
+                    elif typ == settings.Concept:
+                        values[key] = tile.data[nodeid]
+                    elif typ == [settings.Concept]:
+                        values[key] = tile.data[nodeid]
+                    elif isinstance(typ, str):
+                        if typ.startswith("@") and typ[1:] in _resource_models:
+                            if isinstance(tile.data[nodeid], list):
+                                values[key] = RelationList(self, key, nodeid, tile.tileid)
+                                for datum in tile.data[nodeid]:
+                                    related_resource = Resource(datum["resourceId"])
+                                    values[key].append(
+                                        get_well_known_resource_model_by_class_name(typ).from_resource(related_resource, x=datum, lazy=True)
+                                    )
+                            elif tile.data[nodeid]:
+                                related_resource = Resource(tile.data[nodeid])
+                                values[key] = get_well_known_resource_model_by_class_name(typ).from_resource(related_resource, lazy=True)
+                        else:
+                            try:
+                                datatype_factory.get_instance(typ)
+                            except:
+                                raise NotImplementedError(f"{key} {typ}")
+                            else:
+                                values[key] = tile.data[nodeid]
                     else:
-                        raise NotImplementedError()
+                        raise NotImplementedError(f"{key} {typ}")
             if semantic_node:
                 all_values.setdefault(semantic_node, [])
                 all_values[semantic_node].append(semantic_values)
@@ -544,8 +553,14 @@ class ResourceModelWrapper:
         ]
 
     def _update_tiles(self, tiles, values, tiles_to_remove, prefix=None):
+        datatype_factory = DataTypeFactory()
+
         relationships = []
         for key, node in self._nodes.items():
+            if node["nodeid"] not in self._nodes_loaded:
+                self._nodes_loaded[node["nodeid"]] = Node.objects.get(nodeid=node["nodeid"])
+            loaded_node = self._nodes_loaded[node["nodeid"]]
+
             if prefix is not None:
                 if not key.startswith(prefix):
                     continue
@@ -607,9 +622,6 @@ class ResourceModelWrapper:
                 elif typ == date:
                     single = True
                     value = datetime.strptime(value, "%Y-%m-%d").strftime("%Y-%m-%d")
-                elif typ == EDTFDataType:
-                    single = True
-                    value = str(parse_edtf(value))
                 elif typ == datetime:
                     single = True
                     value = datetime.fromisoformat(value).isoformat()
@@ -629,6 +641,10 @@ class ResourceModelWrapper:
                         value = [{node["lang"]: {"value": text, "direction": "ltr"}} for text in value]
                     else:
                         raise NotImplementedError("Unknown type")
+                elif isinstance(typ, str):
+                    single = True
+                    datatype_instance = datatype_factory.get_instance(typ)
+                    value = datatype_instance.transform_value_for_tile(value, **loaded_node.config)
                 if single:
                     multiple_values: list = [value]
                 else:
@@ -762,6 +778,7 @@ class ResourceModelWrapper:
         cls.graphid = well_known_resource_model.graphid
         cls._wkrm = well_known_resource_model
         cls._nodes = well_known_resource_model.nodes
+        cls._nodes_loaded = {}
         cls.post_save = Signal()
 
 @receiver(post_save, sender=Tile)
