@@ -63,10 +63,10 @@ class DataTypes:
         return value
 
     def _build_related(self, nodeid, related_field, model_name):
+        node = models.Node.objects.get(nodeid=nodeid)
         if nodeid not in self.related_nodes:
             assert str(nodeid) in self.node_datatypes and self.node_datatypes[str(nodeid)].startswith("resource-instance")
             self.related_nodes[nodeid] = {}
-            node = models.Node.objects.get(nodeid=nodeid)
             logging.error("N %s %s", str(node), str(node.config))
             self.related_nodes[nodeid] = {
                 "name": related_field,
