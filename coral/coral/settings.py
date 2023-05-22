@@ -10,6 +10,7 @@ import inspect
 from datetime import datetime, date
 import json
 from django.utils.translation import gettext_lazy as _
+from arches.app.datatypes.datatypes import EDTFDataType, GeojsonFeatureCollectionDataType
 
 try:
     from arches.settings import *
@@ -23,9 +24,6 @@ class Concept:
     pass
 
 class GeoJSON:
-    pass
-
-class EDTF:
     pass
 
 APP_NAME = 'coral'
@@ -71,7 +69,7 @@ if WELL_KNOWN_MAPPING_FILE:
                     elif field["type"] == "date":
                         field["type"] = date
                     elif field["type"] == "edtf":
-                        field["type"] = EDTF
+                        field["type"] = EDTFDataType
                     elif field["type"] == "geojson":
                         field["type"] = GeoJSON
                     elif field["type"] == "datetime":

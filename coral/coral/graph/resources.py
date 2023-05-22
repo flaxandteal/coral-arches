@@ -29,7 +29,7 @@ from arches.app.datatypes.concept_types import ConceptDataType, ConceptListDataT
 from arches.app.datatypes.datatypes import ResourceInstanceDataType
 import asyncio
 
-from arches.app.datatypes.datatypes import DataTypeFactory, GeojsonFeatureCollectionDataType
+from arches.app.datatypes.datatypes import DataTypeFactory, EDTFDataType, GeojsonFeatureCollectionDataType
 
 import slugify
 
@@ -233,6 +233,8 @@ class DataTypes:
                     return union
             elif isinstance(datatype_instance, GeojsonFeatureCollectionDataType):
                 return graphene.JSONString()
+            elif isinstance(datatype_instance, EDTFDataType):
+                return graphene.String()
 
     def to_graphene(self, info, field, model_class_name):
         if "type" in info:
@@ -291,6 +293,8 @@ class DataTypes:
                     return graphene.List(partial(_make_union, graphs))
             elif isinstance(datatype_instance, GeojsonFeatureCollectionDataType):
                 return graphene.JSONString()
+            elif isinstance(datatype_instance, EDTFDataType):
+                return graphene.String()
 
 data_types = DataTypes()
 

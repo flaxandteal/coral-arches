@@ -22,6 +22,7 @@ from arches.app.models.concept import get_preflabel_from_valueid
 from arches.app.models.tile import Tile as TileProxyModel
 from coral import settings
 from arches.app.models.system_settings import settings as system_settings
+from arches.app.datatypes.datatypes import EDTFDataType, GeojsonFeatureCollectionDataType
 #from arches.app.models import TileModel
 
 STAGING_TEST = False
@@ -465,7 +466,7 @@ class ResourceModelWrapper:
                             values[key] = tile.data[nodeid]
                         elif typ == datetime:
                             values[key] = tile.data[nodeid]
-                        elif typ == settings.EDTF:
+                        elif typ == EDTFDataType:
                             values[key] = tile.data[nodeid]
                         elif typ == settings.GeoJSON:
                             values[key] = tile.data[nodeid]
@@ -606,7 +607,7 @@ class ResourceModelWrapper:
                 elif typ == date:
                     single = True
                     value = datetime.strptime(value, "%Y-%m-%d").strftime("%Y-%m-%d")
-                elif typ == settings.EDTF:
+                elif typ == EDTFDataType:
                     single = True
                     value = str(parse_edtf(value))
                 elif typ == datetime:
