@@ -430,6 +430,7 @@ class ResourceModelWrapper:
             self.resource = Resource.objects.get(resourceinstanceid=self.id)
         tiles = TileModel.objects.filter(resourceinstance_id=self.id)
         self.resource.load_tiles()
+        from arches.app.datatypes.datatypes import DataTypeFactory
         datatype_factory = DataTypeFactory()
         for tile in self.resource.tiles:
             semantic_values = {}
@@ -553,6 +554,7 @@ class ResourceModelWrapper:
         ]
 
     def _update_tiles(self, tiles, values, tiles_to_remove, prefix=None):
+        from arches.app.datatypes.datatypes import DataTypeFactory
         datatype_factory = DataTypeFactory()
 
         relationships = []
