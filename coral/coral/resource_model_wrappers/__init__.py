@@ -166,9 +166,10 @@ class ResourceModelWrapper:
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
         return wkfm, cross, resource
 
-    def __init__(self, id=None, resource=None, x=None, filled=True, lazy=False, **kwargs):
+    def __init__(self, id=None, _new_id=None, resource=None, x=None, filled=True, lazy=False, **kwargs):
         self._values = {}
         self.id = id
+        self._new_id = _new_id
         self.resource = resource
         self._cross_record = x
         self._filled = filled
@@ -231,7 +232,11 @@ class ResourceModelWrapper:
             for (value, wkrm_fm, wkrm) in wkrms:
                 if not wkrm_fm.id:
                     if not wkrm_fm.resource.resourceinstanceid:
-                        wkrm_fm.resource.resourceinstanceid = uuid.uuid4()
+                        if wkrm_fm._new_id:
+                            new_id = uuid.UUID(wkrm_fm._new_id)
+                        else:
+                            new_id = uuid.uuid4()
+                        wkrm_fm.resource.resourceinstanceid = new_id
                     wkrm_fm.id = wkrm_fm.resource.resourceinstanceid
                     new_wkrms.append(wkrm_fm)
 
@@ -335,6 +340,10 @@ class ResourceModelWrapper:
 
     @classmethod
     def create(cls, _no_save=False, **kwargs):
+        # If an ID is supplied, it should be treated as desired, not existing.
+        if "id" in kwargs:
+            kwargs["_new_id"] = kwargs["id"]
+            del kwargs["id"]
         inst = cls.build(**kwargs)
         inst.to_resource(_no_save=_no_save)
         return inst
