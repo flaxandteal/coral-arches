@@ -25,6 +25,9 @@ class Concept:
 class GeoJSON:
     pass
 
+class EDTF:
+    pass
+
 APP_NAME = 'coral'
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 APP_PATHNAME = os.getenv("APP_PATHNAME", "")
@@ -67,6 +70,8 @@ if WELL_KNOWN_MAPPING_FILE:
                         field["type"] = int
                     elif field["type"] == "date":
                         field["type"] = date
+                    elif field["type"] == "edtf":
+                        field["type"] = EDTF
                     elif field["type"] == "geojson":
                         field["type"] = GeoJSON
                     elif field["type"] == "datetime":

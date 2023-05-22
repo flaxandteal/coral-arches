@@ -2,6 +2,7 @@ import logging
 from django.db import transaction
 import uuid
 from datetime import datetime, date, time
+from edtf import parse_edtf
 import collections
 from arches.app.search.components.base import SearchFilterFactory
 from arches.app.search.search_engine_factory import SearchEngineFactory
@@ -455,6 +456,8 @@ class ResourceModelWrapper:
                             values[key] = tile.data[nodeid]
                         elif typ == datetime:
                             values[key] = tile.data[nodeid]
+                        elif typ == settings.EDTF:
+                            values[key] = tile.data[nodeid]
                         elif typ == settings.GeoJSON:
                             values[key] = tile.data[nodeid]
                         elif typ == settings.Concept:
@@ -594,6 +597,9 @@ class ResourceModelWrapper:
                 elif typ == date:
                     single = True
                     value = datetime.strptime(value, "%Y-%m-%d").strftime("%Y-%m-%d")
+                elif typ == settings.EDTF:
+                    single = True
+                    value = str(parse_edtf(value))
                 elif typ == datetime:
                     single = True
                     value = datetime.fromisoformat(value).isoformat()
