@@ -12,6 +12,7 @@ asciitree
 starlette<=0.20.0
 typing_extensions<4.0
 starlette-graphene3
+starlette-context
 uvicorn<=0.14.0
 click<8
 graphene_file_upload

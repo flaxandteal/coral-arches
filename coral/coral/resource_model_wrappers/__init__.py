@@ -1,9 +1,13 @@
 import logging
-from django.db import transaction
+import json
+from django.db import transaction, connection
 import uuid
 from datetime import datetime, date, time
+import time as time_mod
 from edtf import parse_edtf
 import collections
+from arches.app.utils.betterJSONSerializer import JSONSerializer
+from functools import cached_property, lru_cache
 from arches.app.search.components.base import SearchFilterFactory
 from arches.app.search.search_engine_factory import SearchEngineFactory
 from arches.app.views.search import get_resource_model_label, RESOURCES_INDEX
@@ -23,9 +27,11 @@ from arches.app.models.tile import Tile as TileProxyModel
 from coral import settings
 from arches.app.models.system_settings import settings as system_settings
 from arches.app.datatypes.datatypes import EDTFDataType, GeojsonFeatureCollectionDataType
+from ._bulk_create import BulkImportWKRM
 #from arches.app.models import TileModel
 
 STAGING_TEST = False
+COUNT = 0
 
 
 class RelationList(collections.UserList):
@@ -77,6 +83,8 @@ class ResourceModelWrapper:
     _cross_record: dict = None
     _lazy: bool = False
     _filled: bool = False
+    __datatype_factory = None
+    __node_datatypes = None
     resource: Resource
 
     def __getitem__(self, key):
@@ -172,6 +180,8 @@ class ResourceModelWrapper:
         self.id = id
         self._new_id = _new_id
         self.resource = resource
+        self._document = None
+        self._terms = None
         self._cross_record = x
         self._filled = filled
         self._lazy = lazy
@@ -224,132 +234,27 @@ class ResourceModelWrapper:
             return key, arg
 
     @classmethod
-    def create_bulk(cls, fields: list):
-        requested_wkrms = [(None, cls.create(_no_save=True, **field_set), None) for field_set in fields]
-        all_wkrms = [requested_wkrms]
-        while (relationships := sum([wkrm._pending_relationships for _, wkrm, _ in all_wkrms[0]], [])):
-            all_wkrms = [relationships] + all_wkrms
-
-        crosses = []
-        new_wkrms = []
-        for wkrms in all_wkrms[::-1]:
-            for (value, wkrm_fm, wkrm) in wkrms:
-                if not wkrm_fm.id:
-                    if not wkrm_fm.resource.resourceinstanceid:
-                        if wkrm_fm._new_id:
-                            new_id = uuid.UUID(wkrm_fm._new_id)
-                        else:
-                            new_id = uuid.uuid4()
-                        wkrm_fm.resource.resourceinstanceid = new_id
-                    wkrm_fm.id = wkrm_fm.resource.resourceinstanceid
-                    new_wkrms.append(wkrm_fm)
-
-                    for tile in wkrm_fm.resource.get_flattened_tiles():
-                        tile.resourceinstance = wkrm_fm.resource
-
-                # TODO: what happens if the cross already exists for some reason?
-                if wkrm:
-                    cross = ResourceXResource(
-                        resourceinstanceidfrom=wkrm_fm.resource,
-                        resourceinstanceidto=wkrm.resource,
-                        resourceinstancefrom_graphid=wkrm_fm.resource.graph,
-                        resourceinstanceto_graphid=wkrm.resource.graph,
-                        created=datetime.now(),
-                        modified=datetime.now()
-                    )
-        # during package/csv load the ResourceInstance models are not always available
-                    crosses.append(cross)
-
-                if value is not None and not value.get("resourceXresourceId", False):
-                    value.update(
-                        {
-                            "resourceId": str(wkrm_fm.resource.resourceinstanceid),
-                            "ontologyProperty": "",
-                            "resourceXresourceId": str(cross.resourcexid),
-                            "inverseOntologyProperty": ""
-                        }
-                    )
-
-        transaction_id = uuid.uuid1()
-        with transaction.atomic():
-            bypass = system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION
-            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = True
-
-            Resource.bulk_save([wkrm.resource for wkrm in new_wkrms], transaction_id=transaction_id)
-
-            tiles = []
-            for wkrm in new_wkrms:
-                resource = wkrm.resource
-                resource.tiles = resource.get_flattened_tiles()
-                tiles.extend(resource.tiles)
-            #Resource.objects.bulk_create(resources)
-            #TileModel.objects.bulk_create(tiles)
-            #for resource in resources:
-            #    resource.save_edit(edit_type="create", transaction_id=transaction_id)
-
-            #resources[0].tiles[0].save_edit(
-            #    note=f"Bulk created: {len(tiles)} for {len(resources)} resources.", edit_type="bulk_create", transaction_id=transaction_id
-            #)
-
-            #print("Time to save resource edits: %s" % datetime.timedelta(seconds=time() - start))
-
-            #for resource in resources:
-            #    start = time()
-            #    document, terms = resource.get_documents_to_index(
-            #        fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
-            #    )
-
-            #    documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
-
-            #    for term in terms:
-            #        term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
-
-            #se.bulk_index(documents)
-            #se.bulk_index(term_list)
-            #
-            #TODO loadid = int(time.time())
-            #TODO for tile in tiles:
-            #TODO     cursor.execute(
-            #TODO         """
-            #TODO         INSERT INTO load_staging (
-            #TODO             nodegroupid,
-            #TODO             legacyid,
-            #TODO             resourceid,
-            #TODO             tileid,
-            #TODO             value,
-            #TODO             loadid,
-            #TODO             nodegroup_depth,
-            #TODO             source_description,
-            #TODO             passes_validation
-            #TODO         ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
-            #TODO         (
-            #TODO             nodegroup,
-            #TODO             legacyid,
-            #TODO             resourceid,
-            #TODO             tileid,
-            #TODO             tile_value_json,
-            #TODO             loadid,
-            #TODO             node_depth,
-            #TODO             csv_file_name,
-            #TODO             passes_validation,
-            #TODO         ),
-            #TODO     )
-
-            #TODO cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [loadid])
-
-            ResourceXResource.objects.bulk_create(crosses)
-            system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
-
-        return [wkrm for _, wkrm, _ in requested_wkrms]
+    def create_bulk(cls, fields: list, do_index: bool = True):
+        requested_wkrms = []
+        for n, field_set in enumerate(fields):
+            try:
+                if n % 10 == 0:
+                    logging.info(f"create_bulk: {n} / {len(fields)}")
+                requested_wkrms.append(cls.create(_no_save=True, _do_index=do_index, **field_set))
+            except Exception as e:
+                logging.error(f"Failed item {n}")
+                raise
+        bulk_etl = BulkImportWKRM()
+        return bulk_etl.write(requested_wkrms, do_index=do_index)
 
     @classmethod
-    def create(cls, _no_save=False, **kwargs):
+    def create(cls, _no_save=False, _do_index=True, **kwargs):
         # If an ID is supplied, it should be treated as desired, not existing.
         if "id" in kwargs:
             kwargs["_new_id"] = kwargs["id"]
             del kwargs["id"]
         inst = cls.build(**kwargs)
-        inst.to_resource(_no_save=_no_save)
+        inst.to_resource(_no_save=_no_save, _do_index=_do_index)
         return inst
 
     @classmethod
@@ -422,6 +327,26 @@ class ResourceModelWrapper:
         resource = Resource(resourceinstance.resourceinstanceid)
         return cls.from_resource(resource, x=x)
 
+    @classmethod
+    @lru_cache
+    def _datatype(cls, nodeid):
+        datatype = cls._node_datatypes()[nodeid]
+        datatype_instance = cls._datatype_factory().get_instance(datatype)
+        return datatype, datatype_instance
+
+    @classmethod
+    def _datatype_factory(cls):
+        if cls.__datatype_factory is None:
+            from arches.app.datatypes.datatypes import DataTypeFactory
+            cls.__datatype_factory = DataTypeFactory()
+        return cls.__datatype_factory
+
+    @classmethod
+    def _node_datatypes(cls):
+        if cls.__node_datatypes is None:
+            cls.__node_datatypes = {str(nodeid): datatype for nodeid, datatype in Node.objects.values_list("nodeid", "datatype")}
+        return cls.__node_datatypes
+
     def fill_from_resource(self, reload=None):
         all_values = {}
         cls = self.__class__
@@ -430,8 +355,10 @@ class ResourceModelWrapper:
             self.resource = Resource.objects.get(resourceinstanceid=self.id)
         tiles = TileModel.objects.filter(resourceinstance_id=self.id)
         self.resource.load_tiles()
+        # This will expect initialized Django, so we do not do at module start
         from arches.app.datatypes.datatypes import DataTypeFactory
         datatype_factory = DataTypeFactory()
+
         for tile in self.resource.tiles:
             semantic_values = {}
             semantic_node = None
@@ -553,7 +480,37 @@ class ResourceModelWrapper:
             for tile in tiles
         ]
 
-    def _update_tiles(self, tiles, values, tiles_to_remove, prefix=None):
+
+    def _append_terms(self, document, terms, tile, nodevalue, node):
+        if not nodevalue:
+            return
+
+        datatype, datatype_instance = self._datatype(node["nodeid"])
+        if datatype == "resource-instance":
+            return # FIXME: index once they exist
+
+        nodeid = node["nodeid"]
+        datatype_instance.append_to_document(document, nodevalue, nodeid, tile)
+        node_terms = datatype_instance.get_search_terms(nodevalue, nodeid)
+
+        for index, term in enumerate(node_terms):
+            terms.append(
+                {
+                    "_id": str(nodeid) + str(tile.tileid) + str(index) + term.lang if hasattr(term, "lang") else "",
+                    "_source": {
+                        "value": term.value if hasattr(term, "value") else term,
+                        "nodeid": nodeid,
+                        "nodegroupid": tile.nodegroup_id,
+                        "tileid": tile.tileid,
+                        "language": term.lang if hasattr(term, "lang") else "",
+                        "resourceinstanceid": tile.resourceinstance_id,
+                        "provisional": False,
+                    },
+                }
+            )
+
+    def _update_tiles(self, tiles, values, tiles_to_remove, document, terms, prefix=None):
+        # This will expect initialized Django, so we do not do at module start
         from arches.app.datatypes.datatypes import DataTypeFactory
         datatype_factory = DataTypeFactory()
 
@@ -561,7 +518,7 @@ class ResourceModelWrapper:
         for key, node in self._nodes.items():
             if node["nodeid"] not in self._nodes_loaded:
                 self._nodes_loaded[node["nodeid"]] = Node.objects.get(nodeid=node["nodeid"])
-            loaded_node = self._nodes_loaded[node["nodeid"]]
+            loaded_node = self._nodes_loaded[node["nodeid"]] # FIXME: Duplicate
 
             if prefix is not None:
                 if not key.startswith(prefix):
@@ -596,7 +553,7 @@ class ResourceModelWrapper:
                         if tiles[node["nodegroupid"]] and not tiles[node["nodegroupid"]][0].data and tiles[node["nodegroupid"]][0].tiles:
                             subtiles[node["nodegroupid"]] = [tiles[node["nodegroupid"]][0]]
 
-                        relationships += self._update_tiles(subtiles, entry, tiles_to_remove, prefix=f"{key}/")
+                        relationships += self._update_tiles(subtiles, entry, tiles_to_remove, document, terms, prefix=f"{key}/")
                         if node["nodegroupid"] in subtiles:
                             tiles[node["nodegroupid"]] = list(set(tiles[node["nodegroupid"]]) | set(subtiles[node["nodegroupid"]]))
                     # We do not need to do anything here, because
@@ -629,7 +586,8 @@ class ResourceModelWrapper:
                     value = datetime.fromisoformat(value).isoformat()
                 elif typ == settings.GeoJSON:
                     single = True
-                    value["properties"] = {"nodeId": node["nodeid"]}
+                    if value:
+                        value["properties"] = {"nodeId": node["nodeid"]}
                 elif typ == settings.Concept:
                     single = True
                 elif typ == [settings.Concept]:
@@ -677,12 +635,12 @@ class ResourceModelWrapper:
                                 tile.parenttile = parent
                                 parent.tiles.append(tile)
                             tile.data.update(data)
+                            if document is not None:
+                                self._append_terms(document, terms, tile, value, node)
                             continue
                     #else:
                     #    tiles[node["nodegroupid"]] = []
                     #if (tile := tiles.get(str(node["nodegroupid"]), False)) != False:
-                    #    logging.error("%s", str(tile))
-                    #    logging.error("%s", str(tiles))
                     #    tile.data = data
                     #    if not tile.parenttile:
                     #        tile.parenttile = parent
@@ -692,13 +650,15 @@ class ResourceModelWrapper:
                         nodegroup_id=node["nodegroupid"],
                         parenttile=parent, tileid=None
                     ))
+                    if document is not None:
+                        self._append_terms(document, terms, tile, value, node)
                     tiles.setdefault(node["nodegroupid"], [])
                     tiles[node["nodegroupid"]].append(tile)
                     if parent:
                         parent.tiles.append(tile)
         return relationships
 
-    def to_resource(self, verbose=False, strict=False, _no_save=False, _known_new=False):
+    def to_resource(self, verbose=False, strict=False, _no_save=False, _known_new=False, _do_index=True):
         resource = Resource(resourceinstanceid=self.id, graph_id=self.graphid)
         tiles = {}
         if not _known_new:
@@ -706,7 +666,29 @@ class ResourceModelWrapper:
                 tiles.setdefault(tile.nodegroup_id, [])
                 tiles[tile.nodegroup_id].append(tile)
         tiles_to_remove = sum((ts for ts in tiles.values()), [])
-        relationships = self._update_tiles(tiles, self._values, tiles_to_remove)
+
+        if _do_index:
+            tmp_document = {}
+            tmp_document["resourceinstanceid"] = str(self.id or self._new_id)
+            tmp_document["strings"] = []
+            tmp_document["dates"] = []
+            tmp_document["domains"] = []
+            tmp_document["geometries"] = []
+            tmp_document["points"] = []
+            tmp_document["numbers"] = []
+            tmp_document["date_ranges"] = []
+            tmp_document["ids"] = []
+            terms = []
+        else:
+            tmp_document = None
+            terms = None
+        relationships = self._update_tiles(tiles, self._values, tiles_to_remove, tmp_document, terms)
+        self._terms = terms
+
+        if tmp_document is not None:
+            resource.tiles = []
+            self._document, _ = resource.get_documents_to_index(fetchTiles=False)
+            self._document.update(tmp_document)
 
         # parented tiles are saved hierarchically
         resource.tiles = [t for t in sum((ts for ts in tiles.values()), []) if not t.parenttile]

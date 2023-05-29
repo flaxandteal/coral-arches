@@ -148,7 +148,6 @@ class DataTypes:
                 assert len(graphs) == 1, f"Could not determine a unique type for this subgraph {field} of {model_name}"
                 wkrm = self.graphs[graphs[0]]
                 resources = [_build_resource(wkrm, **v) for v in vs]
-                logging.error("%s", str(resources))
                 return resources
 
             self.remapped[(model_name, field)] = partial(
