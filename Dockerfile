@@ -9,7 +9,8 @@ COPY entrypoint.sh ${WEB_ROOT}/
 COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
-    && pip install starlette-context \
+    && pip install starlette-graphene3
+RUN . ../ENV/bin/activate \
     && pip install cachetools websockets \
     && pip install -r ${WEB_ROOT}/${ARCHES_PROJECT}/requirements.txt --no-binary :all:
 
