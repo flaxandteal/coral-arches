@@ -509,7 +509,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         },
         arguments={
             "field_sets": graphene.List(ResourceInputObjectType),
-            "do_index": graphene.Boolean(required=False, default=True)
+            "do_index": graphene.Boolean(required=False, default_value=True)
         }
     )
     mutations["CreateResource"] = type(
