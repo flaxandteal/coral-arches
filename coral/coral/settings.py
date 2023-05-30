@@ -79,6 +79,8 @@ if WELL_KNOWN_MAPPING_FILE:
                         field["type"] = [Concept]
                     elif field["type"] == "float":
                         field["type"] = float
+                    elif field["type"] == "bool":
+                        field["type"] = "boolean"
                     else:
                         # relationship
                         field["type"] = f"@{field['type']}"

@@ -453,10 +453,10 @@ class FileUploadMutation(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     upload_file = FileUploadMutation.Field()
 
-async def mutate_bulk_create(parent, info, mutation, wkrm, field_sets):
+async def mutate_bulk_create(parent, info, mutation, wkrm, field_sets, do_index=False):
     resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
     field_sets = [{field: data_types.remap(wkrm.model_name, field, value) for field, value in field_set.items()} for field_set in field_sets]
-    resources = await sync_to_async(resource_cls.create_bulk)(field_sets)
+    resources = await sync_to_async(resource_cls.create_bulk)(field_sets, do_index=do_index)
     ok = True
     kwargs = {
         snake(wkrm.model_class_name) + "s": resources,
@@ -509,6 +509,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         },
         arguments={
             "field_sets": graphene.List(ResourceInputObjectType),
+            "do_index": graphene.Boolean(required=False, default=True)
         }
     )
     mutations["CreateResource"] = type(
