@@ -191,6 +191,8 @@ class DataTypes:
                 return graphene.String()
             elif typ == datetime:
                 return graphene.String()
+            elif typ == "boolean":
+                return graphene.Boolean()
             elif typ == float:
                 return graphene.Float()
             elif typ == int:
@@ -247,6 +249,8 @@ class DataTypes:
                 return graphene.String()
             elif typ == datetime:
                 return graphene.String()
+            elif typ == "boolean":
+                return graphene.Boolean()
             elif typ == float:
                 return graphene.Float()
             elif typ == int:

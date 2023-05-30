@@ -393,6 +393,10 @@ class ResourceModelWrapper:
                             values[key] = text
                     elif typ == int:
                         values[key] = tile.data[nodeid]
+                    elif typ == float:
+                        values[key] = tile.data[nodeid]
+                    elif typ == "boolean":
+                        values[key] = tile.data[nodeid]
                     elif typ == date:
                         values[key] = tile.data[nodeid]
                     elif typ == datetime:
@@ -577,6 +581,10 @@ class ResourceModelWrapper:
                     single = True
                     value = [get_preflabel_from_valueid("bc35776b-996f-4fc1-bd25-9f6432c1f349", "en-US")['id']]
                 elif typ == int:
+                    single = True
+                elif typ == float:
+                    single = True
+                elif typ == "boolean":
                     single = True
                 elif typ == date:
                     single = True
