@@ -292,7 +292,6 @@ class BulkImportWKRM(BaseImportModule):
                         resource = wkrm.resource
                         wkrm._document["resourceinstanceid"] = resource.resourceinstanceid
                         doc_indexer.add(index=RESOURCES_INDEX, id=wkrm._document["resourceinstanceid"], data=wkrm._document)
-                        logging.error(str(wkrm._document) + str(wkrm._document["resourceinstanceid"]))
                         for term in wkrm._terms:
                             term["_source"]["resourceinstanceid"] = resource.resourceinstanceid
                             term_indexer.add(index=TERMS_INDEX, id=term["_id"], data=term["_source"])
