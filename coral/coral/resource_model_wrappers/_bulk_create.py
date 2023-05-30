@@ -284,18 +284,20 @@ class BulkImportWKRM(BaseImportModule):
         datatype_factory = DataTypeFactory()
         node_datatypes = {str(nodeid): datatype for nodeid, datatype in Node.objects.values_list("nodeid", "datatype")}
         batch_size = settings.BULK_IMPORT_BATCH_SIZE
-        logging.error("Indexing")
-        with se.BulkIndexer(batch_size=batch_size, refresh=True) as doc_indexer:
-            with se.BulkIndexer(batch_size=batch_size, refresh=True) as term_indexer:
-                for wkrm in new_wkrms:
-                    resource = wkrm.resource
-                    wkrm._document["resourceinstanceid"] = resource.resourceinstanceid
-                    doc_indexer.add(index=RESOURCES_INDEX, id=wkrm._document["resourceinstanceid"], data=wkrm._document)
-                    logging.error(str(wkrm._document) + str(wkrm._document["resourceinstanceid"]))
-                    for term in wkrm._terms:
-                        term["_source"]["resourceinstanceid"] = resource.resourceinstanceid
-                        logging.error(str(term))
-                        term_indexer.add(index=TERMS_INDEX, id=term["_id"], data=term["_source"])
-        logging.error("Indexed")
+        if do_index:
+            logging.error("Indexing")
+            with se.BulkIndexer(batch_size=batch_size, refresh=True) as doc_indexer:
+                with se.BulkIndexer(batch_size=batch_size, refresh=True) as term_indexer:
+                    for wkrm in new_wkrms:
+                        resource = wkrm.resource
+                        wkrm._document["resourceinstanceid"] = resource.resourceinstanceid
+                        doc_indexer.add(index=RESOURCES_INDEX, id=wkrm._document["resourceinstanceid"], data=wkrm._document)
+                        logging.error(str(wkrm._document) + str(wkrm._document["resourceinstanceid"]))
+                        for term in wkrm._terms:
+                            term["_source"]["resourceinstanceid"] = resource.resourceinstanceid
+                            term_indexer.add(index=TERMS_INDEX, id=term["_id"], data=term["_source"])
+            logging.error("Indexed")
+        else:
+            logging.error("Not indexing")
 
         return [wkrm for _, wkrm, _ in requested_wkrms]
