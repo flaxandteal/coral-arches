@@ -139,8 +139,12 @@ class DataTypes:
             )
 
     def _process_field(self, nodeid, model_name, field):
-        datatype = self.node_datatypes[nodeid]
-        datatype_instance = self.datatype_factory.get_instance(datatype)
+        try:
+            datatype = self.node_datatypes[nodeid]
+            datatype_instance = self.datatype_factory.get_instance(datatype)
+        except:
+            logging.error("Had to skip %s %s", model_name, nodeid)
+            return
         if isinstance(datatype_instance, ResourceInstanceDataType):
             self._build_related(nodeid, field, model_name)
             def _construct_resource(vs, nodeid, field, model_name, datatype_instance):
