@@ -13491,7 +13491,30 @@
                     "rangenode_id": "2b3ecaf0-f898-11ed-b329-c2a39274f985"
                 }
             ],
-            "functions_x_graphs": [],
+            "functions_x_graphs": [
+                {
+                    "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "4262ef4a-eabf-11ed-9e22-72d420f37f11",
+                                "string_template": "<Description>"
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "4263977e-eabf-11ed-9e22-72d420f37f11",
+                                "string_template": " <Monument Name>"
+                            },
+                            "name": {
+                                "nodegroup_id": "4263977e-eabf-11ed-9e22-72d420f37f11",
+                                "string_template": "<Monument Name>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "4262df46-eabf-11ed-9e22-72d420f37f11",
+                    "id": "0b960954-db27-4cf8-b1d0-21715c9d16ee"
+                }
+            ],
             "graphid": "4262df46-eabf-11ed-9e22-72d420f37f11",
             "iconclass": "fa fa-bank",
             "is_editable": true,

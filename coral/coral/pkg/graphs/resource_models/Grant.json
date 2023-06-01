@@ -7431,7 +7431,55 @@
                 }
             ],
             "color": "rgba(159,29,34,1)",
-            "config": {},
+            "config": {
+                "activeTabIndex": 0,
+                "tabs": [
+                    {
+                        "header_component": "report-header-map",
+                        "icon": "fa fa-tags",
+                        "name": "Summary Report",
+                        "nodegroup_ids": [
+                            "8d41e4ba-a250-11e9-9b20-00224800b26d",
+                            "8d41e4c0-a250-11e9-a7e3-00224800b26d",
+                            "8d41e4a8-a250-11e9-aff0-00224800b26d",
+                            "fa486e16-ec07-11ed-b9ad-72d420f37f11",
+                            "fa48d84c-ec07-11ed-b9ad-72d420f37f11",
+                            "c32c7b62-a30f-11e9-a8f2-00224800b26d",
+                            "8d41e4b1-a250-11e9-96d3-00224800b26d"
+                        ],
+                        "side_component": "consultations-status"
+                    },
+                    {
+                        "icon": "fa fa-building",
+                        "name": "Conditions/Mitigations",
+                        "nodegroup_ids": [
+                            "8d41e4bd-a250-11e9-89e8-00224800b26d",
+                            "fa48b8a8-ec07-11ed-b9ad-72d420f37f11",
+                            "8d41e4ae-a250-11e9-8c00-00224800b26d"
+                        ],
+                        "side_component": "consultations-conditions-mitigations"
+                    },
+                    {
+                        "empty_component": "consultations-site-visit-empty",
+                        "icon": "fa fa-clipboard",
+                        "main_component": "consultations-site-visit-main",
+                        "name": "Site Visits",
+                        "nodegroup_ids": [
+                            "fa47d53c-ec07-11ed-b9ad-72d420f37f11"
+                        ],
+                        "side_component": "consultations-site-visits-summary"
+                    },
+                    {
+                        "icon": "fa fa-comment",
+                        "name": "Communications",
+                        "nodegroup_ids": [
+                            "fa49685c-ec07-11ed-b9ad-72d420f37f11",
+                            "fa48cdca-ec07-11ed-b9ad-72d420f37f11"
+                        ],
+                        "side_component": "consultations-communications-summary"
+                    }
+                ]
+            },
             "deploymentdate": null,
             "deploymentfile": null,
             "description": {
@@ -10256,7 +10304,44 @@
                     "rangenode_id": "fa4b27e6-ec07-11ed-b9ad-72d420f37f11"
                 }
             ],
-            "functions_x_graphs": [],
+            "functions_x_graphs": [
+                {
+                    "config": {
+                        "cons_status_list_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
+                        "cons_status_list_nodeid": "8d41e4d3-a250-11e9-8977-00224800b26d",
+                        "cons_status_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
+                        "cons_status_nodeid": "8d41e4d3-a250-11e9-8977-00224800b26d",
+                        "triggering_nodegroups": [
+                            "8d41e4c0-a250-11e9-a7e3-00224800b26d"
+                        ]
+                    },
+                    "function_id": "96efa95a-1e2c-4562-ac1f-b415796f9f75",
+                    "graph_id": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
+                    "id": "01b94f67-d240-4cde-bfb3-21cabe416c8a"
+                },
+                {
+                    "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "fa48af20-ec07-11ed-b9ad-72d420f37f11",
+                                "string_template": "<Consultation Description>"
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "fa48af20-ec07-11ed-b9ad-72d420f37f11",
+                                "string_template": "<Consultation Description>"
+                            },
+                            "name": {
+                                "nodegroup_id": "fa485516-ec07-11ed-b9ad-72d420f37f11",
+                                "string_template": "<Consultation Name>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
+                    "id": "f6cfbb56-7746-4581-9acb-95082ca11af8"
+                }
+            ],
             "graphid": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
             "iconclass": "fa fa-briefcase",
             "is_editable": true,
@@ -10687,12 +10772,12 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "associated_consultations",
+                    "alias": "associated_grants",
                     "config": {
                         "graphs": [
                             {
-                                "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                                "name": "Consultation"
+                                "graphid": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
+                                "name": "Grant"
                             }
                         ],
                         "searchDsl": "",
@@ -10701,14 +10786,14 @@
                     "datatype": "resource-instance-list",
                     "description": "",
                     "exportable": true,
-                    "fieldname": "Assoc_Cons",
+                    "fieldname": "Assoc_Gran",
                     "graph_id": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
                     "hascustomalias": false,
                     "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Consultations",
+                    "name": "Associated Grants",
                     "nodegroup_id": "fa484c06-ec07-11ed-b9ad-72d420f37f11",
                     "nodeid": "fa484c06-ec07-11ed-b9ad-72d420f37f11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
