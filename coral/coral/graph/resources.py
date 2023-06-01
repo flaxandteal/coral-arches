@@ -73,7 +73,7 @@ class DataTypes:
                 "model_name": model_name,
                 "relatable_graphs": []
             }
-        assert related_field.split("/")[-1] == self.related_nodes[nodeid]["name"], f"{related_field} != {self.related_nodes[nodeid]['name']}"
+        assert related_field.split("/")[-1] == self.related_nodes[nodeid]["name"].split("/")[-1], f"{related_field} != {self.related_nodes[nodeid]['name']}"
         self.related_nodes[nodeid]["relatable_graphs"] += [str(graph["graphid"]) for graph in node.config["graphs"] if str(graph["graphid"]) in self.graphs]
         logging.error(">%s", str(self.related_nodes[nodeid]["relatable_graphs"]))
         return self.related_nodes[nodeid]["name"]
