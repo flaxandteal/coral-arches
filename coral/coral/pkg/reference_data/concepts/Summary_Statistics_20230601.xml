@@ -36,7 +36,7 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/be4c75d3-b2cc-4bc1-b974-5984dd8de144">
     <dcterms:identifier xml:lang="en">{"id": "25f10b72-62a9-4588-bd69-1a21dde90991", "value": "http://localhost:8000/be4c75d3-b2cc-4bc1-b974-5984dd8de144"}</dcterms:identifier>
-    <skos:prefLabel xml:lang="en">{"id": "9e24d383-c298-46b4-bc80-8860bbffe9eb", "value": "TotalImages"}</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">{"id": "9e24d383-c298-46b4-bc80-8860bbffe9eb", "value": "Total Images"}</skos:prefLabel>
     <skos:inScheme rdf:resource="http://localhost:8000/e3d271cf-4353-4049-af5a-9dc4c106c1e0"/>
   </skos:Concept>
 </rdf:RDF>
