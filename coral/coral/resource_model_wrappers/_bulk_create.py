@@ -28,7 +28,7 @@ from arches.app.etl_modules.base_import_module import BaseImportModule
 import arches.app.utils.task_management as task_management
 
 logger = logging.getLogger(__name__)
-FORMAT = '%(asctime)s %(clientip)-15s %(message)s'
+FORMAT = '%(asctime)s %(message)s'
 formatter = logging.Formatter(FORMAT)
 handler = logging.StreamHandler()
 handler.setFormatter(formatter)

@@ -344,7 +344,7 @@ class ResourceModelWrapper:
         if cls.__node_datatypes is None:
             cls.__node_datatypes = {
                 str(nodeid): datatype for nodeid, datatype in Node.objects.filter(
-                    nodeid__in=[node for node in cls._nodes]
+                    nodeid__in=[node["nodeid"] for node in cls._nodes.values()]
                 ).values_list("nodeid", "datatype")
             }
         return cls.__node_datatypes
