@@ -5,42 +5,6 @@
             "cards": [
                 {
                     "active": true,
-                    "cardid": "3b942378-a58b-448c-81c9-63b9bbb1d292",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "3b942378-a58b-448c-81c9-63b9bbb1d292",
-                            "constraintid": "6089c2f1-85c1-4cc6-af49-f5fbec0a0c60",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": {
-                        "en": ""
-                    },
-                    "graph_id": "4262df46-eabf-11ed-9e22-72d420f37f11",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "New Node_1"
-                    },
-                    "nodegroup_id": "ca9bb506-f891-11ed-a33a-c2a39274f985",
-                    "sortorder": 1,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "42632b18-eabf-11ed-9e22-72d420f37f11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -1092,42 +1056,6 @@
                     },
                     "nodegroup_id": "671108c4-f891-11ed-a33a-c2a39274f985",
                     "sortorder": 10,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "cd5f3796-0463-4cdd-9b44-402f73072b2d",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "cd5f3796-0463-4cdd-9b44-402f73072b2d",
-                            "constraintid": "21c0f631-0875-4b9a-a3eb-d92252defa3e",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": {
-                        "en": ""
-                    },
-                    "graph_id": "4262df46-eabf-11ed-9e22-72d420f37f11",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "New Node_1"
-                    },
-                    "nodegroup_id": "b8bda498-f891-11ed-a33a-c2a39274f985",
-                    "sortorder": 0,
                     "visible": true
                 }
             ],
@@ -13744,18 +13672,6 @@
                     "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "671108c4-f891-11ed-a33a-c2a39274f985",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "b8bda498-f891-11ed-a33a-c2a39274f985",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "ca9bb506-f891-11ed-a33a-c2a39274f985",
                     "parentnodegroup_id": null
                 }
             ],
