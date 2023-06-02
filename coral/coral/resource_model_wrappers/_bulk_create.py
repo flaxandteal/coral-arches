@@ -29,7 +29,7 @@ import arches.app.utils.task_management as task_management
 
 logger = logging.getLogger(__name__)
 FORMAT = '%(asctime)s %(clientip)-15s %(message)s'
-formatter = logging.Formatter('%(threadName)s: %(message)s')
+formatter = logging.Formatter(FORMAT)
 handler = logging.StreamHandler()
 handler.setFormatter(formatter)
 logger.addHandler(handler)
@@ -284,7 +284,7 @@ class BulkImportWKRM(BaseImportModule):
             #TODO cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [loadid])
         logger.error("Loading event marked")
 
-        logger.error("Adding relationships")
+        logger.error("Adding relationships {}", len(crosses))
         ResourceXResource.objects.bulk_create(crosses)
         logger.error("Added relationships")
 
