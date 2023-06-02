@@ -28,6 +28,11 @@ from arches.app.etl_modules.base_import_module import BaseImportModule
 import arches.app.utils.task_management as task_management
 
 logger = logging.getLogger(__name__)
+FORMAT = '%(asctime)s %(clientip)-15s %(message)s'
+formatter = logging.Formatter('%(threadName)s: %(message)s')
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 class BulkImportWKRM(BaseImportModule):
@@ -166,7 +171,7 @@ class BulkImportWKRM(BaseImportModule):
                 cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [self.loadid])
 
         validation = self.validate()
-        logging.error("Validated")
+        logger.error("Validated")
         if len(validation["data"]) != 0:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -177,17 +182,17 @@ class BulkImportWKRM(BaseImportModule):
         else:
             try:
                 with connection.cursor() as cursor:
-                    logging.error("Disabling regular triggers")
+                    logger.error("Disabling regular triggers")
                     cursor.execute("""CALL __arches_prepare_bulk_load();""", [self.loadid])
-                    logging.error("Staging to tile [start]")
+                    logger.error("Staging to tile [start]")
                     cursor.execute("""SELECT * FROM __arches_staging_to_tile(%s)""", [self.loadid])
-                    logging.error("Retrieving result")
+                    logger.error("Retrieving result")
                     row = cursor.fetchall()
-                    logging.error("Refreshing geometries")
+                    logger.error("Refreshing geometries")
                     cursor.execute("""SELECT * FROM refresh_geojson_geometries();""", [self.loadid])
-                    logging.error("Re-enabling regular triggers")
+                    logger.error("Re-enabling regular triggers")
                     cursor.execute("""CALL __arches_complete_bulk_load();""", [self.loadid])
-                    logging.error("Bulk load complete")
+                    logger.error("Bulk load complete")
             except (IntegrityError, ProgrammingError) as e:
                 logger.error(e)
                 with connection.cursor() as cursor:
@@ -202,7 +207,7 @@ class BulkImportWKRM(BaseImportModule):
                     "message": _("Unable to insert record into staging table"),
                 }
 
-        logging.error("Loading event completed")
+        logger.error("Loading event completed")
         if row[0][0]:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -277,26 +282,34 @@ class BulkImportWKRM(BaseImportModule):
             #TODO     )
 
             #TODO cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [loadid])
+        logger.error("Loading event marked")
 
+        logger.error("Adding relationships")
         ResourceXResource.objects.bulk_create(crosses)
+        logger.error("Added relationships")
+
+        if do_index:
+            logger.error("Indexing")
+            documents = []
+            term_list = []
+            for wkrm in new_wkrms:
+                resource = wkrm.resource
+                document, terms = resource.get_documents_to_index(
+                    fetchTiles=False, datatype_factory=wkrm._datatype_factory(), node_datatypes=wkrm._node_datatypes()
+                )
+
+                documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
+
+                for term in terms:
+                    term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
+
+            se.bulk_index(documents)
+            se.bulk_index(term_list)
+            logger.error("Indexed")
+        else:
+            logger.error("Not indexing")
         system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
 
-        datatype_factory = DataTypeFactory()
-        node_datatypes = {str(nodeid): datatype for nodeid, datatype in Node.objects.values_list("nodeid", "datatype")}
-        batch_size = settings.BULK_IMPORT_BATCH_SIZE
-        if do_index:
-            logging.error("Indexing")
-            with se.BulkIndexer(batch_size=batch_size, refresh=True) as doc_indexer:
-                with se.BulkIndexer(batch_size=batch_size, refresh=True) as term_indexer:
-                    for wkrm in new_wkrms:
-                        resource = wkrm.resource
-                        wkrm._document["resourceinstanceid"] = resource.resourceinstanceid
-                        doc_indexer.add(index=RESOURCES_INDEX, id=wkrm._document["resourceinstanceid"], data=wkrm._document)
-                        for term in wkrm._terms:
-                            term["_source"]["resourceinstanceid"] = resource.resourceinstanceid
-                            term_indexer.add(index=TERMS_INDEX, id=term["_id"], data=term["_source"])
-            logging.error("Indexed")
-        else:
-            logging.error("Not indexing")
-
+        # Note that the tiles MAY HAVE CHANGED (see EDTFDataType.append_to_document) as
+        # a result of indexing, so should not be subsequently saved
         return [wkrm for _, wkrm, _ in requested_wkrms]

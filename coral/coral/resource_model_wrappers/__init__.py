@@ -180,8 +180,6 @@ class ResourceModelWrapper:
         self.id = id
         self._new_id = _new_id
         self.resource = resource
-        self._document = None
-        self._terms = None
         self._cross_record = x
         self._filled = filled
         self._lazy = lazy
@@ -344,7 +342,11 @@ class ResourceModelWrapper:
     @classmethod
     def _node_datatypes(cls):
         if cls.__node_datatypes is None:
-            cls.__node_datatypes = {str(nodeid): datatype for nodeid, datatype in Node.objects.values_list("nodeid", "datatype")}
+            cls.__node_datatypes = {
+                str(nodeid): datatype for nodeid, datatype in Node.objects.filter(
+                    nodeid__in=[node["nodeid"] for node in cls._nodes]
+                ).values_list("nodeid", "datatype")
+            }
         return cls.__node_datatypes
 
     def fill_from_resource(self, reload=None):
@@ -485,35 +487,7 @@ class ResourceModelWrapper:
         ]
 
 
-    def _append_terms(self, document, terms, tile, nodevalue, node):
-        if not nodevalue:
-            return
-
-        datatype, datatype_instance = self._datatype(node["nodeid"])
-        if datatype == "resource-instance":
-            return # FIXME: index once they exist
-
-        nodeid = node["nodeid"]
-        datatype_instance.append_to_document(document, nodevalue, nodeid, tile)
-        node_terms = datatype_instance.get_search_terms(nodevalue, nodeid)
-
-        for index, term in enumerate(node_terms):
-            terms.append(
-                {
-                    "_id": str(nodeid) + str(tile.tileid) + str(index) + term.lang if hasattr(term, "lang") else "",
-                    "_source": {
-                        "value": term.value if hasattr(term, "value") else term,
-                        "nodeid": nodeid,
-                        "nodegroupid": tile.nodegroup_id,
-                        "tileid": tile.tileid,
-                        "language": term.lang if hasattr(term, "lang") else "",
-                        "resourceinstanceid": tile.resourceinstance_id,
-                        "provisional": False,
-                    },
-                }
-            )
-
-    def _update_tiles(self, tiles, values, tiles_to_remove, document, terms, prefix=None):
+    def _update_tiles(self, tiles, values, tiles_to_remove, prefix=None):
         # This will expect initialized Django, so we do not do at module start
         from arches.app.datatypes.datatypes import DataTypeFactory
         datatype_factory = DataTypeFactory()
@@ -557,7 +531,7 @@ class ResourceModelWrapper:
                         if tiles[node["nodegroupid"]] and not tiles[node["nodegroupid"]][0].data and tiles[node["nodegroupid"]][0].tiles:
                             subtiles[node["nodegroupid"]] = [tiles[node["nodegroupid"]][0]]
 
-                        relationships += self._update_tiles(subtiles, entry, tiles_to_remove, document, terms, prefix=f"{key}/")
+                        relationships += self._update_tiles(subtiles, entry, tiles_to_remove, prefix=f"{key}/")
                         if node["nodegroupid"] in subtiles:
                             tiles[node["nodegroupid"]] = list(set(tiles[node["nodegroupid"]]) | set(subtiles[node["nodegroupid"]]))
                     # We do not need to do anything here, because
@@ -644,8 +618,6 @@ class ResourceModelWrapper:
                                 tile.parenttile = parent
                                 parent.tiles.append(tile)
                             tile.data.update(data)
-                            if document is not None:
-                                self._append_terms(document, terms, tile, value, node)
                             continue
                     #else:
                     #    tiles[node["nodegroupid"]] = []
@@ -659,8 +631,6 @@ class ResourceModelWrapper:
                         nodegroup_id=node["nodegroupid"],
                         parenttile=parent, tileid=None
                     ))
-                    if document is not None:
-                        self._append_terms(document, terms, tile, value, node)
                     tiles.setdefault(node["nodegroupid"], [])
                     tiles[node["nodegroupid"]].append(tile)
                     if parent:
@@ -676,28 +646,7 @@ class ResourceModelWrapper:
                 tiles[tile.nodegroup_id].append(tile)
         tiles_to_remove = sum((ts for ts in tiles.values()), [])
 
-        if _do_index:
-            tmp_document = {}
-            tmp_document["resourceinstanceid"] = str(self.id or self._new_id)
-            tmp_document["strings"] = []
-            tmp_document["dates"] = []
-            tmp_document["domains"] = []
-            tmp_document["geometries"] = []
-            tmp_document["points"] = []
-            tmp_document["numbers"] = []
-            tmp_document["date_ranges"] = []
-            tmp_document["ids"] = []
-            terms = []
-        else:
-            tmp_document = None
-            terms = None
-        relationships = self._update_tiles(tiles, self._values, tiles_to_remove, tmp_document, terms)
-        self._terms = terms
-
-        if tmp_document is not None:
-            resource.tiles = []
-            self._document, _ = resource.get_documents_to_index(fetchTiles=False)
-            self._document.update(tmp_document)
+        relationships = self._update_tiles(tiles, self._values, tiles_to_remove)
 
         # parented tiles are saved hierarchically
         resource.tiles = [t for t in sum((ts for ts in tiles.values()), []) if not t.parenttile]
