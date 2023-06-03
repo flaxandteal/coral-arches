@@ -172,145 +172,143 @@ class BulkImportWKRM(BaseImportModule):
 
         validation = self.validate()
         logger.error("%s Validated", str(datetime.now()))
-        transaction_id = uuid.uuid1()
-        with transaction.atomic():
-            if len(validation["data"]) != 0:
+        if len(validation["data"]) != 0:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """UPDATE load_event SET status = %s, load_end_time = %s WHERE loadid = %s""",
+                    ("failed", datetime.now(), self.loadid),
+                )
+            return []
+        else:
+            try:
+                with connection.cursor() as cursor:
+                    logger.error("%s Disabling regular triggers", str(datetime.now()))
+                    cursor.execute("""CALL __arches_prepare_bulk_load();""", [self.loadid])
+                    logger.error("%s Staging to tile [start]", str(datetime.now()))
+                    cursor.execute("""SELECT * FROM __arches_staging_to_tile(%s)""", [self.loadid])
+                    logger.error("%s Retrieving result", str(datetime.now()))
+                    row = cursor.fetchall()
+                    logger.error("%s Refreshing geometries", str(datetime.now()))
+                    cursor.execute("""SELECT * FROM refresh_geojson_geometries();""", [self.loadid])
+                    logger.error("%s Re-enabling regular triggers", str(datetime.now()))
+                    cursor.execute("""CALL __arches_complete_bulk_load();""", [self.loadid])
+                    logger.error("%s Bulk load complete", str(datetime.now()))
+            except (IntegrityError, ProgrammingError) as e:
+                logger.error(e)
                 with connection.cursor() as cursor:
                     cursor.execute(
                         """UPDATE load_event SET status = %s, load_end_time = %s WHERE loadid = %s""",
                         ("failed", datetime.now(), self.loadid),
                     )
-                return []
-            else:
-                try:
-                    with connection.cursor() as cursor:
-                        logger.error("%s Disabling regular triggers", str(datetime.now()))
-                        cursor.execute("""CALL __arches_prepare_bulk_load();""", [self.loadid])
-                        logger.error("%s Staging to tile [start]", str(datetime.now()))
-                        cursor.execute("""SELECT * FROM __arches_staging_to_tile(%s)""", [self.loadid])
-                        logger.error("%s Retrieving result", str(datetime.now()))
-                        row = cursor.fetchall()
-                        logger.error("%s Refreshing geometries", str(datetime.now()))
-                        cursor.execute("""SELECT * FROM refresh_geojson_geometries();""", [self.loadid])
-                        logger.error("%s Re-enabling regular triggers", str(datetime.now()))
-                        cursor.execute("""CALL __arches_complete_bulk_load();""", [self.loadid])
-                        logger.error("%s Bulk load complete", str(datetime.now()))
-                except (IntegrityError, ProgrammingError) as e:
-                    logger.error(e)
-                    with connection.cursor() as cursor:
-                        cursor.execute(
-                            """UPDATE load_event SET status = %s, load_end_time = %s WHERE loadid = %s""",
-                            ("failed", datetime.now(), self.loadid),
-                        )
-                    return {
-                        "status": 400,
-                        "success": False,
-                        "title": _("Failed to complete load"),
-                        "message": _("Unable to insert record into staging table"),
-                    }
+                return {
+                    "status": 400,
+                    "success": False,
+                    "title": _("Failed to complete load"),
+                    "message": _("Unable to insert record into staging table"),
+                }
 
-            logger.error("%s Loading event completed", str(datetime.now()))
-            if row[0][0]:
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        """UPDATE load_event SET (status, load_end_time) = (%s, %s) WHERE loadid = %s""",
-                        ("completed", datetime.now(), self.loadid),
-                    )
-                #if do_index:
-                #    index_resources_by_transaction(self.loadid, quiet=True, use_multiprocessing=False)
-            else:
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        """UPDATE load_event SET status = %s, load_end_time = %s WHERE loadid = %s""",
-                        ("failed", datetime.now(), self.loadid),
-                    )
-                return []
-                #Resource.objects.bulk_create(resources)
-                #TileModel.objects.bulk_create(tiles)
-                #for resource in resources:
-                #    resource.save_edit(edit_type="create", transaction_id=transaction_id)
+        logger.error("%s Loading event completed", str(datetime.now()))
+        if row[0][0]:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """UPDATE load_event SET (status, load_end_time) = (%s, %s) WHERE loadid = %s""",
+                    ("completed", datetime.now(), self.loadid),
+                )
+            #if do_index:
+            #    index_resources_by_transaction(self.loadid, quiet=True, use_multiprocessing=False)
+        else:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """UPDATE load_event SET status = %s, load_end_time = %s WHERE loadid = %s""",
+                    ("failed", datetime.now(), self.loadid),
+                )
+            return []
+            #Resource.objects.bulk_create(resources)
+            #TileModel.objects.bulk_create(tiles)
+            #for resource in resources:
+            #    resource.save_edit(edit_type="create", transaction_id=transaction_id)
 
-                #resources[0].tiles[0].save_edit(
-                #    note=f"Bulk created: {len(tiles)} for {len(resources)} resources.", edit_type="bulk_create", transaction_id=transaction_id
-                #)
+            #resources[0].tiles[0].save_edit(
+            #    note=f"Bulk created: {len(tiles)} for {len(resources)} resources.", edit_type="bulk_create", transaction_id=transaction_id
+            #)
 
-                #print("Time to save resource edits: %s" % datetime.timedelta(seconds=time() - start))
+            #print("Time to save resource edits: %s" % datetime.timedelta(seconds=time() - start))
 
-                #for resource in resources:
-                #    start = time()
-                #    document, terms = resource.get_documents_to_index(
-                #        fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
-                #    )
+            #for resource in resources:
+            #    start = time()
+            #    document, terms = resource.get_documents_to_index(
+            #        fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
+            #    )
 
-                #    documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
+            #    documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
 
-                #    for term in terms:
-                #        term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
+            #    for term in terms:
+            #        term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
 
-                #se.bulk_index(documents)
-                #se.bulk_index(term_list)
-                #
-                #TODO loadid = int(time.time())
-                #TODO for tile in tiles:
-                #TODO     cursor.execute(
-                #TODO         """
-                #TODO         INSERT INTO load_staging (
-                #TODO             nodegroupid,
-                #TODO             legacyid,
-                #TODO             resourceid,
-                #TODO             tileid,
-                #TODO             value,
-                #TODO             loadid,
-                #TODO             nodegroup_depth,
-                #TODO             source_description,
-                #TODO             passes_validation
-                #TODO         ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
-                #TODO         (
-                #TODO             nodegroup,
-                #TODO             legacyid,
-                #TODO             resourceid,
-                #TODO             tileid,
-                #TODO             tile_value_json,
-                #TODO             loadid,
-                #TODO             node_depth,
-                #TODO             csv_file_name,
-                #TODO             passes_validation,
-                #TODO         ),
-                #TODO     )
+            #se.bulk_index(documents)
+            #se.bulk_index(term_list)
+            #
+            #TODO loadid = int(time.time())
+            #TODO for tile in tiles:
+            #TODO     cursor.execute(
+            #TODO         """
+            #TODO         INSERT INTO load_staging (
+            #TODO             nodegroupid,
+            #TODO             legacyid,
+            #TODO             resourceid,
+            #TODO             tileid,
+            #TODO             value,
+            #TODO             loadid,
+            #TODO             nodegroup_depth,
+            #TODO             source_description,
+            #TODO             passes_validation
+            #TODO         ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+            #TODO         (
+            #TODO             nodegroup,
+            #TODO             legacyid,
+            #TODO             resourceid,
+            #TODO             tileid,
+            #TODO             tile_value_json,
+            #TODO             loadid,
+            #TODO             node_depth,
+            #TODO             csv_file_name,
+            #TODO             passes_validation,
+            #TODO         ),
+            #TODO     )
 
-                #TODO cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [loadid])
-            logger.error("%s Loading event marked", str(datetime.now()))
+            #TODO cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [loadid])
+        logger.error("%s Loading event marked", str(datetime.now()))
 
-            logger.error("%s Adding relationships [%d]", str(datetime.now()), len(crosses))
-            if crosses:
-                ResourceXResource.objects.bulk_create(crosses)
-            logger.error("%s Added relationships", str(datetime.now()))
+        logger.error("%s Adding relationships [%d]", str(datetime.now()), len(crosses))
+        if crosses:
+            ResourceXResource.objects.bulk_create(crosses)
+        logger.error("%s Added relationships", str(datetime.now()))
 
-            if do_index:
-                logger.error("%s Indexing", str(datetime.now()))
-                documents = []
-                term_list = []
-                for wkrm in new_wkrms:
-                    resource = wkrm.resource
-                    document, terms = resource.get_documents_to_index(
-                        fetchTiles=False, datatype_factory=wkrm._datatype_factory(), node_datatypes=wkrm._node_datatypes()
-                    )
+        if do_index:
+            logger.error("%s Indexing", str(datetime.now()))
+            documents = []
+            term_list = []
+            for wkrm in new_wkrms:
+                resource = wkrm.resource
+                document, terms = resource.get_documents_to_index(
+                    fetchTiles=False, datatype_factory=wkrm._datatype_factory(), node_datatypes=wkrm._node_datatypes()
+                )
 
-                    documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
+                documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
 
-                    for term in terms:
-                        term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
+                for term in terms:
+                    term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
 
-                se.bulk_index(documents)
-                se.bulk_index(term_list)
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        """UPDATE load_event SET (status, indexed_time, complete, successful) = (%s, %s, %s, %s) WHERE loadid = %s""",
-                        ("indexed", datetime.now(), True, True, self.loadid),
-                    )
-                logger.error("%s Indexed", str(datetime.now()))
-            else:
-                logger.error("%s Not indexing", str(datetime.now()))
+            se.bulk_index(documents)
+            se.bulk_index(term_list)
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """UPDATE load_event SET (status, indexed_time, complete, successful) = (%s, %s, %s, %s) WHERE loadid = %s""",
+                    ("indexed", datetime.now(), True, True, self.loadid),
+                )
+            logger.error("%s Indexed", str(datetime.now()))
+        else:
+            logger.error("%s Not indexing", str(datetime.now()))
         system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
 
         # Note that the tiles MAY HAVE CHANGED (see EDTFDataType.append_to_document) as
