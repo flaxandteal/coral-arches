@@ -291,8 +291,11 @@ class BulkImportWKRM(BaseImportModule):
             for n, wkrm in enumerate(new_wkrms):
                 logger.error("%s : WKRM %d", str(datetime.now()), n)
                 resource = wkrm.resource
+                datatype_factory = wkrm._datatype_factory()
+                node_datatypes = wkrm._node_datatypes()
+                logger.error("%s : (fetching)", str(datetime.now()))
                 document, terms = resource.get_documents_to_index(
-                    fetchTiles=False, datatype_factory=wkrm._datatype_factory(), node_datatypes=wkrm._node_datatypes()
+                    fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
                 )
 
                 logger.error("%s : (fetched)", str(datetime.now()))
