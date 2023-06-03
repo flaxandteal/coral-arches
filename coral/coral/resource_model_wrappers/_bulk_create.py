@@ -5,6 +5,7 @@ import logging
 import os
 import uuid
 import zipfile
+import functools
 from arches.app.search.mappings import TERMS_INDEX, RESOURCES_INDEX
 from starlette_context import context
 from django.db import transaction, connection
@@ -12,6 +13,7 @@ from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from arches.app.models.system_settings import settings as system_settings
 from arches.app.models.models import ResourceXResource, TileModel, Node
 from arches.app.models import resource as resource_module
+from arches.app.datatypes import concept_types as concept_module
 from django.core.files import File
 from django.core.files.storage import default_storage
 from django.db import connection
@@ -44,6 +46,8 @@ def temp_get_restricted_users(resource): # RMV
     restrictions["no_access"] = []
     return restrictions
 resource_module.get_restricted_users = temp_get_restricted_users
+concept_module.BaseConceptDataType.get_concept_dates = functools.lru_cache(concept_module.BaseConceptDataType.get_concept_dates)
+concept_module.BaseConceptDataType.get_value = functools.lru_cache(concept_module.BaseConceptDataType.get_value)
 
 
 class BulkImportWKRM(BaseImportModule):
