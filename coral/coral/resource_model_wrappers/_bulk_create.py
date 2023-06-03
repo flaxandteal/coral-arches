@@ -171,7 +171,7 @@ class BulkImportWKRM(BaseImportModule):
                 cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [self.loadid])
 
         validation = self.validate()
-        logger.error("Validated")
+        logger.error("%s Validated", str(datetime.now()))
         if len(validation["data"]) != 0:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -182,17 +182,17 @@ class BulkImportWKRM(BaseImportModule):
         else:
             try:
                 with connection.cursor() as cursor:
-                    logger.error("Disabling regular triggers")
+                    logger.error("%s Disabling regular triggers", str(datetime.now()))
                     cursor.execute("""CALL __arches_prepare_bulk_load();""", [self.loadid])
-                    logger.error("Staging to tile [start]")
+                    logger.error("%s Staging to tile [start]", str(datetime.now()))
                     cursor.execute("""SELECT * FROM __arches_staging_to_tile(%s)""", [self.loadid])
-                    logger.error("Retrieving result")
+                    logger.error("%s Retrieving result", str(datetime.now()))
                     row = cursor.fetchall()
-                    logger.error("Refreshing geometries")
+                    logger.error("%s Refreshing geometries", str(datetime.now()))
                     cursor.execute("""SELECT * FROM refresh_geojson_geometries();""", [self.loadid])
-                    logger.error("Re-enabling regular triggers")
+                    logger.error("%s Re-enabling regular triggers", str(datetime.now()))
                     cursor.execute("""CALL __arches_complete_bulk_load();""", [self.loadid])
-                    logger.error("Bulk load complete")
+                    logger.error("%s Bulk load complete", str(datetime.now()))
             except (IntegrityError, ProgrammingError) as e:
                 logger.error(e)
                 with connection.cursor() as cursor:
@@ -207,7 +207,7 @@ class BulkImportWKRM(BaseImportModule):
                     "message": _("Unable to insert record into staging table"),
                 }
 
-        logger.error("Loading event completed")
+        logger.error("%s Loading event completed", str(datetime.now()))
         if row[0][0]:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -282,14 +282,15 @@ class BulkImportWKRM(BaseImportModule):
             #TODO     )
 
             #TODO cursor.execute("""CALL __arches_check_tile_cardinality_violation_for_load(%s)""", [loadid])
-        logger.error("Loading event marked")
+        logger.error("%s Loading event marked", str(datetime.now()))
 
-        logger.error("Adding relationships {}", len(crosses))
-        ResourceXResource.objects.bulk_create(crosses)
-        logger.error("Added relationships")
+        logger.error("%s Adding relationships [%d]", str(datetime.now()), len(crosses))
+        if crosses:
+            ResourceXResource.objects.bulk_create(crosses)
+        logger.error("%s Added relationships", str(datetime.now()))
 
         if do_index:
-            logger.error("Indexing")
+            logger.error("%s Indexing", str(datetime.now()))
             documents = []
             term_list = []
             for wkrm in new_wkrms:
@@ -305,9 +306,9 @@ class BulkImportWKRM(BaseImportModule):
 
             se.bulk_index(documents)
             se.bulk_index(term_list)
-            logger.error("Indexed")
+            logger.error("%s Indexed", str(datetime.now()))
         else:
-            logger.error("Not indexing")
+            logger.error("%s Not indexing", str(datetime.now()))
         system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
 
         # Note that the tiles MAY HAVE CHANGED (see EDTFDataType.append_to_document) as

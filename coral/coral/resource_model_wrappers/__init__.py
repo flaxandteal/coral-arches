@@ -587,7 +587,6 @@ class ResourceModelWrapper:
                     single = True
                     datatype_instance = datatype_factory.get_instance(typ)
                     value = datatype_instance.transform_value_for_tile(value, **loaded_node.config)
-                    logging.error(f"{value} {node['nodeid']}")
                 if single:
                     multiple_values: list = [value]
                 else:
