@@ -36,6 +36,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 def temp_get_restricted_users(resource): # RMV
+    logging.error("Resource")
     restrictions = {}
     restrictions["cannot_read"] = []
     restrictions["cannot_write"] = []
