@@ -288,17 +288,21 @@ class BulkImportWKRM(BaseImportModule):
             logger.error("%s Indexing", str(datetime.now()))
             documents = []
             term_list = []
-            for wkrm in new_wkrms:
+            for n, wkrm in enumerate(new_wkrms):
+                logger.error("%s : WKRM %d", str(datetime.now()), n)
                 resource = wkrm.resource
                 document, terms = resource.get_documents_to_index(
                     fetchTiles=False, datatype_factory=wkrm._datatype_factory(), node_datatypes=wkrm._node_datatypes()
                 )
 
+                logger.error("%s : (fetched)", str(datetime.now()))
                 documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
+                logger.error("%s : (document appended)", str(datetime.now()))
 
                 for term in terms:
                     term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
 
+            logger.error("%s Index document compiled", str(datetime.now()))
             se.bulk_index(documents)
             se.bulk_index(term_list)
             with connection.cursor() as cursor:
