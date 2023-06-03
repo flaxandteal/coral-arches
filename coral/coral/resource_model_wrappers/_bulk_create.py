@@ -304,7 +304,7 @@ class BulkImportWKRM(BaseImportModule):
                 datatype_factory = wkrm._datatype_factory()
                 node_datatypes = wkrm._node_datatypes()
                 logger.error("%s : (fetching)", str(datetime.now()))
-                resource.get_documents_to_index(
+                document, terms = resource.get_documents_to_index(
                     fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
                 )
                 logger.error("%s : (fetched)", str(datetime.now()))
