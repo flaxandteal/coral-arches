@@ -58,6 +58,7 @@ def get_related(graph_id):
         graph_id=self.graph_id, function__functiontype="primarydescriptors"
     ).select_related("function")
 def temp_get_descriptor(self, descriptor, context):
+    logging.error("GRAPHID")
     graph_function = get_related(self.graph_id)
 
     if self.descriptors is None:
