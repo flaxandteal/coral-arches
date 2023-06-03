@@ -28,6 +28,7 @@ from arches.app.utils.betterJSONSerializer import JSONSerializer
 from arches.app.utils.file_validator import FileValidator
 from arches.app.utils.index_database import index_resources_by_transaction
 from arches.app.etl_modules.base_import_module import BaseImportModule
+from arches.app.functions import primary_descriptors
 import arches.app.utils.task_management as task_management
 
 logger = logging.getLogger(__name__)
@@ -46,9 +47,48 @@ def temp_get_restricted_users(resource): # RMV
     restrictions["no_access"] = []
     return restrictions
 resource_module.get_restricted_users = temp_get_restricted_users
+
+# FIXME: memoize for maximum of a request
 concept_module.BaseConceptDataType.get_concept_dates = functools.lru_cache(concept_module.BaseConceptDataType.get_concept_dates)
 concept_module.BaseConceptDataType.get_value = functools.lru_cache(concept_module.BaseConceptDataType.get_value)
 
+# FIXME: can we find a better way of memoizing this?
+def temp_get_primary_descriptor_from_nodes(self, resource, config, context=None):
+    datatype_factory = None
+    language = None
+    try:
+        if "nodegroup_id" in config and config["nodegroup_id"] != "" and config["nodegroup_id"] is not None:
+            tiles = [tile for tile in resource.tiles if tile.nodegroup_id == uuid.UUID(config["nodegroup_id"]) and tile.sortorder == 0]
+            if len(tiles) == 0:
+                tiles = [tile for tile in resource.tiles if tile.nodegroup_id == uuid.UUID(config["nodegroup_id"])]
+                # tiles = models.TileModel.objects.filter(nodegroup_id=uuid.UUID(config["nodegroup_id"])).filter(
+                #     resourceinstance_id=resource.resourceinstanceid
+                # )
+            for tile in tiles:
+                for node in functools.lru_cache(Node.objects.filter)(nodegroup_id=uuid.UUID(config["nodegroup_id"])):
+                    logging.error("nodetile")
+                    data = {}
+                    if len(list(tile.data.keys())) > 0:
+                        data = tile.data
+                    elif tile.provisionaledits is not None and len(list(tile.provisionaledits.keys())) == 1:
+                        userid = list(tile.provisionaledits.keys())[0]
+                        data = tile.provisionaledits[userid]["value"]
+                    if str(node.nodeid) in data:
+                        if not datatype_factory:
+                            datatype_factory = DataTypeFactory()
+                        datatype = datatype_factory.get_instance(node.datatype)
+                        if context is not None and "language" in context:
+                            language = context["language"]
+                        value = datatype.get_display_value(tile, node, language=language)
+                        if value is None:
+                            value = ""
+                        config["string_template"] = config["string_template"].replace("<%s>" % node.name, str(value))
+    except ValueError:
+        logger.error(_("Invalid nodegroupid, {0}, participating in descriptor function.").format(config["nodegroup_id"]))
+    if config["string_template"].strip() == "":
+        config["string_template"] = _("Undefined")
+    return config["string_template"]
+primary_descriptors.PrimaryDescriptorsFunction.get_primary_descriptor_from_nodes = temp_get_primary_descriptor_from_nodes
 
 class BulkImportWKRM(BaseImportModule):
     moduleid = "a6af3a25-50ac-47a1-a876-bcb13dab411b"
