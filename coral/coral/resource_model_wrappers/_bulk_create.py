@@ -300,7 +300,7 @@ class BulkImportWKRM(BaseImportModule):
                     for nodeid, nodevalue in tile.data.items():
                         logger.error("%s : %s %s doing", str(datetime.now()), nodeid, nodevalue)
                     resource.tiles = [tile]
-                    def temp_get_restricted_users(): # RMV
+                    def temp_get_restricted_users(self): # RMV
                         restrictions = {}
                         restrictions["cannot_read"] = []
                         restrictions["cannot_write"] = []
