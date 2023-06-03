@@ -21,7 +21,7 @@ from django.db.models.functions import Lower
 from django.db.utils import IntegrityError, ProgrammingError
 from django.utils.translation import ugettext as _
 from arches.app.datatypes.datatypes import DataTypeFactory
-from arches.app.models.models import GraphModel, Node, NodeGroup
+from arches.app.models.models import GraphModel, Node, NodeGroup, FunctionXGraph
 from arches.app.models.system_settings import settings
 import arches.app.tasks as tasks
 from arches.app.utils.betterJSONSerializer import JSONSerializer
@@ -51,6 +51,41 @@ resource_module.get_restricted_users = temp_get_restricted_users
 # FIXME: memoize for maximum of a request
 concept_module.BaseConceptDataType.get_concept_dates = functools.lru_cache(concept_module.BaseConceptDataType.get_concept_dates)
 concept_module.BaseConceptDataType.get_value = functools.lru_cache(concept_module.BaseConceptDataType.get_value)
+
+@functools.lru_cache
+def get_related(graph_id):
+    return FunctionXGraph.objects.filter(
+        graph_id=self.graph_id, function__functiontype="primarydescriptors"
+    ).select_related("function")
+def temp_get_descriptor(self, descriptor, context):
+    graph_function = get_related(self.graph_id)
+
+    if self.descriptors is None:
+        self.descriptors = {}
+
+    if self.name is None:
+        self.name = {}
+
+    requested_language = None
+    if context is not None and "language" in context:
+        requested_language = context["language"]
+    language = requested_language or get_language()
+
+    if language not in self.descriptors:
+        self.descriptors[language] = {}
+
+    if len(graph_function) == 1:
+        module = graph_function[0].function.get_class_module()()
+        self.descriptors[language][descriptor] = module.get_primary_descriptor_from_nodes(
+            self, graph_function[0].config["descriptor_types"][descriptor], context
+        )
+        if descriptor == "name" and self.descriptors[language][descriptor] is not None:
+            self.name[language] = self.descriptors[language][descriptor]
+    else:
+        self.descriptors[language][descriptor] = None
+
+    return self.descriptors[language][descriptor]
+resource_module.Resource.get_descriptor = temp_get_descriptor
 
 # FIXME: can we find a better way of memoizing this?
 def temp_get_primary_descriptor_from_nodes(self, resource, config, context=None):
