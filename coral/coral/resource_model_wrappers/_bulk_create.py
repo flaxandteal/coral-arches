@@ -294,9 +294,16 @@ class BulkImportWKRM(BaseImportModule):
                 datatype_factory = wkrm._datatype_factory()
                 node_datatypes = wkrm._node_datatypes()
                 logger.error("%s : (fetching)", str(datetime.now()))
-                document, terms = resource.get_documents_to_index(
-                    fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
-                )
+                tiles = resource.tiles
+                for tile in tiles:
+                    for nodeid, nodevalue in tile.data.items():
+                        logger.error("%s : %s %s doing", str(datetime.now()), nodeid, nodevalue)
+                    resource.tiles = [tile]
+                    document, terms = resource.get_documents_to_index(
+                        fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
+                    )
+                    logger.error("%s : done", str(datetime.now()))
+                resource.tiles = tiles
 
                 logger.error("%s : (fetched)", str(datetime.now()))
                 documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
