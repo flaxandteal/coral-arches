@@ -11,6 +11,7 @@ from django.db import transaction, connection
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from arches.app.models.system_settings import settings as system_settings
 from arches.app.models.models import ResourceXResource, TileModel, Node
+from arches.app.models import resource as resource_module
 from django.core.files import File
 from django.core.files.storage import default_storage
 from django.db import connection
@@ -299,7 +300,15 @@ class BulkImportWKRM(BaseImportModule):
                     for nodeid, nodevalue in tile.data.items():
                         logger.error("%s : %s %s doing", str(datetime.now()), nodeid, nodevalue)
                     resource.tiles = [tile]
-                    document, terms = resource.get_documents_to_index(
+                    def temp_get_restricted_users(): # RMV
+                        restrictions = {}
+                        restrictions["cannot_read"] = []
+                        restrictions["cannot_write"] = []
+                        restrictions["cannot_delete"] = []
+                        restrictions["no_access"] = []
+                        return restrictions
+                    resource_module.get_restricted_users = temp_get_restricted_users
+                    resource.get_documents_to_index(
                         fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
                     )
                     logger.error("%s : done", str(datetime.now()))
