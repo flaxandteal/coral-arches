@@ -55,7 +55,7 @@ concept_module.BaseConceptDataType.get_value = functools.lru_cache(concept_modul
 @functools.lru_cache
 def get_related(graph_id):
     return FunctionXGraph.objects.filter(
-        graph_id=self.graph_id, function__functiontype="primarydescriptors"
+        graph_id=graph_id, function__functiontype="primarydescriptors"
     ).select_related("function")
 def temp_get_descriptor(self, descriptor, context):
     logging.error("GRAPHID")
