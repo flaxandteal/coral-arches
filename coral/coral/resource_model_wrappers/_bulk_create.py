@@ -35,6 +35,15 @@ handler = logging.StreamHandler()
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+def temp_get_restricted_users(resource): # RMV
+    restrictions = {}
+    restrictions["cannot_read"] = []
+    restrictions["cannot_write"] = []
+    restrictions["cannot_delete"] = []
+    restrictions["no_access"] = []
+    return restrictions
+resource_module.get_restricted_users = temp_get_restricted_users
+
 
 class BulkImportWKRM(BaseImportModule):
     moduleid = "a6af3a25-50ac-47a1-a876-bcb13dab411b"
@@ -295,25 +304,9 @@ class BulkImportWKRM(BaseImportModule):
                 datatype_factory = wkrm._datatype_factory()
                 node_datatypes = wkrm._node_datatypes()
                 logger.error("%s : (fetching)", str(datetime.now()))
-                tiles = resource.tiles
-                for tile in tiles:
-                    for nodeid, nodevalue in tile.data.items():
-                        logger.error("%s : %s %s doing", str(datetime.now()), nodeid, nodevalue)
-                    resource.tiles = [tile]
-                    def temp_get_restricted_users(self): # RMV
-                        restrictions = {}
-                        restrictions["cannot_read"] = []
-                        restrictions["cannot_write"] = []
-                        restrictions["cannot_delete"] = []
-                        restrictions["no_access"] = []
-                        return restrictions
-                    resource_module.get_restricted_users = temp_get_restricted_users
-                    resource.get_documents_to_index(
-                        fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
-                    )
-                    logger.error("%s : done", str(datetime.now()))
-                resource.tiles = tiles
-
+                resource.get_documents_to_index(
+                    fetchTiles=False, datatype_factory=datatype_factory, node_datatypes=node_datatypes
+                )
                 logger.error("%s : (fetched)", str(datetime.now()))
                 documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
                 logger.error("%s : (document appended)", str(datetime.now()))
