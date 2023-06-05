@@ -235,7 +235,7 @@ class DataTypes:
                             self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]) for graph in graphs
                         }
                     )
-                    return union
+                    return graphene.Argument(union)
             elif isinstance(datatype_instance, GeojsonFeatureCollectionDataType):
                 return graphene.JSONString()
             elif isinstance(datatype_instance, EDTFDataType):
