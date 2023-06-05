@@ -755,7 +755,10 @@ def get_well_known_resource_model_by_graph_id(graphid, default=None):
     return _resource_models_by_graph_id.get(str(graphid), default)
 
 def attempt_well_known_resource_model(resource_id, from_prefetch=None, **kwargs):
-    resource = from_prefetch(resource_id) if from_prefetch is None else Resource.objects.get(pk=resource_id)
+    resource = from_prefetch(resource_id) if from_prefetch is not None else Resource.objects.get(pk=resource_id)
+    if resource is None:
+        logging.error("Tried to load non-existent WKRM: %s", resource_id)
+        return None
     if isinstance(resource, ResourceModelWrapper):
         return resource
     wkrm = get_well_known_resource_model_by_graph_id(resource.graph_id, default=None)
