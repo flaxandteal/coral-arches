@@ -99,7 +99,7 @@ class DataTypes:
             try:
                 self.node_datatypes = {str(nodeid): datatype for nodeid, datatype in models.Node.objects.values_list("nodeid", "datatype")}
                 self.datatype_factory = DataTypeFactory()
-                self.graphs {
+                self.graphs = {
                     str(wkrm.graphid): wkrm for wkrm in _WELL_KNOWN_RESOURCE_MODELS
                 }
 
