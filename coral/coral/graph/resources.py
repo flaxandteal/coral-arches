@@ -99,15 +99,11 @@ class DataTypes:
             try:
                 self.node_datatypes = {str(nodeid): datatype for nodeid, datatype in models.Node.objects.values_list("nodeid", "datatype")}
                 self.datatype_factory = DataTypeFactory()
-                allowed_graphs = None if ALLOW_NON_WKRM_GRAPHS else {wkrm.graphid for wkrm in _WELL_KNOWN_RESOURCE_MODELS}
-                self.graphs = {
-                    str(pk): string_to_enum(str(name)) for pk, name in Graph.objects.values_list("pk", "name")
-                    if (allowed_graphs is None or str(pk) in allowed_graphs)
+                self.graphs {
+                    str(wkrm.graphid): wkrm for wkrm in _WELL_KNOWN_RESOURCE_MODELS
                 }
 
                 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
-                    if str(wkrm.graphid) in self.graphs:
-                        self.graphs[str(wkrm.graphid)] = wkrm
                     for field, info in wkrm.nodes.items():
                         if "nodeid" in info:
                             if "/" in field:
