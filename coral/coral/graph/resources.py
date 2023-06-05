@@ -232,7 +232,7 @@ class DataTypes:
                         f"{model_class_name}{string_to_enum(field)}UnionInputType",
                         (graphene.InputObjectType,),
                         {
-                            self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]) for graph in graphs
+                            self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph]]) for graph in graphs
                         }
                     )
                     return graphene.Argument(union)
