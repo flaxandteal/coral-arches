@@ -418,11 +418,13 @@ class ResourceModelWrapper:
                                 for datum in tile.data[nodeid]:
                                     related_resource = Resource(datum["resourceId"])
                                     values[key].append(
-                                        get_well_known_resource_model_by_class_name(typ).from_resource(related_resource, x=datum, lazy=True)
+                                        get_well_known_resource_model_by_class_name(typ[1:]).from_resource(related_resource, x=datum, lazy=True)
                                     )
                             elif tile.data[nodeid]:
                                 related_resource = Resource(tile.data[nodeid])
-                                values[key] = get_well_known_resource_model_by_class_name(typ).from_resource(related_resource, lazy=True)
+                                values[key] = get_well_known_resource_model_by_class_name(typ[1:]).from_resource(related_resource, lazy=True)
+                        elif typ == "@resource":
+                                values[key] = attempt_well_known_resource_model(tile.data[nodeid])
                         else:
                             try:
                                 datatype_factory.get_instance(typ)
