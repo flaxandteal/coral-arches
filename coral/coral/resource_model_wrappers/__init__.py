@@ -190,7 +190,7 @@ class ResourceModelWrapper:
                 f"Some keys in {', '.join(kwargs)} are not well-known in {type(self)}"
             )
         if not filled and not lazy:
-            self.fill_from_resource(reload=True, self._related_prefetch)
+            self.fill_from_resource(reload=True, related_prefetch=self._related_prefetch)
 
         for key, value in kwargs.items():
             if isinstance(value, list) and any(types := [isinstance(entry, ResourceModelWrapper) for entry in value]):
