@@ -83,6 +83,7 @@ class ResourceModelWrapper:
     _cross_record: dict = None
     _lazy: bool = False
     _filled: bool = False
+    _related_prefetch = None
     __datatype_factory = None
     __node_datatypes = None
     resource: Resource
@@ -755,6 +756,8 @@ def get_well_known_resource_model_by_graph_id(graphid, default=None):
 
 def attempt_well_known_resource_model(resource_id, from_prefetch=None, **kwargs):
     resource = from_prefetch(resource_id) if from_prefetch is None else Resource.objects.get(pk=resource_id)
+    if isinstance(resource, ResourceModelWrapper):
+        return resource
     wkrm = get_well_known_resource_model_by_graph_id(resource.graph_id, default=None)
     if wkrm:
         return wkrm.from_resource(resource, **kwargs)
