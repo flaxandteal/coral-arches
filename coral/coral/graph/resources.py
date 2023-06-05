@@ -221,18 +221,22 @@ class DataTypes:
 
                 return graphene.Argument(graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type)
             elif isinstance(datatype_instance, ResourceInstanceDataType):
-                graphs = self.related_nodes[info["nodeid"]]["relatable_graphs"]
+                allowed_graphs = [str(wkrm.graphid) for wkrm in _WELL_KNOWN_RESOURCE_MODELS]
+                graphs = [
+                    graph for graph in self.related_nodes[info["nodeid"]]["relatable_graphs"]
+                    if graph in allowed_graphs
+                ]
                 logging.error("%s]", str(graphs))
                 assert len(graphs) > 0, "Relations must relate a graph that is well-known"
                 if len(graphs) == 1:
                     graph = graphs[0]
-                    return graphene.Argument(graphene.List(lambda: _resource_model_inputs[self.graphs[graph]]))
+                    return graphene.Argument(graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]))
                 else:
                     union = type(
                         f"{model_class_name}{string_to_enum(field)}UnionInputType",
                         (graphene.InputObjectType,),
                         {
-                            self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph]]) for graph in graphs
+                            self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]) for graph in graphs
                         }
                     )
                     return graphene.Argument(union)
