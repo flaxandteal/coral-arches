@@ -414,17 +414,16 @@ class ResourceModelWrapper:
                     elif typ == [settings.Concept]:
                         values[key] = tile.data[nodeid]
                     elif isinstance(typ, str):
-                        if typ.startswith("@") and (typ[1:] in _resource_models or typ[1:] == "resource"):
+                        if typ.startswith("@") and (typ[1:] in _resource_models or typ[1:] == "resource" or typ[1:] == "[resource]"):
                             if isinstance(tile.data[nodeid], list):
                                 values[key] = RelationList(self, key, nodeid, tile.tileid)
                                 for datum in tile.data[nodeid]:
-                                    values[key].append(
-                                        attempt_well_known_resource_model(datum["resourceId"], related_prefetch, x=datum, lazy=True)
-                                    )
+                                    if (
+                                        related := attempt_well_known_resource_model(datum["resourceId"], related_prefetch, x=datum, lazy=True)
+                                    ) is not None:
+                                        values[key].append(related)
                             elif tile.data[nodeid]:
-                                values[key].append(
-                                    attempt_well_known_resource_model(tile.data[nodeid], related_prefetch, x=datum, lazy=True)
-                                )
+                                values[key] = attempt_well_known_resource_model(tile.data[nodeid], related_prefetch, x=datum, lazy=True)
                         else:
                             try:
                                 datatype_factory.get_instance(typ)
