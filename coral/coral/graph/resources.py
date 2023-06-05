@@ -226,7 +226,7 @@ class DataTypes:
                 assert len(graphs) > 0, "Relations must relate a graph that is well-known"
                 if len(graphs) == 1:
                     graph = graphs[0]
-                    return graphene.Argument(graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]))
+                    return graphene.Argument(graphene.List(lambda: _resource_model_inputs[self.graphs[graph]]))
                 else:
                     union = type(
                         f"{model_class_name}{string_to_enum(field)}UnionInputType",
