@@ -99,7 +99,7 @@ class ResourceModelWrapper:
             super().__setattr__(key, value)
         else:
             if self._lazy and not self._filled:
-                self.fill_from_resource()
+                self.fill_from_resource(self._related_prefetch)
             self._values[key] = value
 
     def __getattr__(self, key):
@@ -107,7 +107,7 @@ class ResourceModelWrapper:
             return self._values[key]
         elif key in self._nodes:
             if self._lazy and not self._filled:
-                self.fill_from_resource()
+                self.fill_from_resource(self._related_prefetch)
                 return self.__getattr__(key)
             return None
         raise AttributeError(f"No well-known attribute {key}")
@@ -175,7 +175,7 @@ class ResourceModelWrapper:
             system_settings.BYPASS_REQUIRED_VALUE_TILE_VALIDATION = bypass
         return wkfm, cross, resource
 
-    def __init__(self, id=None, _new_id=None, resource=None, x=None, filled=True, lazy=False, **kwargs):
+    def __init__(self, id=None, _new_id=None, resource=None, x=None, filled=True, related_prefetch=None, lazy=False, **kwargs):
         self._values = {}
         self.id = id
         self._new_id = _new_id
@@ -183,13 +183,14 @@ class ResourceModelWrapper:
         self._cross_record = x
         self._filled = filled
         self._lazy = lazy
+        self._related_prefetch = related_prefetch
 
         if set(kwargs) - set(self._nodes):
             raise NotImplementedError(
                 f"Some keys in {', '.join(kwargs)} are not well-known in {type(self)}"
             )
         if not filled and not lazy:
-            self.fill_from_resource(reload=True)
+            self.fill_from_resource(reload=True, self._related_prefetch)
 
         for key, value in kwargs.items():
             if isinstance(value, list) and any(types := [isinstance(entry, ResourceModelWrapper) for entry in value]):
@@ -309,9 +310,9 @@ class ResourceModelWrapper:
         return list(Resource.objects.filter(graph_id=cls.graphid).values_list("resourceinstanceid", flat=True))
 
     @classmethod
-    def all(cls):
+    def all(cls, related_prefetch=None):
         resources = Resource.objects.filter(graph_id=cls.graphid).all()
-        return [cls.from_resource(resource) for resource in resources]
+        return [cls.from_resource(resource, related_prefetch=related_prefetch) for resource in resources]
 
     @classmethod
     def find(cls, resourceinstanceid):
@@ -349,7 +350,7 @@ class ResourceModelWrapper:
             }
         return cls.__node_datatypes
 
-    def fill_from_resource(self, reload=None):
+    def fill_from_resource(self, reload=None, related_prefetch=None):
         all_values = {}
         cls = self.__class__
         class_nodes = {node["nodeid"]: key for key, node in cls._nodes.items()}
@@ -412,19 +413,17 @@ class ResourceModelWrapper:
                     elif typ == [settings.Concept]:
                         values[key] = tile.data[nodeid]
                     elif isinstance(typ, str):
-                        if typ.startswith("@") and typ[1:] in _resource_models:
+                        if typ.startswith("@") and (typ[1:] in _resource_models or typ[1:] == "resource"):
                             if isinstance(tile.data[nodeid], list):
                                 values[key] = RelationList(self, key, nodeid, tile.tileid)
                                 for datum in tile.data[nodeid]:
-                                    related_resource = Resource(datum["resourceId"])
                                     values[key].append(
-                                        get_well_known_resource_model_by_class_name(typ[1:]).from_resource(related_resource, x=datum, lazy=True)
+                                        attempt_well_known_resource_model(datum["resourceId"], related_prefetch, x=datum, lazy=True)
                                     )
                             elif tile.data[nodeid]:
-                                related_resource = Resource(tile.data[nodeid])
-                                values[key] = get_well_known_resource_model_by_class_name(typ[1:]).from_resource(related_resource, lazy=True)
-                        elif typ == "@resource":
-                                values[key] = attempt_well_known_resource_model(tile.data[nodeid])
+                                values[key].append(
+                                    attempt_well_known_resource_model(tile.data[nodeid], related_prefetch, x=datum, lazy=True)
+                                )
                         else:
                             try:
                                 datatype_factory.get_instance(typ)
@@ -441,13 +440,14 @@ class ResourceModelWrapper:
         self._filled = True
 
     @classmethod
-    def from_resource(cls, resource, x=None, lazy=False):
+    def from_resource(cls, resource, x=None, lazy=False, related_prefetch=None):
         ri = cls(
             id=resource.resourceinstanceid,
             resource=resource,
             x=x,
             filled=False,
-            lazy=lazy
+            lazy=lazy,
+            related_prefetch=related_prefetch
         )
         return ri
 
@@ -753,11 +753,11 @@ def get_well_known_resource_model_by_class_name(class_name, default=None):
 def get_well_known_resource_model_by_graph_id(graphid, default=None):
     return _resource_models_by_graph_id.get(str(graphid), default)
 
-def attempt_well_known_resource_model(resource_id):
-    resource = Resource.objects.get(pk=resource_id)
+def attempt_well_known_resource_model(resource_id, from_prefetch=None, **kwargs):
+    resource = from_prefetch(resource_id) if from_prefetch is None else Resource.objects.get(pk=resource_id)
     wkrm = get_well_known_resource_model_by_graph_id(resource.graph_id, default=None)
     if wkrm:
-        return wkrm.from_resource(resource)
+        return wkrm.from_resource(resource, **kwargs)
     return None
 
 globals().update(_resource_models)
