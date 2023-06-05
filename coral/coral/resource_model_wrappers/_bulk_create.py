@@ -126,6 +126,23 @@ def temp_get_primary_descriptor_from_nodes(self, resource, config, context=None)
     return config["string_template"]
 primary_descriptors.PrimaryDescriptorsFunction.get_primary_descriptor_from_nodes = temp_get_primary_descriptor_from_nodes
 
+def temp_get_root_ontology(self):
+    """
+    Finds and returns the ontology class of the instance's root node
+
+    """
+    return get_root_ontology(self.graph_id)
+
+@functools.lru_cache
+def get_root_ontology(graph_id):
+    root_ontology_class = None
+    graph_nodes = Node.objects.filter(graph_id=graph_id).filter(istopnode=True)
+    if len(graph_nodes) > 0:
+        root_ontology_class = graph_nodes[0].ontologyclass
+
+    return root_ontology_class
+resource_module.Resource.get_root_ontology = temp_get_root_ontology
+
 class BulkImportWKRM(BaseImportModule):
     moduleid = "a6af3a25-50ac-47a1-a876-bcb13dab411b"
     loadid = None
