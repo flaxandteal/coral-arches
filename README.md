@@ -8,6 +8,12 @@ This involves setting up the database, elastic search and an arches instance. Th
 
 ### Prerequisites
 
+### Arches
+
+It's important to clone this repository `https://github.com/flaxandteal/arches/tree/bug/coral_dockerfile_for_arches_8` and use the branch `bug/coral_dockerfile_for_arches_8`. It should be in the directory that is containing the `coral-arches` repository.
+
+#### Database
+
 The database is a very important component of this entire project and is `REQUIRED` to build the project in any state.
 
 The step in building the static version locally is building the database. This can be done from the root of the project by running the command:
