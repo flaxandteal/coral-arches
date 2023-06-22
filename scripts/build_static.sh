@@ -9,7 +9,7 @@ exec &> >(tee "$LOG_FILE")
 
 # Start the docker environment required to build arches-coral-static
 # This starts in detached mode `-d` which starts the containers in the background
-docker-compose -f docker-compose-static-build.yml --env-file docker/env-file.env up --build -d
+docker-compose -f docker-compose-static-build.yml --env-file docker/env_file.env up --build -d
 
 # Docker build command that directly matches what is defined in the github workflow.
 # The network option must be set to `--network host` this allows the build to access
@@ -30,4 +30,4 @@ docker build \
 
 # Once everything is complete stop the docker environment we created to
 # be able to build the above image.
-docker-compose -f docker-compose-static-build.yml --env-file docker/env-file.env down
+docker-compose -f docker-compose-static-build.yml --env-file docker/env_file.env down
