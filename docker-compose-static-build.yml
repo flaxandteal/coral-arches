@@ -1,0 +1,71 @@
+version: '2'
+services:
+  arches:
+    container_name: arches
+    image: arches_${ARCHES_PROJECT}:latest
+    restart: unless-stopped
+    environment:
+      - ARCHES_PROJECT=$ARCHES_PROJECT
+      - ARCHES_ROOT=/web_root/arches
+      - COMPRESS_OFFLINE=False
+      - COMPRESS_ENABLED=False
+      - INSTALL_DEFAULT_GRAPHS=False
+      - INSTALL_DEFAULT_CONCEPTS=False
+      - PGUSERNAME=postgres
+      - PGPASSWORD=postgres
+      - PGDBNAME=arches
+      - PGHOST=db
+      - PGPORT=5432
+      - COUCHDB_HOST=couchdb
+      - COUCHDB_PORT=5984
+      - COUCHDB_USER=admin
+      - COUCHDB_PASS=password
+      - ESHOST=elasticsearch
+      - ESPORT=9200
+      - CELERY_BROKER_URL=amqp://rabbitmq
+      - DJANGO_MODE=DEV
+      - DJANGO_DEBUG=True
+      - DOMAIN_NAMES=localhost
+      - PYTHONUNBUFFERED=0
+      - STATIC_URL=/static/
+      - STATIC_ROOT=/static_root
+      - WEB_ROOT=/web_root
+      - TZ=PST
+    ports:
+      - '8000:8000'
+
+  db:
+    container_name: db
+    image: kartoza/postgis:12.0
+    volumes:
+      - postgres-static-data:/var/lib/postgresql/data
+      - postgres-static-log:/var/log/postgresql
+      - ${ARCHES_ROOT:-./$ARCHES_PROJECT/$ARCHES_PROJECT/media/packages/arches}/arches/install/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASS=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,postgis_topology
+      - TZ=PST
+
+  elasticsearch:
+    image: elasticsearch:8.4.0
+    volumes:
+      - elasticsearch-static-data:/usr/share/elasticsearch/data
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    environment:
+      - TZ=PST
+      - discovery.type=single-node
+      - discovery.seed_hosts=[]
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms400m -Xmx400m
+
+volumes:
+  arches-static-log:
+  postgres-static-data:
+  postgres-static-log:
+  elasticsearch-static-data:
