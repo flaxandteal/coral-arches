@@ -10,7 +10,7 @@ services:
       entrypoint: ["../entrypoint.sh"]
       build:
         context: .
-        dockerfile: ./Dockerfile.static-py
+        dockerfile: ./Dockerfile.static-py.local
         args:
           - ARCHES_PROJECT=$ARCHES_PROJECT
           - VERSION=latest
@@ -59,7 +59,7 @@ services:
       entrypoint: ["../entrypoint.sh"]
       build:
         context: .
-        dockerfile: ./Dockerfile.static-py
+        dockerfile: ./Dockerfile.static-py.local
         args:
           - ARCHES_PROJECT=$ARCHES_PROJECT
           - VERSION=latest
