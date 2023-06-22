@@ -2,6 +2,7 @@
 .secrets
 .venv
 .nenv
+*.log
 node_modules
 docker/mapping_file.csv
 docker/mapping_file.json
