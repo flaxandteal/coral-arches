@@ -23,7 +23,7 @@ docker build \
   --build-arg ARCHES_PROJECT=coral \
   --build-arg ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/ \
   --build-arg DJANGO_DUMMY_SECRET_KEY='c7ky-mc6vdnv+avp0r@(a)8y^51ex=25nogq@+q5*mxwdi' \
-  --file Dockerfile.static \
+  --file Dockerfile.static.local \
   --tag arches_coral_static:latest \
   --network host \
   .
