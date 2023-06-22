@@ -15,11 +15,11 @@ services:
           - ARCHES_PROJECT=$ARCHES_PROJECT
           - VERSION=latest
       command: run_arches
-      volumes:
-        - arches-static-log:/arches/arches/logs
-        - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
-        - ./entrypoint.sh:/web_root/entrypoint.sh
-        - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
+      # volumes:
+      #   - arches-static-log:/arches/arches/logs
+      #   - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
+      #   - ./entrypoint.sh:/web_root/entrypoint.sh
+      #   - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
       environment:
         - ARCHES_PROJECT=$ARCHES_PROJECT
         - INSTALL_DEFAULT_GRAPHS=False
@@ -64,11 +64,11 @@ services:
           - ARCHES_PROJECT=$ARCHES_PROJECT
           - VERSION=latest
       command: run_celery
-      volumes:
-        - arches-static-log:/arches/arches/logs
-        - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
-        - ./entrypoint.sh:/web_root/entrypoint.sh
-        - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
+      # volumes:
+      #   - arches-static-log:/arches/arches/logs
+      #   - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
+      #   - ./entrypoint.sh:/web_root/entrypoint.sh
+      #   - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
       environment:
         - ARCHES_PROJECT=$ARCHES_PROJECT
         - INSTALL_DEFAULT_GRAPHS=False
@@ -151,7 +151,7 @@ services:
 
     elasticsearch:
       container_name: elasticsearch
-      image: elasticsearch:7.5.1
+      image: elasticsearch:8.4.0
       volumes:
         - elasticsearch-static-data:/usr/share/elasticsearch/data
       ports:
@@ -160,8 +160,9 @@ services:
       environment:
         - TZ=PST
         - discovery.type=single-node
-        - discovery.seed_hosts=
-        - "ES_JAVA_OPTS=-Xms400m -Xmx400m"
+        - xpack.security.enabled=false
+        - discovery.seed_hosts=[]
+        - ES_JAVA_OPTS=-Xms400m -Xmx400m
 
     rabbitmq:
       container_name: rabbitmq
