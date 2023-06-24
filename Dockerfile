@@ -15,7 +15,7 @@ RUN set -ex \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends $BUILD_DEPS \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python get-pip.py
+    && python3.8 get-pip.py
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
     && pip install starlette-graphene3 \
