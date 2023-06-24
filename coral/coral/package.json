@@ -7,7 +7,7 @@
         "start": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack serve --config webpack/webpack.config.dev.js"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.1.x"
+        "arches-dev-dependencies": "git+https://github.com/archesproject/arches.git#dev/7.5.x"
     },
     "dependencies": {
         "arches": "git+https://github.com/archesproject/arches.git#dev/7.5.x",
