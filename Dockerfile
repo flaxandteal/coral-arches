@@ -13,7 +13,9 @@ RUN set -ex \
         libxslt-dev \
         " \
     && apt-get update -y \
-    && apt-get install -y --no-install-recommends $BUILD_DEPS
+    && apt-get install -y --no-install-recommends $BUILD_DEPS \
+    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+    && python get-pip.py
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
     && pip install starlette-graphene3 \
