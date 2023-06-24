@@ -157,7 +157,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: ${{ env.PROJECT_BASE }}
+        image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           ARCHES_ROOT: "/web_root/arches"
