@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "arches": "git+https://github.com/archesproject/arches.git#dev/7.5.x",
+        "ckeditor4": "git+https://github.com/ckeditor/ckeditor4-releases#full/4.20.x",
         "longjohn": "^0.2.12",
         "webpack": "^5.74.0",
         "webpack-merge": "^5.8.0"

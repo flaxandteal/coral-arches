@@ -3385,6 +3385,11 @@ ckeditor4@ckeditor/ckeditor4-releases#full/4.20.x:
   version "4.20.2"
   resolved "git+ssh://git@github.com/ckeditor/ckeditor4-releases.git#90f4dc9a6071efcee9deeae103e1189a8d5d12a9"
 
+"ckeditor4@git+https://github.com/ckeditor/ckeditor4-releases#full/4.20.x":
+  version "4.20.2"
+  uid "90f4dc9a6071efcee9deeae103e1189a8d5d12a9"
+  resolved "git+https://github.com/ckeditor/ckeditor4-releases#90f4dc9a6071efcee9deeae103e1189a8d5d12a9"
+
 clean-css@^5.2.2:
   version "5.3.2"
   resolved "https://registry.npmjs.org/clean-css/-/clean-css-5.3.2.tgz"
