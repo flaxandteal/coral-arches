@@ -238,11 +238,10 @@ jobs:
     env:
       PROJECT_BASE: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
       PROJECT_STATIC: ${{ fromJSON(jobs['Build-Arches-Static'].steps.meta.outputs.json).tags[0] }}
-    container:
-      image: cypress/included:11.2.0
-    env:
       HOME: ""
       CYPRESS_BASE_URL: http://arches:8000
+    container:
+      image: cypress/included:11.2.0
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
