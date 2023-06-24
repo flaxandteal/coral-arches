@@ -247,6 +247,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             PROJECT_BASE=${{ env.PROJECT_BASE }}
+            PROJECT_STATIC=${{ env.PROJECT_STATIC }}
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
