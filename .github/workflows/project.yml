@@ -68,6 +68,8 @@ jobs:
     needs: [Build-Arches]
     container:
       image: docker:dind
+    env:
+      PROJECT_BASE: ${{ needs['Build-Arches'].outputs['project-base'] }}
     outputs:
       project-static: ${{ steps['set-static'].outputs['project-static'] }}
     steps:
@@ -200,7 +202,9 @@ jobs:
     runs-on: [self-hosted]
     container:
       image: docker:dind
-
+    env:
+      PROJECT_BASE: ${{ needs['Build-Arches'].outputs['project-base'] }}
+      PROJECT_STATIC: ${{ needs['Build-Arches-Static'].outputs['project-static'] }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
@@ -229,7 +233,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.PROJECT_STATIC }}
+          images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}-static-py
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
