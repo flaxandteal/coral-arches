@@ -52,11 +52,12 @@ jobs:
           build-args: |
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+      - name: Record a project base image reference
+        run: |
+          echo "PROJECT_BASE=${{ fromJSON(steps.meta.outputs.json).tags[0] }}" >> $GITHUB_ENV
   Build-Arches-Static:
     runs-on: [self-hosted]
     needs: [Build-Arches]
-    env:
-      PROJECT_BASE: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
     container:
       image: docker:dind
 
@@ -108,6 +109,9 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
+      - name: Record a project static image reference
+        run: |
+          echo "PROJECT_STATIC=${{ fromJSON(steps.meta.outputs.json).tags[0] }}" >> $GITHUB_ENV
     services:
       elasticsearch:
         image: elasticsearch:8.4.0
@@ -182,9 +186,6 @@ jobs:
   Build-Arches-Final:
     needs: [Build-Arches-Static, Build-Arches]
     runs-on: [self-hosted]
-    env:
-      PROJECT_BASE: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
-      PROJECT_STATIC: ${{ fromJSON(jobs['Build-Arches-Static'].steps.meta.outputs.json).tags[0] }}
     container:
       image: docker:dind
 
@@ -236,8 +237,6 @@ jobs:
     runs-on: [self-hosted]
     needs: [Build-Arches-Final, Build-Arches, Build-Arches-Static]
     env:
-      PROJECT_BASE: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
-      PROJECT_STATIC: ${{ fromJSON(jobs['Build-Arches-Static'].steps.meta.outputs.json).tags[0] }}
       HOME: ""
       CYPRESS_BASE_URL: http://arches:8000
     container:
