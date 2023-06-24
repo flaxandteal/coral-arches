@@ -7,6 +7,7 @@ env:
   ARCHES_PROJECT: coral
 jobs:
   Mini:
+    runs-on: [self-hosted]
     outputs:
       project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
     steps:
