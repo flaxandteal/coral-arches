@@ -3,25 +3,10 @@ run-name: Build Arches project
 on: [push]
 env:
   ARCHES_BASE: ghcr.io/flaxandteal/arches-base-7.5-dev:bug-coral_dockerfile_for_arches_7.4
-  POSTGIS_BASE: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
+  ARCHES_POSTGIS: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
   ARCHES_PROJECT: coral
 jobs:
-  Mini:
-    runs-on: [self-hosted]
-    outputs:
-      project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
-    steps:
-      - id: set-base
-        run: |
-          export PROJECT_POSTGIS=${{ env.PROJECT_POSTGIS }}
-          echo "::set-output name=project-postgis::ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4"
   Build-Arches:
-    services:
-      db:
-        image: ${{ needs['Mini'].outputs['project-postgis'] }}
-      db2:
-        image: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
-    needs: [Mini]
     runs-on: [self-hosted]
     outputs:
       project-base: ${{ steps['set-base'].outputs['project-base'] }}
@@ -74,7 +59,7 @@ jobs:
         id: set-base
         run: |
           export PROJECT_BASE=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
-          export PROJECT_POSTGIS=${{ env.PROJECT_POSTGIS }}
+          export PROJECT_POSTGIS=${{ env.ARCHES_POSTGIS }}
           echo "PROJECT_BASE=$PROJECT_BASE" >> $GITHUB_ENV
           echo "::set-output name=project-base::$PROJECT_BASE"
           echo "::set-output name=project-postgis::$PROJECT_POSTGIS"
