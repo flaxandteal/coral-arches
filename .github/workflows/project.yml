@@ -14,11 +14,13 @@ jobs:
       - id: set-base
         run: |
           export PROJECT_POSTGIS=${{ env.PROJECT_POSTGIS }}
-          echo "::set-output name=project-postgis::$PROJECT_POSTGIS"
+          echo "::set-output name=project-postgis::ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4"
   Build-Arches:
     services:
       db:
         image: ${{ needs['Mini'].outputs['project-postgis'] }}
+      db2:
+        image: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
     needs: [Mini]
     runs-on: [self-hosted]
     outputs:
