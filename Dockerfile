@@ -11,6 +11,7 @@ COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
 RUN set -ex \
     && BUILD_DEPS=" \
         libxslt-dev \
+        git \
         " \
     && apt-get update -y \
     && apt-get install -y --no-install-recommends $BUILD_DEPS
