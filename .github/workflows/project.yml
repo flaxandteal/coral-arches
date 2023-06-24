@@ -6,7 +6,19 @@ env:
   POSTGIS_BASE: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
   ARCHES_PROJECT: coral
 jobs:
+  Mini:
+    outputs:
+      project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
+    steps:
+      - id: set-base
+        run: |
+          export PROJECT_POSTGIS=${{ env.PROJECT_POSTGIS }}
+          echo "::set-output name=project-postgis::$PROJECT_POSTGIS"
   Build-Arches:
+    services:
+      db:
+        image: ${{ needs['Mini'].outputs['project-postgis'] }}
+    needs: [Mini]
     runs-on: [self-hosted]
     outputs:
       project-base: ${{ steps['set-base'].outputs['project-base'] }}
