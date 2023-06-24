@@ -11,11 +11,11 @@ COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
 RUN set -ex \
     && BUILD_DEPS=" \
         libxslt-dev \
-        git openssh-client \
+        git ssh \
         " \
     && apt-get update -y \
-    && (ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts) # TODO: fix ckeditor yarn dep \
-    && apt-get install -y --no-install-recommends $BUILD_DEPS
+    && apt-get install -y --no-install-recommends $BUILD_DEPS \
+    && (mkdir ~/.ssh && ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts) # TODO: fix ckeditor yarn dep
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
     && pip install starlette-graphene3 \
