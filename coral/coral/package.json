@@ -10,7 +10,7 @@
         "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.1.x"
     },
     "dependencies": {
-        "arches": "github:archesproject/arches#dev/7.5.x",
+        "arches": "git+https://github.com/archesproject/arches.git#dev/7.5.x",
         "longjohn": "^0.2.12",
         "webpack": "^5.74.0",
         "webpack-merge": "^5.8.0"
