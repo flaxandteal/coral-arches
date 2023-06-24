@@ -14,7 +14,7 @@ RUN set -ex \
         git openssh-client \
         " \
     && apt-get update -y \
-    && (ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts) \ # TODO: fix ckeditor yarn dep
+    && (ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts) # TODO: fix ckeditor yarn dep \
     && apt-get install -y --no-install-recommends $BUILD_DEPS
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
