@@ -1,4 +1,4 @@
-ARG VERSION
+ARG PROJECT_BASE
 ARG ARCHES_PROJECT=coral
 ARG ARCHES_BASE=flaxandteal/arches_coral_base
 ARG WEB_ROOT=/web_root
@@ -44,7 +44,7 @@ ENV DJANGO_DEBUG=False \
 RUN useradd arches && mkdir -p /static_root && chown -R arches /static_root
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 
-FROM flaxandteal/arches_${ARCHES_PROJECT}:$VERSION as arches_dynamic
+FROM $PROJECT_BASE as arches_dynamic
 FROM arches_static_cache as arches
 ARG WEB_ROOT=/web_root
 ARG STATIC_ROOT=/static_root
