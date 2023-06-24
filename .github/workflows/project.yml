@@ -10,6 +10,7 @@ jobs:
     runs-on: [self-hosted]
     outputs:
       project-base: ${{ steps['set-base'].outputs['project-base'] }}
+      project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -60,6 +61,7 @@ jobs:
           export PROJECT_BASE=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
           echo "PROJECT_BASE=$PROJECT_BASE" >> $GITHUB_ENV
           echo "::set-output name=project-base::$PROJECT_BASE"
+          echo "::set-output name=project-postgis::${{ env.PROJECT_POSTGIS }}"
   Build-Arches-Static:
     runs-on: [self-hosted]
     needs: [Build-Arches]
@@ -139,7 +141,7 @@ jobs:
           --health-timeout 5s
           --health-retries 10
       db:
-        image: $POSTGIS_BASE
+        image: ${{ needs['Build-Arches'].outputs['project-postgis'] }}
         #volumes:
         #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
@@ -288,9 +290,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 10
-
       db:
-        image: $POSTGIS_BASE
+        image: ${{ needs['Build-Arches'].outputs['project-postgis'] }}
         #volumes:
         #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
