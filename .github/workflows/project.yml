@@ -8,6 +8,8 @@ env:
 jobs:
   Build-Arches:
     runs-on: [self-hosted]
+    outputs:
+      project-base: ${{ steps['set-base'].outputs['project-base'] }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -53,14 +55,18 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
       - name: Record a project base image reference
+        id: set-base
         run: |
-          echo "PROJECT_BASE=${{ fromJSON(steps.meta.outputs.json).tags[0] }}" >> $GITHUB_ENV
+          export PROJECT_BASE=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          echo "PROJECT_BASE=$PROJECT_BASE" >> $GITHUB_ENV
+          echo "::set-output name=project-base::$PROJECT_BASE"
   Build-Arches-Static:
     runs-on: [self-hosted]
     needs: [Build-Arches]
     container:
       image: docker:dind
-
+    outputs:
+      project-static: ${{ steps['set-static'].outputs['project-static'] }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
@@ -110,8 +116,11 @@ jobs:
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
       - name: Record a project static image reference
+        id: set-static
         run: |
-          echo "PROJECT_STATIC=${{ fromJSON(steps.meta.outputs.json).tags[0] }}" >> $GITHUB_ENV
+          export PROJECT_STATIC=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          echo "PROJECT_STATIC=$PROJECT_STATIC" >> $GITHUB_ENV
+          echo "::set-output name=project-static::$PROJECT_STATIC"
     services:
       elasticsearch:
         image: elasticsearch:8.4.0
@@ -299,7 +308,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: ${{ env.PROJECT_BASE }}
+        image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
