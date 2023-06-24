@@ -11,9 +11,10 @@ COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
 RUN set -ex \
     && BUILD_DEPS=" \
         libxslt-dev \
-        git \
+        git openssh-client \
         " \
     && apt-get update -y \
+    && (ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts) \ # TODO: fix ckeditor yarn dep
     && apt-get install -y --no-install-recommends $BUILD_DEPS
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
