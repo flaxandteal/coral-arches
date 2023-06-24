@@ -13,13 +13,11 @@ RUN set -ex \
         libxslt-dev \
         " \
     && apt-get update -y \
-    && apt-get install -y --no-install-recommends $BUILD_DEPS \
-    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python3.8 get-pip.py
+    && apt-get install -y --no-install-recommends $BUILD_DEPS
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
     && pip install starlette-graphene3 \
-    && pip install docx --binary-only :all: \
+    && pip install docx \
     && pip install starlette-context
 RUN . ../ENV/bin/activate \
     && pip install cachetools websockets \
