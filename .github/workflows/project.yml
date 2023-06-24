@@ -55,6 +55,8 @@ jobs:
   Build-Arches-Static:
     runs-on: [self-hosted]
     needs: [Build-Arches]
+    env:
+      PROJECT_BASE: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
     container:
       image: docker:dind
 
@@ -101,7 +103,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            PROJECT_BASE=${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
+            PROJECT_BASE=${{ env.PROJECT_BASE }}
             ARCHES_ENVIRONMENT=development
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
@@ -142,7 +144,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
+        image: ${{ env.PROJECT_BASE }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           ARCHES_ROOT: "/web_root/arches"
@@ -178,8 +180,11 @@ jobs:
           --health-timeout 5s
           --health-retries 1000
   Build-Arches-Final:
-    needs: [Build-Arches-Static]
+    needs: [Build-Arches-Static, Build-Arches]
     runs-on: [self-hosted]
+    env:
+      PROJECT_BASE: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
+      PROJECT_STATIC: ${{ fromJSON(jobs['Build-Arches-Static'].steps.meta.outputs.json).tags[0] }}
     container:
       image: docker:dind
 
@@ -211,7 +216,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}-static-py
+          images: ${{ env.PROJECT_STATIC }}
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
@@ -224,12 +229,15 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            PROJECT_BASE=${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
+            PROJECT_BASE=${{ env.PROJECT_BASE }}
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
     runs-on: [self-hosted]
-    needs: [Build-Arches-Final]
+    needs: [Build-Arches-Final, Build-Arches, Build-Arches-Static]
+    env:
+      PROJECT_BASE: ${{ fromJSON(jobs['Build-Arches'].steps.meta.outputs.json).tags[0] }}
+      PROJECT_STATIC: ${{ fromJSON(jobs['Build-Arches-Static'].steps.meta.outputs.json).tags[0] }}
     container:
       image: cypress/included:11.2.0
     env:
@@ -293,7 +301,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: ${{ fromJSON(jobs['Build-Arches-Final'].steps.meta.outputs.json).tags[0] }}
+        image: ${{ env.PROJECT_BASE }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
