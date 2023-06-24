@@ -59,9 +59,10 @@ jobs:
         id: set-base
         run: |
           export PROJECT_BASE=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          export PROJECT_POSTGIS=${{ env.PROJECT_POSTGIS }}
           echo "PROJECT_BASE=$PROJECT_BASE" >> $GITHUB_ENV
           echo "::set-output name=project-base::$PROJECT_BASE"
-          echo "::set-output name=project-postgis::${{ env.PROJECT_POSTGIS }}"
+          echo "::set-output name=project-postgis::$PROJECT_POSTGIS"
   Build-Arches-Static:
     runs-on: [self-hosted]
     needs: [Build-Arches]
