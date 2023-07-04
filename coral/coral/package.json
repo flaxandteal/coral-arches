@@ -7,7 +7,22 @@
         "start": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack serve --config webpack/webpack.config.dev.js"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.1.x"
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.1.x",
+        "babel-loader": "^9.1.2",
+        "clean-webpack-plugin": "^4.0.0",
+        "css-loader": "^6.8.1",
+        "eslint-webpack-plugin": "^4.0.1",
+        "file-loader": "^6.2.0",
+        "html-loader": "^4.2.0",
+        "mini-css-extract-plugin": "^2.7.6",
+        "postcss-loader": "^7.3.3",
+        "raw-loader": "^4.0.2",
+        "sass-loader": "^13.3.2",
+        "stylelint-webpack-plugin": "^4.1.1",
+        "ttf-loader": "^1.0.2",
+        "url-loader": "^4.1.1",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1"
     },
     "dependencies": {
         "arches": "archesproject/arches#dev/7.1.x",
