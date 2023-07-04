@@ -18,7 +18,7 @@ services:
         dockerfile: ./Dockerfile
         args:
           - ARCHES_PROJECT=$ARCHES_PROJECT
-      command: run_yarn
+      command: run_yarn_start
       volumes:
         - arches-log:/arches/arches/logs
         - arches-static:/static_root
@@ -176,6 +176,7 @@ services:
         - couchdb-log:/usr/local/var/log/couchdb
 
     elasticsearch:
+      container_name: elasticsearch
       image: elasticsearch:8.4.0
       volumes:
         - elasticsearch-data:/usr/share/elasticsearch/data
@@ -185,9 +186,9 @@ services:
       environment:
         - TZ=PST
         - discovery.type=single-node
-        - discovery.seed_hosts=[]
         - xpack.security.enabled=false
-        - "ES_JAVA_OPTS=-Xms400m -Xmx400m"
+        - discovery.seed_hosts=[]
+        - ES_JAVA_OPTS=-Xms400m -Xmx400m
 
     rabbitmq:
       image: rabbitmq
