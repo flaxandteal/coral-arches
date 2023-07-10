@@ -17,6 +17,7 @@ It's important to clone this repository `https://github.com/flaxandteal/arches/t
 The database is a very important component of this entire project and is `REQUIRED` to build the project in any state.
 
 The step in building the static version locally is building the database. This can be done from the root of the project by running the command:
+
 ```bash
 bash scripts/reset_db.sh
 ```
@@ -26,6 +27,7 @@ Resetting the database takes about 25 minutes so be prepared to wait for it to c
 ### Building the arches_coral_static image
 
 Moving on from here you should be able to build the static image of the project successfully. To start building the static image run the command:
+
 ```bash
 bash scripts/build_static.sh
 ```
@@ -41,6 +43,7 @@ This process is taking place during the console message shown above and it will 
 ### Starting the environment
 
 To start the environment you simply need to run the command:
+
 ```bash
 docker-compose -f docker-compose-static.yml --env-file docker/env_file.env up
 ```
@@ -48,7 +51,6 @@ docker-compose -f docker-compose-static.yml --env-file docker/env_file.env up
 This will the `docker-compose-static.yml` to setup all the required services including the static build of the project.
 
 This can then be visited at `http://localhost:8000`.
-
 
 # docker-compose.yml
 
@@ -71,6 +73,7 @@ Sets up the service
 - - `./settings_docker.py:/web_root/arches/arches/settings_docker.py` the settings file is linked but to the backend arches and not coral arches.
 
 Environment variables for the service:
+
 ```
 - ARCHES_PROJECT=$ARCHES_PROJECT
 - COMPRESS_OFFLINE=False
@@ -117,6 +120,7 @@ The service depends on:
 - - `./settings_docker.py:/web_root/arches/arches/settings_docker.py` the settings file is linked but to the backend arches and not coral arches.
 
 Environment variables for the service:
+
 ```
 - ARCHES_PROJECT=$ARCHES_PROJECT
 - COMPRESS_OFFLINE=False
@@ -157,11 +161,11 @@ Should be hosted on port `8000`.
 > SAME AS THE LAST TWO BUT DIFFERENT ENTRY POINT `run_celery` AND DEPENDS ON
 
 Depends on:
+
 - db
 - elasticsearch
 - couchdb
 - rabbitmq
-
 
 ### db:
 
@@ -172,6 +176,7 @@ Depends on:
 Hosted on port `5432`.
 
 Environment variables:
+
 ```
 - POSTGRES_USER=postgres
 - POSTGRES_PASS=postgres
@@ -185,6 +190,7 @@ Environment variables:
 This is referring to `Dockerfile` and not the other files with dot extensions.
 
 Steps:
+
 - `ARG ARCHES_BASE=flaxandteal/arches_coral_base` Configure an argument `ARG ARCHES_BASE=flaxandteal/arches_coral_base`.
 - `FROM $ARCHES_BASE` if we recall the environment variables set this as `../arches`.
 - `RUN useradd arches` a new user called arches is created.
@@ -193,12 +199,15 @@ Steps:
 - `ENV ARCHES_PROJECT $ARCHES_PROJECT` sets the environment variable to `coral`.
 - `COPY entrypoint.sh ${WEB_ROOT}/` copy the entrypoint file to `web_root/`
 - `COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/` copy `coral/` to `web_root/coral`
+
 ```
 RUN . ../ENV/bin/activate \
     && pip install cachetools websockets \
     && pip install -r ${WEB_ROOT}/${ARCHES_PROJECT}/requirements.txt
 ```
+
 Does the above statement work. Does ../ENV/bin/activate exist in the container or must it be copied over during the docker build?
+
 - `COPY settings_docker.py ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/` copy the settings file to `web_root/coral/coral/`
 - `RUN echo "{}" > ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json` this will create an empty json file in `web_root/coral/coral/webpack/`
 - `WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}` the working directory will be set to `web_root/coral/coral/`
@@ -297,14 +306,6 @@ It's worth noting that `:8000` should be the backend and `:8080` should be the f
 
 Visiting `localhost:8080` is still showing `Cannot GET /`.
 
-
-
-
-
-
-
-
-
 ## After meeting with Phil
 
 The frontend build is dependant on the database existing this is due to the resources existing in the database being needed to provide the static HTML with data.
@@ -317,6 +318,249 @@ To build the Arches static image you can use the script `build_docker.sh`.
 
 I had to fix a couple things in this script
 
+## Rebuilding Webpack
+
+Use the following command directed at the arches container to rebuild webpack and allow port 8000 to render the complied `.htm` files.
+
+```
+rm -f log && docker exec -ti CONTAINER_ID/NAME /bin/sh -c '. ../ENV/bin/activate; cd coral; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js' 2>&1 > log
+```
+
+## Editing Workflows
+
+### Locating the files associated with a workflow
+
+This example will be locating files related to the `Application Area Workflow`.
+
+```
+/coral/coral/media/js/views/components/plugins/application-area.js
+/coral/coral/templates/views/components/workflows/application-area/
+./coral/coral/urls.py:    url(r'^'+settings.APP_PATHNAME+'/plugins/application-area', PluginView.as_view(), name='application-area')
+./coral/coral/media/node_modules/arches/arches/app/templates/views/components/widgets/text.htm:                <input type="text" style="flex:1" data-bind="textInput: currentText, attr: {placeholder: placeholder, maxlength: maxLength, disabled: disable, dir: currentDirection}" class="form-control input-lg widget-input">
+./coral/coral/init-workflow.json
+./coral/coral/pkg/staging/Application Area.json
+./coral/coral/application-area.json
+```
+
+## Creating Extensions
+
+[Arches Documentation](https://arches.readthedocs.io/en/stable/developing/extending/creating-extensions/)
+
+## Creating a plugin
+
+[Arches Documentation](https://arches.readthedocs.io/en/stable/developing/extending/extensions/plugins/#registering-your-plugin)
+
+Within the plugins folder create a json file called sample-plugin.json. The fields shown below are required to register the plugin.
+
+```
+{
+  "pluginid": "c437aa0f-104d-4941-92db-4cb056734e9f", # Optional, will automatically be generated
+  "name": "Sample Plugin",
+  "icon": "fa fa-share-alt",
+  "component": "views/components/plugins/sample-plugin",
+  "componentname": "sample-plugin",
+  "config": {},
+  "slug": "sample-plugin",
+  "sortorder": 0
+}
+```
+
+From my testing it will print the generated plugin id to STDOUT but won't automatically include it in the json file. I recommended manually entering it for consistency.
+
+Use this command to register the plugin:
+
+```
+docker exec -it arches bash -c "source ../ENV/bin/activate && python manage.py plugin register --source ./coral/plugins/sample-plugin.json"
+```
+
+Use this command to list the registered plugins:
+
+```
+docker exec -it arches bash -c "source ../ENV/bin/activate && python manage.py plugin list"
+```
+
+## Creating a workflow
+
+[Arches Documentation](https://arches.readthedocs.io/en/stable/developing/extending/extensions/workflows/)
+
+Registering a plugin id again will overwrite the previous plugin that was registered. For example I changed the sample-plugin json and file name then ran the register command and checked the register plugins list to see the sample-plugin had been removed.
+
+```
+{
+  "pluginid": "c437aa0f-104d-4941-92db-4cb056734e9f",
+  "name": "Quick Create Resource",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/quick-resource-create-workflow",
+  "componentname": "quick-resource-create-workflow",
+  "config": {
+      "show": true
+  },
+  "slug": "quick-resource-create-workflow",
+  "sortorder": 0
+}
+```
+
+```
+docker exec -it arches bash -c "source ../ENV/bin/activate && python manage.py plugin register --source ./coral/plugins/quick-resource-create-workflow.json"
+docker exec -it arches bash -c "source ../ENV/bin/activate && python manage.py plugin list"
+```
+
+The main UI component for the workflow requires these two files:
+
+```
+quick-resource-create-workflow.htm: coral/templates/views/components/plugins/quick-resource-create-workflow.htm
+quick-resource-create-workflow.js: coral/media/js/views/components/plugins/quick-resource-create-workflow.js
+```
+
+Within quick-resource-create-workflow.htm two lines can be added:
+
+```
+{% extends "views/components/plugins/workflow.htm" %}
+{% load i18n %}
+```
+
+Next with quick-resource-create-workflow.js you can the following boiler plate:
+
+> The file name, registered component name, and this.componentName must all match.
+
+```
+define([
+    'knockout',
+    'jquery',
+    'arches',
+    'viewmodels/workflow',
+    // DEFINE EXTRA STEP COMPONENTS HERE AS NEEDED
+    'views/components/workflows/final-step'
+], function(ko, $, arches, Workflow) {
+    return ko.components.register('quick-resource-create-workflow', {
+        viewModel: function(params) {
+            this.componentName = 'quick-resource-create-workflow';
+            this.quitUrl = "/search";
+            this.stepConfig = [
+                // ADD STEP CONFIG ITEMS HERE
+            ];
+            Workflow.apply(this, [params]);
+        },
+        template: { require: 'text!templates/views/components/plugins/quick-resource-create-workflow.htm' }
+    });
+});
+```
+
+### Step Component Item
+
+```
+{
+    title: 'Create Historic Resource',
+    name: 'set-basic-info',
+    required: true,
+    workflowstepclass: 'create-project-project-name-step',
+    informationboxdata: {
+        heading: 'Create historic resource here',
+        text: 'Begin by providing the name and type of historic resource you are adding to the database.',
+    },
+    layoutSections: [
+        // ADD LAYOUT SECTIONS HERE
+    ]
+}
+```
+
+```
+docker-compose --env-file docker/env_file.env restart arches_frontend arches
+```
+
+# Uploading files
+
+FILE UPLOADS GOTO THIS ENDPOINT
+
+AT LEAST THE IMAGE UPLOAD DOES
+
+http://localhost:8000/tile
+
+RESULTING UPLOADED FILES CAN BE FOUND WITHIN
+
+./coral/coral/uploadedfiles
+
+I'm guessing any file can be uploaded to this directory and that something similar to how it is implemented for images needs to be put together
+
+This where the file widget is defined in the database using the special id assigned to it specifically `10000000-0000-0000-0000-000000000019`
+
+```
+./coral/coral/media/node_modules/arches/arches/db/dml/db_data.sql:    VALUES ('10000000-0000-0000-0000-000000000019', 'file-widget', 'views/components/widgets/file', 'file-list', '{"acceptedFiles": "", "maxFilesize": "200"}');
+
+./coral/coral/media/node_modules/arches/arches/db/dml/db_data.sql:INSERT INTO d_data_types(datatype, iconclass, modulename, classname, defaultconfig, configcomponent, configname, isgeometric, defaultwidget) VALUES ('file-list', 'fa fa-file-image-o', 'datatypes.py', 'FileListDataType', null, null, null, FALSE, '10000000-0000-0000-0000-000000000019');
+```
 
 
 
+python manage.py widget update --source /Documents/projects/mynewproject/mynewproject/widgets/sample-widget.json
+
+docker exec -it d2d1eeeacb64 bash -c "source ../ENV/bin/activate && python manage.py widget update --source ./coral/widgets/photo.json"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Locating "Applicaiton Area Stuff"
+
+```
+{
+    "card_id": "9c9f9dbd-83bf-11ea-8cd5-f875a44e0e11",
+    "config": {
+        "defaultValue": {
+            "en": {
+                "direction": "ltr",
+                "value": null
+            }
+        },
+        "i18n_properties": [
+            "placeholder"
+        ],
+        "label": "Application Area Name",
+        "maxLength": null,
+        "placeholder": {
+            "en": "Enter text"
+        },
+        "uneditable": false,
+        "width": "100%"
+    },
+    "id": "9c9f9dc2-83bf-11ea-8d14-f875a44e0e11",
+    "label": {
+        "en": "Application Area Name"
+    },
+    "node_id": "9c9f9dc0-83bf-11ea-8d22-f875a44e0e11",
+    "sortorder": 0,
+    "visible": true,
+    "widget_id": "10000000-0000-0000-0000-000000000001"
+},
+```
+
+
+## Widgets and data types
+
+[Arches Documentation](https://arches.readthedocs.io/en/stable/developing/extending/extensions/widgets/)
+
+
+
+
+## Writing function logic
+
+[Arches Documentation](https://arches.readthedocs.io/en/stable/developing/extending/extensions/functions/)
+
+After setting up the required boiler plate. Your new function must extend the `BaseFunction` class and implement a set of methods that may or may not be used by arches depending on the use case.
+
+### save and delete
+
+> The Tile object will look up all its Graph’s associated Functions upon being saved. Before writing to the database, it calls each function’s save method, passing itself along with the Django Request object. This is likely where the bulk of your function’s logic will reside.
