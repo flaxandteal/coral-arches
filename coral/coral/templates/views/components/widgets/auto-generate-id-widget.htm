@@ -1,0 +1,35 @@
+{% extends "views/components/widgets/base.htm" %}
+{% load i18n %}
+
+{% block form %}
+<div class="row widget-wrapper">
+    <div class="form-group">
+        <label class="control-label widget-input-label" for="" data-bind="text:label"></label>
+        <div class="col-xs-12">
+            <input type="text" data-bind="textInput: idValue, attr: {placeholder: id_placeholder, disabled: disabled}" class="form-control input-lg widget-input" style="margin-bottom: 5px">
+        </div>
+    </div>
+</div>
+{% endblock form %}
+
+{% block config_form %}
+<div class="control-label">
+    {% trans "Placeholder" %}
+</div>
+<div class="col-xs-12 crud-widget-container">
+    <input type="" placeholder="{% trans "Placeholder" %}" id="" class="form-control input-md widget-input" data-bind="textInput: id_placeholder">
+</div>
+<div class="control-label">
+  {% trans "Label" %}
+</div>
+<div class="col-xs-12 crud-widget-container">
+  <input type="" placeholder="{% trans "Label" %}" id="" class="form-control input-md widget-input" data-bind="textInput: label">
+</div>
+{% endblock config_form %}
+
+{% block report %}
+<dt data-bind="text: label"></dt>
+<dd>
+  <div style='margin-bottom:2px' data-bind="text: value"></div>
+</dd>
+{% endblock report %}
