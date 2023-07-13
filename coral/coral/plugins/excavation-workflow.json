@@ -1,0 +1,12 @@
+{
+  "pluginid": "23e0becb-b69f-499a-90b6-854d91621d75",
+  "name": "Excavation Licensing",
+  "icon": "fa fa-file-text",
+  "component": "views/components/plugins/excavation-workflow",
+  "componentname": "excavation-workflow",
+  "slug": "excavation-workflow",
+  "config": {
+    "show": true
+  },
+  "sortorder": 0
+}
