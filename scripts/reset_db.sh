@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# A full log of this script will be output to the file described below.
+LOG_FILE="reset_db.ansi"
+exec &> >(tee "$LOG_FILE")
+
 docker rm -f ${ARCHES_FOLDER:-coral}_db_1
 docker-compose --env-file docker/env_file.env rm -f db
 docker volume rm ${ARCHES_FOLDER:-coral}_postgres-data

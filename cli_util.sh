@@ -2,4 +2,4 @@ alias rbwebpack="rm -f log && docker exec -ti coral-arches_arches_1 /bin/sh -c '
 
 alias djmang='docker exec -it coral-arches_arches_1 bash -c "source ../ENV/bin/activate && python manage.py \"\${0:-help}\" \"\$@\""'
 
-alias upcoral='docker-compose --env-file docker/env_file.env up'
+alias coralup='docker-compose --env-file docker/env_file.env up'
