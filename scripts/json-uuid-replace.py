@@ -7,11 +7,23 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(__name__)
 
-exclude_strings = ['ontology_id', 'function_id', 'template_id', 'widget_id', 'component_id']
+exclude_strings = [
+    r'ontology_id', 
+    r'function_id', 
+    r'template_id', 
+    r'widget_id', 
+    r'component_id', 
+    r'conceptid', 
+    r'config\.defaultValue',
+    r'options\[\d+\]\.id',
+    r'config\.rdmCollection',
+    r'config\.graphid\[\d+\]',
+    r'config\.graphs\[\d+\]\.graphid'
+]
 
 
-def in_string(arr_strings, string):
-    return any(s in string for s in arr_strings)
+def in_string(patterns, string):
+    return any(re.search(p, string) for p in patterns)
 
 
 def is_valid_uuid(value):
