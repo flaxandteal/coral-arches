@@ -564,3 +564,12 @@ After setting up the required boiler plate. Your new function must extend the `B
 ### save and delete
 
 > The Tile object will look up all its Graph’s associated Functions upon being saved. Before writing to the database, it calls each function’s save method, passing itself along with the Django Request object. This is likely where the bulk of your function’s logic will reside.
+
+
+# Cloning Resource Models
+
+Run the following script to clone resource models. This is a temporary solution the clone feature not working correctly.
+
+```
+python3 scripts/json-uuid-replace.py 2>&1 | tee uuid-replace.log
+```
