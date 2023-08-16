@@ -133,7 +133,6 @@ define([
           name: 'init-file-step' /* unique to workflow */,
           required: false,
           // workflowstepclass: 'workflow-form-component',
-
           informationboxdata: {
             heading: 'Record Decision'
           },
@@ -147,17 +146,42 @@ define([
                   parameters: {
                     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
                     nodegroupid: '833b14a7-4c78-42fd-a64a-be416a89903b',
-                    renderContext: 'workflow',
+                   
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'related-file' /* unique to step */,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+                //     nodegroupid: 'de714810-3c3a-11ee-96f2-0242ac140007',
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                //   }
+                // },
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Record Decision Additional Files',
+          name: 'file-upload' /* unique to workflow */,
+          required: false,
+          informationboxdata: {
+            heading: 'Record Decision File Upload'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
                 {
-                  componentName: 'file-viewer',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'related-file' /* unique to step */,
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-                    nodegroupid: '101c32ba-2b49-4aa5-b74e-245b9f696012',
+                    nodegroupid: 'de714810-3c3a-11ee-96f2-0242ac140007',
                     renderContext: 'workflow',
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
