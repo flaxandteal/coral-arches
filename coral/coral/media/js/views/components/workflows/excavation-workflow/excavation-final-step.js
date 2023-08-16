@@ -27,27 +27,23 @@ define([
         },
         address: {
           name: 'Address',
-          value: this.getResourceValue(val.resource, ['Address', '@value'])
-        },
-        bFilecmNumber: {
-          name: 'B File/CM Number',
-          value: this.getResourceValue(val.resource, ['B File/CM Number', '@value'])
+          value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@value'])
         },
         date: {
           name: 'Date',
-          value: this.getResourceValue(val.resource, ['Excavation Dates', '@value'])
+          value: this.getResourceValue(val.resource, ['Excavation Dates', 'Log Date', '@value'])
         },
         licenseeName: {
           name: "Licencee's Name",
-          value: this.getResourceValue(val.resource, ["Licencee's Name", '@value'])
+          value: this.getResourceValue(val.resource, ["Contacts", "Owners", "Owner", '@value'])
         },
         licenseNumber: {
           name: 'License Number',
-          value: this.getResourceValue(val.resource, ['License Number', '@value'])
+          value: this.getResourceValue(val.resource, ['Excavation Names', 'Excavation Name', '@value'])
         },
         siteName: {
           name: 'Site Name',
-          value: this.getResourceValue(val.resource, ['Site Name', '@value'])
+          value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@value'])
         },
         submissionDetails: {
           name: 'Submission Details',
@@ -55,11 +51,11 @@ define([
         },
         county: {
           name: 'County',
-          value: this.getResourceValue(val.resource, ['"Localities/Administrative Areas', '@value'])
+          value: this.getResourceValue(val.resource, ['Localities/Administrative Areas', 'Area Names', 'Area Name', '@value'])
         },
         bFileCmNumber: {
           name: 'B File/CM Number',
-          value: this.getResourceValue(val.resource, ['B File/CM Number', '@value'])
+          value: this.getResourceValue(val.resource, ['References'])[0]['Agency Identifier']['Reference']['@value']
         },
         gridRef: {
           name: 'Grid Reference',
@@ -71,11 +67,11 @@ define([
         },
         applicantInformation: {
           name: 'Applicant Information',
-          value: this.getResourceValue(val.resource, ['Applicant Information', '@value'])
+          value: this.getResourceValue(val.resource, ['Contacts', 'Applicants', 'Applicant', '@value'])
         },
         status: {
           name: 'Status',
-          value: this.getResourceValue(val.resource, ['Status', '@value'])
+          value: this.getResourceValue(val.resource, ['Advice'])[0]['Advice Type']['@value']
         }
       };
 
