@@ -4,6 +4,7 @@
   "component": "views/components/widgets/auto-generate-id-widget",
   "defaultconfig": {
     "label": "Auto Generated ID",
+    "defaultValue": { "en": { "value": "", "direction": "ltr" } },
     "id_placeholder": "This field should automatically be generated",
     "disabled": true
   },
