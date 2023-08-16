@@ -209,6 +209,7 @@ div.workflow-content {
 .card-display-panel {
     position: relative;
     width: calc(100% - 75px);
+    min-height: 400px;
     height: inherit;
     top: 0px;
     left: 0px
@@ -991,7 +992,10 @@ span.rp-tile-title {
     padding: 0px;
 }
 
+/**
+ * Custom CSS Overrides by F&T
+ */
+
 .workflow-form-component {
     height: min-content;
 }
-/* added this step for froms with multipl cards */
