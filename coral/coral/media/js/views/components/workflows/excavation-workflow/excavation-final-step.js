@@ -5,6 +5,8 @@ define([
 ], function (ko, SummaryStep, excavationFinalStepTemplate) {
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
+    console.log(this)
+    console.log(SummaryStep)
 
     const self = this;
     this.resourceid = params.resourceid;
@@ -33,7 +35,7 @@ define([
         },
         date: {
           name: 'Date',
-          value: this.getResourceValue(val.resource, ['Date', '@value'])
+          value: this.getResourceValue(val.resource, ['Excavation Dates', '@value'])
         },
         licenseeName: {
           name: "Licencee's Name",
@@ -53,11 +55,7 @@ define([
         },
         county: {
           name: 'County',
-          value: this.getResourceValue(val.resource, ['County', '@value'])
-        },
-        county: {
-          name: 'County',
-          value: this.getResourceValue(val.resource, ['County', '@value'])
+          value: this.getResourceValue(val.resource, ['"Localities/Administrative Areas', '@value'])
         },
         bFileCmNumber: {
           name: 'B File/CM Number',
