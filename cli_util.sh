@@ -3,3 +3,13 @@ alias rbwebpack="rm -f log && docker exec -ti coral-arches_arches_1 /bin/sh -c '
 alias djmang='docker exec -it coral-arches_arches_1 bash -c "source ../ENV/bin/activate && python manage.py \"\${0:-help}\" \"\$@\""'
 
 alias coralup='docker-compose --env-file docker/env_file.env up'
+
+alias archesbash='docker exec -it coral-arches_arches_1 bash'
+
+# This command must be ran from the two repositorys, both folders should be visible
+archescopy_fn() {
+  docker cp ./$1 coral-arches_arches_1:/web_root/$1
+}
+alias archescopy=archescopy_fn
+
+# docker cp ./arches/arches/app/media/js/viewmodels/workflow-step.js coral-arches_arches_1:/web_root/arches/arches/app/media/js/viewmodels/workflow-step.js
