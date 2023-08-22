@@ -4,7 +4,9 @@ define([
   'arches',
   'viewmodels/workflow',
   'templates/views/components/plugins/excavation-workflow.htm',
-  'views/components/workflows/excavation-workflow/excavation-final-step'
+  'views/components/workflows/excavation-workflow/excavation-final-step',
+  'views/components/workflows/excavation-workflow/excavation-cover-letter'
+
 ], function (ko, $, arches, Workflow, excavationWorkflow) {
   return ko.components.register('excavation-workflow', {
     viewModel: function (params) {
@@ -132,13 +134,24 @@ define([
           title: 'Record Decision',
           name: 'init-file-step' /* unique to workflow */,
           required: false,
-          // workflowstepclass: 'workflow-form-component',
+          workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Record Decision'
           },
           layoutSections: [
             {
               componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'related-file' /* unique to step */,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+                    nodegroupid: '0d8e3224-fd69-45e2-bb80-221f5b66d46c',
+                    renderContext: 'workflow',
+                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                  }
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'record-decision' /* unique to step */,
@@ -150,45 +163,78 @@ define([
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'related-file' /* unique to step */,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-                //     nodegroupid: 'de714810-3c3a-11ee-96f2-0242ac140007',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                //   }
-                // },
-              ]
-            }
-          ]
-        },
-        {
-          title: 'Record Decision Additional Files',
-          name: 'file-upload' /* unique to workflow */,
-          required: false,
-          informationboxdata: {
-            heading: 'Record Decision File Upload'
-          },
-          layoutSections: [
-            {
-              componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'related-file' /* unique to step */,
+                  uniqueInstanceName: 'associated-file' /* unique to step */,
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-                    nodegroupid: 'de714810-3c3a-11ee-96f2-0242ac140007',
-                    renderContext: 'workflow',
+                    nodegroupid: '101c32ba-2b49-4aa5-b74e-245b9f696012',
+                   
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
               ]
             }
           ]
+        },
+        // {
+        //   title: 'Record Decision Additional Files',
+        //   name: 'file-upload' /* unique to workflow */,
+        //   required: false,
+        //   informationboxdata: {
+        //     heading: 'Record Decision File Upload'
+        //   },
+        //   layoutSections: [
+        //     {
+        //       componentConfigs: [
+        //         {
+        //           componentName: 'default-card',
+        //           uniqueInstanceName: 'related-file' /* unique to step */,
+        //           tilesManaged: 'one',
+        //           parameters: {
+        //             graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+        //             nodegroupid: '0d8e3224-fd69-45e2-bb80-221f5b66d46c',
+        //             renderContext: 'workflow',
+        //             resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+        //           }
+        //         },
+        //       ]             }
+        //   ]
+        // },
+        {
+          title: 'Excavation Cover Letter',
+          name: 'excavation-cover-letter',
+          description: 'Choose an option below',
+          component: 'views/components/workflows/component-based-step',
+          componentname: 'component-based-step',
+          layoutSections: [
+              {
+                  componentConfigs: [
+                      { 
+                          componentName: 'excavation-cover-letter',
+                          uniqueInstanceName: 'excavation-cover',
+                          tilesManaged: 'none',
+                          parameters: {
+                              digitalObject: "['upload-documents']['upload-documents-step']",
+                              consultationTileid: "['init-name-step']['application-id-instance']['tileid']",
+                              consultationResourceid: "['init-name-step']['application-id-instance']['resourceid']",
+                              resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']"
+                          },
+                      },
+                  ], 
+              },
+          ],
+          graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
+          nodegroupid: '6a773228-db20-11e9-b6dd-784f435179ea',
+          icon: 'fa-check',
+          resourceid: null,
+          tileid: null,
+          parenttileid: null,
+          informationboxdata: {
+              heading: 'Please Review your cover letter',
+              text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over',
+          }
         },
         {
           title: 'Excavation Complete',
