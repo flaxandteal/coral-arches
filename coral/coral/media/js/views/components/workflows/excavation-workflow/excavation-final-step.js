@@ -1,7 +1,7 @@
 define([
   'knockout',
   'views/components/workflows/summary-step',
-  'templates/views/components/workflows/excavation-workflow/excavation-final-step.htm'
+  'templates/views/components/workflows/excavation-workflow/excavation-final-step.htm',
 ], function (ko, SummaryStep, excavationFinalStepTemplate) {
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
