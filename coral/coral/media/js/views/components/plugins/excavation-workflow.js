@@ -4,6 +4,7 @@ define([
   'arches',
   'viewmodels/workflow',
   'templates/views/components/plugins/excavation-workflow.htm',
+  'views/components/workflows/excavation-workflow/excavation-area-select',
   'views/components/workflows/excavation-workflow/excavation-final-step',
   'views/components/workflows/excavation-workflow/excavation-cover-letter'
 
