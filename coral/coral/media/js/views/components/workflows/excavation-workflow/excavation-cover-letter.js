@@ -1,13 +1,15 @@
 define([
     'knockout',
+    'arches',
     'views/components/workflows/summary-step',
     'templates/views/components/workflows/excavation-workflow/excavation-cover-letter.htm'
     
-  ], function (ko, SummaryStep, excavationCoverTemplate) {
+  ], function (ko, arches, SummaryStep, excavationCoverTemplate) {
     function viewModel(params) {
         console.log(this)
       SummaryStep.apply(this, [params]);
-      console.log(this)
+      console.log("The paramaters", params)
+
       console.log(SummaryStep)
   
       const self = this;
@@ -17,20 +19,65 @@ define([
   
       this.resourceLoading = ko.observable(false);
       this.relatedResourceLoading = ko.observable(false);
+      this.address = ko.observable('')
       this.geometry = false;
-  
-      this.resourceData.subscribe((val) => {
-        console.log('valueeeeee: ', val);
-        this.displayName = val['displayname'] || 'Unnamed';
-        this.reportVals = {
-          applicationId: {
-            name: 'Application ID',
-            value: this.getResourceValue(val.resource, ['Application ID', '@value'])
-          },
-          address: {
-            name: 'Address',
-            value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@value'])
-          },
+
+      self.setSelectedArea = async (val) => {
+        if (val) {
+
+            const response = await fetch(`${arches.urls.api_resource_report(val)}?format=json`);
+            area = await response.json()
+            self.area = area.report_json
+            console.log(self.area)
+            this.address(
+              `${self.area.Addresses[0]['Building Name']['Building Name Value'] != '' ? self.area.Addresses[0]['Building Name']['Building Name Value'] + ', <br />' : ''} 
+              ${self.area.Addresses[0]['Building Number']['Building Number Value']} ${self.area.Addresses[0]['Street']['Street Value']}, 
+              ${self.area.Addresses[0]['Building Number Sub-Street']['Building Number Sub-Street Value'] != '' ? self.area.Addresses[0]['Building Number Sub-Street']['Building Number Sub-Street Value'] + ', <br />' : ''}
+              ${self.area.Addresses[0]['Sub-Street ']['Sub-Street Value'] != '' ? self.area.Addresses[0]['Sub-Street ']['Sub-Street Value'] + ', <br />' : ''}
+              ${self.area.Addresses[0]['Town or City']['Town or City Value']},
+              <br />${self.area.Addresses[0]['County']['County Value']},
+              <br />${self.area.Addresses[0]['Postcode']['Postcode Value']}`)
+            console.log(self.address)
+            this.loading(false);
+
+        }
+    };
+
+    self.setSelectedAreaTile = async (val) => {
+      if (val) {
+
+          const response = await fetch(`${arches.urls.api_tiles(val)}?format=json`);
+          area = await response.json()
+          self.areaid = area.data['fdb2403c-fd46-46cf-993e-fb8480ffbefd']['0']['resourceId']
+          console.log(self.area)
+      }
+  };
+  this.resourceData.subscribe((val) => {
+        self.setSelectedAreaTile(this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@tile_id'])).then(() => {
+          self.areaData = self.setSelectedArea(self.areaid)
+          console.log(self.areaData)
+          console.log('before then', this.address)
+        }).then(() => {
+          console.log('after then', this.address)
+          console.log('valueeeeee: ', val);
+          this.displayName = val['displayname'] || 'Unnamed';
+          this.reportVals = {
+            applicationId: {
+              name: 'Application ID',
+              value: this.getResourceValue(val.resource, ['Application ID', '@value'])
+            },
+            address: {
+              name: 'Address',
+              value: this.address
+            },
+            address_tile: {
+              name: 'address_tile',
+              value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@tile_id'])
+            },
+            areaName: {
+              name: 'Area Name',
+              value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@value'])
+            },
           date: {
             name: 'Date',
             value: this.getResourceValue(val.resource, ['Excavation Dates', 'Log Date', '@value'])
@@ -80,10 +127,13 @@ define([
             value: this.getResourceValue(val.resource, ['Advice'])[0]['Advice Assignment']['Advice applied by']['@value']
           }
         };
-  
+        
+        
+        
+        console.log(this.address)
         console.log('report vals: ', this.reportVals);
+      })
   
-        this.loading(false);
       }, this);
     }
   

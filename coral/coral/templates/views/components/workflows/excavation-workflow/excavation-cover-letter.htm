@@ -2,12 +2,12 @@
 <!-- ko if: loading() === false -->
 <div class="cover-letter">
   <div class="her-cover-letter-section">
-    <a class="summary-value" data-bind="text: reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value"></a>
-    <p class="summary-value" data-bind="text: reportVals.address.value"></p>
+    <!-- <a class="summary-value" data-bind="text: reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value"></a> -->
+    <div data-bind="html: reportVals.address.value"></div>
     <p class="summary-value" data-bind="text: 'Our Ref: ' + reportVals.bFileCmNumber.value"></p>
     <p class="summary-value" data-bind="text: 'Date: ' + reportVals.date.value"></p>
-    <p class="summary-value" data-bind="text: 'Dear ' + reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value "></p>
-    <p class="summary-value" data-bind="text: reportVals.address.value"></p>
+    <p class="summary-value" data-bind="text: 'Dear ' + reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value != reportVals.licenseeName.value ? reportVals.licenseeName.value : ''"></p>
+    <p class="summary-value" data-bind="text: reportVals.areaName.value"></p>
     <p class="summary-value" data-bind="text: 'License No: ' + reportVals.licenseNumber.value"></p>
     <p class="summary-value" data-bind="text: 'Further to your application on ' + reportVals.date.value + ', please find attached an Excavation License for the above-mentioned location.'"></p>
     <p class="summary-value" data-bind="text: reportVals.decisionBy.value"></p>
