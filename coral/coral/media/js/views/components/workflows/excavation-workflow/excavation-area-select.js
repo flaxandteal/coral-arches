@@ -81,11 +81,11 @@ define([
             console.log("excavation tile")
             // console.log(ko.unwrap(this.updatedValue))
             return {
-                "fdb2403c-fd46-46cf-993e-fb8480ffbefd": self.area['Application Area Names']['Application Area Name'], // Related Application Area node
-                "927b24c5-42f4-419e-9e93-23de026e6776": self.area.Geometry['Geospatial Coordinates'], // co-ordinates
+                // "fdb2403c-fd46-46cf-993e-fb8480ffbefd": self.area['Application Area Names']['Application Area Name'], // Related Application Area node
+                // "927b24c5-42f4-419e-9e93-23de026e6776": self.area.Geometry['Geospatial Coordinates'], // co-ordinates
                 // "3ff7039a-6716-43cd-acc9-9fc1e6ebfffb": ko.unwrap(self.geometry), // Geometry
-                "10b84ab0-b26c-444c-b7e7-2eb71ff80514": self.area.Geometry['Feature Shape']['Feature Shape Metatype'],
-                "8a049373-f05a-4d15-aae3-ac7a2c760f13": self.area.Geometry['Feature Shape']['@value'],
+                // "10b84ab0-b26c-444c-b7e7-2eb71ff80514": self.area.Geometry['Feature Shape']['Feature Shape Metatype'],
+                // "8a049373-f05a-4d15-aae3-ac7a2c760f13": self.area.Geometry['Feature Shape']['@value'],
                 // "153787b7-309e-4c18-9032-29d6d872cb02": ko.unwrap(self.descriptions),
                 // "5dcae758-49a6-4cea-b36b-dce619a43de6": ko.unwrap(self.type),
                 // "1b626700-daa7-474d-9743-ad516f1d0eee": ko.unwrap(self.metaType),
@@ -103,7 +103,8 @@ define([
                 "sortorder": 0,
                 "tiles": {},
                 "data": {},
-                "transaction_id": params.form.workflowId
+                "transaction_id": params.form.workflowId,
+                "addresses": self.area
             };
             for (const key in tileDataObj){
                 res.data[key] = tileDataObj[key];
@@ -114,6 +115,25 @@ define([
         this.saveTile = function(tileDataObj, nodeGroupId, resourceid, tileid) {
             var tile = self.buildTile(tileDataObj, nodeGroupId, resourceid, tileid);
             if (!tileid) {tileid = uuid.generate();}
+            
+            $.ajax({ //saving the realted resource (Application Area) to the Related Area Application node (excavation)
+                url: arches.urls.api_node_value,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'resourceinstanceid': ko.unwrap(self.tile().resourceinstance_id),
+                    'nodeid': 'fdb2403c-fd46-46cf-993e-fb8480ffbefd', // Excavation Related Node
+                    'data': val,
+                    'tileid': tileid,
+                    'transaction_id': self.workflowId,
+                },
+            }).done(function(response) {
+                console.log("application area related resource updated")
+                params.form["addresses"] = self.area
+            })
+            .fail(function(response) {
+                console.log("Updating digital related resource failed: \n", response)
+            });
             return window.fetch(arches.urls.api_tiles(tileid), {
                 method: 'POST',
                 credentials: 'include',
@@ -138,6 +158,7 @@ define([
             self.saveTile(excavationTileData(), excavationNodegroupId, self.resourceid(), self.tileid())
                 .then(function(data) {
                     if (data?.resourceinstance_id) {
+                        self.area
                         self.resourceid(data.resourceinstance_id);
                         self.tileid(data.tileid);
                         self.disableResourceSelection(true);
