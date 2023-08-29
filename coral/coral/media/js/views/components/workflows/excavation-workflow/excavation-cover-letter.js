@@ -6,9 +6,8 @@ define([
     
   ], function (ko, arches, SummaryStep, excavationCoverTemplate) {
     function viewModel(params) {
+        console.log(this)
       SummaryStep.apply(this, [params]);
-
-      
       console.log("The paramaters", params)
 
       console.log(SummaryStep)
@@ -48,26 +47,12 @@ define([
       if (val) {
 
           const response = await fetch(`${arches.urls.api_tiles(val)}?format=json`);
-          tile = await response.json()
-
-          // if nodegroup id is for Excavation Area find the related applicatoin area node.
-          if (tile.nodegroup_id === '0726a5fa-dc5e-4914-82d0-7271d22e1f5c'){
-            self.areaid = tile.data['fdb2403c-fd46-46cf-993e-fb8480ffbefd']['0']['resourceId']
-          }
-          
-          // if nodegroup id is for Proposal find the Digital File(s) node.
-          if (tile.nodegroup_id === '0d8e3224-fd69-45e2-bb80-221f5b66d46c') {
-            self.proposalfiles = tile.data['d1b4884b-4cda-4ca0-8c55-35bc80e7814e'].map((digitalFile) => digitalFile.resourceId)
-          }
-          
+          area = await response.json()
+          self.areaid = area.data['fdb2403c-fd46-46cf-993e-fb8480ffbefd']['0']['resourceId']
+          console.log(self.area)
       }
   };
   this.resourceData.subscribe((val) => {
-        self.setSelectedAreaTile(this.getResourceValue(val.resource, ['Proposal'])[0]['Digital File(s)']['@tile_id']).then(() => {
-          for (digitalFile in )
-        })
-
-
         self.setSelectedAreaTile(this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@tile_id'])).then(() => {
           self.areaData = self.setSelectedArea(self.areaid)
           console.log(self.areaData)

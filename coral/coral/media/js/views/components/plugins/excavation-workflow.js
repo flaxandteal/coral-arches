@@ -30,7 +30,7 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-                    nodegroupid: '0d799613-addd-4157-94b9-e58a9d9ff5d6',
+                    nodegroupid: '02d7406a-1e22-4b3b-b908-568b0e157f17',
                     renderContext: 'workflow',
                   }
                 }
@@ -50,6 +50,17 @@ define([
           layoutSections: [
             {
               componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'excavation-name' /* unique to step */,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+                    nodegroupid: '0d799613-addd-4157-94b9-e58a9d9ff5d6',
+                    renderContext: 'workflow',
+                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                  }
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'site-name' /* unique to step */,
