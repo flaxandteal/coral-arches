@@ -67,13 +67,19 @@ define([
             const consultation = await window.fetch(arches.urls.api_resources(ko.unwrap(self.consultationResourceId)) + '?format=json');
             if (consultation?.ok) {
                 const consultationResult = await consultation.json();
-                nameTemplate.data[self.digitalResourceNameNodeId] = "Communication for " + consultationResult.displayname;
+                nameTemplate.data[self.digitalResourceNameNodeId] = {
+                    en: {
+                        direction: 'ltr',
+                        value: "Communication for " + consultationResult.displayname
+                    }
+                };
                 if (!self.digitalResourceNameTileId) {
                     self.digitalResourceNameTileId = uuid.generate();
                 } else {
                     nameTemplate.tileid = self.digitalResourceNameTileId;
                 }
-                const nameTile = await window.fetch(arches.urls.api_tiles(self.digitalResourceNameTileId), {
+   
+             const nameTile = await window.fetch(arches.urls.api_tiles(self.digitalResourceNameTileId), {
                     method: 'POST',
                     credentials: 'include',
                     body: JSON.stringify(nameTemplate),
@@ -98,12 +104,13 @@ define([
                 inverseOntologyProperty:"",
                 resourceXresourceId:""
             }]);
-
             let formData = new window.FormData();
             formData.append('resourceinstanceid', ko.unwrap(self.consultationResourceId));
             formData.append('nodeid', '85af6942-9379-11ea-88ff-f875a44e0e11');
             formData.append('data', relatedDigitalResourceRelationship);
             formData.append('tileid', ko.unwrap(self.consultationTileId));
+
+            console.log('** FORM DATA: ', formData.values())
 
             return await window.fetch(arches.urls.api_node_value, {
                 method: 'POST',
