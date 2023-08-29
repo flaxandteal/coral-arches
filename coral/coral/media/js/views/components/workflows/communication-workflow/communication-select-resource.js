@@ -66,9 +66,9 @@ define([
 
         var communicationTileData = ko.pureComputed(function(){
             return {
-                "caf5bff5-a3d7-11e9-8c7e-00224800b26d": ko.unwrap(self.date), //data node
-                "f4ea6a30-9378-11ea-a36d-f875a44e0e11": ko.unwrap(self.subject), //subject
-                "caf5bff4-a3d7-11e9-99c5-00224800b26d": ko.unwrap(self.type), //type
+                // "caf5bff5-a3d7-11e9-8c7e-00224800b26d": ko.unwrap(self.date), //data node
+                // "f4ea6a30-9378-11ea-a36d-f875a44e0e11": ko.unwrap(self.subject), //subject
+                // "caf5bff4-a3d7-11e9-99c5-00224800b26d": ko.unwrap(self.type), //type
             }
         });
 
