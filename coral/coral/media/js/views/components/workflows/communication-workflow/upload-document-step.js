@@ -10,6 +10,8 @@ define([
 ], function($, _, ko, koMapping, uuid, arches, uploadDocumentStepTemplate) {
     function viewModel(params) {
         var self = this;
+        console.log(params)
+        console.log(params.consultationTileid)
 
         this.consultationResourceId = ko.observable(ko.unwrap(params.consultationResourceid));
         this.consultationTileId = params.consultationTileid;

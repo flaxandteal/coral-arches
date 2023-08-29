@@ -1,0 +1,20 @@
+
+<div class="card-component">
+    <div class="row widget-wrapper">
+        <div class="widget-input-label">Select Related Application Area</div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                loading: loading,
+                form: $data,
+                value: resValue,
+                pageVm: $root,
+                graphids: [graphid],
+                disabled: disableResourceSelection,
+                renderContext: 'workflow',
+                value: relarea
+            }
+        }">
+        </div>
+    </div>
+</div>

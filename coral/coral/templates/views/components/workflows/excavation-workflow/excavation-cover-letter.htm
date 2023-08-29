@@ -1,0 +1,177 @@
+{% load i18n %}
+<!-- ko if: loading() === false -->
+<div class="cover-letter">
+  <div class="her-cover-letter-section">
+    <!-- <a class="summary-value" data-bind="text: reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value"></a> -->
+    <div data-bind="html: reportVals.address.value"></div>
+    <p class="summary-value" data-bind="text: 'Our Ref: ' + reportVals.bFileCmNumber.value"></p>
+    <p class="summary-value" data-bind="text: 'Date: ' + reportVals.date.value"></p>
+    <p class="summary-value" data-bind="text: 'Dear ' + reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value != reportVals.licenseeName.value ? reportVals.licenseeName.value : ''"></p>
+    <p class="summary-value" data-bind="text: reportVals.areaName.value"></p>
+    <p class="summary-value" data-bind="text: 'License No: ' + reportVals.licenseNumber.value"></p>
+    <p class="summary-value" data-bind="text: 'Further to your application on ' + reportVals.date.value + ', please find attached an Excavation License for the above-mentioned location.'"></p>
+    <p class="summary-value" data-bind="text: reportVals.decisionBy.value"></p>
+
+
+
+
+
+
+
+    
+
+    <!-- <div class="cover-letter-section-block">
+      <div class="cover-letter-section-block-item">
+        <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
+          <div
+            class="summary-value"
+            data-bind="text: displayName + ' ({% trans 'Excavation Resource Instance' %})'"
+          ></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between">
+    {% comment %} First block {% endcomment %}
+    <div class="her-cover-letter-section">
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div
+                class="summary-label"
+                data-bind="text: reportVals.applicantInformation.name + ':'"
+              ></div>
+              <div
+                class="summary-value"
+                data-bind="text: reportVals.applicantInformation.value"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="her-cover-letter-section">
+          <div class="cover-letter-section-block">
+            <div class="cover-letter-section-block-item">
+              <div class="block-item">
+                <div class="summary-label" data-bind="text: reportVals.licenseeName.name + ':'"></div>
+                <div class="summary-value" data-bind="text: reportVals.licenseeName.value"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="her-cover-letter-section">
+            <div class="cover-letter-section-block">
+              <div class="cover-letter-section-block-item">
+                <div class="block-item">
+                  <div class="summary-label" data-bind="text: reportVals.address.name + ':'"></div>
+                  <div class="summary-value" data-bind="text: reportVals.address.value"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <div class="her-cover-letter-section">
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: reportVals.siteName.name + ':'"></div>
+              <div class="summary-value" data-bind="text: 'Site: ' + reportVals.siteName.value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="her-cover-letter-section">
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div
+                class="summary-label"
+                data-bind="text: reportVals.bFileCmNumber.name + ':'"
+              ></div>
+              <div class="summary-value" data-bind="text: 'Our Ref: ' + reportVals.bFileCmNumber.value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="her-cover-letter-section">
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: reportVals.date.name + ':'"></div>
+              <div class="summary-value" data-bind="text: 'Date: ' + reportVals.date.value + reportVals.applicantInformation.value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="her-cover-letter-section">
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: reportVals.licenseeName.name + ':'"></div>
+              <div class="summary-value" data-bind="text: 'Dear ' + reportVals.licenseeName.value + ', ' + "></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="her-cover-letter-section">
+        <h5 class="summary-value">{% trans 'Site Name' %}</h5>
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: reportVals.siteName.name + ':'"></div>
+              <div class="summary-value" data-bind="text: 'Site: ' + reportVals.siteName.value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="her-cover-letter-section">
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: reportVals.planningRef.name + ':'"></div>
+              <div class="summary-value" data-bind="text: 'License No: ' + reportVals.planningRef.value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    {% comment %} Second block {% endcomment %}
+
+
+    
+    <div class="her-cover-letter-section">
+        <h5 class="summary-value">{% trans 'License Number' %}</h5>
+        <div class="cover-letter-section-block">
+            <div class="cover-letter-section-block-item">
+                <div class="block-item">
+                    <div class="summary-label" data-bind="text: reportVals.licenseNumber.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.licenseNumber.value"></div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- TODO get application submition date -->
+
+      <!-- <div class="her-cover-letter-section">
+        <h5 class="summary-value">{% trans 'Submission Details' %}</h5>
+        <div class="cover-letter-section-block">
+          <div class="cover-letter-section-block-item">
+            <div class="block-item">
+              <div
+                class="summary-label"
+                data-bind="text: reportVals.submissionDetails.name + ':'"
+              ></div>
+              <div class="summary-value" data-bind="text: reportVals.submissionDetails.value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %} Third block {% endcomment %}
+    <div>test</div>-->
+  </div>
+</div>
+<!-- /ko -->
