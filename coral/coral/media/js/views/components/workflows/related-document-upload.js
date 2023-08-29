@@ -5,7 +5,7 @@ define([
   'knockout-mapping',
   'uuid',
   'arches',
-  'templates/views/components/workflows/communication-workflow/upload-document-step.htm',
+  'templates/views/components/workflows/related-document-upload.htm',
   'bindings/select2-query',
 ], function($, _, ko, koMapping, uuid, arches, uploadDocumentStepTemplate) {
   function viewModel(params) {
@@ -38,7 +38,7 @@ define([
           self.dirty(val);
       });
 
-      console.log('upload ', this, self)
+      console.log('related-document-upload ', this, self)
       
       this.pageVm = params.pageVm;
 

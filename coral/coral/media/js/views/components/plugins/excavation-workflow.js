@@ -175,15 +175,64 @@ define([
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'related-file' /* unique to step */,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+                //     nodegroupid: '101c32ba-2b49-4aa5-b74e-245b9f696012',
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                //   }
+                // },
+              ]
+            }
+          ]
+        },
+        {
+          /**
+           * WIP
+           */
+          title: 'Record Decision Additional Files',
+          name: 'related-documents',
+          required: false,
+          informationboxdata: {
+            heading: 'Record Decision File Upload'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
                 {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'associated-file' /* unique to step */,
+                  /**
+                   * Using custom component to handle the creation of Digital
+                   * Objects that will then be automatically named and related
+                   * to the Excavation License model.
+                   */
+                  componentName: 'related-document-upload',
+                  uniqueInstanceName: 'file-upload',
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-                    nodegroupid: '101c32ba-2b49-4aa5-b74e-245b9f696012',
-                   
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    /**
+                     * Using Digital Object graph id and the file upload
+                     * node group id.
+                     */
+                    graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
+                    nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+
+                    /**
+                     * [FIXME]
+                     * These two lines might be incorrect as they don't follow the same format
+                     * found in communication-workflow.js
+                     */
+                    resourceModelId: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceTileId: "['init-name-step']['application-id-instance'][0]['tileid']",
+                    
+                    /**
+                     * This needs to refer to the Excavation models 
+                     * Digital object node group.
+                     */
+                    resourceModelDigitalObjectNodeGroupId: '101c32ba-2b49-4aa5-b74e-245b9f696012'
                   }
                 },
               ]
