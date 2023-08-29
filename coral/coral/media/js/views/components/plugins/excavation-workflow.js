@@ -4,10 +4,10 @@ define([
   'arches',
   'viewmodels/workflow',
   'templates/views/components/plugins/excavation-workflow.htm',
-  'views/components/workflows/excavation-workflow/excavation-area-select',
+  // 'views/components/workflows/excavation-workflow/excavation-area-select',
+  'views/components/workflows/related-document-upload',
   'views/components/workflows/excavation-workflow/excavation-final-step',
   'views/components/workflows/excavation-workflow/excavation-cover-letter'
-
 ], function (ko, $, arches, Workflow, excavationWorkflow) {
   return ko.components.register('excavation-workflow', {
     viewModel: function (params) {
@@ -182,6 +182,8 @@ define([
         {
           /**
            * WIP
+           * 
+           * This needs to be reconfigured to use the consultation model to work
            */
           title: 'Record Decision Additional Files',
           name: 'related-documents',
@@ -210,18 +212,16 @@ define([
                     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
 
                     /**
-                     * [FIXME]
-                     * These two lines might be incorrect as they don't follow the same format
-                     * found in communication-workflow.js
+                     * Model instance id and tile id
                      */
                     resourceModelId: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                    resourceTileId: "['init-name-step']['application-id-instance'][0]['tileid']",
+                    resourceTileId: "['init-name-step']['application-id-instance'][0]['tileId']",
                     
                     /**
                      * This needs to refer to the Excavation models 
                      * Digital object node group.
                      */
-                    resourceModelDigitalObjectNodeGroupId: '101c32ba-2b49-4aa5-b74e-245b9f696012'
+                    resourceModelDigitalObjectNodeGroupId: 'd1b4884b-4cda-4ca0-8c55-35bc80e7814e'
                   }
                 },
               ]
