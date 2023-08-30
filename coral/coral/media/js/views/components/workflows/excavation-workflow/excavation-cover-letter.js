@@ -53,7 +53,7 @@ define([
       }
   };
   this.resourceData.subscribe((val) => {
-        self.setSelectedAreaTile(this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@tile_id'])).then(() => {
+        self.setSelectedAreaTile(this.getResourceValue(val.resource, ['Contacts', 'Excavation Contact', '@tile_id'])).then(() => {
           self.areaData = self.setSelectedArea(self.areaid)
           console.log(self.areaData)
           console.log('before then', this.address)
@@ -92,7 +92,7 @@ define([
           },
           siteName: {
             name: 'Site Name',
-            value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@value'])
+            value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Excavation Location Descriptions', 'Excavation Location Description', '@value'])
           },
           submissionDetails: {
             name: 'Submission Details',
