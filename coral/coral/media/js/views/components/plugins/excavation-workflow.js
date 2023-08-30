@@ -4,10 +4,10 @@ define([
   'arches',
   'viewmodels/workflow',
   'templates/views/components/plugins/excavation-workflow.htm',
-  // 'views/components/workflows/excavation-workflow/excavation-area-select',
-  'views/components/workflows/related-document-upload',
+  'views/components/workflows/excavation-workflow/excavation-area-select',
   'views/components/workflows/excavation-workflow/excavation-final-step',
   'views/components/workflows/excavation-workflow/excavation-cover-letter'
+
 ], function (ko, $, arches, Workflow, excavationWorkflow) {
   return ko.components.register('excavation-workflow', {
     viewModel: function (params) {
@@ -57,17 +57,6 @@ define([
                   parameters: {
                     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
                     nodegroupid: '0d799613-addd-4157-94b9-e58a9d9ff5d6',
-                    renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                  }
-                },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'site-name' /* unique to step */,
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-                    nodegroupid: '0726a5fa-dc5e-4914-82d0-7271d22e1f5c',
                     renderContext: 'workflow',
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
@@ -143,6 +132,32 @@ define([
           ]
         },
         {
+          title: 'Excavation Location',
+          name: 'init-file-step' /* unique to workflow */,
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          informationboxdata: {
+            heading: 'Record Decision'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'site-name' /* unique to step */,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+                    nodegroupid: '0726a5fa-dc5e-4914-82d0-7271d22e1f5c',
+                    renderContext: 'workflow',
+                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                  }
+                }
+              ]
+            },
+          ]
+        },
+        {
           title: 'Record Decision',
           name: 'init-file-step' /* unique to workflow */,
           required: false,
@@ -193,8 +208,6 @@ define([
         {
           /**
            * WIP
-           * 
-           * This needs to be reconfigured to use the consultation model to work
            */
           title: 'Record Decision Additional Files',
           name: 'related-documents',
@@ -223,16 +236,18 @@ define([
                     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
 
                     /**
-                     * Model instance id and tile id
+                     * [FIXME]
+                     * These two lines might be incorrect as they don't follow the same format
+                     * found in communication-workflow.js
                      */
                     resourceModelId: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                    resourceTileId: "['init-name-step']['application-id-instance'][0]['tileId']",
+                    resourceTileId: "['init-name-step']['application-id-instance'][0]['tileid']",
                     
                     /**
                      * This needs to refer to the Excavation models 
                      * Digital object node group.
                      */
-                    resourceModelDigitalObjectNodeGroupId: 'd1b4884b-4cda-4ca0-8c55-35bc80e7814e'
+                    resourceModelDigitalObjectNodeGroupId: '101c32ba-2b49-4aa5-b74e-245b9f696012'
                   }
                 },
               ]
