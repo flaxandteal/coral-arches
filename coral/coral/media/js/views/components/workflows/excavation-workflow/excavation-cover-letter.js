@@ -11,6 +11,15 @@ define([
       console.log("The paramaters", params)
 
       console.log(SummaryStep)
+
+      /**
+      * INSERT INTO public.nodes VALUES ('d45c7d17-857a-4a51-b4db-e624ba52a4e0', 'Excavation Contact', NULL, false, 'http://www.cidoc-crm.org/cidoc-crm/E55_Type', 'domain-value', 'eca88468-73c8-4784-9f22-be8766c13a1d', '{"options": [{"id": "dcaf8850-9cfc-44ea-9fd4-0ca419806e2b", "text": {"en": "Agent"}, "selected": false}, {"id": "d88aa873-848c-45cb-b967-4febe7397912", "text": {"en": "Owner"}, "selected": false}, {"id": "5cc97bfd-d76f-40fc-be60-fbb9dfb28fc4", "text": {"en": "Planning Officer"}, "selected": false}], "i18n_config": {"fn": "arches.app.datatypes.datatypes.DomainDataType"}}', '9c98720a-f58e-4d11-9a01-409b20e1386a', true, false, 0, NULL, false, 'consulting_contact', false);
+      */
+     const contact_nodes = {
+      'dcaf8850-9cfc-44ea-9fd4-0ca419806e2b': '537be80b-e895-4a07-8324-b8c8cfadd798',
+      'd88aa873-848c-45cb-b967-4febe7397912': 'b38560ef-9769-4a02-b9cb-74eac0432aa6',
+      '5cc97bfd-d76f-40fc-be60-fbb9dfb28fc4': '89d3ef80-d67e-41ed-a1b7-1ce575f7f5d5',
+     }
   
       const self = this;
       this.resourceid = params.resourceid;
@@ -27,16 +36,16 @@ define([
 
             const response = await fetch(`${arches.urls.api_resource_report(val)}?format=json`);
             area = await response.json()
-            self.area = area.report_json
+            self.area = area.report_json['Location Data'][0]
             console.log(self.area)
             this.address(
-              `${self.area.Addresses[0]['Building Name']['Building Name Value'] != '' ? self.area.Addresses[0]['Building Name']['Building Name Value'] + ', <br />' : ''} 
-              ${self.area.Addresses[0]['Building Number']['Building Number Value']} ${self.area.Addresses[0]['Street']['Street Value']}, 
-              ${self.area.Addresses[0]['Building Number Sub-Street']['Building Number Sub-Street Value'] != '' ? self.area.Addresses[0]['Building Number Sub-Street']['Building Number Sub-Street Value'] + ', <br />' : ''}
-              ${self.area.Addresses[0]['Sub-Street ']['Sub-Street Value'] != '' ? self.area.Addresses[0]['Sub-Street ']['Sub-Street Value'] + ', <br />' : ''}
-              ${self.area.Addresses[0]['Town or City']['Town or City Value']},
-              <br />${self.area.Addresses[0]['County']['County Value']},
-              <br />${self.area.Addresses[0]['Postcode']['Postcode Value']}`)
+              `${self.area.Addresses['Building Name']['Building Name Value'] != '' ? self.area.Addresses['Building Name']['Building Name Value'] + ', <br />' : ''} 
+              ${self.area.Addresses['Building Number']['Building Number Value']} ${self.area.Addresses['Street']['Street Value']}, 
+              ${self.area.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value'] != '' ? self.area.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value'] + ', <br />' : ''}
+              ${self.area.Addresses['Sub-Street ']['Sub-Street Value'] != '' ? self.area.Addresses['Sub-Street ']['Sub-Street Value'] + ', <br />' : ''}
+              ${self.area.Addresses['Town or City']['Town or City Value']},
+              <br />${self.area.Addresses['County']['County Value']},
+              <br />${self.area.Addresses['Postcode']['Postcode Value']}`)
             console.log(self.address)
             this.loading(false);
 
@@ -46,10 +55,12 @@ define([
     self.setSelectedAreaTile = async (val) => {
       if (val) {
 
+        
           const response = await fetch(`${arches.urls.api_tiles(val)}?format=json`);
           area = await response.json()
-          self.areaid = area.data['fdb2403c-fd46-46cf-993e-fb8480ffbefd']['0']['resourceId']
-          console.log(self.area)
+          console.log("The contact node", contact_nodes[area.data['d45c7d17-857a-4a51-b4db-e624ba52a4e0']])
+          self.areaid = area.data[contact_nodes[area.data['d45c7d17-857a-4a51-b4db-e624ba52a4e0']]]['0']['resourceId']
+          console.log(self.areaid)
       }
   };
   this.resourceData.subscribe((val) => {
@@ -64,7 +75,7 @@ define([
           this.reportVals = {
             applicationId: {
               name: 'Application ID',
-              value: this.getResourceValue(val.resource, ['Application ID', '@value'])
+              value: this.getResourceValue(val.resource, ['System Reference Numbers', 'UUID', 'ResourceID', '@value'])
             },
             address: {
               name: 'Address',
@@ -72,7 +83,7 @@ define([
             },
             address_tile: {
               name: 'address_tile',
-              value: this.getResourceValue(val.resource, ['Excavation Area', 'Geometry', 'Related Application Area', '@tile_id'])
+              value: this.getResourceValue(val.resource, ['Contacts', 'Excavation Contact', '@tile_id'])
             },
             areaName: {
               name: 'Area Name',
