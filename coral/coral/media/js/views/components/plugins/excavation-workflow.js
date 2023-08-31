@@ -8,7 +8,7 @@ define([
   'views/components/workflows/excavation-workflow/excavation-final-step',
   'views/components/workflows/excavation-workflow/excavation-cover-letter',
   'views/components/workflows/excavation-workflow/asset-reference-card',
-
+  'views/components/workflows/related-document-upload'
 ], function (ko, $, arches, Workflow, excavationWorkflow) {
   return ko.components.register('excavation-workflow', {
     viewModel: function (params) {
@@ -227,9 +227,6 @@ define([
           ]
         },
         {
-          /**
-           * WIP
-           */
           title: 'Record Decision Additional Files',
           name: 'related-documents',
           required: false,
@@ -257,12 +254,11 @@ define([
                     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
 
                     /**
-                     * [FIXME]
-                     * These two lines might be incorrect as they don't follow the same format
-                     * found in communication-workflow.js
+                     * These can be difficult to work with. Sometimes the `tileId` will be all
+                     * lowercase and sometimes it will be camel case. This will vary between workflows.
                      */
                     resourceModelId: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                    resourceTileId: "['init-name-step']['application-id-instance'][0]['tileid']",
+                    resourceTileId: "['init-name-step']['application-id-instance'][0]['tileId']",
                     
                     /**
                      * This needs to refer to the Excavation models 
@@ -275,30 +271,6 @@ define([
             }
           ]
         },
-        // {
-        //   title: 'Record Decision Additional Files',
-        //   name: 'file-upload' /* unique to workflow */,
-        //   required: false,
-        //   informationboxdata: {
-        //     heading: 'Record Decision File Upload'
-        //   },
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'related-file' /* unique to step */,
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-        //             nodegroupid: '0d8e3224-fd69-45e2-bb80-221f5b66d46c',
-        //             renderContext: 'workflow',
-        //             resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-        //           }
-        //         },
-        //       ]             }
-        //   ]
-        // },
         {
           title: 'Excavation Cover Letter',
           name: 'excavation-cover-letter',
