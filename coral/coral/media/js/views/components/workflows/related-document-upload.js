@@ -19,8 +19,6 @@ define([
     this.resourceTileId = params.resourceTileId;
     this.resourceModelDigitalObjectNodeGroupId = params.resourceModelDigitalObjectNodeGroupId;
 
-    console.log('PROVIDED TILE ID: ', this.resourceTileId);
-
     /**
      * The group id refers to the Digital Object name group.
      * The name node refers to the child node of the group that configures the name.
@@ -33,6 +31,7 @@ define([
      * this value will be populated.
      */
     this.digitalResourceNameTileId = params.form.savedData()?.digitalResourceNameTileId;
+    this.digitalFileNodeTileId = params.form.savedData()?.digitalFileNodeTileId;
 
     _.extend(this, params.form);
 
@@ -48,14 +47,20 @@ define([
       await self.tile().save();
       const digitalResourceNameTile = await saveDigitalResourceName();
       if (digitalResourceNameTile?.ok) {
-        const consultationRelationship = await saveConsultationRelationship();
-        if (consultationRelationship?.ok) {
+        const relationship = await saveRelationship();
+        if (relationship?.ok) {
+          /**
+           * Using the savedData method will allow you to configure parameters
+           * that should be present if the user returns to this card after
+           * saving the step.
+           */
           params.form.savedData({
             tileData: koMapping.toJSON(self.tile().data),
             tileId: self.tile().tileid,
             resourceInstanceId: self.tile().resourceinstance_id,
             nodegroupId: self.tile().nodegroup_id,
-            digitalResourceNameTileId: self.digitalResourceNameTileId
+            digitalResourceNameTileId: self.digitalResourceNameTileId,
+            digitalFileNodeTileId: self.digitalFileNodeTileId
           });
           params.form.complete(true);
           params.form.saving(false);
@@ -64,6 +69,7 @@ define([
     };
 
     const saveDigitalResourceName = async () => {
+      console.log('RESOURCE INS BEFORE SAVE NAME: ', self.resourceId());
       const nameTemplate = {
         tileid: '',
         data: {
@@ -128,30 +134,59 @@ define([
       }
     };
 
-    const saveConsultationRelationship = async () => {
-      // Add relationship from the digital object to the 'existing' communication tile
-      var relatedDigitalResourceRelationship = JSON.stringify([
-        {
-          resourceId: self.resourceId(),
-          ontologyProperty: '',
-          inverseOntologyProperty: '',
-          resourceXresourceId: ''
-        }
-      ]);
+    const saveRelationship = async () => {
+      /**
+       * In the example of excavation license the `Files (D1)` nodegroup
+       * has two identical uuids. One refers to the nodegroup and the other
+       * to the node. This is used twice to provide the resource relationship.
+       * 
+       * On line 171 it isn't necessary to wrap the object in an array for 
+       * resource-instance-list datatypes. It will automatically get covnerted
+       * on the backend.
+       * 
+       * This can be found in datatypes.py on line 2080.
+       */
+      const fileTileTemplate = {
+        tileid: '',
+        data: {
+          [self.resourceModelDigitalObjectNodeGroupId]: [
+            {
+              resourceId: self.resourceId(),
+              ontologyProperty: '',
+              inverseOntologyProperty: ''
+            }
+          ]
+        },
+        nodegroup_id: self.resourceModelDigitalObjectNodeGroupId,
+        parenttile_id: null,
+        resourceinstance_id: ko.unwrap(self.resourceModelId),
+        sortorder: 0
+      };
 
-      console.log('TESTING: ', self.resourceModelDigitalObjectNodeGroupId, JSON.stringify(self.resourceModelDigitalObjectNodeGroupId))
+      /**
+       * Similar to the name tile this will generate or use the previous
+       * tile id that was saved.
+       */
+      if (!self.digitalFileNodeTileId) {
+        self.digitalFileNodeTileId = uuid.generate();
+      } else {
+        fileTileTemplate.tileid = self.digitalFileNodeTileId;
+      }
 
-      let formData = new window.FormData();
-      formData.append('resourceinstanceid', ko.unwrap(self.resourceModelId));
-      formData.append('nodeid', self.resourceModelDigitalObjectNodeGroupId);
-      formData.append('data', relatedDigitalResourceRelationship);
-      formData.append('tileid', ko.unwrap(self.resourceTileId));
-
-      return await window.fetch(arches.urls.api_node_value, {
+      const fileTile = await window.fetch(arches.urls.api_tiles(self.digitalFileNodeTileId), {
         method: 'POST',
         credentials: 'include',
-        body: formData
+        body: JSON.stringify(fileTileTemplate),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
+
+      if (fileTile?.ok) {
+        const fileTileResult = await fileTile.json();
+        self.digitalFileNodeTileId = fileTileResult.tileid;
+        return fileTile;
+      }
     };
   }
 
