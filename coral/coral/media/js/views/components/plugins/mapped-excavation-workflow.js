@@ -82,39 +82,96 @@ define([
   
                     }
                   },
-                  
+                  {
+                    componentName: 'default-card',
+                    uniqueInstanceName: 'activity-description' /* unique to step */,
+                    tilesManaged: 'one',
+                    parameters: {
+                      graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                      nodegroupid: 'a472226f-9937-11ea-966a-f875a44e0e11',
+                      renderContext: 'workflow',
+                      resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    }
+                  },
+                  {
+                    componentName: 'default-card',
+                    uniqueInstanceName: 'activity-times' /* unique to step */,
+                    tilesManaged: 'one',
+                    parameters: {
+                      graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                      nodegroupid: '4f5ec415-993e-11ea-bab0-f875a44e0e11',
+                      renderContext: 'workflow',
+                      resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    }
+                  },
                 //   {
                 //     componentName: 'default-card',
-                //     uniqueInstanceName: 'excavation-dates' /* unique to step */,
+                //     uniqueInstanceName: 'smr-name' /* unique to step */,
                 //     tilesManaged: 'one',
                 //     parameters: {
                 //       graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //       nodegroupid: '50167ecc-4929-4451-bb3f-33666df32021',
+                //       nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+                //       renderContext: 'workflow',
                 //       resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                 //     }
                 //   },
-                //   {
+                //   { Inside "Location Data"\Geometry\"Spatial Record Compilation"
                 //     componentName: 'default-card',
-                //     uniqueInstanceName: 'site-visits' /* unique to step */,
+                //     uniqueInstanceName: 'smr-entry' /* unique to step */,
                 //     tilesManaged: 'one',
                 //     parameters: {
                 //       graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //       nodegroupid: '5371bd8c-978c-4e0c-b43d-4857d1f62049',
+                //       nodegroupid: 'a541b93b-f121-11eb-be54-a87eeabdefba',
+                //       renderContext: 'workflow',
                 //       resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                 //     }
                 //   },
-                  // {
-                  //   componentName: 'default-card',
-                  //   uniqueInstanceName: 'excavation-status' /* unique to step */,
-                  //   tilesManaged: 'one',
-                  //   parameters: {
-                  //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                  //     nodegroupid: '633fdd74-e4a1-42f5-850d-6bf197bb38a8',
-                  //     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                  //   }
-                  // },
+                //   {Inside "Location Data"\Geometry
+                //     componentName: 'default-card',
+                //     uniqueInstanceName: 'smr-authorization' /* unique to step */,
+                //     tilesManaged: 'one',
+                //     parameters: {
+                //       graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //       nodegroupid: 'be3831a2-813e-11e9-a6d8-80000b44d1d9',
+                //       renderContext: 'workflow',
+                //       resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                //     }
+                //   },
+                {
+                    componentName: 'default-card',
+                    uniqueInstanceName: 'rept-end' /* unique to step */,
+                    tilesManaged: 'one',
+                    parameters: {
+                      graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                      nodegroupid: '6c21885d-ee13-11eb-9060-a87eeabdefba',
+                      renderContext: 'workflow',
+                      resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    }
+                  },
+                  {
+                    componentName: 'default-card',
+                    uniqueInstanceName: 'arch-found' /* unique to step */,
+                    tilesManaged: 'one',
+                    parameters: {
+                      graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                      nodegroupid: 'be3831a2-813e-11e9-a6d8-80000b44d1d9',
+                      renderContext: 'workflow',
+                      resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    }
+                  },
+                  {
+                    componentName: 'default-card',
+                    uniqueInstanceName: 'storage-area' /* unique to step */,
+                    tilesManaged: 'one',
+                    parameters: {
+                      graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                      nodegroupid: '5f00ef7e-9f63-11ea-9db8-f875a44e0e11',
+                      renderContext: 'workflow',
+                      resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    }
+                  },
                 ]
-              },
+              }
             ]
           },
           {
@@ -157,7 +214,7 @@ define([
                     {
                     componentName: 'default-card',
                     uniqueInstanceName: 'location-index' /* unique to step */,
-                    tilesManaged: 'many',
+                    tilesManaged: 'one',
                     parameters: {
                       graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                       nodegroupid: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
@@ -169,33 +226,33 @@ define([
               },
             ]
           },
-          {
-            title: 'Excavation Adress',
-            name: 'location-step' /* unique to workflow */,
-            required: false,
-            workflowstepclass: 'workflow-form-component',
-            informationboxdata: {
-              heading: 'Record Decision'
-            },
-            layoutSections: [
-              {
-                componentConfigs: [
-                    {
-                    componentName: 'default-card',
-                    uniqueInstanceName: 'location-index' /* unique to step */,
-                    tilesManaged: 'many',
-                    parameters: {
-                      graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                      nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
-                      renderContext: 'workflow',
-                      resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                      parenttileid: "['location-step']['location-index']['tileId']"
-                    }
-                  },
-                ]
-              },
-            ]
-          },
+        //   {
+        //     title: 'Excavation Address',
+        //     name: 'location-step' /* unique to workflow */,
+        //     required: false,
+        //     workflowstepclass: 'workflow-form-component',
+        //     informationboxdata: {
+        //       heading: 'Record Decision'
+        //     },
+        //     layoutSections: [
+        //       {
+        //         componentConfigs: [
+        //             {
+        //             componentName: 'default-card',
+        //             uniqueInstanceName: 'location-index' /* unique to step */,
+        //             tilesManaged: 'many',
+        //             parameters: {
+        //               graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+        //               nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+        //               renderContext: 'workflow',
+        //               resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+        //               parenttileid: "['location-step']['location-index']['tileId']"
+        //             }
+        //           },
+        //         ]
+        //       },
+        //     ]
+        //   },
           {
             title: 'Record Decision',
             name: 'init-file-step' /* unique to workflow */,
