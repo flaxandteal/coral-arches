@@ -109,14 +109,24 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'site-visits' /* unique to step */,
+                  uniqueInstanceName: 'pow-ref' /* unique to step */,
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
-                    nodegroupid: '5371bd8c-978c-4e0c-b43d-4857d1f62049',
+                    nodegroupid: '8aea7d07-757d-43bb-b5a1-eed4ef40c828',
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'site-visits' /* unique to step */,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+                //     nodegroupid: '5371bd8c-978c-4e0c-b43d-4857d1f62049',
+                //     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                //   }
+                // },
                 // {
                 //   componentName: 'default-card',
                 //   uniqueInstanceName: 'excavation-status' /* unique to step */,
