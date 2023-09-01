@@ -1,0 +1,16 @@
+<div class="card-component">
+    <div class="row widget-wrapper">
+        <div class="widget-input-label">Asset Refference</div>
+        <div data-bind="component: {
+            name: 'text-widget',
+            params: {
+                loading: loading,
+                value: resValue,
+                pageVm: $root,
+                graphids: [graphid],
+                renderContext: 'workflow',
+            }
+        }">
+        </div>
+    </div>
+</div>

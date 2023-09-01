@@ -7,6 +7,7 @@ define([
   'views/components/workflows/excavation-workflow/excavation-area-select',
   'views/components/workflows/excavation-workflow/excavation-final-step',
   'views/components/workflows/excavation-workflow/excavation-cover-letter',
+  'views/components/workflows/excavation-workflow/asset-reference-card',
   'views/components/workflows/related-document-upload'
 ], function (ko, $, arches, Workflow, excavationWorkflow) {
   return ko.components.register('excavation-workflow', {
@@ -114,6 +115,16 @@ define([
                   parameters: {
                     graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
                     nodegroupid: '8aea7d07-757d-43bb-b5a1-eed4ef40c828',
+                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                  }
+                },
+                {
+                  componentName: 'asset-reference-card',
+                  uniqueInstanceName: 'asset-refs' /* unique to step */,
+                  tilesManaged: 'many',
+                  parameters: {
+                    graphid: 'eca88468-73c8-4784-9f22-be8766c13a1d',
+                    nodegroupid: '02d7406a-1e22-4b3b-b908-568b0e157f17',
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
