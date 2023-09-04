@@ -3,6 +3,7 @@ define([
   'arches',
   'viewmodels/workflow',
   'templates/views/components/plugins/licensing-workflow.htm',
+  'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/excavation-workflow/asset-reference-card',
   'views/components/workflows/excavation-workflow/collecting-information-step',
   'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
@@ -13,8 +14,8 @@ define([
       this.componentName = 'licensing-workflow';
       this.stepConfig = [
         {
-          title: 'Initialise Excavation',
-          name: 'init-name-step' /* unique to workflow */,
+          title: 'Initialise Excavation License',
+          name: 'license-workflow',
           required: false,
           informationboxdata: {
             heading: 'Initialise Excavation'
@@ -23,13 +24,12 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'application-id-instance' /* unique to step */,
+                  componentName: 'initial-step',
+                  uniqueInstanceName: 'application-id-instance',
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-                    renderContext: 'workflow',
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '991c3c74-48b6-11ee-85af-0242ac140007'
                   }
                 }
               ]
@@ -41,23 +41,20 @@ define([
           name: 'app-details-step' /* unique to workflow */,
           required: false,
           workflowstepclass: 'workflow-form-component',
-
           informationboxdata: {
             heading: 'Application Details'
           },
           layoutSections: [
-
             {
               componentConfigs: [
                 {
-                  componentName: 'collecting-information-step',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'site-name' ,
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
-                    renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['actResourceId']"
                   }
                 },
                 // {
