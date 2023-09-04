@@ -13,4 +13,21 @@
         }">
         </div>
     </div>
+        <div style="display: flex; justify-content: flex-end; padding: 0 18px;">
+            <button 
+                class="btn btn-workflow-tile btn-danger" 
+                style="margin-right: 8px;"
+                data-bind="click: clearEditor"
+            >
+                <span data-bind="text: $root.translations.clear"></span>
+            </button>
+
+            <button 
+                class="btn btn-workflow-tile btn-success" 
+                data-bind="{
+                    click: addOrUpdateTile,
+                    text: tileLoadedInEditor() ? 'Save' : 'Add'
+                }"
+            ></button>
+        </div>
 </div>
