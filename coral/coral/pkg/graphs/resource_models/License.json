@@ -138,7 +138,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Names"
                     },
@@ -178,7 +178,14 @@
                     "cardid": "991c3f76-48b6-11ee-85af-0242ac140007",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "991c3f76-48b6-11ee-85af-0242ac140007",
+                            "constraintid": "82c3b672-8777-439e-b99e-834004b3bbe6",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -192,7 +199,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -219,7 +226,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -1240,11 +1247,11 @@
                         "prefix": {
                             "en": ""
                         },
-                        "step": "",
+                        "step": "1",
                         "suffix": {
                             "en": ""
                         },
-                        "uneditable": false,
+                        "uneditable": true,
                         "width": "100%"
                     },
                     "id": "991c5b1e-48b6-11ee-85af-0242ac140007",
@@ -1304,7 +1311,7 @@
                     },
                     "node_id": "991c5326-48b6-11ee-85af-0242ac140007",
                     "sortorder": 3,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
@@ -1338,25 +1345,27 @@
                                 "value": ""
                             }
                         },
+                        "disabled": true,
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "ResourceID",
+                        "id_placeholder": "This field should automatically be generated",
+                        "label": "Application ID",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
                         },
                         "uneditable": false,
-                        "width": "100%"
+                        "width": "100%%"
                     },
                     "id": "991c5ef2-48b6-11ee-85af-0242ac140007",
                     "label": {
-                        "en": "ResourceID"
+                        "en": "Application ID"
                     },
                     "node_id": "991c49b2-48b6-11ee-85af-0242ac140007",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "f7f712aa-23f4-43b3-9d43-ef75f9b52ab2"
                 },
                 {
                     "card_id": "a9f5434c-48b6-11ee-85af-0242ac140007",
@@ -3572,10 +3581,33 @@
                     "rangenode_id": "fb18edd0-48b8-11ee-84da-0242ac140007"
                 }
             ],
-            "functions_x_graphs": [],
+            "functions_x_graphs": [
+                {
+                    "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "",
+                                "string_template": ""
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "",
+                                "string_template": ""
+                            },
+                            "name": {
+                                "nodegroup_id": "59d65ec0-48b9-11ee-84da-0242ac140007",
+                                "string_template": "<Name>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "9831945b-ee6f-4fea-97e1-6e3ff816d1af"
+                }
+            ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -6444,8 +6476,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "3ef65990-48d0-11ee-9b71-0242ac140007",
-                "published_time": "2023-09-01T14:02:54.179",
+                "publicationid": "a5bd8002-4b25-11ee-be38-0242ac140008",
+                "published_time": "2023-09-04T13:19:16.159",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
