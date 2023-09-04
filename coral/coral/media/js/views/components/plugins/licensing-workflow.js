@@ -4,7 +4,8 @@ define([
   'viewmodels/workflow',
   'templates/views/components/plugins/licensing-workflow.htm',
   'views/components/workflows/excavation-workflow/asset-reference-card',
-  'views/components/workflows/excavation-workflow/collecting-information-step'
+  'views/components/workflows/excavation-workflow/collecting-information-step',
+  'views/components/workflows/excavation-workflow/bfile-card',
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -87,12 +88,19 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'external-file-name' ,
+                  componentName: 'bfile-card',
+                  uniqueInstanceName: 'bfile-name' ,
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    hiddenNodes: [
+                      '589d4dca-edf9-11eb-83ea-a87eeabdefba',
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+
+                    ],
+                    label: 'B-File/CM number',
                     renderContext: 'workflow',
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
 
@@ -134,7 +142,6 @@ define([
 
                   }
                 },
-
                 
                 {
                   componentName: 'default-card',

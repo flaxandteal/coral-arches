@@ -28,9 +28,6 @@ define([
             self.tile().reset();
         };
 
-        arches.
-
-
         this.addOrUpdateTile = function() {
             console.log(this.resValue())
             console.log(self.tile, "addate")
