@@ -58,24 +58,30 @@ define([
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
-                {
-                  componentName: 'grouping-card',
-                  uniqueInstanceName: 'county-name' ,
-                  tilesManaged: 'multi',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
-                    renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
-                  }
-                },
+                // {
+                //   componentName: 'grouping-card',
+                //   uniqueInstanceName: 'townland-name' ,
+                //   tilesManaged: 'multi',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+                //     hiddenNodes: [
+                //       ''
+                //     ],
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                //   }
+                // },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'townland-name' ,
-                  tilesManaged: 'one',
+                  uniqueInstanceName: 'location-names' ,
+                  tilesManaged: 'many',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba'
+                    ],
                     renderContext: 'workflow',
                     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
                   }
