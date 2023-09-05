@@ -8,6 +8,8 @@ define([
 ], function(_, ko, uuid, arches, AlertViewModel, singleWidgetWithLabelTemplate) {
     function viewModel(params) {
         // this.resValue = ko.observable().extend({ deferred: true });
+        console.log("PARAMA", params)
+        console.log(params.form.card())
         this.card = params.card
         this.tile = ko.observable()
         this.loading = params.loading;

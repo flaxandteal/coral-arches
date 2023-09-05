@@ -60,12 +60,12 @@ define([
                   }
                 },
                 // {
-                //   componentName: 'grouping-card',
-                //   uniqueInstanceName: 'townland-name' ,
-                //   tilesManaged: 'many',
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'location-data' ,
+                //   tilesManaged: 'one',
                 //   parameters: {
                 //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+                //     nodegroupid: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
                 //     hiddenNodes: [
                 //       ''
                 //     ],
@@ -73,36 +73,39 @@ define([
                 //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                 //   }
                 // },
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'location-names' ,
-                //   tilesManaged: 'many',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
-                //     hiddenNodes: [
-                //       'a541922b-f121-11eb-a081-a87eeabdefba'
-                //     ],
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'address-info' ,
-                //   tilesManaged: 'many',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
-                //     hiddenNodes: [
-                //       'a541922b-f121-11eb-a081-a87eeabdefba'
-                //     ],
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
                 {
-                  componentName: 'single-widget-with-label',
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'location-names' ,
+                  tilesManaged: 'many',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                    labels: [
+                      'location name',
+                      'location type'
+                    ],
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba'
+                    ],
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'address-info' ,
+                  tilesManaged: 'many',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba'
+                    ],
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                  }
+                },
+                {
+                  componentName: 'multi-widget-with-labels',
                   uniqueInstanceName: 'bfile-name' ,
                   tilesManaged: 'one',
                   parameters: {
@@ -113,7 +116,7 @@ define([
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
                     ],
-                    label: 'B-File / CM number',
+                    labels: ['B-File / CM number'],
                     renderContext: 'workflow',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
 
@@ -132,11 +135,11 @@ define([
                   }
                 },
                 {
-                  componentName: 'single-widget-with-label',
+                  componentName: 'multi-widget-with-labels',
                   uniqueInstanceName: 'license-name' ,
                   tilesManaged: 'one',
                   parameters: {
-                    label: 'Applicant / Licensee',
+                    labels: ['Applicant / Licensee'],
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
                     renderContext: 'workflow',
@@ -152,11 +155,11 @@ define([
                   }
                 },
                 {
-                  componentName: 'single-widget-with-label',
+                  componentName: 'multi-widget-with-labels',
                   uniqueInstanceName: 'company-name' ,
                   tilesManaged: 'one',
                   parameters: {
-                    label: 'Company',
+                    labels: ['Company'],
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
                     renderContext: 'workflow',
@@ -190,11 +193,11 @@ define([
                 },
                 
                 {
-                  componentName: 'single-widget-with-label',
+                  componentName: 'multi-widget-with-labels',
                   uniqueInstanceName: 'activity-description' ,
                   tilesManaged: 'one',
                   parameters: {
-                    label: 'Submission Details',
+                    labels: ['Submission Details'],
                     widget_type: 'rich-text-widget',
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a472226f-9937-11ea-966a-f875a44e0e11',
