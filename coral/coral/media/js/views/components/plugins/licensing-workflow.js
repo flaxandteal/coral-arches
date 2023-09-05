@@ -15,7 +15,7 @@ define([
       this.stepConfig = [
         {
           title: 'Initialise Excavation License',
-          name: 'license-workflow',
+          name: 'init-step',
           required: false,
           informationboxdata: {
             heading: 'Initialise Excavation'
@@ -25,7 +25,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'initial-step',
-                  uniqueInstanceName: 'application-id-instance',
+                  uniqueInstanceName: 'app-id',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -54,7 +54,7 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['actResourceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']"
                   }
                 },
                 // {
@@ -68,7 +68,7 @@ define([
                 //       ''
                 //     ],
                 //     renderContext: 'workflow',
-                //     resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                 //   }
                 // },
                 {
@@ -82,7 +82,7 @@ define([
                       'a541922b-f121-11eb-a081-a87eeabdefba'
                     ],
                     renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
@@ -99,7 +99,7 @@ define([
                     ],
                     label: 'B-File/CM number',
                     renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
 
                   }
                 },
@@ -111,7 +111,7 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
                     renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
 
                   }
                 },
@@ -131,7 +131,7 @@ define([
                       '2a5bc0a8-fe48-11ea-b191-f875a44e0e11',
                       '2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11'
                     ],
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
@@ -150,7 +150,7 @@ define([
                       '2a5bc0a8-fe48-11ea-b191-f875a44e0e11',
                       '2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11'
                     ],
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
@@ -166,7 +166,7 @@ define([
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
                     ],
                     renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
 
                   }
                 },
@@ -182,7 +182,7 @@ define([
                       'a4724977-9937-11ea-a11e-f875a44e0e11'
                     ],
                     renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
@@ -196,7 +196,7 @@ define([
                       '4f5eeb2a-993e-11ea-a2db-f875a44e0e11'
                     ],
                     renderContext: 'workflow',
-                    resourceid: "['init-name-step']['application-id-instance'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
               ]
