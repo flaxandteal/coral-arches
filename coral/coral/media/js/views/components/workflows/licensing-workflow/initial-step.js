@@ -29,9 +29,6 @@ define([
 
     params.form.save = async () => {
       await self.tile().save(); // Resource ID has now been created and is in this.resourceId()
-      console.log('Initial step RID: ', self.resourceId());
-      console.log('self tile: ', self.tile());
-      console.log('self tile data: ', koMapping.toJSON(self.tile().data[self.licenseSysRefNodeId]));
 
       /**
        * This is the ID generate by auto-generate-id. Not to
