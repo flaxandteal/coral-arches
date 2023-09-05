@@ -1,24 +1,24 @@
 <div class="card-component">
     <div class="row widget-wrapper">
+        <div class="widget-input-label" data-bind="text: labels"></div>
         <div data-bind="foreach: {
             data:card.widgets, as: 'widget'
         }">
-            <div class="widget-input-label" data-bind="text: labels"></div>
-            <div data-bind="component: {
-                name: widget_types[0],
+            <div data-bind="text: widget.widgetList()[0].name"></div>
+            <!-- <div data-bind="component: {
+                name: widget.widgetList()[0].name,
                 params: {
                     card: ko.unwrap(card),
                     tile: ko.unwrap(tile),
                     // provisionalTileViewModel: provisionalTileViewModel,
                     // reviewer: reviewer,
-                    value: widget_type == 'text-widget' ? '' : ko.observable(''),
                     loading: loading,
                     form: $data,
                     state: 'form',
                     pageVm: $data.pageVm
                 }
             }">
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
