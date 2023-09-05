@@ -1,0 +1,38 @@
+<div class="card-component">
+    <div class="row widget-wrapper">
+        <div data-bind="text: ko.unwrap(tile)['cards']"></div>
+        <!-- <div data-bind="text: Object.keys(ko.unwrap(tile))"></div> -->
+        <div class="widget-input-label">Protecion Of Wreck, Reference:</div>
+        <div data-bind="component: {
+            name: 'text-widget',
+            params: {
+                card: ko.unwrap(card),
+                tile: ko.unwrap(tile),
+                // provisionalTileViewModel: provisionalTileViewModel,
+                // value: tile.data['589d4dc7-edf9-11eb-9856-a87eeabdefba'],
+                // reviewer: reviewer,
+                loading: loading,
+                form: $data,
+                state: 'form',
+                pageVm: $data.pageVm
+            }
+        }">
+        </div>
+        <div class="widget-input-label">Protecion Of Wreck, Additional Information:</div>
+        <div data-bind="component: {
+            name: 'rich-text-widget',
+            params: {
+                card: ko.unwrap(card),
+                tile: ko.unwrap(tile),
+                // provisionalTileViewModel: provisionalTileViewModel,
+                // reviewer: reviewer,
+                loading: loading,
+                value: ko.observable(''),
+                form: $data,
+                state: 'form',
+                pageVm: $data.pageVm
+            }
+        }">
+        </div>
+    </div>
+</div>
