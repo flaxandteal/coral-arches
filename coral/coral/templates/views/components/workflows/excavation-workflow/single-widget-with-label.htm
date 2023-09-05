@@ -1,13 +1,14 @@
 <div class="card-component">
     <div class="row widget-wrapper">
-        <div class="widget-input-label">B-File / CM Number</div>
+        <div class="widget-input-label" data-bind="text: [label]"></div>
         <div data-bind="component: {
-            name: 'text-widget',
+            name: [widget_type],
             params: {
                 card: ko.unwrap(card),
                 tile: ko.unwrap(tile),
                 // provisionalTileViewModel: provisionalTileViewModel,
                 // reviewer: reviewer,
+                value: widget_type == 'text-widget' ? '' : ko.observable(''),
                 loading: loading,
                 form: $data,
                 state: 'form',

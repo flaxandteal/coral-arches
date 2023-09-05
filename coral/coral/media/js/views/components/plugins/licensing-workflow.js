@@ -7,7 +7,7 @@ define([
   'views/components/workflows/excavation-workflow/asset-reference-card',
   'views/components/workflows/excavation-workflow/collecting-information-step',
   'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
-  'views/components/workflows/excavation-workflow/bfile-card',
+  'views/components/workflows/excavation-workflow/single-widget-with-label',
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -48,10 +48,11 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'single-widget-with-label',
                   uniqueInstanceName: 'site-name' ,
                   tilesManaged: 'one',
                   parameters: {
+                    label: 'Site Name',
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']"
@@ -68,25 +69,39 @@ define([
                 //       ''
                 //     ],
                 //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //   }
+                // },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'location-names' ,
+                //   tilesManaged: 'many',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                //     hiddenNodes: [
+                //       'a541922b-f121-11eb-a081-a87eeabdefba'
+                //     ],
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //   }
+                // },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'address-info' ,
+                //   tilesManaged: 'many',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+                //     hiddenNodes: [
+                //       'a541922b-f121-11eb-a081-a87eeabdefba'
+                //     ],
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                 //   }
                 // },
                 {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'location-names' ,
-                  tilesManaged: 'many',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
-                    hiddenNodes: [
-                      'a541922b-f121-11eb-a081-a87eeabdefba'
-                    ],
-                    renderContext: 'workflow',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                  }
-                },
-                {
-                  componentName: 'bfile-card',
+                  componentName: 'single-widget-with-label',
                   uniqueInstanceName: 'bfile-name' ,
                   tilesManaged: 'one',
                   parameters: {
@@ -97,7 +112,7 @@ define([
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
                     ],
-                    label: 'B-File/CM number',
+                    label: 'B-File / CM number',
                     renderContext: 'workflow',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
 
@@ -116,10 +131,11 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'single-widget-with-label',
                   uniqueInstanceName: 'license-name' ,
                   tilesManaged: 'one',
                   parameters: {
+                    label: 'Applicant / Licensee',
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
                     renderContext: 'workflow',
@@ -135,10 +151,11 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'single-widget-with-label',
                   uniqueInstanceName: 'company-name' ,
                   tilesManaged: 'one',
                   parameters: {
+                    label: 'Company',
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
                     renderContext: 'workflow',
@@ -172,10 +189,12 @@ define([
                 },
                 
                 {
-                  componentName: 'default-card',
+                  componentName: 'single-widget-with-label',
                   uniqueInstanceName: 'activity-description' ,
                   tilesManaged: 'one',
                   parameters: {
+                    label: 'Submission Details',
+                    widget_type: 'rich-text-widget',
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a472226f-9937-11ea-966a-f875a44e0e11',
                     hiddenNodes: [
