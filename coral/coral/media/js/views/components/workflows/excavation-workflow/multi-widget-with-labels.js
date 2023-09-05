@@ -13,6 +13,9 @@ define([
         this.loading = params.loading;
         this.graphid = params.graphid;
         this.labels = params.labels
+        console.log("CARD", this.card)
+        console.log("CARD", this.card.widgets())
+        console.log("CARD", this.card.widgets()[0].widgetList()[0].name)
         this.widget_types = params.widget_types ? params.widget_types : 'text-widget'
         console.log(this.card)
         _.extend(this, params.form);
