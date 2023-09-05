@@ -1,9 +1,9 @@
 <div class="card-component">
     <div class="row widget-wrapper">
-        <div class="widget-input-label" data-bind="text: labels"></div>
+        <!-- <div class="widget-input-label" data-bind="text: labels"></div> -->
             <div data-bind="foreach: { data: widget_group, as: 'widget'}">
             <!-- <div data-bind="text: Object.keys(widget)"> -->
-            <div data-bind="text: widget.visible"></div>
+            <div data-bind="text: widget.selected_label"></div>
             <div data-bind="visible: widget.visible, component: {
                 name: widget.widgetList()[0].name,
                 params: {
