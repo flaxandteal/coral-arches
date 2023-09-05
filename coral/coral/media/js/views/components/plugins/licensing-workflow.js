@@ -8,6 +8,7 @@ define([
   'views/components/workflows/excavation-workflow/collecting-information-step',
   'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
   'views/components/workflows/excavation-workflow/single-widget-with-label',
+  'views/components/workflows/excavation-workflow/multi-widget-with-labels',
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -61,7 +62,7 @@ define([
                 // {
                 //   componentName: 'grouping-card',
                 //   uniqueInstanceName: 'townland-name' ,
-                //   tilesManaged: 'multi',
+                //   tilesManaged: 'many',
                 //   parameters: {
                 //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                 //     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
@@ -205,10 +206,12 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'multi-widget-with-labels',
                   uniqueInstanceName: 'activity-times' ,
                   tilesManaged: 'one',
                   parameters: {
+                    labels: ['Recieved Date', 'Acknowledged Date', 'YearNo'],
+                    widget_types: ['text-widget'],
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '4f5ec415-993e-11ea-bab0-f875a44e0e11',
                     hiddenNodes: [
