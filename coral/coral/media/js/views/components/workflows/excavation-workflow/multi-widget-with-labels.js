@@ -16,7 +16,7 @@ define([
         console.log("CARD", this.card)
         console.log("CARD", this.card.widgets())
         console.log("CARD", this.card.widgets()[0].widgetList()[0].name)
-        this.widget_types = params.widget_types ? params.widget_types : 'text-widget'
+        this.widget_group = this.card.widgets()
         console.log(this.card)
         _.extend(this, params.form);
 

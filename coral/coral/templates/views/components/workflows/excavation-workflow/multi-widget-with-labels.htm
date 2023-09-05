@@ -1,24 +1,28 @@
 <div class="card-component">
     <div class="row widget-wrapper">
         <div class="widget-input-label" data-bind="text: labels"></div>
-        <div data-bind="foreach: {
-            data:card.widgets, as: 'widget'
-        }">
-            <div data-bind="text: widget.widgetList()[0].name"></div>
-            <!-- <div data-bind="component: {
-                name: widget.widgetList()[0].name,
-                params: {
-                    card: ko.unwrap(card),
-                    tile: ko.unwrap(tile),
-                    // provisionalTileViewModel: provisionalTileViewModel,
-                    // reviewer: reviewer,
-                    loading: loading,
-                    form: $data,
-                    state: 'form',
-                    pageVm: $data.pageVm
-                }
-            }">
-            </div> -->
+        <div data-bind="text: Object.keys(card)"></div>
+        <div data-bind="text: Object.keys(card['S']['change']['0'])"></div>
+        <div data-bind="text: card['rc']"></div>
+            <!-- ko foreach: widget_group, as: 'widget' -->
+            <div> hello you looper</div>
+            <div data-bind="text: widget"></div>
+                <div data-bind="text: widget.widgetList()[0].name"></div>
+            <!-- /ko -->
         </div>
     </div>
 </div>
+<!-- <div data-bind="component: {
+    name: widget.widgetList()[0].name,
+    params: {
+        card: ko.unwrap(card),
+        tile: ko.unwrap(tile),
+        // provisionalTileViewModel: provisionalTileViewModel,
+        // reviewer: reviewer,
+        loading: loading,
+        form: $data,
+        state: 'form',
+        pageVm: $data.pageVm
+    }
+}">
+</div> -->
