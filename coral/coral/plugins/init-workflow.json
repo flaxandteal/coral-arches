@@ -46,33 +46,15 @@
                 "bgColor": "#fed04f",
                 "circleColor": "#fedc7d",
                 "desc": "Letter or other document sent to an applicant"
-            }, 
-            {
-                "workflowid": "4bd762cf-b581-11e9-a7f9-784f435179ea",
-                "slug":"excavation-workflow",
-                "name": "Excavation License",
-                "icon": "fa fa-file-text",
-                "bgColor": "#689480",
-                "circleColor": "#79b59a",
-                "desc": "Create a new excavation license"
             },
-            {
-                "workflowid": "4bd762cf-b581-11e9-a7f9-784f435179ea",
-                "slug":"mapped-excavation-workflow",
-                "name": "Excavation Activity",
-                "icon": "fa fa-file-text",
-                "bgColor": "#6ef0ff",
-                "circleColor": "#79b59a",
-                "desc": "Create a new excavation license"
-            }, 
             {
                 "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
                 "slug":"licensing-workflow",
-                "name": "Licensing",
+                "name": "Excavation Licensing",
                 "icon": "fa fa-file-text",
                 "bgColor": "#689480",
                 "circleColor": "#79b59a",
-                "desc": "Create a new license for an Activity"
+                "desc": "Create a new License for an Excavation Activity"
             }
         ],
         "show":true
