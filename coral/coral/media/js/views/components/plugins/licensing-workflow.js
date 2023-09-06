@@ -182,7 +182,7 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     labels: ['Company'],
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    graphid: 'd4a88461-5463-11e9-90d9-000d3ab1e588',
                     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
                     renderContext: 'workflow',
                     hiddenNodes: [
