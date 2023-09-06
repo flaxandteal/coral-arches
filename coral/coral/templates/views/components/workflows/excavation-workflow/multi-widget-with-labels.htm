@@ -4,20 +4,10 @@
             <div data-bind="foreach: { data: widget_group, as: 'widget'}">
             <!-- <div data-bind="text: Object.keys(widget)"> -->
             <div data-bind="text: widget.selected_label"></div>
+            <div data-bind="text: widget.htm_params"></div>
             <div data-bind="visible: widget.visible, component: {
                 name: widget.widgetList()[0].name,
-                params: {
-                    card: ko.unwrap(card),
-                    // tile: ko.unwrap(tile),
-                    // provisionalTileViewModel: provisionalTileViewModel,
-                    // reviewer: reviewer,
-                    // loading: loading,
-                    visible: widget.visible,
-                    form: $data,
-                    value: ko.observable(''),
-                    state: 'form',
-                    pageVm: $data.pageVm
-                }
+                params: widget.htm_params
             }">
             </div>
             </div>
