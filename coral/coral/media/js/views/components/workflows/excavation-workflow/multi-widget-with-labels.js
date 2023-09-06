@@ -44,7 +44,6 @@ define([
                 pageVm: $data.pageVm
             }`
             console.log(widget.htm_params)
-            console.log(widget.htm_params.slice(1,-1))
         })
 
 
