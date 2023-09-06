@@ -4,81 +4,61 @@ define([
     'knockout-mapping',
     'uuid',
     'arches',
+    'viewmodels/card-component',
     'viewmodels/alert',
     'templates/views/components/workflows/excavation-workflow/asset-reference-card.htm',
-], function(_, ko, koMapping, uuid, arches, AlertViewModel, excavationAssetStepTemplate) {
+], function(_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, excavationAssetStepTemplate) {
     function viewModel(params) {
+        
+        console.log("prepara", params)
+        _.extend(this, params.form);
+        CardComponentViewModel.apply(this, [params]);
 
+        this.card = params.card
+
+        
         self = this
         this.resValue = ko.observable().extend({ deferred: true });
         this.loading = params.loading;
         this.graphid = params.graphid;
-
+        
         this.tileLoadedInEditor = ko.observable();
         this.tile = ko.observable();
-        this.tiles = ko.observable();
+        console.log("PARAMBLES", params)
+        console.log("Carambles", this.card)
+        console.log("tumbles", this.card.getNewTile(true))
+        console.log("cartimbles", this.card.tiles())
 
-        console.log(self.tile, "preamble", self.tile())
+
         console.log(this, self)
 
-        this.clearEditor = function() {
-            console.log(this.resValue())
-            console.log(this, self)
-            console.log(self.tile, "clear")
-            self.tile().reset();
-        };
+        console.log("this.resValue")
 
-        this.addOrUpdateTile = function() {
-            console.log(this.resValue())
-            console.log(self.tile, "addate")
-            console.log(this, self)
-            var tiles = self.tiles();
-            self.tiles(null);
+        
 
-            /* breaks observable chain */ 
-            var tileData = koMapping.fromJSON(
-                koMapping.toJSON(self.tile().data)
-            );
+        this.save = function() {
+            console.log("form", this.card.newTile.formData)
+            console.log("data", this.card.newTile.data)
+            console.log("what it should be", this.resValue())
+            this.card.newTile.data['589d4dc7-edf9-11eb-9856-a87eeabdefba'](this.resValue())
+            this.card.newTile.data['589d4dca-edf9-11eb-83ea-a87eeabdefba']({"en": {value: "An asset reference", direction: "ltr"}})
+            Object.keys(this.card.newTile.data).forEach((node) => {
+                try{
+                    console.log(node)
+                    console.log(this.card.newTile.data[node]())
+                } catch {
 
-            var tileLoadedInEditor = self.tileLoadedInEditor();
-
-            if (tileLoadedInEditor) {
-                var index = _.findIndex(tiles, tileLoadedInEditor);
-                
-                if (index > -1) {
-                    tileLoadedInEditor.data = tileData;
-                    tiles[index] = tileLoadedInEditor;
                 }
-
-                
-                self.tileLoadedInEditor(null);
-            }
-            else {
-                var newTile = self.card().getNewTile(true);
-                newTile.data = tileData;
-
-                tiles.unshift(newTile);
-            }
-
-            self.tiles(tiles);
-            self.tile().reset();
-        };
-
-        this.loadTileIntoEditor = function(data) {
-            self.tileLoadedInEditor(data);
-
-            var tile = self.tile();
-
-            /* force the value of current tile data observables */ 
-            Object.keys(tile.data).forEach(function(key) {
-                if (ko.isObservable(tile.data[key])) {
-                    tile.data[key](data.data[key]());
-                }
-            });
-        };
-
-        params.form.save = function() {
-            console.log(self.tile, "save")
+            })
+            // console.log("exist?", this.card.newTile.data['589d4dc7-edf9-11eb-83ea-a87eeabdefba'])
+            
+            // console.log(this.card.newTile.data['589d4dc7-edf9-11eb-83ea-a87eeabdefba']())
+            // this.card.newTile.data['589d4dc9-edf9-11eb-83ea-a87eeabdefba']({"en": {value: "a test not fo assets", direction: "ltr"}})
+            // this.card.newTile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba']('blanka ballix')
+            // console.log(this.card.newTile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba']({"en": {value: "a test not fo assets", direction: "ltr"}}))
+            console.log("pre-save")
+            this.card.newTile.save()
+            console.log("post-save")
         };
     }
     ko.components.register('asset-reference-card', {
