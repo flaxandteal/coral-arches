@@ -8,7 +8,8 @@ define([
   'views/components/workflows/excavation-workflow/collecting-information-step',
   'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
   'views/components/workflows/excavation-workflow/single-widget-with-label',
-  'views/components/workflows/excavation-workflow/multi-widget-with-labels'
+  'views/components/workflows/excavation-workflow/multi-widget-with-labels',
+  'views/components/workflows/related-document-upload'
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -131,7 +132,76 @@ define([
                       ['Cross Reference Note', 'POW Reference Note']
                     ]
                   }
-                }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'app-dates-and-status',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'decision-made-by',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  /**
+                   * Using custom component to handle the creation of Digital
+                   * Objects that will then be automatically named and related
+                   * to the Excavation License model.
+                   */
+                  componentName: 'related-document-upload',
+                  uniqueInstanceName: 'file-upload',
+                  tilesManaged: 'one',
+                  parameters: {
+                    /**
+                     * Using Digital Object graph id and the file upload
+                     * node group id.
+                     */
+                    graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
+                    nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+
+                    /**
+                     * These can be difficult to work with. Sometimes the `tileId` will be all
+                     * lowercase and sometimes it will be camel case. This will vary between workflows.
+                     */
+                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    resourceTileId: "['init-step']['app-id'][0]['tileId']",
+                    
+                    /**
+                     * This needs to refer to the Excavation models 
+                     * Digital object node group.
+                     */
+                    resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'decision-made-by',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      '5d2ae012-48cf-11ee-8e4e-0242ac140007',
+                      '777596ba-48cf-11ee-8e4e-0242ac140007',
+                      '916b5e7e-48cf-11ee-8e4e-0242ac140007'
+                    ],
+                    labels: [
+                      ['Proposal Text', 'Submission Details']
+                    ]
+                  }
+                },
                 // {
                 //   componentName: 'default-card',
                 //   uniqueInstanceName: 'location-data' ,
