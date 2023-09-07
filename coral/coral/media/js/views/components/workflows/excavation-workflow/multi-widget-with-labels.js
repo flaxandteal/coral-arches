@@ -7,9 +7,6 @@ define([
     'templates/views/components/workflows/excavation-workflow/multi-widget-with-labels.htm',
 ], function(_, ko, uuid, arches, AlertViewModel, singleWidgetWithLabelTemplate) {
     function viewModel(params) {
-        // this.resValue = ko.observable().extend({ deferred: true });
-        console.log("PARAMA", params)
-        console.log(params.form.card())
         this.card = params.card
         this.tile = ko.observable()
         this.loading = params.loading;
@@ -50,8 +47,6 @@ define([
         console.log(this.card)
         _.extend(this, params.form);
 
-        params.form.save = function() {
-        };
     }
     ko.components.register('multi-widget-with-labels', {
         viewModel: viewModel,

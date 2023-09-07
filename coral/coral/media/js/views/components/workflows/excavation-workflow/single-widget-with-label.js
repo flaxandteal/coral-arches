@@ -3,9 +3,10 @@ define([
     'knockout',
     'uuid',
     'arches',
+    'viewmodels/card',
     'viewmodels/alert',
     'templates/views/components/workflows/excavation-workflow/single-widget-with-label.htm',
-], function(_, ko, uuid, arches, AlertViewModel, singleWidgetWithLabelTemplate) {
+], function(_, ko, uuid, arches, CardViewModel, AlertViewModel, singleWidgetWithLabelTemplate) {
     function viewModel(params) {
         // this.resValue = ko.observable().extend({ deferred: true });
         this.card = params.card
@@ -17,8 +18,6 @@ define([
         
         _.extend(this, params.form);
 
-        params.form.save = function() {
-        };
     }
     ko.components.register('single-widget-with-label', {
         viewModel: viewModel,

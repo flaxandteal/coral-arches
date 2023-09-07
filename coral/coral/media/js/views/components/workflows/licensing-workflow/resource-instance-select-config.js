@@ -16,8 +16,18 @@ define([
     });
 
     this.pageVm = params.pageVm;
-    this.graphIds = params.graphIds;
-    console.log('graph ids: ', this.graphIds);
+    this.graphids = params.graphids;
+    this.card = params.card
+    this.widget_group = this.card.widgets()
+    this.widget_group.forEach((widget) => {
+            if (widget.widgetList()[0].name === 'resource-instance-multiselect-widget') {
+                widget.graphids = `graphids: ['${this.graphid}'],`
+            } else {
+                widget.graphids = ''
+            }
+          })
+          
+    console.log('graph ids: ', this.graphids);
 
     console.log('thisssss ', this)
   }

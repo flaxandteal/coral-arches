@@ -1,4 +1,5 @@
 <!-- ko if: ko.unwrap(tile) && ko.unwrap(card) -->
+    <div data-bind="graphids"></div>
     <!-- ko component: {
         name: 'default-card',
         params: {
@@ -7,9 +8,11 @@
             provisionalTileViewModel: provisionalTileViewModel,
             reviewer: reviewer,
             loading: loading,
+            graphids: $data.graphids,
             form: $data,
             state: 'form',
             pageVm: $data.pageVm
         }
     } --><!-- /ko -->
 <!-- /ko -->
+
