@@ -73,7 +73,7 @@ class DataTypes:
                 "model_name": model_name,
                 "relatable_graphs": []
             }
-        assert related_field.split("/")[-1] == self.related_nodes[nodeid]["name"], f"{related_field} != {self.related_nodes[nodeid]['name']}"
+        assert related_field.split("/")[-1] == self.related_nodes[nodeid]["name"].split("/")[-1], f"{related_field} != {self.related_nodes[nodeid]['name']}"
         self.related_nodes[nodeid]["relatable_graphs"] += [str(graph["graphid"]) for graph in node.config["graphs"] if str(graph["graphid"]) in self.graphs]
         logging.error(">%s", str(self.related_nodes[nodeid]["relatable_graphs"]))
         return self.related_nodes[nodeid]["name"]
@@ -99,15 +99,11 @@ class DataTypes:
             try:
                 self.node_datatypes = {str(nodeid): datatype for nodeid, datatype in models.Node.objects.values_list("nodeid", "datatype")}
                 self.datatype_factory = DataTypeFactory()
-                allowed_graphs = None if ALLOW_NON_WKRM_GRAPHS else {wkrm.graphid for wkrm in _WELL_KNOWN_RESOURCE_MODELS}
                 self.graphs = {
-                    str(pk): string_to_enum(str(name)) for pk, name in Graph.objects.values_list("pk", "name")
-                    if (allowed_graphs is None or str(pk) in allowed_graphs)
+                    str(wkrm.graphid): wkrm for wkrm in _WELL_KNOWN_RESOURCE_MODELS
                 }
 
                 for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
-                    if str(wkrm.graphid) in self.graphs:
-                        self.graphs[str(wkrm.graphid)] = wkrm
                     for field, info in wkrm.nodes.items():
                         if "nodeid" in info:
                             if "/" in field:
@@ -139,8 +135,12 @@ class DataTypes:
             )
 
     def _process_field(self, nodeid, model_name, field):
-        datatype = self.node_datatypes[nodeid]
-        datatype_instance = self.datatype_factory.get_instance(datatype)
+        try:
+            datatype = self.node_datatypes[nodeid]
+            datatype_instance = self.datatype_factory.get_instance(datatype)
+        except:
+            logging.error("Had to skip %s %s", model_name, nodeid)
+            return
         if isinstance(datatype_instance, ResourceInstanceDataType):
             self._build_related(nodeid, field, model_name)
             def _construct_resource(vs, nodeid, field, model_name, datatype_instance):
@@ -148,7 +148,6 @@ class DataTypes:
                 assert len(graphs) == 1, f"Could not determine a unique type for this subgraph {field} of {model_name}"
                 wkrm = self.graphs[graphs[0]]
                 resources = [_build_resource(wkrm, **v) for v in vs]
-                logging.error("%s", str(resources))
                 return resources
 
             self.remapped[(model_name, field)] = partial(
@@ -192,6 +191,8 @@ class DataTypes:
                 return graphene.String()
             elif typ == datetime:
                 return graphene.String()
+            elif typ == "boolean":
+                return graphene.Boolean()
             elif typ == float:
                 return graphene.Float()
             elif typ == int:
@@ -216,7 +217,11 @@ class DataTypes:
 
                 return graphene.Argument(graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type)
             elif isinstance(datatype_instance, ResourceInstanceDataType):
-                graphs = self.related_nodes[info["nodeid"]]["relatable_graphs"]
+                allowed_graphs = [str(wkrm.graphid) for wkrm in _WELL_KNOWN_RESOURCE_MODELS]
+                graphs = [
+                    graph for graph in self.related_nodes[info["nodeid"]]["relatable_graphs"]
+                    if graph in allowed_graphs
+                ]
                 logging.error("%s]", str(graphs))
                 assert len(graphs) > 0, "Relations must relate a graph that is well-known"
                 if len(graphs) == 1:
@@ -230,7 +235,7 @@ class DataTypes:
                             self.graphs[graph]: graphene.List(lambda: _resource_model_inputs[self.graphs[graph].model_class_name]) for graph in graphs
                         }
                     )
-                    return union
+                    return graphene.Argument(union)
             elif isinstance(datatype_instance, GeojsonFeatureCollectionDataType):
                 return graphene.JSONString()
             elif isinstance(datatype_instance, EDTFDataType):
@@ -248,6 +253,8 @@ class DataTypes:
                 return graphene.String()
             elif typ == datetime:
                 return graphene.String()
+            elif typ == "boolean":
+                return graphene.Boolean()
             elif typ == float:
                 return graphene.Float()
             elif typ == int:
@@ -450,10 +457,10 @@ class FileUploadMutation(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     upload_file = FileUploadMutation.Field()
 
-async def mutate_bulk_create(parent, info, mutation, wkrm, field_sets):
+async def mutate_bulk_create(parent, info, mutation, wkrm, field_sets, do_index=False):
     resource_cls = get_well_known_resource_model_by_class_name(wkrm.model_class_name)
     field_sets = [{field: data_types.remap(wkrm.model_name, field, value) for field, value in field_set.items()} for field_set in field_sets]
-    resources = await sync_to_async(resource_cls.create_bulk)(field_sets)
+    resources = await sync_to_async(resource_cls.create_bulk)(field_sets, do_index=do_index)
     ok = True
     kwargs = {
         snake(wkrm.model_class_name) + "s": resources,
@@ -506,6 +513,7 @@ for wkrm in _WELL_KNOWN_RESOURCE_MODELS:
         },
         arguments={
             "field_sets": graphene.List(ResourceInputObjectType),
+            "do_index": graphene.Boolean(required=False, default_value=True)
         }
     )
     mutations["CreateResource"] = type(

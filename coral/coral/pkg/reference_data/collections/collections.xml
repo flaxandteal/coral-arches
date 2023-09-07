@@ -6069,6 +6069,24 @@
       <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/9f155fc8-4d23-48df-9ed2-edb522988ccf"/>
     </skos:member>
   </skos:Collection>
+  <skos:Collection rdf:about="https://coral-her.flaxandteal.co.uk/rdm/bc729c9e-d098-4936-a3a2-9e7676195264">
+    <skos:prefLabel xml:lang="en">{"id": "40f0565d-3eb4-4c79-9303-abdfdcb7b9c7", "value": "Summary Statistics"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/175d348c-e4b3-42a1-99c2-fc1688336d94"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/0c56e486-c0e2-4b49-8977-c5086d96638d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/627c1f68-aa53-4a57-8f19-5f852adbd805"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/57f5bb66-06b6-4bfd-b2a1-6f22985b1ee5"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/be4c75d3-b2cc-4bc1-b974-5984dd8de144"/>
+    </skos:member>
+  </skos:Collection>
   <skos:Collection rdf:about="https://keystone.historicengland.org.uk/rdm/7849cd3c-3f0d-454d-aaea-db9164629641">
     <skos:prefLabel xml:lang="en">{"id": "90448e49-bc77-4900-9347-232fb545dd5a", "value": "Record Status"}</skos:prefLabel>
     <skos:member>
