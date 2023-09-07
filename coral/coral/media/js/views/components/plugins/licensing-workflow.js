@@ -203,25 +203,25 @@ define([
                     ]
                   }
                 },
-                {
-                  componentName: 'resource-instance-select-config',
-                  uniqueInstanceName: 'company-name' ,
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'd4a88461-5463-11e9-90d9-000d3ab1e588',
-                    graphIds: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
-                    nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
-                    hiddenNodes: [
-                      '2a5bc0a2-fe48-11ea-ae9c-f875a44e0e11',
-                      '2a5bc0a6-fe48-11ea-b5a3-f875a44e0e11',
-                      '2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11',
-                      '2a5b99ae-fe48-11ea-aa8a-f875a44e0e11',
-                      '2a5bc0a8-fe48-11ea-b191-f875a44e0e11',
-                      '2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11'
-                    ],
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']"
-                  }
-                },
+                // {
+                //   componentName: 'resource-instance-select-config',
+                //   uniqueInstanceName: 'company-name' ,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'd4a88461-5463-11e9-90d9-000d3ab1e588',
+                //     graphIds: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
+                //     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
+                //     hiddenNodes: [
+                //       '2a5bc0a2-fe48-11ea-ae9c-f875a44e0e11',
+                //       '2a5bc0a6-fe48-11ea-b5a3-f875a44e0e11',
+                //       '2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11',
+                //       '2a5b99ae-fe48-11ea-aa8a-f875a44e0e11',
+                //       '2a5bc0a8-fe48-11ea-b191-f875a44e0e11',
+                //       '2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11'
+                //     ],
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']"
+                //   }
+                // },
                 // {
                 //   componentName: 'default-card',
                 //   uniqueInstanceName: 'location-data' ,
