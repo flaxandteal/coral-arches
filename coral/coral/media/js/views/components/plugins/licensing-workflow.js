@@ -221,22 +221,22 @@ define([
                 //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']"
                 //   }
                 // },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'location-data' ,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
+                //     hiddenNodes: [
+                //       ''
+                //     ],
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //   }
+                // },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'location-data' ,
-                  tilesManaged: 'many',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
-                    hiddenNodes: [
-                      ''
-                    ],
-                    renderContext: 'workflow',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'location-names' ,
                   tilesManaged: 'many',
                   parameters: {
@@ -246,80 +246,78 @@ define([
                       'location name',
                       'location type'
                     ],
-                    // hiddenNodes: [
-                    //   'a541922b-f121-11eb-a081-a87eeabdefba'
-                    // ],
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba'
+                    ],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    parenttileid: "['app-details-step']['location-data']['tileid']"
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'address-info' ,
-                  tilesManaged: 'many',
+                  tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
-                    // hiddenNodes: [
-                    //   'a541922b-f121-11eb-a081-a87eeabdefba'
-                    // ],
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba'
+                    ],
                     renderContext: 'workflow',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    parenttileid: "['app-details-step']['location-data']['tileid']"
                   }
                 },
-                // {
-                //   componentName: 'single-widget-with-label',
-                //   uniqueInstanceName: 'bfile-name' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     hiddenNodes: [
-                //       '589d4dca-edf9-11eb-83ea-a87eeabdefba',
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                //     ],
-                //     label: 'B-File / CM number',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
-                // {
-                //   componentName: 'asset-reference-card',
-                //   uniqueInstanceName: 'asset-names' ,
-                //   tilesManaged: 'many',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                {
+                  componentName: 'single-widget-with-label',
+                  uniqueInstanceName: 'bfile-name' ,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    hiddenNodes: [
+                      '589d4dca-edf9-11eb-83ea-a87eeabdefba',
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+                    ],
+                    label: 'B-File / CM number',
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                  }
+                },
+                {
+                  componentName: 'asset-reference-card',
+                  uniqueInstanceName: 'asset-names' ,
+                  tilesManaged: 'many',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
 
-                //   }
-                // },
-                // {
-                //   componentName: 'single-widget-with-label',
-                //   uniqueInstanceName: 'planning-reference' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-                //     hiddenNodes: [
-                //       'e7d69604-9939-11ea-baef-f875a44e0e11',
-                //       'e7d6960a-9939-11ea-b292-f875a44e0e11',
-                //       'e7d69602-9939-11ea-b514-f875a44e0e11',
-                //       'e7d69608-9939-11ea-8292-f875a44e0e11',
-                //       'e7d69605-9939-11ea-92ce-f875a44e0e11',
-                //       'e7d69603-9939-11ea-9e7f-f875a44e0e11',
-                //       'e7d69609-9939-11ea-a06d-f875a44e0e11',
-                //       'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-                //       'e7d69607-9939-11ea-b5c4-f875a44e0e11',
-                //     ],
-                //     label: 'Planning Reference',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
+                  }
+                },
+                {
+                  componentName: 'single-widget-with-label',
+                  uniqueInstanceName: 'planning-reference' ,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+                    hiddenNodes: [
+                      'e7d69604-9939-11ea-baef-f875a44e0e11',
+                      'e7d6960a-9939-11ea-b292-f875a44e0e11',
+                      'e7d69602-9939-11ea-b514-f875a44e0e11',
+                      'e7d69608-9939-11ea-8292-f875a44e0e11',
+                      'e7d69605-9939-11ea-92ce-f875a44e0e11',
+                      'e7d69603-9939-11ea-9e7f-f875a44e0e11',
+                      'e7d69609-9939-11ea-a06d-f875a44e0e11',
+                      'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+                      'e7d69607-9939-11ea-b5c4-f875a44e0e11',
+                    ],
+                    label: 'Planning Reference',
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                  }
+                },
                 // {
                 //   componentName: 'widget-labeller',
                 //   uniqueInstanceName: 'licensee-name' ,

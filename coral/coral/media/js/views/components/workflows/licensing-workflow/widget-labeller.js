@@ -7,20 +7,29 @@ define([
   'templates/views/components/workflows/licensing-workflow/widget-labeller.htm'
 ], function (_, ko, koMapping, uuid, arches, widgetLabeller) {
   function viewModel(params) {
+    console.log(this)
     const self = this;
 
     _.extend(this, params.form);
+    console.log(params)
     console.log("LABELLER", params.form)
     console.log("THIS", this.card())
-    self.tile().dirty.subscribe(function (val) {
+    console.log("FORM", params.form.card())
+
+    console.log("SELF", self.tile(), self.card(), self)
+    console.log("Cards for Graph", self.graphModel.graphCards())
+    self.form.tile().dirty.subscribe(function (val) {
       self.dirty(val);
     });
+
     console.log("so long tile then", self.tile())
     this.graphid = params.graphid
     this.graphids = params.graphids ? params.graphids : [this.graphid]
     
     console.log("tile me",this.tile())
     console.log("graph and id!", this.graphid, this.graphids)
+
+    console.log(params.nodegroupId)
 
     this.pageVm = params.pageVm;
 
