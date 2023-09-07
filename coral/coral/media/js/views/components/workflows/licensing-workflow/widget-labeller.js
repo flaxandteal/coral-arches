@@ -19,7 +19,7 @@ define([
 
     this.card().widgets().forEach((widget) => {
       console.log('widget loop: ', widget);
-      params.labels.forEach(([prevLabel, newLabel]) => {
+      params.labels?.forEach(([prevLabel, newLabel]) => {
         if (widget.label() === prevLabel) {
           widget.label(newLabel)
         }
