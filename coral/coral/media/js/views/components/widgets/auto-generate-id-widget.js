@@ -30,7 +30,7 @@ define([
         self.idValue = self.value()[arches.activeLanguage]?.value;
       }
 
-      if (ko.isObservable(self.idValue) && !self.idValue()) {
+      if (ko.isObservable(self.idValue) && !self.idValue() || !self.idValue) {
         self.idValue = ko.observable(uuid.generate());
         self.value({
           [arches.activeLanguage]: {
