@@ -203,26 +203,32 @@ define([
                     ]
                   }
                 },
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'company-name' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                //     nodegroupid: 'f5566e7e-48b6-11ee-85af-0242ac140007',
-                //     // renderContext: 'workflow',
-                //     // hiddenNodes: [
-                //     //   '2a5bc0a2-fe48-11ea-ae9c-f875a44e0e11',
-                //     //   '2a5bc0a6-fe48-11ea-b5a3-f875a44e0e11',
-                //     //   '2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11',
-                //     //   '2a5b99ae-fe48-11ea-aa8a-f875a44e0e11',
-                //     //   '2a5bc0a8-fe48-11ea-b191-f875a44e0e11',
-                //     //   '2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11'
-                //     // ],
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //     // labels: [['Person or Organization','Please Select Company and Applicant']]
-                //   }
-                // },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'entities-involved',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      'f55671b2-48b6-11ee-85af-0242ac140007',
+                      'f556700e-48b6-11ee-85af-0242ac140007',
+                      'f5567342-48b6-11ee-85af-0242ac140007',
+                      'f5566140-48b6-11ee-85af-0242ac140007',
+                      'f5566140-48b6-11ee-85af-0242ac140007',
+                      'f5566654-48b6-11ee-85af-0242ac140007',
+                      'f5566b40-48b6-11ee-85af-0242ac140007',
+                      'f5566cda-48b6-11ee-85af-0242ac140007',
+                      'f556699c-48b6-11ee-85af-0242ac140007',
+                      'f556699c-48b6-11ee-85af-0242ac140007',
+                      'f55667f8-48b6-11ee-85af-0242ac140007'
+                    ],
+                    labels: [
+                      ['Person or Organization','Please Select Company and Applicant']
+                    ]
+                  }
+                },
                 // {
                 //   componentName: 'resource-instance-select-config',
                 //   uniqueInstanceName: 'company-name' ,
