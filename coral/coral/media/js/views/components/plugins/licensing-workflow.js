@@ -102,68 +102,58 @@ define([
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
                   }
                 },
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'b-file-no',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //     hiddenNodes: [
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                //       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
-                //     ],
-                //     labels: [['Cross Reference', 'B-File / CM number']]
-                //   }
-                // },
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'license-no',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //     hiddenNodes: [
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                //       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
-                //     ],
-                //     labels: [['Cross Reference', 'License Number (if applicable)']]
-                //   }
-                // },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'b-file-no',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    hiddenNodes: [
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+                      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                    ],
+                    labels: [['Cross Reference', 'B-File / CM number']]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'license-no',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    hiddenNodes: [
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+                      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                    ],
+                    labels: [['Cross Reference', 'License Number (if applicable)']]
+                  }
+                },
                 
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'asset-refs',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //     hiddenNodes: [
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
-                //     ],
-                //     labels: [
-                //       ['Cross Reference', 'Asset Reference'],
-                //       ['Cross Reference Note', 'Asset Reference Note']
-                //     ]
-                //   }
-                // },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'asset-refs',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    hiddenNodes: [
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
+                    ],
+                    labels: [
+                      ['Cross Reference', 'Asset Reference'],
+                      ['Cross Reference Note', 'Asset Reference Note']
+                    ]
+                  }
+                },
                 
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'app-dates-and-status',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                //     nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                //   }
-                // },
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'company-name' ,
@@ -187,55 +177,84 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'sub-details',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                //     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                //     hiddenNodes: [
-                //       '5d2ae012-48cf-11ee-8e4e-0242ac140007',
-                //       '777596ba-48cf-11ee-8e4e-0242ac140007',
-                //       '916b5e7e-48cf-11ee-8e4e-0242ac140007'
-                //     ],
-                //     labels: [
-                //       ['Proposal Text', 'Submission Details']
-                //     ]
-                //   }
-                // },
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'sub-files',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                //     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                //     hiddenNodes: [
-                //       'aec103a2-48cf-11ee-8e4e-0242ac140007',
-                //       '777596ba-48cf-11ee-8e4e-0242ac140007',
-                //       '916b5e7e-48cf-11ee-8e4e-0242ac140007'
-                //     ],
-                //     labels: [
-                //       ['Digital File(s)', 'Submission Attachments']
-                //     ],
-                //     resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                //     resourceTileId: "['init-step']['app-id'][0]['tileId']",
-                //     resourceModelDigitalObjectNodeGroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007'
-                //   }
-                // },
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'decision-made-by',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                //     nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                //   }
-                // },
+                
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'sub-details',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      '5d2ae012-48cf-11ee-8e4e-0242ac140007',
+                      '777596ba-48cf-11ee-8e4e-0242ac140007',
+                      '916b5e7e-48cf-11ee-8e4e-0242ac140007'
+                    ],
+                    labels: [
+                      ['Proposal Text', 'Submission Details']
+                    ]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'sub-files',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      'aec103a2-48cf-11ee-8e4e-0242ac140007',
+                      '777596ba-48cf-11ee-8e4e-0242ac140007',
+                      '916b5e7e-48cf-11ee-8e4e-0242ac140007'
+                    ],
+                    labels: [
+                      ['Digital File(s)', 'Submission Attachments']
+                    ],
+                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    resourceTileId: "['init-step']['app-id'][0]['tileId']",
+                    resourceModelDigitalObjectNodeGroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007'
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'app-dates-and-status',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'decision-made-by',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'pow-ref',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    hiddenNodes: [
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
+                    ],
+                    labels: [
+                      ['Cross Reference', 'POW Reference'],
+                      ['Cross Reference Note', 'POW Reference Note']
+                    ]
+                  }
+                },
                 
                 
                 // {
@@ -346,24 +365,7 @@ define([
                 //   }
                 // },
                 
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'pow-ref',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //     hiddenNodes: [
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
-                //     ],
-                //     labels: [
-                //       ['Cross Reference', 'POW Reference'],
-                //       ['Cross Reference Note', 'POW Reference Note']
-                //     ]
-                //   }
-                // },
+                
                 // {
                 //   /**
                 //    * Using custom component to handle the creation of Digital
