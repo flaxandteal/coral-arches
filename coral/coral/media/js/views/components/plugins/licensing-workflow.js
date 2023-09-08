@@ -87,7 +87,7 @@ define([
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'location-names' ,
-                  tilesManaged: 'many',
+                  tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
@@ -255,215 +255,59 @@ define([
                     ]
                   }
                 },
-                
-                
-                // {
-                //   componentName: 'resource-instance-select-config',
-                //   uniqueInstanceName: 'company-name' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'd4a88461-5463-11e9-90d9-000d3ab1e588',
-                //     graphIds: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
-                //     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
-                //     hiddenNodes: [
-                //       '2a5bc0a2-fe48-11ea-ae9c-f875a44e0e11',
-                //       '2a5bc0a6-fe48-11ea-b5a3-f875a44e0e11',
-                //       '2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11',
-                //       '2a5b99ae-fe48-11ea-aa8a-f875a44e0e11',
-                //       '2a5bc0a8-fe48-11ea-b191-f875a44e0e11',
-                //       '2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11'
-                //     ],
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']"
-                //   }
-                // },
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'location-data' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
-                //     hiddenNodes: [
-                //       ''
-                //     ],
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
-                
-                // {
-                //   componentName: 'single-widget-with-label',
-                //   uniqueInstanceName: 'bfile-name' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     hiddenNodes: [
-                //       '589d4dca-edf9-11eb-83ea-a87eeabdefba',
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                //     ],
-                //     label: 'B-File / CM number',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
-                // {
-                //   componentName: 'asset-reference-card',
-                //   uniqueInstanceName: 'asset-names' ,
-                //   tilesManaged: 'many',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Location Details',
+          name: 'location-details-step',
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          informationboxdata: {
+            heading: 'Location Details'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'geometry-info' ,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
+                    // hiddenNodes: [
+                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
+                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                    // ],
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
 
-                //   }
-                // },
-                // {
-                //   componentName: 'single-widget-with-label',
-                //   uniqueInstanceName: 'planning-reference' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-                //     hiddenNodes: [
-                //       'e7d69604-9939-11ea-baef-f875a44e0e11',
-                //       'e7d6960a-9939-11ea-b292-f875a44e0e11',
-                //       'e7d69602-9939-11ea-b514-f875a44e0e11',
-                //       'e7d69608-9939-11ea-8292-f875a44e0e11',
-                //       'e7d69605-9939-11ea-92ce-f875a44e0e11',
-                //       'e7d69603-9939-11ea-9e7f-f875a44e0e11',
-                //       'e7d69609-9939-11ea-a06d-f875a44e0e11',
-                //       'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-                //       'e7d69607-9939-11ea-b5c4-f875a44e0e11',
-                //     ],
-                //     label: 'Planning Reference',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'licensee-name' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     labels: [['Person or Organization', 'Applicant / Licensee']],
-                //     graphids: ['22477f01-1a44-11e9-b0a9-000d3ab1e588'],
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '2a5b99a9-fe48-11ea-9deb-f875a44e0e11',
-                //     renderContext: 'workflow',
-                //     hiddenNodes: [
-                //       '2a5bc0a2-fe48-11ea-ae9c-f875a44e0e11',
-                //       '2a5bc0a6-fe48-11ea-b5a3-f875a44e0e11',
-                //       '2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11',
-                //       '2a5b99ae-fe48-11ea-aa8a-f875a44e0e11',
-                //       '2a5bc0a8-fe48-11ea-b191-f875a44e0e11',
-                //       '2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11'
-                //     ],
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
-                
-                
-                // {
-                //   /**
-                //    * Using custom component to handle the creation of Digital
-                //    * Objects that will then be automatically named and related
-                //    * to the Excavation License model.
-                //    */
-                //   componentName: 'related-document-upload',
-                //   uniqueInstanceName: 'file-upload',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     /**
-                //      * Using Digital Object graph id and the file upload
-                //      * node group id.
-                //      */
-                //     graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
-                //     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'grid-info' ,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
+                    // hiddenNodes: [
+                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
+                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                    // ],
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
 
-                //     /**
-                //      * These can be difficult to work with. Sometimes the `tileId` will be all
-                //      * lowercase and sometimes it will be camel case. This will vary between workflows.
-                //      */
-                //     resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                //     resourceTileId: "['init-step']['app-id'][0]['tileId']",
-                    
-                //     /**
-                //      * This needs to refer to the Excavation models 
-                //      * Digital object node group.
-                //      */
-                //     resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
-                //   }
-                // },
-                // // {
-                // //   componentName: 'multi-widget-with-labels',
-                // //   uniqueInstanceName: 'activity-times' ,
-                // //   tilesManaged: 'one',
-                // //   parameters: {
-                // //     labels: ['Recieved Date', 'Acknowledged Date', 'YearNo'],
-                // //     widget_types: ['text-widget'],
-                // //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                // //     nodegroupid: '4f5ec415-993e-11ea-bab0-f875a44e0e11',
-                // //     hiddenNodes: [
-                // //       '4f5eeb2a-993e-11ea-a2db-f875a44e0e11'
-                // //     ],
-                // //     renderContext: 'workflow',
-                // //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                // //   }
-                // // },
-                // {
-                //   componentName: 'single-widget-with-label',
-                //   uniqueInstanceName: 'license-number' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     hiddenNodes: [
-                //       '589d4dca-edf9-11eb-83ea-a87eeabdefba',
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                //     ],
-                //     label: 'License Number',
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
-                // {
-                //   componentName: 'protection-of-wrecks-card',
-                //   uniqueInstanceName: 'pow-details' ,
-                //   tilesManaged: 'many',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                //     hiddenNodes: [
-                //       // '589d4dca-edf9-11eb-83ea-a87eeabdefba',
-                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                //     ],
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-
-                //   }
-                // },
-
-                // {
-                //   componentName: 'multi-widget-with-labels',
-                //   uniqueInstanceName: 'activity-description' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     labels: ['Submission Details'],
-                //     widget_type: 'rich-text-widget',
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'a472226f-9937-11ea-966a-f875a44e0e11',
-                //     hiddenNodes: [
-                //       'a4724977-9937-11ea-a11e-f875a44e0e11'
-                //     ],
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //   }
-                // },
+                  }
+                },
               ]
             }
           ]
