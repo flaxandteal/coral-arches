@@ -228,20 +228,38 @@ define([
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'location-names',
-                  tilesManaged: 'many',
+                  tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
-                    labels: [
-                      ['Area Name', 'Additional Area Name'],
-                      ['Area Type', 'Area Type For Additional Name']
-                    ],
+
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
                     hiddenNodes: [
                       'a541922b-f121-11eb-a081-a87eeabdefba',
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
                     ],
+                    labels: [
+                      ['Area Name', 'Additional Area Name'],
+                      ['Area Type', 'Area Type For Additional Name']
+                    ]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'address-info',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba',
+                      'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                      'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                      'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                    ],
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
                 }
