@@ -39,8 +39,6 @@ define([
       self.dirty(val);
     });
 
-    console.log('related-document-upload ', this, self);
-
     this.pageVm = params.pageVm;
 
     params.form.save = async () => {
