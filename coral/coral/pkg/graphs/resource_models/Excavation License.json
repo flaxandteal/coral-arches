@@ -69,7 +69,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Status and Duration Dates"
                     },
@@ -109,7 +109,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "File(s)"
                     },
@@ -138,7 +138,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Names"
                     },
@@ -199,7 +199,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -226,7 +226,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -266,7 +266,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -333,7 +333,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Proposal"
                     },
@@ -1056,6 +1056,26 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
+                    "card_id": "44bd1735-2ef4-4053-8777-bec3dee48f9b",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Received Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "822c77c9-e763-4d29-88c5-fc3377262ebf",
+                    "label": {
+                        "en": "Received Date"
+                    },
+                    "node_id": "6b96c722-48c7-11ee-ba3a-0242ac140007",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
                     "card_id": "991c3f76-48b6-11ee-85af-0242ac140007",
                     "config": {
                         "defaultValue": null,
@@ -1366,6 +1386,46 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "f7f712aa-23f4-43b3-9d43-ef75f9b52ab2"
+                },
+                {
+                    "card_id": "44bd1735-2ef4-4053-8777-bec3dee48f9b",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Acknowledged Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "9b4b9b41-6a23-48ec-a680-19b6cf5db411",
+                    "label": {
+                        "en": "Acknowledged Date"
+                    },
+                    "node_id": "0a914884-48b4-11ee-90a8-0242ac140007",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "44bd1735-2ef4-4053-8777-bec3dee48f9b",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Start Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "9b7f3fe3-8de3-497f-99fc-2da714c8732f",
+                    "label": {
+                        "en": "Start Date"
+                    },
+                    "node_id": "3bcd2950-48b3-11ee-abec-0242ac140007",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "a9f5434c-48b6-11ee-85af-0242ac140007",
@@ -2205,6 +2265,68 @@
                     "sortorder": 17,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "44bd1735-2ef4-4053-8777-bec3dee48f9b",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Cancelled Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "d6e0ca20-4ef2-4ced-8ae4-09e1cf01287c",
+                    "label": {
+                        "en": "Cancelled Date"
+                    },
+                    "node_id": "bcb01104-48b3-11ee-abec-0242ac140007",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "44bd1735-2ef4-4053-8777-bec3dee48f9b",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Current Status",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "dc2b841f-6fa6-4882-a43c-92f673912545",
+                    "label": {
+                        "en": "Current Status"
+                    },
+                    "node_id": "fb18edd0-48b8-11ee-84da-0242ac140007",
+                    "sortorder": 5,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "44bd1735-2ef4-4053-8777-bec3dee48f9b",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "End Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "f4bc6a1c-11d5-407f-94e8-6805e4523d50",
+                    "label": {
+                        "en": "End Date"
+                    },
+                    "node_id": "8838d23a-48b3-11ee-abec-0242ac140007",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
@@ -3607,7 +3729,7 @@
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -6476,8 +6598,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "014c4d60-4ccd-11ee-9268-0242ac120008",
-                "published_time": "2023-09-06T15:49:46.884",
+                "publicationid": "502ed70a-4d85-11ee-9ddd-0242ac120007",
+                "published_time": "2023-09-07T13:49:06.630",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],

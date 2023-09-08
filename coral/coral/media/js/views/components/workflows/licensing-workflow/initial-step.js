@@ -20,6 +20,7 @@ define([
     this.pageVm = params.pageVm;
 
     this.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
+    this.actLocTileId = params.form.savedData()?.actLocTileId;
     this.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
     this.actResourceId = params.form.savedData()?.actResourceId;
     this.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
@@ -46,20 +47,24 @@ define([
       if (nameTile?.ok) {
         const activityTile = await saveActivitySystemRef();
         if (activityTile?.ok) {
-          const relationship = await saveRelationship();
-          if (relationship.ok) {
-            params.form.savedData({
-              tileData: koMapping.toJSON(self.tile().data),
-              tileId: self.tile().tileid,
-              resourceInstanceId: self.tile().resourceinstance_id,
-              nodegroupId: self.tile().nodegroup_id,
-              actSysRefTileId: self.actSysRefTileId,
-              actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
-              actResourceId: self.actResourceId
-            });
-            params.form.complete(true);
-            params.form.saving(false);
-            console.log("the data", params.form.savedData())
+          const activityLocTile = await saveActivityLocation();
+          if (activityLocTile?.ok){
+            const relationship = await saveRelationship();
+            if (relationship.ok) {
+              params.form.savedData({
+                tileData: koMapping.toJSON(self.tile().data),
+                tileId: self.tile().tileid,
+                resourceInstanceId: self.tile().resourceinstance_id,
+                nodegroupId: self.tile().nodegroup_id,
+                actSysRefTileId: self.actSysRefTileId,
+                actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
+                actResourceId: self.actResourceId,
+                actLocTileId: self.actLocTileId
+              });
+              params.form.complete(true);
+              params.form.saving(false);
+              console.log("the data", params.form.savedData())
+          }
 
           }
         }
@@ -115,6 +120,39 @@ define([
         const activityTileResult = await activityTile.json();
         self.actSysRefTileId = activityTileResult.tileid;
         self.actResourceId = activityTileResult.resourceinstance_id;
+        return activityTile;
+      }
+    };
+
+    const saveActivityLocation = async () => {
+      const actLocationTemplate = {
+        data: {},
+        nodegroup_id: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
+        parenttile_id: null,
+        resourceinstance_id: self.actResourceId,
+        tileid: null,
+        sortorder: 0
+      };
+
+      if (!self.actLocTileId) {
+        self.actLocTileId = uuid.generate();
+      } else {
+        actLocationTemplate.tileid = self.actLocTileId;
+      }
+
+      const activityTile = await window.fetch(arches.urls.api_tiles(self.actLocTileId), {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(actLocationTemplate),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (activityTile?.ok) {
+        const activityTileResult = await activityTile.json();
+        self.actLocTileId = activityTileResult.tileid;
+        console.log("ACTIVITY LOCATION TILE: ", self.actLocTileId)
         return activityTile;
       }
     };
