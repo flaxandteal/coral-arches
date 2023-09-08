@@ -1,6 +1,9 @@
 name: Build Arches project
 run-name: Build Arches project
-on: [push]
+on:
+  push:
+    branches:
+      - develop
 env:
   ARCHES_BASE: flaxandteal/arches_coral_base
   ARCHES_PROJECT: coral

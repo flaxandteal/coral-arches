@@ -1,0 +1,13 @@
+{
+  "widgetid": "f7f712aa-23f4-43b3-9d43-ef75f9b52ab2",
+  "name": "auto-generate-id-widget",
+  "component": "views/components/widgets/auto-generate-id-widget",
+  "defaultconfig": {
+    "label": "Auto Generated ID",
+    "defaultValue": { "en": { "value": "", "direction": "ltr" } },
+    "id_placeholder": "This field should automatically be generated",
+    "disabled": true
+  },
+  "helptext": null,
+  "datatype": "string"
+}

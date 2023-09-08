@@ -991,3 +991,11 @@ span.rp-tile-title {
     height: 100%;
     padding: 0px;
 }
+
+/**
+ * Custom CSS Overrides by F&T
+ */
+
+.workflow-form-component {
+    height: min-content;
+}

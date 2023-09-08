@@ -12,7 +12,7 @@ define([
             this.componentName = 'application-area';
             this.stepConfig = [
                 {
-                    title: 'Application Area Name',
+                    title: 'Application Details',
                     name: 'assign-name',
                     required: true,
                     informationboxdata: {
@@ -29,6 +29,16 @@ define([
                                     parameters: {
                                         graphid: '42ce82f6-83bf-11ea-b1e8-f875a44e0e11',
                                         nodegroupid: '9c9f9dbb-83bf-11ea-bca7-f875a44e0e11',
+                                        renderContext: 'workflow',
+                                    },
+                                },
+                                {
+                                    componentName: 'default-card',
+                                    uniqueInstanceName: 'app-area-county', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '5dedc7c0-993a-11ea-bc4e-f875a44e0e11',
+                                        nodeid: '5dedeefd-993a-11ea-95c6-f875a44e0e11',
                                         renderContext: 'workflow',
                                     },
                                 },
