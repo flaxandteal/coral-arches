@@ -115,6 +115,22 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
+                  uniqueInstanceName: 'planning-ref',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['actSysRefTileId']",
+                    hiddenNodes: [
+                      'e7d69603-9939-11ea-9e7f-f875a44e0e11',
+                      'e7d69602-9939-11ea-b514-f875a44e0e11'
+                    ],
+                    labels: [['Legacy ID', 'Planning Reference']]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'license-no',
                   tilesManaged: 'one',
                   parameters: {
