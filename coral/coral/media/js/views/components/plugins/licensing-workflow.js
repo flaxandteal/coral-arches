@@ -55,7 +55,6 @@ define([
                   uniqueInstanceName: 'site-name',
                   tilesManaged: 'one',
                   parameters: {
-                    label: 'Site Name',
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
@@ -175,11 +174,12 @@ define([
                      * These can be difficult to work with. Sometimes the `tileId` will be all
                      * lowercase and sometimes it will be camel case. This will vary between workflows.
                      */
-                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    resourceModelId:
+                      "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     resourceTileId: "['init-step']['app-id'][0]['tileId']",
-                    
+
                     /**
-                     * This needs to refer to the Excavation models 
+                     * This needs to refer to the Excavation models
                      * Digital object node group.
                      */
                     resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
@@ -198,9 +198,7 @@ define([
                       '777596ba-48cf-11ee-8e4e-0242ac140007',
                       '916b5e7e-48cf-11ee-8e4e-0242ac140007'
                     ],
-                    labels: [
-                      ['Proposal Text', 'Submission Details']
-                    ]
+                    labels: [['Proposal Text', 'Submission Details']]
                   }
                 },
                 {
@@ -224,11 +222,29 @@ define([
                       'f556699c-48b6-11ee-85af-0242ac140007',
                       'f55667f8-48b6-11ee-85af-0242ac140007'
                     ],
-                    labels: [
-                      ['Person or Organization','Please Select Company and Applicant']
-                    ]
+                    labels: [['Person or Organization', 'Please Select Company and Applicant']]
                   }
                 },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'location-names',
+                  tilesManaged: 'many',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                    labels: [
+                      ['Area Name', 'Additional Area Name'],
+                      ['Area Type', 'Area Type For Additional Name']
+                    ],
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba',
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
+                    ],
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
+                  }
+                }
                 // {
                 //   componentName: 'resource-instance-select-config',
                 //   uniqueInstanceName: 'company-name' ,
