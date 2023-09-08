@@ -67,7 +67,6 @@ define([
     };
 
     const saveDigitalResourceName = async () => {
-      console.log('RESOURCE INS BEFORE SAVE NAME: ', self.resourceId());
       const nameTemplate = {
         tileid: '',
         data: {
