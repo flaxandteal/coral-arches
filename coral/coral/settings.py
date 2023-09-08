@@ -7,6 +7,8 @@ import os
 import sys
 import arches
 import inspect
+from datetime import datetime, date
+import json
 from django.utils.translation import gettext_lazy as _
 
 try:
@@ -14,12 +16,92 @@ try:
 except ImportError:
     pass
 
+class Semantic:
+    pass
+
+class Concept:
+    pass
+
+class GeoJSON:
+    pass
+
 APP_NAME = 'coral'
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+APP_PATHNAME = os.getenv("APP_PATHNAME", "")
 STATICFILES_DIRS =  (
     os.path.join(APP_ROOT, 'media', 'build'),
     os.path.join(APP_ROOT, 'media'),
 ) + STATICFILES_DIRS
+
+WELL_KNOWN_MAPPING_FILE = os.getenv("WELL_KNOWN_MAPPING_FILE", None)
+WELL_KNOWN_RESOURCE_MODELS = [
+    dict(
+        model_name="Monument",
+        __str__=lambda ri: ri.monument_name,
+        graphid="076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        monument_name={
+            "type": str,
+            "lang": "en",
+            "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+            "nodeid": "676d47ff-9c1c-11ea-b07f-f875a44e0e11",
+        },
+    )
+]
+if WELL_KNOWN_MAPPING_FILE:
+    with open(WELL_KNOWN_MAPPING_FILE, "r") as wkfd:
+        wkrm: dict = {wkrm["model_name"]: wkrm for wkrm in WELL_KNOWN_RESOURCE_MODELS}
+        for name, model in json.load(wkfd).items():
+            semantic_fields = {}
+            for fieldname, field in model.items():
+                if fieldname in ("__str__", "model_name", "graphid"):
+                    continue
+                if "__str__" in field:
+                    strattr = field["__str__"]
+                    field["__str__"] = lambda ri: getattr(ri, strattr)
+                if "type" in field:
+                    if field["type"] == "str":
+                        field["type"] = str
+                    elif field["type"] == "[str]":
+                        field["type"] = [str]
+                    elif field["type"] == "int":
+                        field["type"] = int
+                    elif field["type"] == "date":
+                        field["type"] = date
+                    elif field["type"] == "edtf":
+                        field["type"] = "edtf" # use datatype properly
+                    elif field["type"] == "geojson":
+                        field["type"] = GeoJSON
+                    elif field["type"] == "datetime":
+                        field["type"] = datetime
+                    elif field["type"] == "concept":
+                        field["type"] = Concept
+                    elif field["type"] == "[concept]":
+                        field["type"] = [Concept]
+                    elif field["type"] == "float":
+                        field["type"] = float
+                    elif field["type"] == "bool":
+                        field["type"] = "boolean"
+                    else:
+                        # relationship
+                        field["type"] = f"@{field['type']}"
+                if "/" in fieldname:
+                    fieldname, __ = fieldname.split("/", -1)
+                    if "/" in fieldname:
+                        raise NotImplementedError("Cannot currently support nested semantic fields in well-known resource models")
+                    semantic_fields[fieldname] = {
+                        "type": [Semantic],
+                        "nodeid": field["nodegroupid"],
+                        "nodegroupid": field["nodegroupid"],
+                    }
+                    if "parentnodegroup_id" in field:
+                        semantic_fields[fieldname]["parentnodegroup_id"] = field["parentnodegroup_id"]
+            model.update(semantic_fields)
+            if name in wkrm:
+                wkrm[name].update(model)
+            else:
+                assert "graphid" in model
+                model.setdefault("model_name", name)
+                WELL_KNOWN_RESOURCE_MODELS.append(model)
 
 WEBPACK_LOADER = {
     "DEFAULT": {
@@ -72,6 +154,7 @@ KIBANA_CONFIG_BASEPATH = "kibana"  # must match Kibana config.yml setting (serve
 LOAD_DEFAULT_ONTOLOGY = False
 LOAD_PACKAGE_ONTOLOGIES = True
 ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://arches:8000/"
+SPARQL_ENDPOINT_PROVIDERS = ({"SPARQL_ENDPOINT_PROVIDER": {"en": {"values": "arches.app.utils.data_management.sparql_providers.aat_provider.AAT_Provider"}}},)
 
 DATABASES = {
     "default": {
@@ -150,7 +233,8 @@ MEDIA_ROOT =  os.path.join(APP_ROOT)
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = os.getenv("STATIC_URL", '/static/')
+COMPRESS_URL = os.getenv("COMPRESS_URL", '/static/')
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -232,9 +316,9 @@ GRAPH_MODEL_CACHE_TIMEOUT = None
 
 OAUTH_CLIENT_ID = ''  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
-APP_TITLE = 'Arches | Heritage Data Management'
+APP_TITLE = 'HED | Heritage Data Management'
 COPYRIGHT_TEXT = 'All Rights Reserved.'
-COPYRIGHT_YEAR = '2019'
+COPYRIGHT_YEAR = '2022-'
 
 ENABLE_CAPTCHA = False
 # RECAPTCHA_PUBLIC_KEY = ''
@@ -254,6 +338,9 @@ EMAIL_HOST_USER = "xxxx@xxx.com"
 # EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# If True, allows for user self creation via the signup view. If False, users can only be created via the Django admin view.
+ENABLE_USER_SIGNUP = False
 
 CELERY_BROKER_URL = "" # RabbitMQ --> "amqp://guest:guest@localhost",  Redis --> "redis://localhost:6379/0"
 CELERY_ACCEPT_CONTENT = ['json']
@@ -341,19 +428,21 @@ except ImportError as e:
     except ImportError as e:
         pass
 
+
+from arches.settings_docker import *
+#COMPRESS_PRECOMPILERS = ()
+
+
 # returns an output that can be read by NODEJS
 if __name__ == "__main__":
     print(
         json.dumps({
             'ARCHES_NAMESPACE_FOR_DATA_EXPORT': ARCHES_NAMESPACE_FOR_DATA_EXPORT,
             'STATIC_URL': STATIC_URL,
+            'COMPRESS_URL': COMPRESS_URL,
             'ROOT_DIR': ROOT_DIR,
             'APP_ROOT': APP_ROOT,
             'WEBPACK_DEVELOPMENT_SERVER_PORT': WEBPACK_DEVELOPMENT_SERVER_PORT,
         })
     )
     sys.stdout.flush()
-
-
-from arches.settings_docker import *
-

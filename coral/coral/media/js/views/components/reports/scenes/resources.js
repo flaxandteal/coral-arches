@@ -1,4 +1,11 @@
-define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'], function (_, ko, arches, reportUtils) {
+define([
+    'underscore',
+    'knockout',
+    'arches',
+    'utils/report',
+    'templates/views/components/reports/scenes/resources.htm',
+    'bindings/datatable',
+], function(_, ko, arches, reportUtils, resourcesReportTemplate) {
     return ko.components.register('views/components/reports/scenes/resources', {
         viewModel: function (params) {
             const self = this;
@@ -209,10 +216,10 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
 
                 const translationNode = self.getRawNodeValue(params.data(), self.dataConfig.translation, 'instance_details');
                 if (Array.isArray(translationNode)) {
+                    const tileid = self.getTileId(self.getRawNodeValue(params.data(), self.dataConfig.translation));
                     self.translation(translationNode.map(x => {
                         const resource = self.getNodeValue(x);
                         const resourceLink = self.getResourceLink(self.getRawNodeValue(x));
-                        const tileid = self.getTileId(x);
                         return { resource, resourceLink, tileid };
                     }));
                 }
@@ -238,6 +245,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
 
             }
         },
-        template: { require: 'text!templates/views/components/reports/scenes/resources.htm' }
+        template: resourcesReportTemplate
     });
 });

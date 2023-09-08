@@ -1,3 +1,10 @@
 .env
+.secrets
+.venv
 .nenv
 node_modules
+docker/mapping_file.csv
+docker/mapping_file.json
+/data
+/scripts
+/docker

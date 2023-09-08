@@ -93,7 +93,7 @@ setup_arches() {
 	echo "*** Any existing Arches database will be deleted ***"
 	echo "" && echo ""
 
-	echo "5" && sleep 1 && echo "4" && sleep 1 && echo "3" && sleep 1 && echo "2" && sleep 1 &&	echo "1" &&	sleep 1 && echo "0" && echo ""
+	echo "5" && sleep 10 && echo "4" && sleep 1 && echo "3" && sleep 1 && echo "2" && sleep 1 &&	echo "1" &&	sleep 1 && echo "0" && echo ""
 
 	echo "Running: python manage.py setup_db --force"
 	python ${APP_FOLDER}/manage.py setup_db --force
@@ -134,6 +134,13 @@ setup_arches() {
 	fi
 
 	run_migrations
+
+	if [[ "${INSTALL_CORAL_PACKAGE}" == "True" ]]; then
+		# Import graphs
+		echo "Running: python manage.py packages -o load_package -s coral/pkg/ -y"
+		python manage.py packages -o load_package -s coral/pkg/ -y;
+		python manage.py es index_database
+	fi
 }
 
 wait_for_db() {
@@ -205,14 +212,57 @@ install_yarn_components() {
 	yarn install
 }
 
+#### Main commands
+run_arches_graphql() {
+
+	if [[ "${DJANGO_MODE}" == "DEV" ]]; then
+		set_dev_mode
+	fi
+
+	run_graphql_server
+}
+
+run_graphql_server() {
+	echo ""
+	echo ""
+	echo "----- *** RUNNING GRAPHQL SERVER *** -----"
+	echo ""
+	cd_app_folder
+	
+        uvicorn --host 0.0.0.0 --port 8000 ${ARCHES_PROJECT}.graph.asgi:app
+}
+
 run_yarn_start() {
 	echo ""
 	echo ""
 	echo "----- RUNNING YARN SERVER -----"
 	echo ""
 	cd_app_folder
+	sleep 10
 	cd ${ARCHES_PROJECT}
 	yarn start
+}
+
+run_yarn_build_production() {
+	echo ""
+	echo ""
+	echo "----- RUNNING YARN SERVER -----"
+	echo ""
+	cd_app_folder
+	sleep 10
+	cd ${ARCHES_PROJECT}
+	yarn build_production
+}
+
+run_yarn_build_development() {
+	echo ""
+	echo ""
+	echo "----- RUNNING YARN SERVER -----"
+	echo ""
+	cd_app_folder
+	sleep 10
+	cd ${ARCHES_PROJECT}
+	yarn build_development
 }
 
 
@@ -330,7 +380,7 @@ collect_static_real(){
 	echo ""
 	cd_app_folder
 	python manage.py collectstatic --noinput
-	python manage.py compress
+	python manage.py compress --verbosity=3
 }
 
 
@@ -452,6 +502,10 @@ do
 			wait_for_db
 			setup_arches
 		;;
+		run_arches_graphql)
+			wait_for_db
+			run_arches_graphql
+		;;
 		run_tests)
 			wait_for_db
 			run_tests
@@ -463,7 +517,13 @@ do
 		install_yarn_components)
 			install_yarn_components
 		;;
-		run_yarn)
+		run_yarn_build_development)
+			run_yarn_build_development
+		;;
+		run_yarn_build_production)
+			run_yarn_build_production
+		;;
+		run_yarn_start)
 			run_yarn_start
 		;;
 		help|-h)

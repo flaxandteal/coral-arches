@@ -5,9 +5,10 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
+    'templates/views/components/reports/monument.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, arches, resourceUtils, reportUtils, monumentReportTemplate) {
     return ko.components.register('monument-report', {
         viewModel: function(params) {
             var self = this;
@@ -58,7 +59,6 @@ define([
             self.nameCards = {};
             self.descriptionCards = {};
             self.classificationCards = {};
-            self.scientificDateCards = {};
             self.assessmentCards = {};
             self.imagesCards = {};
             self.locationCards = {};
@@ -104,7 +104,8 @@ define([
                 };
 
                 self.resourcesCards = {
-                    activities: self.cards?.['associated_activities'],
+                    activities: self.cards?.['associated activities'],
+                    archive: self.cards?.['associated archives'],
                     consultations: self.cards?.['associated consultations'],
                     files: self.cards?.['associated digital file(s)'],
                     assets: self.cards?.['associated monuments, areas and artefacts']
@@ -134,6 +135,6 @@ define([
             }
 
         },
-        template: { require: 'text!templates/views/components/reports/monument.htm' }
+        template: monumentReportTemplate
     });
 });

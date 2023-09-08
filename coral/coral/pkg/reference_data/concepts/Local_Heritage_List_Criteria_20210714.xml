@@ -28,7 +28,7 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/3ab52ba2-b6d9-49cf-83c7-de8a99b26647">
     <skos:prefLabel xml:lang="en">{"id": "11a15bf5-1c06-48d0-b697-f7284105212f", "value": "Asset Type"}</skos:prefLabel>
-    <skos:scopeNote xml:lang="en">{"id": "d4879cc3-433f-4a9b-a8ab-1e8dbd203224", "value": "Although local heritage lists have long been developed successfully for buildings, all\nheritage asset types, including monuments, sites, places, areas, parks, gardens and\ndesigned landscapes may be considered for inclusion."}</skos:scopeNote>
+    <skos:scopeNote xml:lang="en">{"id": "d4879cc3-433f-4a9b-a8ab-1e8dbd203224", "value": "Although local heritage lists have long been developed successfully for buildings, all\nmonument types, including monuments, sites, places, areas, parks, gardens and\ndesigned landscapes may be considered for inclusion."}</skos:scopeNote>
     <skos:inScheme rdf:resource="http://localhost:8000/92a0280e-a86a-42c2-8d6b-886837eb735f"/>
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/9eb62ba2-17f3-421d-bab8-6a59732a45ec">
@@ -47,12 +47,12 @@
     <skos:inScheme rdf:resource="http://localhost:8000/92a0280e-a86a-42c2-8d6b-886837eb735f"/>
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/8b973625-a747-4228-9b29-78c8da89b1b5">
-    <skos:scopeNote xml:lang="en">{"id": "35a1ccf1-eb86-4acd-a18e-3f3f03701576", "value": "A significant historical association of local or national note, including links to important\nlocal figures, may enhance the significance of a heritage asset. Blue Plaque and\nsimilar schemes may be relevant. Social and communal interest may be regarded\nas a sub-set of historic interest but has special value in local listing. As noted in the\nPPG: \u2018Heritage assets \u2026 can also provide meaning for communities derived from their\ncollective experience of a place and can symbolise wider values such as faith and\ncultural identity\u2019. It therefore relates to places perceived as a source of local identity,\ndistinctiveness, social interaction and coherence, contributing to the \u2018collective\nmemory\u2019 of a place."}</skos:scopeNote>
+    <skos:scopeNote xml:lang="en">{"id": "35a1ccf1-eb86-4acd-a18e-3f3f03701576", "value": "A significant historical association of local or national note, including links to important\nlocal figures, may enhance the significance of a monument. Blue Plaque and\nsimilar schemes may be relevant. Social and communal interest may be regarded\nas a sub-set of historic interest but has special value in local listing. As noted in the\nPPG: \u2018Heritage assets \u2026 can also provide meaning for communities derived from their\ncollective experience of a place and can symbolise wider values such as faith and\ncultural identity\u2019. It therefore relates to places perceived as a source of local identity,\ndistinctiveness, social interaction and coherence, contributing to the \u2018collective\nmemory\u2019 of a place."}</skos:scopeNote>
     <skos:inScheme rdf:resource="http://localhost:8000/92a0280e-a86a-42c2-8d6b-886837eb735f"/>
     <skos:prefLabel xml:lang="en">{"id": "072c67ed-6e42-4cb5-9187-e07627136d50", "value": "Historic Interest"}</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://localhost:8000/72b1c0ce-9a98-44c1-95fd-1e7a32ac3c36">
-    <skos:scopeNote xml:lang="en">{"id": "b9125875-4302-4ae9-9ede-be0aae5bdd68", "value": "The local heritage asset may provide evidence about past human activity in the\nlocality, which may be in the form of buried remains, but may also be revealed in the structure of buildings or in a designed landscape, for instance. Heritage assets with archaeological interest are primary sources of evidence about the substance and evolution of places, and of the people and cultures that made them."}</skos:scopeNote>
+    <skos:scopeNote xml:lang="en">{"id": "b9125875-4302-4ae9-9ede-be0aae5bdd68", "value": "The local monument may provide evidence about past human activity in the\nlocality, which may be in the form of buried remains, but may also be revealed in the structure of buildings or in a designed landscape, for instance. Heritage assets with archaeological interest are primary sources of evidence about the substance and evolution of places, and of the people and cultures that made them."}</skos:scopeNote>
     <skos:prefLabel xml:lang="en">{"id": "4052687c-0d73-4ac3-a399-4b5fc844dcf6", "value": "Archaeological Interest"}</skos:prefLabel>
     <skos:inScheme rdf:resource="http://localhost:8000/92a0280e-a86a-42c2-8d6b-886837eb735f"/>
   </skos:Concept>
