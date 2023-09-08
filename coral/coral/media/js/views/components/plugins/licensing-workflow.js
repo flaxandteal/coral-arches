@@ -67,19 +67,38 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'asset-refs',
+                  uniqueInstanceName: 'address-info',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba',
+                      'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                      'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                      'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                    ],
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'location-names',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba',
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
                     ],
                     labels: [
-                      ['Cross Reference', 'Asset Reference'],
-                      ['Cross Reference Note', 'Asset Reference Note']
+                      ['Area Name', 'Additional Area Name'],
+                      ['Area Type', 'Area Type For Additional Name']
                     ]
                   }
                 },
@@ -117,7 +136,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'pow-ref',
+                  uniqueInstanceName: 'asset-refs',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -128,9 +147,49 @@ define([
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
                     ],
                     labels: [
-                      ['Cross Reference', 'POW Reference'],
-                      ['Cross Reference Note', 'POW Reference Note']
+                      ['Cross Reference', 'Asset Reference'],
+                      ['Cross Reference Note', 'Asset Reference Note']
                     ]
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'entities-involved',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      'f55671b2-48b6-11ee-85af-0242ac140007',
+                      'f556700e-48b6-11ee-85af-0242ac140007',
+                      'f5567342-48b6-11ee-85af-0242ac140007',
+                      'f5566140-48b6-11ee-85af-0242ac140007',
+                      'f5566140-48b6-11ee-85af-0242ac140007',
+                      'f5566654-48b6-11ee-85af-0242ac140007',
+                      'f5566b40-48b6-11ee-85af-0242ac140007',
+                      'f5566cda-48b6-11ee-85af-0242ac140007',
+                      'f556699c-48b6-11ee-85af-0242ac140007',
+                      'f556699c-48b6-11ee-85af-0242ac140007',
+                      'f55667f8-48b6-11ee-85af-0242ac140007'
+                    ],
+                    labels: [['Person or Organization', 'Please Select Company and Applicant']]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'sub-details',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      '5d2ae012-48cf-11ee-8e4e-0242ac140007',
+                      '777596ba-48cf-11ee-8e4e-0242ac140007',
+                      '916b5e7e-48cf-11ee-8e4e-0242ac140007'
+                    ],
+                    labels: [['Proposal Text', 'Submission Details']]
                   }
                 },
                 {
@@ -151,6 +210,24 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'pow-ref',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    hiddenNodes: [
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
+                    ],
+                    labels: [
+                      ['Cross Reference', 'POW Reference'],
+                      ['Cross Reference Note', 'POW Reference Note']
+                    ]
                   }
                 },
                 {
@@ -183,84 +260,6 @@ define([
                      * Digital object node group.
                      */
                     resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'sub-details',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: [
-                      '5d2ae012-48cf-11ee-8e4e-0242ac140007',
-                      '777596ba-48cf-11ee-8e4e-0242ac140007',
-                      '916b5e7e-48cf-11ee-8e4e-0242ac140007'
-                    ],
-                    labels: [['Proposal Text', 'Submission Details']]
-                  }
-                },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'entities-involved',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: [
-                      'f55671b2-48b6-11ee-85af-0242ac140007',
-                      'f556700e-48b6-11ee-85af-0242ac140007',
-                      'f5567342-48b6-11ee-85af-0242ac140007',
-                      'f5566140-48b6-11ee-85af-0242ac140007',
-                      'f5566140-48b6-11ee-85af-0242ac140007',
-                      'f5566654-48b6-11ee-85af-0242ac140007',
-                      'f5566b40-48b6-11ee-85af-0242ac140007',
-                      'f5566cda-48b6-11ee-85af-0242ac140007',
-                      'f556699c-48b6-11ee-85af-0242ac140007',
-                      'f556699c-48b6-11ee-85af-0242ac140007',
-                      'f55667f8-48b6-11ee-85af-0242ac140007'
-                    ],
-                    labels: [['Person or Organization', 'Please Select Company and Applicant']]
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'location-names',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
-
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
-                    hiddenNodes: [
-                      'a541922b-f121-11eb-a081-a87eeabdefba',
-                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
-                    ],
-                    labels: [
-                      ['Area Name', 'Additional Area Name'],
-                      ['Area Type', 'Area Type For Additional Name']
-                    ]
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'address-info',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    hiddenNodes: [
-                      'a541922b-f121-11eb-a081-a87eeabdefba',
-                      'a5419222-f121-11eb-8b1f-a87eeabdefba',
-                      'a541e02a-f121-11eb-83b2-a87eeabdefba',
-                      'a541e02d-f121-11eb-b36f-a87eeabdefba'
-                    ],
-                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
                 }
               ]
