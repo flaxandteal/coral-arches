@@ -5,11 +5,6 @@ define([
   'templates/views/components/plugins/licensing-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/licensing-workflow/widget-labeller',
-  'views/components/workflows/licensing-workflow/resource-instance-select-config',
-  'views/components/workflows/excavation-workflow/collecting-information-step',
-  'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
-  'views/components/workflows/excavation-workflow/single-widget-with-label',
-  'views/components/workflows/excavation-workflow/multi-widget-with-labels',
   'views/components/workflows/related-document-upload'
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -153,7 +148,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'entities-involved',
                   tilesManaged: 'one',
                   parameters: {
