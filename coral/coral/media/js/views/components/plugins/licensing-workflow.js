@@ -6,6 +6,8 @@ define([
   'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/licensing-workflow/resource-instance-select-config',
+  'views/components/workflows/licensing-workflow/license-cover-letter',
+  // 'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/excavation-workflow/collecting-information-step',
   'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
   'views/components/workflows/excavation-workflow/single-widget-with-label',
@@ -115,6 +117,10 @@ define([
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
                       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
                     ],
+                    prefilledNodes: [
+                      // Source set to Heritage Environment Record Number
+                      ['589d4dcd-edf9-11eb-8a7d-a87eeabdefba', '19afd557-cc21-44b4-b1df-f32568181b2c']
+                    ],
                     labels: [['Cross Reference', 'B-File / CM number']]
                   }
                 },
@@ -131,6 +137,10 @@ define([
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
                       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
                     ],
+                    prefilledNodes: [
+                      // Source set to Excavation
+                      ['589d4dcd-edf9-11eb-8a7d-a87eeabdefba', '9a383c95-b795-4d76-957a-39f84bcee49e']
+                    ],
                     labels: [['Cross Reference', 'License Number (if applicable)']]
                   }
                 },
@@ -146,6 +156,10 @@ define([
                     hiddenNodes: [
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
+                    ],
+                    prefilledNodes: [
+                      // Source set to Monument
+                      ['589d4dcd-edf9-11eb-8a7d-a87eeabdefba', 'df585888-b45c-4f48-99d1-4cb3432855d5']
                     ],
                     labels: [
                       ['Cross Reference', 'Asset Reference'],
@@ -249,6 +263,10 @@ define([
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba'
                     ],
+                    prefilledNodes: [
+                      // Source set to Wreck
+                      ['589d4dcd-edf9-11eb-8a7d-a87eeabdefba', 'c14def6d-4713-465f-9119-bc33f0d6e8b3']
+                    ],
                     labels: [
                       ['Cross Reference', 'POW Reference'],
                       ['Cross Reference Note', 'POW Reference Note']
@@ -311,6 +329,72 @@ define([
               ]
             }
           ]
+        },
+        {
+          title: 'Cover Letter',
+          name: 'location-details-step',
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          informationboxdata: {
+            heading: 'Location Details'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'license-cover-letter',
+                  uniqueInstanceName: 'cover-letter' ,
+                  tilesManaged: 'none',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
+                    // hiddenNodes: [
+                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
+                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                    // ],
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                  }
+                },
+              ]
+            }
+          ]
+        },
+        {
+          title: 'License Summary',
+          name: 'license-complete',
+          description: 'Choose an option below',
+          component: 'views/components/workflows/component-based-step',
+          componentname: 'component-based-step',
+          layoutSections: [
+              {
+                  componentConfigs: [
+                      { 
+                          componentName: 'license-final-step',
+                          uniqueInstanceName: 'license-final',
+                          tilesManaged: 'none',
+                          parameters: {
+                              // digitalObject: "['upload-documents']['upload-documents-step']",
+                              // consultationTileid: "['init-name-step']['application-id-instance']['tileid']",
+                              activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                          },
+                      },
+                  ], 
+              },
+          ],
+          graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
+          nodegroupid: '6a773228-db20-11e9-b6dd-784f435179ea',
+          icon: 'fa-check',
+          resourceid: null,
+          tileid: null,
+          parenttileid: null,
+          informationboxdata: {
+              heading: 'Workflow Complete: Review your work',
+              text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over',
+          }
         }
       ];
 

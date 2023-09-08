@@ -10,21 +10,24 @@ define([
     const self = this;
 
     _.extend(this, params.form);
-    // console.log("LABELLER", params.form)
-    // console.log("THIS", this.card())
     self.tile().dirty.subscribe(function (val) {
       self.dirty(val);
     });
-    // console.log("so long tile then", self.tile())
     this.graphid = params.graphid
     this.graphids = params.graphids ? params.graphids : [this.graphid]
     
-    // console.log("tile me",this.tile())
-    // console.log("graph and id!", this.graphid, this.graphids)
-
-    // console.log(params.nodegroupId)
-
     this.pageVm = params.pageVm;
+
+
+    if (this.componentData.parameters.prefilledNodes) {
+      this.componentData.parameters.prefilledNodes?.forEach((prefill) => {
+        Object.keys(self.tile().data).forEach((node) => {
+          if (node == prefill[0]){
+            self.tile().data[node](prefill[1])
+          }
+        })
+      })
+    }
 
     this.card().widgets().forEach((widget) => {
       // console.log('widget loop: ', widget);
