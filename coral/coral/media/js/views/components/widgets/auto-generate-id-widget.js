@@ -5,7 +5,7 @@ define([
   'underscore',
   'viewmodels/widget',
   'templates/views/components/widgets/auto-generate-id-widget.htm'
-], function (ko, arches, uuid, _, WidgetViewModel, autoGenerateIdWidget) {
+], function (ko, arches, uuid, _, WidgetViewModel, autoGenerateIdTemplate) {
   /**
    * registers a text-widget component for use in forms
    * @function external:"ko.components".text-widget
@@ -21,8 +21,15 @@ define([
       WidgetViewModel.apply(this, [params]);
 
       const self = this;
-      self.idValue = self.value()[arches.activeLanguage]?.value; 
-  
+
+      self.currentLanguage = ko.observable({ code: arches.activeLanguage });
+
+      if (!ko.isObservable(self.idValue)) {
+        self.idValue = self.value[arches.activeLanguage]?.value;
+      } else {
+        self.idValue = self.value()[arches.activeLanguage]?.value;
+      }
+
       if (ko.isObservable(self.idValue) && !self.idValue()) {
         self.idValue = ko.observable(uuid.generate());
         self.value({
@@ -32,13 +39,7 @@ define([
           }
         });
       }
-
-      this.preview = ko.pureComputed(function() {
-          const preview = self.idValue;
-          this.value(preview);
-          return preview;
-      }, this);
     },
-    template: autoGenerateIdWidget
+    template: autoGenerateIdTemplate
   });
 });
