@@ -32,6 +32,12 @@ define([
           }
         });
       }
+
+      this.preview = ko.pureComputed(function() {
+          const preview = self.idValue;
+          this.value(preview);
+          return preview;
+      }, this);
     },
     template: autoGenerateIdWidget
   });
