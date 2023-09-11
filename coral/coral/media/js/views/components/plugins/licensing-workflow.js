@@ -34,7 +34,8 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '991c3c74-48b6-11ee-85af-0242ac140007'
+                    nodegroupid: '991c3c74-48b6-11ee-85af-0242ac140007',
+                    hiddenNodes: ['991c4340-48b6-11ee-85af-0242ac140007']
                   }
                 }
               ]
