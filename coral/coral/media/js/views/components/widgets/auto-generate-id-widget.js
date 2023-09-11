@@ -20,8 +20,15 @@ define([
       params.configKeys = ['id_placeholder', 'label', 'disabled'];
       WidgetViewModel.apply(this, [params]);
 
+      console.log("AUTO GENERATE WAH!?", this)
+
       const self = this;
-      self.idValue = self.value()[arches.activeLanguage]?.value; 
+      try {
+
+         self.idValue = self.value()[arches.activeLanguage]?.value;
+      } catch {
+        self.idValue = self.value[arches.activeLanguage].value()
+      }
   
       if (ko.isObservable(self.idValue) && !self.idValue()) {
         self.idValue = ko.observable(uuid.generate());

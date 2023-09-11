@@ -6,6 +6,7 @@ define([
 
     function viewmodel(params) {
         CardViewModel.apply(this, [params]);
+        console.log("frontend default", this)
 
         this.getTableData = function(widgets, tiles) {
             var tileObjArr = [[]];
