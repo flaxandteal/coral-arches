@@ -55,6 +55,15 @@
                 "bgColor": "#689480",
                 "circleColor": "#79b59a",
                 "desc": "Create a new License for an Excavation Activity"
+            },
+            {
+                "workflowid": "06756b02-a988-4adc-8029-b439205f1f56",
+                "slug":"admin-consultation-workflow",
+                "name": "Admin Consultation",
+                "icon": "fa fa-envelope",
+                "bgColor": "#a80c33",
+                "circleColor": "#cc3d61",
+                "desc": "Perform the Consultation workflow with an Admins access rights"
             }
         ],
         "show":true

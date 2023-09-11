@@ -1,0 +1,10 @@
+{
+  "pluginid": "06756b02-a988-4adc-8029-b439205f1f56",
+  "name": "Admin Consultation",
+  "icon": "fa fa-envelope",
+  "component": "views/components/plugins/admin-consultation-workflow",
+  "componentname": "admin-consultation-workflow",
+  "config": { "show": false },
+  "slug": "admin-consultation-workflow",
+  "sortorder": 0
+}
