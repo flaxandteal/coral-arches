@@ -2,15 +2,48 @@
 <!-- ko if: loading() === false -->
 <div class="cover-letter">
   <div class="her-cover-letter-section">
-    <!-- <a class="summary-value" data-bind="text: reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value"></a> -->
-    <div data-bind="html: reportVals.address.value"></div>
-    <p class="summary-value" data-bind="text: 'Our Ref: ' + reportVals.bFileCmNumber.value"></p>
-    <p class="summary-value" data-bind="text: 'Date: ' + reportVals.date.value"></p>
-    <p class="summary-value" data-bind="text: 'Dear ' + reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value != reportVals.licenseeName.value ? reportVals.licenseeName.value : ''"></p>
-    <p class="summary-value" data-bind="text: reportVals.areaName.value"></p>
-    <p class="summary-value" data-bind="text: 'License No: ' + reportVals.licenseNumber.value"></p>
-    <p class="summary-value" data-bind="text: 'Further to your application on ' + reportVals.date.value + ', please find attached an Excavation License for the above-mentioned location.'"></p>
-    <p class="summary-value" data-bind="text: reportVals.decisionBy.value"></p>
+    
+    <div data-bind="style: { display: 'flex', 'justify-content': 'space-between' }">
+      <div data-bind="style: { background: 'silver', width: '20em'}">
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient name: <input data-bind="value: applicant" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Site name as it appears on the license: <input data-bind="value: areaName" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Application Recieved Date: <input data-bind="value: recievedDate" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Date: <input data-bind="value: sendDate" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient Address:</p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Name: <input data-bind="value: buildingName" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Number: <input data-bind="value: buildingNumber" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Street: <input data-bind="value: street" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Number Sub Street: <input data-bind="value: buildingNumberSubSt" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Sub Street: <input data-bind="value: subStreet" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Town or City: <input data-bind="value: city" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">County: <input data-bind="value: county" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Postcode: <input data-bind="value: postCode" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Signed: <input data-bind="value: signed" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Senior Inspector: <input data-bind="value: seniorInspector" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Date : <input data-bind="value: sendDate" /></p>
+
+      </div>
+      <div data-bind="style: { background: 'white', 'margin-right': '20px', 'margin-top': '20px', 'padding': '20px', border: 'solid', height: 'fit-content'}">
+        <!-- <a class="summary-value" data-bind="text: reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value"></a> -->
+        <div data-bind="style: {'text-align': 'right', 'margin-right': '8px'}">
+        <div data-bind="html: address()"></div>
+        </div>
+        <p class="summary-value" data-bind="text: 'Date: ' + sendDate()"></p>
+        <p class="summary-value" data-bind="text: 'Our Ref: ' + bFileNumber()"></p>
+        <!-- <p class="summary-value" data-bind="text: 'Date: ' + reportVals.date.value"></p> -->
+        <p class="summary-value" data-bind="text: 'Dear ' + applicant() + ', ' + company()"></p>
+        <p class="summary-value" data-bind="text: 'Site: ' + reportVals.areaName + '.'"></p>
+        <p class="summary-value" data-bind="text: 'License No: ' + reportVals.licenseNo"></p>
+        <p class="summary-value" data-bind="text: 'Further to your application on ' + reportVals.recievedDate + ', please find attached an Excavation License for the above-mentioned location.'"></p>
+        <p class="summary-value" data-bind="text: signed()"></p>
+        <p class="summary-value" data-bind="text: signed() != seniorInspector() ? seniorInspector() : ''"></p>
+      </div>
+      <div></div>
+    </div>
+    
+
+
+    <!-- <p class="summary-value" data-bind="text: reportVals.decisionBy.value"></p> -->
 
 
 
