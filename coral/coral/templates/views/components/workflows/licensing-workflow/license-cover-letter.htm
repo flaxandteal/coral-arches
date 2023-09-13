@@ -5,11 +5,11 @@
     
     <div data-bind="style: { display: 'flex', 'justify-content': 'space-between' }">
       <div data-bind="style: { background: 'silver', width: '20em'}">
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient name: <input data-bind="value: applicant" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient name: <input data-bind="value: applicant" /><select data-bind="options: ['applicants', 'license holder'], optionsCaption: '...'"></select></p>
       <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Site name as it appears on the license: <input data-bind="value: areaName" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Application Recieved Date: <input data-bind="value: recievedDate" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Application Recieved Date: <input data-bind="value: appDate" /><select data-bind="options: appDateOptions, optionsCaption: '...', value: selectedAppDate"></select></p>
       <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Date: <input data-bind="value: sendDate" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient Address:</p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient Address: <select data-bind="options: addressOptions, optionsCaption: '...', value: selectedAddress"></select></p>
       <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Name: <input data-bind="value: buildingName" /></p>
       <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Number: <input data-bind="value: buildingNumber" /></p>
       <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Street: <input data-bind="value: street" /></p>
@@ -20,7 +20,7 @@
       <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Postcode: <input data-bind="value: postCode" /></p>
       <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Signed: <input data-bind="value: signed" /></p>
       <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Senior Inspector: <input data-bind="value: seniorInspector" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Date : <input data-bind="value: sendDate" /></p>
+      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Date : <input data-bind="value: sendDate" /><select data-bind="options: sendDateOptions, optionsCaption: '...', value: selectedSendDate"></select></p>
 
       </div>
       <div data-bind="style: { background: 'white', 'margin-right': '20px', 'margin-top': '20px', 'padding': '20px', border: 'solid', height: 'fit-content'}">
@@ -34,7 +34,7 @@
         <p class="summary-value" data-bind="text: 'Dear ' + applicant() + ', ' + company()"></p>
         <p class="summary-value" data-bind="text: 'Site: ' + reportVals.areaName + '.'"></p>
         <p class="summary-value" data-bind="text: 'License No: ' + reportVals.licenseNo"></p>
-        <p class="summary-value" data-bind="text: 'Further to your application on ' + reportVals.recievedDate + ', please find attached an Excavation License for the above-mentioned location.'"></p>
+        <p class="summary-value" data-bind="text: 'Further to your application on ' + appDate() + ', please find attached an Excavation License for the above-mentioned location.'"></p>
         <p class="summary-value" data-bind="text: signed()"></p>
         <p class="summary-value" data-bind="text: signed() != seniorInspector() ? seniorInspector() : ''"></p>
       </div>

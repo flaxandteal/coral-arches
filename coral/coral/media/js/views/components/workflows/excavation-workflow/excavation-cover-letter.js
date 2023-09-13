@@ -48,7 +48,6 @@ define([
               <br />${self.area.Addresses['Postcode']['Postcode Value']}`)
             console.log(self.address)
             this.loading(false);
-
         }
     };
 
