@@ -1,0 +1,44 @@
+{% extends "views/components/widgets/base.htm" %}
+{% load template_tags %}
+{% load i18n %}
+
+{% block form %}
+<div class="row widget-wrapper" data-bind="style: height: 80em">
+    <div class="form-group" style="position: relative;">
+        <input type="text" data-bind="textInput: html(), attr: {placeholder: id_placeholder, disabled: disabled}" class="form-control input-lg widget-input" style="margin-bottom: 5px">
+    </div>
+</div>
+{% endblock form %}
+
+<!-- ko if: !configForm  && state === 'display_value' -->
+{% block display_value %}
+<span data-bind="text: displayValue && displayValue() && currentLanguage() && displayValue()[currentLanguage().code] && displayValue()[currentLanguage().code]['value'] ? displayValue()[currentLanguage().code]['value'] : '' || $root.translations.none"></span>
+<div data-bind="style: height: 80em">
+    <!-- <input type="text" data-bind="textInput: idValue, attr: {placeholder: id_placeholder, disabled: disabled}" class="form-control input-lg widget-input" style="margin-bottom: 5px"> -->
+</div>
+{% endblock display_value %}
+<!-- /ko -->
+
+<!-- ko if: !configForm  && state === 'report' -->
+<!-- ko if: !ko.unwrap(hideEmptyNodes) || ko.unwrap(hideEmptyNodes) === true && displayValue() -->
+{% block report %}
+<dt data-bind="text: label"></dt>
+<div data-bind="style: { background: 'white', 'margin-right': '20px', 'margin-top': '20px', 'padding': '20px', border: 'solid', height: 'fit-content'}">
+    <!-- <a class="summary-value" data-bind="text: reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value"></a> -->
+    <div data-bind="style: {'text-align': 'right', 'margin-right': '8px'}">
+    <div data-bind="html: address()"></div>
+    </div>
+    <p class="summary-value" data-bind="text: 'Date: ' + sendDate()"></p>
+    <p class="summary-value" data-bind="text: 'Our Ref: ' + bFileNumber()"></p>
+    <!-- <p class="summary-value" data-bind="text: 'Date: ' + reportVals.date.value"></p> -->
+    <p class="summary-value" data-bind="text: 'Dear ' + applicant() + ', ' + company()"></p>
+    <p class="summary-value" data-bind="text: 'Site: ' + reportVals.areaName + '.'"></p>
+    <p class="summary-value" data-bind="text: 'License No: ' + reportVals.licenseNo"></p>
+    <p class="summary-value" data-bind="text: 'Further to your application on ' + appDate() + ', please find attached an Excavation License for the above-mentioned location.'"></p>
+    <p class="summary-value" data-bind="text: signed()"></p>
+    <p class="summary-value" data-bind="text: signed() != seniorInspector() ? seniorInspector() : ''"></p>
+  </div>
+<dd data-bind="text: displayValue() && currentLanguage() && displayValue()[currentLanguage().code] && displayValue()[currentLanguage().code]['value'] ? displayValue()[currentLanguage().code]['value'] : $root.translations.none"></dd>
+{% endblock report %}
+<!-- /ko -->
+<!-- /ko -->
