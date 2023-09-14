@@ -7,7 +7,7 @@ define([
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/licensing-workflow/resource-instance-select-config',
   'views/components/workflows/licensing-workflow/license-cover-letter',
-  // 'views/components/workflows/licensing-workflow/license-final-step',
+  'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/excavation-workflow/collecting-information-step',
   'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
   'views/components/workflows/excavation-workflow/single-widget-with-label',
