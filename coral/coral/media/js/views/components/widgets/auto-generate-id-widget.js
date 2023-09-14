@@ -20,8 +20,6 @@ define([
       params.configKeys = ['id_placeholder', 'label', 'disabled'];
       WidgetViewModel.apply(this, [params]);
 
-      console.log("AUTO GENERATE WAH!?", this)
-
       const self = this;
       try {
 
