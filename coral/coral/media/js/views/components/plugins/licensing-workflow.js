@@ -333,7 +333,7 @@ define([
         },
         {
           title: 'Cover Letter',
-          name: 'location-details-step',
+          name: 'cover-letter-step',
           required: false,
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
@@ -345,7 +345,7 @@ define([
                 {
                   componentName: 'license-cover-letter',
                   uniqueInstanceName: 'cover-letter' ,
-                  tilesManaged: 'none',
+                  tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
@@ -355,8 +355,7 @@ define([
                     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
                     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
                     // ],
-                    renderContext: 'workflow',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
               ]
