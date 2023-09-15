@@ -355,7 +355,7 @@ define([
         },
         {
           title: 'Cover Letter',
-          name: 'location-details-step',
+          name: 'cover-letter-step',
           required: false,
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {

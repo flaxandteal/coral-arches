@@ -16,24 +16,6 @@ define([
     this.companies = ko.observable([])
     this.companiesAddresses = ko.observable([])
 
-    this.licenseHoldersAddresses = ko.computed({
-      read: function () {
-        console.log("comp app add")
-        console.log(this.applicantsAddresses())
-        console.log(this.applicantsAddresses().length)
-        console.log(JSON.stringify(this.applicantsAddresses()))
-        this.applicantsAddresses.length
-        return this.applicantsAddresses().map(applicant => { applicant.map(address => `${address.buildingName ? address.buildingName.en.value + ', <br />' : ''} 
-          ${address.buildingNumber} ${address.street}, 
-          ${address.subStreetNumber ? address.subStreetNumber + ' ' : ''}
-          ${address.subStreet ? address.subStreet + ',' : ''}
-          <br />${address.city},
-          <br />${address.county},
-          <br />${address.postcode}`)}
-        )
-      },
-    }, this)
-
     this.createAddress = function (address) {
       console.log(address)
       return `${address.buildingName ? address.buildingName + ', <br />' : ''} 
@@ -80,16 +62,7 @@ define([
         },
       }),
       licenseHoldersAddresses : ko.observable(['place holder'])
-      
     }
-
-    // county = ko.computed({
-    //   read: function() {
-    //     console.log("county comp")
-    //     self.reportVals.county = self.siteAddress.counties ? self.siteAddress.counties[self.siteAddressIndex()] : ''
-    // },
-    // })
-
 
     this.resourceLoading = ko.observable(false);
     this.relatedResourceLoading = ko.observable(false);
@@ -164,21 +137,6 @@ define([
           name: 'Application ID',
           value: this.getResourceValue(val.resource, ['System Reference Numbers', 'UUID', 'ResourceID', '@value'])
         },
-        // address: {
-        //   name: 'Address',
-        //   value: this.getResourceValue(val.resource, ['license Area', 'Geometry', 'Related Application Area', '@value'])
-        // },
-        // date: {
-        //   name: 'Date',
-        //   value: this.getResourceValue(val.resource, ['license Dates', 'Log Date', '@value'])
-        // },
-        // this.reportVals.applicants = {
-        //   name: "Licencee's Name",
-        //   value: this.getResourceValue(val.resource, ["Contacts", "Applicants", "Applicant", '@value'])
-        // },
-        // console.log("appli can")
-        // this.applicants(this.getResourceValue(val.resource, ["Contacts", "Applicants", "Applicant"]))
-        // console.log("applicants", this.applicants())
         this.reportVals.siteName = {
           name: 'Site Name',
           value: this.getResourceValue(val.resource, ['Associated Activities', '@value'])
@@ -196,14 +154,6 @@ define([
         //   name: 'Planning Reference',
         //   value: this.getResourceValue(val.resource, ['Planning Reference', '@value'])
         // },
-        // applicantInformation: {
-        //   name: 'Applicant Information',
-        //   value: this.getResourceValue(val.resource, ['Contacts', 'Applicants', 'Applicant', '@value'])
-        // },
-        // status: {
-        //   name: 'Status',
-        //   value: this.getResourceValue(val.resource, ['Advice'])[0]['Advice Type']['@value']
-        // }
 
         this.reportVals.inspector = this.getResourceValue(val.resource, ["Decision", "Decision Assignment", "Decision Made By", "@value"])
         this.reportVals.decisionDate = this.getResourceValue(val.resource, ["Decision", "Decision Assignment", "Decision Time Span", "Decision Date", "@value"])
@@ -272,7 +222,6 @@ define([
             })
         )
       this.loading(true)
-      // console.log("y no update", this.reportVals.licenseHoldersAddresses())
       console.log('report vals: ', this.reportVals);
 
       this.loading(false);

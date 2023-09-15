@@ -73,9 +73,6 @@ define([
             return new Date(this.acknowledgedDate()).toLocaleDateString()
           }
         },
-        write: function (){
-
-        }
         }, this)
 
       this.address = ko.computed({
@@ -88,9 +85,6 @@ define([
           <br />${this.county()},
           <br />${this.postCode()}`
         },
-        write: function (){
-
-        }
         }, this)
 
         this.addressSelector = ko.computed({
@@ -131,12 +125,7 @@ define([
               this.postCode(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Postcode']['Postcode Value']['@value'] : '')
             }
           },
-          write: function (){
-            console.log("begin write", this.selectedAddress())
-
-          }
           }, this)
-
        
       this.resourceData.subscribe((val) => {
         console.log('VAL', val)
@@ -146,8 +135,6 @@ define([
         this.areaName(this.reportVals['areaName'])
         this.reportVals['siteAddress'] = val.resource["Location Data"]["Addresses"][0]
 
-        // this.reportVals['appID'] = val.resource["System Reference Numbers"]["UUID"]["ResourceId"]["@value"]
-        
         val.resource["External Cross References"].forEach(ref => {
           if (ref["External Cross Reference Source"]["@value"] === "Historic Environment Record Number"){
             this.reportVals['bFileNumber'] = ref["External Cross Reference"]["@value"]
@@ -171,17 +158,6 @@ define([
         this.licenseResourceData(val.related_resources[0])
         console.log(this.licenseResourceData())
         this.reportVals['areaName'] = val.related_resources[0]
-        // this.licenseResourceData().dates.forEach(date => {
-        //   console.log('2')
-        //   if (date.nodeid === "6b96c722-48c7-11ee-ba3a-0242ac140007") {
-        //     this.reportVals.receivedDate = new Date(date.date / 10000, (date.date % 10000 / 100) - 1, date.date % 100).toLocaleDateString();
-        //     this.receivedDate(this.reportVals.receivedDate)
-        //   }
-        //   if (date.nodeid === "0a914884-48b4-11ee-90a8-0242ac140007") {
-        //     this.reportVals.acknowledgedDate = date.date
-        //     this.acknowledgedDate(this.reportVals.acknowledgedDate)
-        //   }
-        // })
         this.loading(false)
 
         this.reportVals["related_license"] = val["resource_relationships"][0]["resourceinstanceidfrom"]
@@ -244,13 +220,6 @@ define([
                           this.city(this.reportVals['applicantAddresses']['city'])
                           this.county(this.reportVals['applicantAddresses']['county'])
                           this.postCode(this.reportVals['applicantAddresses']['postCode'])
-                          // `${actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] + ', <br />' : ''} 
-                          //  ${actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"]} ${actor["resource"]["Location Data"][0].Addresses['Street']['Street Value']["@value"]}, 
-                          //  ${actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] + ', <br />' : ''}
-                          //  ${actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] + ', <br />' : ''}
-                          //  <br />${actor["resource"]["Location Data"][0].Addresses['Town or City']['Town or City Value']["@value"]},
-                          //  <br />${actor["resource"]["Location Data"][0].Addresses['County']['County Value']["@value"]},
-                          //  <br />${actor["resource"]["Location Data"][0].Addresses['Postcode']['Postcode Value']["@value"]}`
                         }
                         this.address(this.reportVals['applicantAddresses'])
                       }
