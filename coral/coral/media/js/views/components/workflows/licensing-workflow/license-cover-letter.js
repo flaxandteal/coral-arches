@@ -8,25 +8,13 @@ define([
 ], function (ko, _, arches, SummaryStep, licenseCoverTemplate) {
   function viewModel(params) {
     const self = this;
-    // SummaryStep.apply(this, [params]);
 
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
     _.extend(this, params.form);
-
-    // self.tile().dirty.subscribe(function (val) {
-    //   self.dirty(val);
-    // });
-
     this.pageVm = params.pageVm;
 
-    // _.extend(this, params.form);
-
-    // self.tile().dirty.subscribe(function (val) {
-    //   self.dirty(val);
-    // });
-
-    const createEmptyTextObject = (value) => ({
+    const createTextObject = (value) => ({
       [self.currentLanguage().code]: {
         value: value?.toString() || '',
         direction: 'ltr'
@@ -41,39 +29,52 @@ define([
       }
     };
 
-    console.log('The paramaters', params);
-    console.log('this', this);
     this.activityResourceData = ko.observable();
     this.licenseResourceData = ko.observable();
     this.actorTileData = ko.observable();
     this.actorReportData = ko.observable([]);
     this.reportVals = {};
 
-    this.licenseNo = ko.observable(createEmptyTextObject('AE/23/0001'));
-    this.bFileNumber = ko.observable(createEmptyTextObject('B/23/0001'));
+    this.licenseNo = ko.observable(createTextObject('AE/23/0001'));
+    this.bFileNumber = ko.observable(createTextObject('B/23/0001'));
 
-    this.textBody = ko.observable(createEmptyTextObject('Further to your application on [Date], please find attached an Excavation License for the above mentioned location.'));
+    this.textBody = ko.observable(
+      createTextObject(
+        'Further to your application on [Date], please find attached an Excavation License for the above mentioned location.'
+      )
+    );
 
     /**
      * Contacts
      */
-    this.applicant = ko.observable(createEmptyTextObject());
-    this.company = ko.observable(createEmptyTextObject());
-    this.seniorInspector = ko.observable(createEmptyTextObject());
-    this.signed = ko.observable(createEmptyTextObject());
+    this.applicant = ko.observable(createTextObject());
+    this.company = ko.observable(createTextObject());
+    this.seniorInspector = ko.observable(createTextObject());
+    this.signed = ko.observable(createTextObject());
+
+    /**
+     * self.tile().dirty
+     * Needs to be subscribed to and once changed this will
+     * make the 'save' option available to the user
+     * currently when applicant changes it will be made 
+     * available
+     */
+    self.applicant.subscribe(function (val) {
+      self.dirty(val);
+    });
 
     /**
      * Location
      */
-    this.areaName = ko.observable(createEmptyTextObject());
-    this.buildingName = ko.observable(createEmptyTextObject());
-    this.buildingNumber = ko.observable(createEmptyTextObject());
-    this.street = ko.observable(createEmptyTextObject());
-    this.buildingNumberSubSt = ko.observable(createEmptyTextObject());
-    this.subStreet = ko.observable(createEmptyTextObject());
-    this.city = ko.observable(createEmptyTextObject());
-    this.county = ko.observable(createEmptyTextObject());
-    this.postCode = ko.observable(createEmptyTextObject());
+    this.areaName = ko.observable(createTextObject());
+    this.buildingName = ko.observable(createTextObject());
+    this.buildingNumber = ko.observable(createTextObject());
+    this.street = ko.observable(createTextObject());
+    this.buildingNumberSubSt = ko.observable(createTextObject());
+    this.subStreet = ko.observable(createTextObject());
+    this.city = ko.observable(createTextObject());
+    this.county = ko.observable(createTextObject());
+    this.postCode = ko.observable(createTextObject());
 
     /**
      * Dates
@@ -94,6 +95,110 @@ define([
 
     this.sendDateOptions = ko.observable(['today', 'decision', 'acknowledged']);
     this.selectedSendDate = ko.observable('today');
+
+    self.header = ko.computed(() => {
+      let result = '<div>';
+      if (self.getTextValue(self.buildingName)) {
+        result += `<span>${self.getTextValue(self.buildingName)}</span>`;
+      }
+      if (self.getTextValue(self.buildingName) && self.getTextValue(self.buildingNumber)) {
+        result += `<span>, </span>`;
+      }
+      if (self.getTextValue(self.buildingNumber)) {
+        result += `<span>${self.getTextValue(self.buildingNumber)}</span>`;
+      }
+      if (self.getTextValue(self.buildingNumber) && self.getTextValue(self.buildingNumberSubSt)) {
+        result += `<span>, </span>`;
+      }
+      if (self.getTextValue(self.buildingNumberSubSt)) {
+        result += `<span>${self.getTextValue(self.buildingNumberSubSt)}</span>`;
+      }
+      result += '</div><div>';
+      if (self.getTextValue(self.street)) {
+        result += `<span>${self.getTextValue(self.street)}</span>`;
+      }
+      if (self.getTextValue(self.street) && self.getTextValue(self.subStreet)) {
+        result += `<span>, </span>`;
+      }
+      if (self.getTextValue(self.subStreet)) {
+        result += `<span>${self.getTextValue(self.subStreet)}</span>`;
+      }
+      result += '</div>';
+      if (self.getTextValue(self.city)) {
+        result += `<span>${self.getTextValue(self.city)}</span>`;
+      }
+      if (self.getTextValue(self.county)) {
+        result += `<span>${self.getTextValue(self.county)}</span>`;
+      }
+      if (self.getTextValue(self.postCode)) {
+        result += `<span>${self.getTextValue(self.postCode)}</span>`;
+      }
+      return result;
+    }, self);
+
+    self.details = ko.computed(() => {
+      let result = '<div style="display: flex; width: 100%; flex-direction: column">';
+      if (self.sendDate()) {
+        result += `<span>Date: ${self.sendDate()}</span>`;
+      }
+      if (self.getTextValue(self.bFileNumber)) {
+        result += `<span>Our ref: ${self.getTextValue(self.bFileNumber)}</span>`;
+      }
+      if (self.getTextValue(self.licenseNo)) {
+        result += `<span>License No: ${self.getTextValue(self.licenseNo)}</span>`;
+      }
+      if (self.getTextValue(self.areaName)) {
+        result += `<span>Site: ${self.getTextValue(self.areaName)}</span>`;
+      }
+      result += '</div>';
+      return result;
+    }, self);
+
+    self.body = ko.computed(() => {
+      let result =
+        '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
+      if (self.getTextValue(self.applicant)) {
+        result += `<span>Dear: ${self.getTextValue(self.applicant)}</span>`;
+      }
+      result += `<span style="margin-top: 8px">${
+        self.getTextValue(self.textBody) || 'Please enter information regarding the email!'
+      }</span>`;
+      result += '</div>';
+      return result;
+    }, self);
+
+    self.footer = ko.computed(() => {
+      let result =
+        '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
+      if (self.getTextValue(self.seniorInspector)) {
+        result += `<span>Senior Inspector:  ${self.getTextValue(self.seniorInspector)}</span>`;
+      }
+      result += `<span>Signed: ${self.getTextValue(self.signed) || 'Signature required!'}</span>`;
+      result += '</div>';
+      return result;
+    }, self);
+
+    self.letter = ko.computed(() => {
+      let result =
+        '<div style="display: flex; align-items: end; width: 100%; flex-direction: column">';
+      result += self.header();
+      result += self.details();
+      result += self.body();
+      result += self.footer();
+      result += '</div>';
+      return result;
+    }, this);
+
+    self.letter.subscribe((value) => {
+      console.log('letter ', value);
+    }, this);
+
+    params.form.save = async () => {
+      self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'](createTextObject(self.letter()));
+      await self.tile().save();
+      params.form.complete(true);
+      params.form.saving(false);
+    };
 
     // this.sendDate = ko.computed(
     //   {
