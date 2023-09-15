@@ -347,14 +347,8 @@ define([
                   uniqueInstanceName: 'cover-letter' ,
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
-                    // hiddenNodes: [
-                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
-                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
-                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
-                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
-                    // ],
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '0dcf7c74-53d5-11ee-844f-0242ac130008',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
