@@ -3,11 +3,11 @@ alias rbwebpack="rm -f log && docker exec -ti coral-arches_arches_1 /bin/sh -c '
 alias djmang='docker exec -it coral-arches_arches_1 bash -c "source ../ENV/bin/activate && python manage.py \"\${0:-help}\" \"\$@\""'
 
 coralup_fn() {
-  if [ ! -d "../docker-arches" ]; then
-    docker create --name arches_temp_container arches_coral
-    docker cp arches_temp_container:/web_root/arches ../docker-arches
-    docker rm arches_temp_container
-  fi
+  # if [ ! -d "../docker-arches" ]; then
+  #   docker create --name arches_temp_container arches_coral
+  #   docker cp arches_temp_container:/web_root/arches ../docker-arches
+  #   docker rm arches_temp_container
+  # fi
   docker-compose --env-file docker/env_file.env up
 }
 alias coralup=coralup_fn

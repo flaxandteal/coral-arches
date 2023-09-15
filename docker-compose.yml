@@ -20,7 +20,7 @@ services:
           - ARCHES_PROJECT=$ARCHES_PROJECT
       command: run_yarn_start
       volumes:
-        - ../docker-arches:/web_root/arches
+        # - ../docker-arches:/web_root/arches
         - arches-log:/arches/arches/logs
         - arches-static:/static_root
         - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
@@ -68,7 +68,7 @@ services:
           - ARCHES_PROJECT=$ARCHES_PROJECT
       command: run_arches
       volumes:
-        - ../docker-arches:/web_root/arches
+        # - ../docker-arches:/web_root/arches
         - arches-log:/arches/arches/logs
         - arches-static:/static_root
         - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
@@ -116,7 +116,7 @@ services:
       command: run_celery
       user: root
       volumes:
-        - ../docker-arches:/web_root/arches
+        # - ../docker-arches:/web_root/arches
         - arches-log:/arches/arches/logs
         - arches-static:/static_root
         - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
