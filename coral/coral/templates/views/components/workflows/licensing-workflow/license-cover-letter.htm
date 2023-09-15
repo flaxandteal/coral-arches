@@ -38,22 +38,6 @@
     <div class="row widget-wrapper">
       <div
         data-bind="component: {
-          name: 'text-widget',
-          params: {
-            config: {
-                'label': 'Site Name',
-            },
-            value: areaName,
-            loading: loading,
-            form: $data,
-            pageVm: $root
-          }
-        }"
-      ></div>
-    </div>
-    <div class="row widget-wrapper">
-      <div
-        data-bind="component: {
         name: 'datepicker-widget',
         params: {
             node: {
@@ -191,22 +175,6 @@
           name: 'text-widget',
           params: {
             config: {
-                'label': 'Sub Street',
-            },
-            value: subStreet,
-            loading: loading,
-            form: $data,
-            pageVm: $root
-          }
-        }"
-      ></div>
-    </div>
-    <div class="row widget-wrapper">
-      <div
-        data-bind="component: {
-          name: 'text-widget',
-          params: {
-            config: {
                 'label': 'Town or City',
             },
             value: city,
@@ -301,7 +269,8 @@
   </div>
   <div class="card-component" style="width: 100%">
     <div class="row widget-wrapper">
-      <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
+      <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%" data-bind="html: letter()"></div>
+      {% comment %} <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
         <!-- HEADER -->
         <div style="display: flex; align-items: end; width: 100%; flex-direction: column">
           <div>
@@ -376,7 +345,7 @@
             data-bind="text: 'Signed: ' + (getTextValue(signed) || 'Signature required!')"
           ></span>
         </div>
-      </div>
+      </div> {% endcomment %}
     </div>
   </div>
 </div>
