@@ -203,14 +203,14 @@ define([
               this.loading(false)
             })
             .then(x => {
-              window.fetch(this.urls.api_tiles(this.licenseResourceData()['resource']['Associated Actors']['Associated Actor']['Actor']['@tile_id']) + '?format=json&compact=false')
+              window.fetch(this.urls.api_tiles(this.licenseResourceData()['resource']['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
               .then(response => response.json())
               .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
               .then(x => {
                 console.log(this.actorTileData().data)
                 console.log(JSON.stringify(this.actorTileData().data))
 
-                this.actorTileData().data['f5566e7e-48b6-11ee-85af-0242ac140007'].forEach((actor) => {
+                this.actorTileData().data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((actor) => {
                   window.fetch(this.urls.api_resources(actor.resourceId) + '?format=json&compact=false')
                   .then(response => response.json())
                   .then(
