@@ -11,6 +11,50 @@ define([
     this.siteAddress = {}
     this.observedSiteAddress = ko.observable({})
     this.siteAddressIndex = ko.observable(0)
+    this.applicants = ko.observable([])
+    this.applicantsAddresses = ko.observable([])
+    this.companies = ko.observable([])
+    this.companiesAddresses = ko.observable([])
+
+    this.licenseHoldersAddresses = ko.computed({
+      read: function () {
+        console.log("comp app add")
+        console.log(this.applicantsAddresses())
+        console.log(this.applicantsAddresses().length)
+        console.log(JSON.stringify(this.applicantsAddresses()))
+        this.applicantsAddresses.length
+        return this.applicantsAddresses().map(applicant => { applicant.map(address => `${address.buildingName ? address.buildingName.en.value + ', <br />' : ''} 
+          ${address.buildingNumber} ${address.street}, 
+          ${address.subStreetNumber ? address.subStreetNumber + ' ' : ''}
+          ${address.subStreet ? address.subStreet + ',' : ''}
+          <br />${address.city},
+          <br />${address.county},
+          <br />${address.postcode}`)}
+        )
+      },
+      // write: function () {
+      //   console.log("writing lha")
+      //   this.reportVals.licenseHoldersAddresses(self.applicantsAddresses().map(address => `${address.buildingName ? address.buildingName + ', <br />' : ''} 
+      //     ${address.buildingNumber} ${address.street}, 
+      //     ${address.subStreetNumber ? address.subStreetNumber + ' ' : ''}
+      //     ${address.subStreet ? address.subStreet + ',' : ''}
+      //     <br />${address.city},
+      //     <br />${address.county},
+      //     <br />${address.postcode}`)
+      //   )
+      // },
+    }, this)
+
+    this.createAddress = function (address) {
+      console.log(address)
+      return `${address.buildingName ? address.buildingName + ', <br />' : ''} 
+      ${address.buildingNumber} ${address.street}, 
+      ${address.subStreetNumber ? address.subStreetNumber + ' ' : ''}
+      ${address.subStreet ? address.subStreet + ',' : ''}
+      <br />${address.city},
+      <br />${address.county},
+      <br />${address.postCode}`
+    }
 
     // const self = this;
     this.resourceid = params.resourceid;
@@ -38,9 +82,16 @@ define([
             <br />${self.observedSiteAddress().postcodes[self.siteAddressIndex()].en.value}`
           }
           return ''
-          
         },
-      })
+      }),
+      licenseHolders : ko.computed({
+        read: function () {
+          console.log("comp app")
+          return self.applicants()
+        },
+      }),
+      licenseHoldersAddresses : ko.observable(['place holder'])
+      
     }
 
     // county = ko.computed({
@@ -132,19 +183,21 @@ define([
         //   name: 'Date',
         //   value: this.getResourceValue(val.resource, ['license Dates', 'Log Date', '@value'])
         // },
-        // licenseeName: {
+        // this.reportVals.applicants = {
         //   name: "Licencee's Name",
-        //   value: this.getResourceValue(val.resource, ["Contacts", "Owners", "Owner", '@value'])
+        //   value: this.getResourceValue(val.resource, ["Contacts", "Applicants", "Applicant", '@value'])
         // },
-
+        // console.log("appli can")
+        // this.applicants(this.getResourceValue(val.resource, ["Contacts", "Applicants", "Applicant"]))
+        // console.log("applicants", this.applicants())
         this.reportVals.siteName = {
           name: 'Site Name',
           value: this.getResourceValue(val.resource, ['Associated Activities', '@value'])
         },
-        // submissionDetails: {
-        //   name: 'Submission Details',
-        //   value: this.getResourceValue(val.resource, ['Submission Details', '@value'])
-        // },
+        this.reportVals.submissionDetails = {
+          name: 'Submission Details',
+          value: this.getResourceValue(val.resource, ['Proposal', 'Proposal Text', '@value'])
+        },
 
         // gridRef: {
         //   name: 'Grid Reference',
@@ -166,6 +219,88 @@ define([
         this.reportVals.inspector = this.getResourceValue(val.resource, ["Decision", "Decision Assignment", "Decision Made By", "@value"])
         this.reportVals.decisionDate = this.getResourceValue(val.resource, ["Decision", "Decision Assignment", "Decision Time Span", "Decision Date", "@value"])
 
+        console.log("pre fetch", this.applicants(), this.companies())
+        window.fetch(this.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+
+              .then(response => response.json())
+
+              .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
+                const contacts = []
+                  window.fetch(this.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
+                  .then(response => response.json())
+                  .then(
+                    data => {this.loading(true); contacts.push(data)})
+                  .then(x => {
+                    this.loading(true)
+
+                    console.log("Before", JSON.stringify(contacts), contacts)
+
+                    for (let contact of contacts) {
+                      console.log("contact", contact)
+                      console.log("act graph",contact.graph_id)
+                      console.log("app so far", this.applicants())
+                      console.log("com so far", this.companies())
+
+                      if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
+
+                        console.log("new app", contact["resource"]["Name"][0]["Full Name"]["@value"])
+                        this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
+
+                        if (contact["resource"]["Location Data"]) {
+                          this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+                              return {
+                                buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                                buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                                street : location.Addresses['Street']['Street Value']["@value"],
+                                buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                                subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                                city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                                county : location.Addresses['County']['County Value']["@value"],
+                                postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                              }
+                            })
+                        }
+                      } 
+                      else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
+
+                        console.log("new com", contact["resource"]["Names"][0]["Organization Name"]["@value"])
+                        this.companies().push(contact["resource"]["Names"][0]["Organization Name"]["@value"])
+
+                        if (contact["resource"]["Location Data"]) {
+                          this.companiesAddresses().push(
+                            contact["resource"]["Location Data"].map((location) => {
+                              return {
+                                buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                                buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                                street : location.Addresses['Street']['Street Value']["@value"],
+                                buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                                subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                                city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                                county : location.Addresses['County']['County Value']["@value"],
+                                postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                              }
+                            })
+                          ) 
+                        } else {
+                          this.companiesAddresses().push([])
+                        }
+                      }
+                      } 
+                    // console.log('report vals: ', this.reportVals.licenseHolders(), this.reportVals.licenseHoldersAddresses());
+                    this.loading(true)
+                    // console.log("y no update", JSON.stringify(this.reportVals.licenseHoldersAddresses()))
+                    console.log("wen dis is the read", JSON.stringify(this.applicantsAddresses()))
+                    console.log(this.licenseHoldersAddresses())
+                    // this.reportVals.licenseHoldersAddresses(this.applicantsAddresses())
+                    // console.log(this.reportVals.licenseHoldersAddresses())
+                    // console.log('report vals: ', this.reportVals);
+              
+                    this.loading(false)
+                })
+              })
+        )
+      this.loading(true)
+      // console.log("y no update", this.reportVals.licenseHoldersAddresses())
       console.log('report vals: ', this.reportVals);
 
       this.loading(false);
