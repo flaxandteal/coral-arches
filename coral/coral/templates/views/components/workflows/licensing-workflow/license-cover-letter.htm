@@ -1,32 +1,392 @@
 {% load i18n %}
+
 <!-- ko if: loading() === false -->
+<div style="display: flex; flex-direction: row">
+  <div class="card-component" style="width: 100%">
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+              config: {
+                  'label': 'Recipient Name',
+              },
+              value: applicant,
+              loading: loading,
+              form: $data,
+              pageVm: $root
+          }
+      }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+            name: 'text-widget',
+            params: {
+                config: {
+                    'label': 'Site Name',
+                },
+                value: areaName,
+                loading: loading,
+                form: $data,
+                pageVm: $root
+            }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Site Name',
+            },
+            value: areaName,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+        name: 'datepicker-widget',
+        params: {
+            node: {
+                config: {
+                    'dateFormat': 'YYYY-MM-DD',
+                },
+            },
+            config: {
+                'label': 'Application Recieved Date',
+                'maxDate': '',
+                'minDate': '',
+                'viewMode': 'days',
+                'dateFormat': 'YYYY-MM-DD',
+                'placeholder': 'Enter date',
+                'defaultValue': ''
+            },
+            value: appDate,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+        }
+      }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+        name: 'datepicker-widget',
+        params: {
+            node: {
+                config: {
+                    'dateFormat': 'YYYY-MM-DD',
+                },
+            },
+            config: {
+                'label': 'Date',
+                'maxDate': '',
+                'minDate': '',
+                'viewMode': 'days',
+                'dateFormat': 'YYYY-MM-DD',
+                'placeholder': 'Enter date',
+                'defaultValue': ''
+            },
+            value: sendDate,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+        }
+      }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: { 
+            config: {
+                'label': 'Building Name',
+            },
+            value: buildingName,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Building Number',
+            },
+            value: {},
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Street',
+            },
+            value: street,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Building Number Sub Street',
+            },
+            value: buildingNumberSubSt,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Sub Street',
+            },
+            value: subStreet,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Sub Street',
+            },
+            value: subStreet,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Town or City',
+            },
+            value: city,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'County',
+            },
+            value: county,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Postcode',
+            },
+            value: postCode,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Signed',
+            },
+            value: signed,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'text-widget',
+          params: {
+            config: {
+                'label': 'Senior Inspector',
+            },
+            value: seniorInspector,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
+    </div>
+  </div>
+  <div class="card-component" style="width: 100%">
+    <div class="row widget-wrapper">
+      <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
+        <!-- HEADER -->
+        <div style="display: flex; align-items: end; width: 100%; flex-direction: column">
+          <div>
+            <!-- ko if: buildingName()[currentLanguage().code].value -->
+              <span data-bind="text: buildingName()[currentLanguage().code].value"></span>
+            <!-- /ko -->
+            {% comment %} <span data-bind="if: buildingNumber, text: buildingNumber"></span>
+            <span data-bind="if: buildingNumberSubSt, text: buildingNumberSubSt"></span> {% endcomment %}
+          </div>
+          <div>
+            <span data-bind="if: street, text: street"></span>
+            <span data-bind="if: subStreet, text: subStreet"></span>
+          </div>
+          <div>
+            <span data-bind="if: city, text: city"></span>
+          </div>
+          <div>
+            <span data-bind="if: city, text: city"></span>
+          </div>
+          <div>
+            <span data-bind="if: county, text: county"></span>
+          </div>
+          <div>
+            <span data-bind="if: postCode, text: postCode"></span>
+          </div>
+        </div>
+        afwfawffawfwaf
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /ko -->
+
 <div class="cover-letter">
+  {% comment %}
   <div class="her-cover-letter-section">
-    
     <div data-bind="style: { display: 'flex', 'justify-content': 'space-between' }">
       <div data-bind="style: { background: 'silver', width: '20em'}">
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient name: <input data-bind="value: applicant" /><select data-bind="options: ['applicants', 'license holder'], optionsCaption: '...'"></select></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Site name as it appears on the license: <input data-bind="value: areaName" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Application Recieved Date: <input data-bind="value: appDate" /><select data-bind="options: appDateOptions, optionsCaption: '...', value: selectedAppDate"></select></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Date: <input data-bind="value: sendDate" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Recipient Address: <select data-bind="options: addressOptions, optionsCaption: '...', value: selectedAddress"></select></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Name: <input data-bind="value: buildingName" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Number: <input data-bind="value: buildingNumber" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Street: <input data-bind="value: street" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Building Number Sub Street: <input data-bind="value: buildingNumberSubSt" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Sub Street: <input data-bind="value: subStreet" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Town or City: <input data-bind="value: city" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">County: <input data-bind="value: county" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '8px'}">Postcode: <input data-bind="value: postCode" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Signed: <input data-bind="value: signed" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Senior Inspector: <input data-bind="value: seniorInspector" /></p>
-      <p data-bind="style: { width: '12em', 'margin-left': '4px'}">Date : <input data-bind="value: sendDate" /><select data-bind="options: sendDateOptions, optionsCaption: '...', value: selectedSendDate"></select></p>
-
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Recipient name: <input data-bind="value: applicant" /><select
+            data-bind="options: ['applicants', 'license holder'], optionsCaption: '...'"
+          ></select>
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Site name as it appears on the license: <input data-bind="value: areaName" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Application Recieved Date: <input data-bind="value: appDate" /><select
+            data-bind="options: appDateOptions, optionsCaption: '...', value: selectedAppDate"
+          ></select>
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Date: <input data-bind="value: sendDate" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Recipient Address:
+          <select
+            data-bind="options: addressOptions, optionsCaption: '...', value: selectedAddress"
+          ></select>
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          Building Name: <input data-bind="value: buildingName" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          Building Number: <input data-bind="value: buildingNumber" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          Street: <input data-bind="value: street" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          Building Number Sub Street: <input data-bind="value: buildingNumberSubSt" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          Sub Street: <input data-bind="value: subStreet" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          Town or City: <input data-bind="value: city" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          County: <input data-bind="value: county" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '8px'}">
+          Postcode: <input data-bind="value: postCode" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Signed: <input data-bind="value: signed" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Senior Inspector: <input data-bind="value: seniorInspector" />
+        </p>
+        <p data-bind="style: { width: '12em', 'margin-left': '4px'}">
+          Date : <input data-bind="value: sendDate" /><select
+            data-bind="options: sendDateOptions, optionsCaption: '...', value: selectedSendDate"
+          ></select>
+        </p>
       </div>
-      <div data-bind="style: { background: 'white', 'margin-right': '20px', 'margin-top': '20px', 'padding': '20px', border: 'solid', height: 'fit-content'}">
+      <div
+        data-bind="style: { background: 'white', 'margin-right': '20px', 'margin-top': '20px', 'padding': '20px', border: 'solid', height: 'fit-content'}"
+      >
         <!-- <a class="summary-value" data-bind="text: reportVals.licenseeName.value + ', ' + reportVals.applicantInformation.value"></a> -->
         <div data-bind="style: {'text-align': 'right', 'margin-right': '8px'}">
-        <div data-bind="html: address()"></div>
+          <div data-bind="html: address()"></div>
         </div>
         <p class="summary-value" data-bind="text: 'Date: ' + sendDate()"></p>
         <p class="summary-value" data-bind="text: 'Our Ref: ' + bFileNumber()"></p>
@@ -34,24 +394,19 @@
         <p class="summary-value" data-bind="text: 'Dear ' + applicant() + ', ' + company()"></p>
         <p class="summary-value" data-bind="text: 'Site: ' + reportVals.areaName + '.'"></p>
         <p class="summary-value" data-bind="text: 'License No: ' + reportVals.licenseNo"></p>
-        <p class="summary-value" data-bind="text: 'Further to your application on ' + appDate() + ', please find attached an Excavation License for the above-mentioned location.'"></p>
+        <p
+          class="summary-value"
+          data-bind="text: 'Further to your application on ' + appDate() + ', please find attached an Excavation License for the above-mentioned location.'"
+        ></p>
         <p class="summary-value" data-bind="text: signed()"></p>
-        <p class="summary-value" data-bind="text: signed() != seniorInspector() ? seniorInspector() : ''"></p>
+        <p
+          class="summary-value"
+          data-bind="text: signed() != seniorInspector() ? seniorInspector() : ''"
+        ></p>
       </div>
       <div></div>
     </div>
-    
-
-
     <!-- <p class="summary-value" data-bind="text: reportVals.decisionBy.value"></p> -->
-
-
-
-
-
-
-
-    
 
     <!-- <div class="cover-letter-section-block">
       <div class="cover-letter-section-block-item">
@@ -63,7 +418,7 @@
         </a>
       </div>
     </div>
-  </div>
+  </div> {% endcomment %}
   <div style="display: flex; justify-content: space-between">
     {% comment %} First block {% endcomment %}
     <div class="her-cover-letter-section">
@@ -188,7 +543,7 @@
     </div> -->
     <!-- TODO get application submition date -->
 
-      <!-- <div class="her-cover-letter-section">
+    <!-- <div class="her-cover-letter-section">
         <h5 class="summary-value">{% trans 'Submission Details' %}</h5>
         <div class="cover-letter-section-block">
           <div class="cover-letter-section-block-item">
