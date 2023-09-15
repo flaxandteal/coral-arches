@@ -32,17 +32,6 @@ define([
           <br />${address.postcode}`)}
         )
       },
-      // write: function () {
-      //   console.log("writing lha")
-      //   this.reportVals.licenseHoldersAddresses(self.applicantsAddresses().map(address => `${address.buildingName ? address.buildingName + ', <br />' : ''} 
-      //     ${address.buildingNumber} ${address.street}, 
-      //     ${address.subStreetNumber ? address.subStreetNumber + ' ' : ''}
-      //     ${address.subStreet ? address.subStreet + ',' : ''}
-      //     <br />${address.city},
-      //     <br />${address.county},
-      //     <br />${address.postcode}`)
-      //   )
-      // },
     }, this)
 
     this.createAddress = function (address) {
@@ -130,7 +119,7 @@ define([
           // activity
           externalRefs = getNodeValues(related_resource.tiles, '589d4dc7-edf9-11eb-9856-a87eeabdefba')
           externalRefSources = getNodeValues(related_resource.tiles, '589d4dcd-edf9-11eb-8a7d-a87eeabdefba')
-          externalRefNotes = getNodeValues(related_resource.tiles, '589d4dc9-edf9-11eb-9018-a87eeabdefba')
+          externalRefNotes = getNodeValues(related_resource.tiles, '589d4dca-edf9-11eb-83ea-a87eeabdefba')
 
           this.siteAddress.buildingNames = getNodeValues(related_resource.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')
           this.siteAddress.buildingNumbers = getNodeValues(related_resource.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')
@@ -157,11 +146,11 @@ define([
         }
         if (externalRefSources[index] === "df585888-b45c-4f48-99d1-4cb3432855d5") {
           this.reportVals.assetNames.push(externalRefs[index].en.value)
-          this.reportVals.assetNotes.push(externalRefNotes[index])
+          this.reportVals.assetNotes.push(externalRefNotes[index].en.value)
         }
         if (externalRefSources[index] === "c14def6d-4713-465f-9119-bc33f0d6e8b3") {
           this.reportVals.wreckNames.push(externalRefs[index].en.value)
-          this.reportVals.wreckNotes.push(externalRefNotes[index])
+          this.reportVals.wreckNotes.push(externalRefNotes[index].en.value)
         }
       }
       console.log(this.siteAddress)
@@ -233,13 +222,7 @@ define([
                   .then(x => {
                     this.loading(true)
 
-                    console.log("Before", JSON.stringify(contacts), contacts)
-
                     for (let contact of contacts) {
-                      console.log("contact", contact)
-                      console.log("act graph",contact.graph_id)
-                      console.log("app so far", this.applicants())
-                      console.log("com so far", this.companies())
 
                       if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
 
@@ -260,15 +243,14 @@ define([
                               }
                             })
                         }
-                      } 
+                      }
                       else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
 
                         console.log("new com", contact["resource"]["Names"][0]["Organization Name"]["@value"])
-                        this.companies().push(contact["resource"]["Names"][0]["Organization Name"]["@value"])
+                        this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
 
                         if (contact["resource"]["Location Data"]) {
-                          this.companiesAddresses().push(
-                            contact["resource"]["Location Data"].map((location) => {
+                          this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
                               return {
                                 buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
                                 buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
@@ -279,25 +261,15 @@ define([
                                 county : location.Addresses['County']['County Value']["@value"],
                                 postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
                               }
-                            })
-                          ) 
-                        } else {
-                          this.companiesAddresses().push([])
-                        }
-                      }
+                        })
                       } 
-                    // console.log('report vals: ', this.reportVals.licenseHolders(), this.reportVals.licenseHoldersAddresses());
+                    }
                     this.loading(true)
-                    // console.log("y no update", JSON.stringify(this.reportVals.licenseHoldersAddresses()))
-                    console.log("wen dis is the read", JSON.stringify(this.applicantsAddresses()))
-                    console.log(this.licenseHoldersAddresses())
-                    // this.reportVals.licenseHoldersAddresses(this.applicantsAddresses())
-                    // console.log(this.reportVals.licenseHoldersAddresses())
-                    // console.log('report vals: ', this.reportVals);
               
                     this.loading(false)
-                })
+                }
               })
+            })
         )
       this.loading(true)
       // console.log("y no update", this.reportVals.licenseHoldersAddresses())
