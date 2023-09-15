@@ -7,7 +7,7 @@ define([
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/licensing-workflow/resource-instance-select-config',
   'views/components/workflows/licensing-workflow/license-cover-letter',
-  // 'views/components/workflows/licensing-workflow/license-final-step',
+  'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/excavation-workflow/collecting-information-step',
   'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
   'views/components/workflows/excavation-workflow/single-widget-with-label',
@@ -87,6 +87,25 @@ define([
 
                   }
                 },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'grid-info' ,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
+                //     // hiddenNodes: [
+                //     //   'a541922b-f121-11eb-a081-a87eeabdefba',
+                //     //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                //     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                //     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                //     // ],
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //     parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
+
+                //   }
+                // },
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'location-names' ,
@@ -169,30 +188,49 @@ define([
                   }
                 },
                 
+                // {
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'company-name' ,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     labels: [['Person or Organization','Please Select Company and Applicant']],
+                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                //     graphids: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
+                //     nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
+                //     renderContext: 'workflow',
+                //     hiddenNodes: [
+                //       'f5565c2c-48b6-11ee-85af-0242ac140007',
+                //       'f55671b2-48b6-11ee-85af-0242ac140007',
+                //       'f5565c2c-48b6-11ee-85af-0242ac140007',
+                //       'f5566b40-48b6-11ee-85af-0242ac140007',
+                //       'f5566cda-48b6-11ee-85af-0242ac140007',
+                //       'f556699c-48b6-11ee-85af-0242ac140007',
+                //       'f5566654-48b6-11ee-85af-0242ac140007',
+                //       'f5567342-48b6-11ee-85af-0242ac140007'
+                //     ],
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                //   }
+                // },
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'company-name' ,
                   tilesManaged: 'one',
                   parameters: {
-                    labels: [['Person or Organization','Please Select Company and Applicant']],
+                    labels: [
+                      ['Applicant','Please Select Company and Applicant'],
+                      ['Owner', 'Land Owner']
+                    ],
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    graphids: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
-                    nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
+                    nodegroupid: '859ca092-521d-11ee-b790-0242ac120002',
                     renderContext: 'workflow',
                     hiddenNodes: [
-                      'f5565c2c-48b6-11ee-85af-0242ac140007',
-                      'f55671b2-48b6-11ee-85af-0242ac140007',
-                      'f5565c2c-48b6-11ee-85af-0242ac140007',
-                      'f5566b40-48b6-11ee-85af-0242ac140007',
-                      'f5566cda-48b6-11ee-85af-0242ac140007',
-                      'f556699c-48b6-11ee-85af-0242ac140007',
-                      'f5566654-48b6-11ee-85af-0242ac140007',
-                      'f5567342-48b6-11ee-85af-0242ac140007'
+                      '859cc43c-521d-11ee-b790-0242ac120002',
+                      '859cbcd0-521d-11ee-b790-0242ac120002',
+                      '859cb5b4-521d-11ee-b790-0242ac120002'
                     ],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
-                
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'sub-details',
@@ -202,29 +240,11 @@ define([
                     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      '5d2ae012-48cf-11ee-8e4e-0242ac140007',
                       '777596ba-48cf-11ee-8e4e-0242ac140007',
                       '916b5e7e-48cf-11ee-8e4e-0242ac140007'
                     ],
                     labels: [
-                      ['Proposal Text', 'Submission Details']
-                    ]
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'sub-files',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: [
-                      'aec103a2-48cf-11ee-8e4e-0242ac140007',
-                      '777596ba-48cf-11ee-8e4e-0242ac140007',
-                      '916b5e7e-48cf-11ee-8e4e-0242ac140007'
-                    ],
-                    labels: [
+                      ['Proposal Text', 'Submission Details'],
                       ['Digital File(s)', 'Submission Attachments']
                     ],
                     resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
@@ -232,6 +252,27 @@ define([
                     resourceModelDigitalObjectNodeGroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007'
                   }
                 },
+                // {
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'sub-files',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                //     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                //     hiddenNodes: [
+                //       'aec103a2-48cf-11ee-8e4e-0242ac140007',
+                //       '777596ba-48cf-11ee-8e4e-0242ac140007',
+                //       '916b5e7e-48cf-11ee-8e4e-0242ac140007'
+                //     ],
+                //     labels: [
+                //       ['Digital File(s)', 'Submission Attachments']
+                //     ],
+                //     resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                //     resourceTileId: "['init-step']['app-id'][0]['tileId']",
+                //     resourceModelDigitalObjectNodeGroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007'
+                //   }
+                // },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'app-dates-and-status',
@@ -296,25 +337,6 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
-                    // hiddenNodes: [
-                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
-                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
-                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
-                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
-                    // ],
-                    renderContext: 'workflow',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
-
-                  }
-                },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'grid-info' ,
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
                     // hiddenNodes: [
                     //   'a541922b-f121-11eb-a081-a87eeabdefba',
                     //   'a5419222-f121-11eb-8b1f-a87eeabdefba',

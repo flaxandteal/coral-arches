@@ -32,23 +32,12 @@
         </div>
       </div>
       <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'Site Name' %}</h5>
+        <h5 class="summary-value">{% trans 'License Number' %}</h5>
         <div class="final-step-section-block">
           <div class="final-step-section-block-item">
             <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.siteName.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.siteName.value"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'County' %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.county.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.county.value"></div>
+              <div class="summary-label" data-bind="text: 'License Number: '"></div>
+              <div class="summary-value" data-bind="text: reportVals.licenseNumber"></div>
             </div>
           </div>
         </div>
@@ -60,95 +49,9 @@
             <div class="block-item">
               <div
                 class="summary-label"
-                data-bind="text: reportVals.bFileCmNumber.name + ':'"
+                data-bind="text: 'B File CM Number: '"
               ></div>
-              <div class="summary-value" data-bind="text: reportVals.bFileCmNumber.value"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'Grid Reference' %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.gridRef.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.gridRef.value"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'Planning Reference' %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.planningRef.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.planningRef.value"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'Applicant Information' %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div
-                class="summary-label"
-                data-bind="text: reportVals.applicantInformation.name + ':'"
-              ></div>
-              <div
-                class="summary-value"
-                data-bind="text: reportVals.applicantInformation.value"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'Status' %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.status.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.status.value"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% comment %} Second block {% endcomment %}
-    <div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans "Licensee's name" %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.licenseeName.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.licenseeName.value"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'Address' %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.address.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.address.value"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'Date' %}</h5>
-        <div class="final-step-section-block">
-          <div class="final-step-section-block-item">
-            <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.date.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.date.value"></div>
+              <div class="summary-value" data-bind="text: reportVals.bFileNumber"></div>
             </div>
           </div>
         </div>
@@ -165,16 +68,80 @@
         </div>
       </div>
       <div class="her-final-step-section">
-        <h5 class="summary-value">{% trans 'License Number' %}</h5>
+        <h5 class="summary-value">{% trans 'Site Address' %}</h5>
         <div class="final-step-section-block">
           <div class="final-step-section-block-item">
             <div class="block-item">
-              <div class="summary-label" data-bind="text: reportVals.licenseNumber.name + ':'"></div>
-              <div class="summary-value" data-bind="text: reportVals.licenseNumber.value"></div>
+              <!-- <div class="summary-label" data-bind="text: reportVals.address.name + ':'"></div> -->
+              <div class="summary-value" data-bind="html: reportVals.siteAddress"></div>
             </div>
           </div>
         </div>
       </div>
+      <div class="her-final-step-section">
+        <h5 class="summary-value">{% trans 'County' %}</h5>
+        <div class="final-step-section-block">
+          <div class="final-step-section-block-item">
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: 'County:'"></div>
+              <div class="summary-value" data-bind="text: reportVals.county"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %} Second block {% endcomment %}
+    <div>
+      <div class="her-final-step-section">
+        <h5 class="summary-value">{% trans "Company(s)" %}</h5>
+        <div class="final-step-section-block">
+          <div class="final-step-section-block-item">
+            <!-- ko foreach: { data: Object.keys(companies()), as: 'key', noChildContext: true } -->
+            <div class="block-item" data-bind="style: {'margin-top' : '8px' }">
+              <div class="summary-label" data-bind="text: 'name:'"></div>
+              <div class="summary-value" data-bind="text: key"></div>
+            </div>
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: 'addresses:'"></div>
+            </div>
+              <!-- ko foreach: { data: companies()[key], as: 'address', noChildContext: true } -->
+              <div class="block-item">
+                <div class="summary-label" data-bind="text: '_________'"></div>
+              </div>
+              <div class="block-item">
+                <div class="summary-value" data-bind="html: createAddress(address)"></div>
+              </div>
+              <!-- /ko -->
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+      <div class="her-final-step-section">
+        <h5 class="summary-value">{% trans "Applicant and License Holder(s)" %}</h5>
+        <div class="final-step-section-block">
+          <div class="final-step-section-block-item">
+            <!-- ko foreach: { data: Object.keys(applicants()), as: 'key', noChildContext: true } -->
+            <div class="block-item" data-bind="style: {'margin-top' : '8px' }">
+              <div class="summary-label" data-bind="text: 'name:'"></div>
+              <div class="summary-value" data-bind="text: key"></div>
+            </div>
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: 'addresses:'"></div>
+            </div>
+              <!-- ko foreach: { data: applicants()[key], as: 'address', noChildContext: true } -->
+              <div class="block-item">
+                <div class="summary-label" data-bind="text: '_________'"></div>
+              </div>
+              <div class="block-item">
+                <div class="summary-value" data-bind="html: createAddress(address)"></div>
+              </div>
+              <!-- /ko -->
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+      </div>
+      <div>
       <div class="her-final-step-section">
         <h5 class="summary-value">{% trans 'Submission Details' %}</h5>
         <div class="final-step-section-block">
@@ -189,9 +156,81 @@
           </div>
         </div>
       </div>
+      <div class="her-final-step-section">
+        <h5 class="summary-value">{% trans 'Asset Information' %}</h5>
+        <div class="final-step-section-block">
+          <div class="final-step-section-block-item">
+            <div class="block-item">
+              <div
+                class="summary-label"
+                data-bind="text: 'Asset:'"
+              ></div>
+              <div
+                class="summary-value"
+                data-bind="text: reportVals.assetNames"
+              ></div>
+            </div>
+            <div class="block-item">
+              <div
+                class="summary-label"
+                data-bind="text: 'Notes:'"
+              ></div>
+              <div
+                class="summary-value"
+                data-bind="html: reportVals.assetNotes"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ko if reportVals.wreckNames -->
+      <div class="her-final-step-section">
+        <h5 class="summary-value">{% trans 'Wreck Information' %}</h5>
+        <div class="final-step-section-block">
+          <div class="final-step-section-block-item">
+            <div class="block-item">
+              <div
+                class="summary-label"
+                data-bind="text: 'Wreck:'"
+              ></div>
+              <div
+                class="summary-value"
+                data-bind="text: reportVals.wreckNames"
+              ></div>
+            </div>
+            <div class="block-item">
+              <div
+                class="summary-label"
+                data-bind="text: 'Notes:'"
+              ></div>
+              <div
+                class="summary-value"
+                data-bind="html: reportVals.wreckNotes"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
+    </div>
+      <div class="her-final-step-section">
+        <h5 class="summary-value">{% trans 'Decision' %}</h5>
+        <div class="final-step-section-block">
+          <div class="final-step-section-block-item">
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: 'Inspector: '"></div>
+              <div class="summary-value" data-bind="text: reportVals.inspector"></div><br />
+            </div>
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: 'Decision Date: '"></div>
+              <div class="summary-value" data-bind="text: reportVals.decisionDate"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
     {% comment %} Third block {% endcomment %}
-    <div>test</div>
   </div>
 </div>
 <!-- /ko -->
