@@ -24,53 +24,33 @@ define([
 
       self.coverLetterHtml = ko.observable();
 
-      try {
-        console.log('logging params: ', params);
-        console.log('cover letter config: ', params.config());
-      } catch (e) {
-        console.error('failed loging config: ', e)
-      }
-
       self.getValue = (value) => {
         if (ko.isObservable(value)) {
           if (value()?.[arches.activeLanguage]?.value) {
-            console.log('get value here text')
-            return value()[arches.activeLanguage].value
+            return value()[arches.activeLanguage].value;
           } else {
-            console.log('get value here')
             return value();
           }
         } else {
           if (value?.[arches.activeLanguage]?.value) {
-            console.log('get value here text')
-            return value[arches.activeLanguage].value
+            return value[arches.activeLanguage].value;
           } else {
-            console.log('get value here default')
             return value;
           }
         }
       };
-      
+
       if (self.getValue(self.value)) {
-        console.log('got self.value: ', self.getValue(self.value))
-        self.coverLetterHtml(self.getValue(self.value))
-        console.log('covrr letter after self.lvaue ', self.coverLetterHtml());
-      } else {
-        console.log('got self.value: ', self.getValue(self.value))
+        self.coverLetterHtml(self.getValue(self.value));
       }
 
       if (self.getValue(params.coverLetterHtml)) {
-        console.log('self.getValue(params.coverLetterHtml): ', self.getValue(params.coverLetterHtml))
         if (ko.isObservable(params.coverLetterHtml)) {
           self.coverLetterHtml = params.coverLetterHtml;
-          console.log('covrr letter after params.coverLetterHtml ', self.coverLetterHtml());
         }
-      } else {
-        console.log('self.getValue(params.coverLetterHtml): ', self.getValue(params.coverLetterHtml))
       }
 
       self.coverLetterHtml.subscribe((value) => {
-        console.log('self.coverLetterHtml updated: ', value);
         self.value({
           [arches.activeLanguage]: {
             value,
@@ -78,9 +58,6 @@ define([
           }
         });
       }, self);
-
-      
-
 
       // console.log('cover-letter-widget: ', self);
 
