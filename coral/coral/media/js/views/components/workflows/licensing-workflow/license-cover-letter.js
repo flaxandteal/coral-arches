@@ -1,11 +1,11 @@
 define([
   'knockout',
+  'knockout-mapping',
   'underscore',
   'arches',
-  'views/components/workflows/summary-step',
   'templates/views/components/workflows/licensing-workflow/license-cover-letter.htm',
   'plugins/knockout-select2'
-], function (ko, _, arches, SummaryStep, licenseCoverTemplate) {
+], function (ko, koMapping, _, arches, licenseCoverTemplate) {
   function viewModel(params) {
     const self = this;
 
@@ -29,6 +29,10 @@ define([
       }
     };
 
+    self.getSavedValue = (key) => {
+      return params.form.savedData()?.coverLetterData[key];
+    };
+
     this.activityResourceData = ko.observable();
     this.licenseResourceData = ko.observable();
     this.actorTileData = ko.observable();
@@ -39,24 +43,27 @@ define([
     this.bFileNumber = ko.observable(createTextObject('B/23/0001'));
 
     this.textBody = ko.observable(
-      createTextObject(
-        'Further to your application on [Date], please find attached an Excavation License for the above mentioned location.'
-      )
+      self.getSavedValue('textBody') ||
+        createTextObject(
+          'Further to your application on [Date], please find attached an Excavation License for the above mentioned location.'
+        )
     );
 
     /**
      * Contacts
      */
-    this.applicant = ko.observable(createTextObject());
-    this.company = ko.observable(createTextObject());
-    this.seniorInspector = ko.observable(createTextObject());
-    this.signed = ko.observable(createTextObject());
+    this.applicant = ko.observable(self.getSavedValue('applicant') || createTextObject());
+    this.company = ko.observable(self.getSavedValue('company') || createTextObject());
+    this.seniorInspector = ko.observable(
+      self.getSavedValue('seniorInspector') || createTextObject()
+    );
+    this.signed = ko.observable(self.getSavedValue('signed') || createTextObject());
 
     /**
      * self.tile().dirty
      * Needs to be subscribed to and once changed this will
      * make the 'save' option available to the user
-     * currently when applicant changes it will be made 
+     * currently when applicant changes it will be made
      * available
      */
     self.applicant.subscribe(function (val) {
@@ -66,24 +73,30 @@ define([
     /**
      * Location
      */
-    this.areaName = ko.observable(createTextObject());
-    this.buildingName = ko.observable(createTextObject());
-    this.buildingNumber = ko.observable(createTextObject());
-    this.street = ko.observable(createTextObject());
-    this.buildingNumberSubSt = ko.observable(createTextObject());
-    this.subStreet = ko.observable(createTextObject());
-    this.city = ko.observable(createTextObject());
-    this.county = ko.observable(createTextObject());
-    this.postCode = ko.observable(createTextObject());
+    this.areaName = ko.observable(self.getSavedValue('areaName') || createTextObject());
+    this.buildingName = ko.observable(self.getSavedValue('buildingName') || createTextObject());
+    this.buildingNumber = ko.observable(self.getSavedValue('buildingNumber') || createTextObject());
+    this.street = ko.observable(self.getSavedValue('street') || createTextObject());
+    this.buildingNumberSubSt = ko.observable(
+      self.getSavedValue('buildingNumberSubSt') || createTextObject()
+    );
+    this.subStreet = ko.observable(self.getSavedValue('subStreet') || createTextObject());
+    this.city = ko.observable(self.getSavedValue('city') || createTextObject());
+    this.county = ko.observable(self.getSavedValue('county') || createTextObject());
+    this.postCode = ko.observable(self.getSavedValue('postCode') || createTextObject());
 
     /**
      * Dates
      */
-    this.receivedDate = ko.observable('');
-    this.acknowledgedDate = ko.observable('');
-    this.decisionDate = ko.observable('');
-    this.sendDate = ko.observable(new Date().toLocaleDateString('en-GB'));
-    this.appDate = ko.observable(new Date().toLocaleDateString('en-GB'));
+    this.receivedDate = ko.observable(self.getSavedValue('receivedDate') || '');
+    this.acknowledgedDate = ko.observable(self.getSavedValue('acknowledgedDate') || '');
+    this.decisionDate = ko.observable(self.getSavedValue('decisionDate') || '');
+    this.sendDate = ko.observable(
+      self.getSavedValue('sendDate') || new Date().toLocaleDateString('en-GB')
+    );
+    this.appDate = ko.observable(
+      self.getSavedValue('appDate') || new Date().toLocaleDateString('en-GB')
+    );
 
     this.selectedRecipient = ko.observable();
     this.nameOptions = ko.observable(['full name', 'title and surname', 'first name']);
@@ -197,6 +210,38 @@ define([
     params.form.save = async () => {
       self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'](createTextObject(self.letter()));
       await self.tile().save();
+      params.form.savedData({
+        tileData: koMapping.toJSON(self.tile().data),
+        tileId: self.tile().tileid,
+        resourceInstanceId: self.tile().resourceinstance_id,
+        coverLetterData: {
+          licenseNo: ko.unwrap(this.licenseNo),
+          bFileNumber: ko.unwrap(this.bFileNumber),
+
+          textBody: ko.unwrap(this.textBody),
+
+          applicant: ko.unwrap(this.applicant),
+          company: ko.unwrap(this.company),
+          seniorInspector: ko.unwrap(this.seniorInspector),
+          signed: ko.unwrap(this.signed),
+
+          areaName: ko.unwrap(this.areaName),
+          buildingName: ko.unwrap(this.buildingName),
+          buildingNumber: ko.unwrap(this.buildingNumber),
+          street: ko.unwrap(this.street),
+          buildingNumberSubSt: ko.unwrap(this.buildingNumberSubSt),
+          subStreet: ko.unwrap(this.subStreet),
+          city: ko.unwrap(this.city),
+          county: ko.unwrap(this.county),
+          postCode: ko.unwrap(this.postCode),
+
+          receivedDate: ko.unwrap(this.receivedDate),
+          acknowledgedDate: ko.unwrap(this.acknowledgedDate),
+          decisionDate: ko.unwrap(this.decisionDate),
+          sendDate: ko.unwrap(this.sendDate),
+          appDate: ko.unwrap(this.appDate)
+        }
+      });
       params.form.complete(true);
       params.form.saving(false);
     };
@@ -291,8 +336,8 @@ define([
 
     //   this.address = ko.computed({
     //     read: function () {
-    //       return `${this.buildingName() != '' ? this.buildingName() + ', <br />' : ''} 
-    //       ${this.buildingNumber()} ${this.street()}, 
+    //       return `${this.buildingName() != '' ? this.buildingName() + ', <br />' : ''}
+    //       ${this.buildingNumber()} ${this.street()},
     //       ${this.buildingNumberSubSt() != '' ? this.buildingNumberSubSt() + ' ' : ''}
     //       ${this.subStreet() != '' ? this.subStreet() + ',' : ''}
     //       <br />${this.city()},
@@ -340,7 +385,7 @@ define([
     //         }
     //       },
     //       }, this)
-       
+
     //   this.resourceData.subscribe((val) => {
     //     console.log('VAL', val)
     //     this.loading(true)
@@ -403,7 +448,7 @@ define([
     //                     this.reportVals['applicant'] = actor["resource"]["Name"][0]["Full Name"]["@value"]
     //                     this.applicant(this.reportVals.applicant)
     //                     if (actor["resource"]["Location Data"]) {
-    //                       this.reportVals['applicantAddresses'] = 
+    //                       this.reportVals['applicantAddresses'] =
     //                       {
     //                         buildingName : actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"],
     //                         buildingNumber : actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"],
