@@ -3,7 +3,7 @@ run-name: Build Arches project
 on:
   push:
     branches:
-      - main
+      - develop
 env:
   ARCHES_BASE: flaxandteal/arches_coral_base
   ARCHES_PROJECT: coral

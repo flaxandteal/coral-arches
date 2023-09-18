@@ -38,7 +38,7 @@ define([
        * be confused with a resource instance id.
        */
       self.applicationId = self.tile()?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
-      console.log('app id: ', self.applicationId);
+      console.log('License Application ID: ', self.applicationId);
 
       /**
        * TODO: Handle errors
@@ -63,7 +63,6 @@ define([
               });
               params.form.complete(true);
               params.form.saving(false);
-              console.log("the data", params.form.savedData())
           }
 
           }
@@ -152,7 +151,6 @@ define([
       if (activityTile?.ok) {
         const activityTileResult = await activityTile.json();
         self.actLocTileId = activityTileResult.tileid;
-        console.log("ACTIVITY LOCATION TILE: ", self.actLocTileId)
         return activityTile;
       }
     };
