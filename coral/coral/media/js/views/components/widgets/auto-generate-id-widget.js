@@ -22,9 +22,17 @@ define([
 
       const self = this;
 
-      self.idValue = ko.isObservable(self.value()[arches.activeLanguage]?.value) 
-        ? ko.unwrap(self.value()[arches.activeLanguage]?.value) 
-        : self.value()[arches.activeLanguage]?.value;
+      self.currentLanguage = ko.observable({ code: arches.activeLanguage });
+
+      if (ko.isObservable(self.value)) {
+        self.idValue = ko.isObservable(self.value()[arches.activeLanguage]?.value) 
+          ? ko.unwrap(self.value()[arches.activeLanguage]?.value) 
+          : self.value()[arches.activeLanguage]?.value;
+      } else {
+        self.idValue = ko.isObservable(self.value[arches.activeLanguage]?.value) 
+          ? ko.unwrap(self.value[arches.activeLanguage]?.value) 
+          : self.value[arches.activeLanguage]?.value;
+      }
 
       if (!self.idValue) {
         self.idValue = uuid.generate();
