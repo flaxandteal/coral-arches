@@ -83,6 +83,7 @@ define([
     this.acknowledgedDate = ko.observable('');
     this.decisionDate = ko.observable('');
     this.sendDate = ko.observable(new Date().toLocaleDateString('en-GB'));
+    this.appDate = ko.observable(new Date().toLocaleDateString('en-GB'));
 
     this.selectedRecipient = ko.observable();
     this.nameOptions = ko.observable(['full name', 'title and surname', 'first name']);
