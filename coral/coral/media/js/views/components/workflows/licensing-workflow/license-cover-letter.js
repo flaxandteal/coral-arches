@@ -8,10 +8,11 @@ define([
 ], function (ko, _, arches, SummaryStep, licenseCoverTemplate) {
   function viewModel(params) {
     const self = this;
-
+    SummaryStep.apply(this, [params]);
+    console.log(self.tile)
+    _.extend(this, params.form);
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
-    _.extend(this, params.form);
     this.pageVm = params.pageVm;
 
     const createTextObject = (value) => ({
@@ -20,6 +21,8 @@ define([
         direction: 'ltr'
       }
     });
+    console.log("self", self)
+    console.log("postsum tile", self.tile)
 
     self.getTextValue = (textObject) => {
       if (ko.isObservable(textObject)) {
@@ -47,10 +50,28 @@ define([
     /**
      * Contacts
      */
+    this.contacts_loaded = ko.observable(false)
+    this.applicants = ko.observable({});
+    this.applicantsAddresses = ko.observable({});
+    this.companies = ko.observable({})
+    this.companiesAddresses = ko.observable({})
     this.applicant = ko.observable(createTextObject());
     this.company = ko.observable(createTextObject());
     this.seniorInspector = ko.observable(createTextObject());
     this.signed = ko.observable(createTextObject());
+    
+    this.tempApp = ko.computed({
+      read: function (){
+        console.log("read")
+        return this.applicant()
+      },
+      write: function (val){
+        console.log("temp temp", val)
+        if (val){
+          this.applicant(createTextObject(val))
+        }
+      }
+    }, this)
 
     /**
      * self.tile().dirty
@@ -76,6 +97,24 @@ define([
     this.county = ko.observable(createTextObject());
     this.postCode = ko.observable(createTextObject());
 
+    this.tempAdd = ko.computed({
+      read: function (){
+        console.log("read")
+        return this.applicant()
+      },
+      write: function (val){
+        console.log("temp temp", val)
+        this.areaName(createTextObject(val.areaName))
+        this.buildingName(createTextObject(val.buildingName))
+        this.buildingNumber(createTextObject(val.buildingNumber))
+        this.street(createTextObject(val.street))
+        this.buildingNumberSubSt(createTextObject(val.buildingNumberSubSt))
+        this.subStreet(createTextObject(val.subStreet))
+        this.city(createTextObject(val.city))
+        this.county(createTextObject(val.county))
+        this.postCode(createTextObject(val.postCode))
+      }
+    }, this)
     /**
      * Dates
      */
@@ -159,7 +198,7 @@ define([
       let result =
         '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
       if (self.getTextValue(self.applicant)) {
-        result += `<span>Dear: ${self.getTextValue(self.applicant)}</span>`;
+        result += `<span>Dear: ${Object.keys(this.applicants()).join(', ')}, ${this.getTextValue(self.company)}</span>`;
       }
       result += `<span style="margin-top: 8px">${
         self.getTextValue(self.textBody) || 'Please enter information regarding the email!'
@@ -341,133 +380,188 @@ define([
     //       },
     //       }, this)
        
-    //   this.resourceData.subscribe((val) => {
-    //     console.log('VAL', val)
-    //     this.loading(true)
-    //     this.activityResourceData(val.resource)
-    //     this.reportVals['areaName'] = val.resource["Activity Names"][0]["Activity Name"]["@value"]
-    //     this.areaName(this.reportVals['areaName'])
-    //     this.reportVals['siteAddress'] = val.resource["Location Data"]["Addresses"][0]
+      this.resourceData.subscribe((val) => {
+        console.log("val", val)
+        this.activityResourceData(val.resource)
+        this.areaName(createTextObject(val.resource["Associated Activities"]["@value"]))
 
-    //     val.resource["External Cross References"].forEach(ref => {
-    //       if (ref["External Cross Reference Source"]["@value"] === "Historic Environment Record Number"){
-    //         this.reportVals['bFileNumber'] = ref["External Cross Reference"]["@value"]
-    //         this.bFileNumber(this.reportVals['bFileNumber'])
-    //       }
-    //       if (ref["External Cross Reference Source"]["@value"] === "Excavation"){
-    //         this.reportVals['licenseNo'] = ref["External Cross Reference"]["@value"]
-    //         this.licenseNo(this.reportVals['licenseNo'])
-    //       }
-    //       if (ref["External Cross Reference Source"]["@value"] === "Wreck"){
-    //         this.reportVals['wreckRef'] = ref["External Cross Reference"]["@value"]
-    //         this.reportVals['wreckDesc'] = ref["External Cross Reference Notes"]["External Cross Reference Description"]["@value"]
-    //       }
-    //     });
-    //     this.loading(false)
-    //   })
+        this.signed(createTextObject(val.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
+        this.decisionDate(val.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
+        this.appDate(val.resource["Status and Duration Dates"]["Received Date"]["@value"])
+        this.textBody(createTextObject(this.textBody().en.value.replace('[Date]', new Date(this.appDate()).toLocaleDateString())))
+        
 
-    //   this.relatedResources.subscribe((val) => {
-    //     console.log('RELVAL', val)
-    //     console.log('1')
-    //     this.licenseResourceData(val.related_resources[0])
-    //     console.log(this.licenseResourceData())
-    //     this.reportVals['areaName'] = val.related_resources[0]
-    //     this.loading(false)
 
-    //     this.reportVals["related_license"] = val["resource_relationships"][0]["resourceinstanceidfrom"]
-    //     this.loading(true)
-    //     console.log("no fetch")
-    //     window.fetch(this.urls.api_resources(this.reportVals["related_license"]) + '?format=json&compact=false')
-    //         .then(response => response.json())
-    //         .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
-    //         .then(x => {
-    //           window.fetch(this.urls.api_tiles(this.licenseResourceData()['resource']['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
-    //           .then(response => response.json())
-    //           .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
-    //           .then(x => {
-    //             console.log(this.actorTileData().data)
-    //             console.log(JSON.stringify(this.actorTileData().data))
 
-    //             this.actorTileData().data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((actor) => {
-    //               window.fetch(this.urls.api_resources(actor.resourceId) + '?format=json&compact=false')
-    //               .then(response => response.json())
-    //               .then(
-    //                 data => {this.loading(true); this.actorReportData().push(data)})
-    //               .then(x => {
-    //                 this.loading(true)
-    //                 this.actorReportData().forEach(actor => {
-    //                   console.log("actor", actor)
-    //                   console.log("act graph",actor.graph_id)
-    //                   if (actor.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588'){
-    //                     console.log(actor["resource"]["Location Data"])
-    //                     this.reportVals['applicant'] = actor["resource"]["Name"][0]["Full Name"]["@value"]
-    //                     this.applicant(this.reportVals.applicant)
-    //                     if (actor["resource"]["Location Data"]) {
-    //                       this.reportVals['applicantAddresses'] = 
-    //                       {
-    //                         buildingName : actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"],
-    //                         buildingNumber : actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"],
-    //                         street : actor["resource"]["Location Data"][0].Addresses['Street']['Street Value']["@value"],
-    //                         buildingNumberSubSt : actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-    //                         subStreet : actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-    //                         city : actor["resource"]["Location Data"][0].Addresses['Town or City']['Town or City Value']["@value"],
-    //                         county : actor["resource"]["Location Data"][0].Addresses['County']['County Value']["@value"],
-    //                         postCode : actor["resource"]["Location Data"][0].Addresses['Postcode']['Postcode Value']["@value"]
-    //                       }
-    //                       this.buildingName(this.reportVals['applicantAddresses']['buildingName'])
-    //                       this.buildingNumber(this.reportVals['applicantAddresses']['buildingNumber'])
-    //                       this.street(this.reportVals['applicantAddresses']['street'])
-    //                       this.buildingNumberSubSt(this.reportVals['applicantAddresses']['buildingNumberSubSt'])
-    //                       this.subStreet(this.reportVals['applicantAddresses']['subStreet'])
-    //                       this.city(this.reportVals['applicantAddresses']['city'])
-    //                       this.county(this.reportVals['applicantAddresses']['county'])
-    //                       this.postCode(this.reportVals['applicantAddresses']['postCode'])
-    //                     }
-    //                     this.buildingName(this.reportVals['applicantAddresses']['buildingName'])
-    //                     this.buildingNumber(this.reportVals['applicantAddresses']['buildingNumber'])
-    //                     this.street(this.reportVals['applicantAddresses']['street'])
-    //                     this.buildingNumberSubSt(this.reportVals['applicantAddresses']['buildingNumberSubSt'])
-    //                     this.subStreet(this.reportVals['applicantAddresses']['subStreet'])
-    //                     this.city(this.reportVals['applicantAddresses']['city'])
-    //                     this.county(this.reportVals['applicantAddresses']['county'])
-    //                     this.postCode(this.reportVals['applicantAddresses']['postCode'])
-    //                     // `${actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] + ', <br />' : ''}
-    //                     //  ${actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"]} ${actor["resource"]["Location Data"][0].Addresses['Street']['Street Value']["@value"]},
-    //                     //  ${actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] + ', <br />' : ''}
-    //                     //  ${actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] + ', <br />' : ''}
-    //                     //  <br />${actor["resource"]["Location Data"][0].Addresses['Town or City']['Town or City Value']["@value"]},
-    //                     //  <br />${actor["resource"]["Location Data"][0].Addresses['County']['County Value']["@value"]},
-    //                     //  <br />${actor["resource"]["Location Data"][0].Addresses['Postcode']['Postcode Value']["@value"]}`
-    //                   }
-    //                   this.address(this.reportVals['applicantAddresses'])
-    //                 }
-    //                 if (actor.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588'){
-    //                   console.log(actor["resource"]["Location Data"])
-    //                   this.reportVals['company'] = actor["resource"]["Names"][0]["Organization Name"]["@value"]
-    //                   this.company(this.reportVals['company'])
-    //                   if (actor["resource"]["Location Data"]){
-    //                     this.reportVals['companyAddresses'] =
-    //                     {
-    //                       buildingName : actor["resource"]["Location Data"]?.[0].Addresses['Building Name']['Building Name Value']["@value"],
-    //                       buildingNumber : actor["resource"]["Location Data"]?.[0].Addresses['Building Number']['Building Number Value']["@value"],
-    //                       street : actor["resource"]["Location Data"]?.[0].Addresses['Street']['Street Value']["@value"],
-    //                       buildingNumberSubSt : actor["resource"]["Location Data"]?.[0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-    //                       subStreet : actor["resource"]["Location Data"]?.[0].Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-    //                       city : actor["resource"]["Location Data"]?.[0].Addresses['Town or City']['Town or City Value']["@value"],
-    //                       county : actor["resource"]["Location Data"]?.[0].Addresses['County']['County Value']["@value"],
-    //                       postCode : actor["resource"]["Location Data"]?.[0].Addresses['Postcode']['Postcode Value']["@value"]
-    //                     }
-    //                   }
-    //                 }
-    //               })
-    //               this.loading(false)
-    //             })
-    //           })
+        window.fetch(this.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+        .then(response => response.json())
+        .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
+          const contacts = []
+            window.fetch(this.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
+            .then(response => response.json())
+            .then(
+              data => {contacts.push(data)})
+            .then(x => {
 
-    //         })
-    //               .then(x => {this.loading(false); console.log("repVals",this.reportVals)})
-    //       })
-    // })
+              for (let contact of contacts) {
+                this.contacts_loaded(false)
+                if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
+
+                  this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
+
+                  if (contact["resource"]["Location Data"]) {
+                    this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+                        return {
+                          buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                          buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                          street : location.Addresses['Street']['Street Value']["@value"],
+                          buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                          subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                          city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                          county : location.Addresses['County']['County Value']["@value"],
+                          postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                        }
+                      })
+                  }
+                }
+                else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
+
+                  this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
+                  this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
+
+                  if (contact["resource"]["Location Data"]) {
+                    this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+                        return {
+                          buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                          buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                          street : location.Addresses['Street']['Street Value']["@value"],
+                          buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                          subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                          city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                          county : location.Addresses['County']['County Value']["@value"],
+                          postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                        }
+                  })
+                } 
+              }
+            } 
+            this.contacts_loaded(true)
+            })
+          })
+          )
+      })
+
+        // this.reportVals['siteAddress'] = val.resource["Location Data"]["Addresses"][0]
+
+        // val.resource["External Cross References"].forEach(ref => {
+        //   if (ref["External Cross Reference Source"]["@value"] === "Historic Environment Record Number"){
+        //     // this.reportVals['bFileNumber'] = ref["External Cross Reference"]["@value"]
+        //     this.bFileNumber(createTextObject(ref["External Cross Reference"]["@value"]))
+        //   }
+        //   if (ref["External Cross Reference Source"]["@value"] === "Excavation"){
+        //     // this.reportVals['licenseNo'] = ref["External Cross Reference"]["@value"]
+        //     this.licenseNo(createTextObject(ref["External Cross Reference"]["@value"]))
+        //   }
+        //   if (ref["External Cross Reference Source"]["@value"] === "Wreck"){
+        //     // this.reportVals['wreckRef'] = ref["External Cross Reference"]["@value"]
+        //     // this.reportVals['wreckDesc'] = ref["External Cross Reference Notes"]["External Cross Reference Description"]["@value"]
+        //   }
+        // });
+      //   this.loading(false)
+      // })
+
+      // this.relatedResources.subscribe((val) => {
+        // console.log("relval", val)
+        // this.licenseResourceData(val.related_resources[0])
+        // console.log(this.licenseResourceData())
+        // this.reportVals['areaName'] = val.related_resources[0]
+        // this.loading(false)
+
+        // this.reportVals["related_license"] = val["resource_relationships"][0]["resourceinstanceidfrom"]
+        // this.loading(true)
+        // window.fetch(this.urls.api_resources(val["resource_relationships"][0]["resourceinstanceidfrom"]) + '?format=json&compact=false')
+        //     .then(response => response.json())
+        //     .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
+        //     .then(x => {
+        //       window.fetch(this.urls.api_tiles(val.related_resources[0]['resource']['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+        //       .then(response => response.json())
+        //       .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
+        //       .then(x => {
+        //         this.actorTileData().data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((actor) => {
+        //           window.fetch(this.urls.api_resources(actor.resourceId) + '?format=json&compact=false')
+        //           .then(response => response.json())
+        //           .then(
+        //             data => {this.loading(true); this.actorReportData().push(data)})
+        //           .then(x => {
+        //             this.loading(true)
+        //             this.actorReportData().forEach(actor => {
+        //               if (actor.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588'){
+        //                 // this.reportVals['applicant'] = actor["resource"]["Name"][0]["Full Name"]["@value"]
+        //                 this.applicant(this.reportVals.applicant)
+        //                 // if (actor["resource"]["Location Data"]) {
+        //                 //   this.reportVals['applicantAddresses'] = 
+        //                 //   {
+        //                 //     buildingName : actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"],
+        //                 //     buildingNumber : actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"],
+        //                 //     street : actor["resource"]["Location Data"][0].Addresses['Street']['Street Value']["@value"],
+        //                 //     buildingNumberSubSt : actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+        //                 //     subStreet : actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+        //                 //     city : actor["resource"]["Location Data"][0].Addresses['Town or City']['Town or City Value']["@value"],
+        //                 //     county : actor["resource"]["Location Data"][0].Addresses['County']['County Value']["@value"],
+        //                 //     postCode : actor["resource"]["Location Data"][0].Addresses['Postcode']['Postcode Value']["@value"]
+        //                 //   }
+        //                 //   this.buildingName(this.reportVals['applicantAddresses']['buildingName'])
+        //                 //   this.buildingNumber(this.reportVals['applicantAddresses']['buildingNumber'])
+        //                 //   this.street(this.reportVals['applicantAddresses']['street'])
+        //                 //   this.buildingNumberSubSt(this.reportVals['applicantAddresses']['buildingNumberSubSt'])
+        //                 //   this.subStreet(this.reportVals['applicantAddresses']['subStreet'])
+        //                 //   this.city(this.reportVals['applicantAddresses']['city'])
+        //                 //   this.county(this.reportVals['applicantAddresses']['county'])
+        //                 //   this.postCode(this.reportVals['applicantAddresses']['postCode'])
+        //                 // }
+        //                 // this.buildingName(this.reportVals['applicantAddresses']['buildingName'])
+        //                 // this.buildingNumber(this.reportVals['applicantAddresses']['buildingNumber'])
+        //                 // this.street(this.reportVals['applicantAddresses']['street'])
+        //                 // this.buildingNumberSubSt(this.reportVals['applicantAddresses']['buildingNumberSubSt'])
+        //                 // this.subStreet(this.reportVals['applicantAddresses']['subStreet'])
+        //                 // this.city(this.reportVals['applicantAddresses']['city'])
+        //                 // this.county(this.reportVals['applicantAddresses']['county'])
+        //                 // this.postCode(this.reportVals['applicantAddresses']['postCode'])
+        //                 // `${actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] + ', <br />' : ''}
+        //                 //  ${actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"]} ${actor["resource"]["Location Data"][0].Addresses['Street']['Street Value']["@value"]},
+        //                 //  ${actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] + ', <br />' : ''}
+        //                 //  ${actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] + ', <br />' : ''}
+        //                 //  <br />${actor["resource"]["Location Data"][0].Addresses['Town or City']['Town or City Value']["@value"]},
+        //                 //  <br />${actor["resource"]["Location Data"][0].Addresses['County']['County Value']["@value"]},
+        //                 //  <br />${actor["resource"]["Location Data"][0].Addresses['Postcode']['Postcode Value']["@value"]}`
+        //               }
+        //               this.address(this.reportVals['applicantAddresses'])
+        //             // }
+        //             if (actor.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588'){
+        //               this.company(createTextObject(actor["resource"]["Names"][0]["Organization Name"]["@value"]))
+        //               // if (actor["resource"]["Location Data"]){
+        //               //   this.reportVals['companyAddresses'] =
+        //               //   {
+        //               //     buildingName : actor["resource"]["Location Data"]?.[0].Addresses['Building Name']['Building Name Value']["@value"],
+        //               //     buildingNumber : actor["resource"]["Location Data"]?.[0].Addresses['Building Number']['Building Number Value']["@value"],
+        //               //     street : actor["resource"]["Location Data"]?.[0].Addresses['Street']['Street Value']["@value"],
+        //               //     buildingNumberSubSt : actor["resource"]["Location Data"]?.[0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+        //               //     subStreet : actor["resource"]["Location Data"]?.[0].Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+        //               //     city : actor["resource"]["Location Data"]?.[0].Addresses['Town or City']['Town or City Value']["@value"],
+        //               //     county : actor["resource"]["Location Data"]?.[0].Addresses['County']['County Value']["@value"],
+        //               //     postCode : actor["resource"]["Location Data"]?.[0].Addresses['Postcode']['Postcode Value']["@value"]
+        //               //   }
+        //               // }
+        //             }
+        //           })
+        //           this.loading(false)
+        //         })
+        //       })
+
+        //     })
+        //           .then(x => {this.loading(false); console.log("repVals",this.reportVals)})
+        //   })
+  //       })
   }
 
   ko.components.register('license-cover-letter', {
