@@ -203,10 +203,6 @@ define([
       return result;
     }, this);
 
-    self.letter.subscribe((value) => {
-      console.log('letter ', value);
-    }, this);
-
     params.form.save = async () => {
       self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'](createTextObject(self.letter()));
       await self.tile().save();
@@ -214,6 +210,7 @@ define([
         tileData: koMapping.toJSON(self.tile().data),
         tileId: self.tile().tileid,
         resourceInstanceId: self.tile().resourceinstance_id,
+        nodegroupId: self.tile().nodegroup_id,
         coverLetterData: {
           licenseNo: ko.unwrap(this.licenseNo),
           bFileNumber: ko.unwrap(this.bFileNumber),
@@ -245,6 +242,10 @@ define([
       params.form.complete(true);
       params.form.saving(false);
     };
+
+    if (!params.form.savedData()?.['tileId']) {
+      // Run fetch prefill data if there hasn't previously been a saved letter
+    }
 
     // this.sendDate = ko.computed(
     //   {
