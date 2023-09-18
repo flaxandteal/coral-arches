@@ -26,8 +26,6 @@ define([
         ? ko.unwrap(self.value()[arches.activeLanguage]?.value) 
         : self.value()[arches.activeLanguage]?.value;
 
-      console.log('idValue ', self.idValue)
-      
       if (!self.idValue) {
         self.idValue = uuid.generate();
         self.value({
