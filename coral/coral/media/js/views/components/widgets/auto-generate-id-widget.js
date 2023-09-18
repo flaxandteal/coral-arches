@@ -22,7 +22,11 @@ define([
 
       const self = this;
 
-      self.idValue = self.value()[arches.activeLanguage]?.value;
+      self.idValue = ko.isObservable(self.value()[arches.activeLanguage]?.value) 
+        ? ko.unwrap(self.value()[arches.activeLanguage]?.value) 
+        : self.value()[arches.activeLanguage]?.value;
+
+      console.log('idValue ', self.idValue)
       
       if (!self.idValue) {
         self.idValue = uuid.generate();
