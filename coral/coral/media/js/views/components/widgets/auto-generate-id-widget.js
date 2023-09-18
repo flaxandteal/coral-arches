@@ -22,16 +22,10 @@ define([
 
       const self = this;
 
-      self.currentLanguage = ko.observable({ code: arches.activeLanguage });
-
-      if (!ko.isObservable(self.idValue)) {
-        self.idValue = self.value[arches.activeLanguage]?.value;
-      } else {
-        self.idValue = self.value()[arches.activeLanguage]?.value;
-      }
-
-      if (ko.isObservable(self.idValue) && !self.idValue() || !self.idValue) {
-        self.idValue = ko.observable(uuid.generate());
+      self.idValue = self.value()[arches.activeLanguage]?.value;
+      
+      if (!self.idValue) {
+        self.idValue = uuid.generate();
         self.value({
           [arches.activeLanguage]: {
             value: self.idValue,
