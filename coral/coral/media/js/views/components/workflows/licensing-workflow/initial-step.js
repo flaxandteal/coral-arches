@@ -41,8 +41,8 @@ define([
       /**
        * TODO: Handle errors
        */
-      const nameTile = await saveLicenseName();
-      if (nameTile?.ok) {
+      // const nameTile = await saveLicenseName();
+      // if (nameTile?.ok) {
         const activityTile = await saveActivitySystemRef();
         if (activityTile?.ok) {
           const activityLocTile = await saveActivityLocation();
@@ -65,7 +65,7 @@ define([
 
           }
         }
-      }
+      // }
     };
 
     const saveActivitySystemRef = async () => {
