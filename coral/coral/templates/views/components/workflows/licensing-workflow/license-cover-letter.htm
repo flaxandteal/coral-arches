@@ -18,13 +18,60 @@
           }
       }"
       ></div> -->
-      <div>
-        Recipient Type:
-        <div><input type="radio" name="recipientType" value="applicant" data-bind="checked: selectedAddress" /> Applicant
-        <input type="radio" name="recipientType" value="company" data-bind="checked: selectedAddress" /> Company
-        <input type="radio" name="recipientType" value="site" data-bind="checked: selectedAddress" /> Site</div>
-    </div>
+      <div
+        data-bind="component: {
+          name: 'domain-radio-widget',
+          node: {
+            'config': {
+              'options': addressOptions,
+            },
+          },
+          params: {
+            node: {
+            'config': {
+              'options': addressOptions,
+              },
+              'configKeys': configKeys
+            },
+            config: {
+              'label': 'Recipient Type',
+              'options': addressOptions,
+            },
+            value: selectedAddress,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+      }"
+      ></div>
+      
       <!-- ko if: contacts_loaded -->
+      <div
+        data-bind="if: selectedAddress() === 'applicant', component: {
+          name: 'domain-select-widget',
+          node: {
+            'config': {
+              'options': addressOptions,
+            },
+          },
+          params: {
+            node: {
+            'config': {
+              'options': addressOptions,
+              },
+              'configKeys': configKeys
+            },
+            config: {
+              'label': 'Recipient Type',
+              'options': addressOptions,
+            },
+            value: selectedAddress,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+      }"
+      ></div>
       <div data-bind="if: selectedAddress() === 'applicant'">
       <div>Recipient Name</div>
       <select class="select2-choice select2-default"
@@ -42,7 +89,12 @@
       ></select>
       <div>Company Address</div>
       <select class="select2-choice select2-default"
-        data-bind="options: companies()[applicant().en.value], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
+        data-bind="options: companies()[company().en.value], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
+      ></select>
+    </div>
+    <div data-bind="if: selectedAddress() === 'site', visible: false">
+      <select class="select2-choice select2-default"
+        data-bind="options: [siteAddress], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
       ></select>
     </div>
       <!-- /ko -->
@@ -79,7 +131,6 @@
                 'minDate': '',
                 'viewMode': 'days',
                 'dateFormat': 'DD-MM-YYYY',
-                'placeholder': 'Enter date',
                 'defaultValue': ''
             },
             value: appDate,
@@ -106,7 +157,6 @@
                 'minDate': '',
                 'viewMode': 'days',
                 'dateFormat': 'DD-MM-YYYY',
-                'placeholder': 'Enter date',
                 'defaultValue': ''
             },
             value: sendDate,

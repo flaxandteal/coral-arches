@@ -6,7 +6,7 @@ define([
   'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
-  // 'views/components/workflows/licensing-workflow/license-final-step',
+  'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -183,26 +183,47 @@ define([
                     ]
                   }
                 },
+                                // {
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'company-name' ,
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     labels: [['Person or Organization','Please Select Company and Applicant']],
+                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                //     graphids: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
+                //     nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
+                //     renderContext: 'workflow',
+                //     hiddenNodes: [
+                //       'f5565c2c-48b6-11ee-85af-0242ac140007',
+                //       'f55671b2-48b6-11ee-85af-0242ac140007',
+                //       'f5565c2c-48b6-11ee-85af-0242ac140007',
+                //       'f5566b40-48b6-11ee-85af-0242ac140007',
+                //       'f5566cda-48b6-11ee-85af-0242ac140007',
+                //       'f556699c-48b6-11ee-85af-0242ac140007',
+                //       'f5566654-48b6-11ee-85af-0242ac140007',
+                //       'f5567342-48b6-11ee-85af-0242ac140007'
+                //     ],
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                //   }
+                // },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'company-name',
+                  uniqueInstanceName: 'company-name' ,
                   tilesManaged: 'one',
                   parameters: {
-                    labels: [['Person or Organization', 'Please Select Company and Applicant']],
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    graphids: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
-                    nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
-                    hiddenNodes: [
-                      'f5565c2c-48b6-11ee-85af-0242ac140007',
-                      'f55671b2-48b6-11ee-85af-0242ac140007',
-                      'f5565c2c-48b6-11ee-85af-0242ac140007',
-                      'f5566b40-48b6-11ee-85af-0242ac140007',
-                      'f5566cda-48b6-11ee-85af-0242ac140007',
-                      'f556699c-48b6-11ee-85af-0242ac140007',
-                      'f5566654-48b6-11ee-85af-0242ac140007',
-                      'f5567342-48b6-11ee-85af-0242ac140007'
+                    labels: [
+                      ['Applicant','Please Select Company and Applicant'],
+                      ['Owner', 'Land Owner']
                     ],
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '859ca092-521d-11ee-b790-0242ac120002',
+                    renderContext: 'workflow',
+                    hiddenNodes: [
+                      '859cc43c-521d-11ee-b790-0242ac120002',
+                      '859cbcd0-521d-11ee-b790-0242ac120002',
+                      '859cb5b4-521d-11ee-b790-0242ac120002'
+                    ],
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
