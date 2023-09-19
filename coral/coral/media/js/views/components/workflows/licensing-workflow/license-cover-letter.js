@@ -8,9 +8,24 @@ define([
 ], function (ko, _, arches, SummaryStep, licenseCoverTemplate) {
   function viewModel(params) {
     const self = this;
-    SummaryStep.apply(this, [params]);
-    console.log(self.tile)
+
+    this.resourceData = ko.observable();
+    this.relatedResources = ko.observableArray();
+
+    
+
     _.extend(this, params.form);
+
+
+
+  this.getRelatedResources = function() {
+      window.fetch(arches.urls.related_resources + this.resourceid + "?paginate=false")
+      .then(response => response.json())
+      .then(data => this.relatedResources(data))
+  };
+
+    
+
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
     this.pageVm = params.pageVm;
@@ -379,8 +394,11 @@ define([
     //         }
     //       },
     //       }, this)
-       
-      this.resourceData.subscribe((val) => {
+
+    // this.getResourceData = function() {
+    window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false')
+      .then(response => response.json())
+      .then(val =>  {
         console.log("val", val)
         this.activityResourceData(val.resource)
         this.areaName(createTextObject(val.resource["Associated Activities"]["@value"]))
@@ -389,15 +407,12 @@ define([
         this.decisionDate(val.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
         this.appDate(val.resource["Status and Duration Dates"]["Received Date"]["@value"])
         this.textBody(createTextObject(this.textBody().en.value.replace('[Date]', new Date(this.appDate()).toLocaleDateString())))
-        
 
-
-
-        window.fetch(this.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+        window.fetch(arches.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
         .then(response => response.json())
         .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
           const contacts = []
-            window.fetch(this.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
+            window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
             .then(response => response.json())
             .then(
               data => {contacts.push(data)})
@@ -449,7 +464,10 @@ define([
             })
           })
           )
-      })
+    })
+  // };
+
+      
 
         // this.reportVals['siteAddress'] = val.resource["Location Data"]["Addresses"][0]
 
@@ -479,16 +497,16 @@ define([
 
         // this.reportVals["related_license"] = val["resource_relationships"][0]["resourceinstanceidfrom"]
         // this.loading(true)
-        // window.fetch(this.urls.api_resources(val["resource_relationships"][0]["resourceinstanceidfrom"]) + '?format=json&compact=false')
+        // window.fetch(arches.urls.api_resources(val["resource_relationships"][0]["resourceinstanceidfrom"]) + '?format=json&compact=false')
         //     .then(response => response.json())
         //     .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
         //     .then(x => {
-        //       window.fetch(this.urls.api_tiles(val.related_resources[0]['resource']['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+        //       window.fetch(arches.urls.api_tiles(val.related_resources[0]['resource']['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
         //       .then(response => response.json())
         //       .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
         //       .then(x => {
         //         this.actorTileData().data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((actor) => {
-        //           window.fetch(this.urls.api_resources(actor.resourceId) + '?format=json&compact=false')
+        //           window.fetch(arches.urls.api_resources(actor.resourceId) + '?format=json&compact=false')
         //           .then(response => response.json())
         //           .then(
         //             data => {this.loading(true); this.actorReportData().push(data)})
