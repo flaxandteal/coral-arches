@@ -5,13 +5,8 @@ define([
   'templates/views/components/plugins/licensing-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/licensing-workflow/widget-labeller',
-  'views/components/workflows/licensing-workflow/resource-instance-select-config',
   'views/components/workflows/licensing-workflow/license-cover-letter',
-  'views/components/workflows/licensing-workflow/license-final-step',
-  'views/components/workflows/excavation-workflow/collecting-information-step',
-  'views/components/workflows/excavation-workflow/protection-of-wrecks-card',
-  'views/components/workflows/excavation-workflow/single-widget-with-label',
-  'views/components/workflows/excavation-workflow/multi-widget-with-labels',
+  // 'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -46,7 +41,6 @@ define([
           title: 'Application Details',
           name: 'app-details-step',
           required: false,
-          workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Application Details'
           },
@@ -70,7 +64,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'address-info' ,
+                  uniqueInstanceName: 'address-info',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -81,47 +75,27 @@ define([
                       'a541e02a-f121-11eb-83b2-a87eeabdefba',
                       'a541e02d-f121-11eb-b36f-a87eeabdefba'
                     ],
-                    renderContext: 'workflow',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
 
                   }
                 },
-                // {
-                //   componentName: 'default-card',
-                //   uniqueInstanceName: 'grid-info' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                //     nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
-                //     // hiddenNodes: [
-                //     //   'a541922b-f121-11eb-a081-a87eeabdefba',
-                //     //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
-                //     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
-                //     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
-                //     // ],
-                //     renderContext: 'workflow',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                //     parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
-
-                //   }
-                // },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'location-names' ,
+                  uniqueInstanceName: 'location-names',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
+                    hiddenNodes: [
+                      'a541922b-f121-11eb-a081-a87eeabdefba'
+                    ],
                     labels: [
                       ['Area Name', 'Additional Area Name'],
                       ['Area Type', 'Area Type For Additional Name']
                     ],
-                    hiddenNodes: [
-                      'a541922b-f121-11eb-a081-a87eeabdefba'
-                    ],
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
                   }
                 },
                 {
@@ -164,7 +138,22 @@ define([
                     labels: [['Cross Reference', 'License Number (if applicable)']]
                   }
                 },
-                
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'planning-ref',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['actSysRefTileId']",
+                    hiddenNodes: [
+                      'e7d69603-9939-11ea-9e7f-f875a44e0e11',
+                      'e7d69602-9939-11ea-b514-f875a44e0e11'
+                    ],
+                    labels: [['Legacy ID', 'Planning Reference']]
+                  }
+                },
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'asset-refs',
@@ -187,46 +176,24 @@ define([
                     ]
                   }
                 },
-                
-                // {
-                //   componentName: 'widget-labeller',
-                //   uniqueInstanceName: 'company-name' ,
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     labels: [['Person or Organization','Please Select Company and Applicant']],
-                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                //     graphids: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
-                //     nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
-                //     renderContext: 'workflow',
-                //     hiddenNodes: [
-                //       'f5565c2c-48b6-11ee-85af-0242ac140007',
-                //       'f55671b2-48b6-11ee-85af-0242ac140007',
-                //       'f5565c2c-48b6-11ee-85af-0242ac140007',
-                //       'f5566b40-48b6-11ee-85af-0242ac140007',
-                //       'f5566cda-48b6-11ee-85af-0242ac140007',
-                //       'f556699c-48b6-11ee-85af-0242ac140007',
-                //       'f5566654-48b6-11ee-85af-0242ac140007',
-                //       'f5567342-48b6-11ee-85af-0242ac140007'
-                //     ],
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                //   }
-                // },
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'company-name' ,
                   tilesManaged: 'one',
                   parameters: {
-                    labels: [
-                      ['Applicant','Please Select Company and Applicant'],
-                      ['Owner', 'Land Owner']
-                    ],
+                    labels: [['Person or Organization','Please Select Company and Applicant']],
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '859ca092-521d-11ee-b790-0242ac120002',
-                    renderContext: 'workflow',
+                    graphids: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
+                    nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
                     hiddenNodes: [
-                      '859cc43c-521d-11ee-b790-0242ac120002',
-                      '859cbcd0-521d-11ee-b790-0242ac120002',
-                      '859cb5b4-521d-11ee-b790-0242ac120002'
+                      'f5565c2c-48b6-11ee-85af-0242ac140007',
+                      'f55671b2-48b6-11ee-85af-0242ac140007',
+                      'f5565c2c-48b6-11ee-85af-0242ac140007',
+                      'f5566b40-48b6-11ee-85af-0242ac140007',
+                      'f5566cda-48b6-11ee-85af-0242ac140007',
+                      'f556699c-48b6-11ee-85af-0242ac140007',
+                      'f5566654-48b6-11ee-85af-0242ac140007',
+                      'f5567342-48b6-11ee-85af-0242ac140007'
                     ],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
@@ -240,16 +207,13 @@ define([
                     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
+                      '5d2ae012-48cf-11ee-8e4e-0242ac140007',
                       '777596ba-48cf-11ee-8e4e-0242ac140007',
                       '916b5e7e-48cf-11ee-8e4e-0242ac140007'
                     ],
                     labels: [
-                      ['Proposal Text', 'Submission Details'],
-                      ['Digital File(s)', 'Submission Attachments']
-                    ],
-                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    resourceTileId: "['init-step']['app-id'][0]['tileId']",
-                    resourceModelDigitalObjectNodeGroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007'
+                      ['Proposal Text', 'Submission Details']
+                    ]
                   }
                 },
                 // {
@@ -316,6 +280,38 @@ define([
                   }
                 },
               ]
+            },
+            {
+              /**
+               * Using custom component to handle the creation of Digital
+               * Objects that will then be automatically named and related
+               * to the Excavation License model.
+               */
+              componentName: 'related-document-upload',
+              uniqueInstanceName: 'file-upload',
+              tilesManaged: 'one',
+              parameters: {
+                /**
+                 * Using Digital Object graph id and the file upload
+                 * node group id.
+                 */
+                graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
+                nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+
+                /**
+                 * These can be difficult to work with. Sometimes the `tileId` will be all
+                 * lowercase and sometimes it will be camel case. This will vary between workflows.
+                 */
+                resourceModelId:
+                  "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                resourceTileId: "['init-step']['app-id'][0]['tileId']",
+
+                /**
+                 * This needs to refer to the Excavation models
+                 * Digital object node group.
+                 */
+                resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
+              }
             }
           ]
         },
@@ -349,6 +345,25 @@ define([
 
                   }
                 },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'grid-info' ,
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
+                    // hiddenNodes: [
+                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
+                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                    // ],
+                    renderContext: 'workflow',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
+
+                  }
+                },
               ]
             }
           ]
@@ -357,9 +372,8 @@ define([
           title: 'Cover Letter',
           name: 'cover-letter-step',
           required: false,
-          workflowstepclass: 'workflow-form-component',
           informationboxdata: {
-            heading: 'Location Details'
+            heading: 'Use the fields provided below to configure the sections of the cover letter.'
           },
           layoutSections: [
             {
@@ -378,40 +392,40 @@ define([
             }
           ]
         },
-        {
-          title: 'License Summary',
-          name: 'license-complete',
-          description: 'Choose an option below',
-          component: 'views/components/workflows/component-based-step',
-          componentname: 'component-based-step',
-          layoutSections: [
-              {
-                  componentConfigs: [
-                      { 
-                          componentName: 'license-final-step',
-                          uniqueInstanceName: 'license-final',
-                          tilesManaged: 'none',
-                          parameters: {
-                              // digitalObject: "['upload-documents']['upload-documents-step']",
-                              // consultationTileid: "['init-name-step']['application-id-instance']['tileid']",
-                              activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                          },
-                      },
-                  ], 
-              },
-          ],
-          graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
-          nodegroupid: '6a773228-db20-11e9-b6dd-784f435179ea',
-          icon: 'fa-check',
-          resourceid: null,
-          tileid: null,
-          parenttileid: null,
-          informationboxdata: {
-              heading: 'Workflow Complete: Review your work',
-              text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over',
-          }
-        }
+        // {
+        //   title: 'License Summary',
+        //   name: 'license-complete',
+        //   description: 'Choose an option below',
+        //   component: 'views/components/workflows/component-based-step',
+        //   componentname: 'component-based-step',
+        //   layoutSections: [
+        //       {
+        //           componentConfigs: [
+        //               { 
+        //                   componentName: 'license-final-step',
+        //                   uniqueInstanceName: 'license-final',
+        //                   tilesManaged: 'none',
+        //                   parameters: {
+        //                       // digitalObject: "['upload-documents']['upload-documents-step']",
+        //                       // consultationTileid: "['init-name-step']['application-id-instance']['tileid']",
+        //                       activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+        //                       resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+        //                   },
+        //               },
+        //           ], 
+        //       },
+        //   ],
+        //   graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
+        //   nodegroupid: '6a773228-db20-11e9-b6dd-784f435179ea',
+        //   icon: 'fa-check',
+        //   resourceid: null,
+        //   tileid: null,
+        //   parenttileid: null,
+        //   informationboxdata: {
+        //       heading: 'Workflow Complete: Review your work',
+        //       text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over',
+        //   }
+        // }
       ];
 
       Workflow.apply(this, [params]);

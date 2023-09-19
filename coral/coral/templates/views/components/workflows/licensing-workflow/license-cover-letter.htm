@@ -297,7 +297,20 @@
   </div>
   <div class="card-component" style="width: 100%">
     <div class="row widget-wrapper">
-      <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%" data-bind="html: letter()"></div>
+      <div
+        data-bind="component: {
+          name: 'cover-letter-widget',
+          params: {
+            config: {
+              'label': 'Cover Letter',
+            },
+            coverLetterHtml: letter,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+        }"
+      ></div>
       {% comment %} <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
         <!-- HEADER -->
         <div style="display: flex; align-items: end; width: 100%; flex-direction: column">

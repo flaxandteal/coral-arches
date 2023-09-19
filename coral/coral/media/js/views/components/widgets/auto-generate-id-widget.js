@@ -5,7 +5,7 @@ define([
   'underscore',
   'viewmodels/widget',
   'templates/views/components/widgets/auto-generate-id-widget.htm'
-], function (ko, arches, uuid, _, WidgetViewModel, autoGenerateIdWidget) {
+], function (ko, arches, uuid, _, WidgetViewModel, autoGenerateIdTemplate) {
   /**
    * registers a text-widget component for use in forms
    * @function external:"ko.components".text-widget
@@ -21,15 +21,21 @@ define([
       WidgetViewModel.apply(this, [params]);
 
       const self = this;
-      try {
 
-         self.idValue = self.value()[arches.activeLanguage]?.value;
-      } catch {
-        self.idValue = self.value[arches.activeLanguage].value()
+      self.currentLanguage = ko.observable({ code: arches.activeLanguage });
+
+      if (ko.isObservable(self.value)) {
+        self.idValue = ko.isObservable(self.value()[arches.activeLanguage]?.value) 
+          ? ko.unwrap(self.value()[arches.activeLanguage]?.value) 
+          : self.value()[arches.activeLanguage]?.value;
+      } else {
+        self.idValue = ko.isObservable(self.value[arches.activeLanguage]?.value) 
+          ? ko.unwrap(self.value[arches.activeLanguage]?.value) 
+          : self.value[arches.activeLanguage]?.value;
       }
-  
-      if (ko.isObservable(self.idValue) && !self.idValue()) {
-        self.idValue = ko.observable(uuid.generate());
+
+      if (!self.idValue) {
+        self.idValue = uuid.generate();
         self.value({
           [arches.activeLanguage]: {
             value: self.idValue,
@@ -38,6 +44,6 @@ define([
         });
       }
     },
-    template: autoGenerateIdWidget
+    template: autoGenerateIdTemplate
   });
 });

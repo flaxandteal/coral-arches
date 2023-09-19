@@ -1,0 +1,12 @@
+{
+  "widgetid": "f07afda6-3d08-4435-8781-5b1dd15a8697",
+  "name": "cover-letter-widget",
+  "component": "views/components/widgets/cover-letter-widget",
+  "defaultconfig": {
+    "placeholder": "",
+    "label": "Cover Letter",
+    "defaultValue": { "en": { "value": "<strong>Renders HTML</strong>", "direction": "ltr" } }
+  },
+  "helptext": null,
+  "datatype": "string"
+}

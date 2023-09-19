@@ -5,39 +5,17 @@
             "cards": [
                 {
                     "active": true,
-                    "cardid": "159d43e7-e90e-458a-a019-1e9cc8fd4ac5",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": {
-                        "en": null
-                    },
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
-                    "instructions": {
-                        "en": null
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "New Node"
-                    },
-                    "nodegroup_id": "f1e49aa8-53d4-11ee-8e0f-0242ac130008",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "280b701c-4e4d-11ee-a340-0242ac140007",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "280b701c-4e4d-11ee-a340-0242ac140007",
+                            "constraintid": "24e3c330-147f-48e6-a157-773a0712a58b",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -165,7 +143,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Status and Duration Dates"
                     },
@@ -205,7 +183,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "File(s)"
                     },
@@ -362,7 +340,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -429,7 +407,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Proposal"
                     },
@@ -456,7 +434,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Actors"
                     },
@@ -2676,6 +2654,12 @@
                 {
                     "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
                     "config": {
+                        "default": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": "<strong>Renders HTML</strong>"
+                            }
+                        },
                         "defaultValue": {
                             "en": {
                                 "direction": "ltr",
@@ -2691,7 +2675,7 @@
                             "en": "Enter text"
                         },
                         "uneditable": false,
-                        "width": "100%"
+                        "width": "100%%"
                     },
                     "id": "fd6e66f3-1475-40f8-bce7-fe9ffa45c23d",
                     "label": {
@@ -2700,7 +2684,7 @@
                     "node_id": "72e0fc96-53d5-11ee-844f-0242ac130008",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000005"
+                    "widget_id": "f07afda6-3d08-4435-8781-5b1dd15a8697"
                 }
             ],
             "color": null,
@@ -3975,7 +3959,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "6eb3ed8a-16e4-45d6-ab47-0312672ddf9a"
+                    "id": "9831945b-ee6f-4fea-97e1-6e3ff816d1af"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -3997,12 +3981,6 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "2749ea5a-48cb-11ee-be76-0242ac140007",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "280b6cfc-4e4d-11ee-a340-0242ac140007",
                     "parentnodegroup_id": null
                 },
                 {
@@ -4057,12 +4035,6 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "ee5947c6-48b2-11ee-abec-0242ac140007",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "f1e49aa8-53d4-11ee-8e0f-0242ac130008",
                     "parentnodegroup_id": null
                 },
                 {
@@ -7099,8 +7071,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "aa999ab2-53d5-11ee-844f-0242ac130008",
-                "published_time": "2023-09-15T14:39:25.039",
+                "publicationid": "64270d62-4bce-11ee-be90-0242ac140002",
+                "published_time": "2023-09-05T09:27:11.069",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],

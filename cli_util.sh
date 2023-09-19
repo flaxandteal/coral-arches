@@ -13,3 +13,9 @@ archescopy_fn() {
 alias archescopy=archescopy_fn
 
 # docker cp ./arches/arches/app/media/js/viewmodels/workflow-step.js coral-arches_arches_1:/web_root/arches/arches/app/media/js/viewmodels/workflow-step.js
+
+# Can be used to find things such as UUID's across the project
+coralfind_fn() {
+  find -path ./coral/coral/media/build -prune -o -type f -exec grep --color -n -E $1 {} + | cut -b 1-400
+}
+alias coralfind=coralfind_fn

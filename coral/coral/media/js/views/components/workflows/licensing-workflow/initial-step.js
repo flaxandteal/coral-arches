@@ -26,8 +26,6 @@ define([
     this.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
     this.applicationId = '';
 
-    console.log(params.form.savedData())
-
     this.licenseSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
 
     params.form.save = async () => {
@@ -38,7 +36,7 @@ define([
        * be confused with a resource instance id.
        */
       self.applicationId = self.tile()?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
-      console.log('app id: ', self.applicationId);
+      console.log('License Application ID: ', self.applicationId);
 
       /**
        * TODO: Handle errors
@@ -63,7 +61,6 @@ define([
               });
               params.form.complete(true);
               params.form.saving(false);
-              console.log("the data", params.form.savedData())
           }
 
           }
@@ -152,7 +149,6 @@ define([
       if (activityTile?.ok) {
         const activityTileResult = await activityTile.json();
         self.actLocTileId = activityTileResult.tileid;
-        console.log("ACTIVITY LOCATION TILE: ", self.actLocTileId)
         return activityTile;
       }
     };
