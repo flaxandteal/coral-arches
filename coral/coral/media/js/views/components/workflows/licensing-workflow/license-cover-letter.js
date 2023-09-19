@@ -30,6 +30,7 @@ define([
       .then(data => this.relatedResources(data))
   };
 
+  this.configKeys = ko.observable({placeholder: 0})
     
 
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
@@ -42,8 +43,6 @@ define([
         direction: 'ltr'
       }
     });
-    console.log("self", self)
-    console.log("postsum tile", self.tile)
 
     self.getTextValue = (textObject) => {
       if (ko.isObservable(textObject)) {
@@ -56,6 +55,17 @@ define([
     self.getSavedValue = (key) => {
       return params.form.savedData()?.coverLetterData[key];
     };
+
+    var getNodeValues = function(tiles, nodeId) {
+      var values = [];
+      tiles.forEach((tile) => {
+        if (tile.data[nodeId]){
+          values.push(tile.data[nodeId])
+        }
+          });
+      ;
+      return values;
+  };
 
     this.activityResourceData = ko.observable();
     this.licenseResourceData = ko.observable();
@@ -78,6 +88,9 @@ define([
      */
     this.contacts_loaded = ko.observable(false)
     this.applicants = ko.observable({});
+
+    this.applicantList = ko.observable([])
+    
     this.applicantsAddresses = ko.observable({});
     this.companies = ko.observable({})
     this.companiesAddresses = ko.observable({})
@@ -89,15 +102,27 @@ define([
     );
     this.signed = ko.observable(self.getSavedValue('signed') || createTextObject());
     
+    this.siteAddress = {}
+    this.siteAddresses = ko.observable()
+    // TODO change writable computed to subscribe events
     this.tempApp = ko.computed({
       read: function (){
-        console.log("read")
         return this.applicant()
       },
       write: function (val){
-        console.log("temp temp", val)
         if (val){
           this.applicant(createTextObject(val))
+        }
+      }
+    }, this)
+
+    this.tempComp = ko.computed({
+      read: function (){
+        return this.company()
+      },
+      write: function (val){
+        if (val){
+          this.company(createTextObject(val))
         }
       }
     }, this)
@@ -116,36 +141,18 @@ define([
     /**
      * Location
      */
-    this.areaName = ko.observable(self.getSavedValue('areaName') || createTextObject());
-    this.buildingName = ko.observable(self.getSavedValue('buildingName') || createTextObject());
-    this.buildingNumber = ko.observable(self.getSavedValue('buildingNumber') || createTextObject());
-    this.street = ko.observable(self.getSavedValue('street') || createTextObject());
+    this.areaName = ko.observable(self.getSavedValue('areaName') || createTextObject(""));
+    this.buildingName = ko.observable(self.getSavedValue('buildingName') || createTextObject(""));
+    this.buildingNumber = ko.observable(self.getSavedValue('buildingNumber') || createTextObject(""));
+    this.street = ko.observable(self.getSavedValue('street') || createTextObject(""));
     this.buildingNumberSubSt = ko.observable(
-      self.getSavedValue('buildingNumberSubSt') || createTextObject()
+      self.getSavedValue('buildingNumberSubSt') || createTextObject("")
     );
-    this.subStreet = ko.observable(self.getSavedValue('subStreet') || createTextObject());
-    this.city = ko.observable(self.getSavedValue('city') || createTextObject());
-    this.county = ko.observable(self.getSavedValue('county') || createTextObject());
-    this.postCode = ko.observable(self.getSavedValue('postCode') || createTextObject());
+    this.subStreet = ko.observable(self.getSavedValue('subStreet') || createTextObject(""));
+    this.city = ko.observable(self.getSavedValue('city') || createTextObject(""));
+    this.county = ko.observable(self.getSavedValue('county') || createTextObject(""));
+    this.postCode = ko.observable(self.getSavedValue('postCode') || createTextObject(""));
 
-    this.tempAdd = ko.computed({
-      read: function (){
-        console.log("read")
-        return this.applicant()
-      },
-      write: function (val){
-        console.log("temp temp", val)
-        // this.areaName(createTextObject(val.areaName))
-        this.buildingName(createTextObject(val.buildingName))
-        this.buildingNumber(createTextObject(val.buildingNumber))
-        this.street(createTextObject(val.street))
-        this.buildingNumberSubSt(createTextObject(val.buildingNumberSubSt))
-        this.subStreet(createTextObject(val.subStreet))
-        this.city(createTextObject(val.city))
-        this.county(createTextObject(val.county))
-        this.postCode(createTextObject(val.postCode))
-      }
-    }, this)
     /**
      * Dates
      */
@@ -163,7 +170,42 @@ define([
     this.nameOptions = ko.observable(['full name', 'title and surname', 'first name']);
 
     this.selectedAddress = ko.observable('applicant');
-    this.addressOptions = ko.observable(['applicant', 'company', 'site']);
+    this.addressOptions = ko.observable([
+      {text: 'applicant', id: 'applicant'}, 
+      {text: 'company', id: 'company'}, 
+      {text: 'site', id: 'site'}, 
+    ]);
+
+    this.tempAdd = ko.computed({
+      read: function (){
+        if (self.selectedAddress() === 'applicant'){
+          return this.applicant()
+        }
+        if (self.selectedAddress() === 'company'){
+          console.log(this.companies())
+          console.log(this.company())
+          console.log(this.companies()[this.company().en.value])
+          return this.company()
+        }
+        if (self.selectedAddress() === 'site'){
+          console.log(this.siteAddress)
+          this.tempAdd(this.siteAddress)
+        }
+      },
+      write: function (val){
+        if (val) {
+        console.log("Valval",val)
+        this.buildingName(createTextObject(val.buildingName))
+        this.buildingNumber(createTextObject(val.buildingNumber))
+        this.street(createTextObject(val.street))
+        this.buildingNumberSubSt(createTextObject(val.buildingNumberSubSt))
+        this.subStreet(createTextObject(val.subStreet))
+        this.city(createTextObject(val.city))
+        this.county(createTextObject(val.county))
+        this.postCode(createTextObject(val.postCode))
+      }
+      }
+    }, this)
 
     this.appDateOptions = ko.observable(['received', 'acknowledged']);
     this.selectedAppDate = ko.observable('received');
@@ -328,340 +370,160 @@ define([
       self.loadData();
     }
 
-    // this.sendDate = ko.computed(
-    //   {
-    //     read: function () {
-    //       if (this.selectedSendDate() === 'today') {
-    //         return new Date().toLocaleDateString();
-    //       }
-    //       if (this.selectedSendDate() === 'decision') {
-    //         return new Date(this.decisionDate()).toLocaleDateString();
-    //       }
-    //       if (this.selectedSendDate() === 'acknowledged') {
-    //         return new Date(this.acknowledgedDate()).toLocaleDateString();
-    //       }
-    //     },
-    //     write: function () {}
-    //   },
-    //   this
-    // );
-
-    // this.appDate = ko.computed(
-    //   {
-    //     read: function () {
-    //       if (this.selectedAppDate() === 'received') {
-    //         return new Date(this.receivedDate()).toLocaleDateString();
-    //       }
-    //       if (this.selectedAppDate() === 'acknowledged') {
-    //         return new Date(this.acknowledgedDate()).toLocaleDateString();
-    //       }
-    //     },
-    //     write: function () {}
-    //   },
-    //   this
-    // );
-
-    // this.address = ko.computed({
-    //   read: function () {
-    //     return `${this.buildingName() != '' ? this.buildingName() + ', <br />' : ''}
-    //     ${this.buildingNumber()} ${this.street()},
-    //     ${this.buildingNumberSubSt() != '' ? this.buildingNumberSubSt() + ' ' : ''}
-    //     ${this.subStreet() != '' ? this.subStreet() + ',' : ''}
-    //     <br />${this.city()},
-    //     <br />${this.county()},
-    //     <br />${this.postCode()}`
-    //   },
-    //   write: function (){
-
-    //   }
-    //   }, this)
-
-    //   this.addressSelector = ko.computed({
-
-    //     read: function () {
-    //       console.log("begin read", this.selectedAddress())
-    //       this.selectedAddress()
-    //       console.log(this.reportVals)
-    //       if (this.selectedAddress() === 'applicant'){
-    //         this.buildingName(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['buildingName'] : '')
-    //         this.buildingNumber(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['buildingNumber'] : '')
-    //         this.street(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['street'] : '')
-    //         this.buildingNumberSubSt(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['buildingNumberSubSt'] : '')
-    //         this.subStreet(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['subStreet'] : '')
-    //         this.city(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['city'] : '')
-    //         this.county(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['county'] : '')
-    //         this.postCode(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['postCode'] : '')
-    //       }
-    //       if (this.selectedAddress() === 'company'){
-    //         this.buildingName(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['buildingName'] : '')
-    //         this.buildingNumber(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['buildingNumber'] : '')
-    //         this.street(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['street'] : '')
-    //         this.buildingNumberSubSt(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['buildingNumberSubSt'] : '')
-    //         this.subStreet(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['subStreet'] : '')
-    //         this.city(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['city'] : '')
-    //         this.county(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['county'] : '')
-    //         this.postCode(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['postCode'] : '')
-    //       }
-    //       if (this.selectedAddress() === 'site'){
-    //         console.log(this.reportVals['siteAddress'])
-    //         this.buildingName(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Building Name']['Building Name Value']['@value'] : '')
-    //         this.buildingNumber(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Building Number']['Building Number Value']['@value'] : '')
-    //         this.street(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Street']['Street Value']['@value'] : '')
-    //         this.buildingNumberSubSt(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Building Number Sub-Street']['Building Number Sub-Street Value']['@value'] : '')
-    //         this.subStreet(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Sub-Street ']['Sub-Street Value']['@value'] : '')
-    //         this.city(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Town or City']['Town or City Value']['@value'] : '')
-    //         this.county(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['County']['County Value']['@value'] : '')
-    //         this.postCode(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Postcode']['Postcode Value']['@value'] : '')
-    //       }
-    //     },
-    //     }, this)
-
-    //   this.address = ko.computed({
-    //     read: function () {
-    //       return `${this.buildingName() != '' ? this.buildingName() + ', <br />' : ''}
-    //       ${this.buildingNumber()} ${this.street()},
-    //       ${this.buildingNumberSubSt() != '' ? this.buildingNumberSubSt() + ' ' : ''}
-    //       ${this.subStreet() != '' ? this.subStreet() + ',' : ''}
-    //       <br />${this.city()},
-    //       <br />${this.county()},
-    //       <br />${this.postCode()}`
-    //     },
-    //     }, this)
-
-    //     this.addressSelector = ko.computed({
-
-    //       read: function () {
-    //         console.log("begin read", this.selectedAddress())
-    //         this.selectedAddress()
-    //         console.log(this.reportVals)
-    //         if (this.selectedAddress() === 'applicant'){
-    //           this.buildingName(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['buildingName'] : '')
-    //           this.buildingNumber(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['buildingNumber'] : '')
-    //           this.street(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['street'] : '')
-    //           this.buildingNumberSubSt(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['buildingNumberSubSt'] : '')
-    //           this.subStreet(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['subStreet'] : '')
-    //           this.city(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['city'] : '')
-    //           this.county(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['county'] : '')
-    //           this.postCode(this.reportVals['applicantAddresses'] ? this.reportVals['applicantAddresses']['postCode'] : '')
-    //         }
-    //         if (this.selectedAddress() === 'company'){
-    //           this.buildingName(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['buildingName'] : '')
-    //           this.buildingNumber(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['buildingNumber'] : '')
-    //           this.street(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['street'] : '')
-    //           this.buildingNumberSubSt(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['buildingNumberSubSt'] : '')
-    //           this.subStreet(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['subStreet'] : '')
-    //           this.city(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['city'] : '')
-    //           this.county(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['county'] : '')
-    //           this.postCode(this.reportVals['companyAddresses'] ? this.reportVals['companyAddresses']['postCode'] : '')
-    //         }
-    //         if (this.selectedAddress() === 'site'){
-    //           console.log(this.reportVals['siteAddress'])
-    //           this.buildingName(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Building Name']['Building Name Value']['@value'] : '')
-    //           this.buildingNumber(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Building Number']['Building Number Value']['@value'] : '')
-    //           this.street(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Street']['Street Value']['@value'] : '')
-    //           this.buildingNumberSubSt(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Building Number Sub-Street']['Building Number Sub-Street Value']['@value'] : '')
-    //           this.subStreet(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Sub-Street ']['Sub-Street Value']['@value'] : '')
-    //           this.city(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Town or City']['Town or City Value']['@value'] : '')
-    //           this.county(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['County']['County Value']['@value'] : '')
-    //           this.postCode(this.reportVals['siteAddress'] ? this.reportVals['siteAddress']['Postcode']['Postcode Value']['@value'] : '')
-    //         }
-    //       },
-    //       }, this)
-
-    // this.areaName(createTextObject('testing213'))
-
     // this.getResourceData = function() {
-    // window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false')
-    //   .then(response => response.json())
-    //   .then(val =>  {
-    //     console.log("val", val)
-    //     this.activityResourceData(val.resource)
-    //     // this.areaName(createTextObject(val.resource["Associated Activities"]["@value"]))
+    window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false')
+      .then(response => response.json())
+      .then(val =>  {
+        this.activityResourceData(val.resource)
+        this.areaName(createTextObject(val.resource["Associated Activities"]["@value"]))
+        this.areaName.valueHasMutated()
 
-    //     self.areaName(createTextObject('testing213'))
+        this.signed(createTextObject(val.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
+        this.decisionDate(val.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
+        this.appDate(val.resource["Status and Duration Dates"]["Received Date"]["@value"])
+        this.textBody(createTextObject(this.textBody().en.value.replace('[Date]', new Date(this.appDate()).toLocaleDateString())))
 
-    //     this.signed(createTextObject(val.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
-    //     this.decisionDate(val.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
-    //     this.appDate(val.resource["Status and Duration Dates"]["Received Date"]["@value"])
-    //     this.textBody(createTextObject(this.textBody().en.value.replace('[Date]', new Date(this.appDate()).toLocaleDateString())))
+        window.fetch(arches.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+        .then(response => response.json())
+        .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
+          const contacts = []
+            window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
+            .then(response => response.json())
+            .then(
+              data => {contacts.push(data)})
+            .then(x => {
 
-    //     // window.fetch(arches.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
-    //     // .then(response => response.json())
-    //     // .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
-    //     //   const contacts = []
-    //     //     window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
-    //     //     .then(response => response.json())
-    //     //     .then(
-    //     //       data => {contacts.push(data)})
-    //     //     .then(x => {
+              for (let contact of contacts) {
+                this.contacts_loaded(false)
+                if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
 
-    //     //       for (let contact of contacts) {
-    //     //         this.contacts_loaded(false)
-    //     //         if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
+                  this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
 
-    //     //           this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
+                  if (contact["resource"]["Location Data"]) {
+                    this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+                        return {
+                          buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                          buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                          street : location.Addresses['Street']['Street Value']["@value"],
+                          buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                          subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                          city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                          county : location.Addresses['County']['County Value']["@value"],
+                          postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                        }
+                      })
+                  }
+                }
+                else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
 
-    //     //           if (contact["resource"]["Location Data"]) {
-    //     //             this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-    //     //                 return {
-    //     //                   buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
-    //     //                   buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
-    //     //                   street : location.Addresses['Street']['Street Value']["@value"],
-    //     //                   buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-    //     //                   subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-    //     //                   city : location.Addresses['Town or City']['Town or City Value']["@value"],
-    //     //                   county : location.Addresses['County']['County Value']["@value"],
-    //     //                   postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-    //     //                 }
-    //     //               })
-    //     //           }
-    //     //         }
-    //     //         else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
+                  this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
+                  this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
+                  console.log("comp res", contact)
+                  if (contact["resource"]["Location Data"]) {
 
-    //     //           this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
-    //     //           this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
-
-    //     //           if (contact["resource"]["Location Data"]) {
-    //     //             this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-    //     //                 return {
-    //     //                   buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
-    //     //                   buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
-    //     //                   street : location.Addresses['Street']['Street Value']["@value"],
-    //     //                   buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-    //     //                   subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-    //     //                   city : location.Addresses['Town or City']['Town or City Value']["@value"],
-    //     //                   county : location.Addresses['County']['County Value']["@value"],
-    //     //                   postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-    //     //                 }
-    //     //           })
-    //     //         } 
-    //     //       }
-    //     //     } 
-    //     //     this.contacts_loaded(true)
-    //     //     })
-    //     //   })
-    //     //   )
-    // })
+                    if (typeof(contact["resource"]["Location Data"].map) === "function") {
+                      this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+                        return {
+                          buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                          buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                          street : location.Addresses['Street']['Street Value']["@value"],
+                          buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                          subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                          city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                          county : location.Addresses['County']['County Value']["@value"],
+                          postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                        }
+                    })
+                    }
+                    else {
+                      let location = contact["resource"]["Location Data"]
+                      this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = [{
+                        buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                        buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                        street : location.Addresses['Street']['Street Value']["@value"],
+                        buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                        subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                        city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                        county : location.Addresses['County']['County Value']["@value"],
+                        postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                      }]
+                    }
+                } 
+              }
+            } 
+            this.applicantList(Object.keys(this.applicants()).map(x => { return {text: x, id: createTextObject(x)}}))
+            this.contacts_loaded(true)
+            })
+          })
+          )
+    })
   // };
 
       
 
-        // this.reportVals['siteAddress'] = val.resource["Location Data"]["Addresses"][0]
-
-        // val.resource["External Cross References"].forEach(ref => {
-        //   if (ref["External Cross Reference Source"]["@value"] === "Historic Environment Record Number"){
-        //     // this.reportVals['bFileNumber'] = ref["External Cross Reference"]["@value"]
-        //     this.bFileNumber(createTextObject(ref["External Cross Reference"]["@value"]))
-        //   }
-        //   if (ref["External Cross Reference Source"]["@value"] === "Excavation"){
-        //     // this.reportVals['licenseNo'] = ref["External Cross Reference"]["@value"]
-        //     this.licenseNo(createTextObject(ref["External Cross Reference"]["@value"]))
-        //   }
-        //   if (ref["External Cross Reference Source"]["@value"] === "Wreck"){
-        //     // this.reportVals['wreckRef'] = ref["External Cross Reference"]["@value"]
-        //     // this.reportVals['wreckDesc'] = ref["External Cross Reference Notes"]["External Cross Reference Description"]["@value"]
-        //   }
-        // });
+        
       //   this.loading(false)
       // })
 
-      // this.relatedResources.subscribe((val) => {
-        // console.log("relval", val)
-        // this.licenseResourceData(val.related_resources[0])
-        // console.log(this.licenseResourceData())
-        // this.reportVals['areaName'] = val.related_resources[0]
-        // this.loading(false)
-
-        // this.reportVals["related_license"] = val["resource_relationships"][0]["resourceinstanceidfrom"]
-        // this.loading(true)
-        // window.fetch(arches.urls.api_resources(val["resource_relationships"][0]["resourceinstanceidfrom"]) + '?format=json&compact=false')
-        //     .then(response => response.json())
-        //     .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
-        //     .then(x => {
-        //       window.fetch(arches.urls.api_tiles(val.related_resources[0]['resource']['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
-        //       .then(response => response.json())
-        //       .then(data => this.actorTileData(data)).then(x => {this.loading(true)})
-        //       .then(x => {
-        //         this.actorTileData().data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((actor) => {
-        //           window.fetch(arches.urls.api_resources(actor.resourceId) + '?format=json&compact=false')
-        //           .then(response => response.json())
-        //           .then(
-        //             data => {this.loading(true); this.actorReportData().push(data)})
-        //           .then(x => {
-        //             this.loading(true)
-        //             this.actorReportData().forEach(actor => {
-        //               if (actor.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588'){
-        //                 // this.reportVals['applicant'] = actor["resource"]["Name"][0]["Full Name"]["@value"]
-        //                 this.applicant(this.reportVals.applicant)
-        //                 // if (actor["resource"]["Location Data"]) {
-        //                 //   this.reportVals['applicantAddresses'] = 
-        //                 //   {
-        //                 //     buildingName : actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"],
-        //                 //     buildingNumber : actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"],
-        //                 //     street : actor["resource"]["Location Data"][0].Addresses['Street']['Street Value']["@value"],
-        //                 //     buildingNumberSubSt : actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-        //                 //     subStreet : actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-        //                 //     city : actor["resource"]["Location Data"][0].Addresses['Town or City']['Town or City Value']["@value"],
-        //                 //     county : actor["resource"]["Location Data"][0].Addresses['County']['County Value']["@value"],
-        //                 //     postCode : actor["resource"]["Location Data"][0].Addresses['Postcode']['Postcode Value']["@value"]
-        //                 //   }
-        //                 //   this.buildingName(this.reportVals['applicantAddresses']['buildingName'])
-        //                 //   this.buildingNumber(this.reportVals['applicantAddresses']['buildingNumber'])
-        //                 //   this.street(this.reportVals['applicantAddresses']['street'])
-        //                 //   this.buildingNumberSubSt(this.reportVals['applicantAddresses']['buildingNumberSubSt'])
-        //                 //   this.subStreet(this.reportVals['applicantAddresses']['subStreet'])
-        //                 //   this.city(this.reportVals['applicantAddresses']['city'])
-        //                 //   this.county(this.reportVals['applicantAddresses']['county'])
-        //                 //   this.postCode(this.reportVals['applicantAddresses']['postCode'])
-        //                 // }
-        //                 // this.buildingName(this.reportVals['applicantAddresses']['buildingName'])
-        //                 // this.buildingNumber(this.reportVals['applicantAddresses']['buildingNumber'])
-        //                 // this.street(this.reportVals['applicantAddresses']['street'])
-        //                 // this.buildingNumberSubSt(this.reportVals['applicantAddresses']['buildingNumberSubSt'])
-        //                 // this.subStreet(this.reportVals['applicantAddresses']['subStreet'])
-        //                 // this.city(this.reportVals['applicantAddresses']['city'])
-        //                 // this.county(this.reportVals['applicantAddresses']['county'])
-        //                 // this.postCode(this.reportVals['applicantAddresses']['postCode'])
-        //                 // `${actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Name']['Building Name Value']["@value"] + ', <br />' : ''}
-        //                 //  ${actor["resource"]["Location Data"][0].Addresses['Building Number']['Building Number Value']["@value"]} ${actor["resource"]["Location Data"][0].Addresses['Street']['Street Value']["@value"]},
-        //                 //  ${actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"] + ', <br />' : ''}
-        //                 //  ${actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] != '' ? actor["resource"]["Location Data"][0].Addresses['Sub-Street ']['Sub-Street Value']["@value"] + ', <br />' : ''}
-        //                 //  <br />${actor["resource"]["Location Data"][0].Addresses['Town or City']['Town or City Value']["@value"]},
-        //                 //  <br />${actor["resource"]["Location Data"][0].Addresses['County']['County Value']["@value"]},
-        //                 //  <br />${actor["resource"]["Location Data"][0].Addresses['Postcode']['Postcode Value']["@value"]}`
-        //               }
-        //               this.address(this.reportVals['applicantAddresses'])
-        //             // }
-        //             if (actor.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588'){
-        //               this.company(createTextObject(actor["resource"]["Names"][0]["Organization Name"]["@value"]))
-        //               // if (actor["resource"]["Location Data"]){
-        //               //   this.reportVals['companyAddresses'] =
-        //               //   {
-        //               //     buildingName : actor["resource"]["Location Data"]?.[0].Addresses['Building Name']['Building Name Value']["@value"],
-        //               //     buildingNumber : actor["resource"]["Location Data"]?.[0].Addresses['Building Number']['Building Number Value']["@value"],
-        //               //     street : actor["resource"]["Location Data"]?.[0].Addresses['Street']['Street Value']["@value"],
-        //               //     buildingNumberSubSt : actor["resource"]["Location Data"]?.[0].Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-        //               //     subStreet : actor["resource"]["Location Data"]?.[0].Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-        //               //     city : actor["resource"]["Location Data"]?.[0].Addresses['Town or City']['Town or City Value']["@value"],
-        //               //     county : actor["resource"]["Location Data"]?.[0].Addresses['County']['County Value']["@value"],
-        //               //     postCode : actor["resource"]["Location Data"]?.[0].Addresses['Postcode']['Postcode Value']["@value"]
-        //               //   }
-        //               // }
-        //             }
-        //           })
-        //           this.loading(false)
-        //         })
-        //       })
-
-        //     })
-        //           .then(x => {this.loading(false); console.log("repVals",this.reportVals)})
-        //   })
-  //       })
-  }
-
-  ko.components.register('license-cover-letter', {
-    viewModel: viewModel,
-    template: licenseCoverTemplate
-  });
-  return viewModel;
-});
+      // this.getRelatedResources = function() {
+        window.fetch(arches.urls.related_resources + this.resourceId() + "?paginate=false")
+        .then(response => response.json())
+        .then(val => {
+          console.log("relval", val)
+          val.related_resources.forEach(related_resource => {
+            if (related_resource.graph_id === "d4a88461-5463-11e9-90d9-000d3ab1e588") {
+              // company / organisation
+            }
+            if (related_resource.graph_id === "22477f01-1a44-11e9-b0a9-000d3ab1e588") {
+              // people
+            }
+            if (related_resource.graph_id === "b9e0701e-5463-11e9-b5f5-000d3ab1e588") {
+              // activity
+              externalRefs = getNodeValues(related_resource.tiles, '589d4dc7-edf9-11eb-9856-a87eeabdefba')
+              externalRefSources = getNodeValues(related_resource.tiles, '589d4dcd-edf9-11eb-8a7d-a87eeabdefba')
+              externalRefNotes = getNodeValues(related_resource.tiles, '589d4dca-edf9-11eb-83ea-a87eeabdefba')
+    
+              this.siteAddress.buildingName = getNodeValues(related_resource.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0].en.value
+              this.siteAddress.buildingNumber = getNodeValues(related_resource.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0].en.value
+              this.siteAddress.street = getNodeValues(related_resource.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0].en.value
+              this.siteAddress.subStreetNumber = getNodeValues(related_resource.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0].en.value
+              this.siteAddress.subStreet = getNodeValues(related_resource.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0].en.value
+              this.siteAddress.county = getNodeValues(related_resource.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0].en.value
+              this.siteAddress.postCode = getNodeValues(related_resource.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0].en.value
+              this.siteAddress.city = getNodeValues(related_resource.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0].en.value
+    
+            }
+            if (related_resource.graph_id === "a535a235-8481-11ea-a6b9-f875a44e0e11") {
+              // digital objects
+            }
+    
+          })
+          for (const index in externalRefSources) {
+            // currently using HER ref as bfile number. Need to change when we have Kanika's concepts.
+            if (externalRefSources[index] === "19afd557-cc21-44b4-b1df-f32568181b2c") {
+              this.bFileNumber = externalRefs[index].en.value
+            }
+            if (externalRefSources[index] === "9a383c95-b795-4d76-957a-39f84bcee49e") {
+              this.licenseNo = externalRefs[index].en.value
+            }
+            if (externalRefSources[index] === "df585888-b45c-4f48-99d1-4cb3432855d5") {
+              // this.reportVals.assetNames.push(externalRefs[index].en.value)
+              // this.reportVals.assetNotes.push(externalRefNotes[index].en.value)
+            }
+            if (externalRefSources[index] === "c14def6d-4713-465f-9119-bc33f0d6e8b3") {
+              // this.reportVals.wreckNames.push(externalRefs[index].en.value)
+              // this.reportVals.wreckNotes.push(externalRefNotes[index].en.value)
+            }
+          }
+            
+            })
+        // };
+      }
+      
+      ko.components.register('license-cover-letter', {
+        viewModel: viewModel,
+        template: licenseCoverTemplate
+      });
+      return viewModel;
+    });
+    
