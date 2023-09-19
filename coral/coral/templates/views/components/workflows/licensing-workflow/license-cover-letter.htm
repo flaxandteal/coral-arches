@@ -46,32 +46,53 @@
       ></div>
       
       <!-- ko if: contacts_loaded -->
-      <div
-        data-bind="if: selectedAddress() === 'applicant', component: {
+      <!-- <div
+        data-bind="component: {
           name: 'domain-select-widget',
-          node: {
-            'config': {
-              'options': addressOptions,
-            },
-          },
+
           params: {
             node: {
             'config': {
-              'options': addressOptions,
+              'options': applicantList,
               },
               'configKeys': configKeys
             },
             config: {
-              'label': 'Recipient Type',
-              'options': addressOptions,
+              'label': 'Recipient Name',
+              'options': applicantList,
             },
-            value: selectedAddress,
+            value: tempApp,
             loading: loading,
             form: $data,
             pageVm: $root
           }
       }"
       ></div>
+      <div data-bind="text: tempApp().en.value"></div>
+      <div data-bind="text: applicant().en.value"></div>
+      <div
+        data-bind="component: {
+          name: 'domain-select-widget',
+
+          params: {
+            node: {
+            'config': {
+              'options': tempApp,
+              },
+              'configKeys': configKeys
+            },
+            config: {
+              'label': 'Recipient Name',
+              'options': tempApp,
+            },
+            value: tempAdd,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+      }"
+      ></div> -->
+
       <div data-bind="if: selectedAddress() === 'applicant'">
       <div>Recipient Name</div>
       <select class="select2-choice select2-default"
