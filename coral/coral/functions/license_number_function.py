@@ -15,82 +15,51 @@ details = {
     'type': 'node',
     'description': 'Automatically generates a new license number after checking the database',
     'defaultconfig': {
-        'ext_cross_ref_nodegroup': '280b6cfc-4e4d-11ee-a340-0242ac140007',
-        'license_number_node': '280b75bc-4e4d-11ee-a340-0242ac140007',
-        'triggering_nodegroups': ['59d65ec0-48b9-11ee-84da-0242ac140007']
+        'triggering_nodegroups': ['991c3c74-48b6-11ee-85af-0242ac140007']
     },
     'classname': 'LicenseNumberFunction',
     'component': '',
 }
 
-# TODO: Number should only be generated once
-# TODO: Number should be validated
-
-
 class LicenseNumberFunction(BaseFunction):
-    def save(self, tile, request, context):
-        logger = logging.getLogger(__name__)
-        logger.warning('********** LicenseNumber running before tile save')
-        print('********** LicenseNumber running before tile save: ', tile)
-
     def post_save(self, tile, request, context):
-        logger = logging.getLogger(__name__)
-        logger.warning('********** LicenseNumber running after tile save')
-        print('********** LicenseNumber running after tile save')
-
         license_graph_id = 'cc5da227-24e7-4088-bb83-a564c4331efd'
-        total_licenses = Resource.objects.filter(
-            graph_id=license_graph_id).count()
+        total_licenses = Resource.objects.filter(graph_id=license_graph_id).count()
         two_digit_year = str(datetime.datetime.now().year)[-2:]
         license_number = f'AE/{two_digit_year}/{str(total_licenses).zfill(4)}'
 
-        print('LicenseNumber result: ', license_number)
+        # print('LicenseNumber: ', license_number)
 
         resourceinstance_id = str(tile.resourceinstance.resourceinstanceid)
-        ext_cross_ref_tile, created = Tile.objects.get_or_create(
-            # tileid=uuid.uuid4(),
-            resourceinstance_id=resourceinstance_id,
-            nodegroup_id='280b6cfc-4e4d-11ee-a340-0242ac140007',
-            defaults={
-                'data': {'280b75bc-4e4d-11ee-a340-0242ac140007': {'en': {
-                    'direction': 'ltr',
-                    'value': license_number
-                }}}
-            }
-        )
 
-        if not created:
-            print('LicenseNumber Created was false')
-            # try:
-            #     ext_cross_ref_tile.data = {'280b75bc-4e4d-11ee-a340-0242ac140007': {'en': {
-            #         'direction': 'ltr',
-            #         'value': license_number
-            #     }}}
-            # except Exception as e:
-            #     print('tile.data assignment error: ', e)
-            # try:
-            #     ext_cross_ref_tile.save(request=request)
-            # except Exception as e:
-            #     print('tile.save error: ',e)
+        try:
+            Tile.objects.get_or_create(
+                resourceinstance_id=resourceinstance_id,
+                nodegroup_id='280b6cfc-4e4d-11ee-a340-0242ac140007',
+                data={
+                    '280b75bc-4e4d-11ee-a340-0242ac140007': {'en': {
+                        'direction': 'ltr',
+                        'value': license_number
+                    }},
+                    # Set external reference source as 'Excavation'
+                    '280b7a9e-4e4d-11ee-a340-0242ac140007': '9a383c95-b795-4d76-957a-39f84bcee49e'
+                }
+            )
+        except Exception as e:
+            print('Failed saving license number external ref: ', e)
 
-        # try:
-        #     ext_cross_ref_tile.save(request=request)
-        # except Exception as e:
-        #     print('tile.save error: ',e)
+        try:
+            Tile.objects.get_or_create(
+                resourceinstance_id=resourceinstance_id,
+                nodegroup_id='59d65ec0-48b9-11ee-84da-0242ac140007',
+                data={
+                    '59d6676c-48b9-11ee-84da-0242ac140007': { 'en': {
+                        'direction': 'ltr',
+                        'value': f'Excavation License {license_number}'
+                    }}
+                }
+            )
+        except Exception as e:
+            print('Failed saving license name node: ', e)
 
         return
-
-    def on_import(self, tile, request):
-        logger = logging.getLogger(__name__)
-        logger.warning('********** LicenseNumber calling on import')
-        print('********** LicenseNumber calling on import')
-
-    def get(self, tile, request):
-        logger = logging.getLogger(__name__)
-        logger.warning('********** LicenseNumber calling get')
-        print('********** LicenseNumber calling get')
-
-    def delete(self, tile, request):
-        logger = logging.getLogger(__name__)
-        logger.warning('********** LicenseNumber calling delete')
-        print('********** LicenseNumber calling delete')
