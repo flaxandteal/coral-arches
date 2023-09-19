@@ -8,7 +8,14 @@
                     "cardid": "280b701c-4e4d-11ee-a340-0242ac140007",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "280b701c-4e4d-11ee-a340-0242ac140007",
+                            "constraintid": "24e3c330-147f-48e6-a157-773a0712a58b",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -22,12 +29,52 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "External Cross References"
                     },
                     "nodegroup_id": "280b6cfc-4e4d-11ee-a340-0242ac140007",
                     "sortorder": 13,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
+                            "constraintid": "8f1051a2-9a21-45c7-85fd-eae912412481",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        },
+                        {
+                            "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
+                            "constraintid": "bf350a77-ebb4-4ad6-9138-2c387789029b",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Cover Letter"
+                    },
+                    "nodegroup_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "sortorder": null,
                     "visible": true
                 },
                 {
@@ -2603,6 +2650,41 @@
                     "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
+                    "config": {
+                        "default": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": "<strong>Renders HTML</strong>"
+                            }
+                        },
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Letter",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "fd6e66f3-1475-40f8-bce7-fe9ffa45c23d",
+                    "label": {
+                        "en": "Letter"
+                    },
+                    "node_id": "72e0fc96-53d5-11ee-844f-0242ac130008",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "f07afda6-3d08-4435-8781-5b1dd15a8697"
                 }
             ],
             "color": null,
@@ -2630,6 +2712,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
                     "rangenode_id": "991c3c74-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
+                    "edgeid": "1a3011dc-7d8a-4340-80e2-6a7125f822d9",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
+                    "rangenode_id": "0dcf7c74-53d5-11ee-844f-0242ac130008"
                 },
                 {
                     "description": null,
@@ -2810,6 +2901,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "916b5e7e-48cf-11ee-8e4e-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "edgeid": "4c77714e-ef2f-4b8c-8353-5fb3871cedd6",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
+                    "rangenode_id": "43925a52-53d5-11ee-844f-0242ac130008"
                 },
                 {
                     "description": null,
@@ -3242,6 +3342,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "rangenode_id": "991c4340-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "43925a52-53d5-11ee-844f-0242ac130008",
+                    "edgeid": "9a449ead-fccd-4422-a0a2-e012ffa8ee86",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
+                    "rangenode_id": "72e0fc96-53d5-11ee-844f-0242ac130008"
                 },
                 {
                     "description": null,
@@ -3850,7 +3959,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "62865a96-e946-4284-a9ae-90cd05580b00"
+                    "id": "9831945b-ee6f-4fea-97e1-6e3ff816d1af"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -3865,13 +3974,13 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "nodegroupid": "0dcf7c74-53d5-11ee-844f-0242ac130008",
                     "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "280b6cfc-4e4d-11ee-a340-0242ac140007",
+                    "nodegroupid": "2749ea5a-48cb-11ee-be76-0242ac140007",
                     "parentnodegroup_id": null
                 },
                 {
@@ -3956,6 +4065,28 @@
                     "nodeid": "0a914884-48b4-11ee-90a8-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "cover_letter",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Cover Letter",
+                    "nodegroup_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "nodeid": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
                     "sortorder": 0
                 },
                 {
@@ -4404,6 +4535,28 @@
                     "nodeid": "3bcd2950-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "letter_contents",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Letter Contents",
+                    "nodegroup_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "nodeid": "43925a52-53d5-11ee-844f-0242ac130008",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
                     "sortorder": 0
                 },
                 {
@@ -5110,6 +5263,28 @@
                     "nodeid": "6b96c722-48c7-11ee-ba3a-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "letter",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Letter",
+                    "nodegroup_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "nodeid": "72e0fc96-53d5-11ee-844f-0242ac130008",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
                     "sortorder": 0
                 },
                 {
@@ -6896,8 +7071,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "692dff50-4e4e-11ee-8d52-0242ac140007",
-                "published_time": "2023-09-08T13:48:37.410",
+                "publicationid": "64270d62-4bce-11ee-be90-0242ac140002",
+                "published_time": "2023-09-05T09:27:11.069",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
