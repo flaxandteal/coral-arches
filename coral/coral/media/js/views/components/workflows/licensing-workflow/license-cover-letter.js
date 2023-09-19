@@ -12,10 +12,16 @@ define([
     this.resourceData = ko.observable();
     this.relatedResources = ko.observableArray();
 
-    
 
     _.extend(this, params.form);
 
+    /**
+     * Set loading to true to allow async requests to populate
+     * data before rendering the components.
+     * 
+     * This allows the starting data to be configured correctly.
+     */
+    self.loading = ko.observable(true);
 
 
   this.getRelatedResources = function() {
@@ -43,7 +49,7 @@ define([
       if (ko.isObservable(textObject)) {
         return textObject()[self.currentLanguage().code].value;
       } else {
-        return textObject;
+        return textObject[self.currentLanguage().code].value;
       }
     };
 
@@ -129,7 +135,7 @@ define([
       },
       write: function (val){
         console.log("temp temp", val)
-        this.areaName(createTextObject(val.areaName))
+        // this.areaName(createTextObject(val.areaName))
         this.buildingName(createTextObject(val.buildingName))
         this.buildingNumber(createTextObject(val.buildingNumber))
         this.street(createTextObject(val.street))
@@ -298,8 +304,28 @@ define([
       params.form.saving(false);
     };
 
+    self.loadData = async () => {
+      try {
+        const response = await window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false');
+        const data = await response.json();
+        self.areaName(createTextObject(data.resource["Associated Activities"]["@value"]))
+
+        /**
+         * After data has been populated the components
+         * will now render with the correct starting data.
+         */
+        self.loading(false);
+      } catch (error) {
+        console.error('Failed to load data required for cover letter: ', error);
+        /**
+         * TODO: Needs to display error to user
+         */
+      }
+    };
+
     if (!params.form.savedData()?.['tileId']) {
       // Run fetch prefill data if there hasn't previously been a saved letter
+      self.loadData();
     }
 
     // this.sendDate = ko.computed(
@@ -442,76 +468,80 @@ define([
     //       },
     //       }, this)
 
+    // this.areaName(createTextObject('testing213'))
+
     // this.getResourceData = function() {
-    window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false')
-      .then(response => response.json())
-      .then(val =>  {
-        console.log("val", val)
-        this.activityResourceData(val.resource)
-        this.areaName(createTextObject(val.resource["Associated Activities"]["@value"]))
+    // window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false')
+    //   .then(response => response.json())
+    //   .then(val =>  {
+    //     console.log("val", val)
+    //     this.activityResourceData(val.resource)
+    //     // this.areaName(createTextObject(val.resource["Associated Activities"]["@value"]))
 
-        this.signed(createTextObject(val.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
-        this.decisionDate(val.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
-        this.appDate(val.resource["Status and Duration Dates"]["Received Date"]["@value"])
-        this.textBody(createTextObject(this.textBody().en.value.replace('[Date]', new Date(this.appDate()).toLocaleDateString())))
+    //     self.areaName(createTextObject('testing213'))
 
-        window.fetch(arches.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
-        .then(response => response.json())
-        .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
-          const contacts = []
-            window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
-            .then(response => response.json())
-            .then(
-              data => {contacts.push(data)})
-            .then(x => {
+    //     this.signed(createTextObject(val.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
+    //     this.decisionDate(val.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
+    //     this.appDate(val.resource["Status and Duration Dates"]["Received Date"]["@value"])
+    //     this.textBody(createTextObject(this.textBody().en.value.replace('[Date]', new Date(this.appDate()).toLocaleDateString())))
 
-              for (let contact of contacts) {
-                this.contacts_loaded(false)
-                if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
+    //     // window.fetch(arches.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+    //     // .then(response => response.json())
+    //     // .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
+    //     //   const contacts = []
+    //     //     window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
+    //     //     .then(response => response.json())
+    //     //     .then(
+    //     //       data => {contacts.push(data)})
+    //     //     .then(x => {
 
-                  this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
+    //     //       for (let contact of contacts) {
+    //     //         this.contacts_loaded(false)
+    //     //         if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
 
-                  if (contact["resource"]["Location Data"]) {
-                    this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                        return {
-                          buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
-                          buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
-                          street : location.Addresses['Street']['Street Value']["@value"],
-                          buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-                          subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-                          city : location.Addresses['Town or City']['Town or City Value']["@value"],
-                          county : location.Addresses['County']['County Value']["@value"],
-                          postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-                        }
-                      })
-                  }
-                }
-                else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
+    //     //           this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
 
-                  this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
-                  this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
+    //     //           if (contact["resource"]["Location Data"]) {
+    //     //             this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+    //     //                 return {
+    //     //                   buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+    //     //                   buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+    //     //                   street : location.Addresses['Street']['Street Value']["@value"],
+    //     //                   buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+    //     //                   subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+    //     //                   city : location.Addresses['Town or City']['Town or City Value']["@value"],
+    //     //                   county : location.Addresses['County']['County Value']["@value"],
+    //     //                   postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+    //     //                 }
+    //     //               })
+    //     //           }
+    //     //         }
+    //     //         else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
 
-                  if (contact["resource"]["Location Data"]) {
-                    this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                        return {
-                          buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
-                          buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
-                          street : location.Addresses['Street']['Street Value']["@value"],
-                          buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-                          subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-                          city : location.Addresses['Town or City']['Town or City Value']["@value"],
-                          county : location.Addresses['County']['County Value']["@value"],
-                          postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-                        }
-                  })
-                } 
-              }
-            } 
-            this.contacts_loaded(true)
-            })
-          })
-          )
-    })
+    //     //           this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
+    //     //           this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
+
+    //     //           if (contact["resource"]["Location Data"]) {
+    //     //             this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+    //     //                 return {
+    //     //                   buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+    //     //                   buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+    //     //                   street : location.Addresses['Street']['Street Value']["@value"],
+    //     //                   buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+    //     //                   subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+    //     //                   city : location.Addresses['Town or City']['Town or City Value']["@value"],
+    //     //                   county : location.Addresses['County']['County Value']["@value"],
+    //     //                   postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+    //     //                 }
+    //     //           })
+    //     //         } 
+    //     //       }
+    //     //     } 
+    //     //     this.contacts_loaded(true)
+    //     //     })
+    //     //   })
+    //     //   )
+    // })
   // };
 
       
