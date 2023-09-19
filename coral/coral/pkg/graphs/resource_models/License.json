@@ -29,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -143,7 +143,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Status and Duration Dates"
                     },
@@ -340,7 +340,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Decision"
                     },
@@ -3941,6 +3941,16 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "991c3c74-48b6-11ee-85af-0242ac140007"
+                        ]
+                    },
+                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "3ab0d4d4-93f6-48da-8c91-81bcd92419c7"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",
@@ -3959,7 +3969,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "9831945b-ee6f-4fea-97e1-6e3ff816d1af"
+                    "id": "6eb3ed8a-16e4-45d6-ab47-0312672ddf9a"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -3981,6 +3991,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "280b6cfc-4e4d-11ee-a340-0242ac140007",
                     "parentnodegroup_id": null
                 },
                 {
@@ -7071,8 +7087,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "64270d62-4bce-11ee-be90-0242ac140002",
-                "published_time": "2023-09-05T09:27:11.069",
+                "publicationid": "7213cb8a-56dd-11ee-9dbe-0242ac130007",
+                "published_time": "2023-09-19T11:12:39.672",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
