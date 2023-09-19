@@ -64,7 +64,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'address-info' ,
+                  uniqueInstanceName: 'address-info',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -82,7 +82,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'location-names' ,
+                  uniqueInstanceName: 'location-names',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -185,7 +185,6 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     graphids: ['d4a88461-5463-11e9-90d9-000d3ab1e588'],
                     nodegroupid: 'f5565c2c-48b6-11ee-85af-0242ac140007',
-                    renderContext: 'workflow',
                     hiddenNodes: [
                       'f5565c2c-48b6-11ee-85af-0242ac140007',
                       'f55671b2-48b6-11ee-85af-0242ac140007',

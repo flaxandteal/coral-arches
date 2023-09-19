@@ -26,8 +26,6 @@ define([
     this.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
     this.applicationId = '';
 
-    console.log(params.form.savedData())
-
     this.licenseSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
 
     params.form.save = async () => {
