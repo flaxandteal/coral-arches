@@ -177,6 +177,8 @@ define([
 
         if (this.applicant().en.value === "") {
           this.applicant(this.applicantList()[0].id)
+        } else {
+          this.applicant(this.applicant())
         }
         val = this.applicants()[this.applicant()]
       }
@@ -186,6 +188,8 @@ define([
         if (this.company().en.value === "") {
           console.log(this.companyList()[0].id)
           this.company(this.companyList()[0].id)
+        } else {
+          this.company(this.company())
         }
         val = this.companies()[this.company()]
       }
