@@ -84,7 +84,6 @@ define([
 
       if (response.ok) {
         const data = await response.json();
-        console.log('logging data: ', data);
         if (data.resource['External Cross References']) {
           const licenseNumberRef = data.resource['External Cross References'].find((ref) => {
             if (ref['External Cross Reference Source']['@value'] === 'Excavation') {
@@ -92,7 +91,6 @@ define([
             }
           });
           self.licenseNumberTileId = licenseNumberRef['External Cross Reference Number']['@tile_id'];
-          console.log('self.licenseNumberTileId: ', self.licenseNumberTileId);
         }
       }
 
