@@ -12,10 +12,26 @@ define([
     this.resourceData = ko.observable();
     this.relatedResources = ko.observableArray();
 
-    this.configKeys = ko.observable({placeholder: 0})
-    
 
     _.extend(this, params.form);
+
+    /**
+     * Set loading to true to allow async requests to populate
+     * data before rendering the components.
+     * 
+     * This allows the starting data to be configured correctly.
+     */
+    self.loading = ko.observable(true);
+
+
+  this.getRelatedResources = function() {
+      window.fetch(arches.urls.related_resources + this.resourceid + "?paginate=false")
+      .then(response => response.json())
+      .then(data => this.relatedResources(data))
+  };
+
+  this.configKeys = ko.observable({placeholder: 0})
+    
 
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
@@ -32,7 +48,7 @@ define([
       if (ko.isObservable(textObject)) {
         return textObject()[self.currentLanguage().code].value;
       } else {
-        return textObject;
+        return textObject[self.currentLanguage().code].value;
       }
     };
 
@@ -330,8 +346,28 @@ define([
       params.form.saving(false);
     };
 
+    self.loadData = async () => {
+      try {
+        const response = await window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false');
+        const data = await response.json();
+        self.areaName(createTextObject(data.resource["Associated Activities"]["@value"]))
+
+        /**
+         * After data has been populated the components
+         * will now render with the correct starting data.
+         */
+        self.loading(false);
+      } catch (error) {
+        console.error('Failed to load data required for cover letter: ', error);
+        /**
+         * TODO: Needs to display error to user
+         */
+      }
+    };
+
     if (!params.form.savedData()?.['tileId']) {
       // Run fetch prefill data if there hasn't previously been a saved letter
+      self.loadData();
     }
 
     // this.getResourceData = function() {
