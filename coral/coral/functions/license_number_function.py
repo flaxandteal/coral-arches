@@ -18,11 +18,12 @@ details = {
     'component': '',
 }
 
+LICENSE_GRAPH_ID = 'cc5da227-24e7-4088-bb83-a564c4331efd'
 
 EXTERNAL_REF_NODEGROUP = '280b6cfc-4e4d-11ee-a340-0242ac140007'
 EXTERNAL_REF_SOURCE_NODE = '280b7a9e-4e4d-11ee-a340-0242ac140007'
-EXTERNAL_REF_NODE = '280b75bc-4e4d-11ee-a340-0242ac140007'
-LICENSE_GRAPH_ID = 'cc5da227-24e7-4088-bb83-a564c4331efd'
+EXTERNAL_REF_NUMBER_NODE = '280b75bc-4e4d-11ee-a340-0242ac140007'
+EXTERNAL_REF_NOTE_NODE = '280b78fa-4e4d-11ee-a340-0242ac140007'
 
 
 def get_latest_license_number(license_instance_id):
@@ -43,7 +44,7 @@ def get_latest_license_number(license_instance_id):
                                                      }).first()
 
     license_number = latest_license_number_tile.data.get(
-        EXTERNAL_REF_NODE).get('en').get('value').split('/')
+        EXTERNAL_REF_NUMBER_NODE).get('en').get('value').split('/')
     return {
         'year': license_number[1],
         'index': int(license_number[2])
@@ -59,15 +60,15 @@ def generate_license_number(license_instance_id, attempts=0):
         nonlocal attempts, license_instance_id
         attempts += 1
         return generate_license_number(license_instance_id, attempts)
-    
+
     ext_ref_tile = None
     try:
         ext_ref_tile = Tile.objects.filter(resourceinstance_id=license_instance_id,
-                                            nodegroup_id=EXTERNAL_REF_NODEGROUP).first()
+                                           nodegroup_id=EXTERNAL_REF_NODEGROUP).first()
     except Exception as e:
         print('Failed checking if license number tile already exists!')
         return retry()
-        
+
     if ext_ref_tile:
         print('A license number has already been created for this license')
         return
@@ -90,7 +91,7 @@ def generate_license_number(license_instance_id, attempts=0):
             next_number = latest_license_number['index'] + 1
             license_number = f'AE/{two_digit_year}/{str(next_number).zfill(4)}'
     else:
-        # If there is no latest license to work from we know 
+        # If there is no latest license to work from we know
         # this is the first ever created
         license_number = f'AE/{two_digit_year}/0001'
 
@@ -99,7 +100,7 @@ def generate_license_number(license_instance_id, attempts=0):
         # Runs a query searching for an external reference tile with the new license ID
         ext_ref_tile = Tile.objects.filter(nodegroup_id=EXTERNAL_REF_NODEGROUP,
                                            data__contains={
-                                               EXTERNAL_REF_NODE: {'en': {
+                                               EXTERNAL_REF_NUMBER_NODE: {'en': {
                                                    'direction': 'ltr',
                                                    'value': license_number
                                                }},
@@ -131,12 +132,14 @@ class LicenseNumberFunction(BaseFunction):
                 resourceinstance_id=resource_instance_id,
                 nodegroup_id=EXTERNAL_REF_NODEGROUP,
                 data={
-                    EXTERNAL_REF_NODE: {'en': {
+                    EXTERNAL_REF_NUMBER_NODE: {'en': {
                         'direction': 'ltr',
                         'value': license_number
                     }},
                     # Set external reference source as 'Excavation'
-                    EXTERNAL_REF_SOURCE_NODE: '9a383c95-b795-4d76-957a-39f84bcee49e'
+                    EXTERNAL_REF_SOURCE_NODE: '9a383c95-b795-4d76-957a-39f84bcee49e',
+                    # Set empty value for rich text widget
+                    EXTERNAL_REF_NOTE_NODE: {'en': {'value': '', 'direction': 'ltr'}}
                 }
             )
             # Configure the license name with the number included
@@ -152,5 +155,6 @@ class LicenseNumberFunction(BaseFunction):
             )
         except Exception as e:
             print('Failed saving license number external ref or license name: ', e)
+            raise e
 
         return
