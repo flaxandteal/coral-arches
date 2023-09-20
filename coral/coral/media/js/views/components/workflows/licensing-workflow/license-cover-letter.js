@@ -12,26 +12,10 @@ define([
     this.resourceData = ko.observable();
     this.relatedResources = ko.observableArray();
 
+    this.configKeys = ko.observable({placeholder: 0})
+    
 
     _.extend(this, params.form);
-
-    /**
-     * Set loading to true to allow async requests to populate
-     * data before rendering the components.
-     * 
-     * This allows the starting data to be configured correctly.
-     */
-    self.loading = ko.observable(true);
-
-
-  this.getRelatedResources = function() {
-      window.fetch(arches.urls.related_resources + this.resourceid + "?paginate=false")
-      .then(response => response.json())
-      .then(data => this.relatedResources(data))
-  };
-
-  this.configKeys = ko.observable({placeholder: 0})
-    
 
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
@@ -46,10 +30,18 @@ define([
 
     self.getTextValue = (textObject) => {
       if (ko.isObservable(textObject)) {
-        return textObject()[self.currentLanguage().code].value;
-      } else {
-        return textObject[self.currentLanguage().code].value;
+        if (textObject()){
+          if (textObject()[self.currentLanguage().code]) {
+            return textObject()[self.currentLanguage().code]?.value;
+          }
+        }
+      } else if (typeof(textObject) === "string") {
+        return textObject;
       }
+      if (textObject[self.currentLanguage().code]) {
+        return textObject[self.currentLanguage().code]?.value
+      }
+      return ""
     };
 
     self.getSavedValue = (key) => {
@@ -102,30 +94,30 @@ define([
     );
     this.signed = ko.observable(self.getSavedValue('signed') || createTextObject());
     
-    this.siteAddress = {}
+    this.siteAddress = ko.observable({})
     this.siteAddresses = ko.observable()
     // TODO change writable computed to subscribe events
-    this.tempApp = ko.computed({
-      read: function (){
-        return this.applicant()
-      },
-      write: function (val){
-        if (val){
-          this.applicant(createTextObject(val))
-        }
-      }
-    }, this)
+    // this.tempApp = ko.computed({
+    //   read: function (){
+    //     return this.applicant()
+    //   },
+    //   write: function (val){
+    //     if (val){
+    //       this.applicant(createTextObject(val))
+    //     }
+    //   }
+    // }, this)
 
-    this.tempComp = ko.computed({
-      read: function (){
-        return this.company()
-      },
-      write: function (val){
-        if (val){
-          this.company(createTextObject(val))
-        }
-      }
-    }, this)
+    // this.tempComp = ko.computed({
+    //   read: function (){
+    //     return this.company()
+    //   },
+    //   write: function (val){
+    //     if (val){
+    //       this.company(createTextObject(val))
+    //     }
+    //   }
+    // }, this)
 
     /**
      * self.tile().dirty
@@ -134,9 +126,9 @@ define([
      * currently when applicant changes it will be made
      * available
      */
-    self.applicant.subscribe(function (val) {
-      self.dirty(val);
-    });
+    // self.applicant.subscribe(function (val) {
+    //   self.dirty(val);
+    // });
 
     /**
      * Location
@@ -176,25 +168,83 @@ define([
       {text: 'site', id: 'site'}, 
     ]);
 
-    this.tempAdd = ko.computed({
-      read: function (){
-        if (self.selectedAddress() === 'applicant'){
-          return this.applicant()
-        }
-        if (self.selectedAddress() === 'company'){
-          console.log(this.companies())
-          console.log(this.company())
-          console.log(this.companies()[this.company().en.value])
-          return this.company()
-        }
-        if (self.selectedAddress() === 'site'){
-          console.log(this.siteAddress)
-          this.tempAdd(this.siteAddress)
-        }
-      },
-      write: function (val){
-        if (val) {
-        console.log("Valval",val)
+    this.selectedAddress.subscribe(addressType => {
+      if (addressType === 'applicant'){
+        val = this.applicants()[this.applicant()]
+      }
+      if (addressType === 'company'){
+        val = this.companies()[this.company()]
+      }
+      if (addressType === 'site'){
+        val = this.siteAddress()
+      }
+      if (val) {
+        this.tempAdd(
+          { 
+            buildingName: val.buildingName,
+            buildingNumber: val.buildingNumber,
+            street: val.street,
+            buildingNumberSubSt: val.buildingNumberSubSt,
+            subStreet: val.subStreet,
+            city: val.city,
+            county: val.county,
+            postCode: val.postCode
+          }
+        )
+      }
+    })
+
+    this.applicant.subscribe(contact => {
+      console.log("updating cont", contact)
+      if (typeof(contact) === "string"){
+        this.applicant(createTextObject(contact))
+      }
+      
+      val = contact ? this.applicants()[self.getTextValue(contact)] : undefined
+      console.log(val, contact)
+      if (val) {
+        self.dirty(val);
+        this.tempAdd(
+          { 
+            buildingName: val.buildingName,
+            buildingNumber: val.buildingNumber,
+            street: val.street,
+            buildingNumberSubSt: val.buildingNumberSubSt,
+            subStreet: val.subStreet,
+            city: val.city,
+            county: val.county,
+            postCode: val.postCode
+          }
+        )
+        
+      }
+    })
+
+    this.company.subscribe(contact => {
+      if (typeof(contact) === "string"){
+        this.company(createTextObject(contact))
+      }
+      val = contact ? this.applicants()[self.getTextValue(contact)] : undefined
+      console.log(val, contact)
+      if (val) {
+        this.tempAdd(
+          { 
+            buildingName: val.buildingName,
+            buildingNumber: val.buildingNumber,
+            street: val.street,
+            buildingNumberSubSt: val.buildingNumberSubSt,
+            subStreet: val.subStreet,
+            city: val.city,
+            county: val.county,
+            postCode: val.postCode
+          })
+      }
+    })
+
+    this.tempAdd = ko.observable({})
+
+    this.tempAdd.subscribe(val => {
+      if (val) {
         this.buildingName(createTextObject(val.buildingName))
         this.buildingNumber(createTextObject(val.buildingNumber))
         this.street(createTextObject(val.street))
@@ -204,8 +254,38 @@ define([
         this.county(createTextObject(val.county))
         this.postCode(createTextObject(val.postCode))
       }
-      }
-    }, this)
+    })
+
+    // this.tempAdd = ko.computed({
+    //   read: function (){
+    //     if (self.selectedAddress() === 'applicant'){
+    //       return this.applicant()
+    //     }
+    //     if (self.selectedAddress() === 'company'){
+    //       console.log(this.companies())
+    //       console.log(this.company())
+    //       console.log(this.companies()[this.company().en.value])
+    //       return this.company()
+    //     }
+    //     if (self.selectedAddress() === 'site'){
+    //       console.log(this.siteAddress)
+    //       this.tempAdd(this.siteAddress)
+    //     }
+    //   },
+    //   write: function (val){
+    //     if (val) {
+    //     console.log("Valval",val)
+    //     this.buildingName(createTextObject(val.buildingName))
+    //     this.buildingNumber(createTextObject(val.buildingNumber))
+    //     this.street(createTextObject(val.street))
+    //     this.buildingNumberSubSt(createTextObject(val.buildingNumberSubSt))
+    //     this.subStreet(createTextObject(val.subStreet))
+    //     this.city(createTextObject(val.city))
+    //     this.county(createTextObject(val.county))
+    //     this.postCode(createTextObject(val.postCode))
+    //   }
+    //   }
+    // }, this)
 
     this.appDateOptions = ko.observable(['received', 'acknowledged']);
     this.selectedAppDate = ko.observable('received');
@@ -272,9 +352,12 @@ define([
     }, self);
 
     self.body = ko.computed(() => {
+      console.log("apple time!", self.applicant())
+
       let result =
         '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
       if (self.getTextValue(self.applicant)) {
+        console.log("apple time!", self.applicant())
         result += `<span>Dear: ${Object.keys(this.applicants()).join(', ')}, ${this.getTextValue(self.company)}</span>`;
       }
       result += `<span style="margin-top: 8px">${
@@ -346,28 +429,8 @@ define([
       params.form.saving(false);
     };
 
-    self.loadData = async () => {
-      try {
-        const response = await window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false');
-        const data = await response.json();
-        self.areaName(createTextObject(data.resource["Associated Activities"]["@value"]))
-
-        /**
-         * After data has been populated the components
-         * will now render with the correct starting data.
-         */
-        self.loading(false);
-      } catch (error) {
-        console.error('Failed to load data required for cover letter: ', error);
-        /**
-         * TODO: Needs to display error to user
-         */
-      }
-    };
-
     if (!params.form.savedData()?.['tileId']) {
       // Run fetch prefill data if there hasn't previously been a saved letter
-      self.loadData();
     }
 
     // this.getResourceData = function() {
@@ -395,13 +458,15 @@ define([
 
               for (let contact of contacts) {
                 this.contacts_loaded(false)
+                console.log("CONTACT", contact.graph_id)
                 if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
-
+                  console.log("pretending this is a dude", contact.graph_id)
+                  // this.applicant(createTextObject(contact["resource"]["Name"][0]["Full Name"]["@value"]))
                   this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
 
                   if (contact["resource"]["Location Data"]) {
                     this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                        return ko.observable({
+                        return {
                           buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
                           buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
                           street : location.Addresses['Street']['Street Value']["@value"],
@@ -410,13 +475,14 @@ define([
                           city : location.Addresses['Town or City']['Town or City Value']["@value"],
                           county : location.Addresses['County']['County Value']["@value"],
                           postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-                        })  
-                      })
-                  }
+                      }
+                  })
                 }
+              }
                 else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
-
+                  console.log("making company")
                   this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
+                  console.log(this.company())
                   this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
                   console.log("comp res", contact)
                   if (contact["resource"]["Location Data"]) {
@@ -449,8 +515,8 @@ define([
                       }]
                     }
                 } 
-              }
-            } 
+            }
+          }
             this.applicantList(Object.keys(this.applicants()).map(x => { return {text: x, id: createTextObject(x)}}))
             this.contacts_loaded(true)
             })
@@ -482,15 +548,17 @@ define([
               externalRefs = getNodeValues(related_resource.tiles, '589d4dc7-edf9-11eb-9856-a87eeabdefba')
               externalRefSources = getNodeValues(related_resource.tiles, '589d4dcd-edf9-11eb-8a7d-a87eeabdefba')
               externalRefNotes = getNodeValues(related_resource.tiles, '589d4dca-edf9-11eb-83ea-a87eeabdefba')
-    
-              this.siteAddress.buildingName = getNodeValues(related_resource.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0].en.value
-              this.siteAddress.buildingNumber = getNodeValues(related_resource.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0].en.value
-              this.siteAddress.street = getNodeValues(related_resource.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0].en.value
-              this.siteAddress.subStreetNumber = getNodeValues(related_resource.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0].en.value
-              this.siteAddress.subStreet = getNodeValues(related_resource.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0].en.value
-              this.siteAddress.county = getNodeValues(related_resource.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0].en.value
-              this.siteAddress.postCode = getNodeValues(related_resource.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0].en.value
-              this.siteAddress.city = getNodeValues(related_resource.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0].en.value
+              this.siteAddress({
+                buildingName : this.getTextValue(getNodeValues(related_resource.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0]),
+                buildingNumber : this.getTextValue(getNodeValues(related_resource.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0]),
+                street : this.getTextValue(getNodeValues(related_resource.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0]),
+                subStreetNumber : this.getTextValue(getNodeValues(related_resource.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0]),
+                subStreet : this.getTextValue(getNodeValues(related_resource.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0]),
+                county : this.getTextValue(getNodeValues(related_resource.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0]),
+                postCode : this.getTextValue(getNodeValues(related_resource.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0]),
+                city : this.getTextValue(getNodeValues(related_resource.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0])
+
+              })
     
             }
             if (related_resource.graph_id === "a535a235-8481-11ea-a6b9-f875a44e0e11") {

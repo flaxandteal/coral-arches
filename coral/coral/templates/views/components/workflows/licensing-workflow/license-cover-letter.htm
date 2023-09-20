@@ -18,7 +18,7 @@
           }
       }"
       ></div> -->
-      {% comment %} <div
+      <div
         data-bind="component: {
           name: 'domain-radio-widget',
           node: {
@@ -43,8 +43,8 @@
             pageVm: $root
           }
       }"
-      ></div> {% endcomment %}
-
+      ></div>
+      
       <!-- ko if: contacts_loaded -->
       <!-- <div
         data-bind="if: selectedAddress() === 'applicant', component: {
@@ -72,48 +72,32 @@
           }
       }"
       ></div> -->
-      <!-- <div data-bind="text: Object.keys(applicant())"></div>
-      <div data-bind="text: 'apple ' + applicant().en.value"></div>
-      <div data-bind="text: applicants()"></div>
-      <div data-bind="text: Object.keys(applicants())"></div>
-      <div data-bind="text: 'apple app ' + applicants()[applicant().en.value]"></div>
-      <div data-bind="text: 'apple app() ' + applicants()[tempApp()]"></div>
-      <div data-bind="text: 'app() ' + tempApp().en.value"></div>
-      <div data-bind="text: 'apple keys ' + Object.keys(applicants())"></div> -->
-
-      <!-- <div data-bind="text: 'apple bill ' + applicants().bill?.buildingNumber"></div> -->
-
 
       <div data-bind="if: selectedAddress() === 'applicant'">
-        <div>Recipient Name</div>
-        <select
-          class="select2-choice select2-default"
-          data-bind="options: Object.keys(applicants()), value: tempApp, style: { width: '95%', background: 'white', colour: 'black'}"
-        ></select>
-        <div>Recipient Address</div>
-        <select
-          class="select2-choice select2-default"
-          data-bind="options: applicants()[applicant().en.value], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
-        ></select>
-      </div>
-      <div data-bind="if: selectedAddress() === 'company'">
-        <div>Company Name</div>
-        <select
-          class="select2-choice select2-default"
-          data-bind="options: Object.keys(companies()), value: tempComp, style: { width: '95%', background: 'white', colour: 'black'}"
-        ></select>
-        <div>Company Address</div>
-        <select
-          class="select2-choice select2-default"
-          data-bind="options: companies()[company().en.value], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
-        ></select>
-      </div>
-      <div data-bind="if: selectedAddress() === 'site', visible: false">
-        <select
-          class="select2-choice select2-default"
-          data-bind="options: [siteAddress], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
-        ></select>
-      </div>
+      <div>Recipient Name</div>
+      <select class="select2-choice select2-default"
+        data-bind="options: Object.keys(applicants()), value: applicant, style: { width: '95%', background: 'white', colour: 'black'}"
+      ></select>
+      <div>Recipient Address</div>
+      <select class="select2-choice select2-default"
+        data-bind="options: applicants() ? applicants()[applicant().en.value] : [], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
+      ></select>
+    </div>
+    <div data-bind="if: selectedAddress() === 'company'">
+      <div>Company Name</div>
+      <select class="select2-choice select2-default"
+        data-bind="options: Object.keys(companies()), value: company, style: { width: '95%', background: 'white', colour: 'black'}"
+      ></select>
+      <div>Company Address</div>
+      <select class="select2-choice select2-default"
+        data-bind="options: companies()[company().en.value], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
+      ></select>
+    </div>
+    <div data-bind="if: selectedAddress() === 'site', visible: false">
+      <select class="select2-choice select2-default"
+        data-bind="options: [siteAddress], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
+      ></select>
+    </div>
       <!-- /ko -->
     </div>
     <div class="row widget-wrapper">
@@ -378,8 +362,7 @@
           }
         }"
       ></div>
-      {% comment %}
-      <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
+      {% comment %} <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
         <!-- HEADER -->
         <div style="display: flex; align-items: end; width: 100%; flex-direction: column">
           <div>
@@ -454,8 +437,7 @@
             data-bind="text: 'Signed: ' + (getTextValue(signed) || 'Signature required!')"
           ></span>
         </div>
-      </div>
-      {% endcomment %}
+      </div> {% endcomment %}
     </div>
   </div>
 </div>

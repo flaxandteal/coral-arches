@@ -372,25 +372,25 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
-                },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'grid-info',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
-                    // hiddenNodes: [
-                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
-                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
-                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
-                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
-                    // ],
-                    renderContext: 'workflow',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
-                  }
                 }
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'grid-info',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
+                //     // hiddenNodes: [
+                //     //   'a541922b-f121-11eb-a081-a87eeabdefba',
+                //     //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                //     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                //     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                //     // ],
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
+                //   }
+                // }
               ]
             }
           ]
@@ -418,41 +418,41 @@ define([
               ]
             }
           ]
+        },
+        {
+          title: 'License Summary',
+          name: 'license-complete',
+          description: 'Choose an option below',
+          component: 'views/components/workflows/component-based-step',
+          componentname: 'component-based-step',
+          layoutSections: [
+              {
+                  componentConfigs: [
+                      {
+                          componentName: 'license-final-step',
+                          uniqueInstanceName: 'license-final',
+                          tilesManaged: 'none',
+                          parameters: {
+                              // digitalObject: "['upload-documents']['upload-documents-step']",
+                              // consultationTileid: "['init-name-step']['application-id-instance']['tileid']",
+                              activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                          },
+                      },
+                  ],
+              },
+          ],
+          graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
+          nodegroupid: '6a773228-db20-11e9-b6dd-784f435179ea',
+          icon: 'fa-check',
+          resourceid: null,
+          tileid: null,
+          parenttileid: null,
+          informationboxdata: {
+              heading: 'Workflow Complete: Review your work',
+              text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over',
+          }
         }
-        // {
-        //   title: 'License Summary',
-        //   name: 'license-complete',
-        //   description: 'Choose an option below',
-        //   component: 'views/components/workflows/component-based-step',
-        //   componentname: 'component-based-step',
-        //   layoutSections: [
-        //       {
-        //           componentConfigs: [
-        //               {
-        //                   componentName: 'license-final-step',
-        //                   uniqueInstanceName: 'license-final',
-        //                   tilesManaged: 'none',
-        //                   parameters: {
-        //                       // digitalObject: "['upload-documents']['upload-documents-step']",
-        //                       // consultationTileid: "['init-name-step']['application-id-instance']['tileid']",
-        //                       activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //                       resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-        //                   },
-        //               },
-        //           ],
-        //       },
-        //   ],
-        //   graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
-        //   nodegroupid: '6a773228-db20-11e9-b6dd-784f435179ea',
-        //   icon: 'fa-check',
-        //   resourceid: null,
-        //   tileid: null,
-        //   parenttileid: null,
-        //   informationboxdata: {
-        //       heading: 'Workflow Complete: Review your work',
-        //       text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over',
-        //   }
-        // }
       ];
 
       Workflow.apply(this, [params]);
