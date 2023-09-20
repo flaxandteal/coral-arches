@@ -47,51 +47,42 @@
       
       <!-- ko if: contacts_loaded -->
       <!-- <div
-        data-bind="component: {
+        data-bind="if: selectedAddress() === 'applicant', component: {
           name: 'domain-select-widget',
-
+          node: {
+            'config': {
+              'options': addressOptions,
+            },
+          },
           params: {
             node: {
             'config': {
-              'options': applicantList,
+              'options': addressOptions,
               },
               'configKeys': configKeys
             },
             config: {
-              'label': 'Recipient Name',
-              'options': applicantList,
+              'label': 'Recipient Type',
+              'options': addressOptions,
             },
-            value: tempApp,
-            loading: loading,
-            form: $data,
-            pageVm: $root
-          }
-      }"
-      ></div>
-      <div data-bind="text: tempApp().en.value"></div>
-      <div data-bind="text: applicant().en.value"></div>
-      <div
-        data-bind="component: {
-          name: 'domain-select-widget',
-
-          params: {
-            node: {
-            'config': {
-              'options': tempApp,
-              },
-              'configKeys': configKeys
-            },
-            config: {
-              'label': 'Recipient Name',
-              'options': tempApp,
-            },
-            value: tempAdd,
+            value: selectedAddress,
             loading: loading,
             form: $data,
             pageVm: $root
           }
       }"
       ></div> -->
+      <div data-bind="text: Object.keys(applicant())"></div>
+      <div data-bind="text: 'apple ' + applicant().en.value"></div>
+      <div data-bind="text: applicants()"></div>
+      <div data-bind="text: Object.keys(applicants())"></div>
+      <div data-bind="text: 'apple app ' + applicants()[applicant().en.value]"></div>
+      <div data-bind="text: 'apple app() ' + applicants()[tempApp()]"></div>
+      <div data-bind="text: 'app() ' + tempApp().en.value"></div>
+      <div data-bind="text: 'apple keys ' + Object.keys(applicants())"></div>
+
+      <div data-bind="text: 'apple bill ' + applicants().bill?.buildingNumber"></div>
+
 
       <div data-bind="if: selectedAddress() === 'applicant'">
       <div>Recipient Name</div>

@@ -365,7 +365,7 @@ define([
 
                   if (contact["resource"]["Location Data"]) {
                     this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                        return {
+                        return ko.observable({
                           buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
                           buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
                           street : location.Addresses['Street']['Street Value']["@value"],
@@ -374,7 +374,7 @@ define([
                           city : location.Addresses['Town or City']['Town or City Value']["@value"],
                           county : location.Addresses['County']['County Value']["@value"],
                           postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-                        }
+                        })  
                       })
                   }
                 }
