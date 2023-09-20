@@ -126,7 +126,7 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
-            VERSION="${{ env.DOCKER_METADATA_OUTPUT_VERSION }}"
+            VERSION=${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
       - name: Record a project static image reference
         id: set-static
         run: |
