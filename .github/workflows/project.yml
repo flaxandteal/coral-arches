@@ -112,7 +112,6 @@ jobs:
       - name: Log docker image version
         run: |
           echo ${{ steps.meta.outputs.version }}
-          echo ${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
