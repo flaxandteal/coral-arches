@@ -60,6 +60,7 @@ jobs:
           build-args: |
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+
       - name: Record a project base image reference
         id: set-base
         run: |
@@ -125,6 +126,7 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
+            VERSION="${{ env.DOCKER_METADATA_OUTPUT_VERSION }}"
       - name: Record a project static image reference
         id: set-static
         run: |
@@ -170,7 +172,6 @@ jobs:
         image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
-          VERSION: "${{ steps.meta.outputs.version }}"
           ARCHES_ROOT: "/web_root/arches"
           COMPRESS_OFFLINE: "False"
           COMPRESS_ENABLED: "False"
