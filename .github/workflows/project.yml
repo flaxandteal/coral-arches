@@ -170,7 +170,7 @@ jobs:
         image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
-          VERSION: "${{ env.DOCKER_METADATA_OUTPUT_VERSION }}"
+          VERSION: "${{ steps.meta.outputs.version }}"
           ARCHES_ROOT: "/web_root/arches"
           COMPRESS_OFFLINE: "False"
           COMPRESS_ENABLED: "False"
