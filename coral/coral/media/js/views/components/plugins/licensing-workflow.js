@@ -124,22 +124,16 @@ define([
                   uniqueInstanceName: 'license-no',
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                      '280b78fa-4e4d-11ee-a340-0242ac140007',
+                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
+                      '280b7238-4e4d-11ee-a340-0242ac140007'
                     ],
-                    prefilledNodes: [
-                      // Source set to Excavation
-                      [
-                        '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                        '9a383c95-b795-4d76-957a-39f84bcee49e'
-                      ]
-                    ],
-                    labels: [['Cross Reference', 'License Number (if applicable)']]
+                    labels: [['Cross Reference', 'License Number']]
                   }
                 },
                 {
@@ -397,7 +391,7 @@ define([
               ]
             }
           ]
-        }
+        },
         // {
         //   title: 'License Summary',
         //   name: 'license-complete',
