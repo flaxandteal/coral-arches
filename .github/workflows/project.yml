@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - bug/github-ci-not-using-current-branch-name
 
 env:
   ARCHES_BASE: ghcr.io/flaxandteal/arches-base-7.5-dev:bug-coral_dockerfile_for_arches_7.4
@@ -59,6 +60,7 @@ jobs:
           build-args: |
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+
       - name: Record a project base image reference
         id: set-base
         run: |
@@ -107,6 +109,9 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}-static
+      - name: Log docker image version
+        run: |
+          echo ${{ steps.meta.outputs.version }}
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
@@ -124,6 +129,7 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
+            VERSION=${{ steps.meta.outputs.version }}
       - name: Record a project static image reference
         id: set-static
         run: |
@@ -196,11 +202,11 @@ jobs:
           TZ: "PST"
         ports:
           - '8000:8000'
-        options: >-
-          --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 1000
+        # options: >-
+        #   --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
+        #   --health-interval 10s
+        #   --health-timeout 5s
+        #   --health-retries 1000
   Build-Arches-Final:
     needs: [Build-Arches-Static, Build-Arches]
     runs-on: [self-hosted]
