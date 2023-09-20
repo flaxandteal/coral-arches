@@ -4,12 +4,17 @@ on:
   push:
     branches:
       - develop
+
 env:
-  ARCHES_BASE: flaxandteal/arches_coral_base
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base-7.5-dev:bug-coral_dockerfile_for_arches_7.4
+  ARCHES_POSTGIS: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
     runs-on: [self-hosted]
+    outputs:
+      project-base: ${{ steps['set-base'].outputs['project-base'] }}
+      project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -54,12 +59,23 @@ jobs:
           build-args: |
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+      - name: Record a project base image reference
+        id: set-base
+        run: |
+          export PROJECT_BASE=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          export PROJECT_POSTGIS=${{ env.ARCHES_POSTGIS }}
+          echo "PROJECT_BASE=$PROJECT_BASE" >> $GITHUB_ENV
+          echo "::set-output name=project-base::$PROJECT_BASE"
+          echo "::set-output name=project-postgis::$PROJECT_POSTGIS"
   Build-Arches-Static:
     runs-on: [self-hosted]
     needs: [Build-Arches]
     container:
       image: docker:dind
-
+    env:
+      PROJECT_BASE: ${{ needs['Build-Arches'].outputs['project-base'] }}
+    outputs:
+      project-static: ${{ steps['set-static'].outputs['project-static'] }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
@@ -84,8 +100,13 @@ jobs:
           buildkitd-flags: '--allow-insecure-entitlement network.host'
           driver-opts: |
               network=host
-      - name: Build and push Docker image
+      - name: Wait for service availability
         run: docker run --rm --network host willwill/wait-for-it -h localhost -p 8000 -t 0
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}-static
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
@@ -95,13 +116,20 @@ jobs:
           file: Dockerfile.static
           network: host
           allow: network.host
-          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static:feature-graph-api
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            VERSION=feature-graph-api
+            PROJECT_BASE=${{ env.PROJECT_BASE }}
             ARCHES_ENVIRONMENT=development
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
+      - name: Record a project static image reference
+        id: set-static
+        run: |
+          export PROJECT_STATIC=${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+          echo "PROJECT_STATIC=$PROJECT_STATIC" >> $GITHUB_ENV
+          echo "::set-output name=project-static::$PROJECT_STATIC"
     services:
       elasticsearch:
         image: elasticsearch:8.4.0
@@ -120,7 +148,7 @@ jobs:
           --health-timeout 5s
           --health-retries 10
       db:
-        image: flaxandteal/arches_coral_postgres
+        image: ${{ needs['Build-Arches'].outputs['project-postgis'] }}
         #volumes:
         #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
@@ -138,7 +166,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: flaxandteal/arches_coral:feature-graph-api
+        image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           ARCHES_ROOT: "/web_root/arches"
@@ -174,11 +202,13 @@ jobs:
           --health-timeout 5s
           --health-retries 1000
   Build-Arches-Final:
-    needs: [Build-Arches-Static]
+    needs: [Build-Arches-Static, Build-Arches]
     runs-on: [self-hosted]
     container:
       image: docker:dind
-
+    env:
+      PROJECT_BASE: ${{ needs['Build-Arches'].outputs['project-base'] }}
+      PROJECT_STATIC: ${{ needs['Build-Arches-Static'].outputs['project-static'] }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
@@ -203,6 +233,11 @@ jobs:
           buildkitd-flags: '--allow-insecure-entitlement network.host'
           driver-opts: |
               network=host
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: flaxandteal/arches_${{ env.ARCHES_PROJECT }}-static-py
       - name: Build and push Docker image
         id: buildx
         uses: docker/build-push-action@v2
@@ -212,19 +247,21 @@ jobs:
           file: Dockerfile.static-py
           network: host
           allow: network.host
-          tags: flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static_py:feature-graph-api
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            VERSION=feature-graph-api
+            PROJECT_BASE=${{ env.PROJECT_BASE }}
+            PROJECT_STATIC=${{ env.PROJECT_STATIC }}
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
   Test-Arches:
     runs-on: [self-hosted]
-    needs: [Build-Arches-Final]
-    container:
-      image: cypress/included:11.2.0
+    needs: [Build-Arches-Final, Build-Arches, Build-Arches-Static]
     env:
       HOME: ""
       CYPRESS_BASE_URL: http://arches:8000
+    container:
+      image: cypress/included:11.2.0
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
@@ -263,9 +300,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 10
-
       db:
-        image: flaxandteal/arches_coral_postgres
+        image: ${{ needs['Build-Arches'].outputs['project-postgis'] }}
         #volumes:
         #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
@@ -283,7 +319,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: flaxandteal/arches_coral_static_py:feature-graph-api
+        image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
