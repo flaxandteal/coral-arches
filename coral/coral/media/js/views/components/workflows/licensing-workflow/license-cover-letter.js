@@ -83,12 +83,14 @@ define([
 
     this.applicantList = ko.observable([])
     
-    this.applicantsAddresses = ko.observable({});
+    this.applicantAddresses = ko.observable([]);
     this.companies = ko.observable({})
-    this.companiesAddresses = ko.observable({})
+    this.companyList = ko.observable([])
     
     this.applicant = ko.observable(self.getSavedValue('applicant') || createTextObject());
     this.company = ko.observable(self.getSavedValue('company') || createTextObject());
+    this.companyAddresses = ko.observable([]);
+
     this.seniorInspector = ko.observable(
       self.getSavedValue('seniorInspector') || createTextObject()
     );
@@ -169,10 +171,22 @@ define([
     ]);
 
     this.selectedAddress.subscribe(addressType => {
+      let val = undefined
       if (addressType === 'applicant'){
+        // this.applicant(this.applicant())
+
+        if (this.applicant().en.value === "") {
+          this.applicant(this.applicantList()[0].id)
+        }
         val = this.applicants()[this.applicant()]
       }
-      if (addressType === 'company'){
+      if (addressType === 'company') {
+        
+        // this.company(this.getTextValue(this.company))
+        if (this.company().en.value === "") {
+          console.log(this.companyList()[0].id)
+          this.company(this.companyList()[0].id)
+        }
         val = this.companies()[this.company()]
       }
       if (addressType === 'site'){
@@ -195,12 +209,24 @@ define([
     })
 
     this.applicant.subscribe(contact => {
-      console.log("updating cont", contact)
       if (typeof(contact) === "string"){
         this.applicant(createTextObject(contact))
       }
+
+      if (this.applicants()[this.getTextValue(contact)]) {
+
+        this.applicantAddresses(this.applicants()[this.getTextValue(contact)].map((add => {
+          return {
+            'text': `${add.buildingNumber} ${add.street}`,
+            'id': add,
+            'value': add
+
+          }
+        })))
+      }
+
       
-      val = contact ? this.applicants()[self.getTextValue(contact)] : undefined
+      val = this.applicantAddresses()[0].value
       console.log(val, contact)
       if (val) {
         self.dirty(val);
@@ -224,7 +250,16 @@ define([
       if (typeof(contact) === "string"){
         this.company(createTextObject(contact))
       }
-      val = contact ? this.applicants()[self.getTextValue(contact)] : undefined
+      this.companyAddresses(this.companies()[this.getTextValue(contact)].map((add => {
+        console.log("here it is", add)
+        return {
+          'text': `${add.buildingNumber} ${add.street}`,
+          'id': add,
+          'value': add
+
+        }
+      })))
+      val = this.companyAddresses()[0].value
       console.log(val, contact)
       if (val) {
         this.tempAdd(
@@ -244,6 +279,7 @@ define([
     this.tempAdd = ko.observable({})
 
     this.tempAdd.subscribe(val => {
+      console.log("add updating", val)
       if (val) {
         this.buildingName(createTextObject(val.buildingName))
         this.buildingNumber(createTextObject(val.buildingNumber))
@@ -481,9 +517,8 @@ define([
               }
                 else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
                   console.log("making company")
-                  this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
-                  console.log(this.company())
-                  this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
+                  
+                  this.companies({[contact["resource"]["Names"][0]["Organization Name"]["@value"]] : []})
                   console.log("comp res", contact)
                   if (contact["resource"]["Location Data"]) {
 
@@ -500,6 +535,8 @@ define([
                           postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
                         }
                     })
+                    this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
+                    console.log(this.company())
                     }
                     else {
                       let location = contact["resource"]["Location Data"]
@@ -517,7 +554,8 @@ define([
                 } 
             }
           }
-            this.applicantList(Object.keys(this.applicants()).map(x => { return {text: x, id: createTextObject(x)}}))
+            this.applicantList(Object.keys(this.applicants()).map(x => { console.log("for the list ", x);return {text: x, id: x}}))
+            this.companyList(Object.keys(this.companies()).map(x => { console.log("for the list ", x);return {text: x, id: x}}))
             this.contacts_loaded(true)
             })
           })
