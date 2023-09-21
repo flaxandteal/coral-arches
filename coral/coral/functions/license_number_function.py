@@ -77,7 +77,7 @@ def generate_license_number(license_instance_id, attempts=0):
     try:
         latest_license_number = get_latest_license_number(license_instance_id)
         print('latest_license_number: ', latest_license_number)
-    except:
+    except Exception as e:
         print('Failed getting the previously used license number: ', e)
         return retry()
 
