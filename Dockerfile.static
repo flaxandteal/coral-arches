@@ -1,4 +1,4 @@
-ARG VERSION
+ARG PROJECT_BASE
 ARG ARCHES_PROJECT=coral
 ARG ARCHES_BASE=flaxandteal/arches_coral_base
 ARG WEB_ROOT=/web_root
@@ -44,7 +44,7 @@ ENV DJANGO_DEBUG=False \
 RUN useradd arches && mkdir -p /static_root && chown -R arches /static_root
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 
-FROM flaxandteal/arches_${ARCHES_PROJECT}:${VERSION} as arches_dynamic
+FROM $PROJECT_BASE as arches_dynamic
 FROM arches_static_cache as arches
 ARG WEB_ROOT=/web_root
 ARG STATIC_ROOT=/static_root
@@ -61,7 +61,7 @@ RUN ${WEB_ROOT}/entrypoint.sh init_yarn_components
 RUN (echo "\nSTATIC_ROOT='${STATIC_ROOT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT 
 RUN (echo "\nARCHES_NAMESPACE_FOR_DATA_EXPORT='${ARCHES_NAMESPACE_FOR_DATA_EXPORT}'" >> ${WEB_ROOT}/arches/arches/settings_docker.py) && echo $STATIC_ROOT
 
-RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn add -D babel-loader html-loader clean-webpack-plugin webpack-cli mini-css-extract-plugin stylelint-webpack-plugin eslint-webpack-plugin css-loader postcss-loader sass-loader raw-loader ttf-loader file-loader url-loader)
+#RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn add -D babel-loader html-loader clean-webpack-plugin webpack-cli mini-css-extract-plugin stylelint-webpack-plugin eslint-webpack-plugin css-loader postcss-loader sass-loader raw-loader ttf-loader file-loader url-loader)
 
 RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn install -D)
 RUN /bin/bash -c ". ../ENV/bin/activate;\
