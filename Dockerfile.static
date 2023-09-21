@@ -44,11 +44,13 @@ ENV DJANGO_DEBUG=False \
 RUN useradd arches && mkdir -p /static_root && chown -R arches /static_root
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 
-FROM flaxandteal/arches_${ARCHES_PROJECT}:$VERSION as arches_dynamic
+FROM flaxandteal/arches_${ARCHES_PROJECT}:${VERSION} as arches_dynamic
 FROM arches_static_cache as arches
 ARG WEB_ROOT=/web_root
 ARG STATIC_ROOT=/static_root
 ARG ARCHES_PROJECT
+RUN . ../ENV/bin/activate \
+    && pip install python-docx
 COPY --from=arches_dynamic ${WEB_ROOT}/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
 COPY --from=arches_dynamic ${WEB_ROOT}/${ARCHES_PROJECT}/ /web_root/${ARCHES_PROJECT}/
 COPY --from=arches_dynamic ${WEB_ROOT}/arches/arches/settings_docker.py ${WEB_ROOT}/arches/arches

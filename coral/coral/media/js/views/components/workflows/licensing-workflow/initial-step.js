@@ -24,6 +24,7 @@ define([
     this.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
     this.actResourceId = params.form.savedData()?.actResourceId;
     this.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
+    this.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
     this.applicationId = '';
 
     this.licenseSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
@@ -35,18 +36,25 @@ define([
        * This is the ID generate by auto-generate-id. Not to
        * be confused with a resource instance id.
        */
-      self.applicationId = self.tile()?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
+      self.applicationId = self
+        .tile()
+        ?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
       console.log('License Application ID: ', self.applicationId);
 
       /**
-       * TODO: Handle errors
+       * Configuring the name is no longer needed as the license number
+       * function will handle it. If we configured the name from here after
+       * the function we would get a cardinality error.
+       * TODO: Handle errors from requests
        */
-      const nameTile = await saveLicenseName();
-      if (nameTile?.ok) {
+      // const nameTile = await saveLicenseName();
+      // if (nameTile?.ok) {
+      const licenseResource = await getLicenseRefTileId();
+      if (licenseResource.ok) {
         const activityTile = await saveActivitySystemRef();
         if (activityTile?.ok) {
           const activityLocTile = await saveActivityLocation();
-          if (activityLocTile?.ok){
+          if (activityLocTile?.ok) {
             const relationship = await saveRelationship();
             if (relationship.ok) {
               params.form.savedData({
@@ -57,15 +65,36 @@ define([
                 actSysRefTileId: self.actSysRefTileId,
                 actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
                 actResourceId: self.actResourceId,
-                actLocTileId: self.actLocTileId
+                actLocTileId: self.actLocTileId,
+                licenseNumberTileId: self.licenseNumberTileId
               });
               params.form.complete(true);
               params.form.saving(false);
-          }
-
+            }
           }
         }
       }
+      // }
+    };
+
+    const getLicenseRefTileId = async () => {
+      const response = await window.fetch(
+        arches.urls.api_resources(this.resourceId() + '?format=json&compact=false')
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.resource['External Cross References']) {
+          const licenseNumberRef = data.resource['External Cross References'].find((ref) => {
+            if (ref['External Cross Reference Source']['@value'] === 'Excavation') {
+              return ref;
+            }
+          });
+          self.licenseNumberTileId = licenseNumberRef['External Cross Reference Number']['@tile_id'];
+        }
+      }
+
+      return response;
     };
 
     const saveActivitySystemRef = async () => {
