@@ -260,6 +260,7 @@ jobs:
             PROJECT_STATIC=${{ env.PROJECT_STATIC }}
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+            VERSION=${{ steps.meta.outputs.version }}
   Test-Arches:
     runs-on: [self-hosted]
     needs: [Build-Arches-Final, Build-Arches, Build-Arches-Static]
