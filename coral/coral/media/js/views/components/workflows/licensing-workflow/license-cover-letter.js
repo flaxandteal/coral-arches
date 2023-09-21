@@ -336,7 +336,7 @@ define([
     self.header = ko.computed(() => {
       let result = '<div>';
       if (self.getTextValue(self.buildingName)) {
-        result += `<span>${self.getTextValue(self.buildingName)}</span>`;
+        result += `<span>${self.getTextValue(self.buildingName)}<br /></span>`;
       }
       if (self.getTextValue(self.buildingName) && self.getTextValue(self.buildingNumber)) {
         result += `<span>, </span>`;
