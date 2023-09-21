@@ -23,7 +23,7 @@ RUN . ../ENV/bin/activate \
     && pip install starlette-context
 RUN . ../ENV/bin/activate \
     && pip install cachetools websockets \
-    && pip install -r ${WEB_ROOT}/${ARCHES_PROJECT}/requirements.txt --no-binary :all:
+    && pip install -r ${WEB_ROOT}/${ARCHES_PROJECT}/requirements.txt
 
 COPY settings_docker.py ${WEB_ROOT}/arches/arches/
 RUN echo "{}" > ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json
