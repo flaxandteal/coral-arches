@@ -5,80 +5,6 @@
             "cards": [
                 {
                     "active": true,
-                    "cardid": "280b701c-4e4d-11ee-a340-0242ac140007",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "280b701c-4e4d-11ee-a340-0242ac140007",
-                            "constraintid": "24e3c330-147f-48e6-a157-773a0712a58b",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": false,
-                    "name": {
-                        "en": "External Cross References"
-                    },
-                    "nodegroup_id": "280b6cfc-4e4d-11ee-a340-0242ac140007",
-                    "sortorder": 13,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
-                            "constraintid": "8f1051a2-9a21-45c7-85fd-eae912412481",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        },
-                        {
-                            "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
-                            "constraintid": "bf350a77-ebb4-4ad6-9138-2c387789029b",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": false,
-                    "name": {
-                        "en": "Cover Letter"
-                    },
-                    "nodegroup_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "36b3c1f0-48b7-11ee-85af-0242ac140007",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -143,7 +69,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Status and Duration Dates"
                     },
@@ -369,7 +295,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -3166,12 +3092,12 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
-                    "edgeid": "4c77714e-ef2f-4b8c-8353-5fb3871cedd6",
+                    "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
+                    "edgeid": "4aee5de2-f583-4555-906d-b84920ba5572",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                     "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "rangenode_id": "43925a52-53d5-11ee-844f-0242ac130008"
+                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
+                    "rangenode_id": "859ca092-521d-11ee-b790-0242ac120002"
                 },
                 {
                     "description": null,
@@ -4365,16 +4291,6 @@
             "functions_x_graphs": [
                 {
                     "config": {
-                        "triggering_nodegroups": [
-                            "991c3c74-48b6-11ee-85af-0242ac140007"
-                        ]
-                    },
-                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "3ab0d4d4-93f6-48da-8c91-81bcd92419c7"
-                },
-                {
-                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",
@@ -4393,7 +4309,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "6eb3ed8a-16e4-45d6-ab47-0312672ddf9a"
+                    "id": "0ad53f48-f171-474a-a33c-fb233daa7488"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -4409,12 +4325,6 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "2749ea5a-48cb-11ee-be76-0242ac140007",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "n",
-                    "legacygroupid": null,
-                    "nodegroupid": "280b6cfc-4e4d-11ee-a340-0242ac140007",
                     "parentnodegroup_id": null
                 },
                 {
@@ -7791,8 +7701,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "7213cb8a-56dd-11ee-9dbe-0242ac130007",
-                "published_time": "2023-09-19T11:12:39.672",
+                "publicationid": "6fc71922-5223-11ee-8219-0242ac120002",
+                "published_time": "2023-09-13T10:51:04.771",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
