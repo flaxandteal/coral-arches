@@ -19,6 +19,8 @@ define([
 
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
+    self.loading = ko.observable(true);
+
     this.pageVm = params.pageVm;
 
     const createTextObject = (value) => ({
@@ -469,8 +471,25 @@ define([
       params.form.saving(false);
     };
 
+    self.loadData = async () => {
+      try {
+        const response = await window.fetch(arches.urls.api_resources(this.resourceId()) + '?format=json&compact=false');
+        const data = await response.json();
+
+        this.areaName(createTextObject(data.resource["Associated Activities"]["@value"]));
+      } catch (error)  {
+        console.error('Failed loading data for cover letter: ', error);
+        /**
+         * TODO: Display error banner to user
+         */
+      }
+
+      self.loading(false);
+    };
+
     if (!params.form.savedData()?.['tileId']) {
       // Run fetch prefill data if there hasn't previously been a saved letter
+      self.loadData();
     }
 
     // this.getResourceData = function() {
