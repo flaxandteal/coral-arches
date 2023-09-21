@@ -210,12 +210,12 @@ define([
                       ['Owner', 'Land Owner']
                     ],
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '859ca092-521d-11ee-b790-0242ac120002',
+                    nodegroupid: '6d290832-5891-11ee-a624-0242ac120004',
                     renderContext: 'workflow',
                     hiddenNodes: [
-                      '859cc43c-521d-11ee-b790-0242ac120002',
-                      '859cbcd0-521d-11ee-b790-0242ac120002',
-                      '859cb5b4-521d-11ee-b790-0242ac120002'
+                      '6d294784-5891-11ee-a624-0242ac120004',
+                      '6d293532-5891-11ee-a624-0242ac120004',
+                      '6d292a2e-5891-11ee-a624-0242ac120004'
                     ],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
