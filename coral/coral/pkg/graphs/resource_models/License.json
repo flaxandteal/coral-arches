@@ -4300,7 +4300,7 @@
                     "nodeid": "0a914884-48b4-11ee-90a8-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
-                    "sortorder": 0
+                    "sortorder": 1
                 },
                 {
                     "alias": "cover_letter",
@@ -4770,7 +4770,7 @@
                     "nodeid": "3bcd2950-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 0
+                    "sortorder": 2
                 },
                 {
                     "alias": "letter_contents",
@@ -6076,7 +6076,7 @@
                     "nodeid": "8838d23a-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 0
+                    "sortorder": 3
                 },
                 {
                     "alias": "file_s_",
@@ -7427,7 +7427,7 @@
                     "nodeid": "bcb01104-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 0
+                    "sortorder": 4
                 },
                 {
                     "alias": "decision_assignment",
@@ -7505,7 +7505,7 @@
                 {
                     "alias": "status",
                     "config": {
-                        "rdmCollection": null
+                        "rdmCollection": "7849cd3c-3f0d-454d-aaea-db9164629641"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -7529,8 +7529,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "12d21ae8-5893-11ee-ac00-0242ac120004",
-                "published_time": "2023-09-21T15:25:19.426",
+                "publicationid": "11b43c4c-5896-11ee-8af0-0242ac120004",
+                "published_time": "2023-09-21T15:46:46.042",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
