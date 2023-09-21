@@ -346,43 +346,28 @@ define([
     }
 
     self.header = ko.computed(() => {
-      // let result = '<div>';
-      // if (self.getTextValue(self.buildingName)) {
-      //   result += `<span>${self.getTextValue(self.buildingName)}</span>`;
-      // }
-      // if (self.getTextValue(self.buildingName) && self.getTextValue(self.buildingNumber)) {
-      //   result += `<span>, <br /></span>`;
-      // }
-      // if (self.getTextValue(self.buildingNumber)) {
-      //   result += `<span>${self.getTextValue(self.buildingNumber)}</span>`;
-      // }
-      // if (self.getTextValue(self.buildingNumber) && self.getTextValue(self.buildingNumberSubSt)) {
-      //   result += `<span>, </span>`;
-      // }
-      // if (self.getTextValue(self.buildingNumberSubSt)) {
-      //   result += `<span>${self.getTextValue(self.buildingNumberSubSt)}</span>`;
-      // }
-      // result += '</div><div>';
-      // if (self.getTextValue(self.street)) {
-      //   result += `<span>${self.getTextValue(self.street)}</span>`;
-      // }
-      // if (self.getTextValue(self.street) && self.getTextValue(self.subStreet)) {
-      //   result += `<span>, </span>`;
-      // }
-      // if (self.getTextValue(self.subStreet)) {
-      //   result += `<span>${self.getTextValue(self.subStreet)}</span>`;
-      // }
-      // result += '</div>';
-      // if (self.getTextValue(self.city)) {
-      //   result += `<span>${self.getTextValue(self.city)}</span>`;
-      // }
-      // if (self.getTextValue(self.county)) {
-      //   result += `<span>${self.getTextValue(self.county)}</span>`;
-      // }
-      // if (self.getTextValue(self.postCode)) {
-      //   result += `<span>${self.getTextValue(self.postCode)}</span>`;
-      // }
-      return this.createAddress(this.tempAdd())
+      let result = '<div>';
+      if (self.getTextValue(self.buildingName)) {
+        result += `<span>${self.getTextValue(self.buildingName)}</span>`;
+      }
+      result += '</div><div>';
+      if (self.getTextValue(self.buildingNumber)) {
+        result += `<span>${self.getTextValue(self.buildingNumber)} ${self.getTextValue(self.street)}</span>`;
+      }
+      if (self.getTextValue(self.subStreet)) {
+        result += `<span>${self.getTextValue(self.buildingNumberSubSt)?self.getTextValue(self.buildingNumberSubSt) + ' ' :''}${self.getTextValue(self.subStreet)}</span>`;
+      }
+      result += '</div>';
+      if (self.getTextValue(self.city)) {
+        result += `<span>${self.getTextValue(self.city)}</span>`;
+      }
+      if (self.getTextValue(self.county)) {
+        result += `<span>${self.getTextValue(self.county)}</span>`;
+      }
+      if (self.getTextValue(self.postCode)) {
+        result += `<span>${self.getTextValue(self.postCode)}</span>`;
+      }
+      return result
     }, self);
 
     self.details = ko.computed(() => {
