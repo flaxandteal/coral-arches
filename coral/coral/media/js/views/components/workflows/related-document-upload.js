@@ -16,8 +16,9 @@ define([
      * the workflow.
      */
     this.resourceModelId = ko.observable(ko.unwrap(params.resourceModelId));
-    this.resourceTileId = params.resourceTileId;
     this.resourceModelDigitalObjectNodeGroupId = params.resourceModelDigitalObjectNodeGroupId;
+    this.resourceModelDigitalObjectNodeId = params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
+    this.fileObjectNamePrefix = params?.fileObjectNamePrefix || 'Files for ';
 
     /**
      * The group id refers to the Digital Object name group.
@@ -92,7 +93,7 @@ define([
         nameTemplate.data[self.digitalResourceNameNodeId] = {
           en: {
             direction: 'ltr',
-            value: 'Files for ' + resourceData.displayname
+            value: self.fileObjectNamePrefix + resourceData.displayname
           }
         };
         /**
