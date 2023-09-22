@@ -192,24 +192,24 @@ define([
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
                 },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'grid-info',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
-                    // hiddenNodes: [
-                    //   'a541922b-f121-11eb-a081-a87eeabdefba',
-                    //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
-                    //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
-                    //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
-                    // ],
-                    renderContext: 'workflow',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
-                  }
-                }
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'grid-info',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
+                //     // hiddenNodes: [
+                //     //   'a541922b-f121-11eb-a081-a87eeabdefba',
+                //     //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
+                //     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
+                //     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                //     // ],
+                //     renderContext: 'workflow',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
+                //   }
+                // }
               ]
             }
           ]

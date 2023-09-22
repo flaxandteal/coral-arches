@@ -4,7 +4,7 @@
 <div style="display: flex; flex-direction: row">
   <div class="card-component" style="width: 100%">
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -17,7 +17,155 @@
               pageVm: $root
           }
       }"
+      ></div> -->
+      <div
+        data-bind="component: {
+          name: 'domain-radio-widget',
+          node: {
+            'config': {
+              'options': addressOptions,
+            },
+          },
+          params: {
+            node: {
+            'config': {
+              'options': addressOptions,
+              },
+              'configKeys': configKeys
+            },
+            config: {
+              'label': 'Recipient Type',
+              'options': addressOptions,
+            },
+            value: selectedAddress,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+      }"
       ></div>
+
+      <!-- ko if: contacts_loaded -->
+
+      <div data-bind="if: selectedAddress() === 'Applicant'">
+
+      <div
+        data-bind="component: {
+          name: 'domain-select-widget',
+          node: {
+            'config': {
+              'options': applicantList,
+              'multiple': true
+            },
+          },
+          params: {
+            node: {
+            'config': {
+              'options': applicantList,
+              'multiple': true
+              },
+              'configKeys': configKeys
+            },
+            config: {
+              'label': 'Recipient Name',
+              'options': applicantList,
+              'multiple': true
+            },
+            value: applicantText,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+      }"
+      ></div>
+
+    <div
+      data-bind="component: {
+        name: 'domain-select-widget',
+        node: {
+          'config': {
+            'options': applicantAddresses,
+          },
+        },
+        params: {
+          node: {
+          'config': {
+            'options': applicantAddresses,
+            },
+            'configKeys': configKeys
+          },
+          config: {
+            'label': 'Recipient Address',
+            'options': applicantAddresses,
+          },
+          value: tempAddText,
+          loading: loading,
+          form: $data,
+          pageVm: $root
+        }
+    }"
+    ></div>
+
+    </div> 
+
+    <div data-bind="if: selectedAddress() === 'Company'">
+    <div
+    data-bind="component: {
+      name: 'domain-select-widget',
+      node: {
+        'config': {
+          'options': companyList,
+        },
+      },
+      params: {
+        node: {
+        'config': {
+          'options': companyList,
+          },
+          'configKeys': configKeys
+        },
+        config: {
+          'label': 'Company Name',
+          'options': companyList,
+        },
+        value: companyText,
+        loading: loading,
+        form: $data,
+        pageVm: $root
+      }
+  }"
+  ></div>
+
+
+<div
+  data-bind="component: {
+    name: 'domain-select-widget',
+    node: {
+      'config': {
+        'options': companyAddresses,
+      },
+    },
+    params: {
+      node: {
+      'config': {
+        'options': companyAddresses,
+        },
+        'configKeys': configKeys
+      },
+      config: {
+        'label': 'Company Address',
+        'options': companyAddresses,
+      },
+      value: tempAddText,
+      loading: loading,
+      form: $data,
+      pageVm: $root
+    }
+}"
+></div>
+
+    </div>
+      <!-- /ko -->
     </div>
     <div class="row widget-wrapper">
       <div
@@ -51,7 +199,6 @@
                 'minDate': '',
                 'viewMode': 'days',
                 'dateFormat': 'DD-MM-YYYY',
-                'placeholder': 'Enter date',
                 'defaultValue': ''
             },
             value: appDate,
@@ -78,7 +225,6 @@
                 'minDate': '',
                 'viewMode': 'days',
                 'dateFormat': 'DD-MM-YYYY',
-                'placeholder': 'Enter date',
                 'defaultValue': ''
             },
             value: sendDate,
@@ -342,10 +488,10 @@
         <!-- BODY -->
         <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
           <!-- ko if: getTextValue(applicant) -->
-          <span data-bind="text: 'Dear, ' + getTextValue(applicant)"></span>
+          <span data-bind="text: '`Dear, ${getTextValue(applicant)}, ${company}`"></span>
           <!-- /ko -->
           <span
-            data-bind="html: getTextValue(textBody) || 'Please enter information regarding the email!!'"
+            data-bind="html: textPreview || 'Please enter information regarding the email!!'"
             style="margin-top: 8px"
           ></span>
         </div>
