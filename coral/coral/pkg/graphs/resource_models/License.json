@@ -225,7 +225,14 @@
                     "cardid": "6840fc30-48ce-11ee-8e4e-0242ac140007",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "6840fc30-48ce-11ee-8e4e-0242ac140007",
+                            "constraintid": "022e3d23-3e3b-470c-bbe4-258d437e66c9",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -1053,7 +1060,7 @@
                 {
                     "card_id": "6840fc30-48ce-11ee-8e4e-0242ac140007",
                     "config": {
-                        "defaultValue": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+                        "defaultValue": "39a21ebf-7dd6-4a7f-a211-9453202f60aa",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -1084,7 +1091,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Notes",
+                        "label": "Email Content",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -1094,7 +1101,7 @@
                     },
                     "id": "68413e98-48ce-11ee-8e4e-0242ac140007",
                     "label": {
-                        "en": "Notes"
+                        "en": "Email Content"
                     },
                     "node_id": "68410856-48ce-11ee-8e4e-0242ac140007",
                     "sortorder": 7,
@@ -1167,7 +1174,7 @@
                 {
                     "card_id": "6840fc30-48ce-11ee-8e4e-0242ac140007",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": "0f466b8b-a347-439f-9b61-bee9811ccbf0",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -4166,7 +4173,7 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "1c3819da-259d-46c1-bd18-7770820da4b5"
+                    "id": "b3f332d4-bdf3-48f6-9c95-e6363170a315"
                 },
                 {
                     "config": {
@@ -4188,7 +4195,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "511523f9-9049-4baf-a011-81a3c290498a"
+                    "id": "0f109a5e-2c4e-4c7a-8ff6-e7ef05bb3d78"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -4237,7 +4244,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "6840f820-48ce-11ee-8e4e-0242ac140007",
                     "parentnodegroup_id": null
@@ -4300,7 +4307,7 @@
                     "nodeid": "0a914884-48b4-11ee-90a8-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
-                    "sortorder": 1
+                    "sortorder": 0
                 },
                 {
                     "alias": "cover_letter",
@@ -6076,7 +6083,7 @@
                     "nodeid": "8838d23a-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 3
+                    "sortorder": 0
                 },
                 {
                     "alias": "file_s_",
@@ -7427,7 +7434,7 @@
                     "nodeid": "bcb01104-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 4
+                    "sortorder": 0
                 },
                 {
                     "alias": "decision_assignment",
@@ -7529,8 +7536,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "11b43c4c-5896-11ee-8af0-0242ac120004",
-                "published_time": "2023-09-21T15:46:46.042",
+                "publicationid": "f24ba57e-5922-11ee-96a2-0242ac130007",
+                "published_time": "2023-09-22T08:35:12.387",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
@@ -7568,6 +7575,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "/bin/sh: 1: git: not found",
         "os": "Linux",
-        "os version": "5.10.0-21-amd64"
+        "os version": "5.10.0-23-amd64"
     }
 }
