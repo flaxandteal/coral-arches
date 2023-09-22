@@ -29,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -212,7 +212,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "License Names"
                     },
@@ -246,7 +246,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Communications"
                     },
@@ -309,7 +309,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -336,7 +336,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -453,6 +453,28 @@
                 }
             ],
             "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Decision Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "02828e4a-4295-4388-973b-83648714ef54",
+                    "label": {
+                        "en": "Decision Type"
+                    },
+                    "node_id": "25f04f6c-48cd-11ee-94b3-0242ac140007",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
                 {
                     "card_id": "58c2562f-ba9d-49ec-aefd-576c1d7a17f5",
                     "config": {
@@ -1004,6 +1026,29 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "label": "Decision Notes",
+                        "placeholder": {
+                            "en": "Enter text"
+                        }
+                    },
+                    "id": "5caebe21-190a-4460-a771-2f7b26b5b832",
+                    "label": {
+                        "en": "Decision Notes"
+                    },
+                    "node_id": "f6c207ae-5938-11ee-9e74-0242ac130007",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000005"
+                },
+                {
                     "card_id": "6840fc30-48ce-11ee-8e4e-0242ac140007",
                     "config": {
                         "defaultValue": {
@@ -1152,7 +1197,7 @@
                 {
                     "card_id": "6840fc30-48ce-11ee-8e4e-0242ac140007",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
+                        "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "Date of Data Entry",
                         "label": "Communication Date",
                         "maxDate": null,
@@ -1716,6 +1761,27 @@
                     "sortorder": null,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Decision Made By",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "7117aad3-1ecb-4523-a2ce-e46ade4176c8",
+                    "label": {
+                        "en": "Decision Made By"
+                    },
+                    "node_id": "f3dcbf02-48cb-11ee-9081-0242ac140007",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
@@ -2928,6 +2994,26 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
+                    "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
+                        "label": "Decision Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "c0f7bf05-5d2e-46a4-9be7-ba74e93bbb14",
+                    "label": {
+                        "en": "Decision Date"
+                    },
+                    "node_id": "4c58921e-48cc-11ee-9081-0242ac140007",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
                     "card_id": "44bd1735-2ef4-4053-8777-bec3dee48f9b",
                     "config": {
                         "defaultValue": "",
@@ -3917,6 +4003,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "edgeid": "b5e75327-941a-4ab4-80f8-a0e8db830a64",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "f6c207ae-5938-11ee-9e74-0242ac130007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "d8c48cf4-48cb-11ee-9081-0242ac140007",
                     "edgeid": "b8f39be8-3afb-462a-b366-a2852d440bb8",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -4396,7 +4491,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "0f109a5e-2c4e-4c7a-8ff6-e7ef05bb3d78"
+                    "id": "19092d09-8bf5-4ecf-a5d4-a360015c84cd"
                 },
                 {
                     "config": {
@@ -4406,12 +4501,12 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "b3f332d4-bdf3-48f6-9c95-e6363170a315"
+                    "id": "e19c6aa3-14bd-43d8-a784-70328487493c"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -4501,7 +4596,7 @@
                 {
                     "alias": "acknowledged_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -4971,7 +5066,7 @@
                 {
                     "alias": "start_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -5015,7 +5110,7 @@
                 {
                     "alias": "decision_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -5406,7 +5501,7 @@
                 {
                     "alias": "date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -5699,7 +5794,7 @@
                 {
                     "alias": "received_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -6277,7 +6372,7 @@
                 {
                     "alias": "end_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -7628,7 +7723,7 @@
                 {
                     "alias": "cancelled_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -7721,6 +7816,28 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "decision_notes",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Decision Notes",
+                    "nodegroup_id": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "nodeid": "f6c207ae-5938-11ee-9e74-0242ac130007",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0
+                },
+                {
                     "alias": "status",
                     "config": {
                         "rdmCollection": "7849cd3c-3f0d-454d-aaea-db9164629641"
@@ -7746,9 +7863,9 @@
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                "notes": null,
-                "publicationid": "955c83e0-592e-11ee-a04c-0242ac130007",
-                "published_time": "2023-09-22T09:58:30.430",
+                "notes": "Added decision notes to decision nodegroup",
+                "publicationid": "ab0e573a-5939-11ee-9e74-0242ac130007",
+                "published_time": "2023-09-22T11:17:51.291",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
