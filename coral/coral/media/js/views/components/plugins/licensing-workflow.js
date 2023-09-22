@@ -491,24 +491,11 @@ define([
                   uniqueInstanceName: 'report-documents',
                   tilesManaged: 'one',
                   parameters: {
-                    /**
-                     * Using Digital Object graph id and the file upload
-                     * node group id.
-                     */
                     graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
                     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
-
-                    /**
-                     * These can be difficult to work with. Sometimes the `tileId` will be all
-                     * lowercase and sometimes it will be camel case. This will vary between workflows.
-                     */
                     resourceModelId: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-
-                    /**
-                     * This needs to refer to the Excavation models
-                     * Digital object node group.
-                     */
-                    resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11'
+                    resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
+                    fileObjectNamePrefix: 'Site report files for '
                   }
                 }
               ]
