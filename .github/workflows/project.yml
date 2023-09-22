@@ -4,11 +4,16 @@ on:
   push:
     branches:
       - develop
-      - bug/github-ci-not-using-current-branch-name
 
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base-7.5-dev:bug-coral_dockerfile_for_arches_7.4
-  ARCHES_POSTGIS: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
+  # Using the 7.5-bug version of the container is throwing an error for an
+  # undefined database column using the previous coral base and postgis seems
+  # to have avoided the problem. TODO: Investigate difference between the two
+  # ARCHES_BASE: ghcr.io/flaxandteal/arches-base-7.5-dev:bug-coral_dockerfile_for_arches_7.4
+  # ARCHES_POSTGIS: ghcr.io/flaxandteal/arches-postgis-7.5-dev:bug-coral_dockerfile_for_arches_7.4
+
+  ARCHES_BASE: flaxandteal/arches_coral_base
+  ARCHES_POSTGIS: flaxandteal/arches_coral_postgres
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
@@ -129,7 +134,6 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
-            VERSION=${{ steps.meta.outputs.version }}
       - name: Record a project static image reference
         id: set-static
         run: |
@@ -202,11 +206,11 @@ jobs:
           TZ: "PST"
         ports:
           - '8000:8000'
-        # options: >-
-        #   --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
-        #   --health-interval 10s
-        #   --health-timeout 5s
-        #   --health-retries 1000
+        options: >-
+          --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 1000
   Build-Arches-Final:
     needs: [Build-Arches-Static, Build-Arches]
     runs-on: [self-hosted]
