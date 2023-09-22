@@ -423,9 +423,13 @@ define([
         this.areaName(createTextObject(data.resource["Associated Activities"]["@value"]))
         // todo, have this decide if it's license number rather than assume it's first in the list
         this.licenseNo(createTextObject(data.resource["External Cross References"][0]["External Cross Reference Number"]["@value"]))
-        this.signed(createTextObject(data.resource["Decision"]?["Decision Assignment"]["Decision Made By"]["@value"]:'') )
-        this.decisionDate(data.resource["Decision"]?["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"]:'')
-        this.appDate(data.resource["Status and Duration Dates"]?["Received Date"]["@value"]:'')
+        if (data.resource["Decision"]) {
+          this.signed(createTextObject(data.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
+          this.decisionDate(data.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
+        }
+        if (data.resource["Status and Duration Dates"]){
+          this.appDate(data.resource["Status and Duration Dates"]["Received Date"]["@value"])
+        }
         
         if (data.resource['Contacts']) {
 
@@ -519,16 +523,16 @@ define([
                 this.externalRefs(getNodeValues(tiles.tiles, '589d4dc7-edf9-11eb-9856-a87eeabdefba'))
                 this.externalRefSources(getNodeValues(tiles.tiles, '589d4dcd-edf9-11eb-8a7d-a87eeabdefba'))
                 this.externalRefNotes(getNodeValues(tiles.tiles, '589d4dca-edf9-11eb-83ea-a87eeabdefba'))
-  
+                
                 this.siteAddress({
-                  buildingName : getNodeValues(tiles.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
-                  buildingNumber : getNodeValues(tiles.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
-                  street : getNodeValues(tiles.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
-                  subStreetNumber : getNodeValues(tiles.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
-                  subStreet : getNodeValues(tiles.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
-                  county : getNodeValues(tiles.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
-                  postCode : getNodeValues(tiles.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
-                  city : getNodeValues(tiles.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0]?[this.currentLanguage().code].value:''
+                  buildingName : getNodeValues(tiles.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0][this.currentLanguage().code].value : '',
+                  buildingNumber : getNodeValues(tiles.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0][this.currentLanguage().code].value : '',
+                  street : getNodeValues(tiles.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0][this.currentLanguage().code].value : '',
+                  subStreetNumber : getNodeValues(tiles.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0][this.currentLanguage().code].value : '',
+                  subStreet : getNodeValues(tiles.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0][this.currentLanguage().code].value : '',
+                  county : getNodeValues(tiles.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0][this.currentLanguage().code].value : '',
+                  postCode : getNodeValues(tiles.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0][this.currentLanguage().code].value : '',
+                  city : getNodeValues(tiles.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0] ? getNodeValues(tiles.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0][this.currentLanguage().code].value : ''
               })
               })
             
