@@ -318,6 +318,34 @@ define([
           ]
         },
         {
+          title: 'Communications',
+          name: 'communications-step',
+          required: false,
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'communications-upload-step',
+                  tilesManaged: 'multi',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '6840f820-48ce-11ee-8e4e-0242ac140007',
+                    hiddenNodes: [
+                      '6841329a-48ce-11ee-8e4e-0242ac140007',
+                      '68411f12-48ce-11ee-8e4e-0242ac140007', // Communication type
+                      '684121d8-48ce-11ee-8e4e-0242ac140007', // Communication description type
+                      // '684113a0-48ce-11ee-8e4e-0242ac140007', // Participants
+                      '68412778-48ce-11ee-8e4e-0242ac140007'
+                    ],
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+              ]
+            }
+          ]
+        },
+        {
           title: 'Location Details',
           name: 'location-details-step',
           required: false,
