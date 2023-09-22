@@ -7,9 +7,19 @@ ARG ARCHES_PROJECT
 ENV ARCHES_PROJECT $ARCHES_PROJECT
 COPY entrypoint.sh ${WEB_ROOT}/
 COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
+# Install packages required to build the python libs, then remove them
+RUN set -ex \
+    && BUILD_DEPS=" \
+        libxslt-dev \
+        git ssh \
+        " \
+    && apt-get update -y \
+    && apt-get install -y --no-install-recommends $BUILD_DEPS \
+    && (mkdir ~/.ssh && ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts) # TODO: fix ckeditor yarn dep
 RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
     && pip install starlette-graphene3 \
+    && pip install python-docx \
     && pip install starlette-context
 RUN . ../ENV/bin/activate \
     && pip install cachetools websockets \
@@ -20,12 +30,7 @@ RUN echo "{}" > ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-
 
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}
 RUN mkdir -p /static_root && chown -R arches /static_root
-
-RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn add -D babel-loader html-loader clean-webpack-plugin webpack-cli mini-css-extract-plugin stylelint-webpack-plugin eslint-webpack-plugin css-loader postcss-loader sass-loader raw-loader ttf-loader file-loader url-loader webpack-dev-server)
-RUN (cd $WEB_ROOT/$ARCHES_PROJECT/$ARCHES_PROJECT && NODE_OPTIONS=--max_old_space_size=8192 NODE_PATH=./media/node_modules yarn install -D)
-
-RUN chgrp -R arches ../../ENV && chmod -R g=rwx ../../ENV
-
+RUN yarn install
 WORKDIR ${WEB_ROOT}/${ARCHES_PROJECT}
 ENTRYPOINT ../entrypoint.sh
 CMD run_arches
