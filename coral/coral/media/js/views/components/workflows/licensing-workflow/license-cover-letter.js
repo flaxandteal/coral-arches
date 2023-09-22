@@ -438,11 +438,13 @@ define([
 
           const inner_response = await window.fetch(arches.urls.api_tiles(data.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
           const inner_data = await inner_response.json()
-          await inner_data.data['6d2924b6-5891-11ee-a624-0242ac120004'].forEach(async (contact_tile) => {
-            const contacts = []
-            await window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
-            .then(response => response.json())
-            .then(
+          if (inner_data['6d2924b6-5891-11ee-a624-0242ac120004']) {
+
+            await inner_data.data['6d2924b6-5891-11ee-a624-0242ac120004'].forEach(async (contact_tile) => {
+              const contacts = []
+              await window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
+              .then(response => response.json())
+              .then(
               data => {contacts.push(data)})
               .then(x => {
                 
@@ -462,7 +464,7 @@ define([
                             county : location.Addresses['County']['County Value']["@value"],
                             postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
                           }
-                    })
+                        })
                   }
                 }
                 else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
@@ -498,7 +500,7 @@ define([
                           postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
                         }]
                       }
-                  } 
+                    } 
                 }
               }
               this.companyList(Object.keys(this.companies()).map(x => { return {text: x, id: x, value: x}}))
@@ -509,6 +511,7 @@ define([
               this.contacts_loaded(true)
             })
           })
+        }
         }
           
 
