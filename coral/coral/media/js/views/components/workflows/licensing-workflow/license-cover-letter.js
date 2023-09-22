@@ -247,13 +247,16 @@ define([
         this.company(createTextObject(contact))
       }
       if (contact) {
-        this.companyAddresses(this.companies()[this.getTextValue(contact)].map((add => {
-          return {
-            'text': `${add.buildingNumber} ${add.street}`,
-            'id': JSON.stringify(add),
-            'value': add
-          }
-        })))
+        if (this.companies()[this.getTextValue(contact)]){
+
+          this.companyAddresses(this.companies()[this.getTextValue(contact)].map((add => {
+            return {
+              'text': `${add.buildingNumber} ${add.street}`,
+              'id': JSON.stringify(add),
+              'value': add
+            }
+          })))
+        }
       }
 
       if (this.companyAddresses()[0]) {
