@@ -44,7 +44,7 @@
           }
       }"
       ></div>
-      <div data-bind="text: JSON.stringify(textBody())"></div>
+
       <!-- ko if: contacts_loaded -->
 
       <div data-bind="if: selectedAddress() === 'Applicant'">
@@ -331,7 +331,6 @@
         }"
       ></div>
     </div>
-    <div data-bind="text: JSON.stringify(county())"></div>
     <div class="row widget-wrapper">
       <div
         data-bind="component: {
@@ -492,7 +491,7 @@
           <span data-bind="text: '`Dear, ${getTextValue(applicant)}, ${company}`"></span>
           <!-- /ko -->
           <span
-            data-bind="html: getTextValue(textBody) || 'Please enter information regarding the email!!'"
+            data-bind="html: textPreview || 'Please enter information regarding the email!!'"
             style="margin-top: 8px"
           ></span>
         </div>

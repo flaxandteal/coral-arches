@@ -51,7 +51,6 @@ define([
 
     var getNodeValues = function(tiles, nodeId) {
       var values = [];
-      console.log("what you mean there's no foreach?", tiles)
       tiles.forEach((tile) => {
         if (tile.data[nodeId]){
           values.push(tile.data[nodeId])
@@ -70,12 +69,7 @@ define([
     this.licenseNo = ko.observable(createTextObject(''));
     this.bFileNumber = ko.observable(createTextObject(''));
 
-    this.textBody = ko.observable(
-      self.getSavedValue('textBody') ||
-        createTextObject(
-          'Further to your application on [Date], please find attached an Excavation License for the above mentioned location.'
-        )
-    );
+    
 
     /**
      * Contacts
@@ -154,26 +148,24 @@ define([
 
     this.selectedAddress.subscribe(addressType => {
       let val = undefined
-      if (addressType === 'Applicant'){
-
+      if (addressType === 'Applicant' && this.applicant()){
         if (this.applicant().en.value === "") {
-          this.applicant(this.applicantList()[0].id)
+          this.applicant(this.applicantList()[0]?.id)
         } else {
           this.applicant(this.applicant())
         }
         val = this.applicants()[this.applicant()]
       }
-      if (addressType === 'Company') {
+      if (addressType === 'Company' && this.company()) {
         
         if (this.company().en.value === "") {
-          this.company(this.companyList()[0].id)
+          this.company(this.companyList()[0]?.id)
         } else {
           this.company(this.company())
         }
         val = this.companies()[this.company()]
       }
       if (addressType === 'Site'){
-        console.log("site of you babe", this.siteAddress())
         val = this.siteAddress()
       }
       if (val) {
@@ -194,23 +186,36 @@ define([
       this.loading(false)
     })
 
+    this.textBody = ko.observable(
+      self.getSavedValue('textBody') ||
+        createTextObject(
+          'Further to your application on [Date], please find attached an Excavation License for the above mentioned location.'
+        )
+    );
+    this.textPreview = ko.computed({
+      read: function () {
+        return createTextObject(this.textBody().en.value.replace('[Date]', this.appDate() ? this.appDate() :'[Date]'))
+      }
+    },this)
+
 
     this.applicant.subscribe(contact => {
       if (typeof(contact) === "string"){
         this.applicant(contact)
       }
 
-      if (this.applicants()[this.getTextValue(contact)]) {
-
-        this.applicantAddresses(this.applicants()[this.getTextValue(contact)].map((add => {
-          return {
-            'text': `${add.buildingNumber} ${add.street}`,
-            'id': JSON.stringify(add),
-            'value': add
-          }
-        })))
-      this.loading(true)
-      this.loading(false)
+      if (contact){
+        if (this.applicants()[this.getTextValue(contact)]) {
+          this.applicantAddresses(this.applicants()[this.getTextValue(contact)].map((add => {
+            return {
+              'text': `${add.buildingNumber} ${add.street}`,
+              'id': JSON.stringify(add),
+              'value': add
+            }
+          })))
+          this.loading(true)
+          this.loading(false)
+        }
       }
 
       // val = this.applicantAddresses()[0].value
@@ -241,27 +246,18 @@ define([
       if (typeof(contact) === "string"){
         this.company(createTextObject(contact))
       }
-      this.companyAddresses(this.companies()[this.getTextValue(contact)].map((add => {
-        return {
-          'text': `${add.buildingNumber} ${add.street}`,
-          'id': JSON.stringify(add),
-          'value': add
-        }
-      })))
-      // val = this.companyAddresses()[0].value
+      if (contact) {
+        this.companyAddresses(this.companies()[this.getTextValue(contact)].map((add => {
+          return {
+            'text': `${add.buildingNumber} ${add.street}`,
+            'id': JSON.stringify(add),
+            'value': add
+          }
+        })))
+      }
+
       if (this.companyAddresses()[0]) {
         this.tempAddText(this.companyAddresses()[0].id)
-        // this.tempAddText(
-        //   `{
-        //     ${val.buildingName ? '"buildingName": "' + val.buildingName + '",': ''}
-        //     ${val.buildingNumber ? '"buildingNumber": "' + val.buildingNumber + '",': ''}
-        //     ${val.street ? '"street": "' + val.street + '",': ''}
-        //     ${val.buildingNumberSubSt ? '"buildingNumberSubSt": "' + val.buildingNumberSubSt + '",': ''}
-        //     ${val.subStreet ? '"subStreet": "' + val.subStreet + '",': ''}
-        //     ${val.city ? '"city": "' + val.city + '",': ''}
-        //     ${val.county ? '"county": "' + val.county + '",': ''}
-        //     ${val.postCode ? '"postCode": "' + val.postCode + '"': ''}
-        //   }`)
       }
       this.loading(true)
       this.loading(false)
@@ -349,7 +345,7 @@ define([
         result += `<span>Dear: ${Object.keys(this.applicants()).join(', ')}, ${this.getTextValue(self.company)}</span>`;
       }
       result += `<span style="margin-top: 8px">${
-        self.getTextValue(self.textBody) || 'Please enter information regarding the email!'
+        self.getTextValue(self.textPreview) || 'Please enter information regarding the email!'
       }</span>`;
       result += '</div>';
       
@@ -362,7 +358,7 @@ define([
       if (self.getTextValue(self.seniorInspector)) {
         result += `<span>Senior Inspector:  ${self.getTextValue(self.seniorInspector)}</span>`;
       }
-      result += `<span>Signed: ${self.getTextValue(self.signed) || 'Signature required!'}</span>`;
+      result += `<span>Signed: ${self.getTextValue(self.signed) || '[Signature]'}</span>`;
       result += '</div>';
       return result;
     }, self);
@@ -425,49 +421,31 @@ define([
 
         this.activityResourceData(data.resource)
         this.areaName(createTextObject(data.resource["Associated Activities"]["@value"]))
-      
-        this.signed(createTextObject(data.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
-        this.decisionDate(data.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
-        this.appDate(data.resource["Status and Duration Dates"]["Received Date"]["@value"])
-        // this.textBody(createTextObject(this.textBody().en.value.replace('[Date]', new Date(this.appDate()).toLocaleDateString())))
+        // todo, have this decide if it's license number rather than assume it's first in the list
+        this.licenseNo(createTextObject(data.resource["External Cross References"][0]["External Cross Reference Number"]["@value"]))
+        this.signed(createTextObject(data.resource["Decision"]?["Decision Assignment"]["Decision Made By"]["@value"]:'') )
+        this.decisionDate(data.resource["Decision"]?["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"]:'')
+        this.appDate(data.resource["Status and Duration Dates"]?["Received Date"]["@value"]:'')
         
-        const inner_response = await window.fetch(arches.urls.api_tiles(data.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
-        const inner_data = await inner_response.json()
-        await inner_data.data['6d2924b6-5891-11ee-a624-0242ac120004'].forEach(async (contact_tile) => {
+        if (data.resource['Contacts']) {
+
+          const inner_response = await window.fetch(arches.urls.api_tiles(data.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+          const inner_data = await inner_response.json()
+          await inner_data.data['6d2924b6-5891-11ee-a624-0242ac120004'].forEach(async (contact_tile) => {
             const contacts = []
-              await window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
-              .then(response => response.json())
-              .then(
-                data => {contacts.push(data)})
+            await window.fetch(arches.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
+            .then(response => response.json())
+            .then(
+              data => {contacts.push(data)})
               .then(x => {
-              
+                
                 for (let contact of contacts) {
                   this.contacts_loaded(false)
                   if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
                     this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
                     if (contact["resource"]["Location Data"]) {
                       this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                          return {
-                            buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
-                            buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
-                            street : location.Addresses['Street']['Street Value']["@value"],
-                            buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-                            subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-                            city : location.Addresses['Town or City']['Town or City Value']["@value"],
-                            county : location.Addresses['County']['County Value']["@value"],
-                            postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-                        }
-                    })
-                  }
-                }
-                  else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
-
-                    this.companies({[contact["resource"]["Names"][0]["Organization Name"]["@value"]] : []})
-                    if (contact["resource"]["Location Data"]) {
-                    
-                      if (typeof(contact["resource"]["Location Data"].map) === "function") {
-                        this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                          return {
+                        return {
                             buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
                             buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
                             street : location.Addresses['Street']['Street Value']["@value"],
@@ -477,12 +455,17 @@ define([
                             county : location.Addresses['County']['County Value']["@value"],
                             postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
                           }
-                      })
-                      this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
-                      }
-                      else {
-                        let location = contact["resource"]["Location Data"]
-                        this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = [{
+                    })
+                  }
+                }
+                else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
+                  
+                  this.companies({[contact["resource"]["Names"][0]["Organization Name"]["@value"]] : []})
+                  if (contact["resource"]["Location Data"]) {
+                    
+                    if (typeof(contact["resource"]["Location Data"].map) === "function") {
+                      this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
+                        return {
                           buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
                           buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
                           street : location.Addresses['Street']['Street Value']["@value"],
@@ -491,25 +474,39 @@ define([
                           city : location.Addresses['Town or City']['Town or City Value']["@value"],
                           county : location.Addresses['County']['County Value']["@value"],
                           postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
+                        }
+                      })
+                      this.company(createTextObject(contact["resource"]["Names"][0]["Organization Name"]["@value"]))
+                    }
+                    else {
+                      let location = contact["resource"]["Location Data"]
+                      this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = [{
+                        buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
+                        buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
+                        street : location.Addresses['Street']['Street Value']["@value"],
+                        buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
+                        subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
+                        city : location.Addresses['Town or City']['Town or City Value']["@value"],
+                        county : location.Addresses['County']['County Value']["@value"],
+                          postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
                         }]
                       }
                   } 
+                }
               }
-            }
-            this.companyList(Object.keys(this.companies()).map(x => { return {text: x, id: x, value: x}}))
-            this.companyText(Object.keys(this.companies())[0])
-            this.applicantList(Object.keys(this.applicants()).map(x => { return {text: x, id: x, value: x}}))
-            this.applicantText(Object.keys(this.applicants())[0])
-
-            this.contacts_loaded(true)
+              this.companyList(Object.keys(this.companies()).map(x => { return {text: x, id: x, value: x}}))
+              this.companyText(Object.keys(this.companies())[0])
+              this.applicantList(Object.keys(this.applicants()).map(x => { return {text: x, id: x, value: x}}))
+              this.applicantText(Object.keys(this.applicants())[0])
               
+              this.contacts_loaded(true)
             })
-            })
+          })
+        }
           
 
           const related_response = await window.fetch(arches.urls.related_resources + this.resourceId() + "?paginate=false")
           const related_data = await related_response.json()
-          console.log("OH NO babe",related_data)
           related_data.related_resources.forEach(related_resource => {
             if (related_resource.graph_id === "d4a88461-5463-11e9-90d9-000d3ab1e588") {
               // company / organisation
@@ -518,23 +515,20 @@ define([
               // people
             }
             if (related_resource.graph_id === "b9e0701e-5463-11e9-b5f5-000d3ab1e588") {
-              console.log("this where we lookin babe", related_resource)
               window.fetch(arches.urls.resource_editor + related_resource.resourceinstanceid + "/tiles?paginate=false").then(tiles => tiles.json()).then(tiles => {
-                console.log("tiles lad", tiles.tiles)
                 this.externalRefs(getNodeValues(tiles.tiles, '589d4dc7-edf9-11eb-9856-a87eeabdefba'))
                 this.externalRefSources(getNodeValues(tiles.tiles, '589d4dcd-edf9-11eb-8a7d-a87eeabdefba'))
                 this.externalRefNotes(getNodeValues(tiles.tiles, '589d4dca-edf9-11eb-83ea-a87eeabdefba'))
-                console.log("whats changed babe?", getNodeValues(tiles.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba'))
   
                 this.siteAddress({
-                  buildingName : getNodeValues(tiles.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0].en.value,
-                  buildingNumber : getNodeValues(tiles.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0].en.value,
-                  street : getNodeValues(tiles.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0].en.value,
-                  subStreetNumber : getNodeValues(tiles.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0].en.value,
-                  subStreet : getNodeValues(tiles.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0].en.value,
-                  county : getNodeValues(tiles.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0].en.value,
-                  postCode : getNodeValues(tiles.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0].en.value,
-                  city : getNodeValues(tiles.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0].en.value
+                  buildingName : getNodeValues(tiles.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
+                  buildingNumber : getNodeValues(tiles.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
+                  street : getNodeValues(tiles.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
+                  subStreetNumber : getNodeValues(tiles.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
+                  subStreet : getNodeValues(tiles.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
+                  county : getNodeValues(tiles.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
+                  postCode : getNodeValues(tiles.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')[0]?[this.currentLanguage().code].value:'',
+                  city : getNodeValues(tiles.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')[0]?[this.currentLanguage().code].value:''
               })
               })
             
