@@ -82,7 +82,7 @@ define([
         self.pageVm.alert(
           new AlertViewModel(
             'ep-alert-red',
-            'Something went',
+            'Something went wrong',
             'During initialization a resource failed to send the requests required to setup the workflow. Please report the indcident.',
             null,
             function () {}
