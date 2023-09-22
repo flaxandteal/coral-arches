@@ -321,13 +321,17 @@ define([
           title: 'Communications',
           name: 'communications-step',
           required: false,
+          informationboxdata: {
+            heading: 'Email Upload',
+            text: 'Using the fields below select the date the email was sent on and paste the contents in the large textbox below. After you have finished click the \'add\' button at the bottom of the page. WARNING: After clicking add the date will reset to text, if this is not in a date format it will through an error.'
+          },
           layoutSections: [
             {
               componentConfigs: [
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'communications-upload-step',
-                  tilesManaged: 'multi',
+                  tilesManaged: 'many',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6840f820-48ce-11ee-8e4e-0242ac140007',
