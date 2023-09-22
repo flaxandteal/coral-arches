@@ -29,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -69,7 +69,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Cover Letter"
                     },
@@ -183,7 +183,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "File(s)"
                     },
@@ -212,7 +212,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Names"
                     },
@@ -249,35 +249,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": {
-                        "displayAsTable": true
-                    },
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": "Use to record details of applicants, owners and casework officers"
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "Contacts"
-                    },
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "sortorder": 8,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "991c3f76-48b6-11ee-85af-0242ac140007",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -302,7 +273,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -329,7 +300,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -436,11 +407,38 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Proposal"
                     },
                     "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Associated Actors"
+                    },
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
                     "sortorder": null,
                     "visible": true
                 }
@@ -1279,373 +1277,6 @@
                     "sortorder": 10,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Owner Role Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d294c5c-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Owner Role Type"
-                    },
-                    "node_id": "6d2919b2-5891-11ee-a624-0242ac120004",
-                    "sortorder": 10,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Casework Officer",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d294e00-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Casework Officer"
-                    },
-                    "node_id": "6d294784-5891-11ee-a624-0242ac120004",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Agent",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d294f86-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Agent"
-                    },
-                    "node_id": "6d292a2e-5891-11ee-a624-0242ac120004",
-                    "sortorder": 6,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b2489138-dcc5-4151-999e-977809179bb3",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Applicant Role Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d295102-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Applicant Role Type"
-                    },
-                    "node_id": "6d292cf4-5891-11ee-a624-0242ac120004",
-                    "sortorder": 13,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Agent Role Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d29527e-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Agent Role Metatype"
-                    },
-                    "node_id": "6d29323a-5891-11ee-a624-0242ac120004",
-                    "sortorder": 8,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "a69c21b4-34e2-4781-b6c8-5c539e6fe14a",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Agent Role Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d2953f0-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Agent Role Type"
-                    },
-                    "node_id": "6d2921fa-5891-11ee-a624-0242ac120004",
-                    "sortorder": 7,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Owner",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d295576-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Owner"
-                    },
-                    "node_id": "6d292f88-5891-11ee-a624-0242ac120004",
-                    "sortorder": 9,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Owner Role Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d2956e8-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Owner Role Metatype"
-                    },
-                    "node_id": "6d2916d8-5891-11ee-a624-0242ac120004",
-                    "sortorder": 11,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Applicant",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d295864-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Applicant"
-                    },
-                    "node_id": "6d2924b6-5891-11ee-a624-0242ac120004",
-                    "sortorder": 12,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Planning Officer",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d2959ea-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Planning Officer"
-                    },
-                    "node_id": "6d293532-5891-11ee-a624-0242ac120004",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Applicant Role Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d295b52-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Applicant Role Metatype"
-                    },
-                    "node_id": "6d292772-5891-11ee-a624-0242ac120004",
-                    "sortorder": 14,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "50a525cf-acd5-49cc-9123-4247f6418145",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Casework Officer Role Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d295cce-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Casework Officer Role Type"
-                    },
-                    "node_id": "6d2944f0-5891-11ee-a624-0242ac120004",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "31a0f492-2c6d-4c1b-8bfa-74da97fa14fc",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Planning Officer Role Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d295e40-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Planning Officer Role Type"
-                    },
-                    "node_id": "6d29392e-5891-11ee-a624-0242ac120004",
-                    "sortorder": 1,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Planning Officer Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d295fc6-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Planning Officer Metatype"
-                    },
-                    "node_id": "6d29144e-5891-11ee-a624-0242ac120004",
-                    "sortorder": 2,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Casework Officer Role Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d296142-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Casework Officer Role Metatype"
-                    },
-                    "node_id": "6d2941f8-5891-11ee-a624-0242ac120004",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Planning Officer",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d2962b4-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Planning Officer"
-                    },
-                    "node_id": "6d294aea-5891-11ee-a624-0242ac120004",
-                    "sortorder": 7,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Casework Officer",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d2964c6-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Casework Officer"
-                    },
-                    "node_id": "6d291f3e-5891-11ee-a624-0242ac120004",
-                    "sortorder": 6,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "991c3f76-48b6-11ee-85af-0242ac140007",
@@ -2799,6 +2430,228 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Association End Date",
+                        "maxDate": null,
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "f5567464-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Association End Date"
+                    },
+                    "node_id": "f5566cda-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 7,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Association Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f556757c-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Association Type"
+                    },
+                    "node_id": "f55671b2-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Person or Organization",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "f5567680-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Person or Organization"
+                    },
+                    "node_id": "f5566e7e-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Role Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f556777a-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Role Type"
+                    },
+                    "node_id": "f5567342-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Role Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f556787e-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Role Metatype"
+                    },
+                    "node_id": "f5566140-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": null
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Display Date",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "f55679fa-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Display Date"
+                    },
+                    "node_id": "f5566654-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 5,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Date Qualifier Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f5567af4-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Date Qualifier Metatype"
+                    },
+                    "node_id": "f55667f8-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 9,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Date Qualifier",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f5567bee-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Date Qualifier"
+                    },
+                    "node_id": "f556699c-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 8,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Association Start Date",
+                        "maxDate": null,
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "f5567ce8-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Association Start Date"
+                    },
+                    "node_id": "f5566b40-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 6,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "f5565f2e-48b6-11ee-85af-0242ac140007",
+                    "config": {
+                        "defaultValue": "d3b75e3a-638e-490e-8d1b-bbb5c504ce94",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Association Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f5567de2-48b6-11ee-85af-0242ac140007",
+                    "label": {
+                        "en": "Association Metatype"
+                    },
+                    "node_id": "f556700e-48b6-11ee-85af-0242ac140007",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
                     "config": {
                         "default": {
@@ -3151,15 +3004,6 @@
                 {
                     "description": null,
                     "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
-                    "edgeid": "5ee76806-e20b-45b4-beb6-1fdea05aeecb",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
-                    "rangenode_id": "6d290832-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
                     "edgeid": "5f5dc93c-954d-43dd-a19e-71a5b87bdab0",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                     "name": null,
@@ -3348,186 +3192,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "6d29392e-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29d172-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d29144e-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d292cf4-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29d410-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d292772-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29d668-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d291192-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29d884-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d291c78-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291c78-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29da96-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d292a2e-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d2919b2-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29dc9e-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2916d8-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d293d34-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29deb0-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d2924b6-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d293d34-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e04a-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d292cf4-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291192-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e1da-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d292f88-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291192-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e37e-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2919b2-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291c78-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e69e-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2921fa-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e8e2-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d293d34-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29ea2c-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d294aea-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d294aea-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29eb76-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d29392e-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d294aea-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29ecc0-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d293532-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29ee0a-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d291f3e-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d2921fa-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29ef4a-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d29323a-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d2944f0-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29f094-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2941f8-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291f3e-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29f1de-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2944f0-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291f3e-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29f328-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d294784-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "ee5947c6-48b2-11ee-abec-0242ac140007",
                     "edgeid": "755a1ffe-f16c-40bd-8ba2-308396efeb06",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -3543,6 +3207,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115i_is_finished_by",
                     "rangenode_id": "a9f53f00-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
+                    "edgeid": "7b0ed022-75f0-48ce-a2b2-8bc29e12fdb2",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115i_is_finished_by",
+                    "rangenode_id": "f5565c2c-48b6-11ee-85af-0242ac140007"
                 },
                 {
                     "description": null,
@@ -4149,6 +3822,114 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "f5567342-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556c342-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f5566140-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556c554-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "rangenode_id": "f556630c-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f55664b0-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556c70c-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "rangenode_id": "f5566b40-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f55664b0-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556c8b0-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
+                    "rangenode_id": "f5566cda-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f55664b0-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556ca54-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f556699c-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f55664b0-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556cbf8-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "f5566654-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f556699c-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556cd9c-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f55667f8-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f556630c-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556cf36-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span",
+                    "rangenode_id": "f55664b0-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f556630c-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556d0da-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by",
+                    "rangenode_id": "f5566e7e-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f55671b2-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556d274-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f556700e-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556d418-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f55671b2-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "f556630c-48b6-11ee-85af-0242ac140007",
+                    "edgeid": "f556d5bc-48b6-11ee-85af-0242ac140007",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f5567342-48b6-11ee-85af-0242ac140007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "ee5947c6-48b2-11ee-abec-0242ac140007",
                     "edgeid": "fcb8beb6-83d7-4c14-9df6-62916ef535ba",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -4166,7 +3947,7 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "1c3819da-259d-46c1-bd18-7770820da4b5"
+                    "id": "3ab0d4d4-93f6-48da-8c91-81bcd92419c7"
                 },
                 {
                     "config": {
@@ -4188,12 +3969,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "511523f9-9049-4baf-a011-81a3c290498a"
+                    "id": "6eb3ed8a-16e4-45d6-ab47-0312672ddf9a"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -4245,12 +4026,6 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "6d290832-5891-11ee-a624-0242ac120004",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
                     "nodegroupid": "8c5356f4-48ce-11ee-8e4e-0242ac140007",
                     "parentnodegroup_id": null
                 },
@@ -4277,6 +4052,12 @@
                     "legacygroupid": null,
                     "nodegroupid": "ee5947c6-48b2-11ee-abec-0242ac140007",
                     "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "parentnodegroup_id": null
                 }
             ],
             "nodes": [
@@ -4300,7 +4081,7 @@
                     "nodeid": "0a914884-48b4-11ee-90a8-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
-                    "sortorder": 1
+                    "sortorder": 0
                 },
                 {
                     "alias": "cover_letter",
@@ -4770,7 +4551,7 @@
                     "nodeid": "3bcd2950-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 2
+                    "sortorder": 0
                 },
                 {
                     "alias": "letter_contents",
@@ -5501,518 +5282,6 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "contacts",
-                    "config": {},
-                    "datatype": "semantic",
-                    "description": "",
-                    "exportable": false,
-                    "fieldname": "",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Contacts",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d290832-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "owners",
-                    "config": {},
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Owners",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d291192-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "planning_officer_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Planning Officer Metatype",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d29144e-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "owner_role_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Owner Role Metatype",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2916d8-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "owner_role_type",
-                    "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Owner Role Type",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2919b2-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "agents",
-                    "config": {},
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Agents",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d291c78-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "casework_officers",
-                    "config": {},
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": "",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Casework Officers",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d291f3e-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "agent_role_type",
-                    "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Agent Role Type",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2921fa-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "applicant",
-                    "config": {
-                        "graphid": [
-                            "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                            "22477f01-1a44-11e9-b0a9-000d3ab1e588"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                                "name": "Organization"
-                            },
-                            {
-                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                                "name": "Person"
-                            }
-                        ],
-                        "searchDsl": "",
-                        "searchString": ""
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "Applicant",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Applicant",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2924b6-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "applicant_role_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Applicant Role Metatype",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d292772-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "agent",
-                    "config": {
-                        "graphid": null,
-                        "graphs": [
-                            {
-                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                                "name": "Organization"
-                            },
-                            {
-                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                                "name": "Person"
-                            }
-                        ],
-                        "searchDsl": "",
-                        "searchString": ""
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "Agent",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Agent",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d292a2e-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "applicant_role_type",
-                    "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Applicant Role Type",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d292cf4-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "owner",
-                    "config": {
-                        "graphid": [
-                            "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                            "22477f01-1a44-11e9-b0a9-000d3ab1e588"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                                "name": "Organization"
-                            },
-                            {
-                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                                "name": "Person"
-                            }
-                        ],
-                        "searchDsl": "",
-                        "searchString": ""
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "Owner",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Owner",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d292f88-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "agent_role_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Agent Role Metatype",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d29323a-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "planning_officer",
-                    "config": {
-                        "graphid": [
-                            "22477f01-1a44-11e9-b0a9-000d3ab1e588"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                                "name": "Person"
-                            }
-                        ],
-                        "searchDsl": "",
-                        "searchString": ""
-                    },
-                    "datatype": "resource-instance",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "Plan_Offic",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Planning Officer",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d293532-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "planning_officer_role_type",
-                    "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
-                    },
-                    "datatype": "concept",
-                    "description": "",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Planning Officer Role Type",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d29392e-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "applicants",
-                    "config": {},
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Applicants",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d293d34-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "casework_officer_role_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Casework Officer Role Metatype",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2941f8-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "casework_officer_role_type",
-                    "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
-                    },
-                    "datatype": "concept",
-                    "description": "",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Casework Officer Role Type",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2944f0-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "casework_officer",
-                    "config": {
-                        "graphid": [
-                            "22477f01-1a44-11e9-b0a9-000d3ab1e588"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                                "name": "Person"
-                            }
-                        ],
-                        "searchDsl": "",
-                        "searchString": ""
-                    },
-                    "datatype": "resource-instance",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "Case_Offic",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Casework Officer",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d294784-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
-                    "alias": "planning_officers",
-                    "config": {},
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": "",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Planning Officers",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d294aea-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
-                },
-                {
                     "alias": "letter",
                     "config": {
                         "en": ""
@@ -6076,7 +5345,7 @@
                     "nodeid": "8838d23a-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 3
+                    "sortorder": 0
                 },
                 {
                     "alias": "file_s_",
@@ -7427,7 +6696,7 @@
                     "nodeid": "bcb01104-48b3-11ee-abec-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 4
+                    "sortorder": 0
                 },
                 {
                     "alias": "decision_assignment",
@@ -7503,9 +6772,298 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "associated_actors",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actors",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P115i_is_finished_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "role_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Role Metatype",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f5566140-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actor",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f556630c-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor_timespan",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actor Timespan",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f55664b0-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor_display_date",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actor Display Date",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f5566654-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor_date_qualifier_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Associated Actor Date Qualifier Metatype",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f55667f8-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor_date_qualifier",
+                    "config": {
+                        "rdmCollection": "366686d6-deb0-4245-81a3-f94d791a388c"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actor Date Qualifier",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f556699c-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor_start_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actor Start Date",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f5566b40-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor_end_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actor End Date",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f5566cda-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "actor",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                "name": "Person"
+                            },
+                            {
+                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+                                "name": "Organization"
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Actor",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f5566e7e-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "association_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Association Metatype",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f556700e-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "association_type",
+                    "config": {
+                        "rdmCollection": "93362f59-3658-47d8-8781-253fcf06374e"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Association Type",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f55671b2-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "role_type",
+                    "config": {
+                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Role Type",
+                    "nodegroup_id": "f5565c2c-48b6-11ee-85af-0242ac140007",
+                    "nodeid": "f5567342-48b6-11ee-85af-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
                     "alias": "status",
                     "config": {
-                        "rdmCollection": "7849cd3c-3f0d-454d-aaea-db9164629641"
+                        "rdmCollection": null
                     },
                     "datatype": "concept",
                     "description": null,
@@ -7529,8 +7087,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "11b43c4c-5896-11ee-8af0-0242ac120004",
-                "published_time": "2023-09-21T15:46:46.042",
+                "publicationid": "7213cb8a-56dd-11ee-9dbe-0242ac130007",
+                "published_time": "2023-09-19T11:12:39.672",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
@@ -7568,6 +7126,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "/bin/sh: 1: git: not found",
         "os": "Linux",
-        "os version": "5.10.0-21-amd64"
+        "os version": "5.10.0-23-amd64"
     }
 }

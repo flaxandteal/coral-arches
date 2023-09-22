@@ -44,17 +44,10 @@
           }
       }"
       ></div>
-      
+      <div data-bind="text: JSON.stringify(textBody())"></div>
       <!-- ko if: contacts_loaded -->
-      <!-- <div data-bind="text: JSON.stringify(tempAdd())"></div> -->
-      <!-- <div data-bind="text: JSON.stringify(applicants())"></div> -->
-      <!-- <div data-bind="text: JSON.stringify(applicantList())"></div> -->
-      <!-- <div data-bind="text: JSON.stringify(applicant())"></div> -->
-      <!-- <div data-bind="text: JSON.stringify(companies())"></div> -->
-      <!-- <div data-bind="text: JSON.stringify(companyList())"></div> -->
-      <!-- <div data-bind="text: JSON.stringify(company())"></div> -->
 
-      <div data-bind="if: selectedAddress() === 'applicant'">
+      <div data-bind="if: selectedAddress() === 'Applicant'">
 
       <div
         data-bind="component: {
@@ -62,20 +55,23 @@
           node: {
             'config': {
               'options': applicantList,
+              'multiple': true
             },
           },
           params: {
             node: {
             'config': {
               'options': applicantList,
+              'multiple': true
               },
               'configKeys': configKeys
             },
             config: {
               'label': 'Recipient Name',
               'options': applicantList,
+              'multiple': true
             },
-            value: applicant,
+            value: applicantText,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -102,7 +98,7 @@
             'label': 'Recipient Address',
             'options': applicantAddresses,
           },
-          value: tempAdd,
+          value: tempAddText,
           loading: loading,
           form: $data,
           pageVm: $root
@@ -110,20 +106,9 @@
     }"
     ></div>
 
-        <!-- <div data-bind="text: JSON.stringify(applicant())"></div> -->
-        <!-- <div data-bind="text: JSON.stringify(applicantAddresses())"></div> -->
-
-      <!-- <div>Recipient Name</div>
-      <select class="select2-choice select2-default"
-        data-bind="options: Object.keys(applicants()), value: applicant, style: { width: '95%', background: 'white', colour: 'black'}"
-      ></select> -->
-      <!-- <div>Recipient Address</div>
-      <select class="select2-choice select2-default"
-        data-bind="options: applicants() ? applicants()[applicant().en.value] : [], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
-      ></select>-->
     </div> 
 
-    <div data-bind="if: selectedAddress() === 'company'">
+    <div data-bind="if: selectedAddress() === 'Company'">
     <div
     data-bind="component: {
       name: 'domain-select-widget',
@@ -143,7 +128,7 @@
           'label': 'Company Name',
           'options': companyList,
         },
-        value: company,
+        value: companyText,
         loading: loading,
         form: $data,
         pageVm: $root
@@ -171,7 +156,7 @@
         'label': 'Company Address',
         'options': companyAddresses,
       },
-      value: tempAdd,
+      value: tempAddText,
       loading: loading,
       form: $data,
       pageVm: $root
@@ -179,25 +164,6 @@
 }"
 ></div>
 
-    <div data-bind="text: JSON.stringify(companyList())"></div>
-    <div data-bind="text: JSON.stringify(companyAddresses())"></div>
-    <div data-bind="text: JSON.stringify(companies())"></div>
-
-
-    <!-- <div data-bind="if: selectedAddress() === 'company'">
-      <div>Company Name</div>
-      <select class="select2-choice select2-default"
-        data-bind="options: Object.keys(companies()), value: company, style: { width: '95%', background: 'white', colour: 'black'}"
-      ></select>
-      <div>Company Address</div>
-      <select class="select2-choice select2-default"
-        data-bind="options: companies()[company().en.value], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
-      ></select>
-    </div>
-    <div data-bind="if: selectedAddress() === 'site', visible: false">
-      <select class="select2-choice select2-default"
-        data-bind="options: [siteAddress], value: tempAdd, optionsText: function(loc){ return loc.buildingNumber + ' ' + loc.street }, style: { width: '95%', background: 'white', colour: 'black'}"
-      ></select> -->
     </div>
       <!-- /ko -->
     </div>
@@ -365,6 +331,7 @@
         }"
       ></div>
     </div>
+    <div data-bind="text: JSON.stringify(county())"></div>
     <div class="row widget-wrapper">
       <div
         data-bind="component: {
