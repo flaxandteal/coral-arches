@@ -1,9 +1,10 @@
-ARG VERSION
+ARG PROJECT_BASE
+ARG PROJECT_STATIC
 ARG ARCHES_PROJECT
 ARG WEB_ROOT=/web_root
-FROM flaxandteal/arches_${ARCHES_PROJECT}_static:$VERSION as arches_static
+FROM $PROJECT_STATIC as arches_static
 
-FROM flaxandteal/arches_${ARCHES_PROJECT}:$VERSION as arches
+FROM $PROJECT_BASE as arches
 
 COPY --from=arches_static /usr/share/nginx/webpack-stats.json ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/webpack/webpack-stats.json
 COPY --from=arches_static /usr/share/nginx/html ${WEB_ROOT}/${ARCHES_PROJECT}/${ARCHES_PROJECT}/media/build

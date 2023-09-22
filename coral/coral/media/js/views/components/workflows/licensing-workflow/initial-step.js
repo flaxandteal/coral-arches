@@ -6,10 +6,11 @@ define([
   'uuid',
   'arches',
   'templates/views/components/workflows/licensing-workflow/initial-step.htm',
+  'viewmodels/alert',
   'bindings/select2-query'
-], function ($, _, ko, koMapping, uuid, arches, initialStep) {
+], function ($, _, ko, koMapping, uuid, arches, initialStep, AlertViewModel) {
   function viewModel(params) {
-    var self = this;
+    const self = this;
 
     _.extend(this, params.form);
 
@@ -17,20 +18,20 @@ define([
       self.dirty(val);
     });
 
-    this.pageVm = params.pageVm;
+    self.pageVm = params.pageVm;
 
-    this.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
-    this.actLocTileId = params.form.savedData()?.actLocTileId;
-    this.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
-    this.actResourceId = params.form.savedData()?.actResourceId;
-    this.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
-    this.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
-    this.applicationId = '';
+    self.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
+    self.actLocTileId = params.form.savedData()?.actLocTileId;
+    self.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
+    self.actResourceId = params.form.savedData()?.actResourceId;
+    self.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
+    self.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
+    self.applicationId = '';
 
-    this.licenseSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
+    self.licenseSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
 
     params.form.save = async () => {
-      await self.tile().save(); // Resource ID has now been created and is in this.resourceId()
+      await self.tile().save(); // Resource ID has now been created and is in self.resourceId()
 
       /**
        * This is the ID generate by auto-generate-id. Not to
@@ -41,45 +42,58 @@ define([
         ?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
       console.log('License Application ID: ', self.applicationId);
 
-      /**
-       * Configuring the name is no longer needed as the license number
-       * function will handle it. If we configured the name from here after
-       * the function we would get a cardinality error.
-       * TODO: Handle errors from requests
-       */
-      // const nameTile = await saveLicenseName();
-      // if (nameTile?.ok) {
-      const licenseResource = await getLicenseRefTileId();
-      if (licenseResource.ok) {
-        const activityTile = await saveActivitySystemRef();
-        if (activityTile?.ok) {
-          const activityLocTile = await saveActivityLocation();
-          if (activityLocTile?.ok) {
-            const relationship = await saveRelationship();
-            if (relationship.ok) {
-              params.form.savedData({
-                tileData: koMapping.toJSON(self.tile().data),
-                tileId: self.tile().tileid,
-                resourceInstanceId: self.tile().resourceinstance_id,
-                nodegroupId: self.tile().nodegroup_id,
-                actSysRefTileId: self.actSysRefTileId,
-                actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
-                actResourceId: self.actResourceId,
-                actLocTileId: self.actLocTileId,
-                licenseNumberTileId: self.licenseNumberTileId
-              });
-              params.form.complete(true);
-              params.form.saving(false);
+
+      try {
+        /**
+         * Configuring the name is no longer needed as the license number
+         * function will handle it. If we configured the name from here after
+         * the function we would get a cardinality error.
+         * TODO: Handle errors from requests
+         */
+        // const nameTile = await saveLicenseName();
+        // if (nameTile?.ok) {
+        const licenseResource = await getLicenseRefTileId();
+        if (licenseResource.ok) {
+          const activityTile = await saveActivitySystemRef();
+          if (activityTile?.ok) {
+            const activityLocTile = await saveActivityLocation();
+            if (activityLocTile?.ok) {
+              const relationship = await saveRelationship();
+              if (relationship.ok) {
+                params.form.savedData({
+                  tileData: koMapping.toJSON(self.tile().data),
+                  tileId: self.tile().tileid,
+                  resourceInstanceId: self.tile().resourceinstance_id,
+                  nodegroupId: self.tile().nodegroup_id,
+                  actSysRefTileId: self.actSysRefTileId,
+                  actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
+                  actResourceId: self.actResourceId,
+                  actLocTileId: self.actLocTileId,
+                  licenseNumberTileId: self.licenseNumberTileId
+                });
+                params.form.complete(true);
+                params.form.saving(false);
+              }
             }
           }
         }
+        // }
+      } catch (error) {
+        self.pageVm.alert(
+          new AlertViewModel(
+            'ep-alert-red',
+            'Something went',
+            'During initialization a resource failed to send the requests required to setup the workflow. Please report the indcident.',
+            null,
+            function () {}
+          )
+        );
       }
-      // }
     };
 
     const getLicenseRefTileId = async () => {
       const response = await window.fetch(
-        arches.urls.api_resources(this.resourceId() + '?format=json&compact=false')
+        arches.urls.api_resources(self.resourceId() + '?format=json&compact=false')
       );
 
       if (response.ok) {
@@ -90,7 +104,8 @@ define([
               return ref;
             }
           });
-          self.licenseNumberTileId = licenseNumberRef['External Cross Reference Number']['@tile_id'];
+          self.licenseNumberTileId =
+            licenseNumberRef['External Cross Reference Number']['@tile_id'];
         }
       }
 

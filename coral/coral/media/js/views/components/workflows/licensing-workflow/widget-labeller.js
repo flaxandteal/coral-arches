@@ -10,7 +10,7 @@ define([
     const self = this;
 
     _.extend(this, params.form);
-    self.tile().dirty.subscribe(function (val) {
+    self.tile()?.dirty.subscribe(function (val) {
       self.dirty(val);
     });
     this.graphid = params.graphid
@@ -29,7 +29,7 @@ define([
       })
     }
 
-    this.card().widgets().forEach((widget) => {
+    this.card()?.widgets().forEach((widget) => {
       widget.graphids = this.graphids ? this.graphids : [this.graphid]
       params.labels?.forEach(([prevLabel, newLabel]) => {
         if (widget.label() === prevLabel) {
