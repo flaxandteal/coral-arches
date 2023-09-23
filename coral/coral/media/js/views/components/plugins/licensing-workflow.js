@@ -73,29 +73,54 @@ define([
                     labels: [['Legacy ID', 'Planning Reference']]
                   }
                 },
+                // if cm ref is for license
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'cm-reference',
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                      '280b78fa-4e4d-11ee-a340-0242ac140007',
+                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
+                      '280b7238-4e4d-11ee-a340-0242ac140007'
                     ],
                     prefilledNodes: [
                       // Source set to Heritage Environment Record Number
                       [
-                        '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                        '280b7a9e-4e4d-11ee-a340-0242ac140007',
                         '19afd557-cc21-44b4-b1df-f32568181b2c'
                       ]
                     ],
                     labels: [['Cross Reference', 'CM Reference']]
                   }
                 },
+                // if cm ref is for activity
+                // { 
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'cm-reference',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //     hiddenNodes: [
+                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+                //       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                //     ],
+                //     prefilledNodes: [
+                //       // Source set to Heritage Environment Record Number
+                //       [
+                //         '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                //         '19afd557-cc21-44b4-b1df-f32568181b2c'
+                //       ]
+                //     ],
+                //     labels: [['Cross Reference', 'CM Reference']]
+                //   }
+                // },
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'license-no',
@@ -446,30 +471,56 @@ define([
                     labels: [['Cross Reference', 'License Number']]
                   }
                 },
+                // if we decise to attach bfile to license
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'cm-reference',
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     tileid: "['app-details-step']['cm-reference'][0]['tileId']",
                     hiddenNodes: [
-                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                      '280b78fa-4e4d-11ee-a340-0242ac140007',
+                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
+                      '280b7238-4e4d-11ee-a340-0242ac140007'
                     ],
                     prefilledNodes: [
                       // Source set to Heritage Environment Record Number
                       [
-                        '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                        '280b7a9e-4e4d-11ee-a340-0242ac140007',
                         '19afd557-cc21-44b4-b1df-f32568181b2c'
                       ]
                     ],
                     labels: [['Cross Reference', 'CM Reference']]
                   }
-                }
+                },
+                // If we decide to attach bfile to activity
+                // {
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'cm-reference',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                //     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                //     tileid: "['app-details-step']['cm-reference'][0]['tileId']",
+                //     hiddenNodes: [
+                //       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                //       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+                //       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                //     ],
+                //     prefilledNodes: [
+                //       // Source set to Heritage Environment Record Number
+                //       [
+                //         '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                //         '19afd557-cc21-44b4-b1df-f32568181b2c'
+                //       ]
+                //     ],
+                //     labels: [['Cross Reference', 'CM Reference']]
+                //   }
+                // }
               ]
             }
           ]
