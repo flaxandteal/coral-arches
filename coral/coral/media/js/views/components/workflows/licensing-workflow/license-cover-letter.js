@@ -424,11 +424,16 @@ define([
 
         this.activityResourceData(data.resource)
         this.areaName(createTextObject(data.resource["Associated Activities"]["@value"]))
-        // todo, have this decide if it's license number rather than assume it's first in the list
+
         this.licenseNo(createTextObject(data.resource["External Cross References"].filter(ref =>
           ref["External Cross Reference Source"]["@value"] === 'Excavation')[0]["External Cross Reference Number"]["@value"]))
-        this.bFileNumber(createTextObject(data.resource["External Cross References"].filter(ref =>
-          ref["External Cross Reference Source"]["@value"] === 'Historic Environment Record Number')[0]["External Cross Reference Number"]["@value"]))
+        let bfileList = data.resource["External Cross References"].filter(ref =>
+          ref["External Cross Reference Source"]["@value"] === 'Historic Environment Record Number')
+        
+        if (bfileList[0]) {
+          this.bFileNumber(createTextObject(bfileList[0]["External Cross Reference Number"]["@value"]))
+        }
+
         if (data.resource["Decision"]) {
           this.signed(createTextObject(data.resource["Decision"]["Decision Assignment"]["Decision Made By"]["@value"]))
           this.decisionDate(data.resource["Decision"]["Decision Assignment"]["Decision Time Span"]["Decision Date"]["@value"])
