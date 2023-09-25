@@ -19,8 +19,8 @@ define([
     self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
     self.loading = ko.observable(false);
-
-    this.pageVm = params.pageVm;
+    self.pageVm = params.pageVm;
+    self.dirty(true);
 
     const createTextObject = (value) => ({
       [self.currentLanguage().code]: {
@@ -31,24 +31,10 @@ define([
 
     self.getTextValue = (textObject) => {
       if (ko.isObservable(textObject)) {
-        return textObject()?.[self.currentLanguage().code].value || '';
+        return textObject()?.[self.currentLanguage().code]?.value || '';
       } else {
-        return textObject?.[self.currentLanguage().code].value || '';
+        return textObject?.[self.currentLanguage().code]?.value || '';
       }
-
-      if (ko.isObservable(textObject)) {
-        if (textObject()) {
-          if (textObject()[self.currentLanguage().code]) {
-            return textObject()[self.currentLanguage().code]?.value;
-          }
-        }
-      } else if (typeof textObject === 'string') {
-        return textObject;
-      }
-      if (textObject[self.currentLanguage().code]) {
-        return textObject[self.currentLanguage().code]?.value;
-      }
-      return '';
     };
 
     self.getSavedValue = (key) => {
@@ -65,58 +51,59 @@ define([
       return values;
     };
 
-    self.coverLetterData = {
-      recipientName: ko.observable(createTextObject()),
-      companyName: ko.observable(createTextObject()),
-      siteName: ko.observable(createTextObject()),
-      hasAdditonalFiles: ko.observable(false),
-      decisionBy: {
-        name: ko.observable(createTextObject()),
-        date: ko.observable()
-      },
-      dates: {
-        acknowledged: ko.observable(),
-        received: ko.observable()
-      },
-      addresses: {
-        applicant: {
-          fullAddress: ko.observable(createTextObject()),
-          buildingNumberSubSt: ko.observable(createTextObject()),
-          city: ko.observable(createTextObject()),
-          postcode: ko.observable(createTextObject()),
-          subStreet: ko.observable(createTextObject()),
-          buildingName: ko.observable(createTextObject()),
-          buildingNumber: ko.observable(createTextObject()),
-          streetName: ko.observable(createTextObject()),
-          locality: ko.observable(createTextObject()),
-          county: ko.observable(createTextObject())
+    self.createAddressObject = ({
+      fullAddress,
+      buildingNumberSubSt,
+      city,
+      postcode,
+      subStreet,
+      buildingName,
+      buildingNumber,
+      streetName,
+      locality,
+      county
+    } = {}) => ({
+      fullAddress: ko.observable(fullAddress || createTextObject()),
+      buildingNumberSubSt: ko.observable(buildingNumberSubSt || createTextObject()),
+      city: ko.observable(city || createTextObject()),
+      postcode: ko.observable(postcode || createTextObject()),
+      subStreet: ko.observable(subStreet || createTextObject()),
+      buildingName: ko.observable(buildingName || createTextObject()),
+      buildingNumber: ko.observable(buildingNumber || createTextObject()),
+      streetName: ko.observable(streetName || createTextObject()),
+      locality: ko.observable(locality || createTextObject()),
+      county: ko.observable(county || createTextObject())
+    });
+
+    self.loadCoverLetterData = () => {
+      let data = params.form.savedData()?.coverLetterData;
+      return {
+        recipientName: ko.observable(data?.recipientName || createTextObject()),
+        companyName: ko.observable(data?.companyName || createTextObject()),
+        siteName: ko.observable(data?.siteName || createTextObject()),
+        seniorInspectorName: ko.observable(data?.seniorInspectorName || createTextObject()),
+        signedName: ko.observable(data?.signedName || createTextObject()),
+        hasAdditonalFiles: ko.observable(data?.hasAdditonalFiles || false),
+        licenseNumber: ko.observable(data?.licenseNumber || ''),
+        cmReference: ko.observable(data?.cmReference || ''),
+        selectedAddress: ko.observable(data?.selectedAddress || 'applicant'),
+        decisionBy: {
+          name: ko.observable(data?.decisionBy?.name || createTextObject()),
+          date: ko.observable(data?.decisionBy?.date || '')
         },
-        company: {
-          fullAddress: ko.observable(createTextObject()),
-          buildingNumberSubSt: ko.observable(createTextObject()),
-          city: ko.observable(createTextObject()),
-          postcode: ko.observable(createTextObject()),
-          subStreet: ko.observable(createTextObject()),
-          buildingName: ko.observable(createTextObject()),
-          buildingNumber: ko.observable(createTextObject()),
-          streetName: ko.observable(createTextObject()),
-          locality: ko.observable(createTextObject()),
-          county: ko.observable(createTextObject())
+        dates: {
+          acknowledged: ko.observable(data?.dates?.acknowledged || ''),
+          received: ko.observable(data?.dates?.received || '')
         },
-        site: {
-          fullAddress: ko.observable(createTextObject()),
-          buildingNumberSubSt: ko.observable(createTextObject()),
-          city: ko.observable(createTextObject()),
-          postcode: ko.observable(createTextObject()),
-          subStreet: ko.observable(createTextObject()),
-          buildingName: ko.observable(createTextObject()),
-          buildingNumber: ko.observable(createTextObject()),
-          streetName: ko.observable(createTextObject()),
-          locality: ko.observable(createTextObject()),
-          county: ko.observable(createTextObject())
+        addresses: {
+          applicant: self.createAddressObject(data?.addresses?.applicant),
+          company: self.createAddressObject(data?.addresses?.company),
+          site: self.createAddressObject(data?.addresses?.site)
         }
-      }
+      };
     };
+
+    self.coverLetterData = self.loadCoverLetterData();
 
     this.activityResourceData = ko.observable();
     this.licenseResourceData = ko.observable();
@@ -143,63 +130,11 @@ define([
     this.company = ko.observable(self.getSavedValue('company') || createTextObject());
     this.companyAddresses = ko.observable([]);
 
-    this.seniorInspector = ko.observable(
-      self.getSavedValue('seniorInspector') || createTextObject()
-    );
-    this.signed = ko.observable(self.getSavedValue('signed') || createTextObject());
-
-    this.siteAddress = ko.observable({});
-    this.siteAddresses = ko.observable();
-    this.externalRefs = ko.observable();
-    this.externalRefSources = ko.observable();
-    this.externalRefNotes = ko.observable();
-    /**
-     * self.tile().dirty
-     * Needs to be subscribed to and once changed this will
-     * make the 'save' option available to the user
-     * currently when applicant changes it will be made
-     * available
-     */
-    // self.applicant.subscribe(function (val) {
-    //   self.dirty(val);
-    // });
-
-    /**
-     * Location
-     */
-    this.areaName = ko.observable(self.getSavedValue('areaName') || createTextObject(''));
-    this.buildingName = ko.observable(self.getSavedValue('buildingName') || createTextObject(''));
-    this.buildingNumber = ko.observable(
-      self.getSavedValue('buildingNumber') || createTextObject('')
-    );
-    this.street = ko.observable(self.getSavedValue('street') || createTextObject(''));
-    this.buildingNumberSubSt = ko.observable(
-      self.getSavedValue('buildingNumberSubSt') || createTextObject('')
-    );
-    this.subStreet = ko.observable(self.getSavedValue('subStreet') || createTextObject(''));
-    this.city = ko.observable(self.getSavedValue('city') || createTextObject(''));
-    this.county = ko.observable(self.getSavedValue('county') || createTextObject(''));
-    this.postCode = ko.observable(self.getSavedValue('postCode') || createTextObject(''));
-
-    /**
-     * Dates
-     */
-    this.receivedDate = ko.observable(self.getSavedValue('receivedDate') || '');
-    this.acknowledgedDate = ko.observable(self.getSavedValue('acknowledgedDate') || '');
-    this.decisionDate = ko.observable(self.getSavedValue('decisionDate') || '');
-    this.sendDate = ko.observable(
-      self.getSavedValue('sendDate') || new Date().toLocaleDateString('en-GB')
-    );
-    this.appDate = ko.observable(
-      self.getSavedValue('appDate') || new Date().toLocaleDateString('en-GB')
-    );
-
     // this.selectedRecipient = ko.observable();
     // this.nameOptions = ko.observable(['full name', 'title and surname', 'first name']);
 
-    this.selectedAddress = ko.observable('applicant');
-    this.selectedAddress.subscribe((selected) => {
-      if (!selected) this.selectedAddress('applicant');
+    this.coverLetterData.selectedAddress.subscribe((selected) => {
+      if (!selected) this.coverLetterData.selectedAddress('applicant');
     }, this);
     this.addressOptions = ko.observable([
       { text: 'Applicant', id: 'applicant' },
@@ -261,7 +196,10 @@ define([
       {
         read: function () {
           return createTextObject(
-            this.textBody().en.value.replace('[Date]', this.appDate() ? this.appDate() : '[Date]')
+            this.textBody().en.value.replace(
+              '[Date]',
+              self.coverLetterData.dates.acknowledged() || '[Date]'
+            )
           );
         }
       },
@@ -367,7 +305,9 @@ define([
     this.selectedSendDate = ko.observable('today');
 
     self.getAddressValue = (value) => {
-      return self.getTextValue(self.coverLetterData.addresses[self.selectedAddress()][value]);
+      return self.getTextValue(
+        self.coverLetterData.addresses[self.coverLetterData.selectedAddress()][value]
+      );
     };
 
     self.header = ko.computed(() => {
@@ -424,11 +364,15 @@ define([
           self.coverLetterData.dates.acknowledged
         )}</span>`;
       }
-      // if (self.getTextValue(self.bFileNumber)) {
-      //   result += `<span>Our ref: ${self.getTextValue(self.bFileNumber)}</span>`;
-      // }
-      if (self.getTextValue(self.licenseNo)) {
-        result += `<span>License Number: ${self.getTextValue(self.licenseNo)}</span>`;
+      if (self.getTextValue(self.coverLetterData.cmReference)) {
+        result += `<span>CM Reference: ${self.getTextValue(
+          self.coverLetterData.cmReference
+        )}</span>`;
+      }
+      if (self.getTextValue(self.coverLetterData.licenseNumber)) {
+        result += `<span>License Number: ${self.getTextValue(
+          self.coverLetterData.licenseNumber
+        )}</span>`;
       }
       if (self.getTextValue(self.coverLetterData.siteName)) {
         result += `<span>Site: ${self.getTextValue(self.coverLetterData.siteName)}</span>`;
@@ -454,10 +398,14 @@ define([
     self.footer = ko.computed(() => {
       let result =
         '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
-      if (self.getTextValue(self.seniorInspector)) {
-        result += `<span>Senior Inspector:  ${self.getTextValue(self.seniorInspector)}</span>`;
+      if (self.getTextValue(self.coverLetterData.seniorInspectorName)) {
+        result += `<span>Senior Inspector:  ${self.getTextValue(
+          self.coverLetterData.seniorInspectorName
+        )}</span>`;
       }
-      result += `<span>Signed: ${self.getTextValue(self.signed) || '[Signature]'}</span>`;
+      result += `<span>Signed: ${
+        self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
+      }</span>`;
       result += '</div>';
       return result;
     }, self);
@@ -471,43 +419,21 @@ define([
       result += self.footer();
       result += '</div>';
       return result;
-    }, this);
+    }, self);
 
     params.form.save = async () => {
-      self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'](createTextObject(self.letter()));
+      if (ko.isObservable(self?.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'])) {
+        self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'](createTextObject(self.letter()));
+      } else {
+        self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'] = createTextObject(self.letter());
+      }
       await self.tile().save();
       params.form.savedData({
         tileData: koMapping.toJSON(self.tile().data),
         tileId: self.tile().tileid,
         resourceInstanceId: self.tile().resourceinstance_id,
         nodegroupId: self.tile().nodegroup_id,
-        coverLetterData: {
-          licenseNo: ko.unwrap(this.licenseNo),
-          bFileNumber: ko.unwrap(this.bFileNumber),
-
-          textBody: ko.unwrap(this.textBody),
-
-          applicant: ko.unwrap(this.applicant),
-          company: ko.unwrap(this.company),
-          seniorInspector: ko.unwrap(this.seniorInspector),
-          signed: ko.unwrap(this.signed),
-
-          areaName: ko.unwrap(this.areaName),
-          buildingName: ko.unwrap(this.buildingName),
-          buildingNumber: ko.unwrap(this.buildingNumber),
-          street: ko.unwrap(this.street),
-          buildingNumberSubSt: ko.unwrap(this.buildingNumberSubSt),
-          subStreet: ko.unwrap(this.subStreet),
-          city: ko.unwrap(this.city),
-          county: ko.unwrap(this.county),
-          postCode: ko.unwrap(this.postCode),
-
-          receivedDate: ko.unwrap(this.receivedDate),
-          acknowledgedDate: ko.unwrap(this.acknowledgedDate),
-          decisionDate: ko.unwrap(this.decisionDate),
-          sendDate: ko.unwrap(this.sendDate),
-          appDate: ko.unwrap(this.appDate)
-        }
+        coverLetterData: ko.toJS(self.coverLetterData)
       });
       params.form.complete(true);
       params.form.saving(false);
@@ -526,22 +452,19 @@ define([
       };
       for (const tile of tileData) {
         if (!(nodeValueId in tile.data)) continue;
-
         if (validator) {
           if (validator(tile)) {
             result.tileId = tile.tileid;
             result.value = tile.data[nodeValueId];
-            result.display = tile.display_values.find((node) => node.nodeid === nodeValueId).value;
+            result.display = tile.display_values.find((node) => node.nodeid === nodeValueId)?.value;
             break;
           }
           continue;
         }
-
         result.tileId = tile.tileid;
         result.value = tile.data[nodeValueId];
-        result.display = tile.display_values.find((node) => node.nodeid === nodeValueId).value;
+        result.display = tile.display_values.find((node) => node.nodeid === nodeValueId)?.value;
       }
-
       return result.tileId ? result : null;
     };
 
@@ -558,7 +481,7 @@ define([
       return tileData.some((tile) => tile.nodegroup === nodeGroupId);
     };
 
-    self.configureAddress = (
+    self.setAddressValues = (
       addressee,
       {
         fullAddress,
@@ -605,6 +528,36 @@ define([
       }
     };
 
+    self.configureAddress = (
+      tileData,
+      addressee,
+      {
+        fullAddressId,
+        buildingNumberSubStId,
+        cityId,
+        postcodeId,
+        subStreetId,
+        buildingNameId,
+        buildingNumberId,
+        streetNameId,
+        localityId,
+        countyId
+      }
+    ) => {
+      self.setAddressValues(addressee, {
+        fullAddress: self.getValueFromTiles(tileData, fullAddressId)?.value,
+        buildingNumberSubSt: self.getValueFromTiles(tileData, buildingNumberSubStId)?.value,
+        city: self.getValueFromTiles(tileData, cityId)?.value,
+        postcode: self.getValueFromTiles(tileData, postcodeId)?.value,
+        subStreet: self.getValueFromTiles(tileData, subStreetId)?.value,
+        buildingName: self.getValueFromTiles(tileData, buildingNameId)?.value,
+        buildingNumber: self.getValueFromTiles(tileData, buildingNumberId)?.value,
+        streetName: self.getValueFromTiles(tileData, streetNameId)?.value,
+        locality: self.getValueFromTiles(tileData, localityId)?.value,
+        county: self.getValueFromTiles(tileData, countyId)?.value
+      });
+    };
+
     self.loadData = async () => {
       self.loading(true);
       try {
@@ -621,7 +574,7 @@ define([
           }
         );
         if (licenseNo) {
-          self.licenseNo(licenseNo.value);
+          self.coverLetterData.licenseNumber(licenseNo.value);
         }
 
         const additionalFiles = self.getValueFromTiles(
@@ -649,57 +602,17 @@ define([
                 console.log('applicantName: ', applicantName);
                 self.coverLetterData.recipientName(applicantName.value);
               }
-              const fullAddress = self.getValueFromTiles(
-                contactTiles,
-                'b3a27611-effb-11eb-a79c-a87eeabdefba'
-              )?.value;
-              const buildingNumberSubSt = self.getValueFromTiles(
-                contactTiles,
-                'b3a27615-effb-11eb-8b46-a87eeabdefba'
-              )?.value;
-              const city = self.getValueFromTiles(
-                contactTiles,
-                'b3a27617-effb-11eb-a80f-a87eeabdefba'
-              )?.value;
-              const postcode = self.getValueFromTiles(
-                contactTiles,
-                'b3a27619-effb-11eb-a66d-a87eeabdefba'
-              )?.value;
-              const subStreet = self.getValueFromTiles(
-                contactTiles,
-                'b3a2761b-effb-11eb-bcf9-a87eeabdefba'
-              )?.value;
-              const buildingName = self.getValueFromTiles(
-                contactTiles,
-                'b3a2761d-effb-11eb-9867-a87eeabdefba'
-              )?.value;
-              const buildingNumber = self.getValueFromTiles(
-                contactTiles,
-                '9e7907d5-eff3-11eb-a511-a87eeabdefba'
-              )?.value;
-              const streetName = self.getValueFromTiles(
-                contactTiles,
-                'b3a2761d-effb-11eb-9867-a87eeabdefba'
-              )?.value;
-              const locality = self.getValueFromTiles(
-                contactTiles,
-                'b3a28c1a-effb-11eb-a811-a87eeabdefba'
-              )?.value;
-              const county = self.getValueFromTiles(
-                contactTiles,
-                'b3a28c1d-effb-11eb-95a1-a87eeabdefba'
-              )?.value;
-              self.configureAddress('applicant', {
-                fullAddress,
-                buildingNumberSubSt,
-                city,
-                postcode,
-                subStreet,
-                buildingName,
-                buildingNumber,
-                streetName,
-                locality,
-                county
+              self.configureAddress(contactTiles, 'applicant', {
+                fullAddressId: 'b3a27611-effb-11eb-a79c-a87eeabdefba',
+                buildingNumberSubStId: 'b3a27615-effb-11eb-8b46-a87eeabdefba',
+                cityId: 'b3a27617-effb-11eb-a80f-a87eeabdefba',
+                postcodeId: 'b3a27619-effb-11eb-a66d-a87eeabdefba',
+                subStreetId: 'b3a2761b-effb-11eb-bcf9-a87eeabdefba',
+                buildingNameId: 'b3a2761d-effb-11eb-9867-a87eeabdefba',
+                buildingNumberId: 'b3a2761f-effb-11eb-9059-a87eeabdefba',
+                streetNameId: 'b3a27621-effb-11eb-83e6-a87eeabdefba',
+                localityId: 'b3a28c1a-effb-11eb-a811-a87eeabdefba',
+                countyId: 'b3a28c1d-effb-11eb-95a1-a87eeabdefba'
               });
             }
             if (self.hasNodeGroup(contactTiles, 'af3b0116-29a9-11eb-8333-f875a44e0e11')) {
@@ -712,57 +625,17 @@ define([
                 console.log('companyName: ', companyName);
                 self.coverLetterData.companyName(companyName.value);
               }
-              const fullAddress = self.getValueFromTiles(
-                contactTiles,
-                '9e7907c7-eff3-11eb-b606-a87eeabdefba'
-              )?.value;
-              const buildingNumberSubSt = self.getValueFromTiles(
-                contactTiles,
-                '9e7907cb-eff3-11eb-83b1-a87eeabdefba'
-              )?.value;
-              const city = self.getValueFromTiles(
-                contactTiles,
-                '9e7907cd-eff3-11eb-b0f1-a87eeabdefba'
-              )?.value;
-              const postcode = self.getValueFromTiles(
-                contactTiles,
-                '9e7907cf-eff3-11eb-8412-a87eeabdefba'
-              )?.value;
-              const subStreet = self.getValueFromTiles(
-                contactTiles,
-                '9e7907d1-eff3-11eb-9d65-a87eeabdefba'
-              )?.value;
-              const buildingName = self.getValueFromTiles(
-                contactTiles,
-                '9e7907d3-eff3-11eb-ac11-a87eeabdefba'
-              )?.value;
-              const buildingNumber = self.getValueFromTiles(
-                contactTiles,
-                '9e7907d5-eff3-11eb-a511-a87eeabdefba'
-              )?.value;
-              const streetName = self.getValueFromTiles(
-                contactTiles,
-                '9e7907d7-eff3-11eb-8e7a-a87eeabdefba'
-              )?.value;
-              const locality = self.getValueFromTiles(
-                contactTiles,
-                '9e791cfb-eff3-11eb-bdaf-a87eeabdefba'
-              )?.value;
-              const county = self.getValueFromTiles(
-                contactTiles,
-                '9e791cfe-eff3-11eb-9c35-a87eeabdefba'
-              )?.value;
-              self.configureAddress('company', {
-                fullAddress,
-                buildingNumberSubSt,
-                city,
-                postcode,
-                subStreet,
-                buildingName,
-                buildingNumber,
-                streetName,
-                locality,
-                county
+              self.configureAddress(contactTiles, 'company', {
+                fullAddressId: '9e7907c7-eff3-11eb-b606-a87eeabdefba',
+                buildingNumberSubStId: '9e7907cb-eff3-11eb-83b1-a87eeabdefba',
+                cityId: '9e7907cd-eff3-11eb-b0f1-a87eeabdefba',
+                postcodeId: '9e7907cf-eff3-11eb-8412-a87eeabdefba',
+                subStreetId: '9e7907d1-eff3-11eb-9d65-a87eeabdefba',
+                buildingNameId: '9e7907d3-eff3-11eb-ac11-a87eeabdefba',
+                buildingNumberId: '9e7907d5-eff3-11eb-a511-a87eeabdefba',
+                streetNameId: '9e7907d7-eff3-11eb-8e7a-a87eeabdefba',
+                localityId: '9e791cfb-eff3-11eb-bdaf-a87eeabdefba',
+                countyId: '9e791cfe-eff3-11eb-9c35-a87eeabdefba'
               });
             }
           });
@@ -777,7 +650,6 @@ define([
         if (decisionByDate) {
           console.log('decisionByDate: ', decisionByDate);
           self.coverLetterData.decisionBy.date(decisionByDate.value);
-          self.decisionDate(decisionByDate.value);
         }
 
         const decisionBy = self.getValueFromTiles(
@@ -793,7 +665,6 @@ define([
           );
           console.log('decisionByName: ', decisionByName);
           self.coverLetterData.decisionBy.name(decisionByName.value);
-          self.signed(decisionByName.value);
         }
 
         const associatedActivitys = self.getValueFromTiles(
@@ -810,70 +681,41 @@ define([
           );
           if (siteName) {
             self.coverLetterData.siteName(siteName.value);
-            self.areaName(siteName.value);
           }
-          const fullAddress = self.getValueFromTiles(
+          const cmReference = self.getValueFromTiles(
             activityTiles,
-            'a5419224-f121-11eb-9ca7-a87eeabdefba'
-          )?.value;
-          const buildingNumberSubSt = self.getValueFromTiles(
-            activityTiles,
-            'a541b922-f121-11eb-9fa2-a87eeabdefba'
-          )?.value;
-          const city = self.getValueFromTiles(
-            activityTiles,
-            'a541e023-f121-11eb-b770-a87eeabdefba'
-          )?.value;
-          const postcode = self.getValueFromTiles(
-            activityTiles,
-            'a541e025-f121-11eb-8212-a87eeabdefba'
-          )?.value;
-          const subStreet = self.getValueFromTiles(
-            activityTiles,
-            'a541e027-f121-11eb-ba26-a87eeabdefba'
-          )?.value;
-          const buildingName = self.getValueFromTiles(
-            activityTiles,
-            'a541e029-f121-11eb-802c-a87eeabdefba'
-          )?.value;
-          const buildingNumber = self.getValueFromTiles(
-            activityTiles,
-            'a541b925-f121-11eb-9264-a87eeabdefba'
-          )?.value;
-          const streetName = self.getValueFromTiles(
-            activityTiles,
-            'a541b927-f121-11eb-8377-a87eeabdefba'
-          )?.value;
-          const locality = self.getValueFromTiles(
-            activityTiles,
-            'a541b930-f121-11eb-a30c-a87eeabdefba'
-          )?.value;
-          const county = self.getValueFromTiles(
-            activityTiles,
-            'a541e034-f121-11eb-8803-a87eeabdefba'
-          )?.value;
-          self.configureAddress('site', {
-            fullAddress,
-            buildingNumberSubSt,
-            city,
-            postcode,
-            subStreet,
-            buildingName,
-            buildingNumber,
-            streetName,
-            locality,
-            county
+            '589d4dc7-edf9-11eb-9856-a87eeabdefba',
+            (tile) => {
+              return (
+                tile.data?.['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'] ===
+                '19afd557-cc21-44b4-b1df-f32568181b2c'
+              );
+            }
+          );
+          if (cmReference) {
+            self.coverLetterData.cmReference(cmReference.value);
+          }
+          self.configureAddress(activityTiles, 'site', {
+            fullAddressId: 'a5419224-f121-11eb-9ca7-a87eeabdefba',
+            buildingNumberSubStId: 'a541b922-f121-11eb-9fa2-a87eeabdefba',
+            cityId: 'a541e023-f121-11eb-b770-a87eeabdefba',
+            postcodeId: 'a541e025-f121-11eb-8212-a87eeabdefba',
+            subStreetId: 'a541e027-f121-11eb-ba26-a87eeabdefba',
+            buildingNameId: 'a541e029-f121-11eb-802c-a87eeabdefba',
+            buildingNumberId: 'a541b925-f121-11eb-9264-a87eeabdefba',
+            streetNameId: 'a541b927-f121-11eb-8377-a87eeabdefba',
+            localityId: 'a541b930-f121-11eb-a30c-a87eeabdefba',
+            countyId: 'a541e034-f121-11eb-8803-a87eeabdefba'
           });
         }
 
-        const ackDate = self.getValueFromTiles(
+        const acknowledgedDate = self.getValueFromTiles(
           licenseTiles,
           '0a914884-48b4-11ee-90a8-0242ac140007'
         );
-        if (ackDate) {
-          console.log('ackDate: ', ackDate);
-          self.coverLetterData.dates.acknowledged(ackDate.value);
-          self.appDate(ackDate.value);
+        if (acknowledgedDate) {
+          console.log('acknowledgedDate: ', acknowledgedDate);
+          self.coverLetterData.dates.acknowledged(acknowledgedDate.value);
         }
 
         const receivedDate = self.getValueFromTiles(

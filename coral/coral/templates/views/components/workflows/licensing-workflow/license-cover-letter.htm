@@ -34,10 +34,10 @@
               'configKeys': configKeys
             },
             config: {
-              'label': 'Recipient Type',
+              'label': 'Selected Address',
               'options': addressOptions,
             },
-            value: selectedAddress,
+            value: coverLetterData.selectedAddress,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -239,7 +239,7 @@
             config: {
                 'label': 'Building Name',
             },
-            value: coverLetterData.addresses[selectedAddress()].buildingName,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].buildingName,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -255,7 +255,7 @@
             config: {
                 'label': 'Street',
             },
-            value: coverLetterData.addresses[selectedAddress()].streetName,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].streetName,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -271,7 +271,7 @@
             config: {
                 'label': 'Building Number',
             },
-            value: coverLetterData.addresses[selectedAddress()].buildingNumber,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].buildingNumber,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -287,7 +287,7 @@
             config: {
                 'label': 'Building Number Sub Street',
             },
-            value: coverLetterData.addresses[selectedAddress()].buildingNumberSubSt,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].buildingNumberSubSt,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -303,7 +303,7 @@
             config: {
                 'label': 'Sub Street',
             },
-            value: coverLetterData.addresses[selectedAddress()].subStreet,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].subStreet,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -319,7 +319,7 @@
             config: {
                 'label': 'Town or City',
             },
-            value: coverLetterData.addresses[selectedAddress()].city,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].city,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -335,7 +335,7 @@
             config: {
                 'label': 'County',
             },
-            value: coverLetterData.addresses[selectedAddress()].county,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].county,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -351,7 +351,7 @@
             config: {
                 'label': 'Postcode',
             },
-            value: coverLetterData.addresses[selectedAddress()].postcode,
+            value: coverLetterData.addresses[coverLetterData.selectedAddress()].postcode,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -383,7 +383,7 @@
             config: {
                 'label': 'Senior Inspector',
             },
-            value: seniorInspector,
+            value: coverLetterData.seniorInspectorName,
             loading: loading,
             form: $data,
             pageVm: $root
