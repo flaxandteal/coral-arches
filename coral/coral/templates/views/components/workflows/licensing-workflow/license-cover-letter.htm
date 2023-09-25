@@ -4,20 +4,20 @@
 <div style="display: flex; flex-direction: row">
   <div class="card-component" style="width: 100%">
     <div class="row widget-wrapper">
-      <!-- <div
+      <div
         data-bind="component: {
           name: 'text-widget',
           params: {
               config: {
                   'label': 'Recipient Name',
               },
-              value: applicant,
+              value: coverLetterData.recipientName,
               loading: loading,
               form: $data,
               pageVm: $root
           }
       }"
-      ></div> -->
+      ></div>
       <div
         data-bind="component: {
           name: 'domain-radio-widget',
@@ -48,9 +48,8 @@
       <!-- ko if: contacts_loaded -->
 
       <div data-bind="if: selectedAddress() === 'Applicant'">
-
-      <div
-        data-bind="component: {
+        <div
+          data-bind="component: {
           name: 'domain-select-widget',
           node: {
             'config': {
@@ -77,10 +76,10 @@
             pageVm: $root
           }
       }"
-      ></div>
+        ></div>
 
-    <div
-      data-bind="component: {
+        <div
+          data-bind="component: {
         name: 'domain-select-widget',
         node: {
           'config': {
@@ -104,13 +103,12 @@
           pageVm: $root
         }
     }"
-    ></div>
+        ></div>
+      </div>
 
-    </div> 
-
-    <div data-bind="if: selectedAddress() === 'Company'">
-    <div
-    data-bind="component: {
+      <div data-bind="if: selectedAddress() === 'Company'">
+        <div
+          data-bind="component: {
       name: 'domain-select-widget',
       node: {
         'config': {
@@ -134,11 +132,10 @@
         pageVm: $root
       }
   }"
-  ></div>
+        ></div>
 
-
-<div
-  data-bind="component: {
+        <div
+          data-bind="component: {
     name: 'domain-select-widget',
     node: {
       'config': {
@@ -162,9 +159,8 @@
       pageVm: $root
     }
 }"
-></div>
-
-    </div>
+        ></div>
+      </div>
       <!-- /ko -->
     </div>
     <div class="row widget-wrapper">
@@ -175,7 +171,7 @@
                 config: {
                     'label': 'Site Name',
                 },
-                value: areaName,
+                value: coverLetterData.siteName,
                 loading: loading,
                 form: $data,
                 pageVm: $root
@@ -194,14 +190,14 @@
                 },
             },
             config: {
-                'label': 'Application Recieved Date',
+                'label': 'Recieved Date',
                 'maxDate': '',
                 'minDate': '',
                 'viewMode': 'days',
                 'dateFormat': 'DD-MM-YYYY',
                 'defaultValue': ''
             },
-            value: appDate,
+            value: coverLetterData.dates.received,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -220,14 +216,14 @@
                 },
             },
             config: {
-                'label': 'Send Date',
+                'label': 'Acknowledged/Send Date',
                 'maxDate': '',
                 'minDate': '',
                 'viewMode': 'days',
                 'dateFormat': 'DD-MM-YYYY',
                 'defaultValue': ''
             },
-            value: sendDate,
+            value: coverLetterData.dates.acknowledged,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -243,7 +239,7 @@
             config: {
                 'label': 'Building Name',
             },
-            value: buildingName,
+            value: coverLetterData.addresses[selectedAddress()].buildingName,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -259,7 +255,7 @@
             config: {
                 'label': 'Street',
             },
-            value: street,
+            value: coverLetterData.addresses[selectedAddress()].streetName,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -275,7 +271,7 @@
             config: {
                 'label': 'Building Number',
             },
-            value: buildingNumber,
+            value: coverLetterData.addresses[selectedAddress()].buildingNumber,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -291,7 +287,7 @@
             config: {
                 'label': 'Building Number Sub Street',
             },
-            value: buildingNumberSubSt,
+            value: coverLetterData.addresses[selectedAddress()].buildingNumberSubSt,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -307,7 +303,7 @@
             config: {
                 'label': 'Sub Street',
             },
-            value: subStreet,
+            value: coverLetterData.addresses[selectedAddress()].subStreet,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -323,7 +319,7 @@
             config: {
                 'label': 'Town or City',
             },
-            value: city,
+            value: coverLetterData.addresses[selectedAddress()].city,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -339,7 +335,7 @@
             config: {
                 'label': 'County',
             },
-            value: county,
+            value: coverLetterData.addresses[selectedAddress()].county,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -355,7 +351,7 @@
             config: {
                 'label': 'Postcode',
             },
-            value: postCode,
+            value: coverLetterData.addresses[selectedAddress()].postcode,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -371,7 +367,7 @@
             config: {
                 'label': 'Signed',
             },
-            value: signed,
+            value: coverLetterData.decisionBy.name,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -429,7 +425,8 @@
           }
         }"
       ></div>
-      {% comment %} <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
+      {% comment %}
+      <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
         <!-- HEADER -->
         <div style="display: flex; align-items: end; width: 100%; flex-direction: column">
           <div>
@@ -504,7 +501,8 @@
             data-bind="text: 'Signed: ' + (getTextValue(signed) || 'Signature required!')"
           ></span>
         </div>
-      </div> {% endcomment %}
+      </div>
+      {% endcomment %}
     </div>
   </div>
 </div>
