@@ -31,6 +31,12 @@ define([
 
     self.getTextValue = (textObject) => {
       if (ko.isObservable(textObject)) {
+        return textObject()?.[self.currentLanguage().code].value || '';
+      } else {
+        return textObject?.[self.currentLanguage().code].value || '';
+      }
+
+      if (ko.isObservable(textObject)) {
         if (textObject()) {
           if (textObject()[self.currentLanguage().code]) {
             return textObject()[self.currentLanguage().code]?.value;
@@ -57,6 +63,59 @@ define([
         }
       });
       return values;
+    };
+
+    self.coverLetterData = {
+      recipientName: ko.observable(createTextObject()),
+      companyName: ko.observable(createTextObject()),
+      siteName: ko.observable(createTextObject()),
+      hasAdditonalFiles: ko.observable(false),
+      decisionBy: {
+        name: ko.observable(createTextObject()),
+        date: ko.observable()
+      },
+      dates: {
+        acknowledged: ko.observable(),
+        received: ko.observable()
+      },
+      addresses: {
+        applicant: {
+          fullAddress: ko.observable(createTextObject()),
+          buildingNumberSubSt: ko.observable(createTextObject()),
+          city: ko.observable(createTextObject()),
+          postcode: ko.observable(createTextObject()),
+          subStreet: ko.observable(createTextObject()),
+          buildingName: ko.observable(createTextObject()),
+          buildingNumber: ko.observable(createTextObject()),
+          streetName: ko.observable(createTextObject()),
+          locality: ko.observable(createTextObject()),
+          county: ko.observable(createTextObject())
+        },
+        company: {
+          fullAddress: ko.observable(createTextObject()),
+          buildingNumberSubSt: ko.observable(createTextObject()),
+          city: ko.observable(createTextObject()),
+          postcode: ko.observable(createTextObject()),
+          subStreet: ko.observable(createTextObject()),
+          buildingName: ko.observable(createTextObject()),
+          buildingNumber: ko.observable(createTextObject()),
+          streetName: ko.observable(createTextObject()),
+          locality: ko.observable(createTextObject()),
+          county: ko.observable(createTextObject())
+        },
+        site: {
+          fullAddress: ko.observable(createTextObject()),
+          buildingNumberSubSt: ko.observable(createTextObject()),
+          city: ko.observable(createTextObject()),
+          postcode: ko.observable(createTextObject()),
+          subStreet: ko.observable(createTextObject()),
+          buildingName: ko.observable(createTextObject()),
+          buildingNumber: ko.observable(createTextObject()),
+          streetName: ko.observable(createTextObject()),
+          locality: ko.observable(createTextObject()),
+          county: ko.observable(createTextObject())
+        }
+      }
     };
 
     this.activityResourceData = ko.observable();
@@ -307,51 +366,72 @@ define([
     this.sendDateOptions = ko.observable(['today', 'decision', 'acknowledged']);
     this.selectedSendDate = ko.observable('today');
 
+    self.getAddressValue = (value) => {
+      return self.getTextValue(self.coverLetterData.addresses[self.selectedAddress()][value]);
+    };
+
     self.header = ko.computed(() => {
       let result = '<div>';
-      if (self.getTextValue(self.buildingName)) {
-        result += `<span>${self.getTextValue(self.buildingName)}</span>`;
+      if (self.getAddressValue('buildingName')) {
+        result += `<span>${self.getAddressValue('buildingName')}</span>`;
       }
       result += '</div><div>';
-      if (self.getTextValue(self.buildingNumber)) {
-        result += `<span>${self.getTextValue(self.buildingNumber)} ${self.getTextValue(
-          self.street
-        )}</span>`;
+      if (self.getAddressValue('buildingNumber')) {
+        result += `<span>${self.getAddressValue('buildingNumber')}</span>`;
       }
-      if (self.getTextValue(self.subStreet)) {
-        result += `<span>${
-          self.getTextValue(self.buildingNumberSubSt)
-            ? self.getTextValue(self.buildingNumberSubSt) + ' '
-            : ''
-        }${self.getTextValue(self.subStreet)}</span>`;
+      if (self.getAddressValue('buildingNumber') && self.getAddressValue('street')) {
+        result += `<span>, </span>`;
+      }
+      if (self.getAddressValue('street')) {
+        result += `<span>${self.getAddressValue('street')}</span>`;
+      }
+      if (self.getAddressValue('street') && self.getAddressValue('subStreet')) {
+        result += `<span>, </span>`;
+      }
+      if (self.getAddressValue('subStreet')) {
+        result += `<span>${self.getAddressValue('subStreet')}</span>`;
+      }
+      if (self.getAddressValue('subStreet') && self.getAddressValue('buildingNumberSubSt')) {
+        result += `<span>, </span>`;
+      }
+      if (self.getAddressValue('buildingNumberSubSt')) {
+        result += `<span>${self.getAddressValue('buildingNumberSubSt')}</span>`;
+      }
+      result += '</div><div>';
+      if (self.getAddressValue('city')) {
+        result += `<span>${self.getAddressValue('city')}</span>`;
+      }
+      if (self.getAddressValue('city') && self.getAddressValue('county')) {
+        result += `<span>, </span>`;
+      }
+      if (self.getAddressValue('county')) {
+        result += `<span>${self.getAddressValue('county')}</span>`;
+      }
+      if (self.getAddressValue('county') && self.getAddressValue('postcode')) {
+        result += `<span>, </span>`;
+      }
+      if (self.getAddressValue('postcode')) {
+        result += `<span>${self.getAddressValue('postcode')}</span>`;
       }
       result += '</div>';
-      if (self.getTextValue(self.city)) {
-        result += `<span>${self.getTextValue(self.city)}</span>`;
-      }
-      if (self.getTextValue(self.county)) {
-        result += `<span>${self.getTextValue(self.county)}</span>`;
-      }
-      if (self.getTextValue(self.postCode)) {
-        result += `<span>${self.getTextValue(self.postCode)}</span>`;
-      }
-
       return result;
     }, self);
 
     self.details = ko.computed(() => {
       let result = '<div style="display: flex; width: 100%; flex-direction: column">';
-      if (self.sendDate()) {
-        result += `<span>Date: ${self.sendDate()}</span>`;
+      if (self.getTextValue(self.coverLetterData.dates.acknowledged)) {
+        result += `<span>Date: ${self.getTextValue(
+          self.coverLetterData.dates.acknowledged
+        )}</span>`;
       }
-      if (self.getTextValue(self.bFileNumber)) {
-        result += `<span>Our ref: ${self.getTextValue(self.bFileNumber)}</span>`;
-      }
+      // if (self.getTextValue(self.bFileNumber)) {
+      //   result += `<span>Our ref: ${self.getTextValue(self.bFileNumber)}</span>`;
+      // }
       if (self.getTextValue(self.licenseNo)) {
-        result += `<span>License No: ${self.getTextValue(self.licenseNo)}</span>`;
+        result += `<span>License Number: ${self.getTextValue(self.licenseNo)}</span>`;
       }
-      if (self.getTextValue(self.areaName)) {
-        result += `<span>Site: ${self.getTextValue(self.areaName)}</span>`;
+      if (self.getTextValue(self.coverLetterData.siteName)) {
+        result += `<span>Site: ${self.getTextValue(self.coverLetterData.siteName)}</span>`;
       }
       result += '</div>';
       return result;
@@ -360,10 +440,8 @@ define([
     self.body = ko.computed(() => {
       let result =
         '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
-      if (self.getTextValue(self.applicant)) {
-        result += `<span>Dear: ${Object.keys(this.applicants()).join(', ')}, ${this.getTextValue(
-          self.company
-        )}</span>`;
+      if (self.getTextValue(self.coverLetterData.recipientName)) {
+        result += `<span>Dear: ${self.getTextValue(self.coverLetterData.recipientName)}</span>`;
       }
       result += `<span style="margin-top: 8px">${
         self.getTextValue(self.textPreview) || 'Please enter information regarding the email!'
@@ -465,59 +543,6 @@ define([
       }
 
       return result.tileId ? result : null;
-    };
-
-    self.coverLetterData = {
-      recipientName: ko.observable(createTextObject()),
-      companyName: ko.observable(createTextObject()),
-      siteName: ko.observable(createTextObject()),
-      hasAdditonalFiles: ko.observable(false),
-      decisionBy: {
-        name: ko.observable(createTextObject()),
-        date: ko.observable()
-      },
-      dates: {
-        acknowledged: ko.observable(),
-        received: ko.observable()
-      },
-      addresses: {
-        applicant: {
-          fullAddress: ko.observable(createTextObject()),
-          buildingNumberSubSt: ko.observable(createTextObject()),
-          city: ko.observable(createTextObject()),
-          postcode: ko.observable(createTextObject()),
-          subStreet: ko.observable(createTextObject()),
-          buildingName: ko.observable(createTextObject()),
-          buildingNumber: ko.observable(createTextObject()),
-          streetName: ko.observable(createTextObject()),
-          locality: ko.observable(createTextObject()),
-          county: ko.observable(createTextObject())
-        },
-        company: {
-          fullAddress: ko.observable(createTextObject()),
-          buildingNumberSubSt: ko.observable(createTextObject()),
-          city: ko.observable(createTextObject()),
-          postcode: ko.observable(createTextObject()),
-          subStreet: ko.observable(createTextObject()),
-          buildingName: ko.observable(createTextObject()),
-          buildingNumber: ko.observable(createTextObject()),
-          streetName: ko.observable(createTextObject()),
-          locality: ko.observable(createTextObject()),
-          county: ko.observable(createTextObject())
-        },
-        site: {
-          fullAddress: ko.observable(createTextObject()),
-          buildingNumberSubSt: ko.observable(createTextObject()),
-          city: ko.observable(createTextObject()),
-          postcode: ko.observable(createTextObject()),
-          subStreet: ko.observable(createTextObject()),
-          buildingName: ko.observable(createTextObject()),
-          buildingNumber: ko.observable(createTextObject()),
-          streetName: ko.observable(createTextObject()),
-          locality: ko.observable(createTextObject()),
-          county: ko.observable(createTextObject())
-        }
-      }
     };
 
     self.fetchTileData = async (resourceId) => {
