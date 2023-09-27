@@ -48187,36 +48187,59 @@
   <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/a5adddec-c2fa-383a-afcb-ad558388cce6"/>
 
   <!-- Below are Concepts added by Owen-->
-  <skos:Collection rdf:about="http://arches:8000/d1c801ea-28cc-4c69-807e-c4c315dac8f1">
+  <!-- Application Stages -->
+  <skos:Collection rdf:about="http://arches:8000/8ca41a78-479a-4d87-831d-08b640910126">
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/76002c89-484e-4229-bc80-c90b6a60444e"/>
+      <skos:Concept rdf:about="http://arches:8000/aac0e5d3-5c04-453a-9d0d-8a752dcadd03"/>
     </skos:member>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/7cd3864d-59a8-4b3f-a56c-f1187c67c67c"/>
+      <skos:Concept rdf:about="http://arches:8000/41ce2be4-3d0d-4669-b9ab-7b28ca549fbf"/>
     </skos:member>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/ea907411-38b9-49fc-8b60-4650c9b7cd22"/>
+      <skos:Concept rdf:about="http://arches:8000/e78bcb57-ca1f-4398-b1d1-aec4a97af3ee"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/8c1de914-0617-4682-9c5a-df9c952c350c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/c46f4564-d973-47d3-be09-1444e6b61ec0"/>
     </skos:member>
     <skos:prefLabel xml:lang="en">
-    {"id": "ec9755ad-e3d7-4458-88c3-826e25ca9387", "value": "Excavation Types"}
+    {"id": "653a5026-0dd6-4396-86de-712dcfb19953", "value": "Application Stages"}
     </skos:prefLabel>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/b41ae8b4-fd3c-4e30-a336-5a96d5692e21"/>
+      <skos:Concept rdf:about="http://arches:8000/2f4da185-bfab-42c1-bef8-a7526aae0f6d"/>
     </skos:member>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/aa7e77f9-ddaf-4300-b2b6-dc4abc429e58"/>
+      <skos:Concept rdf:about="http://arches:8000/67f7ede6-0013-40d8-9bc6-e03dc5885551"/>
     </skos:member>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/6ef56446-d7e5-438e-a3c0-3ce3f5d75181"/>
+      <skos:Concept rdf:about="http://arches:8000/f0184cdc-b3c3-4975-8615-7001a9361929"/>
     </skos:member>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/127f9fc1-23cd-4d2e-9174-b4cc9c5f77c2"/>
+      <skos:Concept rdf:about="http://arches:8000/c74e97d2-6951-426d-a480-a1643011f1b5"/>
+    </skos:member>
+  </skos:Collection>
+  <!-- / -->
+  <!-- Excavation Types -->
+  <skos:Collection rdf:about="http://arches:8000/b1c3237e-69fc-4cce-a12e-04ef1e053722">
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/54e2cec4-e9e1-4f35-9ec0-015c642883d2"/>
+    </skos:member>
+    <skos:prefLabel xml:lang="en">
+    {"id": "b67e07bb-b492-478c-8d85-fab34c91389f", "value": "Excavation Types"}
+    </skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5c17ed6f-ba77-4e69-a175-494fd1d19f9f"/>
     </skos:member>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/d449d04b-3a2f-4c47-9bc3-96e5783c0a7a"/>
+      <skos:Concept rdf:about="http://arches:8000/acf7d018-6042-4961-a794-9d6690981731"/>
     </skos:member>
     <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/694f7d1f-2341-49cf-b5b4-d9fab94d8394"/>
+      <skos:Concept rdf:about="http://arches:8000/5d4dcb3b-9d73-4441-96ca-215783471def"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f96d1f54-5029-491d-826d-c12c3344d5dc"/>
     </skos:member>
   </skos:Collection>
 

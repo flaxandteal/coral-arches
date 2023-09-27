@@ -140,6 +140,16 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
+                  uniqueInstanceName: 'excavation-type',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '6e071042-5d45-11ee-88b0-0242ac120008',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'company-name',
                   tilesManaged: 'one',
                   parameters: {
