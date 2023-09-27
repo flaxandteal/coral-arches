@@ -48185,4 +48185,39 @@
   <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/cc657936-f26a-331f-b8e1-cc31a1b535f0"/>
   <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/3512940f-f611-3130-a12a-b6169d0a3df0"/>
   <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/a5adddec-c2fa-383a-afcb-ad558388cce6"/>
+
+  <!-- Below are Concepts added by Owen-->
+  <skos:Collection rdf:about="http://arches:8000/d1c801ea-28cc-4c69-807e-c4c315dac8f1">
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/76002c89-484e-4229-bc80-c90b6a60444e"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/7cd3864d-59a8-4b3f-a56c-f1187c67c67c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ea907411-38b9-49fc-8b60-4650c9b7cd22"/>
+    </skos:member>
+    <skos:prefLabel xml:lang="en">
+    {"id": "ec9755ad-e3d7-4458-88c3-826e25ca9387", "value": "Excavation Types"}
+    </skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/b41ae8b4-fd3c-4e30-a336-5a96d5692e21"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/aa7e77f9-ddaf-4300-b2b6-dc4abc429e58"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/6ef56446-d7e5-438e-a3c0-3ce3f5d75181"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/127f9fc1-23cd-4d2e-9174-b4cc9c5f77c2"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/d449d04b-3a2f-4c47-9bc3-96e5783c0a7a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/694f7d1f-2341-49cf-b5b4-d9fab94d8394"/>
+    </skos:member>
+  </skos:Collection>
+
 </rdf:RDF>
