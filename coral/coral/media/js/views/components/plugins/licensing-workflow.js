@@ -135,7 +135,17 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'app-dates-and-status',
+                  uniqueInstanceName: 'app-dates',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '05f6b846-5d49-11ee-911e-0242ac130003',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'app-status',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -191,7 +201,7 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
-                },
+                }
                 // {
                 //   componentName: 'default-card',
                 //   uniqueInstanceName: 'grid-info',
