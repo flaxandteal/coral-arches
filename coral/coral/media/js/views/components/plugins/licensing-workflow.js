@@ -159,15 +159,28 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'app-dates-and-status',
                   tilesManaged: 'one',
                   parameters: {
+                    labels: [
+                      ['Status', 'Stage of Application']
+                    ],
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'app-dates-and-status',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                //     nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                //   }
+                // },
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'sub-details',
@@ -479,7 +492,7 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     tileid: "['app-details-step']['cm-reference'][0]['tileId']",
                     hiddenNodes: [
                       '280b78fa-4e4d-11ee-a340-0242ac140007',
