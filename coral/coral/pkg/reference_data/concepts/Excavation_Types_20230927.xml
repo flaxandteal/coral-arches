@@ -1,0 +1,71 @@
+<rdf:RDF>
+<skos:Concept rdf:about="http://arches:8000/127f9fc1-23cd-4d2e-9174-b4cc9c5f77c2">
+<skos:prefLabel xml:lang="en">
+{"id": "2eb86b95-530f-478c-a2a6-7d6fffb13b7c", "value": "Refused"}
+</skos:prefLabel>
+<skos:inScheme>
+<skos:ConceptScheme rdf:about="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97">
+<skos:hasTopConcept rdf:resource="http://arches:8000/aa7e77f9-ddaf-4300-b2b6-dc4abc429e58"/>
+<skos:hasTopConcept rdf:resource="http://arches:8000/127f9fc1-23cd-4d2e-9174-b4cc9c5f77c2"/>
+<skos:hasTopConcept rdf:resource="http://arches:8000/694f7d1f-2341-49cf-b5b4-d9fab94d8394"/>
+<skos:hasTopConcept rdf:resource="http://arches:8000/7cd3864d-59a8-4b3f-a56c-f1187c67c67c"/>
+<skos:hasTopConcept rdf:resource="http://arches:8000/b41ae8b4-fd3c-4e30-a336-5a96d5692e21"/>
+<skos:hasTopConcept rdf:resource="http://arches:8000/6ef56446-d7e5-438e-a3c0-3ce3f5d75181"/>
+<dcterms:title xml:lang="en">
+{"id": "22d5d945-0be6-4822-944e-a34bb9ddfe4f", "value": "Excavation Types"}
+</dcterms:title>
+<skos:hasTopConcept rdf:resource="http://arches:8000/76002c89-484e-4229-bc80-c90b6a60444e"/>
+<skos:hasTopConcept rdf:resource="http://arches:8000/ea907411-38b9-49fc-8b60-4650c9b7cd22"/>
+<skos:hasTopConcept rdf:resource="http://arches:8000/d449d04b-3a2f-4c47-9bc3-96e5783c0a7a"/>
+</skos:ConceptScheme>
+</skos:inScheme>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/d449d04b-3a2f-4c47-9bc3-96e5783c0a7a">
+<skos:prefLabel xml:lang="en">
+{"id": "a182c38d-1456-4589-8118-1d555f333dd7", "value": "Summary"}
+</skos:prefLabel>
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/6ef56446-d7e5-438e-a3c0-3ce3f5d75181">
+<skos:prefLabel xml:lang="en">
+{"id": "a6cf031a-7572-4196-a244-d43090584814", "value": "Deferred"}
+</skos:prefLabel>
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/76002c89-484e-4229-bc80-c90b6a60444e">
+<skos:prefLabel xml:lang="en">
+{"id": "d50e1caf-7ab9-4d8b-98ab-c6f6cd28b331", "value": "Received"}
+</skos:prefLabel>
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/b41ae8b4-fd3c-4e30-a336-5a96d5692e21">
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+<skos:prefLabel xml:lang="en">
+{"id": "2be02b17-6c50-4b17-a553-d3477cff3036", "value": "Preliminary"}
+</skos:prefLabel>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/aa7e77f9-ddaf-4300-b2b6-dc4abc429e58">
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+<skos:prefLabel xml:lang="en">
+{"id": "1d2bf7dd-575c-433f-b293-8d9666308831", "value": "Not Used"}
+</skos:prefLabel>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/694f7d1f-2341-49cf-b5b4-d9fab94d8394">
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+<skos:prefLabel xml:lang="en">
+{"id": "06c70c17-cb28-4238-a650-d56c2b852bdc", "value": "Not Received"}
+</skos:prefLabel>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/ea907411-38b9-49fc-8b60-4650c9b7cd22">
+<skos:prefLabel xml:lang="en">
+{"id": "7ad14f44-1fb8-44a1-947e-3e5142044f2a", "value": "Not Issued"}
+</skos:prefLabel>
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+</skos:Concept>
+<skos:Concept rdf:about="http://arches:8000/7cd3864d-59a8-4b3f-a56c-f1187c67c67c">
+<skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+<skos:prefLabel xml:lang="en">
+{"id": "2f42326b-8140-4bd5-a8b2-31ff5b8196f0", "value": "Final"}
+</skos:prefLabel>
+</skos:Concept>
+</rdf:RDF>
