@@ -1197,7 +1197,7 @@
                 {
                     "card_id": "6840fc30-48ce-11ee-8e4e-0242ac140007",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
+                        "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "Date of Data Entry",
                         "label": "Communication Date",
                         "maxDate": null,
@@ -2996,7 +2996,7 @@
                 {
                     "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
+                        "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Decision Date",
                         "maxDate": false,
@@ -4596,7 +4596,7 @@
                 {
                     "alias": "acknowledged_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -5066,7 +5066,7 @@
                 {
                     "alias": "start_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -5110,7 +5110,7 @@
                 {
                     "alias": "decision_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -5501,7 +5501,7 @@
                 {
                     "alias": "date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -5794,7 +5794,7 @@
                 {
                     "alias": "received_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -6372,7 +6372,7 @@
                 {
                     "alias": "end_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
@@ -7723,7 +7723,7 @@
                 {
                     "alias": "cancelled_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "DD-MM-YYYY"
                     },
                     "datatype": "date",
                     "description": null,
