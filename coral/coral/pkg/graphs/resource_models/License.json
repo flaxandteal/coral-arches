@@ -1034,10 +1034,16 @@
                                 "value": ""
                             }
                         },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Decision Notes",
+                        "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
-                        }
+                        },
+                        "uneditable": false,
+                        "width": "100%"
                     },
                     "id": "5caebe21-190a-4460-a771-2f7b26b5b832",
                     "label": {
@@ -4491,7 +4497,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "19092d09-8bf5-4ecf-a5d4-a360015c84cd"
+                    "id": "3778e8c7-5ad4-453f-b7dc-ebb87ba6eee8"
                 },
                 {
                     "config": {
@@ -4501,7 +4507,7 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "e19c6aa3-14bd-43d8-a784-70328487493c"
+                    "id": "3a36e942-b3c3-430d-a8d1-2452f79991e5"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -7840,7 +7846,7 @@
                 {
                     "alias": "status",
                     "config": {
-                        "rdmCollection": "7849cd3c-3f0d-454d-aaea-db9164629641"
+                        "rdmCollection": "d1c801ea-28cc-4c69-807e-c4c315dac8f1"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -7863,9 +7869,9 @@
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                "notes": "Added decision notes to decision nodegroup",
-                "publicationid": "ab0e573a-5939-11ee-9e74-0242ac130007",
-                "published_time": "2023-09-22T11:17:51.291",
+                "notes": null,
+                "publicationid": "1c8ff1ec-5d41-11ee-a242-0242ac120008",
+                "published_time": "2023-09-27T14:21:12.851",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
@@ -7903,6 +7909,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "/bin/sh: 1: git: not found",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "5.10.0-21-amd64"
     }
 }
