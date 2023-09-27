@@ -427,6 +427,7 @@ define([
 
         this.licenseNo(createTextObject(data.resource["External Cross References"].filter(ref =>
           ref["External Cross Reference Source"]["@value"] === 'Excavation')[0]["External Cross Reference Number"]["@value"]))
+
         let bfileList = data.resource["External Cross References"].filter(ref =>
           ref["External Cross Reference Source"]["@value"] === 'Historic Environment Record Number')
         
@@ -533,6 +534,8 @@ define([
               // people
             }
             if (related_resource.graph_id === "b9e0701e-5463-11e9-b5f5-000d3ab1e588") {
+              // activity
+              
               window.fetch(arches.urls.resource_tiles.replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", related_resource.resourceinstanceid) + "?paginate=false").then(tiles => tiles.json()).then(tiles => {
                 this.externalRefs(getNodeValues(tiles.tiles, '589d4dc7-edf9-11eb-9856-a87eeabdefba'))
                 this.externalRefSources(getNodeValues(tiles.tiles, '589d4dcd-edf9-11eb-8a7d-a87eeabdefba'))
