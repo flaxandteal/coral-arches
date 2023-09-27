@@ -412,6 +412,31 @@ LANGUAGES = [
 # override this to permenantly display/hide the language switcher
 SHOW_LANGUAGE_SWITCH = len(LANGUAGES) > 1
 
+DATE_FORMATS = {
+    # Keep index values the same for formats in the python and javascript arrays.
+    "Python": ["%Y-%m-%dT%H:%M:%S.%f%z", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d %H:%M:%S%z", "%Y-%m-%d", "%Y-%m", "%Y", "-%Y", "%d-%m-%YT%H:%M:%S.%f%z", "%d-%m-%YT%H:%M:%S%z", "%d-%m-%Y %H:%M:%S%z", "%d-%m-%Y"],
+    "JavaScript": ["YYYY-MM-DDTHH:mm:ss.sssZ", "YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ssZ", "YYYY-MM-DD", "YYYY-MM", "YYYY", "-YYYY", "DD-MM-YYYYTHH:mm:ss.sssZ", "DD-MM-YYYYTHH:mm:ssZ", "DD-MM-YYYY HH:mm:ssZ", "DD-MM-YYYY"],
+    "Elasticsearch": [
+        "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
+        "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+        "yyyy-MM-dd'T'HH:mm:ssZZZZZ",
+        "yyyy-MM-dd'T'HH:mm:ssZ",
+        "yyyy-MM-dd HH:mm:ssZZZZZ",
+        "yyyy-MM-dd",
+        "yyyy-MM",
+        "yyyy",
+        "-yyyy",
+        "dd-MM-yyyy'T'HH:mm:ss.SSSZZZZZ",
+        "dd-MM-yyyy'T'HH:mm:ss.SSSZ",
+        "dd-MM-yyyy'T'HH:mm:ssZZZZZ",
+        "dd-MM-yyyy'T'HH:mm:ssZ",
+        "dd-MM-yyyy HH:mm:ssZZZZZ",
+        "dd-MM-yyyy",
+    ],
+}
+
+DATE_IMPORT_EXPORT_FORMAT = "%d-%m-%Y"  # Custom date format for dates imported from and exported to csv
+
 try:
     from .package_settings import *
 except ImportError:
