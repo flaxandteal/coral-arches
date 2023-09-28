@@ -682,23 +682,12 @@ define([
           if (siteName) {
             self.coverLetterData.siteName(siteName.value);
           }
-          // If cmRef should be linked to activity
-          // const cmReference = self.getValueFromTiles(
-          //   activityTiles,
-          //   '589d4dc7-edf9-11eb-9856-a87eeabdefba',
-          //   (tile) => {
-          //     return (
-          //       tile.data?.['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'] ===
-          //       '19afd557-cc21-44b4-b1df-f32568181b2c'
-          //     );
-          //   }
-          // );
           const cmReference = self.getValueFromTiles(
-            licenseTiles,
-            '280b75bc-4e4d-11ee-a340-0242ac140007',
+            activityTiles,
+            '589d4dc7-edf9-11eb-9856-a87eeabdefba',
             (tile) => {
               return (
-                tile.data?.['280b7a9e-4e4d-11ee-a340-0242ac140007'] ===
+                tile.data?.['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'] ===
                 '19afd557-cc21-44b4-b1df-f32568181b2c'
               );
             }
