@@ -29,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -143,7 +143,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Application Status"
                     },
@@ -212,7 +212,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "License Names"
                     },
@@ -282,7 +282,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Contacts"
                     },
@@ -316,7 +316,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -343,7 +343,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -423,7 +423,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Dates"
                     },
@@ -490,7 +490,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Application"
                     },
@@ -1517,14 +1517,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Company Directors",
+                        "label": "Excavation Directors",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "6d294f86-5891-11ee-a624-0242ac120004",
                     "label": {
-                        "en": "Company Directors"
+                        "en": "Excavation Directors"
                     },
                     "node_id": "6d292a2e-5891-11ee-a624-0242ac120004",
                     "sortorder": 9,
@@ -1560,7 +1560,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Company Director Role Metatype",
+                        "label": "Excavation Director Role Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -1568,7 +1568,7 @@
                     },
                     "id": "6d29527e-5891-11ee-a624-0242ac120004",
                     "label": {
-                        "en": "Company Director Role Metatype"
+                        "en": "Excavation Director Role Metatype"
                     },
                     "node_id": "6d29323a-5891-11ee-a624-0242ac120004",
                     "sortorder": 11,
@@ -1582,7 +1582,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Company Director Role Type",
+                        "label": "Excavation Director Role Type",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -1590,7 +1590,7 @@
                     },
                     "id": "6d2953f0-5891-11ee-a624-0242ac120004",
                     "label": {
-                        "en": "Company Director Role Type"
+                        "en": "Excavation Director Role Type"
                     },
                     "node_id": "6d2921fa-5891-11ee-a624-0242ac120004",
                     "sortorder": 10,
@@ -4623,6 +4623,16 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "991c3c74-48b6-11ee-85af-0242ac140007"
+                        ]
+                    },
+                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "668fbbda-c6a7-4ee8-98e7-7449f64da43b"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",
@@ -4641,22 +4651,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "0cc0e5e9-2537-477b-812b-70cbfff1007b"
-                },
-                {
-                    "config": {
-                        "triggering_nodegroups": [
-                            "991c3c74-48b6-11ee-85af-0242ac140007"
-                        ]
-                    },
-                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "f4a17dd3-6771-4817-9995-8789cff83d56"
+                    "id": "bfa0d492-9f22-4247-a544-9502e117073d"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -4813,7 +4813,7 @@
                     "nodeid": "132fcfec-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 1
+                    "sortorder": 0
                 },
                 {
                     "alias": "decision_type",
@@ -5283,7 +5283,7 @@
                     "nodeid": "3b707c40-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 2
+                    "sortorder": 0
                 },
                 {
                     "alias": "letter_contents",
@@ -6055,7 +6055,7 @@
                     "nodeid": "6a373fbe-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 5
+                    "sortorder": 0
                 },
                 {
                     "alias": "contacts",
@@ -6097,7 +6097,7 @@
                     "nodeid": "6d291192-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 2
+                    "sortorder": 0
                 },
                 {
                     "alias": "planning_officer_metatype",
@@ -6166,7 +6166,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "company_directors",
+                    "alias": "excavation_directors",
                     "config": {
                         "en": ""
                     },
@@ -6180,12 +6180,12 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Company Directors",
+                    "name": "Excavation Directors",
                     "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
                     "nodeid": "6d291c78-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 3
+                    "sortorder": 0
                 },
                 {
                     "alias": "licensees",
@@ -6207,10 +6207,10 @@
                     "nodeid": "6d291f3e-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 1
+                    "sortorder": 0
                 },
                 {
-                    "alias": "company_director_role_type",
+                    "alias": "excavation_director_role_type",
                     "config": {
                         "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
                     },
@@ -6224,7 +6224,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Company Director Role Type",
+                    "name": "Excavation Director Role Type",
                     "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
                     "nodeid": "6d2921fa-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -6283,7 +6283,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "company_director",
+                    "alias": "excavation_director",
                     "config": {
                         "graphid": null,
                         "graphs": [
@@ -6305,7 +6305,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Company Director",
+                    "name": "Excavation Director",
                     "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
                     "nodeid": "6d292a2e-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
@@ -6364,7 +6364,7 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "company_director_role_metatype",
+                    "alias": "excavation_director_role_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -6378,7 +6378,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Company Director Role Metatype",
+                    "name": "Excavation Director Role Metatype",
                     "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
                     "nodeid": "6d29323a-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -6553,7 +6553,7 @@
                     "nodeid": "6d294aea-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 4
+                    "sortorder": 0
                 },
                 {
                     "alias": "letter",
@@ -6714,7 +6714,7 @@
                     "nodeid": "94aaeb74-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 4
+                    "sortorder": 0
                 },
                 {
                     "alias": null,
@@ -8036,7 +8036,7 @@
                     "nodeid": "d2a39e8a-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 3
+                    "sortorder": 0
                 },
                 {
                     "alias": "decision_assignment",
@@ -8182,8 +8182,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "02cbfc56-5de6-11ee-a54d-0242ac130003",
-                "published_time": "2023-09-28T10:01:36.584",
+                "publicationid": "90449fdc-5dfc-11ee-9979-0242ac130003",
+                "published_time": "2023-09-28T12:43:02.862",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
