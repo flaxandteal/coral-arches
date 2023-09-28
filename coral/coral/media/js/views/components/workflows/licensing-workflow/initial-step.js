@@ -71,20 +71,30 @@ define([
             });
             params.form.complete(true);
             params.form.saving(false);
+          } else {
+            const failed = responses.find((response) => !response.ok);
+            if (failed) {
+              params.pageVm.alert(
+                new AlertViewModel(
+                  'ep-alert-red',
+                  failed.responseJSON.title,
+                  failed.responseJSON.message,
+                  null,
+                  function () {}
+                )
+              );
+            }
           }
         } else {
-          const failed = responses.find((response) => !response.ok);
-          if (failed) {
-            params.pageVm.alert(
-              new AlertViewModel(
-                'ep-alert-red',
-                failed.responseJSON.title,
-                failed.responseJSON.message,
-                null,
-                function () {}
-              )
-            );
-          }
+          params.pageVm.alert(
+            new AlertViewModel(
+              'ep-alert-red',
+              activityResponse.responseJSON.title,
+              activityResponse.responseJSON.message,
+              null,
+              function () {}
+            )
+          );
         }
       } catch (error) {
         console.error('Failed to initilise License workflow: ', error);
