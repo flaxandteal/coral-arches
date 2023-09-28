@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+>
+  <skos:Concept rdf:about="http://arches:8000/f0184cdc-b3c3-4975-8615-7001a9361929">
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97">
+        <dcterms:title xml:lang="en">
+        {"id": "7097bd18-ae29-4263-a253-a41cc3e33a07", "value": "Application Stages"}
+        </dcterms:title>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/f0184cdc-b3c3-4975-8615-7001a9361929"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/c74e97d2-6951-426d-a480-a1643011f1b5"/>
+        <dcterms:identifier xml:lang="en">
+        {"id": "6b1124cb-7a46-4d3d-aa4c-f58508489b56", "value": "http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"}
+        </dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/8c1de914-0617-4682-9c5a-df9c952c350c"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/aac0e5d3-5c04-453a-9d0d-8a752dcadd03"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/41ce2be4-3d0d-4669-b9ab-7b28ca549fbf"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/c46f4564-d973-47d3-be09-1444e6b61ec0"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/e78bcb57-ca1f-4398-b1d1-aec4a97af3ee"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/67f7ede6-0013-40d8-9bc6-e03dc5885551"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/2f4da185-bfab-42c1-bef8-a7526aae0f6d"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+    <skos:prefLabel xml:lang="en">
+    {"id": "03dc689e-4911-4a04-95c0-4b4a4b83dc7a", "value": "Deferred"}
+    </skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/8c1de914-0617-4682-9c5a-df9c952c350c">
+    <skos:prefLabel xml:lang="en">
+    {"id": "14650fec-d4ae-4e9d-9096-95d60f35caa8", "value": "Received"}
+    </skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/41ce2be4-3d0d-4669-b9ab-7b28ca549fbf">
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    <skos:prefLabel xml:lang="en">
+    {"id": "241584bc-a03c-4d8b-926b-5d66754b2373", "value": "Preliminary"}
+    </skos:prefLabel>
+    </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/c74e97d2-6951-426d-a480-a1643011f1b5">
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    <skos:prefLabel xml:lang="en">
+    {"id": "dc157bc7-e470-41b6-88fa-f69fa75f4fc4", "value": "Not Issued"}
+    </skos:prefLabel>
+    </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/aac0e5d3-5c04-453a-9d0d-8a752dcadd03">
+    <skos:prefLabel xml:lang="en">
+    {"id": "a7f3b4ae-6b41-423c-bc10-059358f6f2ec", "value": "Not Used"}
+    </skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/e78bcb57-ca1f-4398-b1d1-aec4a97af3ee">
+    <skos:prefLabel xml:lang="en">
+    {"id": "a54a29a0-b82e-4123-95d9-0e28f05323b3", "value": "Refused"}
+    </skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/2f4da185-bfab-42c1-bef8-a7526aae0f6d">
+    <skos:prefLabel xml:lang="en">
+    {"id": "4840c102-dcea-4a9a-b74c-d405301f8db5", "value": "Not Received"}
+    </skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/c46f4564-d973-47d3-be09-1444e6b61ec0">
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    <skos:prefLabel xml:lang="en">
+    {"id": "8c454982-c470-437d-a9c6-87460b07b3d9", "value": "Final"}
+    </skos:prefLabel>
+    </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/67f7ede6-0013-40d8-9bc6-e03dc5885551">
+    <skos:inScheme rdf:resource="http://arches:8000/b91183eb-6600-42f6-be1f-bda0f30fff97"/>
+    <skos:prefLabel xml:lang="en">
+    {"id": "49f0655b-55e5-450e-acfa-cb62f0af7d46", "value": "Summary"}
+    </skos:prefLabel>
+    </skos:Concept>
+</rdf:RDF>
