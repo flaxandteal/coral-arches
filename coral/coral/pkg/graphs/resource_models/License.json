@@ -3306,6 +3306,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "edgeid": "1aae02c4-5beb-4527-b403-de1d6b98efeb",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
+                    "rangenode_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "6e071042-5d45-11ee-88b0-0242ac120008",
                     "edgeid": "6e076c22-5d45-11ee-88b0-0242ac120008",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -4764,6 +4773,18 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "dd771adc-5dd4-11ee-8d58-0242ac120008",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "f698fefe-5dd4-11ee-8d58-0242ac120008",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "6e071042-5d45-11ee-88b0-0242ac120008",
                     "parentnodegroup_id": null
                 },
@@ -4853,6 +4874,37 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "funding_available",
+                    "config": {
+                        "falseLabel": {
+                            "en": "No"
+                        },
+                        "i18n_properties": [
+                            "trueLabel",
+                            "falseLabel"
+                        ],
+                        "trueLabel": {
+                            "en": "Yes"
+                        }
+                    },
+                    "datatype": "boolean",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Funding Available",
+                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "nodeid": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E29_Design_or_Procedure",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
+                    "sortorder": 0
+                },
                 {
                     "alias": "type",
                     "config": {
