@@ -16,7 +16,11 @@ define([
         {
           title: 'Initialise Excavation License',
           name: 'init-step',
-          required: false,
+          required: true,
+          informationboxdata: {
+            heading: 'Important Information',
+            text: 'Please note that it could take up to a minute to complete the initialisation for the License application. If something goes wrong during the process an error will be displayed to you.'
+          },
           layoutSections: [
             {
               componentConfigs: [
@@ -201,7 +205,7 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
-                },
+                }
                 // {
                 //   componentName: 'default-card',
                 //   uniqueInstanceName: 'grid-info',
