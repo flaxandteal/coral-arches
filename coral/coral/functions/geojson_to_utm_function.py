@@ -87,13 +87,6 @@ M2 = (3 * E / 8 + 3 * E2 / 32 + 45 * E3 / 1024)
 M3 = (15 * E2 / 256 + 45 * E3 / 1024)
 M4 = (35 * E3 / 3072)
 
-
-class Struct:
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
-
-print("utm finction processing..............")
-
 class GeoJSONToUTMPoint(BaseFunction):
     def get(self):
         raise NotImplementedError
@@ -112,40 +105,21 @@ class GeoJSONToUTMPoint(BaseFunction):
 
             is_function_save_method: a bool stating whether the function calling it is the save function.
         """
-        print("TILER", tile.get_tile_data())
-        print("TIDLER", tile.tileid)
-        print("TINSLER", tile.resourceinstance_id)
-        print("TITLER", tile.parenttile.tileid)
-        print("TODLER", tile.nodegroup_id)
         geojsonnode = self.config["geojson_input_node"]
-        # utmnode = self.config["utm_output_node"]
+        utmnode = self.config["utm_output_node"]
+        utmnodegroup = self.config["utm_output_nodegroup"]
         if geojsonnode in tile.data.keys():
             geojsonValue = tile.data[geojsonnode]
         else:
             geojsonValue = None
-        # print("NODLER", utmnode)
-        # print("GODELER", geojsonnode)
-        """
-        arches_1           | TILER {'a5419248-f121-11eb-86a9-a87eeabdefba': {'type': 'FeatureCollection', 'features': [{'id': '6a8d7757e8318777161ece6265efe69f', 'type': 'Feature', 'properties': {'nodeId': 'a5419248-f121-11eb-86a9-a87eeabdefba'}, 'geometry': {'coordinates': [0.17011593677793257, 51.573566041039214], 'type': 'Point'}}]}, 'a5419245-f121-11eb-be7b-a87eeabdefba': None, 'a541e01e-f121-11eb-8ad7-a87eeabdefba': 'dbc18bc0-ec10-4623-b866-52ece47d9780'}
-        arches_1           | TIDLER 2e2ef184-5a4e-4e93-9a78-1340269ee820
-        arches_1           | TINSLER d709e23a-0f7b-4f4f-8aff-feb67274004c
-        arches_1           | TITLER 6086805d-c0d6-4498-b98c-a50c9b842623
-        arches_1           | TODLER a541560c-f121-11eb-aa92-a87eeabdefba
-        """
 
         utmrefs = []
 
         if geojsonValue != None:
             # Grab a copy of the Geometry collection.
             geoJsFeatures = geojsonValue["features"]
-            print("ALL FEATURES", geoJsFeatures)
-            
-            print("The length of it",len(geoJsFeatures))
-            for x in geoJsFeatures:
-                print("THIS WILL BE X",x)
 
             geometries = list(map(lambda x: x['geometry'], geoJsFeatures))
-            print("GEOMETRIES", geometries)
             
             for geo in geometries:
                 if geo['type'] == 'Point':
@@ -158,40 +132,25 @@ class GeoJSONToUTMPoint(BaseFunction):
                         for plot in coor:
                             utmrefs.append(self.from_latlon(plot[0], plot[1]))
 
-            # print(utmrefs)
-            # tile.data[utmnode] = { 'lang': 'en', 'value': str(utmrefs)}
-            # print(tile)
-            # print("selfer", self)
-            # print("selferson", json.dumps(self))
-
-            # Tile.objects.get_or_create(
-            #     resourceinstance_id=tile.resourceinstance_id,
-            #     nodegroup_id='a5416b43-f121-11eb-b691-a87eeabdefba'
-            #     parent
-            # )
-            print("DADDY TILE", str(tile.parenttile))
-            # try:
-
-            utmreftile = Tile.objects.filter(nodegroup_id='a5416b43-f121-11eb-b691-a87eeabdefba', resourceinstance_id=tile.resourceinstance_id
+            utmreftile = Tile.objects.filter(nodegroup_id=utmnodegroup, resourceinstance_id=tile.resourceinstance_id
                                            ).values_list()
             
             if len(utmreftile) == 0:
                 Tile.objects.get_or_create(
                 resourceinstance_id=tile.resourceinstance_id,
-                nodegroup_id='a5416b43-f121-11eb-b691-a87eeabdefba',
+                nodegroup_id=utmnodegroup,
                 parenttile = tile.parenttile,
                 data={
-                    'ad0e57ae-5ec7-11ee-9811-0242ac120008': {'en': {
+                    utmnode: {'en': {
                         'direction': 'ltr',
                         'value': str(utmrefs)
                     }}
                 }
             )
             else:
-                tileid = Tile.objects.filter(nodegroup_id='a5416b43-f121-11eb-b691-a87eeabdefba', resourceinstance_id=tile.resourceinstance_id
+                tileid = Tile.objects.filter(nodegroup_id=utmnodegroup, resourceinstance_id=tile.resourceinstance_id
                                              ).first().tileid
-                print("this is the tileid!", tileid)
-                Tile.update_node_value('ad0e57ae-5ec7-11ee-9811-0242ac120008', {'en': {
+                Tile.update_node_value(utmnode, {'en': {
                             'direction': 'ltr',
                             'value': str(utmrefs)
                         }}, tileid)
@@ -306,7 +265,6 @@ class GeoJSONToUTMPoint(BaseFunction):
 
 
     def from_latlon(self, latitude, longitude):
-        print("PROCESSING", latitude, longitude)
         """This function converts Latitude and Longitude to UTM coordinate
     
             Parameters
@@ -379,26 +337,21 @@ class GeoJSONToUTMPoint(BaseFunction):
         # return easting, northing, zone_number, zone_letter
     
     def save(self, tile, request, context=None):
-        print("utm save............")
         self.save_utmpoint(tile=tile, request=request, is_function_save_method=True)
         return
 
     def post_save(self, *args, **kwargs):
-        print("utm post save............")
         raise NotImplementedError
 
     def delete(self, tile, request):
-        print("utm delete............")
 
         raise NotImplementedError
 
     def on_import(self, tile):
-        print("utm import............")
 
         self.save_utmpoint(tile=tile, request=None, is_function_save_method=False)
         return
 
     def after_function_save(self, tile, request):
-        print("utm after func............")
 
         raise NotImplementedError

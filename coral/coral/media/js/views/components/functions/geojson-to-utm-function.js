@@ -9,7 +9,6 @@ define(['knockout',
         viewModel: function(params) {
             
             FunctionViewModel.apply(this, arguments);
-            console.log("Running a sample function")
             var self = this;
             this.nodesGeoJSON = ko.observableArray();
             this.nodesUTM = ko.observableArray();
@@ -57,7 +56,7 @@ define(['knockout',
                     if (node.datatype === "geojson-feature-collection"){
                         this.nodesGeoJSON.push(node);
                     }
-                    else if (node.datatype === "bngcentrepoint") {
+                    else if (node.datatype === "string" && node.ontologyclass === "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive") {
                         this.nodesUTM.push(node);
                     }
      
