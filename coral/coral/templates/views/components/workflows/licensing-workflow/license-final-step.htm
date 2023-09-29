@@ -29,11 +29,12 @@
       </div>
     </div>
   </div>
+  <!-- ko foreach: { data: Object.values(nodesToRender()), as: 'config', noChildContext: true } -->
   <div
     class="her-final-step-section"
-    data-bind="foreach: { data: nodesToRender()['dates'].data, as: 'tiles', noChildContext: true }"
+    data-bind="foreach: { data: config.data, as: 'tiles', noChildContext: true }"
   >
-    <h5 class="summary-value">{% trans 'Dates' %}</h5>
+    <h5 class="summary-value" data-bind="text: config.label"></h5>
     <div class="final-step-section-block">
       <div
         class="final-step-section-block-item"
@@ -46,6 +47,8 @@
       </div>
     </div>
   </div>
+  <!-- /ko -->
+  {% comment %}
   <div
     class="her-final-step-section"
     data-bind="foreach: { data: nodesToRender()['status'].data, as: 'tiles', noChildContext: true }"
@@ -114,5 +117,57 @@
       </div>
     </div>
   </div>
+  <div
+    class="her-final-step-section"
+    data-bind="foreach: { data: nodesToRender()['externalRef'].data, as: 'tiles', noChildContext: true }"
+  >
+    <h5 class="summary-value">{% trans 'External Reference' %}</h5>
+    <div class="final-step-section-block">
+      <div
+        class="final-step-section-block-item"
+        data-bind="foreach: { data: tiles, as: 'nodes', noChildContext: true }"
+      >
+        <div class="block-item">
+          <div class="summary-label" data-bind="text: nodes.label + ':'"></div>
+          <div class="summary-value" data-bind="text: nodes.displayValue"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="her-final-step-section"
+    data-bind="foreach: { data: nodesToRender()['excavationType'].data, as: 'tiles', noChildContext: true }"
+  >
+    <h5 class="summary-value">{% trans 'Excavation Type' %}</h5>
+    <div class="final-step-section-block">
+      <div
+        class="final-step-section-block-item"
+        data-bind="foreach: { data: tiles, as: 'nodes', noChildContext: true }"
+      >
+        <div class="block-item">
+          <div class="summary-label" data-bind="text: nodes.label + ':'"></div>
+          <div class="summary-value" data-bind="text: nodes.displayValue"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="her-final-step-section"
+    data-bind="foreach: { data: nodesToRender()['communication'].data, as: 'tiles', noChildContext: true }"
+  >
+    <h5 class="summary-value">{% trans 'Communication' %}</h5>
+    <div class="final-step-section-block">
+      <div
+        class="final-step-section-block-item"
+        data-bind="foreach: { data: tiles, as: 'nodes', noChildContext: true }"
+      >
+        <div class="block-item">
+          <div class="summary-label" data-bind="text: nodes.label + ':'"></div>
+          <div class="summary-value" data-bind="text: nodes.displayValue"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
 </div>
 <!-- /ko -->

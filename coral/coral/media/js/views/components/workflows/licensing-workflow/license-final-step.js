@@ -14,9 +14,6 @@ define([
     self.displayName = 'Temp Display Name';
     self.applicationId = 'Temp Application ID';
 
-    /**
-     *
-     */
     self.nodesToRender = ko.observable({
       dates: {
         label: 'Dates',
@@ -27,7 +24,8 @@ define([
       status: {
         label: 'Application Status',
         nodegroupId: 'ee5947c6-48b2-11ee-abec-0242ac140007',
-        renderNodeIds: null
+        renderNodeIds: null,
+        data: []
       },
       // relatedActivities: {
       //   label: 'Related Activities',
@@ -45,12 +43,14 @@ define([
           '25f04f6c-48cd-11ee-94b3-0242ac140007',
           'f3dcbf02-48cb-11ee-9081-0242ac140007',
           'f6c207ae-5938-11ee-9e74-0242ac130007'
-        ]
+        ],
+        data: []
       },
       systemRef: {
         label: 'System Reference',
         nodegroupId: '991c3c74-48b6-11ee-85af-0242ac140007',
-        renderNodeIds: ['991c49b2-48b6-11ee-85af-0242ac140007']
+        renderNodeIds: ['991c49b2-48b6-11ee-85af-0242ac140007'],
+        data: []
       },
       applicationDetails: {
         label: 'Application Details',
@@ -58,7 +58,32 @@ define([
         renderNodeIds: [
           'aec103a2-48cf-11ee-8e4e-0242ac140007',
           'c2f40174-5dd5-11ee-ae2c-0242ac120008'
-        ]
+        ],
+        data: []
+      },
+      externalRef: {
+        label: 'External Reference',
+        nodegroupId: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+        renderNodeIds: [
+          { nodeId: '280b75bc-4e4d-11ee-a340-0242ac140007', label: 'License Number' }
+        ],
+        data: []
+      },
+      excavationType: {
+        label: 'Excavation Type',
+        nodegroupId: '6e071042-5d45-11ee-88b0-0242ac120008',
+        renderNodeIds: ['6e071042-5d45-11ee-88b0-0242ac120008'],
+        data: []
+      },
+      communication: {
+        label: 'Email',
+        nodegroupId: '6840f820-48ce-11ee-8e4e-0242ac140007',
+        renderNodeIds: [
+          '684110e4-48ce-11ee-8e4e-0242ac140007',
+          '68410b3a-48ce-11ee-8e4e-0242ac140007',
+          { nodeId: '684113a0-48ce-11ee-8e4e-0242ac140007', defaultValue: 'None Provided' }
+        ],
+        data: []
       }
     });
 
@@ -75,10 +100,27 @@ define([
         if (!config.renderNodeIds) {
           result.push(Object.values(t.data));
         } else {
-          const filtered = Object.values(t.data).filter((node) =>
-            config.renderNodeIds.includes(node.nodeId)
-          );
+          const filtered = [];
+          config.renderNodeIds.forEach((rNode) => {
+            if (typeof rNode === 'string' || rNode instanceof String) {
+              // Use the node ID string to get the node object
+              filtered.push(t.data[rNode]);
+            } else {
+              /**
+               * This is the object notation path that allows for overriding
+               * values such as: label
+               */
+              const node = t.data[rNode.nodeId];
+              if (rNode.label) node.label = rNode.label;
+              if (rNode.defaultValue && !node.displayValue) node.displayValue = rNode.defaultValue;
+              filtered.push(node);
+            }
+          });
           result.push(filtered);
+
+          // const filtered = Object.values(t.data).filter((node) =>
+          //   config.renderNodeIds.includes(node.nodeId)
+          // );
         }
       };
 
@@ -203,6 +245,9 @@ define([
       self.renderNodes('decisionMadeBy', formattedLicenseTiles);
       self.renderNodes('systemRef', formattedLicenseTiles);
       self.renderNodes('applicationDetails', formattedLicenseTiles);
+      self.renderNodes('externalRef', formattedLicenseTiles);
+      self.renderNodes('excavationType', formattedLicenseTiles);
+      self.renderNodes('communication', formattedLicenseTiles);
       self.loading(false);
     };
 
