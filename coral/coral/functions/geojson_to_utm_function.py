@@ -131,6 +131,10 @@ class GeoJSONToUTMPoint(BaseFunction):
                     for coor in geo['coordinates']:
                         for plot in coor:
                             utmrefs.append(self.from_latlon(plot[0], plot[1]))
+                        center_lat = sum(list(map(lambda x : x[0], coor))) / len(coor)
+                        center_lon = sum(list(map(lambda x : x[1], coor))) / len(coor)
+                        utmrefs.append(self.from_latlon(center_lat,center_lon))
+                        
 
             utmreftile = Tile.objects.filter(nodegroup_id=utmnodegroup, resourceinstance_id=tile.resourceinstance_id
                                            ).values_list()
