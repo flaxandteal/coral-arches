@@ -42,43 +42,62 @@ define([
         ?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
       console.log('License Application ID: ', self.applicationId);
 
-
       try {
         /**
          * Configuring the name is no longer needed as the license number
          * function will handle it. If we configured the name from here after
          * the function we would get a cardinality error.
-         * TODO: Handle errors from requests
          */
-        // const nameTile = await saveLicenseName();
-        // if (nameTile?.ok) {
-        const licenseResource = await getLicenseRefTileId();
-        if (licenseResource.ok) {
-          const activityTile = await saveActivitySystemRef();
-          if (activityTile?.ok) {
-            const activityLocTile = await saveActivityLocation();
-            if (activityLocTile?.ok) {
-              const relationship = await saveRelationship();
-              if (relationship.ok) {
-                params.form.savedData({
-                  tileData: koMapping.toJSON(self.tile().data),
-                  tileId: self.tile().tileid,
-                  resourceInstanceId: self.tile().resourceinstance_id,
-                  nodegroupId: self.tile().nodegroup_id,
-                  actSysRefTileId: self.actSysRefTileId,
-                  actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
-                  actResourceId: self.actResourceId,
-                  actLocTileId: self.actLocTileId,
-                  licenseNumberTileId: self.licenseNumberTileId
-                });
-                params.form.complete(true);
-                params.form.saving(false);
-              }
+        let responses = [];
+        const activityResponse = await saveActivitySystemRef();
+        if (activityResponse.ok) {
+          responses = await Promise.all([
+            getLicenseRefTileId(),
+            saveActivityLocation(),
+            saveRelationship()
+          ]);
+
+          if (responses.every((response) => response.ok)) {
+            params.form.savedData({
+              tileData: koMapping.toJSON(self.tile().data),
+              tileId: self.tile().tileid,
+              resourceInstanceId: self.tile().resourceinstance_id,
+              nodegroupId: self.tile().nodegroup_id,
+              actSysRefTileId: self.actSysRefTileId,
+              actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
+              actResourceId: self.actResourceId,
+              actLocTileId: self.actLocTileId,
+              licenseNumberTileId: self.licenseNumberTileId
+            });
+            params.form.complete(true);
+            params.form.saving(false);
+          } else {
+            const failed = responses.find((response) => !response.ok);
+            if (failed) {
+              params.pageVm.alert(
+                new AlertViewModel(
+                  'ep-alert-red',
+                  failed.responseJSON.title,
+                  failed.responseJSON.message,
+                  null,
+                  function () {}
+                )
+              );
             }
           }
+        } else {
+          params.pageVm.alert(
+            new AlertViewModel(
+              'ep-alert-red',
+              activityResponse.responseJSON.title,
+              activityResponse.responseJSON.message,
+              null,
+              function () {}
+            )
+          );
         }
-        // }
       } catch (error) {
+        console.error('Failed to initilise License workflow: ', error);
         self.pageVm.alert(
           new AlertViewModel(
             'ep-alert-red',

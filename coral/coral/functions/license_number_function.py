@@ -26,6 +26,10 @@ EXTERNAL_REF_NUMBER_NODE = '280b75bc-4e4d-11ee-a340-0242ac140007'
 EXTERNAL_REF_NOTE_NODE = '280b78fa-4e4d-11ee-a340-0242ac140007'
 
 
+def license_number_format(year, index):
+    return f'AE/{year}/{str(index).zfill(2)}'
+
+
 def get_latest_license_number(license_instance_id):
     latest_license = None
     try:
@@ -80,19 +84,19 @@ def generate_license_number(license_instance_id, attempts=0):
         print('Failed getting the previously used license number: ', e)
         return retry()
 
-    two_digit_year = str(datetime.datetime.now().year)[-2:]
+    year = str(datetime.datetime.now().year)
     if latest_license_number:
-        if latest_license_number['year'] != two_digit_year:
+        if latest_license_number['year'] != year:
             # If we are on a new year then we reset back to 1
-            license_number = f'AE/{two_digit_year}/0001'
+            license_number = license_number_format(year, 1)
         else:
             # Otherwise we calculate the next number based on the latest
             next_number = latest_license_number['index'] + 1
-            license_number = f'AE/{two_digit_year}/{str(next_number).zfill(4)}'
+            license_number = license_number_format(year, next_number)
     else:
         # If there is no latest license to work from we know
         # this is the first ever created
-        license_number = f'AE/{two_digit_year}/0001'
+        license_number = license_number_format(year, 1)
 
     ext_ref_tile = None
     try:
@@ -138,7 +142,8 @@ class LicenseNumberFunction(BaseFunction):
                     # Set external reference source as 'Excavation'
                     EXTERNAL_REF_SOURCE_NODE: '9a383c95-b795-4d76-957a-39f84bcee49e',
                     # Set empty value for rich text widget
-                    EXTERNAL_REF_NOTE_NODE: {'en': {'value': '', 'direction': 'ltr'}}
+                    EXTERNAL_REF_NOTE_NODE: {
+                        'en': {'value': '', 'direction': 'ltr'}}
                 }
             )
             # Configure the license name with the number included
