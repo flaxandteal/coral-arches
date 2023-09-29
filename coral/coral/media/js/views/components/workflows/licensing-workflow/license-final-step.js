@@ -29,11 +29,21 @@ define([
       },
       // relatedActivities: {
       //   label: 'Related Activities',
-      //   nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
-      //   renderNodeIds: [
-      //     // Possibly need method to go get the related resource,
-      //     // 'a9f53f00-48b6-11ee-85af-0242ac140007'
-      //   ]
+      //   nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007'
+      //   // renderNodeIds: [
+      //   //   // Possibly need method to go get the related resource,
+      //   //   {
+      //   //     related: true,
+      //   //     nodeId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
+      //   //     label: 'Site',
+      //   //     address: {
+      //   //       label: '',
+      //   //       nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+      //   //       renderNodeIds: null,
+      //   //       data: []
+      //   //     }
+      //   //   }
+      //   // ]
       // },
       decisionMadeBy: {
         label: 'Decision',
@@ -87,49 +97,64 @@ define([
       }
     });
 
-    self.renderNodes = (key, tileData) => {
+    self.renderNodes = async (key, tileData) => {
       console.log('tileData: ', tileData);
       let result = [];
       const config = self.nodesToRender()[key];
-      const tile = tileData[config.nodegroupId];
-      console.log('tile: ', tile);
       console.log('config: ', config);
+      /**
+       * CURRENT ISSUE: Nodegroup is not defined
+       */
+      const tiles = tileData[config.nodegroupId];
+      console.log('tiles: ', tiles);
 
-      const getNodeDataFromTile = (t) => {
+      const getNodeDataFromTile = async (t) => {
         console.log('t: ', t);
+        const nodeData = [];
         if (!config.renderNodeIds) {
-          result.push(Object.values(t.data));
+          nodeData.push(Object.values(t.data));
         } else {
           const filtered = [];
-          config.renderNodeIds.forEach((rNode) => {
+          await config.renderNodeIds.forEach(async (rNode) => {
             if (typeof rNode === 'string' || rNode instanceof String) {
               // Use the node ID string to get the node object
               filtered.push(t.data[rNode]);
             } else {
               /**
-               * This is the object notation path that allows for overriding
-               * values such as: label
+               * This is the object notation path that allows you to
+               * provide values such as: label, defaultValue, related
                */
               const node = t.data[rNode.nodeId];
-              if (rNode.label) node.label = rNode.label;
-              if (rNode.defaultValue && !node.displayValue) node.displayValue = rNode.defaultValue;
-              filtered.push(node);
+              /**
+               * Bug is with this piece of code...
+               */
+              if (!rNode.related) {
+                if (rNode.label) node.label = rNode.label;
+                if (rNode.defaultValue && !node.displayValue)
+                  node.displayValue = rNode.defaultValue;
+                filtered.push(node);
+              } else {
+                const resourceId = node.value[0].resourceId;
+                const relatedTiles = await self.fetchTileData(resourceId);
+                console.log('resourceId: ', resourceId);
+                console.log('relatedTiles: ', relatedTiles);
+                self.renderNodes('key', relatedTiles);
+              }
             }
           });
-          result.push(filtered);
-
-          // const filtered = Object.values(t.data).filter((node) =>
-          //   config.renderNodeIds.includes(node.nodeId)
-          // );
+          nodeData.push(filtered);
         }
+        return nodeData;
       };
 
-      if (Array.isArray(tile)) {
+      if (Array.isArray(tiles)) {
         // Multi Tile Node
-        tile.forEach(getNodeDataFromTile);
+        for await (const tile of tiles) {
+          result = [...result, ...(await getNodeDataFromTile(tile))];
+        }
       } else {
         // Single Tile Node
-        getNodeDataFromTile(tile);
+        result = [...result, ...(await getNodeDataFromTile(tiles))];
       }
 
       console.log('result: ', result);
@@ -242,6 +267,7 @@ define([
       console.log('formattedLicenseTiles: ', formattedLicenseTiles);
       self.renderNodes('dates', formattedLicenseTiles);
       self.renderNodes('status', formattedLicenseTiles);
+      self.renderNodes('relatedActivities', formattedLicenseTiles);
       self.renderNodes('decisionMadeBy', formattedLicenseTiles);
       self.renderNodes('systemRef', formattedLicenseTiles);
       self.renderNodes('applicationDetails', formattedLicenseTiles);
