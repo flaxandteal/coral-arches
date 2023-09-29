@@ -30,6 +30,7 @@
     </div>
   </div>
   <!-- ko foreach: { data: Object.values(nodesToRender()), as: 'config', noChildContext: true } -->
+  <!-- ko if: config.data -->
   <div
     class="her-final-step-section"
     data-bind="foreach: { data: config.data, as: 'tiles', noChildContext: true }"
@@ -38,15 +39,18 @@
     <div class="final-step-section-block">
       <div
         class="final-step-section-block-item"
-        data-bind="foreach: { data: tiles, as: 'nodes', noChildContext: true }"
+        data-bind="foreach: { data: tiles, as: 'node', noChildContext: true }"
       >
+        <!-- ko if: node -->
         <div class="block-item">
-          <div class="summary-label" data-bind="text: nodes.label + ':'"></div>
-          <div class="summary-value" data-bind="text: nodes.displayValue"></div>
+          <div class="summary-label" data-bind="text: node.label + ':'"></div>
+          <div class="summary-value" data-bind="text: node.displayValue"></div>
         </div>
+        <!-- /ko -->
       </div>
     </div>
   </div>
+  <!-- /ko -->
   <!-- /ko -->
   {% comment %}
   <div

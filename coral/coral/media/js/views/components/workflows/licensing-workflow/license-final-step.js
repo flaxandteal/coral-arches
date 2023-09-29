@@ -99,13 +99,11 @@ define([
 
     self.renderNodes = async (key, tileData) => {
       console.log('tileData: ', tileData);
+      console.log('key: ', key);
       let result = [];
       const config = self.nodesToRender()[key];
       console.log('config: ', config);
-      /**
-       * CURRENT ISSUE: Nodegroup is not defined
-       */
-      const tiles = tileData[config.nodegroupId];
+      const tiles = tileData[config?.nodegroupId];
       console.log('tiles: ', tiles);
 
       const getNodeDataFromTile = async (t) => {
@@ -125,20 +123,20 @@ define([
                * provide values such as: label, defaultValue, related
                */
               const node = t.data[rNode.nodeId];
-              /**
-               * Bug is with this piece of code...
-               */
+              console.log('rNode: ', rNode);
               if (!rNode.related) {
+                console.log('Not related');
                 if (rNode.label) node.label = rNode.label;
                 if (rNode.defaultValue && !node.displayValue)
                   node.displayValue = rNode.defaultValue;
                 filtered.push(node);
               } else {
+                console.log('Related');
                 const resourceId = node.value[0].resourceId;
                 const relatedTiles = await self.fetchTileData(resourceId);
                 console.log('resourceId: ', resourceId);
                 console.log('relatedTiles: ', relatedTiles);
-                self.renderNodes('key', relatedTiles);
+                // self.renderNodes('key', relatedTiles);
               }
             }
           });
@@ -147,19 +145,21 @@ define([
         return nodeData;
       };
 
-      if (Array.isArray(tiles)) {
-        // Multi Tile Node
-        for await (const tile of tiles) {
-          result = [...result, ...(await getNodeDataFromTile(tile))];
+      if (tiles) {
+        if (Array.isArray(tiles)) {
+          // Multi Tile Node
+          for await (const tile of tiles) {
+            result = [...result, ...(await getNodeDataFromTile(tile))];
+          }
+        } else {
+          // Single Tile Node
+          result = [...result, ...(await getNodeDataFromTile(tiles))];
         }
-      } else {
-        // Single Tile Node
-        result = [...result, ...(await getNodeDataFromTile(tiles))];
       }
 
       console.log('result: ', result);
       self.nodesToRender()[key].data = result;
-      console.log('self.nodesToRender()[key].data: ', self.nodesToRender()[key]);
+      console.log(`self.nodesToRender()[${key}].data: `, self.nodesToRender()[key]);
     };
 
     console.log('Logging params: ', params);
@@ -265,15 +265,16 @@ define([
       const licenseTiles = await self.fetchTileData(self.resourceid);
       const formattedLicenseTiles = self.formatTileData(licenseTiles);
       console.log('formattedLicenseTiles: ', formattedLicenseTiles);
-      self.renderNodes('dates', formattedLicenseTiles);
-      self.renderNodes('status', formattedLicenseTiles);
-      self.renderNodes('relatedActivities', formattedLicenseTiles);
-      self.renderNodes('decisionMadeBy', formattedLicenseTiles);
-      self.renderNodes('systemRef', formattedLicenseTiles);
-      self.renderNodes('applicationDetails', formattedLicenseTiles);
-      self.renderNodes('externalRef', formattedLicenseTiles);
-      self.renderNodes('excavationType', formattedLicenseTiles);
-      self.renderNodes('communication', formattedLicenseTiles);
+      await self.renderNodes('dates', formattedLicenseTiles);
+      await self.renderNodes('status', formattedLicenseTiles);
+      // self.renderNodes('relatedActivities', formattedLicenseTiles);
+      await self.renderNodes('decisionMadeBy', formattedLicenseTiles);
+      await self.renderNodes('systemRef', formattedLicenseTiles);
+      await self.renderNodes('applicationDetails', formattedLicenseTiles);
+      await self.renderNodes('externalRef', formattedLicenseTiles);
+      await self.renderNodes('excavationType', formattedLicenseTiles);
+      await self.renderNodes('communication', formattedLicenseTiles);
+      console.log('self.nodesToRender: ', self.nodesToRender());
       self.loading(false);
     };
 
