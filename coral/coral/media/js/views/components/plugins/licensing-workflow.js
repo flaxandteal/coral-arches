@@ -6,7 +6,7 @@ define([
   'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
-  // 'views/components/workflows/licensing-workflow/license-final-step',
+  'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'
 ], function (ko, arches, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -530,41 +530,31 @@ define([
               ]
             }
           ]
+        },
+        {
+          title: 'License Summary',
+          name: 'license-complete',
+          required: false,
+          informationboxdata: {
+            heading: 'Workflow Complete: Review your work',
+            text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'license-final-step',
+                  uniqueInstanceName: 'license-final',
+                  tilesManaged: 'none',
+                  parameters: {
+                    activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                }
+              ]
+            }
+          ]
         }
-        // {
-        //   title: 'License Summary',
-        //   name: 'license-complete',
-        //   description: 'Choose an option below',
-        //   component: 'views/components/workflows/component-based-step',
-        //   componentname: 'component-based-step',
-        //   layoutSections: [
-        //       {
-        //           componentConfigs: [
-        //               {
-        //                   componentName: 'license-final-step',
-        //                   uniqueInstanceName: 'license-final',
-        //                   tilesManaged: 'none',
-        //                   parameters: {
-        //                       // digitalObject: "['upload-documents']['upload-documents-step']",
-        //                       // consultationTileid: "['init-name-step']['application-id-instance']['tileid']",
-        //                       activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //                       resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-        //                   },
-        //               },
-        //           ],
-        //       },
-        //   ],
-        //   graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
-        //   nodegroupid: '6a773228-db20-11e9-b6dd-784f435179ea',
-        //   icon: 'fa-check',
-        //   resourceid: null,
-        //   tileid: null,
-        //   parenttileid: null,
-        //   informationboxdata: {
-        //       heading: 'Workflow Complete: Review your work',
-        //       text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over',
-        //   }
-        // }
       ];
 
       Workflow.apply(this, [params]);
