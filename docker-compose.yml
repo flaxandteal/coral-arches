@@ -9,55 +9,108 @@ services:
       env_file:
         - ./docker/env_file.env
 
-    arches_frontend:
-      image: arches_${ARCHES_PROJECT:?Must define ARCHES_PROJECT}:latest
+    arches_graphql:
       restart: unless-stopped
-      entrypoint: ["../entrypoint.sh"]
+      entrypoint: [ "bash", "-c", "../entrypoint.sh run_arches_graphql" ]
       build:
         context: .
         dockerfile: ./Dockerfile
         args:
           - ARCHES_PROJECT=$ARCHES_PROJECT
-      command: run_yarn
+          - ARCHES_BASE=$ARCHES_BASE
       volumes:
         - arches-log:/arches/arches/logs
         - arches-static:/static_root
         - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
+        - ./docker/mapping_file.json:/mapping_file.json
+        - ../arches:/web_root/arches
+        - ../arches/docker/gunicorn_config.py:/web_root/arches/gunicorn_config.py
+        - ../arches/docker/settings_local.py:/web_root/arches/arches/settings_local.py
         - ./entrypoint.sh:/web_root/entrypoint.sh
         - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
+        - ../infrastructure/credentials_stg.json:/tmp/credentials.json
+        # .venv/lib64/python3.10/site-packages/django/db/models/query.py:/web_root/ENV/lib/python3.8/site-packages/django/db/models/query.py
+        # .venv/lib64/python3.10/site-packages/django/db/models/sql/compiler.py:/web_root/ENV/lib/python3.8/site-packages/django/db/models/sql/compiler.py
+      env_file:
+        - ./docker/env_file.env
       environment:
+        - WELL_KNOWN_MAPPING_FILE=/mapping_file.json
         - ARCHES_PROJECT=$ARCHES_PROJECT
         - COMPRESS_OFFLINE=False
+        - ARCHES_GRAPH_API_ALLOW_NON_WKRM_CONCEPTS=True
         - INSTALL_DEFAULT_GRAPHS=False
         - INSTALL_DEFAULT_CONCEPTS=False
         - PGUSERNAME=postgres
         - PGPASSWORD=postgres
         - PGDBNAME=arches
         - PGHOST=db
+        # PGHOST=172.24.0.1
         - PGPORT=5432
-        - COUCHDB_HOST=couchdb
-        - COUCHDB_PORT=5984
-        - COUCHDB_USER=admin
-        - COUCHDB_PASS=password
         - ESHOST=elasticsearch
+        # ESHOST=172.24.0.1
         - ESPORT=9200
         - CELERY_BROKER_URL=amqp://rabbitmq
-        - DJANGO_MODE=DEV
+        - DJANGO_MODE=PROD
         - DJANGO_DEBUG=True
         # - DJANGO_REMOTE_DEBUG=False
         - DOMAIN_NAMES=localhost
         - PYTHONUNBUFFERED=0
         - TZ=PST
       ports:
-        - '8080:8080'
+        - '8088:8000'
       depends_on:
-        - arches
         - db
         - elasticsearch
-        - couchdb
+
+    #rches_frontend:
+    # image: arches_${ARCHES_PROJECT:?Must define ARCHES_PROJECT}:latest
+    # restart: unless-stopped
+    # entrypoint: ["../entrypoint.sh"]
+    # build:
+    #   context: .
+    #   dockerfile: ./Dockerfile
+    #   args:
+    #     - ARCHES_PROJECT=$ARCHES_PROJECT
+    # command: run_yarn_build_development
+    # volumes:
+    #   - arches-log:/arches/arches/logs
+    #   - arches-static:/static_root
+    #   - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
+    #   - ./entrypoint.sh:/web_root/entrypoint.sh
+    #   - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
+    # environment:
+    #   - ARCHES_PROJECT=$ARCHES_PROJECT
+    #   - COMPRESS_OFFLINE=False
+    #   - INSTALL_DEFAULT_GRAPHS=False
+    #   - INSTALL_DEFAULT_CONCEPTS=False
+    #   - PGUSERNAME=postgres
+    #   - PGPASSWORD=postgres
+    #   - PGDBNAME=arches
+    #   - PGHOST=db
+    #   - PGPORT=5432
+    #   - COUCHDB_HOST=couchdb
+    #   - COUCHDB_PORT=5984
+    #   - COUCHDB_USER=admin
+    #   - COUCHDB_PASS=password
+    #   - ESHOST=elasticsearch
+    #   - ESPORT=9200
+    #   - CELERY_BROKER_URL=amqp://rabbitmq
+    #   - DJANGO_MODE=DEV
+    #   - DJANGO_DEBUG=True
+    #   # - DJANGO_REMOTE_DEBUG=False
+    #   - DOMAIN_NAMES=localhost
+    #   - PYTHONUNBUFFERED=0
+    #   - TZ=PST
+    # ports:
+    #   - '8080:8080'
+    # depends_on:
+    #   - arches
+    #   - db
+    #   - elasticsearch
+    #   - couchdb
 
     arches:
-      image: arches_${ARCHES_PROJECT:?Must define ARCHES_PROJECT}:latest
+      #image: arches_${ARCHES_PROJECT:?Must define ARCHES_PROJECT}:latest
       restart: unless-stopped
       entrypoint: ["../entrypoint.sh"]
       build:
@@ -65,16 +118,20 @@ services:
         dockerfile: ./Dockerfile
         args:
           - ARCHES_PROJECT=$ARCHES_PROJECT
+          - ARCHES_BASE=$ARCHES_BASE
       command: run_arches
       volumes:
         - arches-log:/arches/arches/logs
         - arches-static:/static_root
+        - ../arches:/web_root/arches
+        - ../arches/docker/gunicorn_config.py:/web_root/arches/gunicorn_config.py
+        - ../arches/docker/settings_local.py:/web_root/arches/arches/settings_local.py
         - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
         - ./entrypoint.sh:/web_root/entrypoint.sh
         - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
       environment:
         - ARCHES_PROJECT=$ARCHES_PROJECT
-        - COMPRESS_OFFLINE=False
+        #- COMPRESS_OFFLINE=False
         - INSTALL_DEFAULT_GRAPHS=False
         - INSTALL_DEFAULT_CONCEPTS=False
         - PGUSERNAME=postgres
@@ -82,25 +139,29 @@ services:
         - PGDBNAME=arches
         - PGHOST=db
         - PGPORT=5432
-        - COUCHDB_HOST=couchdb
-        - COUCHDB_PORT=5984
-        - COUCHDB_USER=admin
-        - COUCHDB_PASS=password
         - ESHOST=elasticsearch
         - ESPORT=9200
         - CELERY_BROKER_URL=amqp://rabbitmq
-        - DJANGO_MODE=DEV
+        - DJANGO_MODE=PROD
         - DJANGO_DEBUG=True
-        # - DJANGO_REMOTE_DEBUG=False
+        ## - DJANGO_REMOTE_DEBUG=False
         - DOMAIN_NAMES=localhost
         - PYTHONUNBUFFERED=0
         - TZ=PST
+        - ARCHES_ROOT=/web_root/arches
+        # DJANGO_SETTINGS_MODULE=coral.settings
+        # DOMAIN_NAMES=her-test.flaxandteal.co.uk
+        - COMPRESS_OFFLINE=False
+        - STATIC_URL=/static/
+        - STATIC_ROOT=/static_root
+        - COMPRESS_ENABLED=True
+        - WEB_ROOT=/web_root
+
       ports:
         - '8000:8000'
       depends_on:
         - db
         - elasticsearch
-        - couchdb
 
     arches_worker:
       image: arches_${ARCHES_PROJECT}:latest
@@ -116,6 +177,9 @@ services:
       volumes:
         - arches-log:/arches/arches/logs
         - arches-static:/static_root
+        - ../arches:/web_root/arches
+        - ../arches/docker/gunicorn_config.py:/web_root/arches/gunicorn_config.py
+        - ../arches/docker/settings_local.py:/web_root/arches/arches/settings_local.py
         - ./$ARCHES_PROJECT:/web_root/$ARCHES_PROJECT
         - ./entrypoint.sh:/web_root/entrypoint.sh
         - ./settings_docker.py:/web_root/arches/arches/settings_docker.py
@@ -128,10 +192,6 @@ services:
         - PGDBNAME=arches
         - PGHOST=db
         - PGPORT=5432
-        - COUCHDB_HOST=couchdb
-        - COUCHDB_PORT=5984
-        - COUCHDB_USER=admin
-        - COUCHDB_PASS=password
         - ESHOST=elasticsearch
         - ESPORT=9200
         - DJANGO_MODE=DEV
@@ -144,13 +204,12 @@ services:
       depends_on:
         - db
         - elasticsearch
-        - couchdb
         - rabbitmq
 
     db:
       image: kartoza/postgis:12.0
       volumes:
-          - postgres-data:/var/lib/postgresql/data
+          - ../docker-data/postgres:/var/lib/postgresql
           - postgres-log:/var/log/postgresql
           - ${ARCHES_ROOT}/arches/install/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
       ports:
@@ -164,21 +223,10 @@ services:
         - POSTGRES_MULTIPLE_EXTENSIONS=postgis,postgis_topology
         - TZ=PST
 
-    couchdb:
-      image: couchdb:2.1.1
-      ports:
-        - "5984:5984"
-      environment:
-        COUCHDB_USER: admin
-        COUCHDB_PASSWORD: password
-      volumes:
-        - couchdb-data:/usr/local/var/lib/couchdb
-        - couchdb-log:/usr/local/var/log/couchdb
-
     elasticsearch:
       image: elasticsearch:8.4.0
       volumes:
-        - elasticsearch-data:/usr/share/elasticsearch/data
+        - ../docker-data/elasticsearch:/usr/share/elasticsearch/data
       ports:
         - "9200:9200"
         - "9300:9300"
@@ -195,9 +243,5 @@ services:
 volumes:
     arches-log:
     arches-static:
-    couchdb-data:
-    couchdb-log:
-    postgres-data:
     postgres-log:
-    elasticsearch-data:
     cantaloupe-data:

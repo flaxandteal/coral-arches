@@ -6,11 +6,11 @@ RUN chgrp arches ../entrypoint.sh && chmod g+rx ../entrypoint.sh
 ARG ARCHES_PROJECT
 ENV ARCHES_PROJECT $ARCHES_PROJECT
 COPY entrypoint.sh ${WEB_ROOT}/
-COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
 RUN . ../ENV/bin/activate \
-    && pip install --upgrade pip \
+    && pip install --upgrade pip setuptools \
     && pip install starlette-graphene3 \
-    && pip install starlette-context
+    && pip install "lxml<4.5" starlette-context "google-auth<2.23" django-authorization casbin-django-orm-adapter
+COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
 RUN . ../ENV/bin/activate \
     && pip install cachetools websockets \
     && pip install -r ${WEB_ROOT}/${ARCHES_PROJECT}/requirements.txt --no-binary :all:

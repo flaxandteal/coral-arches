@@ -109,10 +109,14 @@ WEBPACK_LOADER = {
     },
 }
 
+PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
+#PERMISSION_FRAMEWORK = "arches_default_deny.ArchesDefaultDenyPermissionFramework"
+
 DATATYPE_LOCATIONS.append('coral.datatypes')
 FUNCTION_LOCATIONS.append('coral.functions')
 ETL_MODULE_LOCATIONS.append('coral.etl_modules')
 SEARCH_COMPONENT_LOCATIONS.append('coral.search_components')
+PERMISSION_FRAMEWORK_LOCATIONS.append('coral.permissions')
 TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'functions', 'templates'))
 TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'widgets', 'templates'))
 TEMPLATES[0]['DIRS'].insert(0, os.path.join(APP_ROOT, 'templates'))
@@ -200,6 +204,7 @@ INSTALLED_APPS = (
     "compressor",
     # "silk",
     "coral",
+    "casbin_adapter.apps.CasbinAdapterConfig",
 )
 
 MIDDLEWARE = [
