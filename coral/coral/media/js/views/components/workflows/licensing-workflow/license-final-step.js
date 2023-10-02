@@ -14,7 +14,7 @@ define([
     self.displayName = 'Temp Display Name';
     self.applicationId = 'Temp Application ID';
 
-    self.nodesToRender = ko.observable({
+    self.licenseNodes = ko.observable({
       dates: {
         label: 'Dates',
         nodegroupId: '05f6b846-5d49-11ee-911e-0242ac130003',
@@ -77,39 +77,92 @@ define([
         ],
         data: []
       },
-      relatedActivities: {
-        label: 'Related Activities',
+      associatedActivities: {
+        label: 'Associated Activities',
         nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
-        renderNodeIds: [
-          // Possibly need method to go get the related resource,
-          {
-            related: true,
-            nodeId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
-            label: 'Site',
-            nodesToRender: {
-              address: {
-                label: 'Address',
-                nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
-                renderNodeIds: null,
-                data: []
-              }
-            }
-          }
-        ]
+        renderNodeIds: ['a9f53f00-48b6-11ee-85af-0242ac140007'],
+        data: []
+      },
+      digitalFiles: {
+        label: 'Digital Files',
+        nodegroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007',
+        renderNodeIds: ['8c5356f4-48ce-11ee-8e4e-0242ac140007'],
+        data: []
       }
     });
 
-    self.renderNodes = async (key, tileData, nodesToRender) => {
+    self.activityNodes = ko.observable({
+      name: {
+        label: 'Activity',
+        nodegroupId: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
+        renderNodeIds: ['4a7be135-9938-11ea-b0e2-f875a44e0e11'],
+        data: []
+      },
+      systemRef: {
+        label: 'System Reference',
+        nodegroupId: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
+        renderNodeIds: [
+          'e7d69603-9939-11ea-9e7f-f875a44e0e11',
+          'e7d69604-9939-11ea-baef-f875a44e0e11'
+          // { nodeId: 'e7d69603-9939-11ea-9e7f-f875a44e0e11', label: 'Application ID' },
+          // { nodeId: 'e7d69604-9939-11ea-baef-f875a44e0e11', label: 'Planning Reference' }
+        ],
+        data: []
+      },
+      externalRef: {
+        label: 'External References',
+        nodegroupId: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+        renderNodeIds: [
+          '589d4dc7-edf9-11eb-9856-a87eeabdefba',
+          '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+        ],
+        data: []
+      },
+      digitalFiles: {
+        label: 'Digital Files',
+        nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
+        renderNodeIds: ['316c7d1e-8554-11ea-aed7-f875a44e0e11'],
+        data: []
+      },
+      areaType: {
+        label: 'Area',
+        nodegroupId: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+        renderNodeIds: [
+          'a5416b53-f121-11eb-a507-a87eeabdefba',
+          'a541922e-f121-11eb-b2f6-a87eeabdefba'
+        ],
+        data: []
+      },
+      address: {
+        label: 'Address',
+        nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+        renderNodeIds: [
+          'a5419224-f121-11eb-9ca7-a87eeabdefba',
+          'a541e034-f121-11eb-8803-a87eeabdefba',
+          'a541e030-f121-11eb-aaf7-a87eeabdefba',
+          'a541e029-f121-11eb-802c-a87eeabdefba',
+          'a541e027-f121-11eb-ba26-a87eeabdefba',
+          'a541e025-f121-11eb-8212-a87eeabdefba',
+          'a541e023-f121-11eb-b770-a87eeabdefba',
+          'a541b930-f121-11eb-a30c-a87eeabdefba',
+          'a541b927-f121-11eb-8377-a87eeabdefba',
+          'a541b925-f121-11eb-9264-a87eeabdefba',
+          'a541b922-f121-11eb-9fa2-a87eeabdefba'
+        ],
+        data: []
+      }
+    });
+
+    self.renderNode = async (key, tileData, config) => {
       console.log('tileData: ', tileData);
       console.log('key: ', key);
       let result = [];
-      const config = nodesToRender[key];
       console.log('config: ', config);
       const tiles = tileData[config?.nodegroupId];
       console.log('tiles: ', tiles);
 
       const getNodeDataFromTile = async (t) => {
-        console.log('t: ', t);
+        console.log('t: ', JSON.stringify(t));
         const nodeData = [];
         if (!config.renderNodeIds) {
           // If no render nodes specified render them all
@@ -127,25 +180,13 @@ define([
                */
               const node = t.data[nodeIdObject.nodeId];
               console.log('nodeIdObject: ', nodeIdObject);
-              if (!nodeIdObject.related) {
-                console.log('Not related');
-                if (nodeIdObject.label) node.label = nodeIdObject.label;
-                if (nodeIdObject.defaultValue && !node.displayValue)
-                  node.displayValue = nodeIdObject.defaultValue;
-                filtered.push(node);
-              } else {
-                console.log('Related');
-                const resourceId = node.value[0].resourceId;
-                const relatedTiles = self.formatTileData(await self.fetchTileData(resourceId));
-                console.log('resourceId: ', resourceId);
-                console.log('relatedTiles: ', relatedTiles);
-                filtered.push(
-                  Object.values(
-                    await self.renderNodes('address', relatedTiles, nodeIdObject.nodesToRender)
-                  )
-                );
-                console.log('nodeData after related: ', nodeData);
+              if (nodeIdObject.label) {
+                node.label = nodeIdObject.label;
               }
+              if (nodeIdObject.defaultValue && !node.displayValue) {
+                node.displayValue = nodeIdObject.defaultValue;
+              }
+              filtered.push(node);
             }
           }
           nodeData.push(filtered);
@@ -166,40 +207,17 @@ define([
       }
 
       console.log('result: ', result);
-      nodesToRender[key].data = result;
-      console.log(`nodesToRender[${key}].data: `, nodesToRender[key]);
-      return nodesToRender;
+      config.data = result;
+
+      return config;
     };
 
-    console.log('Logging params: ', params);
-
-    self.getValueFromTiles = (tileData, nodeValueId, validator) => {
-      /**
-       * The validator callback can be used to access the found tile
-       * and validate that another node value is present. Useful for
-       * identifing multiple tiles of the same type.
-       */
-      const result = {
-        tileId: null,
-        value: null,
-        display: null
-      };
-      for (const tile of tileData) {
-        if (!(nodeValueId in tile.data)) continue;
-        if (validator) {
-          if (validator(tile)) {
-            result.tileId = tile.tileid;
-            result.value = tile.data[nodeValueId];
-            result.display = tile.display_values.find((node) => node.nodeid === nodeValueId)?.value;
-            break;
-          }
-          continue;
-        }
-        result.tileId = tile.tileid;
-        result.value = tile.data[nodeValueId];
-        result.display = tile.display_values.find((node) => node.nodeid === nodeValueId)?.value;
+    self.renderAllNodes = async (nodeConfigs, tileData) => {
+      for await (const [key, value] of Object.entries(nodeConfigs)) {
+        const result = await self.renderNode(key, tileData, value);
+        nodeConfigs[key] = result;
       }
-      return result.tileId ? result : null;
+      return nodeConfigs;
     };
 
     self.formatTileData = (tileData) => {
@@ -269,338 +287,43 @@ define([
       return tileData.some((tile) => tile.nodegroup === nodeGroupId);
     };
 
+    self.getResourceIds = (nodeConfig) => {
+      const ids = [];
+      nodeConfig.data.forEach((data) => {
+        data.forEach((node) => {
+          node.value.forEach((relationship) => {
+            ids.push(relationship.resourceId);
+          });
+        });
+      });
+      return ids;
+    };
+
     self.loadData = async () => {
       self.loading(true);
       const licenseTiles = await self.fetchTileData(self.resourceid);
       const formattedLicenseTiles = self.formatTileData(licenseTiles);
       console.log('formattedLicenseTiles: ', formattedLicenseTiles);
 
-      for await (const key of Object.keys(self.nodesToRender())) {
-        self.nodesToRender(
-          await self.renderNodes(key, formattedLicenseTiles, self.nodesToRender())
-        );
-      }
+      self.licenseNodes(await self.renderAllNodes(self.licenseNodes(), formattedLicenseTiles));
 
-      console.log('self.nodesToRender: ', self.nodesToRender());
+      console.log(
+        'self.licenseNodes().associatedActivities: ',
+        self.licenseNodes().associatedActivities
+      );
+      const activityResourceIds = self.getResourceIds(self.licenseNodes().associatedActivities);
+      console.log('activityResourceId: ', activityResourceIds);
+      const activityTiles = await self.fetchTileData(activityResourceIds[0]);
+      const formattedActivityTiles = self.formatTileData(activityTiles);
+      console.log('formattedActivityTiles: ', formattedActivityTiles);
+
+      self.activityNodes(await self.renderAllNodes(self.activityNodes(), formattedActivityTiles));
+
       self.loading(false);
     };
 
     // Call load data
     self.loadData();
-
-    // this.siteAddress = {};
-    // this.observedSiteAddress = ko.observable({});
-    // this.siteAddressIndex = ko.observable(0);
-    // this.applicants = ko.observable([]);
-    // this.applicantsAddresses = ko.observable([]);
-    // this.companies = ko.observable([]);
-    // this.companiesAddresses = ko.observable([]);
-
-    // this.createAddress = function (address) {
-    //   console.log(address);
-    //   return `${address.buildingName ? address.buildingName + ', <br />' : ''}
-    //   ${address.buildingNumber} ${address.street},
-    //   ${address.subStreetNumber ? address.subStreetNumber + ' ' : ''}
-    //   ${address.subStreet ? address.subStreet + ',' : ''}
-    //   <br />${address.city},
-    //   <br />${address.county},
-    //   <br />${address.postCode}`;
-    // };
-
-    // // const self = this;
-    // this.resourceid = params.resourceid;
-    // this.reportVals = {
-    //   assetNames: [],
-    //   assetNotes: [],
-    //   wreckNames: [],
-    //   wreckNotes: [],
-    //   county: ko.computed({
-    //     read: function () {
-    //       console.log('county comp');
-    //       console.log(self.siteAddressIndex(), JSON.stringify(self.siteAddress), self.siteAddress);
-    //       return self.observedSiteAddress().counties
-    //         ? self.observedSiteAddress().counties[self.siteAddressIndex()].en.value
-    //         : '';
-    //     }
-    //   }),
-    //   siteAddress: ko.computed({
-    //     read: function () {
-    //       if (self.observedSiteAddress().buildingNumbers) {
-    //         return `${
-    //           self.observedSiteAddress().buildingNames
-    //             ? self.observedSiteAddress().buildingNames[self.siteAddressIndex()].en.value +
-    //               ', <br />'
-    //             : ''
-    //         }
-    //         ${self.observedSiteAddress().buildingNumbers[self.siteAddressIndex()].en.value} ${
-    //           self.observedSiteAddress().streets[self.siteAddressIndex()].en.value
-    //         },
-    //         ${
-    //           self.observedSiteAddress().subStreetNumbers
-    //             ? self.observedSiteAddress().subStreetNumbers[self.siteAddressIndex()].en.value +
-    //               ' '
-    //             : ''
-    //         }
-    //         ${
-    //           self.observedSiteAddress().subStreets
-    //             ? self.observedSiteAddress().subStreets[self.siteAddressIndex()].en.value + ','
-    //             : ''
-    //         }
-    //         <br />${self.observedSiteAddress().cities[self.siteAddressIndex()].en.value},
-    //         <br />${self.observedSiteAddress().counties[self.siteAddressIndex()].en.value},
-    //         <br />${self.observedSiteAddress().postcodes[self.siteAddressIndex()].en.value}`;
-    //       }
-    //       return '';
-    //     }
-    //   }),
-    //   licenseHolders: ko.computed({
-    //     read: function () {
-    //       console.log('comp app');
-    //       return self.applicants();
-    //     }
-    //   }),
-    //   licenseHoldersAddresses: ko.observable(['place holder'])
-    // };
-
-    // this.resourceLoading = ko.observable(false);
-    // this.relatedResourceLoading = ko.observable(false);
-    // this.geometry = false;
-
-    // var getNodeValues = function (tiles, nodeId) {
-    //   var values = [];
-    //   tiles.forEach((tile) => {
-    //     if (tile.data[nodeId]) {
-    //       values.push(tile.data[nodeId]);
-    //     }
-    //   });
-    //   return values;
-    // };
-
-    // this.relatedResources.subscribe((val) => {
-    //   console.log('revalu', val);
-    //   val.related_resources.forEach((related_resource) => {
-    //     if (related_resource.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
-    //       // company / organisation
-    //     }
-    //     if (related_resource.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
-    //       // people
-    //     }
-    //     if (related_resource.graph_id === 'b9e0701e-5463-11e9-b5f5-000d3ab1e588') {
-    //       // activity
-    //       externalRefs = getNodeValues(
-    //         related_resource.tiles,
-    //         '589d4dc7-edf9-11eb-9856-a87eeabdefba'
-    //       );
-    //       externalRefSources = getNodeValues(
-    //         related_resource.tiles,
-    //         '589d4dcd-edf9-11eb-8a7d-a87eeabdefba'
-    //       );
-    //       externalRefNotes = getNodeValues(
-    //         related_resource.tiles,
-    //         '589d4dca-edf9-11eb-83ea-a87eeabdefba'
-    //       );
-
-    //       this.siteAddress.buildingNames = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541e029-f121-11eb-802c-a87eeabdefba'
-    //       );
-    //       this.siteAddress.buildingNumbers = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541b925-f121-11eb-9264-a87eeabdefba'
-    //       );
-    //       this.siteAddress.streets = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541b927-f121-11eb-8377-a87eeabdefba'
-    //       );
-    //       this.siteAddress.subStreetNumbers = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541b922-f121-11eb-9fa2-a87eeabdefba'
-    //       );
-    //       this.siteAddress.subStreets = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541e027-f121-11eb-ba26-a87eeabdefba'
-    //       );
-    //       this.siteAddress.counties = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541e034-f121-11eb-8803-a87eeabdefba'
-    //       );
-    //       this.siteAddress.postcodes = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541e025-f121-11eb-8212-a87eeabdefba'
-    //       );
-    //       this.siteAddress.cities = getNodeValues(
-    //         related_resource.tiles,
-    //         'a541e023-f121-11eb-b770-a87eeabdefba'
-    //       );
-    //     }
-    //     if (related_resource.graph_id === 'a535a235-8481-11ea-a6b9-f875a44e0e11') {
-    //       // digital objects
-    //     }
-    //   });
-    //   for (const index in externalRefSources) {
-    //     // currently using HER ref as bfile number. Need to change when we have Kanika's concepts.
-    //     if (externalRefSources[index] === '19afd557-cc21-44b4-b1df-f32568181b2c') {
-    //       this.reportVals.bFileNumber = externalRefs[index].en.value;
-    //     }
-    //     if (externalRefSources[index] === '9a383c95-b795-4d76-957a-39f84bcee49e') {
-    //       this.reportVals.licenseNumber = externalRefs[index].en.value;
-    //     }
-    //     if (externalRefSources[index] === 'df585888-b45c-4f48-99d1-4cb3432855d5') {
-    //       this.reportVals.assetNames.push(externalRefs[index].en.value);
-    //       this.reportVals.assetNotes.push(externalRefNotes[index].en.value);
-    //     }
-    //     if (externalRefSources[index] === 'c14def6d-4713-465f-9119-bc33f0d6e8b3') {
-    //       this.reportVals.wreckNames.push(externalRefs[index].en.value);
-    //       this.reportVals.wreckNotes.push(externalRefNotes[index].en.value);
-    //     }
-    //   }
-    //   console.log(this.siteAddress);
-    //   this.observedSiteAddress(this.siteAddress);
-    // }, this);
-
-    // this.resourceData.subscribe((val) => {
-    //   console.log('valueeeeee: ', val);
-    //   this.displayName = val['displayname'] || 'Unnamed';
-    //   (this.reportVals.applicationId = {
-    //     name: 'Application ID',
-    //     value: this.getResourceValue(val.resource, [
-    //       'System Reference Numbers',
-    //       'UUID',
-    //       'ResourceID',
-    //       '@value'
-    //     ])
-    //   }),
-    //     (this.reportVals.siteName = {
-    //       name: 'Site Name',
-    //       value: this.getResourceValue(val.resource, ['Associated Activities', '@value'])
-    //     }),
-    //     (this.reportVals.submissionDetails = {
-    //       name: 'Submission Details',
-    //       value: this.getResourceValue(val.resource, ['Proposal', 'Proposal Text', '@value'])
-    //     }),
-    //     // gridRef: {
-    //     //   name: 'Grid Reference',
-    //     //   value: this.getResourceValue(val.resource, ['Grid Reference', '@value'])
-    //     // },
-    //     // planningRef: {
-    //     //   name: 'Planning Reference',
-    //     //   value: this.getResourceValue(val.resource, ['Planning Reference', '@value'])
-    //     // },
-
-    //     (this.reportVals.inspector = this.getResourceValue(val.resource, [
-    //       'Decision',
-    //       'Decision Assignment',
-    //       'Decision Made By',
-    //       '@value'
-    //     ]));
-    //   this.reportVals.decisionDate = this.getResourceValue(val.resource, [
-    //     'Decision',
-    //     'Decision Assignment',
-    //     'Decision Time Span',
-    //     'Decision Date',
-    //     '@value'
-    //   ]);
-
-    //   console.log('pre fetch', this.applicants(), this.companies());
-    //   window
-    //     .fetch(
-    //       this.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) +
-    //         '?format=json&compact=false'
-    //     )
-
-    //     .then((response) => response.json())
-
-    //     .then((data) =>
-    //       data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
-    //         const contacts = [];
-    //         window
-    //           .fetch(
-    //             this.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false'
-    //           )
-    //           .then((response) => response.json())
-    //           .then((data) => {
-    //             this.loading(true);
-    //             contacts.push(data);
-    //           })
-    //           .then((x) => {
-    //             this.loading(true);
-
-    //             for (let contact of contacts) {
-    //               if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
-    //                 console.log('new app', contact['resource']['Name'][0]['Full Name']['@value']);
-    //                 this.applicants()[contact['resource']['Name'][0]['Full Name']['@value']] = [];
-
-    //                 if (contact['resource']['Location Data']) {
-    //                   this.applicants()[contact['resource']['Name'][0]['Full Name']['@value']] =
-    //                     contact['resource']['Location Data'].map((location) => {
-    //                       return {
-    //                         buildingName:
-    //                           location.Addresses['Building Name']['Building Name Value']['@value'],
-    //                         buildingNumber:
-    //                           location.Addresses['Building Number']['Building Number Value'][
-    //                             '@value'
-    //                           ],
-    //                         street: location.Addresses['Street']['Street Value']['@value'],
-    //                         buildingNumberSubSt:
-    //                           location.Addresses['Building Number Sub-Street'][
-    //                             'Building Number Sub-Street Value'
-    //                           ]['@value'],
-    //                         subStreet:
-    //                           location.Addresses['Sub-Street ']['Sub-Street Value']['@value'],
-    //                         city: location.Addresses['Town or City']['Town or City Value'][
-    //                           '@value'
-    //                         ],
-    //                         county: location.Addresses['County']['County Value']['@value'],
-    //                         postCode: location.Addresses['Postcode']['Postcode Value']['@value']
-    //                       };
-    //                     });
-    //                 }
-    //               } else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
-    //                 console.log(
-    //                   'new com',
-    //                   contact['resource']['Names'][0]['Organization Name']['@value']
-    //                 );
-    //                 this.companies()[
-    //                   contact['resource']['Names'][0]['Organization Name']['@value']
-    //                 ] = [];
-
-    //                 if (contact['resource']['Location Data']) {
-    //                   this.companies()[
-    //                     contact['resource']['Names'][0]['Organization Name']['@value']
-    //                   ] = contact['resource']['Location Data'].map((location) => {
-    //                     return {
-    //                       buildingName:
-    //                         location.Addresses['Building Name']['Building Name Value']['@value'],
-    //                       buildingNumber:
-    //                         location.Addresses['Building Number']['Building Number Value'][
-    //                           '@value'
-    //                         ],
-    //                       street: location.Addresses['Street']['Street Value']['@value'],
-    //                       buildingNumberSubSt:
-    //                         location.Addresses['Building Number Sub-Street'][
-    //                           'Building Number Sub-Street Value'
-    //                         ]['@value'],
-    //                       subStreet:
-    //                         location.Addresses['Sub-Street ']['Sub-Street Value']['@value'],
-    //                       city: location.Addresses['Town or City']['Town or City Value']['@value'],
-    //                       county: location.Addresses['County']['County Value']['@value'],
-    //                       postCode: location.Addresses['Postcode']['Postcode Value']['@value']
-    //                     };
-    //                   });
-    //                 }
-    //               }
-    //               this.loading(true);
-
-    //               this.loading(false);
-    //             }
-    //           });
-    //       })
-    //     );
-    //   this.loading(true);
-    //   console.log('report vals: ', this.reportVals);
-
-    //   this.loading(false);
-    // }, this);
   }
 
   ko.components.register('license-final-step', {
