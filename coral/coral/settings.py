@@ -253,9 +253,16 @@ FORCE_SCRIPT_NAME = None
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
 
+if (LOG_LEVEL := os.getenv("LOG_LEVEL", "")):
+    pass
+elif DEBUG or {os.getenv(debug_env, "False").lower() for debug_env in ("DJANGO_DEBUG", "DEBUG")} & {"true", "1"}:
+    LOG_LEVEL = "DEBUG"
+else:
+    LOG_LEVEL = "WARNING"
+
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'formatters': {
         'console': {
             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
@@ -263,21 +270,37 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'WARNING',  # DEBUG, INFO, WARNING, ERROR
+            'level': LOG_LEVEL,  # DEBUG, INFO, WARNING, ERROR
             'class': 'logging.FileHandler',
             'filename': os.path.join(APP_ROOT, 'arches.log'),
             'formatter': 'console'
         },
         'console': {
-            'level': 'WARNING',
+            'level': LOG_LEVEL,
             'class': 'logging.StreamHandler',
             'formatter': 'console'
         }
     },
     'loggers': {
+
+        'gunicorn': {
+            'level': 'DEBUG',
+            'propagate': False,
+            'handlers': ['console'],
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL,
+            'propagate': True
+        },
         'arches': {
-            'handlers': ['file', 'console'],
-            'level': 'WARNING',
+            'handlers': ['console'],
+            'level': LOG_LEVEL,
+            'propagate': True
+        },
+        'coral': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL,
             'propagate': True
         }
     }
@@ -436,8 +459,6 @@ except ImportError as e:
 
 from arches.settings_docker import *
 #COMPRESS_PRECOMPILERS = ()
-
-
 # returns an output that can be read by NODEJS
 if __name__ == "__main__":
     print(

@@ -22,6 +22,8 @@ from arches.app.utils import index_database
 import arches.app.views.search
 from coral import settings
 
+logger = logging.getLogger(__name__)
+
 _relaxed_check_resource_instance_permissions = arches.app.utils.permission_backend.check_resource_instance_permissions
 def _strict_check_resource_instance_permissions(user, resourceid, permission):
     result = _relaxed_check_resource_instance_permissions(user, resourceid, permission)
@@ -63,7 +65,8 @@ def _checking_search_results(request, returnDsl=False):
         ]
         #result = _relaxed_check_resource_instance_permissions(user, resourceid, permission)
         return JSONResponse(ret)
-    except:
+    except Exception as e:
+        logger.traceback(e)
         ret  = {"message": _("There was an error retrieving the search results")}
         return JSONErrorResponse(ret, status=500)
 arches.app.views.search.search_results = _checking_search_results

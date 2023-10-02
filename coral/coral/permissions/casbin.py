@@ -1,4 +1,9 @@
+import logging
 from dauthz.backends.casbin_backend import CasbinBackend
+# https://github.com/casbin/pycasbin/issues/323
+logging.disable(logging.NOTSET)
+logging.getLogger("casbin_adapter").setLevel(logging.ERROR)
+
 from django.core.exceptions import ObjectDoesNotExist
 from arches.app.models.system_settings import settings
 from django.contrib.auth.models import User, Group, Permission
@@ -6,6 +11,7 @@ from django.contrib.gis.db.models import Model
 from django.core.cache import caches
 from guardian.backends import check_support, ObjectPermissionBackend
 from guardian.core import ObjectPermissionChecker
+import logging
 from guardian.shortcuts import (
     get_perms,
     get_group_perms,
@@ -27,6 +33,8 @@ from arches.app.models.models import ResourceInstance, MapLayer
 from arches.app.search.elasticsearch_dsl_builder import Bool, Query, Terms, Nested
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
+
+logger = logging.getLogger(__name__)
 
 class CasbinPermissionFramework(PermissionFramework):
     @property
@@ -50,13 +58,13 @@ class CasbinPermissionFramework(PermissionFramework):
     @staticmethod
     def _subj_to_str(subj):
         if isinstance(subj, User):
-            subj = f"u{subj.pk}"
+            subj = f"u:{subj.pk}"
         elif isinstance(subj, Group):
-            subj = f"g{subj.pk}"
+            subj = f"g:{subj.pk}"
         elif isinstance(subj, str) and ":" in subj:
             return subj
         else:
-            raise ArchesNotUserNorGroup()
+            raise ArchesNotUserNorGroup(str(subj))
         return subj
 
     @staticmethod
@@ -71,15 +79,66 @@ class CasbinPermissionFramework(PermissionFramework):
             obj = f"ng:{obj.pk}"
         elif isinstance(obj, MapLayer):
             obj = f"ml:{obj.pk}"
+        elif isinstance(obj, Permission):
+            obj = f"ct:{obj.content_type}"
         else:
             obj = f"o:{obj.pk}"
         return obj
 
-    def assign_perm(self, perm, user_or_group, obj=None):
-        obj = self._obj_to_str(obj)
-        subj = self._subj_to_str(user_or_group)
+    def update_permissions_for_user(self, user):
+        logger.error("u4g")
+        perms = {(self._obj_to_str(permission), permission.codename) for permission in user.user_permissions.all()}
+        user = self._subj_to_str(user)
+        was = {(obj, act) for _, obj, act in self._enforcer.get_permissions_for_user(user)}
+        logger.error(was)
+        logger.error(perms)
+        for obj, act in perms - was:
+            self._enforcer.add_policy(user, obj, act)
+        for obj, act in was - perms:
+            self._enforcer.remove_policy(user, obj, act)
+        self._enforcer.save_policy()
 
-        self._enforcer.add_policy(subj, obj, perm)
+    def update_permissions_for_group(self, group):
+        logger.error("p4g")
+        perms = {(self._obj_to_str(permission), permission.codename) for permission in group.permissions.all()}
+        group = self._subj_to_str(group)
+        was = {(obj, act) for _, obj, act in self._enforcer.get_permissions_for_user(group)}
+        logger.error(was)
+        logger.error(perms)
+        for obj, act in perms - was:
+            self._enforcer.add_policy(group, obj, act)
+        for obj, act in was - perms:
+            self._enforcer.remove_policy(group, obj, act)
+        self._enforcer.save_policy()
+
+    def update_groups_for_user(self, user):
+        logger.error("g4u")
+        groups = {self._subj_to_str(group) for group in user.groups.all()}
+        user = self._subj_to_str(user)
+        was = set(self._enforcer.get_roles_for_user(user))
+        logger.error(was)
+        logger.error(groups)
+        for group in groups - was:
+            self._enforcer.add_role_for_user(user, group)
+        for group in was - groups:
+            self._enforcer.delete_role_for_user(user, group)
+        self._enforcer.save_policy()
+        self._enforcer.model.print_policy()
+
+    def assign_perm(self, perm, user_or_group, obj=None):
+        try:
+            next(obj)
+        except:
+            obj = [obj]
+
+        subj = self._subj_to_str(user_or_group)
+        print(obj, "OBJ", subj)
+        for o in obj:
+            o = self._obj_to_str(o)
+
+            logger.debug(f"Assigning permission: {o} {subj}")
+
+            self._enforcer.add_policy(subj, o, perm)
         self._enforcer.save_policy()
 
     def get_permission_backend(self):
@@ -114,27 +173,31 @@ class CasbinPermissionFramework(PermissionFramework):
         }
 
     def _get_perms(self, user_or_group, obj):
-        obj = self._obj_to_str(obj)
+        if obj is not None:
+            obj = self._obj_to_str(obj)
 
-        permissions = self._enforcer.get_implicit_permissions_for_user
+        user_or_group = self._subj_to_str(user_or_group)
+        permissions = self._enforcer.get_implicit_permissions_for_user(user_or_group)
 
         perms = {
             (sub, tobj, act)
             for sub, tobj, act in
-            permissions(user_or_group)
-            if tobj == obj
+            permissions
+            if (obj is None or tobj == obj)
         }
+        logger.error(str(perms))
+
+        logger.debug(f"Fetching permissions: {obj} {perms}")
 
         return perms
 
-    def process_new_user(self, user):
-        raise NotImplementedError()
+    def process_new_user(self, instance, created):
         ct = ContentType.objects.get(app_label="models", model="resourceinstance")
         resourceInstanceIds = list(GroupObjectPermission.objects.filter(content_type=ct).values_list("object_pk", flat=True).distinct())
         for resourceInstanceId in resourceInstanceIds:
             resourceInstanceId = uuid.UUID(resourceInstanceId)
         resources = ResourceInstance.objects.filter(pk__in=resourceInstanceIds)
-        self.assign_perm("no_access_to_resourceinstance", instance, resources)
+        # self.assign_perm("no_access_to_resourceinstance", instance, resources)
         for resource_instance in resources:
             resource = Resource(resource_instance.resourceinstanceid)
             resource.graph_id = resource_instance.graph_id
@@ -169,6 +232,7 @@ class CasbinPermissionFramework(PermissionFramework):
             permitted_map_layers = list()
 
             user_permissions = {}
+            user = self._subj_to_str(user)
             for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(user):
                 if obj.startswith("ml:"):
                     ml = obj[3:]
@@ -179,7 +243,7 @@ class CasbinPermissionFramework(PermissionFramework):
                 if map_layer.addtomap is True and map_layer.isoverlay is False:
                     permitted_map_layers.append(map_layer)
                 else:  # if no explicit permissions, object is considered accessible by all with group permissions
-                    explicit_map_layer_perms = user_permissions[str(map_layer.pk)]
+                    explicit_map_layer_perms = user_permissions.get(self._obj_to_str(map_layer), set())
                     if len(explicit_map_layer_perms):
                         if any_perm:
                             if len(set(formatted_perms) & set(explicit_map_layer_perms)):
@@ -223,6 +287,9 @@ class CasbinPermissionFramework(PermissionFramework):
         any_perm -- True to check ANY perm in "perms" or False to check ALL perms
 
         """
+
+        logger.debug(f"Fetching node group permissions: {user} {perms}")
+
         if not isinstance(perms, list):
             perms = [perms]
 
@@ -236,6 +303,7 @@ class CasbinPermissionFramework(PermissionFramework):
 
         permitted_nodegroups = set()
         targets = {}
+        user = self._subj_to_str(user)
         for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(user):
             if obj.startswith("ng:"):
                 ng = obj[3:]
@@ -268,19 +336,23 @@ class CasbinPermissionFramework(PermissionFramework):
 
         """
         result = {}
+
+        logger.debug(f"Checking resource instance permissions: {user} {resourceid}")
+
         try:
             resource = ResourceInstance.objects.get(resourceinstanceid=resourceid)
             result["resource"] = resource
 
             user_permissions = set()
             group_permissions = set()
-            for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(user):
+            subj = self._subj_to_str(user)
+            for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(subj):
                 if obj == f"ri:{resourceid}":
                     if sub == f"u:{user.pk}":
                         user_perms.add(act)
                     else:
                         group_perms.add(act)
-            all_perms = user_perms | group_perms
+            all_perms = user_permissions | group_permissions
 
             if len(all_perms) == 0:  # no permissions assigned. permission _not_ implied
                 result["permitted"] = False
@@ -314,10 +386,15 @@ class CasbinPermissionFramework(PermissionFramework):
         if with_superusers or (not with_group_users) or only_with_perms_in:
             raise NotImplementedError()
         users = self._get_with_perms("u", obj, attach_perms)
+
+        logger.debug(f"Users with perms: {obj}")
+
         return User.objects.filter(pk__in=users)
 
     def _get_with_perms(self, subj_prefix, obj, attach_perms=False):
         obj = self._obj_to_str(obj)
+
+        logger.debug(f"Getting with perms: {obj}")
 
         # Casbin does not distinguish between users and groups
         users = [
@@ -345,6 +422,8 @@ class CasbinPermissionFramework(PermissionFramework):
         reading, editing, deleting, or accessing it.
 
         """
+
+        logger.debug(f"Getting restricted users: {resource}")
 
         user_and_group_perms = get_users_with_perms(resource, attach_perms=True, with_group_users=True)
 
@@ -421,6 +500,9 @@ class CasbinPermissionFramework(PermissionFramework):
 
 
     def get_restricted_instances(self, user, search_engine=None, allresources=False):
+        asf
+        logger.debug(f"Getting restricted instances: {user}")
+
         if allresources is False and user.is_superuser is True:
             return []
 
