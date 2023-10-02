@@ -27,24 +27,6 @@ define([
         renderNodeIds: null,
         data: []
       },
-      // relatedActivities: {
-      //   label: 'Related Activities',
-      //   nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007'
-      //   // renderNodeIds: [
-      //   //   // Possibly need method to go get the related resource,
-      //   //   {
-      //   //     related: true,
-      //   //     nodeId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
-      //   //     label: 'Site',
-      //   //     address: {
-      //   //       label: '',
-      //   //       nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
-      //   //       renderNodeIds: null,
-      //   //       data: []
-      //   //     }
-      //   //   }
-      //   // ]
-      // },
       decisionMadeBy: {
         label: 'Decision',
         nodegroupId: '2749ea5a-48cb-11ee-be76-0242ac140007',
@@ -94,14 +76,34 @@ define([
           { nodeId: '684113a0-48ce-11ee-8e4e-0242ac140007', defaultValue: 'None Provided' }
         ],
         data: []
+      },
+      relatedActivities: {
+        label: 'Related Activities',
+        nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
+        renderNodeIds: [
+          // Possibly need method to go get the related resource,
+          {
+            related: true,
+            nodeId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
+            label: 'Site',
+            nodesToRender: {
+              address: {
+                label: 'Address',
+                nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+                renderNodeIds: null,
+                data: []
+              }
+            }
+          }
+        ]
       }
     });
 
-    self.renderNodes = async (key, tileData) => {
+    self.renderNodes = async (key, tileData, nodesToRender) => {
       console.log('tileData: ', tileData);
       console.log('key: ', key);
       let result = [];
-      const config = self.nodesToRender()[key];
+      const config = nodesToRender[key];
       console.log('config: ', config);
       const tiles = tileData[config?.nodegroupId];
       console.log('tiles: ', tiles);
@@ -110,36 +112,42 @@ define([
         console.log('t: ', t);
         const nodeData = [];
         if (!config.renderNodeIds) {
+          // If no render nodes specified render them all
           nodeData.push(Object.values(t.data));
         } else {
           const filtered = [];
-          await config.renderNodeIds.forEach(async (rNode) => {
-            if (typeof rNode === 'string' || rNode instanceof String) {
+          for await (const nodeIdObject of config.renderNodeIds) {
+            if (typeof nodeIdObject === 'string' || nodeIdObject instanceof String) {
               // Use the node ID string to get the node object
-              filtered.push(t.data[rNode]);
+              filtered.push(t.data[nodeIdObject]);
             } else {
               /**
                * This is the object notation path that allows you to
                * provide values such as: label, defaultValue, related
                */
-              const node = t.data[rNode.nodeId];
-              console.log('rNode: ', rNode);
-              if (!rNode.related) {
+              const node = t.data[nodeIdObject.nodeId];
+              console.log('nodeIdObject: ', nodeIdObject);
+              if (!nodeIdObject.related) {
                 console.log('Not related');
-                if (rNode.label) node.label = rNode.label;
-                if (rNode.defaultValue && !node.displayValue)
-                  node.displayValue = rNode.defaultValue;
+                if (nodeIdObject.label) node.label = nodeIdObject.label;
+                if (nodeIdObject.defaultValue && !node.displayValue)
+                  node.displayValue = nodeIdObject.defaultValue;
                 filtered.push(node);
               } else {
                 console.log('Related');
                 const resourceId = node.value[0].resourceId;
-                const relatedTiles = await self.fetchTileData(resourceId);
+                const relatedTiles = self.formatTileData(await self.fetchTileData(resourceId));
                 console.log('resourceId: ', resourceId);
                 console.log('relatedTiles: ', relatedTiles);
-                // self.renderNodes('key', relatedTiles);
+                filtered.push(
+                  Object.values(
+                    await self.renderNodes('address', relatedTiles, nodeIdObject.nodesToRender)
+                  )
+                );
+                console.log('nodeData after related: ', nodeData);
               }
             }
-          });
+          }
           nodeData.push(filtered);
         }
         return nodeData;
@@ -158,8 +166,9 @@ define([
       }
 
       console.log('result: ', result);
-      self.nodesToRender()[key].data = result;
-      console.log(`self.nodesToRender()[${key}].data: `, self.nodesToRender()[key]);
+      nodesToRender[key].data = result;
+      console.log(`nodesToRender[${key}].data: `, nodesToRender[key]);
+      return nodesToRender;
     };
 
     console.log('Logging params: ', params);
@@ -265,15 +274,13 @@ define([
       const licenseTiles = await self.fetchTileData(self.resourceid);
       const formattedLicenseTiles = self.formatTileData(licenseTiles);
       console.log('formattedLicenseTiles: ', formattedLicenseTiles);
-      await self.renderNodes('dates', formattedLicenseTiles);
-      await self.renderNodes('status', formattedLicenseTiles);
-      // self.renderNodes('relatedActivities', formattedLicenseTiles);
-      await self.renderNodes('decisionMadeBy', formattedLicenseTiles);
-      await self.renderNodes('systemRef', formattedLicenseTiles);
-      await self.renderNodes('applicationDetails', formattedLicenseTiles);
-      await self.renderNodes('externalRef', formattedLicenseTiles);
-      await self.renderNodes('excavationType', formattedLicenseTiles);
-      await self.renderNodes('communication', formattedLicenseTiles);
+
+      for await (const key of Object.keys(self.nodesToRender())) {
+        self.nodesToRender(
+          await self.renderNodes(key, formattedLicenseTiles, self.nodesToRender())
+        );
+      }
+
       console.log('self.nodesToRender: ', self.nodesToRender());
       self.loading(false);
     };
