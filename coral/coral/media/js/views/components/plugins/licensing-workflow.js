@@ -256,7 +256,7 @@ define([
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'location-names',
-                  tilesManaged: 'one',
+                  tilesManaged: 'many',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
@@ -267,6 +267,20 @@ define([
                       ['Area Name', 'Additional Area Name'],
                       ['Area Type', 'Area Type For Additional Name']
                     ]
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'location-description',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a5416b40-f121-11eb-9cb6-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
+                    hiddenNodes: [
+                      'a5419231-f121-11eb-911a-a87eeabdefba'
+                    ],
                   }
                 },
                 {
@@ -318,7 +332,33 @@ define([
                       ['Cross Reference Note', 'POW Reference Note']
                     ]
                   }
-                }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'associated-activities',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    labels: [
+                      ['Activity', 'Related Acitvities'],
+                    ]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'associated-site',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'b9e07043-5463-11e9-bb70-000d3ab1e588',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    labels: [
+                      ['Associated Monument, Area or Artefact', 'Related Sites, Monuments, or Artefacts'],
+                    ]
+                  }
+                },
               ]
             }
           ]
@@ -401,20 +441,62 @@ define([
         {
           title: 'Record Decision',
           name: 'record-dicision-step',
+          workflowstepclass: 'workflow-form-component',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
+                
                 {
-                  componentName: 'default-card',
+                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'decision-made-by',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    labels: [
+                      ['Decision Type', 'Decision']
+                    ],
+                    // hiddenNodes: ['f6c207ae-5938-11ee-9e74-0242ac130007']
                   }
-                }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'decision-dates',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '05f6b846-5d49-11ee-911e-0242ac130003',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    labels: [['Cross Reference', 'License Number']],
+                    hiddenNodes: [
+                      'ed16bb80-5d4a-11ee-9b75-0242ac130003',
+                      '7ee258e0-5d4a-11ee-9b75-0242ac130003',
+                      '97f6c776-5d4a-11ee-9b75-0242ac130003',
+                      '58880bd6-5d4a-11ee-9b75-0242ac130003'
+                    ]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'license-no',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      '280b78fa-4e4d-11ee-a340-0242ac140007',
+                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
+                      '280b7238-4e4d-11ee-a340-0242ac140007',
+                      '280b7760-4e4d-11ee-a340-0242ac140007',
+                      '280b7404-4e4d-11ee-a340-0242ac140007'
+                    ],
+                    labels: [['Cross Reference', 'License Number']]
+                  }
+                },
               ]
             }
           ]
