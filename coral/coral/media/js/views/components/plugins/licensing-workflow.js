@@ -593,6 +593,16 @@ define([
                     resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
                     fileObjectNamePrefix: 'Site report files for '
                   }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'report-info',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                  }
                 }
               ]
             }
