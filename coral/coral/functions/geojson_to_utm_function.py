@@ -43,6 +43,7 @@ details = {
         "utm_output_node": "",
         "geojson_input_nodegroup": "",
         "utm_output_nodegroup": "",
+        "utm_list_nodegroup": "",
         "triggering_nodegroups": [],
     },
     "classname": "GeoJSONToUTMPoint",
@@ -114,6 +115,7 @@ class GeoJSONToUTMPoint(BaseFunction):
             geojsonValue = None
 
         utmrefs = []
+        selectedutm = ''
 
         if geojsonValue != None:
             # Grab a copy of the Geometry collection.
@@ -124,9 +126,12 @@ class GeoJSONToUTMPoint(BaseFunction):
             for geo in geometries:
                 if geo['type'] == 'Point':
                     utmrefs.append(self.from_latlon(geo['coordinates'][0], geo['coordinates'][1]))
+                    selectedutm = self.from_latlon(geo['coordinates'][0], geo['coordinates'][1])
                 elif geo['type'] == 'LineString':
                     for plot in geo['coordinates']:
                         utmrefs.append(self.from_latlon(plot[0], plot[1]))
+                        selectedutm = self.from_latlon(plot[0], plot[1])
+
                 elif geo['type'] == 'Polygon':
                     for coor in geo['coordinates']:
                         for plot in coor:
@@ -134,6 +139,7 @@ class GeoJSONToUTMPoint(BaseFunction):
                         center_lat = sum(list(map(lambda x : x[0], coor))) / len(coor)
                         center_lon = sum(list(map(lambda x : x[1], coor))) / len(coor)
                         utmrefs.append(self.from_latlon(center_lat,center_lon))
+                        selectedutm = self.from_latlon(center_lat,center_lon)
                         
 
             utmreftile = Tile.objects.filter(nodegroup_id=utmnodegroup, resourceinstance_id=tile.resourceinstance_id
@@ -147,7 +153,8 @@ class GeoJSONToUTMPoint(BaseFunction):
                 data={
                     utmnode: {'en': {
                         'direction': 'ltr',
-                        'value': str(utmrefs)
+                        # 'value': str(utmrefs)
+                        'value': selectedutm
                     }}
                 }
             )
@@ -156,7 +163,8 @@ class GeoJSONToUTMPoint(BaseFunction):
                                              ).first().tileid
                 Tile.update_node_value(utmnode, {'en': {
                             'direction': 'ltr',
-                            'value': str(utmrefs)
+                            # 'value': str(utmrefs)
+                            'value': selectedutm
                         }}, tileid)
 
 

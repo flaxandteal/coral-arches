@@ -14,10 +14,9 @@ define(['knockout',
             this.nodesUTM = ko.observableArray();
             this.geojson_input_node = params.config.geojson_input_node;
             this.utm_output_node = params.config.utm_output_node;
+            this.utm_list_node = params.config.utm_list_node;
             this.triggering_nodegroups = params.config.triggering_nodegroups;
 
-            // Subscription.
-            // Single node subscription. (They may want point/line/polygon in which case we'll need two more.)
             this.geojson_input_node.subscribe(function(ng){
                 self.nodesGeoJSON().forEach(node => {
                     console.log("node",node)
@@ -34,6 +33,20 @@ define(['knockout',
                 })
             });
 
+            // this.utm_list_node.subscribe(function(o_n){
+            //     console.log('UTM list node id:', o_n);
+            //     self.nodesUTM().forEach(node => {
+            //         if (node.datatype !== "semantic"){
+                        
+            //             if (o_n === node.nodeid){
+            //                 params.config.utm_list_nodegroup = node.nodegroup_id;
+            //                 console.log("utm_list_nodegroup",self.utm_list_nodegroup);
+            //             }
+            //         }
+                    
+            //     })
+            // })
+
             this.utm_output_node.subscribe(function(o_n){
                 console.log('UTM node id:', o_n);
                 self.nodesUTM().forEach(node => {
@@ -46,8 +59,6 @@ define(['knockout',
                     }
                     
                 })
-                
-                
             })
 
 
