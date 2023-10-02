@@ -42,10 +42,38 @@
         data-bind="foreach: { data: tiles, as: 'node', noChildContext: true }"
       >
         <!-- ko if: node -->
-        <div class="block-item">
-          <div class="summary-label" data-bind="text: node.label + ':'"></div>
-          <div class="summary-value" data-bind="text: node.displayValue"></div>
-        </div>
+          <!-- ko if: !node.nodegroupId -->
+          <div class="block-item">
+            <div class="summary-label" data-bind="text: node.label + ':'"></div>
+            <div class="summary-value" data-bind="text: node.displayValue"></div>
+          </div>
+          <!-- /ko -->
+          <!-- ko if: node.nodegroupId -->
+            <!-- ko foreach: { data: node.data, as: 'relatedConfig', noChildContext: true } -->
+              <div data-bind="text: relatedConfig"></div>
+              {% comment %} <!-- ko if: relatedConfig.data -->
+              <div
+                class="her-final-step-section"
+                data-bind="foreach: { data: relatedConfig.data, as: 'relatedTiles', noChildContext: true }"
+              >
+                <h5 class="summary-value" data-bind="text: relatedConfig.label"></h5>
+                <div class="final-step-section-block">
+                  <div
+                    class="final-step-section-block-item"
+                    data-bind="foreach: { data: relatedTiles, as: 'relatedNode', noChildContext: true }"
+                  >
+                    <!-- ko if: relatedNode -->
+                    <div class="block-item">
+                      <div class="summary-label" data-bind="text: relatedNode.label + ':'"></div>
+                      <div class="summary-value" data-bind="text: relatedNode.displayValue"></div>
+                    </div>
+                    <!-- /ko -->
+                  </div>
+                </div>
+              </div>
+              <!-- /ko --> {% endcomment %}
+            <!-- /ko -->
+          <!-- /ko -->
         <!-- /ko -->
       </div>
     </div>
