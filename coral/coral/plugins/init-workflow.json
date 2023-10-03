@@ -59,6 +59,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create a new License for an Excavation Activity"
+      },
+      {
+        "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
+        "slug": "excavation-site-visit",
+        "name": "Excavation Site Visit",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#7955fa",
+        "desc": "A site visit regarding an Article 42 Excavation"
       }
     ],
     "show": true
