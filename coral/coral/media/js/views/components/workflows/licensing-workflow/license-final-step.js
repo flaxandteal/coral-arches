@@ -1,231 +1,189 @@
 define([
   'knockout',
   'views/components/workflows/summary-step',
-  'templates/views/components/workflows/licensing-workflow/license-final-step.htm',
+  'templates/views/components/workflows/licensing-workflow/license-final-step.htm'
 ], function (ko, SummaryStep, licenseFinalStepTemplate) {
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
-    var self = this
-    console.log(SummaryStep)
 
-    this.siteAddress = {}
-    this.observedSiteAddress = ko.observable({})
-    this.siteAddressIndex = ko.observable(0)
-    this.applicants = ko.observable([])
-    this.applicantsAddresses = ko.observable([])
-    this.companies = ko.observable([])
-    this.companiesAddresses = ko.observable([])
+    /**
+     * {
+     *    name: 'example-1',
+     *    exampleNodegroup: {
+     *      label: String, // Appears as group title
+     *      nodegroupId: UUID, // Finds the nodegroup
+     *      // Provide the string ids or an object with nodeId and additional propertys
+     *      renderNodeIds: Array<String | Object>, // Leave null to render all from the group
+     *      data: Array // Data from the nodes provided in renderNodeIds will appear here
+     *    }
+     * }
+     */
 
-    this.createAddress = function (address) {
-      console.log(address)
-      return `${address.buildingName ? address.buildingName + ', <br />' : ''} 
-      ${address.buildingNumber} ${address.street}, 
-      ${address.subStreetNumber ? address.subStreetNumber + ' ' : ''}
-      ${address.subStreet ? address.subStreet + ',' : ''}
-      <br />${address.city},
-      <br />${address.county},
-      <br />${address.postCode}`
-    }
-
-    // const self = this;
-    this.resourceid = params.resourceid;
-    this.reportVals = {
-      assetNames: [],
-      assetNotes: [],
-      wreckNames: [],
-      wreckNotes: [],
-      county : ko.computed({
-        read: function() {
-          console.log("county comp")
-          console.log(self.siteAddressIndex(), JSON.stringify(self.siteAddress), self.siteAddress)
-          return self.observedSiteAddress().counties ? self.observedSiteAddress().counties[self.siteAddressIndex()].en.value : ''
+    this.licenseNodes = {
+      id: 'license',
+      contacts: {
+        label: 'Contacts',
+        nodegroupId: '6d290832-5891-11ee-a624-0242ac120004',
+        renderNodeIds: [
+          '6d292f88-5891-11ee-a624-0242ac120004',
+          '6d2924b6-5891-11ee-a624-0242ac120004',
+          '6d294784-5891-11ee-a624-0242ac120004'
+        ]
       },
-    }),
-      siteAddress : ko.computed({
-        read: function () {
-          if (self.observedSiteAddress().buildingNumbers){
-            return `${self.observedSiteAddress().buildingNames ? self.observedSiteAddress().buildingNames[self.siteAddressIndex()].en.value + ', <br />' : ''} 
-            ${self.observedSiteAddress().buildingNumbers[self.siteAddressIndex()].en.value} ${self.observedSiteAddress().streets[self.siteAddressIndex()].en.value}, 
-            ${self.observedSiteAddress().subStreetNumbers ? self.observedSiteAddress().subStreetNumbers[self.siteAddressIndex()].en.value + ' ' : ''}
-            ${self.observedSiteAddress().subStreets ? self.observedSiteAddress().subStreets[self.siteAddressIndex()].en.value + ',' : ''}
-            <br />${self.observedSiteAddress().cities[self.siteAddressIndex()].en.value},
-            <br />${self.observedSiteAddress().counties[self.siteAddressIndex()].en.value},
-            <br />${self.observedSiteAddress().postcodes[self.siteAddressIndex()].en.value}`
-          }
-          return ''
-        },
-      }),
-      licenseHolders : ko.computed({
-        read: function () {
-          console.log("comp app")
-          return self.applicants()
-        },
-      }),
-      licenseHoldersAddresses : ko.observable(['place holder'])
-    }
-
-    this.resourceLoading = ko.observable(false);
-    this.relatedResourceLoading = ko.observable(false);
-    this.geometry = false;
-
-    var getNodeValues = function(tiles, nodeId) {
-      var values = [];
-      tiles.forEach((tile) => {
-        if (tile.data[nodeId]){
-          values.push(tile.data[nodeId])
-        }
-          });
-      ;
-      return values;
-  };
-
-    this.relatedResources.subscribe((val) => {
-      console.log('revalu', val)
-      val.related_resources.forEach(related_resource => {
-        if (related_resource.graph_id === "d4a88461-5463-11e9-90d9-000d3ab1e588") {
-          // company / organisation
-        }
-        if (related_resource.graph_id === "22477f01-1a44-11e9-b0a9-000d3ab1e588") {
-          // people
-        }
-        if (related_resource.graph_id === "b9e0701e-5463-11e9-b5f5-000d3ab1e588") {
-          // activity
-          externalRefs = getNodeValues(related_resource.tiles, '589d4dc7-edf9-11eb-9856-a87eeabdefba')
-          externalRefSources = getNodeValues(related_resource.tiles, '589d4dcd-edf9-11eb-8a7d-a87eeabdefba')
-          externalRefNotes = getNodeValues(related_resource.tiles, '589d4dca-edf9-11eb-83ea-a87eeabdefba')
-
-          this.siteAddress.buildingNames = getNodeValues(related_resource.tiles, 'a541e029-f121-11eb-802c-a87eeabdefba')
-          this.siteAddress.buildingNumbers = getNodeValues(related_resource.tiles, 'a541b925-f121-11eb-9264-a87eeabdefba')
-          this.siteAddress.streets = getNodeValues(related_resource.tiles, 'a541b927-f121-11eb-8377-a87eeabdefba')
-          this.siteAddress.subStreetNumbers = getNodeValues(related_resource.tiles, 'a541b922-f121-11eb-9fa2-a87eeabdefba')
-          this.siteAddress.subStreets = getNodeValues(related_resource.tiles, 'a541e027-f121-11eb-ba26-a87eeabdefba')
-          this.siteAddress.counties = getNodeValues(related_resource.tiles, 'a541e034-f121-11eb-8803-a87eeabdefba')
-          this.siteAddress.postcodes = getNodeValues(related_resource.tiles, 'a541e025-f121-11eb-8212-a87eeabdefba')
-          this.siteAddress.cities = getNodeValues(related_resource.tiles, 'a541e023-f121-11eb-b770-a87eeabdefba')
-
-        }
-        if (related_resource.graph_id === "a535a235-8481-11ea-a6b9-f875a44e0e11") {
-          // digital objects
-        }
-
-      })
-      for (const index in externalRefSources) {
-        // currently using HER ref as bfile number. Need to change when we have Kanika's concepts.
-        if (externalRefSources[index] === "19afd557-cc21-44b4-b1df-f32568181b2c") {
-          this.reportVals.bFileNumber = externalRefs[index].en.value
-        }
-        if (externalRefSources[index] === "9a383c95-b795-4d76-957a-39f84bcee49e") {
-          this.reportVals.licenseNumber = externalRefs[index].en.value
-        }
-        if (externalRefSources[index] === "df585888-b45c-4f48-99d1-4cb3432855d5") {
-          this.reportVals.assetNames.push(externalRefs[index].en.value)
-          this.reportVals.assetNotes.push(externalRefNotes[index].en.value)
-        }
-        if (externalRefSources[index] === "c14def6d-4713-465f-9119-bc33f0d6e8b3") {
-          this.reportVals.wreckNames.push(externalRefs[index].en.value)
-          this.reportVals.wreckNotes.push(externalRefNotes[index].en.value)
-        }
+      dates: {
+        label: 'Dates',
+        nodegroupId: '05f6b846-5d49-11ee-911e-0242ac130003',
+        renderNodeIds: null
+      },
+      status: {
+        label: 'Application Status',
+        nodegroupId: 'ee5947c6-48b2-11ee-abec-0242ac140007',
+        renderNodeIds: null
+      },
+      decisionMadeBy: {
+        label: 'Decision',
+        nodegroupId: '2749ea5a-48cb-11ee-be76-0242ac140007',
+        renderNodeIds: [
+          '4c58921e-48cc-11ee-9081-0242ac140007',
+          '25f04f6c-48cd-11ee-94b3-0242ac140007',
+          'f3dcbf02-48cb-11ee-9081-0242ac140007',
+          'f6c207ae-5938-11ee-9e74-0242ac130007'
+        ]
+      },
+      systemRef: {
+        label: 'System Reference',
+        nodegroupId: '991c3c74-48b6-11ee-85af-0242ac140007',
+        renderNodeIds: [{ nodeId: '991c49b2-48b6-11ee-85af-0242ac140007', label: 'Application ID' }]
+      },
+      applicationDetails: {
+        label: 'Application Details',
+        nodegroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+        renderNodeIds: [
+          'aec103a2-48cf-11ee-8e4e-0242ac140007',
+          'c2f40174-5dd5-11ee-ae2c-0242ac120008'
+        ]
+      },
+      externalRef: {
+        label: 'External Reference',
+        nodegroupId: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+        renderNodeIds: [{ nodeId: '280b75bc-4e4d-11ee-a340-0242ac140007', label: 'License Number' }]
+      },
+      excavationType: {
+        label: 'Excavation Type',
+        nodegroupId: '6e071042-5d45-11ee-88b0-0242ac120008',
+        renderNodeIds: ['6e071042-5d45-11ee-88b0-0242ac120008']
+      },
+      communication: {
+        label: 'Email',
+        nodegroupId: '6840f820-48ce-11ee-8e4e-0242ac140007',
+        renderNodeIds: [
+          '684110e4-48ce-11ee-8e4e-0242ac140007',
+          '68410b3a-48ce-11ee-8e4e-0242ac140007',
+          { nodeId: '684113a0-48ce-11ee-8e4e-0242ac140007', defaultValue: 'None Provided' }
+        ]
+      },
+      associatedActivities: {
+        label: 'Associated Activities',
+        nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
+        renderNodeIds: ['a9f53f00-48b6-11ee-85af-0242ac140007']
+      },
+      digitalFiles: {
+        label: 'Digital Files',
+        nodegroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007',
+        renderNodeIds: ['8c5356f4-48ce-11ee-8e4e-0242ac140007']
       }
-      console.log(this.siteAddress)
-      this.observedSiteAddress(this.siteAddress)
-    }, this)
+    };
 
-    this.resourceData.subscribe((val) => {
-      console.log('valueeeeee: ', val);
-      this.displayName = val['displayname'] || 'Unnamed';
-      this.reportVals.applicationId = {
-          name: 'Application ID',
-          value: this.getResourceValue(val.resource, ['System Reference Numbers', 'UUID', 'ResourceID', '@value'])
-        },
-        this.reportVals.siteName = {
-          name: 'Site Name',
-          value: this.getResourceValue(val.resource, ['Associated Activities', '@value'])
-        },
-        this.reportVals.submissionDetails = {
-          name: 'Submission Details',
-          value: this.getResourceValue(val.resource, ['Proposal', 'Proposal Text', '@value'])
-        },
+    this.activityNodes = {
+      id: 'activity',
+      name: {
+        label: 'Activity',
+        nodegroupId: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
+        renderNodeIds: ['4a7be135-9938-11ea-b0e2-f875a44e0e11']
+      },
+      systemRef: {
+        label: 'System Reference',
+        nodegroupId: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+        renderNodeIds: [
+          { nodeId: 'e7d69603-9939-11ea-9e7f-f875a44e0e11', label: 'Application ID' },
+          { nodeId: 'e7d69604-9939-11ea-baef-f875a44e0e11', label: 'Planning Reference' }
+        ]
+      },
+      externalRef: {
+        label: 'External Reference',
+        nodegroupId: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+        renderNodeIds: [
+          '589d4dc7-edf9-11eb-9856-a87eeabdefba',
+          '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+        ]
+      },
+      digitalFiles: {
+        label: 'Digital Files',
+        nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
+        renderNodeIds: ['316c7d1e-8554-11ea-aed7-f875a44e0e11']
+      },
+      areaType: {
+        label: 'Area',
+        nodegroupId: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+        renderNodeIds: [
+          'a5416b53-f121-11eb-a507-a87eeabdefba',
+          'a541922e-f121-11eb-b2f6-a87eeabdefba'
+        ]
+      },
+      address: {
+        label: 'Address',
+        nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+        renderNodeIds: [
+          'a5419224-f121-11eb-9ca7-a87eeabdefba',
+          'a541e034-f121-11eb-8803-a87eeabdefba',
+          'a541e030-f121-11eb-aaf7-a87eeabdefba',
+          'a541e029-f121-11eb-802c-a87eeabdefba',
+          'a541e027-f121-11eb-ba26-a87eeabdefba',
+          'a541e025-f121-11eb-8212-a87eeabdefba',
+          'a541e023-f121-11eb-b770-a87eeabdefba',
+          'a541b930-f121-11eb-a30c-a87eeabdefba',
+          'a541b927-f121-11eb-8377-a87eeabdefba',
+          'a541b925-f121-11eb-9264-a87eeabdefba',
+          'a541b922-f121-11eb-9fa2-a87eeabdefba'
+        ]
+      },
+      digitalFiles: {
+        label: 'Digital Files',
+        nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
+        renderNodeIds: ['316c7d1e-8554-11ea-aed7-f875a44e0e11']
+      }
+    };
 
-        // gridRef: {
-        //   name: 'Grid Reference',
-        //   value: this.getResourceValue(val.resource, ['Grid Reference', '@value'])
-        // },
-        // planningRef: {
-        //   name: 'Planning Reference',
-        //   value: this.getResourceValue(val.resource, ['Planning Reference', '@value'])
-        // },
+    this.digitalFilesNodes = {
+      id: 'digital-files',
+      name: {
+        label: 'Digital Object',
+        nodegroupId: 'c61ab163-9513-11ea-9bb6-f875a44e0e11',
+        renderNodeIds: ['c61ab16c-9513-11ea-89a4-f875a44e0e11']
+      },
+      files: {
+        label: 'Files',
+        nodegroupId: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+        renderNodeIds: ['96f8830a-8490-11ea-9aba-f875a44e0e11']
+      }
+    };
 
-        this.reportVals.inspector = this.getResourceValue(val.resource, ["Decision", "Decision Assignment", "Decision Made By", "@value"])
-        this.reportVals.decisionDate = this.getResourceValue(val.resource, ["Decision", "Decision Assignment", "Decision Time Span", "Decision Date", "@value"])
+    this.getData = async () => {
+      await this.renderResourceIds(this.resourceid, this.licenseNodes);
 
-        console.log("pre fetch", this.applicants(), this.companies())
-        window.fetch(this.urls.api_tiles(val.resource['Contacts']['Applicants']['Applicant']['@tile_id']) + '?format=json&compact=false')
+      let digitalFileResourceIds = this.getResourceIds(this.licenseNodes.digitalFiles);
+      await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
 
-              .then(response => response.json())
+      const activityResourceIds = this.getResourceIds(this.licenseNodes.associatedActivities);
+      await this.renderResourceIds(activityResourceIds, this.activityNodes);
 
-              .then(data => data.data['859cb33e-521d-11ee-b790-0242ac120002'].forEach((contact_tile) => {
-                const contacts = []
-                  window.fetch(this.urls.api_resources(contact_tile.resourceId) + '?format=json&compact=false')
-                  .then(response => response.json())
-                  .then(
-                    data => {this.loading(true); contacts.push(data)})
-                  .then(x => {
-                    this.loading(true)
+      digitalFileResourceIds = this.getResourceIds(this.activityNodes.digitalFiles);
+      await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
 
-                    for (let contact of contacts) {
+      console.log('License Final Step: ', this.renderedNodegroups());
+    };
 
-                      if (contact.graph_id === '22477f01-1a44-11e9-b0a9-000d3ab1e588') {
-
-                        console.log("new app", contact["resource"]["Name"][0]["Full Name"]["@value"])
-                        this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = []
-
-                        if (contact["resource"]["Location Data"]) {
-                          this.applicants()[contact["resource"]["Name"][0]["Full Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                              return {
-                                buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
-                                buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
-                                street : location.Addresses['Street']['Street Value']["@value"],
-                                buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-                                subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-                                city : location.Addresses['Town or City']['Town or City Value']["@value"],
-                                county : location.Addresses['County']['County Value']["@value"],
-                                postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-                              }
-                            })
-                        }
-                      }
-                      else if (contact.graph_id === 'd4a88461-5463-11e9-90d9-000d3ab1e588') {
-
-                        console.log("new com", contact["resource"]["Names"][0]["Organization Name"]["@value"])
-                        this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = []
-
-                        if (contact["resource"]["Location Data"]) {
-                          this.companies()[contact["resource"]["Names"][0]["Organization Name"]["@value"]] = contact["resource"]["Location Data"].map((location) => {
-                              return {
-                                buildingName : location.Addresses['Building Name']['Building Name Value']["@value"],
-                                buildingNumber : location.Addresses['Building Number']['Building Number Value']["@value"],
-                                street : location.Addresses['Street']['Street Value']["@value"],
-                                buildingNumberSubSt : location.Addresses['Building Number Sub-Street']['Building Number Sub-Street Value']["@value"],
-                                subStreet : location.Addresses['Sub-Street ']['Sub-Street Value']["@value"],
-                                city : location.Addresses['Town or City']['Town or City Value']["@value"],
-                                county : location.Addresses['County']['County Value']["@value"],
-                                postCode : location.Addresses['Postcode']['Postcode Value']["@value"]
-                              }
-                        })
-                      } 
-                    }
-                    this.loading(true)
-              
-                    this.loading(false)
-                }
-              })
-            })
-        )
-      this.loading(true)
-      console.log('report vals: ', this.reportVals);
-
-      this.loading(false);
-    }, this);
+    this.loadData();
   }
 
   ko.components.register('license-final-step', {
