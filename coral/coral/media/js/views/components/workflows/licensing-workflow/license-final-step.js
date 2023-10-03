@@ -6,9 +6,6 @@ define([
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
 
-    this.displayName = 'Temp Display Name';
-    this.applicationId = 'Temp Application ID';
-
     /**
      * {
      *    name: 'example-1',
@@ -56,7 +53,7 @@ define([
       systemRef: {
         label: 'System Reference',
         nodegroupId: '991c3c74-48b6-11ee-85af-0242ac140007',
-        renderNodeIds: ['991c49b2-48b6-11ee-85af-0242ac140007']
+        renderNodeIds: [{ nodeId: '991c49b2-48b6-11ee-85af-0242ac140007', label: 'Application ID' }]
       },
       applicationDetails: {
         label: 'Application Details',
@@ -106,16 +103,14 @@ define([
       },
       systemRef: {
         label: 'System Reference',
-        nodegroupId: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
+        nodegroupId: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
         renderNodeIds: [
-          'e7d69603-9939-11ea-9e7f-f875a44e0e11',
-          'e7d69604-9939-11ea-baef-f875a44e0e11'
-          // { nodeId: 'e7d69603-9939-11ea-9e7f-f875a44e0e11', label: 'Application ID' },
-          // { nodeId: 'e7d69604-9939-11ea-baef-f875a44e0e11', label: 'Planning Reference' }
+          { nodeId: 'e7d69603-9939-11ea-9e7f-f875a44e0e11', label: 'Application ID' },
+          { nodeId: 'e7d69604-9939-11ea-baef-f875a44e0e11', label: 'Planning Reference' }
         ]
       },
       externalRef: {
-        label: 'External References',
+        label: 'External Reference',
         nodegroupId: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
         renderNodeIds: [
           '589d4dc7-edf9-11eb-9856-a87eeabdefba',
@@ -184,6 +179,8 @@ define([
 
       digitalFileResourceIds = this.getResourceIds(this.activityNodes.digitalFiles);
       await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
+
+      console.log('License Final Step: ', this.renderedNodegroups());
     };
 
     this.loadData();

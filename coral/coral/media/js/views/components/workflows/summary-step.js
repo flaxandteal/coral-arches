@@ -18,6 +18,7 @@ define([
 ) {
   function viewModel(params) {
     FinalStep.apply(this, [params]);
+    this.displayName = ko.observable();
     this.resourceData = ko.observable();
     this.relatedResources = ko.observableArray();
     this.loading = ko.observable(false);
@@ -26,7 +27,10 @@ define([
       window
         .fetch(this.urls.api_resources(this.resourceid) + '?format=json&compact=false')
         .then((response) => response.json())
-        .then((data) => this.resourceData(data));
+        .then((data) => {
+          this.resourceData(data);
+          this.displayName(this.resourceData().displayname);
+        });
     };
 
     this.getRelatedResources = function () {
@@ -94,12 +98,15 @@ define([
         const nodeData = [];
         if (!config.renderNodeIds) {
           // If no render nodes specified render them all
-          nodeData.push(Object.values(t.data));
+          const allNodes = Object.values(t.data).filter((node) => !!node.displayValue);
+          if (allNodes.length) {
+            nodeData.push(Object.values(t.data));
+          }
         } else {
           const filtered = [];
           for await (const nodeIdObject of config.renderNodeIds) {
-            if (!(nodeIdObject in t.data)) continue;
             if (typeof nodeIdObject === 'string' || nodeIdObject instanceof String) {
+              if (!(nodeIdObject in t.data)) continue;
               // Use the node ID string to get the node object
               const node = t.data[nodeIdObject];
               if (node.displayValue) {
@@ -111,6 +118,7 @@ define([
              * This is the object notation path that allows you to
              * provide values such as: label, defaultValue, related
              */
+            if (!(nodeIdObject.nodeId in t.data)) continue;
             const node = t.data[nodeIdObject.nodeId];
             if (nodeIdObject.label) {
               node.label = nodeIdObject.label;
