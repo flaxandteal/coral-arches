@@ -109,7 +109,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Site Visits"
                     },
@@ -257,33 +257,6 @@
                         "en": "License Names"
                     },
                     "nodegroup_id": "59d65ec0-48b9-11ee-84da-0242ac140007",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "65a1a9e3-c06e-4326-ad79-1d5f61fc00f8",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
-                    "instructions": {
-                        "en": null
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "Site"
-                    },
-                    "nodegroup_id": "fbaebc8e-61ef-11ee-baf1-0242ac120004",
                     "sortorder": null,
                     "visible": true
                 },
@@ -628,6 +601,27 @@
                 {
                     "card_id": "30ca7b81-fdfc-4906-9ded-c71c6bb82bc8",
                     "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Site",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "056fd892-fc9f-4426-8ef7-e8470815c132",
+                    "label": {
+                        "en": "Site"
+                    },
+                    "node_id": "fbaebc8e-61ef-11ee-baf1-0242ac120004",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "30ca7b81-fdfc-4906-9ded-c71c6bb82bc8",
+                    "config": {
                         "defaultValue": null,
                         "label": "Survey Methods Adequate"
                     },
@@ -636,7 +630,7 @@
                         "en": "Survey Methods Adequate"
                     },
                     "node_id": "1bc7db26-61f1-11ee-95b9-0242ac120004",
-                    "sortorder": 9,
+                    "sortorder": 10,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -866,7 +860,7 @@
                         "en": "Site Visit Date"
                     },
                     "node_id": "2eff14f8-61f0-11ee-baf1-0242ac120004",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -1079,7 +1073,7 @@
                         "en": "Survey Methods Discussed"
                     },
                     "node_id": "feb8984a-61f0-11ee-95b9-0242ac120004",
-                    "sortorder": 8,
+                    "sortorder": 9,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -1100,7 +1094,7 @@
                         "en": "Present"
                     },
                     "node_id": "80096f44-61ee-11ee-baf1-0242ac120004",
-                    "sortorder": 2,
+                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -2135,7 +2129,7 @@
                         "en": "Additional Notes"
                     },
                     "node_id": "d0ca7152-61ef-11ee-baf1-0242ac120004",
-                    "sortorder": 7,
+                    "sortorder": 8,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
@@ -2156,7 +2150,7 @@
                         "en": "Carried Out By"
                     },
                     "node_id": "b08c3bec-61ee-11ee-baf1-0242ac120004",
-                    "sortorder": 11,
+                    "sortorder": 12,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -2176,7 +2170,7 @@
                         "en": "Potential Date of Remains"
                     },
                     "node_id": "7f1edea6-61ef-11ee-baf1-0242ac120004",
-                    "sortorder": 6,
+                    "sortorder": 7,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -2225,7 +2219,7 @@
                         "en": "Attendee Notes"
                     },
                     "node_id": "1412d202-61ef-11ee-baf1-0242ac120004",
-                    "sortorder": 4,
+                    "sortorder": 5,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
@@ -3466,7 +3460,7 @@
                         "en": "Survey Methods Notes"
                     },
                     "node_id": "338e37fa-61f1-11ee-95b9-0242ac120004",
-                    "sortorder": 10,
+                    "sortorder": 11,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
@@ -3481,7 +3475,7 @@
                         "en": "License Holder Present"
                     },
                     "node_id": "f01fb306-61ee-11ee-baf1-0242ac120004",
-                    "sortorder": 3,
+                    "sortorder": 4,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -3531,7 +3525,7 @@
                         "en": "Nominated Licensee"
                     },
                     "node_id": "40be5c64-61ee-11ee-baf1-0242ac120004",
-                    "sortorder": 1,
+                    "sortorder": 2,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -3588,7 +3582,7 @@
                         "en": "Any Finds"
                     },
                     "node_id": "acbfe6d4-61ef-11ee-baf1-0242ac120004",
-                    "sortorder": 5,
+                    "sortorder": 6,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -5346,16 +5340,10 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "f1e707c6-61ed-11ee-baf1-0242ac120004",
                     "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "fbaebc8e-61ef-11ee-baf1-0242ac120004",
-                    "parentnodegroup_id": "f1e707c6-61ed-11ee-baf1-0242ac120004"
                 }
             ],
             "nodes": [
@@ -9258,12 +9246,12 @@
                     "fieldname": null,
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                     "hascustomalias": false,
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Site",
-                    "nodegroup_id": "fbaebc8e-61ef-11ee-baf1-0242ac120004",
+                    "nodegroup_id": "f1e707c6-61ed-11ee-baf1-0242ac120004",
                     "nodeid": "fbaebc8e-61ef-11ee-baf1-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at",
@@ -9305,8 +9293,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "3e84ede2-61f2-11ee-b9d2-0242ac120004",
-                "published_time": "2023-10-03T13:39:15.394",
+                "publicationid": "b4aa0412-61fc-11ee-8398-0242ac120004",
+                "published_time": "2023-10-03T14:54:08.575",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],

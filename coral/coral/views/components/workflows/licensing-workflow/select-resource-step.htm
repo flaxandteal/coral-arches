@@ -16,7 +16,20 @@
     </div>
     <!-- ko if: tile() && card() && resourceValue() -->
     <div>
+        <div class="widget-input-label">Select Related Site</div>
         <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                graphids: [
+                    'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                ],
+                renderContext: 'workflow',
+                value: resourceValue,
+                disabled: locked,
+                searchString: `http://localhost:8000/resource/related/${resourceValue()}`
+            }
+        }"></div>
+        <!-- <div data-bind="component: {
             name: cardComponentLookup[card().model.component_id()].componentname,
             params: {
                 card: card(),
@@ -28,23 +41,7 @@
                 pageVm: $root
             }
         }">
-        </div>
+        </div> -->
     </div>
-    <!-- ko if: tile() && card() && actVal() -->
-    <!-- <div data-bind="component: {
-        name: 'default-card',
-        params: {
-            graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-            nodegroupid: '5f00ef7e-9f63-11ea-9db8-f875a44e0e11',
-            resourceid: actVal(),
-            form: $data,
-            pageVm: $root,
-            tile: actTile()
-
-        }
-    }">
-    </div> -->
-    <!-- /ko -->
-
     <!-- /ko -->
 </div>
