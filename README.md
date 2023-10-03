@@ -490,28 +490,9 @@ This where the file widget is defined in the database using the special id assig
 ./coral/coral/media/node_modules/arches/arches/db/dml/db_data.sql:INSERT INTO d_data_types(datatype, iconclass, modulename, classname, defaultconfig, configcomponent, configname, isgeometric, defaultwidget) VALUES ('file-list', 'fa fa-file-image-o', 'datatypes.py', 'FileListDataType', null, null, null, FALSE, '10000000-0000-0000-0000-000000000019');
 ```
 
-
-
 python manage.py widget update --source /Documents/projects/mynewproject/mynewproject/widgets/sample-widget.json
 
 docker exec -it d2d1eeeacb64 bash -c "source ../ENV/bin/activate && python manage.py widget update --source ./coral/widgets/photo.json"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ### Locating "Applicaiton Area Stuff"
 
@@ -547,13 +528,9 @@ docker exec -it d2d1eeeacb64 bash -c "source ../ENV/bin/activate && python manag
 },
 ```
 
-
 ## Widgets and data types
 
 [Arches Documentation](https://arches.readthedocs.io/en/stable/developing/extending/extensions/widgets/)
-
-
-
 
 ## Writing function logic
 
@@ -565,11 +542,25 @@ After setting up the required boiler plate. Your new function must extend the `B
 
 > The Tile object will look up all its Graph’s associated Functions upon being saved. Before writing to the database, it calls each function’s save method, passing itself along with the Django Request object. This is likely where the bulk of your function’s logic will reside.
 
-
 # Cloning Resource Models
 
 Run the following script to clone resource models. This is a temporary solution the clone feature not working correctly.
 
 ```
 python3 scripts/json-uuid-replace.py 2>&1 | tee uuid-replace.log
+```
+
+# Configure JSON diff tool
+
+Install `json-diff` globally using NPM:
+
+```bash
+npm i -g json-diff
+```
+
+Add the `json-diff` configuration to your `.git/config` file:
+
+```conf
+[diff "json_diff"]
+	command = json-diff -C --max-elisions 1 "$LOCAL" "$REMOTE"
 ```
