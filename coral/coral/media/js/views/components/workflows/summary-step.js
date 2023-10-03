@@ -5,7 +5,8 @@ define([
   'arches',
   'views/components/map',
   'views/components/cards/select-feature-layers',
-  'viewmodels/alert'
+  'viewmodels/alert',
+  'views/components/workflows/render-nodes'
 ], function (
   ko,
   FinalStep,
@@ -86,19 +87,13 @@ define([
     this.renderedNodegroups = ko.observable({});
 
     this.renderNode = async (key, tileData, config) => {
-      console.log('tileData: ', tileData);
-      console.log('key: ', key);
       let result = [];
-      console.log('config: ', config);
       const tiles = tileData[config?.nodegroupId];
-      console.log('tiles: ', tiles);
 
       const getNodeDataFromTile = async (t) => {
-        console.log('t: ', JSON.stringify(t));
         const nodeData = [];
         if (!config.renderNodeIds) {
           // If no render nodes specified render them all
-          console.log('nodeData: ', nodeData, Object.values(t.data));
           nodeData.push(Object.values(t.data));
         } else {
           const filtered = [];
@@ -117,7 +112,6 @@ define([
              * provide values such as: label, defaultValue, related
              */
             const node = t.data[nodeIdObject.nodeId];
-            console.log('nodeIdObject: ', nodeIdObject);
             if (nodeIdObject.label) {
               node.label = nodeIdObject.label;
             }
@@ -130,8 +124,6 @@ define([
             nodeData.push(filtered);
           }
         }
-
-        console.log('nodeData: ', nodeData);
         return nodeData;
       };
 
@@ -139,21 +131,15 @@ define([
         if (Array.isArray(tiles)) {
           // Multi Tile Node
           for await (const tile of tiles) {
-            const temp = await getNodeDataFromTile(tile);
-            console.log('temppppp: ', temp);
             result = [...result, ...(await getNodeDataFromTile(tile))];
           }
         } else {
           // Single Tile Node
-          const temp = await getNodeDataFromTile(tiles);
-          console.log('temppppp: ', temp);
-          result = [...result, ...(await getNodeDataFromTile(tiles))];
+          result = await getNodeDataFromTile(tiles);
         }
       }
 
-      console.log('result: ', result);
       config.data = result;
-
       return config;
     };
 
@@ -201,7 +187,6 @@ define([
           }
         }
         tile.display_values.forEach((display) => {
-          console.log('cardinality: ', cardinality, cardinalityIdx);
           if (!cardinality) {
             formatted[tile.nodegroup]['data'][display.nodeid] = {
               nodeId: display.nodeid,
@@ -223,12 +208,10 @@ define([
     };
 
     this.fetchTileData = async (resourceId) => {
-      console.log('Fetching tiles for resource ID: ', resourceId);
       const tilesResponse = await window.fetch(
         arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
       );
       const data = await tilesResponse.json();
-      console.log('Logging tilesResponse: ', tilesResponse, data.tiles);
       return data.tiles;
     };
 
@@ -249,7 +232,6 @@ define([
     };
 
     this.renderResourceIds = async (ids, nodeConfigs) => {
-      console.log('ids: ', ids);
       if (!Array.isArray(ids)) {
         ids = [ids];
       }

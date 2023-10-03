@@ -5,8 +5,6 @@ define([
 ], function (ko, SummaryStep, licenseFinalStepTemplate) {
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
-    // var this = this;
-    console.log(SummaryStep);
 
     this.displayName = 'Temp Display Name';
     this.applicationId = 'Temp Application ID';
@@ -186,8 +184,6 @@ define([
 
       digitalFileResourceIds = this.getResourceIds(this.activityNodes.digitalFiles);
       await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
-
-      console.log('this.renderedNodegroups: ', this.renderedNodegroups());
     };
 
     this.loadData();
