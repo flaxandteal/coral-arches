@@ -2,8 +2,9 @@ define([
   'knockout',
   'arches',
   'views/components/workflows/summary-step',
-  'templates/views/components/workflows/licensing-workflow/license-final-step.htm'
-], function (ko, arches, SummaryStep, licenseFinalStepTemplate) {
+  'templates/views/components/workflows/licensing-workflow/license-final-step.htm',
+  'uuid'
+], function (ko, arches, SummaryStep, licenseFinalStepTemplate, uuid) {
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
     var self = this;
@@ -14,7 +15,30 @@ define([
     self.displayName = 'Temp Display Name';
     self.applicationId = 'Temp Application ID';
 
+    /**
+     * {
+     *    name: 'example-1',
+     *    exampleNodegroup: {
+     *      label: String, // Appears as group title
+     *      nodegroupId: UUID, // Finds the nodegroup
+     *      // Provide the string ids or an object with nodeId and additional propertys
+     *      renderNodeIds: Array<String | Object>, // Leave null to render all from the group
+     *      data: Array // Data from the nodes provided in renderNodeIds will appear here
+     *    }
+     * }
+     */
+
     self.licenseNodes = ko.observable({
+      id: 'license',
+      contacts: {
+        label: 'Contacts',
+        nodegroupId: '6d290832-5891-11ee-a624-0242ac120004',
+        renderNodeIds: [
+          '6d292f88-5891-11ee-a624-0242ac120004',
+          '6d2924b6-5891-11ee-a624-0242ac120004',
+          '6d294784-5891-11ee-a624-0242ac120004'
+        ]
+      },
       dates: {
         label: 'Dates',
         nodegroupId: '05f6b846-5d49-11ee-911e-0242ac130003',
@@ -92,6 +116,7 @@ define([
     });
 
     self.activityNodes = ko.observable({
+      id: 'activity',
       name: {
         label: 'Activity',
         nodegroupId: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
@@ -150,8 +175,30 @@ define([
           'a541b922-f121-11eb-9fa2-a87eeabdefba'
         ],
         data: []
+      },
+      digitalFiles: {
+        label: 'Digital Files',
+        nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
+        renderNodeIds: ['316c7d1e-8554-11ea-aed7-f875a44e0e11'],
+        data: []
       }
     });
+
+    self.digitalFilesNodes = {
+      id: 'digital-files',
+      name: {
+        label: 'Digital Object',
+        nodegroupId: 'c61ab163-9513-11ea-9bb6-f875a44e0e11',
+        renderNodeIds: ['c61ab16c-9513-11ea-89a4-f875a44e0e11']
+      },
+      files: {
+        label: 'Files',
+        nodegroupId: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+        renderNodeIds: ['96f8830a-8490-11ea-9aba-f875a44e0e11']
+      }
+    };
+
+    self.renderedNodegroups = ko.observable({});
 
     self.renderNode = async (key, tileData, config) => {
       console.log('tileData: ', tileData);
@@ -217,6 +264,10 @@ define([
         const result = await self.renderNode(key, tileData, value);
         nodeConfigs[key] = result;
       }
+      if (!(nodeConfigs.id in self.renderedNodegroups())) {
+        self.renderedNodegroups()[nodeConfigs.id] = [];
+      }
+      self.renderedNodegroups()[nodeConfigs.id].push(nodeConfigs);
       return nodeConfigs;
     };
 
@@ -299,26 +350,32 @@ define([
       return ids;
     };
 
+    self.renderResourceIds = async (ids, nodeConfigs) => {
+      console.log('ids: ', ids);
+      if (!Array.isArray(ids)) {
+        ids = [ids];
+      }
+      for await (const id of ids) {
+        const tiles = await self.fetchTileData(id);
+        const formattedTiles = self.formatTileData(tiles);
+        await self.renderAllNodes(nodeConfigs, formattedTiles);
+      }
+    };
+
     self.loadData = async () => {
       self.loading(true);
-      const licenseTiles = await self.fetchTileData(self.resourceid);
-      const formattedLicenseTiles = self.formatTileData(licenseTiles);
-      console.log('formattedLicenseTiles: ', formattedLicenseTiles);
+      await self.renderResourceIds(self.resourceid, self.licenseNodes());
 
-      self.licenseNodes(await self.renderAllNodes(self.licenseNodes(), formattedLicenseTiles));
+      let digitalFileResourceIds = self.getResourceIds(self.licenseNodes().digitalFiles);
+      await self.renderResourceIds(digitalFileResourceIds, self.digitalFilesNodes);
 
-      console.log(
-        'self.licenseNodes().associatedActivities: ',
-        self.licenseNodes().associatedActivities
-      );
       const activityResourceIds = self.getResourceIds(self.licenseNodes().associatedActivities);
-      console.log('activityResourceId: ', activityResourceIds);
-      const activityTiles = await self.fetchTileData(activityResourceIds[0]);
-      const formattedActivityTiles = self.formatTileData(activityTiles);
-      console.log('formattedActivityTiles: ', formattedActivityTiles);
+      await self.renderResourceIds(activityResourceIds, self.activityNodes());
 
-      self.activityNodes(await self.renderAllNodes(self.activityNodes(), formattedActivityTiles));
+      digitalFileResourceIds = self.getResourceIds(self.activityNodes().digitalFiles);
+      await self.renderResourceIds(digitalFileResourceIds, self.digitalFilesNodes);
 
+      console.log('self.renderedNodegroups: ', self.renderedNodegroups());
       self.loading(false);
     };
 

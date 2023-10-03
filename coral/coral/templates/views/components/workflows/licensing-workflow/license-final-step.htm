@@ -31,8 +31,9 @@
   </div>
   <div style="display: flex">
     <div>
-      <!-- ko foreach: { data: Object.values(licenseNodes()), as: 'config', noChildContext: true } -->
-      <!-- ko if: config.data -->
+      <!-- ko foreach: { data: renderedNodegroups()['license'], as: 'nodes', noChildContext: true } -->
+      <!-- ko foreach: { data: Object.values(nodes), as: 'config', noChildContext: true } -->
+      <!-- ko if: config.data?.length -->
       <div
         class="her-final-step-section"
         data-bind="foreach: { data: config.data, as: 'tiles', noChildContext: true }"
@@ -52,12 +53,14 @@
           </div>
         </div>
       </div>
+      <!-- /ko -->
       <!-- /ko -->
       <!-- /ko -->
     </div>
     <div>
-      <!-- ko foreach: { data: Object.values(activityNodes()), as: 'config', noChildContext: true } -->
-      <!-- ko if: config.data -->
+      <!-- ko foreach: { data: renderedNodegroups()['activity'], as: 'nodes', noChildContext: true } -->
+      <!-- ko foreach: { data: Object.values(nodes), as: 'config', noChildContext: true } -->
+      <!-- ko if: config?.data?.length -->
       <div
         class="her-final-step-section"
         data-bind="foreach: { data: config.data, as: 'tiles', noChildContext: true }"
@@ -77,6 +80,34 @@
           </div>
         </div>
       </div>
+      <!-- /ko -->
+      <!-- /ko -->
+      <!-- /ko -->
+    </div>
+    <div>
+      <!-- ko foreach: { data: renderedNodegroups()['digital-files'], as: 'nodes', noChildContext: true } -->
+      <!-- ko foreach: { data: Object.values(nodes), as: 'config', noChildContext: true } -->
+      <!-- ko if: config?.data?.length -->
+      <div
+        class="her-final-step-section"
+        data-bind="foreach: { data: config.data, as: 'tiles', noChildContext: true }"
+      >
+        <h5 class="summary-value" data-bind="text: config.label"></h5>
+        <div class="final-step-section-block">
+          <div
+            class="final-step-section-block-item"
+            data-bind="foreach: { data: tiles, as: 'node', noChildContext: true }"
+          >
+            <!-- ko if: node -->
+            <div class="block-item">
+              <div class="summary-label" data-bind="text: node.label + ':'"></div>
+              <div class="summary-value" data-bind="text: node.displayValue"></div>
+            </div>
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
       <!-- /ko -->
       <!-- /ko -->
     </div>
