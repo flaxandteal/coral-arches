@@ -217,6 +217,7 @@ define([
         } else {
           const filtered = [];
           for await (const nodeIdObject of config.renderNodeIds) {
+            if (!(nodeIdObject in t.data)) continue;
             if (typeof nodeIdObject === 'string' || nodeIdObject instanceof String) {
               // Use the node ID string to get the node object
               filtered.push(t.data[nodeIdObject]);
@@ -236,7 +237,9 @@ define([
               filtered.push(node);
             }
           }
-          nodeData.push(filtered);
+          if (filtered.length) {
+            nodeData.push(filtered);
+          }
         }
         return nodeData;
       };
