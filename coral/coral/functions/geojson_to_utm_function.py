@@ -7,6 +7,36 @@ from django.contrib.gis.geos import GEOSGeometry
 import json, math
 from datetime import datetime
 
+"""Sources
+_[1]: https://github.com/Turbo87/utm/blob/master/utm/conversion.py
+_[2]: http://www.jaworski.ca/utmzones.htm
+_[3]: https://desktop.arcgis.com/en/arcmap/latest/map/projections/projection-parameters.htm
+_[4]: https://www.merriam-webster.com/dictionary/eccentricity
+_[5]: https://www.ccgalberta.com/ccgresources/report11/2009-410_converting_latlon_to_utm.pdf
+
+MIT License
+
+Copyright (c) 2012-2017 Tobias Bieniek <Tobias.Bieniek@gmx.de>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. [1]_
+"""
+
 """
             ALL FEATURES [
                 {
