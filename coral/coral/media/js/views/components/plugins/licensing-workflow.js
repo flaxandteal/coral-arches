@@ -532,7 +532,7 @@ define([
           ]
         },
         {
-          title: 'License Summary',
+          title: 'Summary',
           name: 'license-complete',
           required: false,
           informationboxdata: {
@@ -547,7 +547,6 @@ define([
                   uniqueInstanceName: 'license-final',
                   tilesManaged: 'none',
                   parameters: {
-                    activityResourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 }
