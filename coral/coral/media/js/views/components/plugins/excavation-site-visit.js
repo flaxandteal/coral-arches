@@ -29,7 +29,7 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd', //license graph
-                                        nodegroupid: 'eeaf01e4-61c5-11ee-bf10-0242ac120004', //Visit Date & desc
+                                        nodegroupid: 'f1e707c6-61ed-11ee-baf1-0242ac120004', //Visit Date & desc
                                         graphids: ['cc5da227-24e7-4088-bb83-a564c4331efd']
                                     },
                                 },
