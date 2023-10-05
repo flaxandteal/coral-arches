@@ -250,7 +250,7 @@ define([
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'location-names',
-                  tilesManaged: 'many',
+                  tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
