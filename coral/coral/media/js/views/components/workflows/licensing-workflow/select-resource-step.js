@@ -13,21 +13,15 @@ define([
         this.graphids = params.graphids;
         this.resourceValue = ko.observable();
         // this.actTile = 
-        console.log("card",this.card())
-        console.log("tile", this.tile())
-        console.log("this",this)
         this.resourceValue.subscribe((val) => {
-            console.log("licence", val)
         })
         this.actVal = ko.observable()
         this.actVal.subscribe((val) => {
-            console.log("site", val)
 
         })
         this.actResVal = ko.observable()
         
         
-        console.log("init site", this.actVal())
         this.resourceValue.subscribe(val => {
             if (val){
                 self.tile().resourceinstance_id = val;
@@ -58,13 +52,11 @@ define([
                     activityResourceId = self.tile().data['fbaebc8e-61ef-11ee-baf1-0242ac120004']()[0].resourceId()
                     activityTiles = self.fetchTileData(activityResourceId).then(val => {
                         suitableTiles = val.filter((tile) => tile.nodegroup === '5f00ef7e-9f63-11ea-9db8-f875a44e0e11')
-                        console.log(val, suitableTiles)
                         if (suitableTiles.length === 0) {
                             activityTileId = ""
                         } else {
                             activityTileId = suitableTiles[0].tileid
                         }
-                        console.log(activityTileId)
                     }
                     ).then(function () {
                         params.form.savedData({
