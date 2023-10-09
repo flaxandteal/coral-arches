@@ -1,6 +1,7 @@
 define([
   'knockout',
   'arches',
+  'uuid',
   'viewmodels/workflow',
   'templates/views/components/plugins/licensing-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
@@ -8,7 +9,7 @@ define([
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'
-], function (ko, arches, Workflow, licensingWorkflowTemplate) {
+], function (ko, arches, uuid, Workflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
       this.componentName = 'licensing-workflow';
@@ -53,7 +54,7 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    // resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     hiddenNodes: [
                       '4a7bba20-9938-11ea-92e7-f875a44e0e11',
                       '4a7bba21-9938-11ea-8f0f-f875a44e0e11'
@@ -68,8 +69,8 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    tileid: "['init-step']['app-id'][0]['resourceid']['actSysRefTileId']",
+                    // resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    // tileid: "['init-step']['app-id'][0]['resourceid']['actSysRefTileId']",
                     hiddenNodes: [
                       'e7d69603-9939-11ea-9e7f-f875a44e0e11',
                       'e7d69602-9939-11ea-b514-f875a44e0e11'
@@ -107,7 +108,7 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
+                    // tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
                       '280b78fa-4e4d-11ee-a340-0242ac140007',
@@ -272,9 +273,7 @@ define([
                     nodegroupid: 'a5416b40-f121-11eb-9cb6-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
-                    hiddenNodes: [
-                      'a5419231-f121-11eb-911a-a87eeabdefba'
-                    ],
+                    hiddenNodes: ['a5419231-f121-11eb-911a-a87eeabdefba']
                   }
                 },
                 {
@@ -335,9 +334,7 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    labels: [
-                      ['Activity', 'Related Acitvities'],
-                    ]
+                    labels: [['Activity', 'Related Acitvities']]
                   }
                 },
                 {
@@ -349,10 +346,13 @@ define([
                     nodegroupid: 'b9e07043-5463-11e9-bb70-000d3ab1e588',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     labels: [
-                      ['Associated Monument, Area or Artefact', 'Related Sites, Monuments, or Artefacts'],
+                      [
+                        'Associated Monument, Area or Artefact',
+                        'Related Sites, Monuments, or Artefacts'
+                      ]
                     ]
                   }
-                },
+                }
               ]
             }
           ]
@@ -440,7 +440,6 @@ define([
           layoutSections: [
             {
               componentConfigs: [
-                
                 {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'decision-made-by',
@@ -449,9 +448,7 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    labels: [
-                      ['Decision Type', 'Decision']
-                    ],
+                    labels: [['Decision Type', 'Decision']]
                     // hiddenNodes: ['f6c207ae-5938-11ee-9e74-0242ac130007']
                   }
                 },
@@ -490,7 +487,7 @@ define([
                     ],
                     labels: [['Cross Reference', 'License Number']]
                   }
-                },
+                }
               ]
             }
           ]
@@ -595,7 +592,7 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 }
               ]
@@ -649,6 +646,90 @@ define([
       ];
 
       Workflow.apply(this, [params]);
+
+      (() => {
+        const editMode = JSON.parse(localStorage.getItem('workflow-edit-mode'));
+        if (!editMode) return;
+
+        localStorage.removeItem('workflow-edit-mode');
+        const id = uuid.generate();
+        this.setToLocalStorage('workflow-id', id);
+        this.id = ko.observable(id);
+        this.setWorkflowIdToUrl();
+
+        const result = {};
+        this.stepConfig.forEach((step) => {
+          const components = {};
+          step.layoutSections[0].componentConfigs.forEach((component) => {
+            const nodegroupId = component?.parameters?.nodegroupid;
+            if (nodegroupId) {
+              components[component.uniqueInstanceName] = nodegroupId;
+            }
+          });
+          if (Object.values(components).length) {
+            result[step.name] = {
+              componentIdLookup: JSON.stringify(components)
+            };
+          }
+        });
+
+        console.log('logging component ids override: ', result);
+        localStorage.setItem('workflow-steps', JSON.stringify(result));
+
+        // If edit mode has been set in local storage
+        // set the url id to a new uuid
+        // also update the local storage uuid to match to stop it clearing the local storage
+        // clear the local storage edit mode
+        // now that the local storage workflow id and url id match it won't be reset but will still
+        // return you to the reopened workflow
+        // if a new workflow is opened edit mode won't be set
+        // a new uuid will be created
+        // they won't match and the local stoage data will be cleared
+        // allowing a new license to be started
+        // this.setWorkflowIdToUrl();
+
+        /**
+         * This checks if the component abstracts current in local storage contain
+         * a nodegroup ID from the steps above. Default operation of the component
+         * abstracts creates a unique UUID for each component step. The edit
+         * functionality hooks into that by swapping out what would have been the
+         * unique UUID with the nodegroup id. This allows the data to be resolved and
+         * placed in the correct location when loading a resource to edit.
+         */
+        // const componentAbstracts = JSON.parse(localStorage.getItem('workflow-component-abstracts'));
+        // console.log('componentAbstracts: ', componentAbstracts);
+        // const editConfiguredAbstracts = Object.keys(result).some((nodegroupId) =>
+        //   Object.keys(componentAbstracts).includes(nodegroupId)
+        // );
+        // if (!editConfiguredAbstracts) return;
+
+        // this.getWorkflowIdFromUrl = () => this.id();
+
+        // const doSomething = async () => {
+        //   const tilesResponse = await window.fetch(
+        //     arches.urls.resource_tiles.replace(
+        //       'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+        //       'a50502df-60d0-4f95-89ef-5d7cb503b7f6'
+        //     )
+        //   );
+        //   const data = (await tilesResponse.json()).tiles;
+        //   const result = {};
+        //   data.forEach((tile) => {
+        //     result[tile.nodegroup] = {
+        //       value: JSON.stringify({
+        //         tileData: JSON.stringify(tile.data),
+        //         resourceInstanceId: tile.resourceinstance,
+        //         tileId: tile.tileid,
+        //         nodegroupId: tile.nodegroup
+        //       })
+        //     };
+        //   });
+        //   localStorage.setItem('workflow-component-abstracts', JSON.stringify(result));
+        // };
+
+        // await doSomething();
+      })();
+
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
     template: licensingWorkflowTemplate
