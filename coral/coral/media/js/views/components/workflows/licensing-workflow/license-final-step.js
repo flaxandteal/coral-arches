@@ -21,24 +21,24 @@ define([
 
     this.licenseNodes = {
       id: 'license',
+      label: 'License',
       contacts: {
         label: 'Contacts',
         nodegroupId: '6d290832-5891-11ee-a624-0242ac120004',
         renderNodeIds: [
           '6d292f88-5891-11ee-a624-0242ac120004',
           '6d2924b6-5891-11ee-a624-0242ac120004',
-          '6d294784-5891-11ee-a624-0242ac120004'
+          '6d294784-5891-11ee-a624-0242ac120004',
+          '6d292a2e-5891-11ee-a624-0242ac120004'
         ]
       },
       dates: {
         label: 'Dates',
-        nodegroupId: '05f6b846-5d49-11ee-911e-0242ac130003',
-        renderNodeIds: null
+        nodegroupId: '05f6b846-5d49-11ee-911e-0242ac130003'
       },
       status: {
         label: 'Application Status',
-        nodegroupId: 'ee5947c6-48b2-11ee-abec-0242ac140007',
-        renderNodeIds: null
+        nodegroupId: 'ee5947c6-48b2-11ee-abec-0242ac140007'
       },
       decisionMadeBy: {
         label: 'Decision',
@@ -49,6 +49,10 @@ define([
           'f3dcbf02-48cb-11ee-9081-0242ac140007',
           'f6c207ae-5938-11ee-9e74-0242ac130007'
         ]
+      },
+      report: {
+        label: 'Report',
+        nodegroupId: 'f060583a-6120-11ee-9fd1-0242ac120003'
       },
       systemRef: {
         label: 'System Reference',
@@ -84,20 +88,19 @@ define([
       },
       associatedActivities: {
         label: 'Associated Activities',
-        nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007',
-        renderNodeIds: ['a9f53f00-48b6-11ee-85af-0242ac140007']
+        nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007'
       },
       digitalFiles: {
         label: 'Digital Files',
-        nodegroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007',
-        renderNodeIds: ['8c5356f4-48ce-11ee-8e4e-0242ac140007']
+        nodegroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
       }
     };
 
     this.activityNodes = {
       id: 'activity',
+      label: 'Activity',
       name: {
-        label: 'Activity',
+        label: 'Name',
         nodegroupId: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
         renderNodeIds: ['4a7be135-9938-11ea-b0e2-f875a44e0e11']
       },
@@ -116,11 +119,6 @@ define([
           '589d4dc7-edf9-11eb-9856-a87eeabdefba',
           '589d4dca-edf9-11eb-83ea-a87eeabdefba'
         ]
-      },
-      digitalFiles: {
-        label: 'Digital Files',
-        nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
-        renderNodeIds: ['316c7d1e-8554-11ea-aed7-f875a44e0e11']
       },
       areaType: {
         label: 'Area',
@@ -147,17 +145,21 @@ define([
           'a541b922-f121-11eb-9fa2-a87eeabdefba'
         ]
       },
+      associatedActivities: {
+        label: 'Associated Activities',
+        nodegroupId: 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11'
+      },
       digitalFiles: {
         label: 'Digital Files',
-        nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
-        renderNodeIds: ['316c7d1e-8554-11ea-aed7-f875a44e0e11']
+        nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11'
       }
     };
 
     this.digitalFilesNodes = {
       id: 'digital-files',
+      label: 'Digital Object',
       name: {
-        label: 'Digital Object',
+        label: 'Name',
         nodegroupId: 'c61ab163-9513-11ea-9bb6-f875a44e0e11',
         renderNodeIds: ['c61ab16c-9513-11ea-89a4-f875a44e0e11']
       },
@@ -171,13 +173,22 @@ define([
     this.getData = async () => {
       await this.renderResourceIds(this.resourceid, this.licenseNodes);
 
-      let digitalFileResourceIds = this.getResourceIds(this.licenseNodes.digitalFiles);
-      await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
+      let digitalFileResourceIds = this.getResourceIds(this.licenseNodes.id, 'digitalFiles');
 
-      const activityResourceIds = this.getResourceIds(this.licenseNodes.associatedActivities);
-      await this.renderResourceIds(activityResourceIds, this.activityNodes);
+      await this.renderResourceIds(
+        this.getResourceIds(this.licenseNodes.id, 'associatedActivities'),
+        this.activityNodes
+      );
+      await this.renderResourceIds(
+        this.getResourceIds(this.activityNodes.id, 'associatedActivities'),
+        this.activityNodes
+      );
 
-      digitalFileResourceIds = this.getResourceIds(this.activityNodes.digitalFiles);
+      digitalFileResourceIds = [
+        ...digitalFileResourceIds,
+        ...this.getResourceIds(this.activityNodes.id, 'digitalFiles')
+      ];
+
       await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
 
       console.log('License Final Step: ', this.renderedNodegroups());

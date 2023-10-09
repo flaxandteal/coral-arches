@@ -21,7 +21,6 @@ define([
     this.displayName = ko.observable();
     this.resourceData = ko.observable();
     this.relatedResources = ko.observableArray();
-    this.loading = ko.observable(false);
 
     this.getResourceData = function () {
       window
@@ -90,11 +89,11 @@ define([
 
     this.renderedNodegroups = ko.observable({});
 
-    this.renderNode = async (key, tileData, config) => {
+    this.renderNode = (config, tileData) => {
       let result = [];
       const tiles = tileData[config?.nodegroupId];
 
-      const getNodeDataFromTile = async (t) => {
+      const getNodeDataFromTile = (t) => {
         const nodeData = [];
         if (!config.renderNodeIds) {
           // If no render nodes specified render them all
@@ -104,7 +103,7 @@ define([
           }
         } else {
           const filtered = [];
-          for await (const nodeIdObject of config.renderNodeIds) {
+          for (const nodeIdObject of config.renderNodeIds) {
             if (typeof nodeIdObject === 'string' || nodeIdObject instanceof String) {
               if (!(nodeIdObject in t.data)) continue;
               // Use the node ID string to get the node object
@@ -138,12 +137,12 @@ define([
       if (tiles) {
         if (Array.isArray(tiles)) {
           // Multi Tile Node
-          for await (const tile of tiles) {
-            result = [...result, ...(await getNodeDataFromTile(tile))];
+          for (const tile of tiles) {
+            result = [...result, ...getNodeDataFromTile(tile)];
           }
         } else {
           // Single Tile Node
-          result = await getNodeDataFromTile(tiles);
+          result = getNodeDataFromTile(tiles);
         }
       }
 
@@ -151,9 +150,13 @@ define([
       return config;
     };
 
-    this.renderAllNodes = async (nodeConfigs, tileData) => {
-      for await (const [key, value] of Object.entries(nodeConfigs)) {
-        const result = await this.renderNode(key, tileData, value);
+    this.renderAllNodes = (nodeConfigs, tileData) => {
+      /**
+       * Deep copy of the config object to prevent object referecing.
+       */
+      nodeConfigs = JSON.parse(JSON.stringify(nodeConfigs));
+      for (const [key, value] of Object.entries(nodeConfigs)) {
+        const result = this.renderNode(value, tileData);
         nodeConfigs[key] = result;
       }
       if (!(nodeConfigs.id in this.renderedNodegroups())) {
@@ -227,12 +230,14 @@ define([
       return tileData.some((tile) => tile.nodegroup === nodeGroupId);
     };
 
-    this.getResourceIds = (nodeConfig) => {
+    this.getResourceIds = (nodeConfigId, configKey) => {
       const ids = [];
-      nodeConfig.data.forEach((data) => {
-        data.forEach((node) => {
-          node.value.forEach((relationship) => {
-            ids.push(relationship.resourceId);
+      this.renderedNodegroups()[nodeConfigId]?.forEach((config) => {
+        config[configKey].data.forEach((data) => {
+          data.forEach((node) => {
+            node.value.forEach((relationship) => {
+              ids.push(relationship.resourceId);
+            });
           });
         });
       });
@@ -243,10 +248,10 @@ define([
       if (!Array.isArray(ids)) {
         ids = [ids];
       }
-      for await (const id of ids) {
+      for (const id of ids) {
         const tiles = await this.fetchTileData(id);
         const formattedTiles = this.formatTileData(tiles);
-        await this.renderAllNodes(nodeConfigs, formattedTiles);
+        this.renderAllNodes(nodeConfigs, formattedTiles);
       }
     };
 
