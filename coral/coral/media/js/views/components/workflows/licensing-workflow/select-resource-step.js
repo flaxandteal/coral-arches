@@ -12,7 +12,11 @@ define([
         var self = this;
         this.graphids = params.graphids;
         this.resourceValue = ko.observable();
-        // this.actTile = 
+        this.actTile = ko.observable();
+        this.actCard = ko.observable();
+
+        this.archiveDisplayTiles = ko.observable()
+        this.archiveTileId = ko.observable()
         this.resourceValue.subscribe((val) => {
         })
         this.actVal = ko.observable()
@@ -46,17 +50,41 @@ define([
             return data.tiles;
           }
 
+
+        this.tile().data['fbaebc8e-61ef-11ee-baf1-0242ac120004'].subscribe(dat => {
+            if (dat) {
+
+                siteResourceId = dat[0].resourceId()
+                self.fetchTileData(siteResourceId).then(data => {
+                    archiveTiles = data.filter(x => x.nodegroup === "5f00ef7e-9f63-11ea-9db8-f875a44e0e11")
+                    if (archiveTiles.length != 0) {
+                        displayTiles = []
+                        archiveTiles.forEach(tile => {
+                            displayTiles.push({
+                                name : tile.data["cca6bed0-afd0-11ea-87f9-f875a44e0e11"].en.value,
+                                buildingName: tile.data["cca6bed9-afd0-11ea-b0dc-f875a44e0e11"].en.value,
+                                owner: tile.data["cca6bed8-afd0-11ea-b349-f875a44e0e11"][0]["resourceId"],
+                                id: tile.tileid
+                            })
+                        })
+                        this.archiveDisplayTiles(displayTiles)
+                    }
+                })
+            }
+        })
+        this.removeArchive = function(thing) {
+            this.archiveTileId(null)
+        }
+        this.selectArchive = function(thing) {
+            this.archiveTileId(thing.id)
+        }
         params.form.save = function() {
             self.tile().save().then(
                 function(){
                     activityResourceId = self.tile().data['fbaebc8e-61ef-11ee-baf1-0242ac120004']()[0].resourceId()
                     activityTiles = self.fetchTileData(activityResourceId).then(val => {
                         suitableTiles = val.filter((tile) => tile.nodegroup === '5f00ef7e-9f63-11ea-9db8-f875a44e0e11')
-                        if (suitableTiles.length === 0) {
-                            activityTileId = ""
-                        } else {
-                            activityTileId = suitableTiles[0].tileid
-                        }
+                        
                     }
                     ).then(function () {
                         params.form.savedData({
@@ -65,7 +93,7 @@ define([
                             tileId: self.tile().tileid,
                             nodegroupId: self.tile().nodegroup_id,
                             activityResourceId: activityResourceId,
-                            activityTileId: activityTileId,
+                            activityTileId: self.archiveTileId(),
                             otherTileOptions: suitableTiles.map(x => x.tileid)
                         });
                         self.locked(true);

@@ -15,20 +15,43 @@
         }"></div>
     </div>
     <!-- ko if: tile() && card() && resourceValue() -->
-    <div>
-        <div data-bind="component: {
-            name: 'default-card',
-            params: {
-                graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                nodegroupid: '5f00ef7e-9f63-11ea-9db8-f875a44e0e11',
-                form: $data,
-                pageVm: $root,
-                tile: actTile(),
-                card: actCard(),
-                value: actResVal
-            }
-        }">
+    <div>  
+    <!-- ko if : archiveDisplayTiles -->
+        <div class="widget-input-label" style="padding-top: 15px; padding-bottom: 15px; padding-left: 60px;">Select Archive Storage Location</div>
+        <div style="display: flex; justify-content: space-around;">
+    <!-- ko foreach: {data: archiveDisplayTiles, as: 'widget'} -->
+    <div style="width: fit-content; height:fit-content">
+    <div class="wf-multi-tile-step-card">
+        <div class="wf-multi-tile-card-info">
+            <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span>
+            </div>
+            <div class="wf-multi-tile-card-info-details" style="width:fit-content">
+                        <div data-bind="html: '<span>Building: </span> <span>' + widget.buildingName + '</span>'"></div>
+                        <div data-bind="html: '<span>Area: </span> <span>' + widget.name + '</span>'"></div>
+                        <div data-bind="html: '<span>Owner: </span> <span>' + widget.owner + '</span>'"></div>
+                    </div>
+                </div>
+                <!-- ko if : widget.id === $parent.archiveTileId()-->
+                <div class="wf-multi-tile-step-card-controls" style="align-self: flex-end; border-color: greenyellow;">
+                    <div data-bind="click: function() {$parent.removeArchive(widget)}">
+                    <i class="fa fa-circle"></i>
+                    <span data-bind="text: $root.translations.remove"></span>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <!-- ko else -->
+                <div class="wf-multi-tile-step-card-controls" style="align-self: flex-end;">
+                    <div data-bind="click: function() {$parent.selectArchive(widget)}">
+                    <i class="fa fa-circle"></i>
+                    <span data-bind="text: $root.translations.select"></span>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
         </div>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
         <div data-bind="component: {
             name: cardComponentLookup[card().model.component_id()].componentname,
             params: {
@@ -42,10 +65,8 @@
             }
         }">
         </div>
-    </div>
-    <!-- ko if: tile() && card() && actVal() -->
-   
-    <!-- /ko -->
+    </div>  
+    
 
     <!-- /ko -->
 </div>

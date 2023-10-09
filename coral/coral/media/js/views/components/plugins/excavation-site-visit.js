@@ -57,7 +57,6 @@ define([
                                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588', //license graph
                                     nodegroupid: '5f00ef7e-9f63-11ea-9db8-f875a44e0e11',
                                     visible: false,
-                                    feck: "['excavation-site-init']",
                                     resourceid: "['excavation-site-init']['visit']['resourceid']['activityResourceId']",
                                     tileid: "['excavation-site-init']['visit']['resourceid']['activityTileId']",
                                 },
