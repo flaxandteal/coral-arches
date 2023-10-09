@@ -1,5 +1,11 @@
 <div>
   <!-- ko foreach: { data: resourceNodes, as: 'nodes', noChildContext: true } -->
+  <div
+    class="her-final-step-section"
+    style="padding: 0px; border-bottom: 1px solid #7777; margin: 0 15px"
+  >
+    <h4 class="summary-value" data-bind="text: nodes.label"></h4>
+  </div>
   <!-- ko foreach: { data: Object.values(nodes), as: 'config', noChildContext: true } -->
   <!-- ko if: config.data?.length -->
   <div
