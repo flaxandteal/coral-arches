@@ -1,0 +1,32 @@
+<div class="workflow-select-plugin">Oooga booga</div>
+<div class="card-component" style="width: 100%">
+  <div class="row widget-wrapper">
+    <div
+      data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+          graphids: [
+            'cc5da227-24e7-4088-bb83-a564c4331efd',
+          ],
+          config: {
+            label: 'Select License',
+            placeholder: 'Start new or please select below',
+          },
+          renderContext: 'workflow',
+          value: selectedResource
+        }
+      }"
+    ></div>
+  </div>
+  <div class="row widget-wrapper">
+    <button
+      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-primary"
+      data-bind="click: () => {
+        openWorkflow();
+        window.location.href = workflowUrl();
+      }, disable: !selectedResource()"
+    >
+      <span>Confirm</span>
+    </button>
+  </div>
+</div>

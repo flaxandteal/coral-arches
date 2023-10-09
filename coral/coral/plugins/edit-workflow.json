@@ -1,0 +1,18 @@
+{
+  "pluginid": "90d00be6-c447-4fef-8b98-cf0579fb4a65",
+  "name": "Edit Workflow",
+  "icon": "fa fa-edit",
+  "component": "views/components/plugins/edit-workflow",
+  "componentname": "edit-workflow",
+  "config": {
+    "editableWorkflows": [
+      {
+        "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
+        "slug": "licensing-workflow",
+        "name": "Excavation Licensing"
+      }
+    ]
+  },
+  "slug": "edit-workflow",
+  "sortorder": 0
+}

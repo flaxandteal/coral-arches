@@ -59,6 +59,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create a new License for an Excavation Activity"
+      },
+      {
+        "workflowid": "90d00be6-c447-4fef-8b98-cf0579fb4a65",
+        "slug": "edit-workflow",
+        "name": "Edit Workflow",
+        "icon": "fa fa-edit",
+        "bgColor": "#d43f58",
+        "circleColor": "#e36464",
+        "desc": "Edit an existing workflow"
       }
     ],
     "show": true
