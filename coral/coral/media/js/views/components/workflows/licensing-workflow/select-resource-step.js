@@ -52,9 +52,13 @@ define([
 
 
         this.tile().data['fbaebc8e-61ef-11ee-baf1-0242ac120004'].subscribe(dat => {
-            if (dat) {
-
-                siteResourceId = dat[0].resourceId()
+            if (dat[0]) {
+                console.log("dat problem",dat[0])
+                if (ko.isObservable(dat[0].resourceId)){
+                    siteResourceId = dat[0].resourceId()
+                } else {
+                    siteResourceId = dat[0].resourceId
+                }
                 self.fetchTileData(siteResourceId).then(data => {
                     archiveTiles = data.filter(x => x.nodegroup === "5f00ef7e-9f63-11ea-9db8-f875a44e0e11")
                     if (archiveTiles.length != 0) {
