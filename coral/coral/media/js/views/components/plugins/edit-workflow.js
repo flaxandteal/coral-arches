@@ -59,6 +59,9 @@ define([
         relatedActivitiesTile.data['a9f53f00-48b6-11ee-85af-0242ac140007'][0].resourceId
       );
       console.log('activityTiles: ', activityTiles);
+      const actLocTile = activityTiles.find(
+        (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
+      );
       activityTiles.forEach((tile) => {
         result[tile.nodegroup] = {
           value: JSON.stringify({
@@ -67,6 +70,21 @@ define([
             tileId: tile.tileid,
             nodegroupId: tile.nodegroup
           })
+        };
+      });
+      licenseTiles.forEach((tile) => {
+        const value = {
+          tileData: koMapping.toJSON(tile.data),
+          resourceInstanceId: tile.resourceinstance,
+          tileId: tile.tileid,
+          nodegroupId: tile.nodegroup
+        };
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && actLocTile) {
+          value['actLocTileId'] = actLocTile.tileid;
+          value['actResourceId'] = actLocTile.resourceinstance;
+        }
+        result[tile.nodegroup] = {
+          value: JSON.stringify(value)
         };
       });
       localStorage.setItem('workflow-component-abstracts', JSON.stringify(result));
