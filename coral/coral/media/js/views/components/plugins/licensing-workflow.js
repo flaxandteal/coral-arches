@@ -80,7 +80,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'cm-reference',
+                  uniqueInstanceName: 'cm-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -277,7 +277,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'asset-refs',
+                  uniqueInstanceName: 'asset-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -453,23 +453,6 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'decision-dates',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '05f6b846-5d49-11ee-911e-0242ac130003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    labels: [['Cross Reference', 'License Number']],
-                    hiddenNodes: [
-                      'ed16bb80-5d4a-11ee-9b75-0242ac130003',
-                      '7ee258e0-5d4a-11ee-9b75-0242ac130003',
-                      '97f6c776-5d4a-11ee-9b75-0242ac130003',
-                      '58880bd6-5d4a-11ee-9b75-0242ac130003'
-                    ]
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'license-no',
                   tilesManaged: 'one',
                   parameters: {
@@ -534,20 +517,20 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'cm-reference',
+                  uniqueInstanceName: 'cm-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    tileid: "['app-details-step']['cm-reference'][0]['tileId']",
+                    tileid: "['app-details-step']['cm-ref'][0]['tileId']",
                     hiddenNodes: [
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
                       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
                     ],
                     prefilledNodes: [
-                      // Source set to Heritage Environment Record Number
+                      // Source set to Project Number
                       [
                         '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                         '19afd557-cc21-44b4-b1df-f32568181b2c'
@@ -656,12 +639,71 @@ define([
         this.id = ko.observable(id);
         this.setWorkflowIdToUrl();
 
+        const seenIds = {};
+        this.stepConfig.forEach((step) => {
+          step.layoutSections[0].componentConfigs.forEach((component) => {
+            const nodegroupId = component?.parameters?.nodegroupid;
+            if (!nodegroupId) return;
+            if (!(nodegroupId in seenIds)) {
+              seenIds[nodegroupId] = {
+                nodegroupId,
+                stepName: step.name,
+                uniqueNames: [component.uniqueInstanceName],
+                totalNames: [component.uniqueInstanceName],
+                totalUnique: 1
+              };
+            } else {
+              if (!seenIds[nodegroupId].uniqueNames.includes(component.uniqueInstanceName)) {
+                seenIds[nodegroupId].uniqueNames.push(component.uniqueInstanceName);
+              }
+              seenIds[nodegroupId].totalNames.push(component.uniqueInstanceName);
+              seenIds[nodegroupId].totalUnique = seenIds[nodegroupId].uniqueNames.length;
+            }
+          });
+        });
+
+        // const result = {};
+        // Object.values(seenIds).forEach((ids) => {
+        //   const components = {};
+        //   // if (ids.totalUnique === 1) {
+        //   //   components[ids.uniqueNames[0]] = ids.nodegroupId;
+        //   // } else {
+        //   //   ids.uniqueNames.forEach((name) => {
+        //   //     components[name] = ids.nodegroupId + `|${name}`;
+        //   //   });
+        //   // }
+        //   // if (Object.values(components).length) {
+        //   //   result[ids.stepName] = {
+        //   //     componentIdLookup: JSON.stringify(components)
+        //   //   };
+        //   // }
+
+        //   // components[component.uniqueInstanceName]
+        //   // ids
+
+        //   step.layoutSections[0].componentConfigs.forEach((component) => {
+        //     const nodegroupId = component?.parameters?.nodegroupid;
+        //     if (nodegroupId) {
+        //       components[component.uniqueInstanceName] = nodegroupId;
+        //     }
+        //   });
+        //   if (Object.values(components).length) {
+        //     result[step.name] = {
+        //       componentIdLookup: JSON.stringify(components)
+        //     };
+        //   }
+        // });
+
         const result = {};
         this.stepConfig.forEach((step) => {
           const components = {};
           step.layoutSections[0].componentConfigs.forEach((component) => {
             const nodegroupId = component?.parameters?.nodegroupid;
-            if (nodegroupId) {
+            if (!nodegroupId) return;
+            if (seenIds[nodegroupId].totalUnique > 1) {
+              components[component.uniqueInstanceName] =
+                nodegroupId + `|${component.uniqueInstanceName}`;
+            } else {
               components[component.uniqueInstanceName] = nodegroupId;
             }
           });
@@ -671,6 +713,9 @@ define([
             };
           }
         });
+
+        console.log('seenIds: ', seenIds);
+        console.log('result 123: ', result);
 
         const safeList = ['resourceInstanceId', 'tileId', 'actLocTileId', 'actResourceId'];
         this.stepConfig = this.stepConfig.map((stepConfig) => {
