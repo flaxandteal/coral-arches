@@ -54,7 +54,7 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
-                    // resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     hiddenNodes: [
                       '4a7bba20-9938-11ea-92e7-f875a44e0e11',
                       '4a7bba21-9938-11ea-8f0f-f875a44e0e11'
@@ -69,8 +69,8 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-                    // resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    // tileid: "['init-step']['app-id'][0]['resourceid']['actSysRefTileId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['actSysRefTileId']",
                     hiddenNodes: [
                       'e7d69603-9939-11ea-9e7f-f875a44e0e11',
                       'e7d69602-9939-11ea-b514-f875a44e0e11'
@@ -108,7 +108,7 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    // tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
+                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
                       '280b78fa-4e4d-11ee-a340-0242ac140007',
@@ -196,7 +196,6 @@ define([
                     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
                     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
                     // ],
-                    renderContext: 'workflow',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
@@ -650,8 +649,8 @@ define([
       (() => {
         const editMode = JSON.parse(localStorage.getItem('workflow-edit-mode'));
         if (!editMode) return;
-
         localStorage.removeItem('workflow-edit-mode');
+
         const id = uuid.generate();
         this.setToLocalStorage('workflow-id', id);
         this.id = ko.observable(id);
@@ -672,6 +671,29 @@ define([
             };
           }
         });
+
+        const safeList = ['resourceInstanceId', 'tileId', 'actLocTileId', 'actResourceId'];
+        this.stepConfig = this.stepConfig.map((stepConfig) => {
+          stepConfig.layoutSections = stepConfig.layoutSections.map((layoutSection) => {
+            layoutSection.componentConfigs = layoutSection.componentConfigs.map((config) => {
+              console.log('my config: ', config);
+              Object.entries(config.parameters).forEach(([key, value]) => {
+                console.warn('value: ', value, value.includes('[') && value.includes(']'));
+                if (value.includes('[') && value.includes(']')) {
+                  const isSafe = safeList.some((keyIdx) => value.includes(keyIdx));
+                  if (!isSafe) {
+                    delete config.parameters[key];
+                  }
+                }
+              });
+              return config;
+            });
+            return layoutSection;
+          });
+          return stepConfig;
+        });
+
+        console.log('this.stepConfig: ', JSON.stringify(this.stepConfig));
 
         console.log('logging component ids override: ', result);
         localStorage.setItem('workflow-steps', JSON.stringify(result));
