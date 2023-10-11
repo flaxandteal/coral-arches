@@ -53,21 +53,12 @@
       },
       {
         "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
-        "slug": "licensing-workflow",
+        "slug": "edit-workflow?workflow-slug=licensing-workflow",
         "name": "Excavation Licensing",
         "icon": "fa fa-file-text",
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create a new License for an Excavation Activity"
-      },
-      {
-        "workflowid": "90d00be6-c447-4fef-8b98-cf0579fb4a65",
-        "slug": "edit-workflow",
-        "name": "Edit Workflow",
-        "icon": "fa fa-edit",
-        "bgColor": "#d43f58",
-        "circleColor": "#e36464",
-        "desc": "Edit an existing workflow"
       }
     ],
     "show": true
