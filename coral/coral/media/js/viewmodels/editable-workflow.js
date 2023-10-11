@@ -83,10 +83,8 @@ define([
        * uniqueIntanceName to the end.
        *
        * When running the setup function tiles can be matched to the components with
-       * the same nodegroups.
-       *
-       * Note: Remember to support the case where the multi tile nodegroup has
-       * only one tile was created for it, meaning the suffix won't exist.
+       * the same nodegroups automatically. If the nodegroup has been used more than
+       * once use the uniqueInstanceName to populate them correctly.
        */
       const result = {};
       this.stepConfig.forEach((step) => {
