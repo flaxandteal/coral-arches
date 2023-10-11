@@ -529,7 +529,7 @@ define([
                       '589d4dca-edf9-11eb-83ea-a87eeabdefba'
                     ],
                     prefilledNodes: [
-                      // Source set to Project Number
+                      // Source set to Heritage Environment Record Number
                       [
                         '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                         '19afd557-cc21-44b4-b1df-f32568181b2c'
