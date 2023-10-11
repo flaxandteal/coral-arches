@@ -5,10 +5,25 @@ define([
   'templates/views/components/plugins/edit-workflow.htm'
 ], function (ko, koMapping, arches, editWorkflowTemplate) {
   const editWorkflow = function (params) {
-    console.log('Init edit workflow: ', params);
+    this.WORKFLOW_LABEL = 'workflow-slug';
+    this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
 
+    this.editableWorkflows = params.editableWorkflows;
     this.selectedResource = ko.observable();
     this.workflowUrl = ko.observable();
+    this.workflowSlug = ko.observable();
+    this.workflow = ko.observable();
+    this.graphId = ko.observable();
+    this.loading = ko.observable(false);
+
+    this.getWorkflowSlug = () => {
+      let searchParams = new URLSearchParams(window.location.search);
+      return searchParams.get(this.WORKFLOW_LABEL);
+    };
+
+    this.getWorkflowData = () => {
+      return this.editableWorkflows.find((workflow) => workflow.slug === this.workflowSlug());
+    };
 
     this.fetchTileData = async (resourceId) => {
       const tilesResponse = await window.fetch(
@@ -20,14 +35,14 @@ define([
 
     this.selectedResource.subscribe(async (value) => {
       if (value) {
-        console.log('selectedResource: ', value);
         /**
          * TODO: Current hardcoded to only edit licensing workflows,
          * would be interesting to investigate editing all workflows
          * from the same edit workflow page.
          */
-        await this.loadLicensingData(value);
-        this.workflowUrl(arches.urls.plugin('licensing-workflow'));
+        this.loading(true);
+        await this[this.workflow().setupFunction](value);
+        this.loading(false);
       }
     });
 
@@ -38,7 +53,7 @@ define([
      * into local storage and then have the related resource's nodegroups
      * also populated into to local storage.
      */
-    this.loadLicensingData = async (licenseResourceId) => {
+    this.loadLicenseData = async (licenseResourceId) => {
       const licenseTiles = await this.fetchTileData(licenseResourceId);
       const result = {};
       licenseTiles.forEach((tile) => {
@@ -54,11 +69,9 @@ define([
       const relatedActivitiesTile = licenseTiles.find(
         (tile) => tile.nodegroup === 'a9f53f00-48b6-11ee-85af-0242ac140007'
       );
-      console.log('relatedActivitiesTile: ', relatedActivitiesTile);
       const activityTiles = await this.fetchTileData(
         relatedActivitiesTile.data['a9f53f00-48b6-11ee-85af-0242ac140007'][0].resourceId
       );
-      console.log('activityTiles: ', activityTiles);
       const actLocTile = activityTiles.find(
         (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
       );
@@ -101,11 +114,19 @@ define([
       localStorage.setItem('workflow-component-abstracts', JSON.stringify(result));
     };
 
-    this.openWorkflow = () => {
-      console.log('Open workflow: ', this.selectedResource());
-      localStorage.setItem('workflow-edit-mode', JSON.stringify(true));
-      // window.location.href = arches.urls.plugin('licensing-workflow');
+    this.editWorkflow = () => {
+      localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
     };
+
+    this.init = () => {
+      console.log('Init edit workflow: ', params);
+      this.workflowSlug(this.getWorkflowSlug());
+      this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
+      this.workflow(this.getWorkflowData());
+      this.graphId(this.workflow().graphId);
+    };
+
+    this.init();
   };
 
   return ko.components.register('edit-workflow', {

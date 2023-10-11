@@ -1,4 +1,6 @@
-<div class="workflow-select-plugin">Oooga booga</div>
+{% comment %}
+<div class="workflow-select-plugin">Possibly list previously editted resources</div>
+{% endcomment %}
 <div class="card-component" style="width: 100%">
   <div class="row widget-wrapper">
     <div
@@ -6,7 +8,7 @@
         name: 'resource-instance-select-widget',
         params: {
           graphids: [
-            'cc5da227-24e7-4088-bb83-a564c4331efd',
+            graphId(),
           ],
           config: {
             label: 'Select License',
@@ -18,15 +20,23 @@
       }"
     ></div>
   </div>
-  <div class="row widget-wrapper">
+  <div class="row widget-wrapper" style="display: flex">
     <button
-      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-primary"
+      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
       data-bind="click: () => {
-        openWorkflow();
+        window.location.href = workflowUrl();
+      }"
+    >
+      <span>Start New</span>
+    </button>
+    <button
+      class="btn btn-shim btn-labeled btn-lg btn-primary"
+      data-bind="click: () => {
+        editWorkflow();
         window.location.href = workflowUrl();
       }, disable: !selectedResource()"
     >
-      <span>Confirm</span>
+      <span>Edit Selected</span>
     </button>
   </div>
 </div>
