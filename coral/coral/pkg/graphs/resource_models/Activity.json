@@ -328,7 +328,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Activity Names"
                     },
@@ -484,7 +484,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -524,7 +524,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Activity Archive Material"
                     },
@@ -722,7 +722,7 @@
                         "selectSource": "",
                         "selectSourceLayer": "",
                         "selectText": "",
-                        "zoom": "9"
+                        "zoom": 20
                     },
                     "constraints": [],
                     "cssclass": null,
@@ -877,7 +877,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Eastings and Northings"
+                        "en": "National Grid References"
                     },
                     "nodegroup_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
                     "sortorder": 5,
@@ -931,7 +931,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Data"
                     },
@@ -1067,7 +1067,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -2059,6 +2059,21 @@
                     "sortorder": null,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "a5416b45-f121-11eb-a6db-a87eeabdefba",
+                    "config": {
+                        "label": "National Grid Reference",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "396836e3-2dc8-11ec-84ac-a87eeabdefba",
+                    "label": {
+                        "en": "National Grid Reference"
+                    },
+                    "node_id": "a5419226-f121-11eb-9148-a87eeabdefba",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
                 },
                 {
                     "card_id": "4136bad7-27f1-11eb-81ac-f875a44e0e11",
@@ -5746,7 +5761,7 @@
                         "overlayOpacity": null,
                         "pitch": null,
                         "rerender": true,
-                        "zoom": "9"
+                        "zoom": 20
                     },
                     "id": "a5420766-f121-11eb-bafc-a87eeabdefba",
                     "label": {
@@ -7600,15 +7615,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
-                    "edgeid": "1265c57e-8acc-48b8-9110-07d4d1d6d3f9",
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "a7d98d68-5eb2-11ee-aa2d-0242ac120008"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
                     "edgeid": "2a5c0ee4-fe48-11ea-a0d0-f875a44e0e11",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -9013,6 +9019,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
+                    "edgeid": "a54ac3c1-f121-11eb-8d40-a87eeabdefba",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "a5419226-f121-11eb-9148-a87eeabdefba"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "a5416b49-f121-11eb-8e2c-a87eeabdefba",
                     "edgeid": "a54ac3c2-f121-11eb-a9ac-a87eeabdefba",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -10338,28 +10353,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "7541b4cd-fa17-4a99-98ad-53db781bdc76"
-                },
-                {
-                    "config": {
-                        "geojson_input_node": "a5419248-f121-11eb-86a9-a87eeabdefba",
-                        "geojson_input_nodegroup": "a541560c-f121-11eb-aa92-a87eeabdefba",
-                        "triggering_nodegroups": [
-                            "a541560c-f121-11eb-aa92-a87eeabdefba",
-                            "a541560c-f121-11eb-aa92-a87eeabdefba"
-                        ],
-                        "utm_list_nodegroup": "",
-                        "utm_output_node": "a7d98d68-5eb2-11ee-aa2d-0242ac120008",
-                        "utm_output_nodegroup": "a5416b43-f121-11eb-b691-a87eeabdefba"
-                    },
-                    "function_id": "317a318b-792b-4de3-bea9-e4212850431f",
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "b51f8a22-c263-4966-809f-c21f98facf92"
+                    "id": "da80451c-aebc-4791-8c0e-b3f18cb86cf8"
                 }
             ],
             "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
             "iconclass": "fa fa-cogs",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -13184,10 +13183,8 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "eastings_and_northings",
-                    "config": {
-                        "en": ""
-                    },
+                    "alias": "national_grid_references",
+                    "config": {},
                     "datatype": "semantic",
                     "description": "Represents a single node in a graph",
                     "exportable": false,
@@ -13198,7 +13195,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Eastings and Northings",
+                    "name": "National Grid References",
                     "nodegroup_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
                     "nodeid": "a5416b43-f121-11eb-b691-a87eeabdefba",
                     "ontologyclass": "http://www.ics.forth.gr/isl/CRMgeo/SP6_Declarative_Place",
@@ -14218,6 +14215,28 @@
                     "nodeid": "a5419225-f121-11eb-8224-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "national_grid_reference",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "bngcentrepoint",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "NGR",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "National Grid Reference",
+                    "nodegroup_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
+                    "nodeid": "a5419226-f121-11eb-9148-a87eeabdefba",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "sortorder": 0
                 },
                 {
@@ -16875,28 +16894,6 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "utm_easting_and_northing",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "UTM Easting and Northing",
-                    "nodegroup_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
-                    "nodeid": "a7d98d68-5eb2-11ee-aa2d-0242ac120008",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "sortorder": 0
-                },
-                {
                     "alias": "associated_monuments_and_areas",
                     "config": {
                         "graphid": [
@@ -17706,8 +17703,8 @@
             "publication": {
                 "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                 "notes": null,
-                "publicationid": "0855fb7c-6106-11ee-a51d-0242ac120003",
-                "published_time": "2023-10-02T09:28:23.261",
+                "publicationid": "ab775b04-6816-11ee-8a3f-0242ac120007",
+                "published_time": "2023-10-11T09:15:07.035",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
