@@ -41,6 +41,7 @@ define([
                     title: 'Edit or Add Archive Storage Location',
                     name: 'excavation-site-archive-details',
                     required: true,
+                    workflowstepclass: 'workflow-form-component',
                     informationboxdata: {
                         heading: 'Archive Storage Location',
                         text: 'Check the details of the storage location',
@@ -48,6 +49,21 @@ define([
                     layoutSections: [
                         {
                             componentConfigs: [
+                                {
+                                    componentName: 'widget-labeller',
+                                    uniqueInstanceName: 'excavation-artifact', /* unique to step */
+                                    tilesManaged: 'one',
+                                    visible: false,
+                                    parameters: {
+                                        graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588', //license graph
+                                        nodegroupid: 'b9e07043-5463-11e9-bb70-000d3ab1e588',
+                                        visible: false,
+                                        resourceid: "['excavation-site-init']['visit']['resourceid']['activityResourceId']",
+                                        // tileid: "['excavation-site-init']['visit']['resourceid']['activityTileId']",
+                                        labels: [['Associated Monument, Area or Artefact', 'Associated Artefact']]
+
+                                    },
+                                },
                                 {
                                 componentName: 'widget-labeller',
                                 uniqueInstanceName: 'excavation-archive', /* unique to step */
