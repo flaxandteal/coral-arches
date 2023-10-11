@@ -9,13 +9,12 @@ define([
     'geojsonhint',
     'togeojson',
     'proj4',
-    'views/components/widgets/map-with-latlon',
+    'views/components/map',
     'views/components/cards/select-feature-layers',
     'views/components/datatypes/geojson-feature-collection',
 ], function($, _, ko, koMapping, arches, uuid, geojsonExtent, geojsonhint, toGeoJSON, proj4, MapComponentViewModel, selectFeatureLayersFactory) {
     var viewModel = function(params) {
          
-
         var self = this;
         var padding = 40;
         var drawFeatures;
@@ -44,6 +43,16 @@ define([
         var selectSource = this.selectSource();
         var selectSourceLayer = this.selectSourceLayer();
         var selectFeatureLayers = selectFeatureLayersFactory(resourceId, selectSource, selectSourceLayer);
+
+        proj4.defs("WGS84", "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+        proj4.defs("EPSG:29902","+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +a=6377340.189 +rf=299.3249646 +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs");
+        this.source = new proj4.Proj('WGS84');    
+        this.dest = new proj4.Proj('EPSG:29902');
+
+        this.project = function (lat, long) {
+            let testpt = new proj4.Point(lat,long)
+            return proj4.transform(this.source,this.dest, testpt)
+        }
 
         this.setSelectLayersVisibility = function(visibility) {
             var map = self.map();
@@ -702,6 +711,13 @@ define([
                 return proj4(sourceCRS, geographic, [Number(coords[0]()), Number(coords[1]())]);
             });
         }).extend({ throttle: 100 });
+
+        self.eastingNorthing = ko.computed(function() {
+            return self.coordinates().map(function(coords) {
+                return self.project(coords[0](), coords[1]());
+            });
+        }).extend({ throttle: 100 });
+        
         self.rawCoordinates.subscribe(function(rawCoordinates) {
             var selectedFeatureId = self.selectedFeatureIds()[0];
             if (self.coordinateEditing()) {
@@ -717,6 +733,7 @@ define([
                             else
                                 feature.geometry.coordinates = rawCoordinates;
                         }
+                        feature.geometry.epsg29909 = self.eastingNorthing()
                     });
                     self.draw.set({
                         type: 'FeatureCollection',
@@ -730,12 +747,15 @@ define([
                     case 'Polygon':
                         rawCoordinates.push(rawCoordinates[0]);
                         coordinates = [rawCoordinates];
+                        epsg29909 = self.eastingNorthing()
                         break;
                     case 'Point':
                         coordinates = rawCoordinates[0];
+                        epsg29909 = self.eastingNorthing()
                         break;
                     default:
                         coordinates = rawCoordinates;
+                        epsg29909 = self.eastingNorthing()
                         break;
                     }
                     addSelectFeatures([{
@@ -802,6 +822,7 @@ define([
                 transformCoordinatePair(newCoords, geographic);
                 return newCoords;
             }));
+
         };
         var transformCoordinatePair = function(coords, sourceCRS) {
             var targetCRS = self.selectedCoordinateReference();

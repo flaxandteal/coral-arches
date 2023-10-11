@@ -1,4 +1,4 @@
-{% extends "views/components/map-with-latlon.htm" %}
+{% extends "views/components/map.htm" %}
 {% load i18n %}
 
 {% block tabs %}
@@ -119,22 +119,36 @@
                                                 <span class="map-card-feature-name" data-bind="text: feature.geometry.type"></span>
                                                 <!-- ko if: feature.geometry.type === "Point" -->
                                                 <br />
-                                                <span class="map-card-feature-name" data-bind="text: 'Lat: ' + feature.geometry.coordinates[0]"></span>
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Lat: </strong>' +'<span>' + ' ' + feature.geometry.coordinates[0] + '</span>'"></span>
                                                 <br />
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Long: </strong>' +'<span>' + ' ' + feature.geometry.coordinates[1] + '</span>'"></span>
+                                                <br />
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Easting: </strong>' +'<span>' + ' ' + $parent.project(feature.geometry.coordinates[0], feature.geometry.coordinates[1]).x + '</span>'"></span>
+                                                <br />
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Northing: </strong>' +'<span>' + ' ' + $parent.project(feature.geometry.coordinates[0], feature.geometry.coordinates[1]).y + '</span>'"></span>
 
-                                                <span class="map-card-feature-name" data-bind="text: 'Long: ' + feature.geometry.coordinates[1]"></span>
+
                                                 <!-- /ko -->
                                                 <!-- ko if: feature.geometry.type === "Polygon"-->
                                                 <br />
-                                                <span class="map-card-feature-name" data-bind="text: 'Lat: ' + feature.geometry.coordinates[0].map(x => x[0]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length"></span>
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Lat: </strong>' +'<span>' + ' ' + feature.geometry.coordinates[0].map(x => x[0]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length + '</span>'"></span>
                                                 <br />
-                                                <span class="map-card-feature-name" data-bind="text: 'Long: ' + feature.geometry.coordinates[0].map(x => x[1]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length"></span>
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Long: </strong>' +'<span>' + ' ' + feature.geometry.coordinates[0].map(x => x[1]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length + '</span>'"></span>
+                                                <br />
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Easting: </strong>' +'<span>' + ' ' + $parent.project(feature.geometry.coordinates[0].map(x => x[0]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length, feature.geometry.coordinates[0].map(x => x[1]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length).x + '</span>'"></span>
+                                                <br />
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Northing: </strong>' +'<span>' + ' ' + $parent.project(feature.geometry.coordinates[0].map(x => x[1]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length, feature.geometry.coordinates[0].map(x => x[1]).reduce((partialSum, a) => partialSum + a, 0) / feature.geometry.coordinates[0].length).y + '</span>'"></span>
                                                 <!-- /ko -->
                                                 <!-- ko if: feature.geometry.type === "LineString"-->
                                                 <br />
-                                                <span class="map-card-feature-name" data-bind="text: 'Lat: ' + feature.geometry.coordinates[0][0]"></span>
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Lat: </strong>' +'<span>' + ' ' + feature.geometry.coordinates[0][0] + '</span>'"></span>
                                                 <br />
-                                                <span class="map-card-feature-name" data-bind="text: 'Long: ' + feature.geometry.coordinates[0][1]"></span>
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Long: </strong>' +'<span>' + ' ' + feature.geometry.coordinates[0][1] + '</span>'"></span>
+                                                <br />
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Easting: </strong>' +'<span>' + ' ' + $parent.project(feature.geometry.coordinates[0][0], feature.geometry.coordinates[0][1]).x + '</span>'"></span>
+                                                <br />
+                                                <span class="map-card-feature-name" data-bind="html: '<strong>Northing: </strong>' +'<span>' + ' ' + $parent.project(feature.geometry.coordinates[0][0], feature.geometry.coordinates[0][1]).y + '</span>'"></span>
+
                                                 <!-- /ko -->
                                             </td>
                                             <td class="map-card-feature-tool">
