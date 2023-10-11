@@ -20,13 +20,10 @@
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
-                graphids: [
-                    'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                ],
                 renderContext: 'workflow',
                 value: resourceValue,
                 disabled: locked,
-                searchString: `http://localhost:8000/resource/related/${resourceValue()}`
+                searchString: `http://localhost:8000/search/resources/related-resources-filter/${resourceValue()}`
             }
         }"></div>
         <!-- <div data-bind="component: {
