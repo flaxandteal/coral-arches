@@ -61,21 +61,33 @@ define([
       this.loading(false);
     };
 
+    /**
+     * TODO: Refactor this into utility methods to make it easier
+     * to create more setup functions.
+     */
     this.loadLicenseData = async (licenseResourceId) => {
       const licenseTiles = await this.fetchTileData(licenseResourceId);
       this.resourceName(
         this.getNameFromNodeId(licenseTiles, '59d6676c-48b9-11ee-84da-0242ac140007')
       );
       const componentData = {};
-      licenseTiles.forEach((tile) => {
-        componentData[tile.nodegroup] = {
-          value: JSON.stringify({
-            tileData: koMapping.toJSON(tile.data),
-            resourceInstanceId: tile.resourceinstance,
-            tileId: tile.tileid,
-            nodegroupId: tile.nodegroup
-          })
-        };
+      const licenseDigitalFiles = licenseTiles.find(
+        (tile) => tile.nodegroup === '8c5356f4-48ce-11ee-8e4e-0242ac140007'
+      );
+      const licenseDigitalFilesTiles = await this.fetchTileData(
+        licenseDigitalFiles.data['8c5356f4-48ce-11ee-8e4e-0242ac140007'][0].resourceId
+      );
+      licenseDigitalFilesTiles.forEach((tile) => {
+        if (tile.nodegroup === '7db68c6c-8490-11ea-a543-f875a44e0e11') {
+          componentData[tile.nodegroup + `|file-upload`] = {
+            value: JSON.stringify({
+              tileData: koMapping.toJSON(tile.data),
+              resourceInstanceId: tile.resourceinstance,
+              tileId: tile.tileid,
+              nodegroupId: tile.nodegroup
+            })
+          };
+        }
       });
       const relatedActivitiesTile = licenseTiles.find(
         (tile) => tile.nodegroup === 'a9f53f00-48b6-11ee-85af-0242ac140007'
@@ -111,6 +123,24 @@ define([
             nodegroupId: tile.nodegroup
           })
         };
+      });
+      const activityDigitalFiles = activityTiles.find(
+        (tile) => tile.nodegroup === '316c7d1e-8554-11ea-aed7-f875a44e0e11'
+      );
+      const activityDigitalFilesTiles = await this.fetchTileData(
+        activityDigitalFiles.data['316c7d1e-8554-11ea-aed7-f875a44e0e11'][0].resourceId
+      );
+      activityDigitalFilesTiles.forEach((tile) => {
+        if (tile.nodegroup === '7db68c6c-8490-11ea-a543-f875a44e0e11') {
+          componentData[tile.nodegroup + `|report-documents`] = {
+            value: JSON.stringify({
+              tileData: koMapping.toJSON(tile.data),
+              resourceInstanceId: tile.resourceinstance,
+              tileId: tile.tileid,
+              nodegroupId: tile.nodegroup
+            })
+          };
+        }
       });
       licenseTiles.forEach((tile) => {
         const value = {
