@@ -84,6 +84,9 @@ define([
        *
        * When running the setup function tiles can be matched to the components with
        * the same nodegroups.
+       *
+       * Note: Remember to support the case where the multi tile nodegroup has
+       * only one tile was created for it, meaning the suffix won't exist.
        */
       const result = {};
       this.stepConfig.forEach((step) => {
@@ -105,18 +108,13 @@ define([
         }
       });
 
-      console.log('seenIds: ', seenIds);
-      console.log('result 123: ', result);
-
       /**
        * Find and clear all components with unsafe array accesses.
        */
       this.stepConfig = this.stepConfig.map((stepConfig) => {
         stepConfig.layoutSections = stepConfig.layoutSections.map((layoutSection) => {
           layoutSection.componentConfigs = layoutSection.componentConfigs.map((config) => {
-            console.log('my config: ', config);
             Object.entries(config.parameters).forEach(([key, value]) => {
-              console.warn('value: ', value, value.includes('[') && value.includes(']'));
               if (value.includes('[') && value.includes(']')) {
                 const isSafe = this.safeArrayAccesses.some((keyIdx) => value.includes(keyIdx));
                 if (!isSafe) {
@@ -131,9 +129,6 @@ define([
         return stepConfig;
       });
 
-      console.log('this.stepConfig: ', JSON.stringify(this.stepConfig));
-
-      console.log('logging component ids override: ', result);
       /**
        * Save the rewritten component ID lookups to local storage.
        */
