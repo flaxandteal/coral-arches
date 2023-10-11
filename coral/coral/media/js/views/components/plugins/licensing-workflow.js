@@ -1,15 +1,14 @@
 define([
   'knockout',
   'arches',
-  'uuid',
-  'viewmodels/workflow',
+  'viewmodels/editable-workflow',
   'templates/views/components/plugins/licensing-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'
-], function (ko, arches, uuid, Workflow, licensingWorkflowTemplate) {
+], function (ko, arches, EditableWorkflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
       this.componentName = 'licensing-workflow';
@@ -627,175 +626,9 @@ define([
         }
       ];
 
-      Workflow.apply(this, [params]);
+      this.safeArrayAccesses = ['resourceInstanceId', 'tileId', 'actLocTileId', 'actResourceId'];
 
-      (() => {
-        const editMode = JSON.parse(localStorage.getItem('workflow-edit-mode'));
-        if (!editMode) return;
-        localStorage.removeItem('workflow-edit-mode');
-
-        const id = uuid.generate();
-        this.setToLocalStorage('workflow-id', id);
-        this.id = ko.observable(id);
-        this.setWorkflowIdToUrl();
-
-        const seenIds = {};
-        this.stepConfig.forEach((step) => {
-          step.layoutSections[0].componentConfigs.forEach((component) => {
-            const nodegroupId = component?.parameters?.nodegroupid;
-            if (!nodegroupId) return;
-            if (!(nodegroupId in seenIds)) {
-              seenIds[nodegroupId] = {
-                nodegroupId,
-                stepName: step.name,
-                uniqueNames: [component.uniqueInstanceName],
-                totalNames: [component.uniqueInstanceName],
-                totalUnique: 1
-              };
-            } else {
-              if (!seenIds[nodegroupId].uniqueNames.includes(component.uniqueInstanceName)) {
-                seenIds[nodegroupId].uniqueNames.push(component.uniqueInstanceName);
-              }
-              seenIds[nodegroupId].totalNames.push(component.uniqueInstanceName);
-              seenIds[nodegroupId].totalUnique = seenIds[nodegroupId].uniqueNames.length;
-            }
-          });
-        });
-
-        // const result = {};
-        // Object.values(seenIds).forEach((ids) => {
-        //   const components = {};
-        //   // if (ids.totalUnique === 1) {
-        //   //   components[ids.uniqueNames[0]] = ids.nodegroupId;
-        //   // } else {
-        //   //   ids.uniqueNames.forEach((name) => {
-        //   //     components[name] = ids.nodegroupId + `|${name}`;
-        //   //   });
-        //   // }
-        //   // if (Object.values(components).length) {
-        //   //   result[ids.stepName] = {
-        //   //     componentIdLookup: JSON.stringify(components)
-        //   //   };
-        //   // }
-
-        //   // components[component.uniqueInstanceName]
-        //   // ids
-
-        //   step.layoutSections[0].componentConfigs.forEach((component) => {
-        //     const nodegroupId = component?.parameters?.nodegroupid;
-        //     if (nodegroupId) {
-        //       components[component.uniqueInstanceName] = nodegroupId;
-        //     }
-        //   });
-        //   if (Object.values(components).length) {
-        //     result[step.name] = {
-        //       componentIdLookup: JSON.stringify(components)
-        //     };
-        //   }
-        // });
-
-        const result = {};
-        this.stepConfig.forEach((step) => {
-          const components = {};
-          step.layoutSections[0].componentConfigs.forEach((component) => {
-            const nodegroupId = component?.parameters?.nodegroupid;
-            if (!nodegroupId) return;
-            if (seenIds[nodegroupId].totalUnique > 1) {
-              components[component.uniqueInstanceName] =
-                nodegroupId + `|${component.uniqueInstanceName}`;
-            } else {
-              components[component.uniqueInstanceName] = nodegroupId;
-            }
-          });
-          if (Object.values(components).length) {
-            result[step.name] = {
-              componentIdLookup: JSON.stringify(components)
-            };
-          }
-        });
-
-        console.log('seenIds: ', seenIds);
-        console.log('result 123: ', result);
-
-        const safeList = ['resourceInstanceId', 'tileId', 'actLocTileId', 'actResourceId'];
-        this.stepConfig = this.stepConfig.map((stepConfig) => {
-          stepConfig.layoutSections = stepConfig.layoutSections.map((layoutSection) => {
-            layoutSection.componentConfigs = layoutSection.componentConfigs.map((config) => {
-              console.log('my config: ', config);
-              Object.entries(config.parameters).forEach(([key, value]) => {
-                console.warn('value: ', value, value.includes('[') && value.includes(']'));
-                if (value.includes('[') && value.includes(']')) {
-                  const isSafe = safeList.some((keyIdx) => value.includes(keyIdx));
-                  if (!isSafe) {
-                    delete config.parameters[key];
-                  }
-                }
-              });
-              return config;
-            });
-            return layoutSection;
-          });
-          return stepConfig;
-        });
-
-        console.log('this.stepConfig: ', JSON.stringify(this.stepConfig));
-
-        console.log('logging component ids override: ', result);
-        localStorage.setItem('workflow-steps', JSON.stringify(result));
-
-        // If edit mode has been set in local storage
-        // set the url id to a new uuid
-        // also update the local storage uuid to match to stop it clearing the local storage
-        // clear the local storage edit mode
-        // now that the local storage workflow id and url id match it won't be reset but will still
-        // return you to the reopened workflow
-        // if a new workflow is opened edit mode won't be set
-        // a new uuid will be created
-        // they won't match and the local stoage data will be cleared
-        // allowing a new license to be started
-        // this.setWorkflowIdToUrl();
-
-        /**
-         * This checks if the component abstracts current in local storage contain
-         * a nodegroup ID from the steps above. Default operation of the component
-         * abstracts creates a unique UUID for each component step. The edit
-         * functionality hooks into that by swapping out what would have been the
-         * unique UUID with the nodegroup id. This allows the data to be resolved and
-         * placed in the correct location when loading a resource to edit.
-         */
-        // const componentAbstracts = JSON.parse(localStorage.getItem('workflow-component-abstracts'));
-        // console.log('componentAbstracts: ', componentAbstracts);
-        // const editConfiguredAbstracts = Object.keys(result).some((nodegroupId) =>
-        //   Object.keys(componentAbstracts).includes(nodegroupId)
-        // );
-        // if (!editConfiguredAbstracts) return;
-
-        // this.getWorkflowIdFromUrl = () => this.id();
-
-        // const doSomething = async () => {
-        //   const tilesResponse = await window.fetch(
-        //     arches.urls.resource_tiles.replace(
-        //       'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-        //       'a50502df-60d0-4f95-89ef-5d7cb503b7f6'
-        //     )
-        //   );
-        //   const data = (await tilesResponse.json()).tiles;
-        //   const result = {};
-        //   data.forEach((tile) => {
-        //     result[tile.nodegroup] = {
-        //       value: JSON.stringify({
-        //         tileData: JSON.stringify(tile.data),
-        //         resourceInstanceId: tile.resourceinstance,
-        //         tileId: tile.tileid,
-        //         nodegroupId: tile.nodegroup
-        //       })
-        //     };
-        //   });
-        //   localStorage.setItem('workflow-component-abstracts', JSON.stringify(result));
-        // };
-
-        // await doSomething();
-      })();
+      EditableWorkflow.apply(this, [params]);
 
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
