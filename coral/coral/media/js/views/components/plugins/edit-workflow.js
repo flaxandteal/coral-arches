@@ -7,6 +7,8 @@ define([
   const editWorkflow = function (params) {
     this.WORKFLOW_LABEL = 'workflow-slug';
     this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
+    this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
+    this.WORKFLOW_RECENTLY_EDITED_LABEL = 'workflow-recently-edited';
 
     this.editableWorkflows = params.editableWorkflows;
     this.selectedResource = ko.observable();
@@ -15,6 +17,14 @@ define([
     this.workflow = ko.observable();
     this.graphId = ko.observable();
     this.loading = ko.observable(false);
+
+    this.resourceName = ko.observable();
+    this.recentlyEdited = ko.observable();
+
+    this.recentlyEditedResources = ko.computed(() => {
+      const items = this.recentlyEdited()?.[this.workflowSlug()];
+      return items ? Object.values(items) : [];
+    }, this);
 
     this.getWorkflowSlug = () => {
       let searchParams = new URLSearchParams(window.location.search);
@@ -33,31 +43,32 @@ define([
       return data.tiles;
     };
 
+    this.getNameFromNodeId = (tiles, nodeId) => {
+      const tile = tiles.find((tile) => nodeId in tile.data);
+      return tile?.display_values.find((dv) => dv.nodeid === nodeId)?.value || '';
+    };
+
     this.selectedResource.subscribe(async (value) => {
       if (value) {
-        /**
-         * TODO: Current hardcoded to only edit licensing workflows,
-         * would be interesting to investigate editing all workflows
-         * from the same edit workflow page.
-         */
-        this.loading(true);
-        await this[this.workflow().setupFunction](value);
-        this.loading(false);
+        await this.loadResourceData(value);
       }
     });
 
-    /**
-     * It seems like there will need to be a custom resolver method
-     * for each type of workflow that requires multiple dependacies.
-     * All that needs to be done is have all the nodegroup tiles populated
-     * into local storage and then have the related resource's nodegroups
-     * also populated into to local storage.
-     */
+    this.loadResourceData = async (resourceId) => {
+      this.loading(true);
+      const componentData = await this[this.workflow().setupFunction](resourceId);
+      localStorage.setItem(this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL, JSON.stringify(componentData));
+      this.loading(false);
+    };
+
     this.loadLicenseData = async (licenseResourceId) => {
       const licenseTiles = await this.fetchTileData(licenseResourceId);
-      const result = {};
+      this.resourceName(
+        this.getNameFromNodeId(licenseTiles, '59d6676c-48b9-11ee-84da-0242ac140007')
+      );
+      const componentData = {};
       licenseTiles.forEach((tile) => {
-        result[tile.nodegroup] = {
+        componentData[tile.nodegroup] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
             resourceInstanceId: tile.resourceinstance,
@@ -69,6 +80,11 @@ define([
       const relatedActivitiesTile = licenseTiles.find(
         (tile) => tile.nodegroup === 'a9f53f00-48b6-11ee-85af-0242ac140007'
       );
+      /**
+       * FIXME: Currently dosen't support multiple associated activities.
+       * Needs a search implemented to find an activity with the same system
+       * reference ID assigned to the License.
+       */
       const activityTiles = await this.fetchTileData(
         relatedActivitiesTile.data['a9f53f00-48b6-11ee-85af-0242ac140007'][0].resourceId
       );
@@ -87,7 +103,7 @@ define([
         if (externalRefSource === 'c14def6d-4713-465f-9119-bc33f0d6e8b3') {
           nodegroupId += '|pow-ref'; // This is set to match the unique instance name from the workflow
         }
-        result[nodegroupId] = {
+        componentData[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
             resourceInstanceId: tile.resourceinstance,
@@ -107,15 +123,40 @@ define([
           value['actLocTileId'] = actLocTile.tileid;
           value['actResourceId'] = actLocTile.resourceinstance;
         }
-        result[tile.nodegroup] = {
+        componentData[tile.nodegroup] = {
           value: JSON.stringify(value)
         };
       });
-      localStorage.setItem('workflow-component-abstracts', JSON.stringify(result));
+      return componentData;
+    };
+
+    this.openRecent = async (resourceId) => {
+      localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
+      await this.loadResourceData(resourceId);
     };
 
     this.editWorkflow = () => {
       localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
+      this.updateRecentlyEdited(this.selectedResource());
+    };
+
+    this.updateRecentlyEdited = (resourceId) => {
+      const slug = this.workflowSlug();
+      const newEdit = {
+        name: this.resourceName(),
+        resourceId: resourceId
+      };
+      if (!(slug in this.recentlyEdited())) {
+        this.recentlyEdited()[slug] = {
+          [resourceId]: newEdit
+        };
+      } else {
+        this.recentlyEdited()[slug][resourceId] = newEdit;
+      }
+      localStorage.setItem(
+        this.WORKFLOW_RECENTLY_EDITED_LABEL,
+        JSON.stringify(this.recentlyEdited())
+      );
     };
 
     this.init = () => {
@@ -124,6 +165,9 @@ define([
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
       this.graphId(this.workflow().graphId);
+      this.recentlyEdited(
+        JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_EDITED_LABEL)) || {}
+      );
     };
 
     this.init();
