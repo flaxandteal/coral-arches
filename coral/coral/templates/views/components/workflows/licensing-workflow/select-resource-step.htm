@@ -17,8 +17,8 @@
     <div>  
         
     <!-- ko if : archiveDisplayTiles -->
-        <div class="widget-input-label" style="padding-top: 15px; padding-bottom: 15px; padding-left: 60px;">Select Archive Storage Location</div>
-        <div style="display: flex; justify-content: space-around;">
+        <div class="widget-input-label" style="padding-top: 15px; padding-bottom: 15px; padding-left: 60px;">Archive Storage Location(s)</div>
+        <div style="display: flex; justify-content: space-evenly;">
     <!-- ko foreach: {data: archiveDisplayTiles, as: 'widget'} -->
     <div style="width: fit-content; height:fit-content">
     <div class="wf-multi-tile-step-card">
@@ -28,7 +28,7 @@
             <div class="wf-multi-tile-card-info-details" style="width:fit-content">
                         <div data-bind="html: '<span>Building: </span> <span>' + widget.buildingName + '</span>'"></div>
                         <div data-bind="html: '<span>Area: </span> <span>' + widget.name + '</span>'"></div>
-                        <div data-bind="html: '<span>Owner: </span> <span>' + widget.owner + '</span>'"></div>
+                        <!-- <div data-bind="html: '<span>Owner: </span> <span>' + widget.owner + '</span>'"></div> -->
                     </div>
                 </div>
                 <!-- ko if : widget.id === $parent.archiveTileId()-->

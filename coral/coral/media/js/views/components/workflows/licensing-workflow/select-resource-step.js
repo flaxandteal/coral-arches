@@ -63,7 +63,7 @@ define([
                     archiveTiles = data.filter(x => x.nodegroup === "5f00ef7e-9f63-11ea-9db8-f875a44e0e11")
                     if (archiveTiles.length != 0) {
                         displayTiles = []
-                        archiveTiles.forEach(tile => {
+                        archiveTiles.forEach(async tile => {
                             displayTiles.push({
                                 name : tile.data["cca6bed0-afd0-11ea-87f9-f875a44e0e11"].en.value,
                                 buildingName: tile.data["cca6bed9-afd0-11ea-b0dc-f875a44e0e11"].en.value,
@@ -72,10 +72,25 @@ define([
                             })
                         })
                         this.archiveDisplayTiles(displayTiles)
+
+                        // this.archiveDisplayTiles(this.archiveDisplayTiles().map(x => { return {name: x.name, buildingName: x.buildingName, id: x.id, owner: self.updateName(x.owner)}}))
                     }
                 })
             }
         })
+        this.updateTiles = async function (tileArray) {
+            tileArray.foreach(async tile => {
+                tile.owner = await self.updateName(tile.owner)
+            }).then(function () {
+                this.archiveDisplayTiles(tileArray)
+            })
+
+        }
+        this.updateName = async function (nameid) {
+            const name_response = await window.fetch(arches.urls.api_card + nameid)
+            const data = await name_response.json()
+            return data.displayname
+        }
         this.removeArchive = function(thing) {
             this.archiveTileId(null)
         }
