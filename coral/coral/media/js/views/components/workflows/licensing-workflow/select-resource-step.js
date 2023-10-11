@@ -16,7 +16,7 @@ define([
         this.actCard = ko.observable();
 
         this.archiveDisplayTiles = ko.observable()
-        this.archiveTileId = ko.observable()
+        this.archiveTileId = ko.observable(null)
         this.resourceValue.subscribe((val) => {
         })
         this.actVal = ko.observable()
@@ -52,7 +52,7 @@ define([
 
 
         this.tile().data['fbaebc8e-61ef-11ee-baf1-0242ac120004'].subscribe(dat => {
-            if (dat[0]) {
+            if (dat) {
                 console.log("dat problem",dat[0])
                 if (ko.isObservable(dat[0].resourceId)){
                     siteResourceId = dat[0].resourceId()
@@ -91,13 +91,14 @@ define([
                         
                     }
                     ).then(function () {
+                        console.log("the id of it", self.archiveTileId())
                         params.form.savedData({
                             tileData: koMapping.toJSON(self.tile().data),
                             resourceInstanceId: self.tile().resourceinstance_id,
                             tileId: self.tile().tileid,
                             nodegroupId: self.tile().nodegroup_id,
                             activityResourceId: activityResourceId,
-                            activityTileId: self.archiveTileId(),
+                            activityTileId: self.archiveTileId() || null,
                             otherTileOptions: suitableTiles.map(x => x.tileid)
                         });
                         self.locked(true);

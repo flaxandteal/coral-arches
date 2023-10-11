@@ -38,12 +38,12 @@ define([
                     ],
                 },
                 { 
-                    title: 'Site Visit Details',
+                    title: 'Edit or Add Archive Storage Location',
                     name: 'excavation-site-archive-details',
                     required: true,
                     informationboxdata: {
-                        heading: 'Site Visit Details',
-                        text: 'Select the Licence for the visit',
+                        heading: 'Archive Storage Location',
+                        text: 'Check the details of the storage location',
                     },
                     layoutSections: [
                         {
