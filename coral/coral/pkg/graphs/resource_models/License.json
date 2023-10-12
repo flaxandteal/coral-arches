@@ -69,7 +69,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Cover Letter"
                     },
@@ -143,7 +143,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application Status"
                     },
@@ -183,7 +183,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "File(s)"
                     },
@@ -246,7 +246,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Communications"
                     },
@@ -282,7 +282,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Contacts"
                     },
@@ -318,7 +318,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type"
                     },
@@ -419,7 +419,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -459,7 +459,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dates"
                     },
@@ -526,7 +526,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application"
                     },
@@ -566,7 +566,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Report"
                     },
@@ -3379,6 +3379,35 @@
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
                 {
+                    "card_id": "2bbcab14-60b1-4fd1-9a52-7f9f5690436f",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Letter Data Raw",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": ""
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "e4f97565-0f20-429b-89b8-b2d71ec2e2a1",
+                    "label": {
+                        "en": "Letter Data Raw"
+                    },
+                    "node_id": "a99a4236-68e0-11ee-81c3-0242ac130004",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
                     "config": {
                         "defaultValue": "",
@@ -3706,6 +3735,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "916b5e7e-48cf-11ee-8e4e-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "edgeid": "417e8015-1ce1-4843-acd0-b5164d71506b",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
+                    "rangenode_id": "a99a4236-68e0-11ee-81c3-0242ac130004"
                 },
                 {
                     "description": null,
@@ -4950,7 +4988,7 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "3928d12f-a282-45ee-a8dd-18604e30b19a"
+                    "id": "728d8afa-052b-476e-80b0-f2152e5879bd"
                 },
                 {
                     "config": {
@@ -4972,7 +5010,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "c3d0cab5-e2b9-43a4-9393-46c969643573"
+                    "id": "9d38f18a-fe31-473c-b50a-f88b342cdcd0"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -5066,12 +5104,6 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "bc4995ae-48c8-11ee-8859-0242ac140007",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "e29a4792-6120-11ee-9fd1-0242ac120003",
                     "parentnodegroup_id": null
                 },
                 {
@@ -7544,6 +7576,28 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "letter_data_raw",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Letter Data Raw",
+                    "nodegroup_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
+                    "nodeid": "a99a4236-68e0-11ee-81c3-0242ac130004",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D9_Data_Object",
+                    "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
+                    "sortorder": 0
+                },
+                {
                     "alias": "associated_activities",
                     "config": {
                         "graphid": [
@@ -8743,9 +8797,9 @@
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                "notes": null,
-                "publicationid": "6a3bd24e-6124-11ee-94f7-0242ac120003",
-                "published_time": "2023-10-02T13:05:52.408",
+                "notes": "Added cover letter data raw",
+                "publicationid": "be758096-68e3-11ee-9316-0242ac130004",
+                "published_time": "2023-10-12T09:43:05.730",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
@@ -8781,8 +8835,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "/bin/sh: 1: git: not found",
+        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.10.0-21-amd64"
+        "os version": "5.10.0-23-amd64"
     }
 }
