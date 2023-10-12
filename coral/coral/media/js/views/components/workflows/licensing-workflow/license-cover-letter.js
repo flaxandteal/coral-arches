@@ -427,6 +427,20 @@ define([
       } else {
         self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'] = createTextObject(self.letter());
       }
+      /**
+       * Save raw cover letter data to a node value.
+       */
+      if (ko.isObservable(self?.tile().data['a99a4236-68e0-11ee-81c3-0242ac130004'])) {
+        self
+          .tile()
+          .data['a99a4236-68e0-11ee-81c3-0242ac130004'](
+            createTextObject(koMapping.toJSON(self.coverLetterData))
+          );
+      } else {
+        self.tile().data['a99a4236-68e0-11ee-81c3-0242ac130004'] = createTextObject(
+          koMapping.toJSON(self.coverLetterData)
+        );
+      }
       await self.tile().save();
       params.form.savedData({
         tileData: koMapping.toJSON(self.tile().data),
