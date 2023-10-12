@@ -104,6 +104,10 @@ define([
         (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
       );
       activityTiles.forEach((tile) => {
+        if (tile.nodegroup in manyTilesManagedNodegroups) {
+          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
+          return;
+        }
         let nodegroupId = tile.nodegroup;
         
         if (tile.nodegroup in manyTilesManagedNodegroups) {
