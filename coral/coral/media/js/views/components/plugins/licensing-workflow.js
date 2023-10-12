@@ -1,14 +1,14 @@
 define([
   'knockout',
   'arches',
-  'viewmodels/workflow',
+  'viewmodels/editable-workflow',
   'templates/views/components/plugins/licensing-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'
-], function (ko, arches, Workflow, licensingWorkflowTemplate) {
+], function (ko, arches, EditableWorkflow, licensingWorkflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
       this.componentName = 'licensing-workflow';
@@ -79,7 +79,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'cm-reference',
+                  uniqueInstanceName: 'cm-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -195,7 +195,6 @@ define([
                     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
                     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
                     // ],
-                    renderContext: 'workflow',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
                   }
@@ -277,7 +276,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'asset-refs',
+                  uniqueInstanceName: 'asset-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
@@ -517,13 +516,13 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'cm-reference',
+                  uniqueInstanceName: 'cm-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    tileid: "['app-details-step']['cm-reference'][0]['tileId']",
+                    tileid: "['app-details-step']['cm-ref'][0]['tileId']",
                     hiddenNodes: [
                       '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
                       '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
@@ -627,7 +626,10 @@ define([
         }
       ];
 
-      Workflow.apply(this, [params]);
+      this.safeArrayAccesses = ['resourceInstanceId', 'tileId', 'actLocTileId', 'actResourceId'];
+
+      EditableWorkflow.apply(this, [params]);
+
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
     template: licensingWorkflowTemplate
