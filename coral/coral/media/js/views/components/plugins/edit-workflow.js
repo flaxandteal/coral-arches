@@ -105,6 +105,11 @@ define([
       );
       activityTiles.forEach((tile) => {
         let nodegroupId = tile.nodegroup;
+        
+        if (tile.nodegroup in manyTilesManagedNodegroups) {
+          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
+          return;
+        }
         const externalRefSource = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
         if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
           nodegroupId += '|cm-ref'; // This is set to match the unique instance name from the workflow
