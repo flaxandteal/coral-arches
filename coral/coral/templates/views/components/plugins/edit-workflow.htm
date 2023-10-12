@@ -13,8 +13,8 @@
       cursor: pointer;
       margin-bottom: 8px;
     "
-    data-bind="click: () => {
-      openRecent(edited.resourceId);
+    data-bind="click: async () => {
+      await openRecent(edited.resourceId);
       window.location.href = workflowUrl();
     }"
   >
