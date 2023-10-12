@@ -66,6 +66,9 @@ define([
      * to create more setup functions.
      */
     this.loadLicenseData = async (licenseResourceId) => {
+      const manyTilesManagedNodegroups = {
+        '6840f820-48ce-11ee-8e4e-0242ac140007': []
+      };
       const licenseTiles = await this.fetchTileData(licenseResourceId);
       this.resourceName(
         this.getNameFromNodeId(licenseTiles, '59d6676c-48b9-11ee-84da-0242ac140007')
@@ -143,6 +146,10 @@ define([
         }
       });
       licenseTiles.forEach((tile) => {
+        if (tile.nodegroup in manyTilesManagedNodegroups) {
+          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
+          return;
+        }
         const value = {
           tileData: koMapping.toJSON(tile.data),
           resourceInstanceId: tile.resourceinstance,
@@ -158,6 +165,11 @@ define([
           value['actResourceId'] = actLocTile.resourceinstance;
         }
         componentData[tile.nodegroup] = {
+          value: JSON.stringify(value)
+        };
+      });
+      Object.entries(manyTilesManagedNodegroups).forEach(([key, value]) => {
+        componentData[key] = {
           value: JSON.stringify(value)
         };
       });
