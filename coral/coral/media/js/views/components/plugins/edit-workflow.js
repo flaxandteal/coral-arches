@@ -149,6 +149,10 @@ define([
           tileId: tile.tileid,
           nodegroupId: tile.nodegroup
         };
+        /**
+         * Good example of populating custom array access values. These
+         * two values will be included in the safeArrayAccesses.
+         */
         if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && actLocTile) {
           value['actLocTileId'] = actLocTile.tileid;
           value['actResourceId'] = actLocTile.resourceinstance;
