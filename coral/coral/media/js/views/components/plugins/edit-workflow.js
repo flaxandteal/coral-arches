@@ -61,7 +61,8 @@ define([
      */
     this.loadLicenseData = async (licenseResourceId) => {
       const manyTilesManagedNodegroups = {
-        '6840f820-48ce-11ee-8e4e-0242ac140007': []
+        '6840f820-48ce-11ee-8e4e-0242ac140007': [],
+        'a5416b46-f121-11eb-8f2d-a87eeabdefba': []
       };
       const licenseTiles = await this.fetchTileData(licenseResourceId);
       this.resourceName(

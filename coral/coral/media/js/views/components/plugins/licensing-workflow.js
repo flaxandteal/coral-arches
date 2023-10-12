@@ -247,7 +247,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'location-names',
                   tilesManaged: 'many',
                   parameters: {
@@ -450,98 +450,98 @@ define([
                     // hiddenNodes: ['f6c207ae-5938-11ee-9e74-0242ac130007']
                   }
                 },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'license-no',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: [
-                      '280b78fa-4e4d-11ee-a340-0242ac140007',
-                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
-                      '280b7238-4e4d-11ee-a340-0242ac140007',
-                      '280b7760-4e4d-11ee-a340-0242ac140007',
-                      '280b7404-4e4d-11ee-a340-0242ac140007'
-                    ],
-                    labels: [['Cross Reference', 'License Number']]
-                  }
-                }
+                // {
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'license-no',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                //     nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+                //     tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                //     hiddenNodes: [
+                //       '280b78fa-4e4d-11ee-a340-0242ac140007',
+                //       '280b7a9e-4e4d-11ee-a340-0242ac140007',
+                //       '280b7238-4e4d-11ee-a340-0242ac140007',
+                //       '280b7760-4e4d-11ee-a340-0242ac140007',
+                //       '280b7404-4e4d-11ee-a340-0242ac140007'
+                //     ],
+                //     labels: [['Cross Reference', 'License Number']]
+                //   }
+                // }
               ]
             }
           ]
         },
-        {
-          title: 'Site Visit',
-          name: 'site-visit-step',
-          workflowstepclass: 'workflow-form-component',
-          required: false,
-          layoutSections: [
-            {
-              componentConfigs: [
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'site-name',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    tileid: "['app-details-step']['site-name'][0]['tileId']",
-                    hiddenNodes: [
-                      '4a7bba20-9938-11ea-92e7-f875a44e0e11',
-                      '4a7bba21-9938-11ea-8f0f-f875a44e0e11'
-                    ],
-                    labels: [['Activity Name', 'Site Name']]
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'license-no',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: [
-                      '280b78fa-4e4d-11ee-a340-0242ac140007',
-                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
-                      '280b7238-4e4d-11ee-a340-0242ac140007'
-                    ],
-                    labels: [['Cross Reference', 'License Number']]
-                  }
-                },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'cm-ref',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                    tileid: "['app-details-step']['cm-ref'][0]['tileId']",
-                    hiddenNodes: [
-                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-                      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
-                    ],
-                    prefilledNodes: [
-                      // Source set to Heritage Environment Record Number
-                      [
-                        '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-                        '19afd557-cc21-44b4-b1df-f32568181b2c'
-                      ]
-                    ],
-                    labels: [['Cross Reference', 'CM Reference']]
-                  }
-                }
-              ]
-            }
-          ]
-        },
+        // {
+        //   title: 'Site Visit',
+        //   name: 'site-visit-step',
+        //   workflowstepclass: 'workflow-form-component',
+        //   required: false,
+        //   layoutSections: [
+        //     {
+        //       componentConfigs: [
+        //         {
+        //           componentName: 'widget-labeller',
+        //           uniqueInstanceName: 'site-name',
+        //           tilesManaged: 'one',
+        //           parameters: {
+        //             graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+        //             nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
+        //             resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+        //             tileid: "['app-details-step']['site-name'][0]['tileId']",
+        //             hiddenNodes: [
+        //               '4a7bba20-9938-11ea-92e7-f875a44e0e11',
+        //               '4a7bba21-9938-11ea-8f0f-f875a44e0e11'
+        //             ],
+        //             labels: [['Activity Name', 'Site Name']]
+        //           }
+        //         },
+        //         {
+        //           componentName: 'widget-labeller',
+        //           uniqueInstanceName: 'license-no',
+        //           tilesManaged: 'one',
+        //           parameters: {
+        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+        //             nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+        //             tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
+        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+        //             hiddenNodes: [
+        //               '280b78fa-4e4d-11ee-a340-0242ac140007',
+        //               '280b7a9e-4e4d-11ee-a340-0242ac140007',
+        //               '280b7238-4e4d-11ee-a340-0242ac140007'
+        //             ],
+        //             labels: [['Cross Reference', 'License Number']]
+        //           }
+        //         },
+        //         {
+        //           componentName: 'widget-labeller',
+        //           uniqueInstanceName: 'cm-ref',
+        //           tilesManaged: 'one',
+        //           parameters: {
+        //             graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+        //             nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+        //             resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+        //             tileid: "['app-details-step']['cm-ref'][0]['tileId']",
+        //             hiddenNodes: [
+        //               '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+        //               '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+        //               '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+        //             ],
+        //             prefilledNodes: [
+        //               // Source set to Heritage Environment Record Number
+        //               [
+        //                 '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+        //                 '19afd557-cc21-44b4-b1df-f32568181b2c'
+        //               ]
+        //             ],
+        //             labels: [['Cross Reference', 'CM Reference']]
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // },
         {
           title: 'Excavation Report',
           name: 'excavation-report-step',
