@@ -5,6 +5,7 @@
   "component": "views/components/plugins/edit-workflow",
   "componentname": "edit-workflow",
   "config": {
+    "show": false,
     "editableWorkflows": [
       {
         "slug": "licensing-workflow",
