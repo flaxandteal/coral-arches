@@ -28,7 +28,8 @@ define([
      * to either configure them from the workflow resource setup function and add them to the
      * safe list or don't provide them at all and allow them to be removed.
      */
-    this.safeArrayAccesses = ['resourceInstanceId', 'tileId'];
+    this.safeArrayAccesses;
+    this.defaultArrayAccesses = ['resourceInstanceId', 'tileId'];
 
     (() => {
       /**
@@ -37,6 +38,13 @@ define([
       const editMode = JSON.parse(localStorage.getItem(this.WORKFLOW_EDIT_MODE_LABEL));
       if (!editMode) return;
       localStorage.removeItem(this.WORKFLOW_EDIT_MODE_LABEL);
+
+      /**
+       * Set array accesses;
+       */
+      if (!this.safeArrayAccesses) {
+        this.safeArrayAccesses = this.defaultArrayAccesses;
+      }
 
       /**
        * The current system will try match the UUID kept in the address bar
