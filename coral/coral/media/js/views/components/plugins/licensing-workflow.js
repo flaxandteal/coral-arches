@@ -247,7 +247,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'location-names',
                   tilesManaged: 'many',
                   parameters: {
