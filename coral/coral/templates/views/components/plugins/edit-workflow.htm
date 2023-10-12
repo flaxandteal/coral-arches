@@ -55,8 +55,8 @@
     </button>
     <button
       class="btn btn-shim btn-labeled btn-lg btn-primary"
-      data-bind="click: () => {
-        editWorkflow();
+      data-bind="click: async () => {
+        await editWorkflow();
         window.location.href = workflowUrl();
       }, disable: !selectedResource()"
     >

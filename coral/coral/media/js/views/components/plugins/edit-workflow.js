@@ -48,12 +48,6 @@ define([
       return tile?.display_values.find((dv) => dv.nodeid === nodeId)?.value || '';
     };
 
-    this.selectedResource.subscribe(async (value) => {
-      if (value) {
-        await this.loadResourceData(value);
-      }
-    });
-
     this.loadResourceData = async (resourceId) => {
       this.loading(true);
       const componentData = await this[this.workflow().setupFunction](resourceId);
@@ -164,9 +158,11 @@ define([
           nodegroupId: tile.nodegroup
         };
         if (tile.nodegroup === '0dcf7c74-53d5-11ee-844f-0242ac130008') {
-          value['coverLetterData'] = JSON.parse(
-            tile.data['a99a4236-68e0-11ee-81c3-0242ac130004']?.[arches.activeLanguage]?.value
-          );
+          const letterData =
+            tile.data['a99a4236-68e0-11ee-81c3-0242ac130004']?.[arches.activeLanguage]?.value;
+          if (letterData) {
+            value['coverLetterData'] = JSON.parse(letterData);
+          }
         }
         /**
          * Good example of populating custom array access values. These
@@ -193,8 +189,9 @@ define([
       await this.loadResourceData(resourceId);
     };
 
-    this.editWorkflow = () => {
+    this.editWorkflow = async () => {
       localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
+      await this.loadResourceData(this.selectedResource());
       this.updateRecentlyEdited(this.selectedResource());
     };
 
