@@ -255,6 +255,20 @@ define([
       }
     };
 
+    this.getDisplayValue = (nodeConfigId, configKey, nodeId) => {
+      let found = null;
+      this.renderedNodegroups()[nodeConfigId]?.forEach((config) => {
+        return config[configKey]?.data.forEach((group) => {
+          return group.forEach((node) => {
+            if (node.nodeId === nodeId) {
+              found = node;
+            }
+          });
+        });
+      });
+      return found?.displayValue;
+    };
+
     this.getData = async () => {
       console.log('summary-step.js: Please configure the getData function');
     };
