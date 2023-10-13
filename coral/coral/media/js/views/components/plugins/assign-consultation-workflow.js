@@ -161,6 +161,19 @@ define([
                       ],
                     }
                   },
+                  {
+                    componentName: 'default-card',
+                    uniqueInstanceName: 'proposal',
+                    tilesManaged: 'one',
+                    parameters: {
+                      graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
+                      nodegroupid: '1b0e15e9-8864-11ea-b5f3-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
+                      hiddenNodes: [
+                      ],
+                    }
+                  },
 
                 ]
               }
