@@ -233,7 +233,7 @@ define([
           {
             title: 'Documentation',
             name: 'assingment-documentation',
-            required: true,
+            required: false,
             informationboxdata: {
               heading: 'Assignment Documentation',
             },
@@ -247,6 +247,32 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: 'b3addca4-8882-11ea-acc1-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
+                    //   labels: [['Cross Reference', 'Planning Reference']],
+                    }
+                  },
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Action',
+            name: 'consultation-action',
+            required: true,
+            informationboxdata: {
+              heading: 'Action',
+            },
+            layoutSections: [
+              {
+                componentConfigs: [
+                  {
+                    componentName: 'widget-labeller',
+                    uniqueInstanceName: 'consultation-action',
+                    tilesManaged: 'one',
+                    parameters: {
+                      graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
+                      nodegroupid: 'a5e15f5c-51a3-11eb-b240-f875a44e0e11',
                       resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
 
                     //   labels: [['Cross Reference', 'Planning Reference']],
