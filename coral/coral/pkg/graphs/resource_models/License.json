@@ -1042,6 +1042,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Decision Approved By",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "4bb33399-2c99-44c5-a61d-dbe23d540fe8",
+                    "label": {
+                        "en": "Decision Approved By"
+                    },
+                    "node_id": "ca121106-69ad-11ee-931f-0242ac130002",
+                    "sortorder": 5,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
                     "card_id": "aea9e4ca-991b-4dd5-831e-b30b11c7f0ae",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
@@ -1271,7 +1292,7 @@
                         "en": "Decision Notes"
                     },
                     "node_id": "f6c207ae-5938-11ee-9e74-0242ac130007",
-                    "sortorder": 5,
+                    "sortorder": 6,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
@@ -3604,6 +3625,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P94i_was_created_by",
                     "rangenode_id": "d8c48cf4-48cb-11ee-9081-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "d8c48cf4-48cb-11ee-9081-0242ac140007",
+                    "edgeid": "1e6113c7-fa2c-4a12-b699-709b13b9c9d1",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by",
+                    "rangenode_id": "ca121106-69ad-11ee-931f-0242ac130002"
                 },
                 {
                     "description": null,
@@ -8731,6 +8761,35 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "decision_approved_by",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                "name": "Person"
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Decision Approved By",
+                    "nodegroup_id": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "nodeid": "ca121106-69ad-11ee-931f-0242ac130002",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by",
+                    "sortorder": 0
+                },
+                {
                     "alias": "license_valid_to",
                     "config": {
                         "en": ""
@@ -8961,9 +9020,9 @@
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                "notes": "Moved valid span dates to decision nodegroup",
-                "publicationid": "52946d92-69ab-11ee-aef3-0242ac130002",
-                "published_time": "2023-10-13T09:31:44.084",
+                "notes": "Added decision approved by",
+                "publicationid": "2abcf1a6-69ae-11ee-b302-0242ac130002",
+                "published_time": "2023-10-13T09:52:05.731",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
