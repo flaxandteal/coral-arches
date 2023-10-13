@@ -9,6 +9,35 @@ define([
       viewModel: function (params) {
         this.componentName = 'assign-consultation-workflow';
         this.stepConfig = [
+            {
+                title: 'Initialise Consultation',
+                name: 'init-step',
+                required: true,
+                informationboxdata: {
+                  heading: 'Important Information',
+                  text: 'Please provide a name for the consultation'
+                },
+                layoutSections: [
+                  {
+                    componentConfigs: [
+                      {
+                        componentName: 'default-card',
+                        uniqueInstanceName: 'app-id',
+                        tilesManaged: 'one',
+                        parameters: {
+                          graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
+                          nodegroupid: '4ad66f55-951f-11ea-b2e2-f875a44e0e11',
+                          hiddenNodes: [
+                            '4ad66f59-951f-11ea-ab0a-f875a44e0e11',
+                            '4ad69681-951f-11ea-b8ab-f875a44e0e11',
+                            '4ad66f58-951f-11ea-9c61-f875a44e0e11',
+                          ],
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
           {
             title: 'Assign Consultation',
             name: 'application-details',
@@ -27,6 +56,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '3b500555-eec2-11eb-b785-a87eeabdefba',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                       labels: [['Cross Reference', 'Planning Reference']],
                       hiddenNodes: [
                         '3b50055b-eec2-11eb-b4af-a87eeabdefba',
@@ -48,6 +79,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '3b500555-eec2-11eb-b785-a87eeabdefba',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                       labels: [['Cross Reference', 'CM Reference']],
                       hiddenNodes: [
                         '3b50055b-eec2-11eb-b4af-a87eeabdefba',
@@ -70,6 +103,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '40eff4c9-893a-11ea-ac3a-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                       labels: [['Log Date', 'Dif Received Date'], ['Completion Date', 'Date Consulted']],
                       hiddenNodes: [
                         '40eff4cc-893a-11ea-92e4-f875a44e0e11',
@@ -87,6 +122,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: 'b37552ba-9527-11ea-96b5-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                       labels: [['Primary Reference Number', 'Entry Number']],
                       hiddenNodes: [
                         'b37552bf-9527-11ea-9c87-f875a44e0e11',
@@ -106,6 +143,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '73fdfe62-8895-11ea-a058-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                     }
                   },
                   {
@@ -115,6 +154,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '4ea4a189-184f-11eb-b45e-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                       hiddenNodes: [
                         '4ea4c885-184f-11eb-b4d5-f875a44e0e11'
                       ],
@@ -143,6 +184,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '152aa058-936d-11ea-b517-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                     //   labels: [['Cross Reference', 'Planning Reference']],
                     }
                   },
@@ -153,6 +196,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '44532175-2007-11ea-9976-c4d9877d154e',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                     //   labels: [['Cross Reference', 'Planning Reference']],
                     }
                   },
@@ -163,6 +208,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: '58a2b98f-a255-11e9-9a30-00224800b26d',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                     //   labels: [['Cross Reference', 'Planning Reference']],
                     }
                   },
@@ -187,6 +234,8 @@ define([
                     parameters: {
                       graphid: '8d41e49e-a250-11e9-9eab-00224800b26d',
                       nodegroupid: 'b3addca4-8882-11ea-acc1-f875a44e0e11',
+                      resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+
                     //   labels: [['Cross Reference', 'Planning Reference']],
                     }
                   },
