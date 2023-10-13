@@ -61,7 +61,8 @@ define([
      */
     this.loadLicenseData = async (licenseResourceId) => {
       const manyTilesManagedNodegroups = {
-        '6840f820-48ce-11ee-8e4e-0242ac140007': []
+        '6840f820-48ce-11ee-8e4e-0242ac140007': [],
+        'a5416b46-f121-11eb-8f2d-a87eeabdefba': []
       };
       const licenseTiles = await this.fetchTileData(licenseResourceId);
       this.resourceName(
@@ -103,6 +104,10 @@ define([
         (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
       );
       activityTiles.forEach((tile) => {
+        if (tile.nodegroup in manyTilesManagedNodegroups) {
+          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
+          return;
+        }
         let nodegroupId = tile.nodegroup;
         const externalRefSource = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
         if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
