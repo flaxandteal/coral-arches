@@ -45,6 +45,16 @@ WELL_KNOWN_RESOURCE_MODELS = [
             "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
             "nodeid": "676d47ff-9c1c-11ea-b07f-f875a44e0e11",
         },
+    ),
+    dict(
+        model_name="Person",
+        graphid="22477f01-1a44-11e9-b0a9-000d3ab1e588",
+        user_account={
+            "type": "user",
+            "lang": "en",
+            "nodegroupid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+            "nodeid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+        },
     )
 ]
 if WELL_KNOWN_MAPPING_FILE:
@@ -250,6 +260,8 @@ STATIC_ROOT = os.path.join(APP_ROOT, "staticfiles")
 # when hosting Arches under a sub path set this value to the sub path eg : "/{sub_path}/"
 FORCE_SCRIPT_NAME = None
 
+FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
+
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
 
@@ -369,6 +381,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # If True, allows for user self creation via the signup view. If False, users can only be created via the Django admin view.
 ENABLE_USER_SIGNUP = False
+ENABLE_PERSON_USER_SIGNUP = True
 
 CELERY_BROKER_URL = "" # RabbitMQ --> "amqp://guest:guest@localhost",  Redis --> "redis://localhost:6379/0"
 CELERY_ACCEPT_CONTENT = ['json']

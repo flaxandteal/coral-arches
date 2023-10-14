@@ -39,3 +39,5 @@ if settings.DEBUG:
 #settings.update_from_db()
 
 from coral import resource_model_hooks
+import logging
+logging.disable(logging.NOTSET)

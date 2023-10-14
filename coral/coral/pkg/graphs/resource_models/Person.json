@@ -476,6 +476,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "e2543712-8ada-478f-84f0-fd30d2cfd9e5",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "User Account"
+                    },
+                    "nodegroup_id": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "e79149c0-51ab-11eb-b20f-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -705,6 +732,35 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "adfd15ce-dbab-11e7-86d1-0fcf08612b27"
+                },
+                {
+                    "card_id": "e2543712-8ada-478f-84f0-fd30d2cfd9e5",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "User Account",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": ""
+                        },
+                        "uneditable": true,
+                        "width": "100%"
+                    },
+                    "id": "070e72e8-691c-411e-b9f5-35f9c16f215a",
+                    "label": {
+                        "en": "User Account"
+                    },
+                    "node_id": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "4110f743-1a44-11e9-9a37-000d3ab1e588",
@@ -5415,6 +5471,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "rangenode_id": "32e81677-effd-11eb-bef3-a87eeabdefba"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "22477f00-1a44-11e9-a60e-000d3ab1e588",
+                    "edgeid": "35b6f4df-baf9-46aa-b9ef-804435dcc7a5",
+                    "graph_id": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "b1f5c336-6a0e-11ee-b748-0242ac140009"
                 },
                 {
                     "description": null,
@@ -10134,6 +10199,26 @@
                     "nodeid": "b09288b0-9508-11ea-9ab6-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "user_account",
+                    "config": {},
+                    "datatype": "user",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "User Account",
+                    "nodegroup_id": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+                    "nodeid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0
                 },
                 {

@@ -70,7 +70,7 @@ def temp_get_descriptor(self, descriptor, context):
     requested_language = None
     if context is not None and "language" in context:
         requested_language = context["language"]
-    language = requested_language or get_language()
+    language = requested_language or resource_module.get_language()
 
     if language not in self.descriptors:
         self.descriptors[language] = {}

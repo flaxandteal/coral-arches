@@ -514,6 +514,7 @@ class ResourceModelWrapper:
                 single = False
                 value: Any = values[key]
                 typ = node["type"]
+                logger.error(typ)
                 if typ == [settings.Semantic]:
                     tiles.setdefault(node["nodegroupid"], [])
                     if "parentnodegroup_id" in node:
@@ -562,6 +563,9 @@ class ResourceModelWrapper:
                     single = True
                 elif typ == "boolean":
                     single = True
+                elif typ == "user":
+                    single = True
+                    logger.error("USER")
                 elif typ == date:
                     single = True
                     value = datetime.strptime(value, "%Y-%m-%d").strftime("%Y-%m-%d")
@@ -577,6 +581,7 @@ class ResourceModelWrapper:
                 elif typ == [settings.Concept]:
                     single = True
                 elif "lang" in node:
+                    logger.error("LUSER")
                     if typ == str:
                         single = True
                         value = {node["lang"]: {"value": value, "direction": "ltr"}} # FIXME: rtl

@@ -19,6 +19,8 @@ from django.contrib.contenttypes.models import ContentType
 from guardian.models import GroupObjectPermission, UserObjectPermission
 from arches.templatetags.template_tags import register
 from arches.app.utils import index_database
+from coral.resource_model_wrappers import Person
+
 import arches.app.views.search
 from coral import settings
 
