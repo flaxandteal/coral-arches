@@ -233,11 +233,11 @@ define([
       <div><span>Date: [send_date]</div></span>
       </div>`
     )
-    if (self.getTextValue(self.coverLetterData.licenseNumber)) {
-      result += `<span>License Number: ${self.getTextValue(
-        self.coverLetterData.licenseNumber
-      )}</span>`;
-    }
+    // if (self.getTextValue(self.coverLetterData.licenseNumber)) {
+    //   result += `<span>Licence Number: ${self.getTextValue(
+    //     self.coverLetterData.licenseNumber
+    //   )}</span>`;
+    // }
     self.getAddressValue = (value) => {
       return self.getTextValue(
         self.coverLetterData.addresses[self.coverLetterData.selectedAddress()][value]
@@ -301,7 +301,7 @@ define([
       }
 
       if (self.getTextValue(self.coverLetterData.licenseNumber)) {
-        result += `<div><span><strong>License Number: ${self.getTextValue(
+        result += `<div><span><strong>Licence Number: ${self.getTextValue(
           self.coverLetterData.licenseNumber
         )}</strong></span></div>`;
       }
