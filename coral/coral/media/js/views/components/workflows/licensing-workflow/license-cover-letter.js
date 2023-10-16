@@ -181,6 +181,7 @@ define([
       },
       this
     );
+    
 
     self.fromAddress = ko.observable(
       self.getSavedValue('fromAddress') ||
@@ -296,13 +297,55 @@ define([
         "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
         : "</span></div>"
       }`)
+      this.detailsPreview = ko.computed(
+        {
+          read: function () {
+            return createTextObject(
+              self.details().replace(
+                '[Date]',
+                self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]')
+              .replace('[recipient]', self.getTextValue(self.coverLetterData.recipientName()) || '[recipient]')
+              .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
+              .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '[site_address]')
+              .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county')
+              .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenseNumber) || '[licence_no]')
+              .replace(
+                '[send_date]',
+                self.coverLetterData.dates.sendDate() || '[send_date]'
+              ).replace(
+                '[cmref]',
+                self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]'
+              ).replace('[decision_by]', self.getTextValue(self.coverLetterData.decisionBy))
+              // .replace()
+  
+            );
+          }
+        },
+        this
+      );
 
+    this.preview = function(textObject) {
+      if (typeof(textObject) === 'string') {
+        return textObject.replace(
+          '[Date]',
+          self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]')
+        .replace('[recipient]', self.getTextValue(self.coverLetterData.recipientName()) || '[recipient]')
+        .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
+        .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '[site_address]')
+        .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county')
+        .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenseNumber) || '[licence_no]')
+        .replace('[send_date]',self.coverLetterData.dates.sendDate() || '[send_date]')
+        .replace('[cmref]',self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]')
+        .replace('[decision_by]', self.getTextValue(self.coverLetterData.decisionBy) || '[decision_by]')
+        .replace('[Signature]', self.getTextValue(self.coverLetterData.decisionBy.name) || '[decision_by]')
+      }
+    }
     self.letter = ko.computed(() => {
       let result = ''
-        result += self.header();
-        result += self.details();
-        result += self.body();
-        result += self.footer()
+        result += self.preview(self.header());
+        result += self.preview(self.details());
+        result += self.preview(self.body());
+        result += self.preview(self.footer())
       // }
       return result;
     }, self);
@@ -658,9 +701,9 @@ define([
 
         self.details(
           `<div style="display: flex; width: 100%; flex-direction: column">
-          <div><strong>EXCAVATION REPORT FOR: [site]${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
+          <div><strong>EXCAVATION REPORT FOR: [site][site_address]</strong></span></div>
           <div><span><strong>Licence Number: [licence_no]
-          )}</strong></span></div></div>
+          </strong></span></div></div>
           <br />
           `)
         self.header(
@@ -753,7 +796,7 @@ define([
               `)
 
             self.footer(`
-            <div> <span style="width: 20ch;"> Authorised Officer </span><span><u>[decision_by]</u></span></div>
+            <div> <span style="width: 20ch;"> Authorised Officer </span><span><u>[Signature]</u></span></div>
             <div> <span style="width: 20ch; padding-right: 7ch"> Dated this </span><span><u>[send_date]</u></span></div>
             <div> <span style="width: 20ch; padding-right: 2ch"> Licence Number </span><span><u>[licence_no]</u></span></div>
             `)
