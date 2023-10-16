@@ -4,11 +4,22 @@
 {% block form %}
 <div class="row widget-wrapper">
   <div class="form-group">
+    <!-- ko if: mode() !== 'summary' -->
     <label class="control-label widget-input-label" for="" data-bind="text: label"></label>
+    <!-- /ko -->
+    <!-- ko if: mode() === 'summary' -->
+    <h5 class="summary-value" data-bind="text: label"></h5>
+    <!-- /ko -->
     <div class="col-xs-12">
       
       <div
-        style="border: 5px solid #eee; padding: 10px; max-width: 800px; width: 100%; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);"
+        style="
+          border: 5px solid #eee;
+          padding: 10px;
+          max-width: 800px;
+          width: 100%;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        "
         data-bind="html: coverLetterHtml()"
       ></div>
     </div>
@@ -22,7 +33,7 @@
   <input type="" placeholder="{% trans "Label" %}" id="" class="form-control input-md widget-input"
   data-bind="textInput: label">
 </div>
-{% endblock config_form %} 
+{% endblock config_form %}
 
 <!-- ko if: !configForm  && state === 'display_value' -->
 {% block display_value %}
@@ -33,9 +44,15 @@
 <!-- ko if: !configForm  && state === 'report' -->
 <!-- ko if: !ko.unwrap(hideEmptyNodes) || ko.unwrap(hideEmptyNodes) === true && displayValue() -->
 {% block report %}
-<dt data-bind="text: label"></dt>
+<dt data-bind="text: '123"></dt>
 <dd
-  style="border: 5px solid #eee; padding: 10px; max-width: 500px; width: 100%; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);"
+  style="
+    border: 5px solid #eee;
+    padding: 10px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  "
   data-bind="html: coverLetterHtml()"
 ></dd>
 {% endblock report %}

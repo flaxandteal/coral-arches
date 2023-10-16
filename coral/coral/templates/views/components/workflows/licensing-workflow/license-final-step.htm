@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div style="display: flex">
+  <div style="display: flex; flex-wrap: wrap">
     <div
       data-bind="component: {
         name: 'render-nodes',
@@ -36,6 +36,21 @@
         name: 'render-nodes',
         params: {
           resourceNodes: renderedNodegroups()['digital-files']
+        }
+      }"
+    ></div>
+    <div
+      data-bind="component: {
+        name: 'cover-letter-widget',
+        params: {
+          config: {
+            label: 'Cover Letter',
+            mode: 'summary'
+          },
+          coverLetterHtml: coverLetterHtml,
+          loading: loading,
+          form: $data,
+          pageVm: $root
         }
       }"
     ></div>
