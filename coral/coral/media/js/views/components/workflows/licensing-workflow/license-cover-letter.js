@@ -170,8 +170,12 @@ define([
           return createTextObject(
             self.getTextValue(this.textBody()).replace(
               '[Date]',
-              self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]'
-            )
+              self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]')
+            .replace('[recipient]', self.getTextValue(self.coverLetterData.recipientName()) || '[recipient]')
+            .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
+            .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '[site_address]')
+            .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county')
+
           );
         }
       },
@@ -517,13 +521,11 @@ define([
                 });
               }
               if (self.hasNodeGroup(contactTiles, 'af3b0116-29a9-11eb-8333-f875a44e0e11')) {
-                // Name nodegroup of company
                 const companyName = self.getValueFromTiles(
                   contactTiles,
                   'e8431c61-8098-11ea-8b01-f875a44e0e11'
                 );
                 if (companyName) {
-                  console.log('companyName: ', companyName);
                   self.coverLetterData.companyName(companyName.value);
                 }
                 self.configureAddress(contactTiles, 'company', {
@@ -656,9 +658,8 @@ define([
 
         self.details(
           `<div style="display: flex; width: 100%; flex-direction: column">
-          <div><strong>EXCAVATION REPORT FOR: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
-          <div><span><strong>Licence Number: ${self.getTextValue(
-            self.coverLetterData.licenseNumber
+          <div><strong>EXCAVATION REPORT FOR: [site]${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
+          <div><span><strong>Licence Number: [licence_no]
           )}</strong></span></div></div>
           <br />
           `)
@@ -668,7 +669,7 @@ define([
                <div style="display: flex; justify-content: space-around; width: 100%">
                ${self.toAddress()}${self.fromAddressPreview()}</div>`
             )
-        self.footer((`
+        self.footer((`  
           <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
           <span>Yours sincerely\n ${
         self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
@@ -698,9 +699,8 @@ define([
             self.details(
               `<div style="display: flex; width: 100%; flex-direction: column">
               <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
-              <div><span><strong>Site: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
-              <div><span><strong>Licence Number: ${self.getTextValue(
-              self.coverLetterData.licenseNumber
+              <div><span><strong>Site: [site]${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
+              <div><span><strong>Licence Number: [licence_no]
             )}</strong></span></div></div>
             <br />
             `)
@@ -758,7 +758,6 @@ define([
             <div> <span style="width: 20ch; padding-right: 2ch"> Licence Number </span><span><u>[licence_no]</u></span></div>
             `)
           }
-      console.log(self.textBody())
       self.textReady(true)
     })
 
