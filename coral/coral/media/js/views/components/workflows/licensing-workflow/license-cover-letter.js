@@ -93,7 +93,8 @@ define([
         },
         dates: {
           acknowledged: ko.observable(data?.dates?.acknowledged || ''),
-          received: ko.observable(data?.dates?.received || '')
+          received: ko.observable(data?.dates?.received || ''),
+          sendDate: ko.observable(data?.dates?.received || new Date().toLocaleDateString()),
         },
         addresses: {
           applicant: self.createAddressObject(data?.addresses?.applicant),
@@ -185,11 +186,26 @@ define([
     //   this.loading(true);
     //   this.loading(false);
     // });
+    this.header = ko.observable(
+      self.getSavedValue('headerBody') ||
+      '<img width="30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />'
+    )
 
     this.textBody = ko.observable(
       self.getSavedValue('textBody') ||
         createTextObject(
-          'Further to your application on [Date], please find attached an Excavation License for the above mentioned location.'
+          `<div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
+          <br />
+          <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
+          <br />
+          [conditions]
+          <br /><br />
+          <div><em>The Historic Environment Division operates an environmental management system to the requirements of ISO 14001 and would remind all parties of the need to comply with relevant environmental legislation. Legislation covers, but is not limited to, waste management issues, water pollution, air pollution and appropriate storage of materials.</em></div>
+
+          <div>The division has published an environmental good practice guide for archaeological excavations which may be found at:</div>
+          <br />
+          <a style="color: blue" href="url">https://www.communities-ni.gov.uk/publications/environmental-good-practice-guide-archaeological-excavations</a>
+          `
         )
     );
     this.textPreview = ko.computed(
@@ -200,11 +216,13 @@ define([
               '[Date]',
               self.coverLetterData.dates.acknowledged() || '[Date]'
             )
+            
           );
         }
       },
       this
     );
+    
 
     // this.applicant.subscribe((contact) => {
     //   if (typeof contact === 'string') {
@@ -304,54 +322,72 @@ define([
     this.sendDateOptions = ko.observable(['today', 'decision', 'acknowledged']);
     this.selectedSendDate = ko.observable('today');
 
+    self.fromAddress = ko.observable(
+      self.getSavedValue('fromAddress') ||
+      `<div style="width: 40%; border: 1px solid; text-align: left">
+      <div><span>Historic Environment Division</span></div>
+      <div><span>Ground Floor</span></div>
+      <div><span>NINE Lanyon Place</span></div>
+      <div><span>Town Parks</span></div>
+      <div><span>Belfast</span></div>
+      <div><span>BT1 3LP</span></div>
+      <div><span>Email: ExcavationsandReports@communities-ni.gov.uk</span></div>
+      <br />
+      <div><span>Our Ref: ${self.getTextValue(self.coverLetterData.cmReference) ? self.getTextValue(self.coverLetterData.cmReference) : '[cmref]'}</span></div>
+      <br />
+      <div><span>Date: [send_date]</div></span>
+      </div>`
+    )
+    if (self.getTextValue(self.coverLetterData.licenseNumber)) {
+      result += `<span>License Number: ${self.getTextValue(
+        self.coverLetterData.licenseNumber
+      )}</span>`;
+    }
     self.getAddressValue = (value) => {
       return self.getTextValue(
         self.coverLetterData.addresses[self.coverLetterData.selectedAddress()][value]
       );
     };
+    this.fromAddressPreview = ko.computed(
+      {
+        read: function () {
+          return self.fromAddress().replace(
+              '[send_date]',
+              self.coverLetterData.dates.sendDate() || '[send_date]'
+            ).replace(
+              '[cmref]',
+              self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]'
+            )
+        }
+      },
+      this
+    );
 
-    self.header = ko.computed(() => {
-      let result = '<div>';
+    self.toAddress = ko.computed(() => {
+      let result = '<div style="width: 40%; height: fit-content; border: 1px solid;">';
+      if (self.getTextValue(self.coverLetterData.recipientName())){
+        result += `<div><span>${self.getTextValue(self.coverLetterData.recipientName())}</span></div>`
+      }
+      if (self.getTextValue(self.company())){
+        result += `<div><span>${self.getTextValue(self.company())}</span></div>`
+      }
       if (self.getAddressValue('buildingName')) {
-        result += `<span>${self.getAddressValue('buildingName')}</span>`;
+        result += `<div><span>${self.getAddressValue('buildingName')}</span></div>`;
       }
-      result += '</div><div>';
       if (self.getAddressValue('buildingNumber')) {
-        result += `<span>${self.getAddressValue('buildingNumber')}</span>`;
-      }
-      if (self.getAddressValue('buildingNumber') && self.getAddressValue('street')) {
-        result += `<span>, </span>`;
-      }
-      if (self.getAddressValue('street')) {
-        result += `<span>${self.getAddressValue('street')}</span>`;
-      }
-      if (self.getAddressValue('street') && self.getAddressValue('subStreet')) {
-        result += `<span>, </span>`;
+        result += `<div><span>${self.getAddressValue('buildingNumber')}, ${self.getAddressValue('streetName')}</span></div>`;
       }
       if (self.getAddressValue('subStreet')) {
-        result += `<span>${self.getAddressValue('subStreet')}</span>`;
+        result += `<div><span>${self.getAddressValue('buildingNumberSubSt') ? self.getAddressValue('buildingNumberSubSt') +', ' : ''}${self.getAddressValue('subStreet')}</span></div>`;
       }
-      if (self.getAddressValue('subStreet') && self.getAddressValue('buildingNumberSubSt')) {
-        result += `<span>, </span>`;
-      }
-      if (self.getAddressValue('buildingNumberSubSt')) {
-        result += `<span>${self.getAddressValue('buildingNumberSubSt')}</span>`;
-      }
-      result += '</div><div>';
       if (self.getAddressValue('city')) {
-        result += `<span>${self.getAddressValue('city')}</span>`;
-      }
-      if (self.getAddressValue('city') && self.getAddressValue('county')) {
-        result += `<span>, </span>`;
+        result += `<div><span>${self.getAddressValue('city')}</span></div>`;
       }
       if (self.getAddressValue('county')) {
-        result += `<span>${self.getAddressValue('county')}</span>`;
-      }
-      if (self.getAddressValue('county') && self.getAddressValue('postcode')) {
-        result += `<span>, </span>`;
+        result += `<div><span>${self.getAddressValue('county')}</span></div>`;
       }
       if (self.getAddressValue('postcode')) {
-        result += `<span>${self.getAddressValue('postcode')}</span>`;
+        result += `<div><span>${self.getAddressValue('postcode')}</span></div>`;
       }
       result += '</div>';
       return result;
@@ -359,24 +395,22 @@ define([
 
     self.details = ko.computed(() => {
       let result = '<div style="display: flex; width: 100%; flex-direction: column">';
-      if (self.getTextValue(self.coverLetterData.dates.acknowledged)) {
-        result += `<span>Date: ${self.getTextValue(
-          self.coverLetterData.dates.acknowledged
-        )}</span>`;
-      }
-      if (self.getTextValue(self.coverLetterData.cmReference)) {
-        result += `<span>CM Reference: ${self.getTextValue(
-          self.coverLetterData.cmReference
-        )}</span>`;
-      }
-      if (self.getTextValue(self.coverLetterData.licenseNumber)) {
-        result += `<span>License Number: ${self.getTextValue(
-          self.coverLetterData.licenseNumber
-        )}</span>`;
-      }
+      // if (self.getTextValue(self.coverLetterData.dates.acknowledged)) {
+      //   result += `<span>Date: ${self.getTextValue(
+      //     self.coverLetterData.dates.acknowledged
+      //   )}</span>`;
+      // }
+      result += `<div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>`
       if (self.getTextValue(self.coverLetterData.siteName)) {
-        result += `<span>Site: ${self.getTextValue(self.coverLetterData.siteName)}</span>`;
+        result += `<div><span><strong>Site: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>`;
       }
+
+      if (self.getTextValue(self.coverLetterData.licenseNumber)) {
+        result += `<div><span><strong>License Number: ${self.getTextValue(
+          self.coverLetterData.licenseNumber
+        )}</strong></span></div>`;
+      }
+      
       result += '</div>';
       return result;
     }, self);
@@ -398,22 +432,28 @@ define([
     self.footer = ko.computed(() => {
       let result =
         '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
+      
+      result += `<span>Yours sincerely\n ${
+        self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
+      }</span>`;
       if (self.getTextValue(self.coverLetterData.seniorInspectorName)) {
-        result += `<span>Senior Inspector:  ${self.getTextValue(
+        result += `<span>pp</span><span>Senior Inspector:  ${self.getTextValue(
           self.coverLetterData.seniorInspectorName
         )}</span>`;
       }
-      result += `<span>Signed: ${
-        self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-      }</span>`;
       result += '</div>';
       return result;
     }, self);
 
     self.letter = ko.computed(() => {
+      console.log("weruliv", self.toAddress())
       let result =
         '<div style="display: flex; align-items: end; width: 100%; flex-direction: column">';
       result += self.header();
+      result += '<div style="display: flex; justify-content: space-around; width: 100%">'
+      result += self.toAddress()
+      result += self.fromAddressPreview();
+      result += '</div>'
       result += self.details();
       result += self.body();
       result += self.footer();
@@ -708,6 +748,7 @@ define([
           );
           if (cmReference) {
             self.coverLetterData.cmReference(cmReference.value);
+            console.log("we do have it,", self.coverLetterData.cmReference())
           }
           self.configureAddress(activityTiles, 'site', {
             fullAddressId: 'a5419224-f121-11eb-9ca7-a87eeabdefba',
