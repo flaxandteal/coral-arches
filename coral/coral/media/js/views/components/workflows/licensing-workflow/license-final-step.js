@@ -93,6 +93,11 @@ define([
       digitalFiles: {
         label: 'Digital Files',
         nodegroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
+      },
+      coverLetter: {
+        visible: false,
+        nodegroupId: '0dcf7c74-53d5-11ee-844f-0242ac130008',
+        renderNodeIds: ['72e0fc96-53d5-11ee-844f-0242ac130008']
       }
     };
 
@@ -170,6 +175,8 @@ define([
       }
     };
 
+    this.coverLetterHtml = ko.observable();
+
     this.getData = async () => {
       await this.renderResourceIds(this.resourceid, this.licenseNodes);
 
@@ -190,6 +197,14 @@ define([
       ];
 
       await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
+
+      this.coverLetterHtml(
+        this.getDisplayValue(
+          this.licenseNodes.id,
+          'coverLetter',
+          '72e0fc96-53d5-11ee-844f-0242ac130008'
+        )
+      );
 
       console.log('License Final Step: ', this.renderedNodegroups());
     };
