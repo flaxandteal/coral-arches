@@ -606,10 +606,8 @@ define([
 
     if (!params.form.savedData()?.['tileId']) {
       // Run fetch prefill data if there hasn't previously been a saved letter
-      console.log('Loading data...');
       self.loadData();
     }
-    // self.loadData();
   }
 
   ko.components.register('license-cover-letter', {
