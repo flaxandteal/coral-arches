@@ -258,8 +258,8 @@ define([
     this.getDisplayValue = (nodeConfigId, configKey, nodeId) => {
       let found = null;
       this.renderedNodegroups()[nodeConfigId]?.forEach((config) => {
-        return config[configKey]?.data.forEach((group) => {
-          return group.forEach((node) => {
+        config[configKey]?.data.forEach((group) => {
+          group.forEach((node) => {
             if (node.nodeId === nodeId) {
               found = node;
             }
