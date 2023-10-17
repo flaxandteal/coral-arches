@@ -8,10 +8,12 @@ define([
 ], function (ko, arches, uuid, _, WidgetViewModel, coverLetterWidgetTemplate) {
   return ko.components.register('cover-letter-widget', {
     viewModel: function (params) {
-      params.configKeys = ['placeholder', 'label', 'disabled', 'defaultValue'];
+      params.configKeys = ['placeholder', 'label', 'disabled', 'defaultValue', 'mode'];
       WidgetViewModel.apply(this, [params]);
 
       const self = this;
+
+      self.mode = ko.observable(params.config.mode);
 
       self.coverLetterHtml = ko.observable();
 
