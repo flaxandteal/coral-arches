@@ -1,124 +1,82 @@
+{% extends "views/components/cards/default.htm" %}
 {% load i18n %}
 
-<div class="workbench-card-wrapper">
-    <div class="workbench-card-sidebar">
-        {% block tabs %}
-        <div class="workbench-card-sidebar-tab" data-bind="click: function() {
-            toggleTab('basemap');
-        }, css: {
-            'active': activeTab() === 'basemap'
-        }">
-            <i class="fa fa-globe"></i>
-            <span data-bind="text: $root.translations.basemap" class="map-sidebar-text"></span>
-        </div>
-        <div class="workbench-card-sidebar-tab" data-bind="click: function() {
-            toggleTab('overlays');
-        }, css: {
-            'active': activeTab() === 'overlays'
-        }">
-            <i class="fa fa-list"></i>
-            <span data-bind="text: $root.translations.overlays" class="map-sidebar-text"></span>
-        </div>
-        <div class="workbench-card-sidebar-tab" data-bind="click: function() {
-            toggleTab('legend');
-        }, css: {
-            'active': activeTab() === 'legend'
-        }">
-            <i class="fa fa-list-alt"></i>
-            <span data-bind="text: $root.translations.legend" class="map-sidebar-text"></span>
-        </div>
-        {% endblock tabs %}
+{% block form %}
+{% include 'views/components/map-widget-editor.htm' %}
+{% endblock form %}
+
+{% block config %}
+<div>
+    <div class="node-config-item">
+        <label class="control-label" for="">
+            <span data-bind="text: $root.translations.selectDrawingsMapSource"></span>
+        </label>
+        <input type="text" data-bind="textInput: selectSource" class="form-control input-md widget-input">
     </div>
-    <!--ko if: activeTab() -->
-        <div class="workbench-card-sidepanel" data-bind="css:{'expanded': expandSidePanel()}">
-            {% block sidepanel %}
-            <!--ko if: activeTab() === 'basemap' -->
-                <div class="workbench-card-sidepanel-header-container">
-                    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">
-                        <span data-bind="text: $root.translations.basemaps" ></span>
-                    </h4>
-                </div>
-                <div class="workbench-card-sidepanel-border"></div>
-
-                <div class="workbench-card-sidepanel-body">
-                <div class="basemap-listing-container">
-                <!--ko foreach: basemaps -->
-                    <div class="basemap-listing" data-bind="
-                        click: $parent.activeBasemap,
-                        css: {'active-basemap': $data === $parent.activeBasemap()}
-                        ">
-                        <i data-bind="css: icon" class="layer-listing-icon"></i>
-                        <span data-bind="text: name"></span>
-                    </div>
-                <!--/ko -->
-                </div>
-                </div>
-
-            <!--/ko -->
-
-            <!--ko if: activeTab() === 'overlays' -->
-                <div class="workbench-card-sidepanel-header-container">
-                    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">
-                        <span data-bind="text: $root.translations.overlays" ></span>
-                    </h4>
-                </div>
-                <div class="workbench-card-sidepanel-border"></div>
-                <div class="workbench-card-sidepanel-body">
-                <div class="overlays-listing-container" data-bind="sortable: {
-                    data: overlays
-                }">
-                    <div class="overlay-listing" data-bind="css: {'active-overlay': onMap}">
-                        <div class="overlay-name" data-bind="
-                            click: function() {
-                                onMap(!onMap());
-                                updateParent($parent);
-                            }
-                        ">
-                            <i data-bind="css: icon" class="layer-listing-icon"></i>
-                            <span data-bind="text: name"></span>
-                        </div>
-                        <div class="relative">
-                            <div class="overlay-opacity-control">
-                                <i class="fa fa-adjust"></i>
-                                <div class="overlay-opacity-slider">
-                                    <input type="range" min="0" max="100" step="1" data-bind="value: opacity, valueUpdate: 'input'">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            <!--/ko -->
-
-            <!--ko if: activeTab() === 'legend' -->
-                <div class="workbench-card-sidepanel-header-container">
-                    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">
-                        <span data-bind="text: $root.translations.legend" ></span>
-                    </h4>
-                </div>
-                <div class="workbench-card-sidepanel-border"></div>
-                <div class="workbench-card-sidepanel-body">
-                <div class="legend-listing-container" data-bind="sortable: {
-                    data: overlays
-                }">
-                    <div class="legend-listing" data-bind="css: {'hidden': !onMap()}">
-                        <div class="legend-name">
-                            <i data-bind="css: icon" class="layer-listing-icon"></i>
-                            <span data-bind="text: name"></span>
-                        </div>
-                        <!--ko if: legend -->
-                        <div class="legend-content" data-bind="html: legend"></div>
-                        <!--/ko -->
-                    </div>
-                </div>
-                </div>
-            <!--/ko -->
-            {% endblock sidepanel %}
+    <div class="node-config-item">
+        <label class="control-label" for="">
+            <span data-bind="text: $root.translations.selectDrawingsMapSourceLayer"></span>
+        </label>
+        <input type="text" data-bind="textInput: selectSourceLayer" class="form-control input-md widget-input">
+    </div>
+    <div class="node-config-item">
+        <label class="control-label" for="">
+            <span data-bind="text: $root.translations.selectDrawingsText"></span>
+        </label>
+        <input type="text" data-bind="textInput: selectText" class="form-control input-md widget-input">
+    </div>
+    <div class="node-config-item">
+        <div class="control-label">
+            <span data-bind="text: $root.translations.mapCenterLongitude"></span>
         </div>
-    <!--/ko -->
-    <div class="workbench-card-container" data-bind="mapboxgl: {
-            mapOptions: mapOptions,
-            afterRender: setupMap
-        }">
+        <div class="col-xs-12 pad-no crud-widget-container">
+            <input 
+                type="number" 
+                id="" 
+                class="form-control input-md widget-input" 
+                data-bind="
+                    attr: {placeholder: $root.translations.longitudeXCoordinate},
+                    value: centerX, 
+                    valueUpdate: 'keyup'
+                "
+            >
+        </div>
+    </div>
+    <div class="node-config-item">
+        <div class="control-label">
+            <span data-bind="text: $root.translations.mapCenterLatitude"></span>
+        </div>
+        <div class="col-xs-12 pad-no crud-widget-container">
+            <input 
+                type="number" 
+                id="" 
+                class="form-control input-md widget-input" 
+                data-bind="
+                    attr: {placeholder: $root.translations.latitudeYCoordinate},
+                    value: centerY, 
+                    valueUpdate: 'keyup'
+                "
+            >
+        </div>
+    </div>
+    <div class="node-config-item">
+        <div class="control-label">
+            <span data-bind="text: $root.translations.defaultZoom"></span>
+        </div>
+        <div class="col-xs-12 pad-no crud-widget-container">
+            <input 
+                type="number" 
+                min=1 
+                max=20
+                id="" 
+                class="form-control input-md widget-input" 
+                data-bind="
+                    attr: {placeholder: $root.translations.zoomLevel},
+                    value: zoom, 
+                    valueUpdate: 'keyup'
+                "
+            >
+        </div>
     </div>
 </div>
+{% endblock config %}
