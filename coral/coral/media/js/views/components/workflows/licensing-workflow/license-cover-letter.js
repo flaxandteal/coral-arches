@@ -132,6 +132,7 @@ define([
     this.coverLetterData.selectedAddress.subscribe((selected) => {
       if (!selected) this.coverLetterData.selectedAddress('applicant');
     }, this);
+
     this.addressOptions = ko.observable([
       { text: 'Applicant', id: 'applicant' },
       { text: 'Company', id: 'company' },
@@ -177,6 +178,26 @@ define([
       },
       this
     );
+
+    this.preview = function(textObject) {
+      if (typeof(textObject) === 'string') {
+        return textObject.replace(
+          '[Date]',
+          self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]')
+        .replace('[recipient]', self.getTextValue(self.coverLetterData.recipientName()) || '[recipient]')
+        .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
+        .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '[site_address]')
+        .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county')
+        .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenseNumber) || '[licence_no]')
+        .replace('[send_date]',self.coverLetterData.dates.sendDate() || '[send_date]')
+        .replace('[cmref]',self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]')
+        .replace('[decision_by]', self.getTextValue(self.coverLetterData.decisionBy) || '[decision_by]')
+        .replace('[Signature]', self.getTextValue(self.coverLetterData.decisionBy.name) || '[decision_by]')
+        .replace('[to_address]', self.toAddress())
+        .replace('[from_address]', self.fromAddressPreview())
+      }
+    }
+    
 
     self.fromAddress = ko.observable(
       self.getSavedValue('fromAddress') ||
@@ -250,13 +271,15 @@ define([
       return result;
     }, self);
 
-    this.header = ko.observable(
-      self.getSavedValue('headerBody') ||
-        `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
-         <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
-         <div style="display: flex; justify-content: space-around; width: 100%">
-         ${self.toAddress()}${self.fromAddressPreview()}</div>`
-      )
+    this.headerText = ko.observable(`<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
+    <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
+    <div style="display: flex; justify-content: space-around; width: 100%">
+    [to_address][from_address]</div>`)
+
+    this.header = ko.computed(() => {
+      return self.getSavedValue('headerBody') ||
+      self.preview(this.headerText())
+    })
 
     self.details = ko.observable(
     `<div style="display: flex; width: 100%; flex-direction: column">
@@ -282,24 +305,27 @@ define([
       return result;
     }, self);
 
-    self.footer = ko.observable(`
-    <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-      <span>Yours sincerely\n ${
-        self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-      }</span>
-      ${
-        self.getTextValue(self.coverLetterData.seniorInspectorName) ?
-        "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-        : "</span></div>"
-      }`)
+    self.footer = ko.observable()
 
+    // self.footer = ko.computed(() => {
+    //   return `
+    //   <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
+    //   <span>Yours sincerely\n ${
+    //     self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
+    //   }</span>
+    //   ${
+    //     self.getTextValue(self.coverLetterData.seniorInspectorName) ?
+    //     "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
+    //     : "</span></div>"
+    //   }`
+    // })
+      
     self.letter = ko.computed(() => {
       let result = ''
         result += self.header();
         result += self.details();
         result += self.body();
         result += self.footer()
-      // }
       return result;
     }, self);
 
@@ -653,7 +679,6 @@ define([
           <div>I would like to thank you for your co-operation and can confirm that you have met all of Historic Environment Division's conditions associated with this licence.</div>
           `)
         )
-
         self.details(
           `<div style="display: flex; width: 100%; flex-direction: column">
           <div><strong>EXCAVATION REPORT FOR: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
@@ -661,75 +686,68 @@ define([
             self.coverLetterData.licenseNumber
           )}</strong></span></div></div>
           <br />
-          `)
-        self.header(
-              `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
-               <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
-               <div style="display: flex; justify-content: space-around; width: 100%">
-               ${self.toAddress()}${self.fromAddressPreview()}</div>`
-            )
+          `
+        )
+        self.headerText(
+          `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
+           <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
+           <div style="display: flex; justify-content: space-around; width: 100%">
+           ${self.toAddress()}${self.fromAddressPreview()}</div>`
+        )
         self.footer((`
           <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
           <span>Yours sincerely\n ${
-        self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-      }</span>
-      ${
-        self.getTextValue(self.coverLetterData.seniorInspectorName) ?
-        "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-        : "</span></div>"
-      }`))
+          self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
+          }</span>
+          ${
+            self.getTextValue(self.coverLetterData.seniorInspectorName) ?
+            "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
+            : "</span></div>"
+          }`)
+        )
       } else if (temp === 'licence-cover-letter'){
-            self.textBody(
-              createTextObject(
-              `<div>Dear [recipient]</div>
-              <div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
-            <br />
-            <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
-            <br />
-            [conditions]
-            <br /><br />
-            <div><em>The Historic Environment Division operates an environmental management system to the requirements of ISO 14001 and would remind all parties of the need to comply with relevant environmental legislation. Legislation covers, but is not limited to, waste management issues, water pollution, air pollution and appropriate storage of materials.</em></div>
-            <br />
-            <div>The division has published an environmental good practice guide for archaeological excavations which may be found at:</div>
-            <br />
-            <a style="color: blue" href="url">https://www.communities-ni.gov.uk/publications/environmental-good-practice-guide-archaeological-excavations</a>
-            `)
-            )
-            self.details(
-              `<div style="display: flex; width: 100%; flex-direction: column">
-              <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
-              <div><span><strong>Site: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
-              <div><span><strong>Licence Number: ${self.getTextValue(
-              self.coverLetterData.licenseNumber
-            )}</strong></span></div></div>
-            <br />
-            `)
-            self.footer((`
+        self.textBody(
+          createTextObject(
+          `<div>Dear [recipient]</div>
+          <div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
+          <br />
+          <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
+          <br />
+          [conditions]
+          <br /><br />
+          <div><em>The Historic Environment Division operates an environmental management system to the requirements of ISO 14001 and would remind all parties of the need to comply with relevant environmental legislation. Legislation covers, but is not limited to, waste management issues, water pollution, air pollution and appropriate storage of materials.</em></div>
+          <br />
+          <div>The division has published an environmental good practice guide for archaeological excavations which may be found at:</div>
+          <br />
+          <a style="color: blue" href="url">https://www.communities-ni.gov.uk/publications/environmental-good-practice-guide-archaeological-excavations</a>
+          `)
+        )
+        self.details(
+          `<div style="display: flex; width: 100%; flex-direction: column">
+          <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
+          <div><span><strong>Site: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
+          <div><span><strong>Licence Number: ${self.getTextValue(
+          self.coverLetterData.licenseNumber
+          )}</strong></span></div></div>
+          <br />
+        `)
+        self.footer((`
           <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
           <span>Yours sincerely\n ${
-        self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-      }</span>
-      ${
-        self.getTextValue(self.coverLetterData.seniorInspectorName) ?
-        "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-        : "</span></div>"
-      }`))
-            self.header(
-              `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
-               <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
-               <div style="display: flex; justify-content: space-around; width: 100%">
-               ${self.toAddress()}${self.fromAddressPreview()}</div>`
-            )
-            (`
-    <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-      <span>Yours sincerely\n ${
-        self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-      }</span>
-      ${
-        self.getTextValue(self.coverLetterData.seniorInspectorName) ?
-        "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-        : "</span></div>"
-      }`)
+          self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
+          }</span>
+          ${
+          self.getTextValue(self.coverLetterData.seniorInspectorName) ?
+          "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
+          : "</span></div>"
+          }`)
+        )
+        self.headerText(
+          `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
+           <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
+           <div style="display: flex; justify-content: space-around; width: 100%">
+           ${self.toAddress()}${self.fromAddressPreview()}</div>`
+        )
           } else if (temp === 'licence-extension-letter') {
             self.textBody(
               createTextObject(
@@ -743,7 +761,7 @@ define([
 
             self.details(`<br /><br />`)
 
-            self.header(`<div style="width: 100%; border: solid; text-align: center;">
+            self.headerText(`<div style="width: 100%; border: solid; text-align: center;">
                 <div><strong>DEPARTMENT FOR COMMUNITIES</strong></div>
                   <br />
                 <div><strong><em>Historic Monuments and Archaeological Objects (Northern Ireland) Order 1995</em></strong></div>
