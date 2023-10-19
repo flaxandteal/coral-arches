@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 <head>
     <title>{{app_title}}</title>
-
+    
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,8 +62,9 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
                 <div class="navbar-brand-disco-icon-container" style="">
                     <img class="navbar-brand-disco-icon" src="{% webpack_static 'img/landing/arches_logo_dark.png' %}" style="" alt="Arches Logo">
                 </div>
-                <div class="application-name">
+                <div class="application-name" style="display: flex; flex-direction: column">
                     <h2>{{app_title}}</h2>
+                    <span style="font-size: 10px; color: #25476A">v{{app_version}}</span>
                     <!-- <span>Data Integration for Science and Conservation</span> -->
                 </div>
             </div>

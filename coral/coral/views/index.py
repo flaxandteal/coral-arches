@@ -18,7 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from arches.app.models import models
 from arches.app.models.system_settings import settings
-from coral.settings import APP_TITLE
+from coral.settings import APP_TITLE, APP_VERSION
 from arches.app.models.resource import Resource
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 from django.shortcuts import render
@@ -37,6 +37,7 @@ class IndexView(TemplateView):
         context['graph_models'] = []
         context['graphs'] = '[]'
         context['app_title'] = APP_TITLE
+        context['app_version'] = APP_VERSION
         context['plugins'] = []
         context['plugin_labels'] = {
             'active-consultations':'Active',

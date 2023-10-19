@@ -5,6 +5,8 @@
     "component": "views/components/plugins/active-consultations",
     "componentname": "active-consultations",
     "slug": "active-consultations",
-    "config": {},
+    "config": {
+        "show": false
+    },
     "sortorder": 0
 }

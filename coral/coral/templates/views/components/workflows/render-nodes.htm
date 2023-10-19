@@ -8,6 +8,7 @@
   </div>
   <!-- ko foreach: { data: Object.values(nodes), as: 'config', noChildContext: true } -->
   <!-- ko if: config.data?.length -->
+  <!-- ko if: config.visible !== false -->
   <div
     class="her-final-step-section"
     data-bind="foreach: { data: config.data, as: 'tiles', noChildContext: true }"
@@ -27,6 +28,7 @@
       </div>
     </div>
   </div>
+  <!-- /ko -->
   <!-- /ko -->
   <!-- /ko -->
   <!-- /ko -->
