@@ -692,7 +692,7 @@ define([
           `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
            <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
            <div style="display: flex; justify-content: space-around; width: 100%">
-           ${self.toAddress()}${self.fromAddressPreview()}</div>`
+           [to_address][from_address]</div>`
         )
         self.footer((`
           <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
@@ -746,7 +746,7 @@ define([
           `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
            <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
            <div style="display: flex; justify-content: space-around; width: 100%">
-           ${self.toAddress()}${self.fromAddressPreview()}</div>`
+           [to_address][from_address]</div>`
         )
           } else if (temp === 'licence-extension-letter') {
             self.textBody(
