@@ -186,18 +186,20 @@ define([
           self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]')
         .replace('[recipient]', self.getTextValue(self.coverLetterData.recipientName()) || '[recipient]')
         .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
-        .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '[site_address]')
-        .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county')
+        .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '')
+        .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county]')
         .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenseNumber) || '[licence_no]')
         .replace('[send_date]',self.coverLetterData.dates.sendDate() || '[send_date]')
         .replace('[cmref]',self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]')
         .replace('[decision_by]', self.getTextValue(self.coverLetterData.decisionBy) || '[decision_by]')
-        .replace('[Signature]', self.getTextValue(self.coverLetterData.decisionBy.name) || '[decision_by]')
+        .replace('[Signature]', self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]')
+        .replace('[senior_inspector]', self.getTextValue(self.coverLetterData.seniorInspectorName) ? 
+          "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
+          : "</span></div>")
         .replace('[to_address]', self.toAddress())
         .replace('[from_address]', self.fromAddressPreview())
       }
     }
-    
 
     self.fromAddress = ko.observable(
       self.getSavedValue('fromAddress') ||
@@ -281,18 +283,20 @@ define([
       self.preview(this.headerText())
     })
 
-    self.details = ko.observable(
-    `<div style="display: flex; width: 100%; flex-direction: column">
-    <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
-    <div><span><strong>Site: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
-    <div><span><strong>Licence Number: ${self.getTextValue(
-      self.coverLetterData.licenseNumber
-    )}</strong></span></div></div>
-    <br />
-    `);
+    self.detailsText = ko.observable(
+      `<div style="display: flex; width: 100%; flex-direction: column">
+      <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
+      <div><span><strong>Site: [site][site_address]</strong></span></div>
+      <div><span><strong>Licence Number: [licence_no]</strong></span></div></div>
+      <br />
+      `
+    )
+    self.details = ko.computed(() => {
+      return self.preview(self.detailsText())
+    }
+    );
 
     self.body = ko.computed(() => {
-      console.log("bodied",self.textPreview())
       let result =
         '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
       if (self.getTextValue(self.coverLetterData.recipientName)) {
@@ -305,20 +309,17 @@ define([
       return result;
     }, self);
 
-    self.footer = ko.observable()
+    self.footerText = ko.observable(`
+    <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
+    <span>Yours sincerely<br />
+    [Signature]
+    </span>
+    [senior_inspector]
+    `)
 
-    // self.footer = ko.computed(() => {
-    //   return `
-    //   <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-    //   <span>Yours sincerely\n ${
-    //     self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-    //   }</span>
-    //   ${
-    //     self.getTextValue(self.coverLetterData.seniorInspectorName) ?
-    //     "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-    //     : "</span></div>"
-    //   }`
-    // })
+    self.footer = ko.computed(() => {
+      return self.preview(self.footerText())
+    })
       
     self.letter = ko.computed(() => {
       let result = ''
@@ -396,7 +397,6 @@ define([
         arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
       );
       const data = await tilesResponse.json();
-      console.log('Logging tilesResponse: ', tilesResponse, data.tiles);
       return data.tiles;
     };
 
@@ -518,7 +518,6 @@ define([
           for (const contact of contacts) {
             for (const resource of contact.value) {
               const contactTiles = await self.fetchTileData(resource.resourceId);
-              console.log('contactTiles: ', contactTiles);
               if (self.hasNodeGroup(contactTiles, '4110f741-1a44-11e9-885e-000d3ab1e588')) {
                 // Name nodegroup of person
                 const applicantName = self.getValueFromTiles(
@@ -526,7 +525,6 @@ define([
                   '5f8ded26-7ef9-11ea-8e29-f875a44e0e11'
                 );
                 if (applicantName) {
-                  console.log('applicantName: ', applicantName);
                   self.coverLetterData.recipientName(applicantName.value);
                 }
                 self.configureAddress(contactTiles, 'applicant', {
@@ -549,7 +547,6 @@ define([
                   'e8431c61-8098-11ea-8b01-f875a44e0e11'
                 );
                 if (companyName) {
-                  console.log('companyName: ', companyName);
                   self.coverLetterData.companyName(companyName.value);
                 }
                 self.configureAddress(contactTiles, 'company', {
@@ -567,7 +564,6 @@ define([
               }
             }
           }
-          console.log('self.coverLetterData.addresses: ', self.coverLetterData.addresses);
         }
 
         const decisionByDate = self.getValueFromTiles(
@@ -575,7 +571,6 @@ define([
           '4c58921e-48cc-11ee-9081-0242ac140007'
         );
         if (decisionByDate) {
-          console.log('decisionByDate: ', decisionByDate);
           self.coverLetterData.decisionBy.date(decisionByDate.value);
         }
 
@@ -584,13 +579,11 @@ define([
           'f3dcbf02-48cb-11ee-9081-0242ac140007'
         );
         if (decisionBy?.value.length) {
-          console.log('decisionBy: ', decisionBy);
           const decisionByTiles = await self.fetchTileData(decisionBy.value[0].resourceId);
           const decisionByName = self.getValueFromTiles(
             decisionByTiles,
             '5f8ded26-7ef9-11ea-8e29-f875a44e0e11'
           );
-          console.log('decisionByName: ', decisionByName);
           self.coverLetterData.decisionBy.name(decisionByName.value);
         }
 
@@ -599,7 +592,6 @@ define([
           'a9f53f00-48b6-11ee-85af-0242ac140007'
         );
         if (associatedActivitys?.value.length) {
-          console.log('associatedActivitys: ', associatedActivitys);
           // Assuming only one activity has been assigned upto this point
           const activityTiles = await self.fetchTileData(associatedActivitys.value[0].resourceId);
           const siteName = self.getValueFromTiles(
@@ -621,7 +613,6 @@ define([
           );
           if (cmReference) {
             self.coverLetterData.cmReference(cmReference.value);
-            console.log("we do have it,", self.coverLetterData.cmReference())
           }
           self.configureAddress(activityTiles, 'site', {
             fullAddressId: 'a5419224-f121-11eb-9ca7-a87eeabdefba',
@@ -642,7 +633,6 @@ define([
           '0a914884-48b4-11ee-90a8-0242ac140007'
         );
         if (acknowledgedDate) {
-          console.log('acknowledgedDate: ', acknowledgedDate);
           self.coverLetterData.dates.acknowledged(acknowledgedDate.value);
         }
 
@@ -651,11 +641,9 @@ define([
           '6b96c722-48c7-11ee-ba3a-0242ac140007'
         );
         if (receivedDate) {
-          console.log('receivedDate: ', receivedDate);
           self.coverLetterData.dates.received(receivedDate.value);
         }
 
-        console.log('coverLetterData: ', ko.toJS(self.coverLetterData));
       } catch (error) {
         console.error('Failed loading data for cover letter: ', error);
         /**
@@ -665,7 +653,6 @@ define([
       self.loading(false);
     };
     self.template.subscribe(temp => {
-      console.log(temp)
       self.textReady(false)
       if (temp === 'final-report-letter') {
 
@@ -679,12 +666,10 @@ define([
           <div>I would like to thank you for your co-operation and can confirm that you have met all of Historic Environment Division's conditions associated with this licence.</div>
           `)
         )
-        self.details(
+        self.detailsText(
           `<div style="display: flex; width: 100%; flex-direction: column">
-          <div><strong>EXCAVATION REPORT FOR: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
-          <div><span><strong>Licence Number: ${self.getTextValue(
-            self.coverLetterData.licenseNumber
-          )}</strong></span></div></div>
+          <div><strong>EXCAVATION REPORT FOR: [site][site_address]</strong></span></div>
+          <div><span><strong>Licence Number: [licence_no]</strong></span></div></div>
           <br />
           `
         )
@@ -694,16 +679,12 @@ define([
            <div style="display: flex; justify-content: space-around; width: 100%">
            [to_address][from_address]</div>`
         )
-        self.footer((`
+        self.footerText((`
           <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-          <span>Yours sincerely\n ${
-          self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-          }</span>
-          ${
-            self.getTextValue(self.coverLetterData.seniorInspectorName) ?
-            "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-            : "</span></div>"
-          }`)
+          <span>Yours sincerely<br />
+          [Signature]
+          </span>
+          [senior_inspector]`)
         )
       } else if (temp === 'licence-cover-letter'){
         self.textBody(
@@ -722,25 +703,23 @@ define([
           <a style="color: blue" href="url">https://www.communities-ni.gov.uk/publications/environmental-good-practice-guide-archaeological-excavations</a>
           `)
         )
-        self.details(
+        self.detailsText(
           `<div style="display: flex; width: 100%; flex-direction: column">
           <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
-          <div><span><strong>Site: ${self.getTextValue(self.coverLetterData.siteName)}${self.getTextValue(self.coverLetterData.addresses.site.fullAddress) ? ',' + self.getTextValue(self.coverLetterData.addresses.site.fullAddress) : ''}</strong></span></div>
-          <div><span><strong>Licence Number: ${self.getTextValue(
-          self.coverLetterData.licenseNumber
+          <div><span><strong>Site: [site][site_address]}</strong></span></div>
+          <div><span><strong>Licence Number: [licence_no]
           )}</strong></span></div></div>
           <br />
         `)
-        self.footer((`
+
+
+        self.footerText((`
           <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-          <span>Yours sincerely\n ${
-          self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]'
-          }</span>
-          ${
-          self.getTextValue(self.coverLetterData.seniorInspectorName) ?
-          "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-          : "</span></div>"
-          }`)
+          <span>Yours sincerely<br />
+          [Signature]
+          </span>
+          [senior_inspector]
+          `)
         )
         self.headerText(
           `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
@@ -759,7 +738,7 @@ define([
               `)
             )
 
-            self.details(`<br /><br />`)
+            self.detailsText(`<br /><br />`)
 
             self.headerText(`<div style="width: 100%; border: solid; text-align: center;">
                 <div><strong>DEPARTMENT FOR COMMUNITIES</strong></div>
@@ -770,13 +749,12 @@ define([
                 </div>
               `)
 
-            self.footer(`
+            self.footerText(`
             <div> <span style="width: 20ch;"> Authorised Officer </span><span><u>[decision_by]</u></span></div>
             <div> <span style="width: 20ch; padding-right: 7ch"> Dated this </span><span><u>[send_date]</u></span></div>
             <div> <span style="width: 20ch; padding-right: 2ch"> Licence Number </span><span><u>[licence_no]</u></span></div>
             `)
           }
-      console.log(self.textBody())
       self.textReady(true)
     })
 
