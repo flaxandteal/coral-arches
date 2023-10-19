@@ -142,7 +142,9 @@ define([
     this.textBody = ko.observable(
       self.getSavedValue('textBody') ||
         createTextObject(
-          `<div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
+          `
+          <div>Dear [recipient]</div>
+          <div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
           <br />
           <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
           <br />
@@ -297,16 +299,16 @@ define([
     );
 
     self.body = ko.computed(() => {
-      let result =
-        '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
-      if (self.getTextValue(self.coverLetterData.recipientName)) {
-      }
-      result += `<span style="margin-top: 8px">${
-        self.getTextValue(self.textPreview) || 'Please enter information regarding the email!'
-      }</span>`;
-      result += '</div>';
+      // let result =
+      //   '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
+      // if (self.getTextValue(self.coverLetterData.recipientName)) {
+      // }
+      // result += `<span style="margin-top: 8px">${
+      //   self.getTextValue(self.textPreview) || 'Please enter information regarding the email!'
+      // }</span>`;
+      // result += '</div>';
 
-      return result;
+      return self.preview(self.getTextValue(self.textBody()));
     }, self);
 
     self.footerText = ko.observable(`
@@ -658,7 +660,8 @@ define([
 
         self.textBody(
           createTextObject(
-          `<div>Dear [recipient]</div>
+          `<br />
+          <div>Dear [recipient]</div>
           <div>Thank you for your report and associated documentation which we received in this office regarding the above-mentioned excavation.</div>
           <br />
           <div>The report was deemed to be final on [report_approved] and it and the associated documentation have been passed to HERoNI for uploading to the map viewer.</div>
@@ -668,9 +671,9 @@ define([
         )
         self.detailsText(
           `<div style="display: flex; width: 100%; flex-direction: column">
-          <div><strong>EXCAVATION REPORT FOR: [site][site_address]</strong></span></div>
-          <div><span><strong>Licence Number: [licence_no]</strong></span></div></div>
-          <br />
+            <div><strong>EXCAVATION REPORT FOR: [site][site_address]</strong></span></div>
+            <div><span><strong>Licence Number: [licence_no]</strong></span></div>
+          </div>
           `
         )
         self.headerText(
@@ -706,9 +709,9 @@ define([
         self.detailsText(
           `<div style="display: flex; width: 100%; flex-direction: column">
           <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
-          <div><span><strong>Site: [site][site_address]}</strong></span></div>
+          <div><span><strong>Site: [site][site_address]</strong></span></div>
           <div><span><strong>Licence Number: [licence_no]
-          )}</strong></span></div></div>
+          </strong></span></div></div>
           <br />
         `)
 
@@ -750,7 +753,7 @@ define([
               `)
 
             self.footerText(`
-            <div> <span style="width: 20ch;"> Authorised Officer </span><span><u>[decision_by]</u></span></div>
+            <div> <span style="width: 20ch;"> Authorised Officer </span><span><u>[Signature]</u></span></div>
             <div> <span style="width: 20ch; padding-right: 7ch"> Dated this </span><span><u>[send_date]</u></span></div>
             <div> <span style="width: 20ch; padding-right: 2ch"> Licence Number </span><span><u>[licence_no]</u></span></div>
             `)
