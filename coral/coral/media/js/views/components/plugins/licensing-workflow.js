@@ -118,7 +118,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'map-with-latlon-widget',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'app-contacts',
                   tilesManaged: 'one',
                   parameters: {
