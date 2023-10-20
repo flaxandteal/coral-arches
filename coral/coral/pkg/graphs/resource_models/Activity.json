@@ -164,7 +164,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Digital Files"
                     },
@@ -328,7 +328,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Activity Names"
                     },
@@ -484,7 +484,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -524,7 +524,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Activity Archive Material"
                     },
@@ -819,7 +819,7 @@
                     "instructions": {
                         "en": "Used to record the postal address of a resource."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Addresses"
                     },
@@ -846,7 +846,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Descriptions"
                     },
@@ -904,7 +904,7 @@
                     "instructions": {
                         "en": "Administrative, geopolitical areas, localities, and other areas (e.g.: Research or zoning areas)  "
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Localities/Administrative Areas"
                     },
@@ -931,7 +931,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Data"
                     },
@@ -965,7 +965,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Monuments, Areas and Artefacts"
                     },
@@ -1067,7 +1067,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -1101,7 +1101,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -5755,7 +5755,7 @@
                     "node_id": "a5419248-f121-11eb-86a9-a87eeabdefba",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000007"
+                    "widget_id": "b96d9bc9-34c2-413c-9d88-b879f7a335da"
                 },
                 {
                     "card_id": "a5416b36-f121-11eb-be10-a87eeabdefba",
@@ -10338,7 +10338,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "7541b4cd-fa17-4a99-98ad-53db781bdc76"
+                    "id": "73cf5c16-0335-4414-8970-c878e08154f0"
                 },
                 {
                     "config": {
@@ -10354,12 +10354,12 @@
                     },
                     "function_id": "317a318b-792b-4de3-bea9-e4212850431f",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "b51f8a22-c263-4966-809f-c21f98facf92"
+                    "id": "f4a74dec-fe15-4fab-ba3a-94075a885e89"
                 }
             ],
             "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
             "iconclass": "fa fa-cogs",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -17706,8 +17706,8 @@
             "publication": {
                 "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                 "notes": null,
-                "publicationid": "0855fb7c-6106-11ee-a51d-0242ac120003",
-                "published_time": "2023-10-02T09:28:23.261",
+                "publicationid": "61ca3cc8-6e8e-11ee-98c3-0242ac120007",
+                "published_time": "2023-10-19T14:47:10.012",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
