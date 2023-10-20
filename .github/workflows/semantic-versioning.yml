@@ -13,8 +13,21 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Check Target Branch
+        id: check-branch
+        run: |
+          if [ "${{ github.event.pull_request.base.ref }}" = "develop" ]; then
+            echo "Target branch is 'develop'"
+            echo "::set-output name=target_branch::true"
+          else
+            echo "Target branch is not 'develop'"
+            echo "::set-output name=target_branch::false"
+          fi
+        shell: bash
+
       - name: Read Existing Version
         id: read-version
+        if: steps.check-branch.outputs.target_branch == 'true'
         run: |
           python_file="your_python_file.py"
           current_version=$(grep -oE "APP_VERSION = '[0-9]+\.[0-9]+\.[0-9]'" "$python_file" | cut -c 15-)
@@ -24,6 +37,7 @@ jobs:
 
       - name: Determine New Version
         id: determine-version
+        if: steps.check-branch.outputs.target_branch == 'true'
         run: |
           branch_name="${GITHUB_REF/refs\/heads\//}"
           current_version="${{ steps.read-version.outputs.current_version }}"
@@ -44,6 +58,7 @@ jobs:
 
       - name: Update Python File
         id: update-python-file
+        if: steps.check-branch.outputs.target_branch == 'true'
         run: |
           python_file="your_python_file.py"
           new_version="${{ steps.determine-version.outputs.new_version }}"
@@ -52,6 +67,7 @@ jobs:
 
       - name: Commit and Push Changes
         id: commit-changes
+        if: steps.check-branch.outputs.target_branch == 'true'
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
