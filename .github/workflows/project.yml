@@ -60,6 +60,7 @@ jobs:
 
       - name: Commit and Push Changes
         id: commit-changes
+        if:  steps.read-version.outputs.current_version != steps.determine-version.outputs.new_version
         run: |
           python_file="./coral/coral/settings.py"
           git config user.name "$GITHUB_ACTOR"
