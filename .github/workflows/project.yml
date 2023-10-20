@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - develop
+  workflow_run:
+    workflows: ["Update version and commit"]
+    types:
+      - completed
 
 env:
   # Using the 7.5-bug version of the container is throwing an error for an
@@ -18,7 +22,6 @@ env:
 jobs:
   Build-Arches:
     runs-on: [self-hosted]
-    needs: [update-version]
     outputs:
       project-base: ${{ steps['set-base'].outputs['project-base'] }}
       project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
