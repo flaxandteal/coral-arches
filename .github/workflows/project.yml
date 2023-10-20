@@ -17,14 +17,6 @@ env:
   ARCHES_POSTGIS: flaxandteal/arches_coral_postgres
   ARCHES_PROJECT: coral
 jobs:
-  dump-context:
-    runs-on: [self-hosted]
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
   update-version:
     runs-on: [self-hosted]
 
@@ -68,6 +60,7 @@ jobs:
 
       - name: Commit and Push Changes
         id: commit-changes
+        if:  steps.read-version.outputs.current_version != steps.determine-version.outputs.new_version
         run: |
           python_file="./coral/coral/settings.py"
           git config user.name "$GITHUB_ACTOR"
@@ -80,6 +73,7 @@ jobs:
 
   Build-Arches:
     runs-on: [self-hosted]
+    needs: [update-version]
     outputs:
       project-base: ${{ steps['set-base'].outputs['project-base'] }}
       project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
