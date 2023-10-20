@@ -6,6 +6,7 @@ import os
 import threading
 import asyncio
 import django
+import contextlib
 from django.contrib.auth import authenticate
 from asgiref.sync import sync_to_async
 import binascii
@@ -33,19 +34,9 @@ from starlette_context.middleware import RawContextMiddleware
 
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'coral.settings')
-django.setup()
 
-from oauth2_provider.models import AccessToken, get_application_model
 from oauth2_provider.oauth2_backends import OAuthLibCore
 from oauthlib.common import Request as OauthlibRequest
-
-from .resources import ResourceQuery, FullResourceMutation
-from .concepts import ConceptQuery, FullConceptMutation
-from .resource_models import ResourceModelQuery
-
-resources_schema = graphene.Schema(query=ResourceQuery, mutation=FullResourceMutation)
-concept_schema = graphene.Schema(query=ConceptQuery, mutation=FullConceptMutation)
-resource_model_schema = graphene.Schema(query=ResourceModelQuery)
 
 class App(HTTPEndpoint):
     async def get(self, request):
@@ -99,7 +90,21 @@ middleware = [
     Middleware(AuthenticationMiddleware, backend=BasicAuthBackend())
 ]
 
+@contextlib.asynccontextmanager
+async def lifespan(app):
+    await sync_to_async(django.setup)()
+
+    from .resources import ResourceQuery, FullResourceMutation
+    from .concepts import ConceptQuery, FullConceptMutation
+    from .resource_models import ResourceModelQuery
+
+    resources_schema = graphene.Schema(query=ResourceQuery, mutation=FullResourceMutation)
+    concept_schema = graphene.Schema(query=ConceptQuery, mutation=FullConceptMutation)
+    resource_model_schema = graphene.Schema(query=ResourceModelQuery)
+
+    app.mount("/resources/", GraphQLApp(resources_schema, on_get=make_graphiql_handler()))
+    app.mount("/concepts/", GraphQLApp(concept_schema, on_get=make_graphiql_handler()))
+    app.mount("/resource-models/", GraphQLApp(resource_model_schema, on_get=make_graphiql_handler()))
+    yield
+
 app = Starlette(debug=DEBUG, routes=[Route("/", App)], middleware=middleware)
-app.mount("/resources/", GraphQLApp(resources_schema, on_get=make_graphiql_handler()))
-app.mount("/concepts/", GraphQLApp(concept_schema, on_get=make_graphiql_handler()))
-app.mount("/resource-models/", GraphQLApp(resource_model_schema, on_get=make_graphiql_handler()))
