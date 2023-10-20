@@ -24,6 +24,60 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+
+  update-version:
+    runs-on: [self-hosted]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Read Existing Version
+        id: read-version
+        run: |
+          python_file="./coral/coral/settings.py"
+          current_version=$(grep -oE "APP_VERSION = '[0-9]+\.[0-9]+\.[0-9]+'" "$python_file" | cut -d"'" -f2)
+          echo "Current Version: $current_version"
+          echo "::set-output name=current_version::$current_version"
+
+      - name: Determine New Version
+        id: determine-version
+        run: |
+          merge_message="${{ github.head_commit.message }}"
+          current_version="${{ steps.read-version.outputs.current_version }}"
+
+          if [[ $merge_message =~ "feature" ]]; then
+            new_version=$(echo "$current_version" | awk -F'.' -v OFS='.' '{$2 = $2 + 1; print}')
+          elif [[ $merge_message =~ "bug" ]]; then
+            new_version="0.$(echo $current_version | cut -d'.' -f2).$(( ${current_version##*.} + 1 ))"
+          elif [[ $merge_message =~ "release" ]]; then
+            new_version="$(( ${current_version%%.*} + 1 )).0.0"
+          else
+            new_version="$current_version"
+          fi
+
+          echo "New Version: $new_version"
+          echo "::set-output name=new_version::$new_version"
+
+      - name: Update Python File
+        id: update-python-file
+        run: |
+          python_file="./coral/coral/settings.py"
+          new_version="${{ steps.determine-version.outputs.new_version }}"
+          sed -i "s/APP_VERSION = '.*'/APP_VERSION = '$new_version'/" "$python_file"
+
+      - name: Commit and Push Changes
+        id: commit-changes
+        run: |
+          python_file="./coral/coral/settings.py"
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add "$python_file"
+          git commit -m "Version: ${{ steps.determine-version.outputs.new_version }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   Build-Arches:
     runs-on: [self-hosted]
     outputs:
