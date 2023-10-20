@@ -7,6 +7,7 @@ define([
     'templates/views/components/workflows/licensing-workflow/select-resource-step.htm',
 ], function(_, $, arches, ko, koMapping, excavationSelectResourceStepTemplate) {
     function viewModel(params) {
+        params.form.locked = ko.observable(false)
         _.extend(this, params.form);
 
         var self = this;
@@ -14,6 +15,7 @@ define([
         this.resourceValue = ko.observable();
         this.actTile = ko.observable();
         this.actCard = ko.observable();
+
 
         this.archiveDisplayTiles = ko.observable()
         this.archiveTileId = ko.observable(null)
@@ -53,6 +55,7 @@ define([
 
         this.tile().data['fbaebc8e-61ef-11ee-baf1-0242ac120004'].subscribe(dat => {
             if (dat) {
+
                 if (dat[0]){
 
                     console.log("dat problem",dat[0], dat)
