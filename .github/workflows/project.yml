@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - develop
-  workflow_run:
-    workflows: ["Update version and commit"]
-    types:
-      - completed
 
 env:
   # Using the 7.5-bug version of the container is throwing an error for an
@@ -20,8 +16,80 @@ env:
   ARCHES_POSTGIS: flaxandteal/arches_coral_postgres
   ARCHES_PROJECT: coral
 jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Check Target Branch
+        id: check-branch
+        run: |
+          if [ "${{ github.event.pull_request.base.ref }}" = "develop" ]; then
+            echo "Target branch is 'develop'"
+            echo "::set-output name=target_branch::true"
+          else
+            echo "Target branch is not 'develop'"
+            echo "::set-output name=target_branch::false"
+          fi
+        shell: bash
+
+      - name: Read Existing Version
+        id: read-version
+        if: steps.check-branch.outputs.target_branch == 'true'
+        run: |
+          python_file="./coral/coral/settings.py"
+          current_version=$(grep -oE "APP_VERSION = '[0-9]+\.[0-9]+\.[0-9]+'" "$python_file" | cut -d"'" -f2)
+          echo "Current Version: $current_version"
+          echo "::set-output name=current_version::$current_version"
+        shell: bash
+
+      - name: Determine New Version
+        id: determine-version
+        if: steps.check-branch.outputs.target_branch == 'true'
+        run: |
+          branch_name="${GITHUB_REF/refs\/heads\//}"
+          current_version="${{ steps.read-version.outputs.current_version }}"
+
+          if [[ $branch_name =~ "feature" ]]; then
+            new_version=$(echo "$current_version" | awk -F'.' -v OFS='.' '{$2 = $2 + 1; print}')
+          elif [[ $branch_name =~ "bug" ]]; then
+            new_version="0.$(echo $current_version | cut -d'.' -f2).$(( ${current_version##*.} + 1 ))"
+          elif [[ $branch_name =~ "release" ]]; then
+            new_version="$(( ${current_version%%.*} + 1 )).0.0"
+          else
+            new_version="$current_version"
+          fi
+
+          echo "New Version: $new_version"
+          echo "::set-output name=new_version::$new_version"
+        shell: bash
+
+      - name: Update Python File
+        id: update-python-file
+        if: steps.check-branch.outputs.target_branch == 'true'
+        run: |
+          python_file="./coral/coral/settings.py"
+          new_version="${{ steps.determine-version.outputs.new_version }}"
+          sed -i "s/APP_VERSION = '.*'/APP_VERSION = '$new_version'/" "$python_file"
+        shell: bash
+
+      - name: Commit and Push Changes
+        id: commit-changes
+        if: steps.check-branch.outputs.target_branch == 'true'
+        run: |
+          python_file="./coral/coral/settings.py"
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add "$python_file"
+          git commit -m "Version: ${{ steps.determine-version.outputs.new_version }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   Build-Arches:
     runs-on: [self-hosted]
+    needs: [update-version]
     outputs:
       project-base: ${{ steps['set-base'].outputs['project-base'] }}
       project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
