@@ -17,8 +17,8 @@ env:
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
-    needs: [update-version]
     runs-on: [self-hosted]
+    needs: [update-version]
     outputs:
       project-base: ${{ steps['set-base'].outputs['project-base'] }}
       project-postgis: ${{ steps['set-base'].outputs['project-postgis'] }}
@@ -107,7 +107,7 @@ jobs:
           endpoint: builders
           buildkitd-flags: '--allow-insecure-entitlement network.host'
           driver-opts: |
-            network=host
+              network=host
       - name: Wait for service availability
         run: docker run --rm --network host willwill/wait-for-it -h localhost -p 8000 -t 0
       - name: Extract metadata (tags, labels) for Docker
@@ -145,14 +145,14 @@ jobs:
       elasticsearch:
         image: elasticsearch:8.4.0
         ports:
-          - '9200:9200'
-          - '9300:9300'
+          - "9200:9200"
+          - "9300:9300"
         env:
-          TZ: 'PST'
-          discovery.type: 'single-node'
-          discovery.seed_hosts: '[]'
-          xpack.security.enabled: 'false'
-          ES_JAVA_OPTS: '-Xms400m -Xmx400m'
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
         options: >-
           --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
           --health-interval 10s
@@ -179,32 +179,32 @@ jobs:
       arches:
         image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
-          ARCHES_PROJECT: '${{ env.ARCHES_PROJECT }}'
-          ARCHES_ROOT: '/web_root/arches'
-          COMPRESS_OFFLINE: 'False'
-          COMPRESS_ENABLED: 'False'
-          INSTALL_DEFAULT_GRAPHS: 'False'
-          INSTALL_DEFAULT_CONCEPTS: 'False'
-          PGUSERNAME: 'postgres'
-          PGPASSWORD: 'postgres'
-          PGDBNAME: 'arches'
-          PGHOST: 'db'
-          PGPORT: '5432'
-          COUCHDB_HOST: 'couchdb'
-          COUCHDB_PORT: '5984'
-          COUCHDB_USER: 'admin'
-          COUCHDB_PASS: 'password'
-          ESHOST: 'elasticsearch'
-          ESPORT: '9200'
-          CELERY_BROKER_URL: 'amqp://rabbitmq'
-          DJANGO_MODE: 'DEV'
-          DJANGO_DEBUG: 'True'
-          DOMAIN_NAMES: 'localhost'
-          PYTHONUNBUFFERED: '0'
-          STATIC_URL: '/static/'
-          STATIC_ROOT: '/static_root'
-          WEB_ROOT: '/web_root'
-          TZ: 'PST'
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          ARCHES_ROOT: "/web_root/arches"
+          COMPRESS_OFFLINE: "False"
+          COMPRESS_ENABLED: "False"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
+          DOMAIN_NAMES: "localhost"
+          PYTHONUNBUFFERED: "0"
+          STATIC_URL: "/static/"
+          STATIC_ROOT: "/static_root"
+          WEB_ROOT: "/web_root"
+          TZ: "PST"
         ports:
           - '8000:8000'
         options: >-
@@ -243,7 +243,7 @@ jobs:
           endpoint: builders
           buildkitd-flags: '--allow-insecure-entitlement network.host'
           driver-opts: |
-            network=host
+              network=host
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
@@ -269,7 +269,7 @@ jobs:
     runs-on: [self-hosted]
     needs: [Build-Arches-Final, Build-Arches, Build-Arches-Static]
     env:
-      HOME: ''
+      HOME: ""
       CYPRESS_BASE_URL: http://arches:8000
     container:
       image: cypress/included:11.2.0
@@ -298,14 +298,14 @@ jobs:
       elasticsearch:
         image: elasticsearch:8.4.0
         ports:
-          - '9200:9200'
-          - '9300:9300'
+          - "9200:9200"
+          - "9300:9300"
         env:
-          TZ: 'PST'
-          discovery.type: 'single-node'
-          discovery.seed_hosts: '[]'
-          xpack.security.enabled: 'false'
-          ES_JAVA_OPTS: '-Xms400m -Xmx400m'
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
         options: >-
           --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
           --health-interval 10s
@@ -332,28 +332,28 @@ jobs:
       arches:
         image: ${{ needs['Build-Arches'].outputs['project-base'] }}
         env:
-          ARCHES_PROJECT: '${{ env.ARCHES_PROJECT }}'
-          COMPRESS_OFFLINE: 'False'
-          INSTALL_CORAL_PACKAGE: 'True'
-          INSTALL_DEFAULT_GRAPHS: 'False'
-          INSTALL_DEFAULT_CONCEPTS: 'False'
-          PGUSERNAME: 'postgres'
-          PGPASSWORD: 'postgres'
-          PGDBNAME: 'arches'
-          PGHOST: 'db'
-          PGPORT: '5432'
-          COUCHDB_HOST: 'couchdb'
-          COUCHDB_PORT: '5984'
-          COUCHDB_USER: 'admin'
-          COUCHDB_PASS: 'password'
-          ESHOST: 'elasticsearch'
-          ESPORT: '9200'
-          CELERY_BROKER_URL: 'amqp://rabbitmq'
-          DJANGO_MODE: 'DEV'
-          DJANGO_DEBUG: 'True'
-          DOMAIN_NAMES: 'arches'
-          PYTHONUNBUFFERED: '0'
-          TZ: 'PST'
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          COMPRESS_OFFLINE: "False"
+          INSTALL_CORAL_PACKAGE: "True"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
+          DOMAIN_NAMES: "arches"
+          PYTHONUNBUFFERED: "0"
+          TZ: "PST"
         ports:
           - '8000:8000'
         options: >-
