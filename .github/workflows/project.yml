@@ -2,10 +2,9 @@ name: Build Arches project
 run-name: Build Arches project
 
 on:
-  workflow_run:
-    workflows: ["Update version and commit"]
-    types:
-      - completed
+  push:
+    branches:
+      - develop
 
 env:
   # Using the 7.5-bug version of the container is throwing an error for an
