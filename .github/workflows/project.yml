@@ -17,7 +17,7 @@ env:
   ARCHES_PROJECT: coral
 jobs:
   update-version:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
 
     steps:
       - name: Checkout Code
@@ -43,7 +43,6 @@ jobs:
           current_version=$(grep -oE "APP_VERSION = '[0-9]+\.[0-9]+\.[0-9]+'" "$python_file" | cut -d"'" -f2)
           echo "Current Version: $current_version"
           echo "::set-output name=current_version::$current_version"
-        shell: bash
 
       - name: Determine New Version
         id: determine-version
@@ -64,7 +63,6 @@ jobs:
 
           echo "New Version: $new_version"
           echo "::set-output name=new_version::$new_version"
-        shell: bash
 
       - name: Update Python File
         id: update-python-file
@@ -73,7 +71,6 @@ jobs:
           python_file="./coral/coral/settings.py"
           new_version="${{ steps.determine-version.outputs.new_version }}"
           sed -i "s/APP_VERSION = '.*'/APP_VERSION = '$new_version'/" "$python_file"
-        shell: bash
 
       - name: Commit and Push Changes
         id: commit-changes
