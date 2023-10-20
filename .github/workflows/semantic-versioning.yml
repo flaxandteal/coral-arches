@@ -30,7 +30,7 @@ jobs:
         if: steps.check-branch.outputs.target_branch == 'true'
         run: |
           python_file="./coral/coral/settings.py"
-          current_version=$(grep -oE "APP_VERSION = '[0-9]+\.[0-9]+\.[0-9]+'" "$python_file" | cut -c 15-)
+          current_version=$(grep -oE "APP_VERSION = '[0-9]+\.[0-9]+\.[0-9]+'" "$python_file" | cut -d"'" -f2)
           echo "Current Version: $current_version"
           echo "::set-output name=current_version::$current_version"
         shell: bash
