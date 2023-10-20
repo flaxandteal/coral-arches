@@ -16,7 +16,7 @@ env:
   ARCHES_POSTGIS: flaxandteal/arches_coral_postgres
   ARCHES_PROJECT: coral
 jobs:
-   update-version:
+  update-version:
     runs-on: ubuntu-latest
 
     steps:
@@ -87,7 +87,6 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   Build-Arches:
     runs-on: [self-hosted]
     needs: [update-version]
