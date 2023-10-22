@@ -500,7 +500,6 @@ class CasbinPermissionFramework(PermissionFramework):
 
 
     def get_restricted_instances(self, user, search_engine=None, allresources=False):
-        asf
         logger.debug(f"Getting restricted instances: {user}")
 
         if allresources is False and user.is_superuser is True:

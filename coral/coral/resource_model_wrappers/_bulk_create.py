@@ -92,14 +92,20 @@ resource_module.Resource.get_descriptor = temp_get_descriptor
 def temp_get_primary_descriptor_from_nodes(self, resource, config, context=None):
     datatype_factory = None
     language = None
+    result = config["string_template"]
     try:
         if "nodegroup_id" in config and config["nodegroup_id"] != "" and config["nodegroup_id"] is not None:
             tiles = [tile for tile in resource.tiles if tile.nodegroup_id == uuid.UUID(config["nodegroup_id"]) and tile.sortorder == 0]
             if len(tiles) == 0:
                 tiles = [tile for tile in resource.tiles if tile.nodegroup_id == uuid.UUID(config["nodegroup_id"])]
-                # tiles = models.TileModel.objects.filter(nodegroup_id=uuid.UUID(config["nodegroup_id"])).filter(
-                #     resourceinstance_id=resource.resourceinstanceid
-                # )
+                if len(tiles) == 0:
+                    logging.warn("Loading all tiles for resource model to get descriptors")
+                    tiles = TileModel.objects.filter(nodegroup_id=uuid.UUID(config["nodegroup_id"])).filter(
+                        resourceinstance_id=resource.resourceinstanceid
+                    )
+                    sorted_tiles = [tile for tile in tiles if tile.sortorder == 0]
+                    if len(sorted_tiles) > 0:
+                        tiles = sorted_tiles
             for tile in tiles:
                 for node in functools.lru_cache(Node.objects.filter)(nodegroup_id=uuid.UUID(config["nodegroup_id"])):
                     logging.error("nodetile")
@@ -118,12 +124,12 @@ def temp_get_primary_descriptor_from_nodes(self, resource, config, context=None)
                         value = datatype.get_display_value(tile, node, language=language)
                         if value is None:
                             value = ""
-                        config["string_template"] = config["string_template"].replace("<%s>" % node.name, str(value))
+                        result = result.replace("<%s>" % node.name, str(value))
     except ValueError:
         logger.error(_("Invalid nodegroupid, {0}, participating in descriptor function.").format(config["nodegroup_id"]))
-    if config["string_template"].strip() == "":
-        config["string_template"] = _("Undefined")
-    return config["string_template"]
+    if result.strip() == "":
+        result = _("Undefined")
+    return result
 primary_descriptors.PrimaryDescriptorsFunction.get_primary_descriptor_from_nodes = temp_get_primary_descriptor_from_nodes
 
 def temp_get_root_ontology(self):

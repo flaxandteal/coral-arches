@@ -40,6 +40,7 @@ class IndexView(TemplateView):
         context['plugins'] = []
         context['plugin_labels'] = {
             'active-consultations':'Active',
+            'group-manager':'Groups',
             'init-workflow':'New'
         }
         context['main_script'] = 'index'
