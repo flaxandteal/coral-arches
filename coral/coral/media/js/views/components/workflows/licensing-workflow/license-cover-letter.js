@@ -765,6 +765,51 @@ define([
       // Run fetch prefill data if there hasn't previously been a saved letter
       self.loadData();
     }
+    this.useTemplate = function (){
+      console.log("sending ", self.coverLetterData)
+      stringLetterData = {}
+      for (let key of Object.keys(self.coverLetterData)) {
+        console.log("____________________")
+        console.log(key)
+        if (ko.isObservable(self.coverLetterData[key])) {
+          console.log("is observable")
+          stringLetterData[key] = self.getTextValue(self.coverLetterData[key]())
+          console.log(self.coverLetterData[key]())
+        } else {
+          stringLetterData[key] = self.coverLetterData[key]
+          for (let subkey of Object.keys(self.coverLetterData[key])) {
+            if (ko.isObservable(self.coverLetterData[key][subkey])) {
+              stringLetterData[key][subkey] = self.getTextValue(self.coverLetterData[key][subkey]())
+            } else {
+              stringLetterData[key][subkey] = self.getTextValue(self.coverLetterData[key][subkey])
+          }
+        }
+        }
+      }
+      stringLetterData['from_address'] = self.fromAddress()
+      .replaceAll("</div>", "")      
+      .replaceAll("</span>", "")
+      .replaceAll("<span>", "")
+      .replaceAll("<div>", "")
+      .replaceAll("<br />", "")
+      .replaceAll("<", "")
+      .replaceAll(">", "")
+      .replaceAll('div style="width: 40%; border: 1px solid; text-align: left"', "")
+      .replace("[cmref]", stringLetterData["cmReference"])
+      .replace("[send_date]", self.coverLetterData.dates.sendDate)
+      stringLetterData['to_address'] = self.toAddress()
+      .replaceAll("</div>", "\n")      
+      .replaceAll("</span>", "")
+      .replaceAll("<span>", "")
+      .replaceAll("<div>", "")
+      .replaceAll("<br />", "")
+      .replaceAll("<", "")
+      .replaceAll(">", "")
+      .replaceAll('div style="width: 40%; height: fit-content; border: 1px solid;"', "")
+      console.log("want to send", JSON.stringify(stringLetterData))
+      window.fetch("http://localhost:8000/templategenerator" + "?coverLetterData=" + JSON.stringify(stringLetterData))
+
+    }
   }
 
   ko.components.register('license-cover-letter', {

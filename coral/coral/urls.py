@@ -7,6 +7,7 @@ from coral.views.index import IndexView
 from django.views.generic import RedirectView
 from coral.views.resource import ResourceDescriptors
 from coral.views.active_consultations import ActiveConsultationsView
+from coral.views.template_generator import TemplateGenerator
 from arches.app.views import main
 from arches.app.views.user import UserManagerView
 
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^', include('arches.urls')),
     url(r'^'+settings.APP_PATHNAME+'/user$', UserManagerView.as_view(), name="user_profile_manager"),
     url(r'^filetemplate', FileTemplateView.as_view(), name='filetemplate'),
+    url(r'^templategenerator', TemplateGenerator.as_view(), name="use_template"),
     url(r'^'+settings.APP_PATHNAME+'/plugins/active-consultations', PluginView.as_view(), name='active-consultations'),
     url(r'^activeconsultations', ActiveConsultationsView.as_view(),
         name='activeconsultations'),
@@ -33,6 +35,7 @@ urlpatterns = [
     url(r'^'+settings.APP_PATHNAME+'/plugins/correspondence-workflow', PluginView.as_view(), name='correspondence-workflow'),
     url(r'^'+settings.APP_PATHNAME+'/plugins/communication-workflow', PluginView.as_view(), name='communication-workflow'),
     url(r'^'+settings.APP_PATHNAME+'/plugins/init-workflow', PluginView.as_view(), name='init-workflow'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.SHOW_LANGUAGE_SWITCH is True:
