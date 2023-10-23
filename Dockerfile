@@ -20,6 +20,7 @@ RUN . ../ENV/bin/activate \
     && pip install --upgrade pip \
     && pip install starlette-graphene3 \
     && pip install python-docx \
+    && pip install docxtpl \
     && pip install starlette-context
 RUN . ../ENV/bin/activate \
     && pip install cachetools websockets \
