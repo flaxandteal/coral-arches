@@ -21,9 +21,9 @@ define([
 
     this.template = ko.observable("licence-cover-letter")
     this.templateOptions = ko.observable([
-      { text: 'Cover', id: 'licence-cover-letter' },
-      { text: 'Final Report', id: 'final-report-letter' },
-      { text: 'Extension', id: 'licence-extension-letter' }
+      { text: 'Cover', id: 'licence-cover-letter', file: 'Licence Covering Letter.docx' },
+      { text: 'Final Report', id: 'final-report-letter', file: 'final-report-letter-covid-19.docx' },
+      { text: 'Extension', id: 'licence-extension-letter', file: 'extension-licence.docx' }
     ]);
     
     self.loading = ko.observable(false);
@@ -159,7 +159,6 @@ define([
         )
     );
     
-    
 
     this.appDateOptions = ko.observable(['received', 'acknowledged']);
     this.selectedAppDate = ko.observable('received');
@@ -173,7 +172,7 @@ define([
           return createTextObject(
             self.getTextValue(this.textBody()).replace(
               '[Date]',
-              self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]'
+              self.coverLetterData.dates[self.selectedAppDate()] || '[Date]'
             )
           );
         }
@@ -185,13 +184,13 @@ define([
       if (typeof(textObject) === 'string') {
         return textObject.replace(
           '[Date]',
-          self.coverLetterData.dates[self.selectedAppDate()]() || '[Date]')
+          self.coverLetterData.dates[self.selectedAppDate()] || '[Date]')
         .replace('[recipient]', self.getTextValue(self.coverLetterData.recipientName()) || '[recipient]')
         .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
         .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '')
         .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county]')
         .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenseNumber) || '[licence_no]')
-        .replace('[send_date]',self.coverLetterData.dates.sendDate() || '[send_date]')
+        .replace('[send_date]',self.coverLetterData.dates.sendDate || '[send_date]')
         .replace('[cmref]',self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]')
         .replace('[decision_by]', self.getTextValue(self.coverLetterData.decisionBy) || '[decision_by]')
         .replace('[Signature]', self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]')
@@ -235,7 +234,7 @@ define([
         read: function () {
           return self.fromAddress().replace(
               '[send_date]',
-              self.coverLetterData.dates.sendDate() || '[send_date]'
+              self.coverLetterData.dates.sendDate || '[send_date]'
             ).replace(
               '[cmref]',
               self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]'
@@ -765,7 +764,13 @@ define([
       // Run fetch prefill data if there hasn't previously been a saved letter
       self.loadData();
     }
-    this.useTemplate = function (){
+    this.useTemplate = function () {
+      chosenTemp = Object.entries(this.templateOptions()).filter(([key, value]) => {return value.id === this.template()})
+      console.log("chosen", chosenTemp)
+      console.log(chosenTemp[0][1])
+
+      templateFile = chosenTemp[0][1].file
+      console.log("the file", templateFile)
       console.log("sending ", self.coverLetterData)
       stringLetterData = {}
       for (let key of Object.keys(self.coverLetterData)) {
@@ -807,7 +812,33 @@ define([
       .replaceAll(">", "")
       .replaceAll('div style="width: 40%; height: fit-content; border: 1px solid;"', "")
       console.log("want to send", JSON.stringify(stringLetterData))
-      window.fetch("http://localhost:8000/templategenerator" + "?coverLetterData=" + JSON.stringify(stringLetterData))
+      
+      window.fetch("http://localhost:8000/templategenerator" + "?coverLetterData=" + JSON.stringify(stringLetterData) + "&template=" + templateFile)
+      .then((response) => response.blob())
+      .then((myBlob) => {
+        const blobUrl = URL.createObjectURL(myBlob);
+        const link = document.createElement("a");
+
+        // Set link's href to point to the Blob URL
+        link.href = blobUrl;
+        link.download = "test-download.docx";
+
+        // Append link to the body
+        document.body.appendChild(link);
+
+        // Dispatch click event on the link
+        // This is necessary as link.click() does not work on the latest firefox
+        link.dispatchEvent(
+          new MouseEvent('click', { 
+            bubbles: true, 
+            cancelable: true, 
+            view: window 
+      })
+    );
+
+    // Remove link from body
+    document.body.removeChild(link);
+    });
 
     }
   }
