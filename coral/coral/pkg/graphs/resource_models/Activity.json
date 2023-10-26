@@ -164,7 +164,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Associated Digital Files"
                     },
@@ -524,7 +524,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Activity Archive Material"
                     },
@@ -904,7 +904,7 @@
                     "instructions": {
                         "en": "Administrative, geopolitical areas, localities, and other areas (e.g.: Research or zoning areas)  "
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Localities/Administrative Areas"
                     },
@@ -10322,8 +10322,8 @@
                     "config": {
                         "descriptor_types": {
                             "description": {
-                                "nodegroup_id": "a472226f-9937-11ea-966a-f875a44e0e11",
-                                "string_template": " <Activity Description>"
+                                "nodegroup_id": "a5416b3d-f121-11eb-85b4-a87eeabdefba",
+                                "string_template": "<County Value>, <Town or City Value>, <Postcode Value>"
                             },
                             "map_popup": {
                                 "nodegroup_id": "a472226f-9937-11ea-966a-f875a44e0e11",
@@ -10338,7 +10338,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "73cf5c16-0335-4414-8970-c878e08154f0"
+                    "id": "37a2fcd1-5b33-45e6-94ab-4a2ce96c6559"
                 },
                 {
                     "config": {
@@ -10354,7 +10354,7 @@
                     },
                     "function_id": "317a318b-792b-4de3-bea9-e4212850431f",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "f4a74dec-fe15-4fab-ba3a-94075a885e89"
+                    "id": "9c6889c9-9f7b-4e5c-9147-fd1a9e9fd24c"
                 }
             ],
             "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -13317,10 +13317,10 @@
                         },
                         "options": [
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             },
                             {
@@ -13331,10 +13331,10 @@
                                 }
                             },
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             }
                         ]
@@ -13496,10 +13496,10 @@
                         },
                         "options": [
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             },
                             {
@@ -13510,10 +13510,10 @@
                                 }
                             },
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             }
                         ]
@@ -17743,8 +17743,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "/bin/sh: 1: git: not found",
+        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.10.0-21-amd64"
+        "os version": "5.10.0-23-amd64"
     }
 }
