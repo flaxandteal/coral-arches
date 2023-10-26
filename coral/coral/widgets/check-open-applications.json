@@ -2,7 +2,9 @@
   "widgetid": "f3ff0ab8-c626-4bbf-88dd-420ce66c0724",
   "name": "check-open-applications",
   "component": "views/components/widgets/check-open-applications",
-  "defaultconfig": {},
+  "defaultconfig": {
+    "limit": 6
+  },
   "helptext": null,
-  "datatype": "resource-instance-select"
+  "datatype": "resource-instance"
 }
