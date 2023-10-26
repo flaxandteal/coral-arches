@@ -36,6 +36,12 @@
             </div>
 
         </div>
+        <!-- ko if: currentState() -->
+        <div style="padding: 8px; color: white; max-width: 600px; margin-top: 8px; border-radius: 4px" data-bind="style: { background: colour() }">
+            <div data-bind="text: title()" style="font-size: 14px; font-weight: 700"></div>
+            <div data-bind="text: message()" style="font-size: 13px; font-weight: 600"></div>
+        </div>
+        <!-- /ko -->
     </div>
 
     <div class="rr-widget">
@@ -215,6 +221,20 @@
             data-bind="
                 attr: {placeholder: $root.translations.placeholder},
                 value: placeholder, 
+                valueUpdate: 'keyup'
+            "
+        >
+    </div>
+    <div class="control-label">
+        <span>Open Applications Limit</span>
+    </div>
+    <div class="col-xs-12 pad-no crud-widget-container">
+        <input 
+            class="form-control input-md widget-input"
+            type="number"
+            data-bind="
+                attr: {placeholder: 'Limit'},
+                value: limit, 
                 valueUpdate: 'keyup'
             "
         >
