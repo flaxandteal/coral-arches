@@ -219,7 +219,43 @@ define([
       );
     };
 
-    this.init = () => {
+    this.saveRecentlyEdited = () => {
+      localStorage.setItem(
+        this.WORKFLOW_RECENTLY_EDITED_LABEL,
+        JSON.stringify(this.recentlyEdited())
+      );
+    };
+
+    this.validateRecentlyEdited = async (workflows) => {
+      const removeWorkflows = [];
+
+      const validate = (resourceId) =>
+        new Promise(async (resolve, reject) => {
+          const tiles = await this.fetchTileData(resourceId);
+          if (!tiles.length) {
+            removeWorkflows.push(resourceId);
+          }
+          resolve();
+        });
+
+      await Promise.all(Object.values(workflows).map(({ resourceId }) => validate(resourceId)));
+
+      const recentlyEdited = this.recentlyEdited();
+      removeWorkflows.forEach((resourceId) => {
+        delete recentlyEdited[this.workflowSlug()][resourceId];
+      });
+      this.recentlyEdited(recentlyEdited);
+      this.saveRecentlyEdited();
+    };
+
+    this.clearRecentlyEdited = () => {
+      const recentlyEdited = this.recentlyEdited();
+      recentlyEdited[this.workflowSlug()] = {};
+      this.recentlyEdited(recentlyEdited);
+      this.saveRecentlyEdited();
+    };
+
+    this.init = async () => {
       console.log('Init edit workflow: ', params);
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
@@ -228,6 +264,8 @@ define([
       this.recentlyEdited(
         JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_EDITED_LABEL)) || {}
       );
+
+      await this.validateRecentlyEdited(this.recentlyEdited()[this.workflowSlug()]);
     };
 
     this.init();
