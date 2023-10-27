@@ -51,9 +51,29 @@ define([
 
     this.loadResourceData = async (resourceId) => {
       this.loading(true);
-      const componentData = await this[this.workflow().setupFunction](resourceId);
-      localStorage.setItem(this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL, JSON.stringify(componentData));
+      await this[this.workflow().setupFunction](resourceId);
+      this.formatManyTilesManagedNodegroups();
+      localStorage.setItem(
+        this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL,
+        JSON.stringify(this.componentData())
+      );
       this.loading(false);
+    };
+
+    this.componentData = ko.observable({});
+    this.manyTilesManagedNodegroups = ko.observable({});
+    this.tileData = ko.observable({});
+
+    this.addManyTilesManagedNodegroup = (nodegroupId) => {
+      this.manyTilesManagedNodegroups()[nodegroupId] = [];
+    };
+
+    this.formatManyTilesManagedNodegroups = () => {
+      Object.entries(this.manyTilesManagedNodegroups()).forEach(([key, value]) => {
+        this.componentData()[key] = {
+          value: JSON.stringify(value)
+        };
+      });
     };
 
     /**
@@ -61,15 +81,12 @@ define([
      * to create more setup functions.
      */
     this.loadLicenseData = async (licenseResourceId) => {
-      const manyTilesManagedNodegroups = {
-        '6840f820-48ce-11ee-8e4e-0242ac140007': [],
-        'a5416b46-f121-11eb-8f2d-a87eeabdefba': []
-      };
+      this.addManyTilesManagedNodegroup('6840f820-48ce-11ee-8e4e-0242ac140007');
+      this.addManyTilesManagedNodegroup('a5416b46-f121-11eb-8f2d-a87eeabdefba');
       const licenseTiles = await this.fetchTileData(licenseResourceId);
       this.resourceName(
         this.getNameFromNodeId(licenseTiles, '59d6676c-48b9-11ee-84da-0242ac140007')
       );
-      const componentData = {};
       const licenseDigitalFiles = licenseTiles.find(
         (tile) => tile.nodegroup === '8c5356f4-48ce-11ee-8e4e-0242ac140007'
       );
@@ -79,7 +96,7 @@ define([
         );
         licenseDigitalFilesTiles.forEach((tile) => {
           if (tile.nodegroup === '7db68c6c-8490-11ea-a543-f875a44e0e11') {
-            componentData[tile.nodegroup + `|file-upload`] = {
+            this.componentData()[tile.nodegroup + `|file-upload`] = {
               value: JSON.stringify({
                 tileData: koMapping.toJSON(tile.data),
                 resourceInstanceId: tile.resourceinstance,
@@ -140,8 +157,8 @@ define([
         (tile) => tile.nodegroup === 'e7d695ff-9939-11ea-8fff-f875a44e0e11'
       );
       activityTiles.forEach((tile) => {
-        if (tile.nodegroup in manyTilesManagedNodegroups) {
-          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
+        if (tile.nodegroup in this.manyTilesManagedNodegroups()) {
+          this.manyTilesManagedNodegroups()[tile.nodegroup].push(tile);
           return;
         }
         let nodegroupId = tile.nodegroup;
@@ -155,7 +172,7 @@ define([
         if (externalRefSource === 'c14def6d-4713-465f-9119-bc33f0d6e8b3') {
           nodegroupId += '|pow-ref'; // This is set to match the unique instance name from the workflow
         }
-        componentData[nodegroupId] = {
+        this.componentData()[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
             resourceInstanceId: tile.resourceinstance,
@@ -173,7 +190,7 @@ define([
         );
         activityDigitalFilesTiles.forEach((tile) => {
           if (tile.nodegroup === '7db68c6c-8490-11ea-a543-f875a44e0e11') {
-            componentData[tile.nodegroup + `|report-documents`] = {
+            this.componentData()[tile.nodegroup + `|report-documents`] = {
               value: JSON.stringify({
                 tileData: koMapping.toJSON(tile.data),
                 resourceInstanceId: tile.resourceinstance,
@@ -188,8 +205,8 @@ define([
         (tile) => tile.nodegroup === '280b6cfc-4e4d-11ee-a340-0242ac140007'
       );
       licenseTiles.forEach((tile) => {
-        if (tile.nodegroup in manyTilesManagedNodegroups) {
-          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
+        if (tile.nodegroup in this.manyTilesManagedNodegroups()) {
+          this.manyTilesManagedNodegroups()[tile.nodegroup].push(tile);
           return;
         }
         /**
@@ -222,17 +239,10 @@ define([
         if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && licenseExtRefTile) {
           value['licenseNumberTileId'] = licenseExtRefTile.tileid;
         }
-
-        componentData[tile.nodegroup] = {
+        this.componentData()[tile.nodegroup] = {
           value: JSON.stringify(value)
         };
       });
-      Object.entries(manyTilesManagedNodegroups).forEach(([key, value]) => {
-        componentData[key] = {
-          value: JSON.stringify(value)
-        };
-      });
-      return componentData;
     };
 
     this.openRecent = async (resourceId) => {
