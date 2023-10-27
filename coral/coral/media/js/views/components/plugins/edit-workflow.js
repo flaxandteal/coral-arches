@@ -76,6 +76,21 @@ define([
       });
     };
 
+    this.addComponentData = (tile, suffix, additionalValues = {}) => {
+      const key = suffix ? `${tile.nodegroup}|${suffix}` : tile.nodegroup;
+      this.componentData()[key] = {
+        value: JSON.stringify({
+          tileData: koMapping.toJSON(tile.data),
+          resourceInstanceId: tile.resourceinstance,
+          tileId: tile.tileid,
+          nodegroupId: tile.nodegroup,
+          ...additionalValues
+        })
+      };
+    };
+
+    this.advancedSearch = () => {};
+
     /**
      * TODO: Refactor this into utility methods to make it easier
      * to create more setup functions.
@@ -84,33 +99,54 @@ define([
       this.addManyTilesManagedNodegroup('6840f820-48ce-11ee-8e4e-0242ac140007');
       this.addManyTilesManagedNodegroup('a5416b46-f121-11eb-8f2d-a87eeabdefba');
       const licenseTiles = await this.fetchTileData(licenseResourceId);
+
       this.resourceName(
         this.getNameFromNodeId(licenseTiles, '59d6676c-48b9-11ee-84da-0242ac140007')
       );
-      const licenseDigitalFiles = licenseTiles.find(
-        (tile) => tile.nodegroup === '8c5356f4-48ce-11ee-8e4e-0242ac140007'
-      );
-      if (licenseDigitalFiles) {
-        const licenseDigitalFilesTiles = await this.fetchTileData(
-          licenseDigitalFiles.data['8c5356f4-48ce-11ee-8e4e-0242ac140007'][0].resourceId
-        );
-        licenseDigitalFilesTiles.forEach((tile) => {
-          if (tile.nodegroup === '7db68c6c-8490-11ea-a543-f875a44e0e11') {
-            this.componentData()[tile.nodegroup + `|file-upload`] = {
-              value: JSON.stringify({
-                tileData: koMapping.toJSON(tile.data),
-                resourceInstanceId: tile.resourceinstance,
-                tileId: tile.tileid,
-                nodegroupId: tile.nodegroup
-              })
-            };
-          }
+
+      const findDataFromTiles = (config, tiles) => {
+        const result = { ...config };
+        Object.keys(result).forEach((key) => (result[key] = null));
+        tiles.forEach((tile) => {
+          Object.entries(config).forEach(([key, value]) => {
+            console.log('key, value: ', key, value);
+            if (typeof value === 'string' || value instanceof String) {
+              if (tile.nodegroup === value) {
+                result[key] = tile;
+              }
+            } else if (typeof value === 'function') {
+              if (value(tile)) {
+                result[key] = tile;
+              }
+            }
+          });
         });
+        return result;
+      };
+
+      const licenseData = findDataFromTiles(
+        {
+          digitalFiles: '8c5356f4-48ce-11ee-8e4e-0242ac140007',
+          sysRef: '991c3c74-48b6-11ee-85af-0242ac140007',
+          extRef: '280b6cfc-4e4d-11ee-a340-0242ac140007'
+        },
+        licenseTiles
+      );
+      console.log(licenseData);
+
+      if (licenseData.digitalFiles) {
+        const licenseDigitalFilesTiles = await this.fetchTileData(
+          licenseData.digitalFiles.data['8c5356f4-48ce-11ee-8e4e-0242ac140007'][0].resourceId
+        );
+        const licenseFilesData = findDataFromTiles(
+          { files: '7db68c6c-8490-11ea-a543-f875a44e0e11' },
+          licenseDigitalFilesTiles
+        );
+        if (licenseFilesData.files) {
+          this.addComponentData(licenseFilesData.files, 'file-upload');
+        }
       }
 
-      const licenseSysRefTile = licenseTiles.find(
-        (tile) => tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007'
-      );
       let acitivityResourceId = null;
       await $.ajax({
         type: 'GET',
@@ -129,7 +165,7 @@ define([
               'e7d69603-9939-11ea-9e7f-f875a44e0e11': {
                 op: '~',
                 lang: 'en',
-                val: licenseSysRefTile?.data['991c49b2-48b6-11ee-85af-0242ac140007'][
+                val: licenseData.sysRef?.data['991c49b2-48b6-11ee-85af-0242ac140007'][
                   arches.activeLanguage
                 ].value
               },
@@ -149,37 +185,59 @@ define([
         }
       });
       const activityTiles = await this.fetchTileData(acitivityResourceId);
+      const activityData = findDataFromTiles(
+        {
+          actLoc: 'a5416b49-f121-11eb-8e2c-a87eeabdefba',
+          sysRef: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+          cmRef: (tile) => {
+            if (tile.nodegroup !== '') return;
+            const source = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
+            if (source === '19afd557-cc21-44b4-b1df-f32568181b2c') {
+              return true;
+            }
+          },
+          assetRef: (tile) => {
+            if (tile.nodegroup !== '') return;
+            const source = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
+            if (source === 'df585888-b45c-4f48-99d1-4cb3432855d5') {
+              return true;
+            }
+          },
+          powRef: (tile) => {
+            if (tile.nodegroup !== '') return;
+            const source = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
+            if (source === 'c14def6d-4713-465f-9119-bc33f0d6e8b3') {
+              return true;
+            }
+          }
+        },
+        activityTiles
+      );
+      console.log(activityData);
 
-      const actLocTile = activityTiles.find(
-        (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
-      );
-      const actSysRefTile = activityTiles.find(
-        (tile) => tile.nodegroup === 'e7d695ff-9939-11ea-8fff-f875a44e0e11'
-      );
+      // const actLocTile = activityTiles.find(
+      //   (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
+      // );
+      // const actSysRefTile = activityTiles.find(
+      //   (tile) => tile.nodegroup === 'e7d695ff-9939-11ea-8fff-f875a44e0e11'
+      // );
       activityTiles.forEach((tile) => {
         if (tile.nodegroup in this.manyTilesManagedNodegroups()) {
           this.manyTilesManagedNodegroups()[tile.nodegroup].push(tile);
           return;
         }
-        let nodegroupId = tile.nodegroup;
+        let suffix = null;
         const externalRefSource = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
         if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
-          nodegroupId += '|cm-ref'; // This is set to match the unique instance name from the workflow
+          suffix += '|cm-ref'; // This is set to match the unique instance name from the workflow
         }
         if (externalRefSource === 'df585888-b45c-4f48-99d1-4cb3432855d5') {
-          nodegroupId += '|asset-ref'; // This is set to match the unique instance name from the workflow
+          suffix += '|asset-ref'; // This is set to match the unique instance name from the workflow
         }
         if (externalRefSource === 'c14def6d-4713-465f-9119-bc33f0d6e8b3') {
-          nodegroupId += '|pow-ref'; // This is set to match the unique instance name from the workflow
+          suffix += '|pow-ref'; // This is set to match the unique instance name from the workflow
         }
-        this.componentData()[nodegroupId] = {
-          value: JSON.stringify({
-            tileData: koMapping.toJSON(tile.data),
-            resourceInstanceId: tile.resourceinstance,
-            tileId: tile.tileid,
-            nodegroupId: tile.nodegroup
-          })
-        };
+        this.addComponentData(tile, suffix);
       });
       const activityDigitalFiles = activityTiles.find(
         (tile) => tile.nodegroup === '316c7d1e-8554-11ea-aed7-f875a44e0e11'
@@ -188,18 +246,13 @@ define([
         const activityDigitalFilesTiles = await this.fetchTileData(
           activityDigitalFiles.data['316c7d1e-8554-11ea-aed7-f875a44e0e11'][0].resourceId
         );
-        activityDigitalFilesTiles.forEach((tile) => {
-          if (tile.nodegroup === '7db68c6c-8490-11ea-a543-f875a44e0e11') {
-            this.componentData()[tile.nodegroup + `|report-documents`] = {
-              value: JSON.stringify({
-                tileData: koMapping.toJSON(tile.data),
-                resourceInstanceId: tile.resourceinstance,
-                tileId: tile.tileid,
-                nodegroupId: tile.nodegroup
-              })
-            };
-          }
-        });
+        const activityFilesData = findDataFromTiles(
+          { files: '7db68c6c-8490-11ea-a543-f875a44e0e11' },
+          activityDigitalFilesTiles
+        );
+        if (activityFilesData.files) {
+          this.addComponentData(activityFilesData.files, 'report-documents');
+        }
       }
       const licenseExtRefTile = licenseTiles.find(
         (tile) => tile.nodegroup === '280b6cfc-4e4d-11ee-a340-0242ac140007'
@@ -229,16 +282,19 @@ define([
          * Good example of populating custom array access values. These
          * two values will be included in the safeArrayAccesses.
          */
-        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && actLocTile) {
-          value['actLocTileId'] = actLocTile.tileid;
-          value['actResourceId'] = actLocTile.resourceinstance;
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && activityResourceId) {
+          value['actResourceId'] = activityResourceId;
         }
-        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && actSysRefTile) {
-          value['actSysRefTileId'] = actSysRefTile.tileid;
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && activityData.actLoc) {
+          value['actLocTileId'] = activityData.actLoc.tileid;
+        }
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && activityData.sysRef) {
+          value['actSysRefTileId'] = activityData.sysRef.tileid;
         }
         if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && licenseExtRefTile) {
           value['licenseNumberTileId'] = licenseExtRefTile.tileid;
         }
+        this.addComponentData(tile);
         this.componentData()[tile.nodegroup] = {
           value: JSON.stringify(value)
         };
