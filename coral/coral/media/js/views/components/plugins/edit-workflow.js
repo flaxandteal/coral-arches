@@ -91,6 +91,9 @@ define([
         });
       }
 
+      const licenseSysRefTile = licenseTiles.find(
+        (tile) => tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007'
+      );
       let acitivityResourceId = null;
       await $.ajax({
         type: 'GET',
@@ -109,7 +112,9 @@ define([
               'e7d69603-9939-11ea-9e7f-f875a44e0e11': {
                 op: '~',
                 lang: 'en',
-                val: 'f9bab27e-414f-49bd-8b6d-546afc1f8ca3'
+                val: licenseSysRefTile?.data['991c49b2-48b6-11ee-85af-0242ac140007'][
+                  arches.activeLanguage
+                ].value
               },
               'e7d69604-9939-11ea-baef-f875a44e0e11': { op: '~', lang: 'en', val: '' }
             }
