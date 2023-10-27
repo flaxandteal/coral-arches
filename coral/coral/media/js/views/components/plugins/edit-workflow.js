@@ -1,9 +1,10 @@
 define([
+  'jquery',
   'knockout',
   'knockout-mapping',
   'arches',
   'templates/views/components/plugins/edit-workflow.htm'
-], function (ko, koMapping, arches, editWorkflowTemplate) {
+], function ($, ko, koMapping, arches, editWorkflowTemplate) {
   const editWorkflow = function (params) {
     this.WORKFLOW_LABEL = 'workflow-slug';
     this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
@@ -89,17 +90,44 @@ define([
           }
         });
       }
-      const relatedActivitiesTile = licenseTiles.find(
-        (tile) => tile.nodegroup === 'a9f53f00-48b6-11ee-85af-0242ac140007'
-      );
-      /**
-       * FIXME: Currently dosen't support multiple associated activities.
-       * Needs a search implemented to find an activity with the same system
-       * reference ID assigned to the License.
-       */
-      const activityTiles = await this.fetchTileData(
-        relatedActivitiesTile.data['a9f53f00-48b6-11ee-85af-0242ac140007'][0].resourceId
-      );
+
+      let acitivityResourceId = null;
+      await $.ajax({
+        type: 'GET',
+        url: arches.urls.search_results,
+        data: {
+          'paging-filter': 1,
+          tiles: true,
+          format: 'tilecsv',
+          reportlink: 'false',
+          precision: '6',
+          total: '0',
+          'advanced-search': JSON.stringify([
+            {
+              op: 'and',
+              'e7d69602-9939-11ea-b514-f875a44e0e11': { op: 'eq', val: '' },
+              'e7d69603-9939-11ea-9e7f-f875a44e0e11': {
+                op: '~',
+                lang: 'en',
+                val: 'f9bab27e-414f-49bd-8b6d-546afc1f8ca3'
+              },
+              'e7d69604-9939-11ea-baef-f875a44e0e11': { op: '~', lang: 'en', val: '' }
+            }
+          ])
+        },
+        context: this,
+        success: (response) => {
+          acitivityResourceId = response.results.hits.hits[0]?._id;
+        },
+        error: (response, status, error) => {
+          console.error(error);
+        },
+        complete: (request, status) => {
+          //
+        }
+      });
+      const activityTiles = await this.fetchTileData(acitivityResourceId);
+
       const actLocTile = activityTiles.find(
         (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
       );
