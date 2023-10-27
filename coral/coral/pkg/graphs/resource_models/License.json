@@ -1,7 +1,7 @@
 {
     "graph": [
         {
-            "author": " Taylor North and Owen McEvoy",
+            "author": "Taylor North and Owen McEvoy",
             "cards": [
                 {
                     "active": true,
@@ -29,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -212,7 +212,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "License Names"
                     },
@@ -352,7 +352,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -379,7 +379,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -419,7 +419,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Decision"
                     },
@@ -1850,7 +1850,7 @@
                     "node_id": "6d2924b6-5891-11ee-a624-0242ac120004",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "f3ff0ab8-c626-4bbf-88dd-420ce66c0724"
                 },
                 {
                     "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
@@ -5088,16 +5088,6 @@
             "functions_x_graphs": [
                 {
                     "config": {
-                        "triggering_nodegroups": [
-                            "991c3c74-48b6-11ee-85af-0242ac140007"
-                        ]
-                    },
-                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "57031f7c-0774-406c-8ea6-3c50a4cc8cb2"
-                },
-                {
-                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",
@@ -5116,12 +5106,22 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "d7568281-86fc-4c18-818d-dceb93aae69f"
+                    "id": "20fe5200-7cb3-4fc7-9be2-2a06fa9b1f1d"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "991c3c74-48b6-11ee-85af-0242ac140007"
+                        ]
+                    },
+                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "d89494ef-a50e-4060-9bb9-fb9abe75ab02"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -5312,7 +5312,7 @@
                     "nodeid": "132fcfec-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 2
+                    "sortorder": 0
                 },
                 {
                     "alias": "archaeology_found",
@@ -6243,7 +6243,7 @@
                     "nodeid": "67ae46da-5d49-11ee-911e-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 3
+                    "sortorder": 0
                 },
                 {
                     "alias": "communications",
@@ -6702,7 +6702,7 @@
                     "nodeid": "6a373fbe-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 1
+                    "sortorder": 0
                 },
                 {
                     "alias": "contacts",
@@ -7405,7 +7405,7 @@
                     "nodeid": "94aaeb74-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 4
+                    "sortorder": 0
                 },
                 {
                     "alias": null,
@@ -8831,7 +8831,7 @@
                     "nodeid": "d2a39e8a-5d4a-11ee-9b75-0242ac130003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 5
+                    "sortorder": 0
                 },
                 {
                     "alias": "decision_assignment",
@@ -9007,7 +9007,7 @@
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
-                    "issearchable": false,
+                    "issearchable": true,
                     "istopnode": false,
                     "name": "Status",
                     "nodegroup_id": "ee5947c6-48b2-11ee-abec-0242ac140007",
@@ -9020,9 +9020,9 @@
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                "notes": "Added decision approved by",
-                "publicationid": "2abcf1a6-69ae-11ee-b302-0242ac130002",
-                "published_time": "2023-10-13T09:52:05.731",
+                "notes": null,
+                "publicationid": "0f0d4512-74a5-11ee-b1d0-0242ac130008",
+                "published_time": "2023-10-27T08:44:36.601",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
@@ -9050,7 +9050,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": ""
+                "en": "Designed to support fields required to manage the creation of Licenses, including their dates, communications and people involved"
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
             "version": ""

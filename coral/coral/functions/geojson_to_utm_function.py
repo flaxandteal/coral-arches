@@ -334,6 +334,8 @@ class GeoJSONToUTMPoint(BaseFunction):
                 can be accessed in [3]_
     
         """
+        
+
         lat_rad = math.radians(latitude)
         lat_sin = math.sin(lat_rad)
         lat_cos = math.cos(lat_rad)
@@ -348,6 +350,8 @@ class GeoJSONToUTMPoint(BaseFunction):
         lon_rad = math.radians(longitude)
         central_lon = self.zone_number_to_central_longitude(zone_number)
         central_lon_rad = math.radians(central_lon)
+
+        self.convert_to_itm(lat_rad, lon_rad)
     
         n = R / math.sqrt(1 - E * lat_sin**2)
         c = E_P2 * lat_cos**2
@@ -377,6 +381,41 @@ class GeoJSONToUTMPoint(BaseFunction):
 
         return f"{zone_number}{zone_letter} {easting}mE, {northing}mN"
         # return easting, northing, zone_number, zone_letter
+
+    def convert_to_itm(self, lat, lon):
+        # Natural Origin 
+        lat0=53.5
+        lon0=-8.
+
+        b=R*math.sqrt(1-E)
+
+        # Meridian Arc 
+        n=(R-b)/(R+b)
+        a0=1.+((n**2)/4.)+((n**4)/64.)
+        a2=(3./2.)*(n-((n**3)/8.))
+        a4=(15./16.)*((n**2)-((n**4)/4.))
+        a6=(35./48.)*(n**3)
+
+        s1=R/(1+n)*(a0*lat0-a2*math.sin(2.*lat0)+a4*math.sin(4.*lat0)-a6*math.sin(6.*lat0))
+        s2=R/(1+n)*(a0*lat-a2*math.sin(2.*lat)+a4*math.sin(4.*lat)-a6*math.sin(6.*lat))
+    
+        meridian_arc = s2 - s1
+
+        # Gaus Kruger Projection
+        N=R/math.sqrt(1-E*(math.sin(lat))**2)
+        RO=R*(1-E)/((1-E*(math.sin(lat)**2))**(3./2.))
+
+        k1=(N/RO)+(4.*(N**2)/(RO**2))-((math.tan(lat))**2)
+
+        k2=(N/RO)-((math.tan(lat))**2)
+
+        k3=N/RO*(14.-58.*((math.tan(lat)))**2)+40.*((math.tan(lat))**2)+((math.tan(lat))**4)-9.
+
+        x=lon*N*math.cos(lat)+(lon**3)/6.*N*((math.cos(lat))**3)*k2+(lon**5)/120.*N*((math.cos(lat))**5)*k3
+
+        y=meridian_arc + (lon**2)/2.*N*math.sin(lat)*math.cos(lat)+((lon**4)/24.)*N*math.sin(lat)*((math.cos(lat))**3)*k1
+        print("HERE IS THE ITM", (x,y))
+        return x,y
     
     def save(self, tile, request, context=None):
         self.save_utmpoint(tile=tile, request=request, is_function_save_method=True)
