@@ -204,7 +204,7 @@ define([
           },
           context: this,
           success: function (response) {
-            console.log('search response: ', response);
+            // console.log('search response: ', response);
             this.totalOpenApplications(response.results.hits.total.value);
 
             switch (true) {
@@ -222,42 +222,8 @@ define([
                 break;
             }
 
-            console.log('this.currentState(): ', this.currentState());
-            console.log('this.totalOpenApplications(): ', this.totalOpenApplications());
-
-            // if (totalOpenApplications >= 2) {
-            //   this.exceededThreshold = true;
-            //   // this.pageVm.alert(
-            //   //   new AlertViewModel(
-            //   //     'ep-alert-warning',
-            //   //     'Warning',
-            //   //     `This user currently has ${totalOpenApplications} applications open it is not recommended to continue until the others have completed their course.`
-            //   //   )
-            //   // );
-            // }
-            // _.each(
-            //   this.viewModel.sharedStateObject.searchResults,
-            //   function (value, key, results) {
-            //     if (key !== 'timestamp') {
-            //       delete this.viewModel.sharedStateObject.searchResults[key];
-            //     }
-            //   },
-            //   this
-            // );
-            // _.each(
-            //   response,
-            //   function (value, key, response) {
-            //     if (key !== 'timestamp') {
-            //       this.viewModel.sharedStateObject.searchResults[key] = value;
-            //     }
-            //   },
-            //   this
-            // );
-            // this.viewModel.sharedStateObject.searchResults.timestamp(response.timestamp);
-            // this.viewModel.sharedStateObject.userIsReviewer(response.reviewer);
-            // this.viewModel.sharedStateObject.userid(response.userid);
-            // this.viewModel.total(response.total_results);
-            // this.viewModel.alert(false);
+            // console.log('this.currentState(): ', this.currentState());
+            // console.log('this.totalOpenApplications(): ', this.totalOpenApplications());
           },
           error: function (response, status, error) {
             if (this.openApplicationsRequest.statusText !== 'abort') {
@@ -273,7 +239,6 @@ define([
           },
           complete: function (request, status) {
             this.openApplicationsRequest = undefined;
-            // window.history.pushState({}, '', '?' + $.param(queryString).split('+').join('%20'));
           }
         });
       };
