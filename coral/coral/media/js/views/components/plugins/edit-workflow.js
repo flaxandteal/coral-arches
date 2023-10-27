@@ -136,6 +136,9 @@ define([
       const actLocTile = activityTiles.find(
         (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
       );
+      const actSysRefTile = activityTiles.find(
+        (tile) => tile.nodegroup === 'e7d695ff-9939-11ea-8fff-f875a44e0e11'
+      );
       activityTiles.forEach((tile) => {
         if (tile.nodegroup in manyTilesManagedNodegroups) {
           manyTilesManagedNodegroups[tile.nodegroup].push(tile);
@@ -181,6 +184,9 @@ define([
           }
         });
       }
+      const licenseExtRefTile = licenseTiles.find(
+        (tile) => tile.nodegroup === '280b6cfc-4e4d-11ee-a340-0242ac140007'
+      );
       licenseTiles.forEach((tile) => {
         if (tile.nodegroup in manyTilesManagedNodegroups) {
           manyTilesManagedNodegroups[tile.nodegroup].push(tile);
@@ -210,6 +216,13 @@ define([
           value['actLocTileId'] = actLocTile.tileid;
           value['actResourceId'] = actLocTile.resourceinstance;
         }
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && actSysRefTile) {
+          value['actSysRefTileId'] = actSysRefTile.tileid;
+        }
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && licenseExtRefTile) {
+          value['licenseNumberTileId'] = licenseExtRefTile.tileid;
+        }
+
         componentData[tile.nodegroup] = {
           value: JSON.stringify(value)
         };

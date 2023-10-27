@@ -607,7 +607,14 @@ define([
         }
       ];
 
-      this.safeArrayAccesses = ['resourceInstanceId', 'tileId', 'actLocTileId', 'actResourceId'];
+      this.safeArrayAccesses = [
+        'resourceInstanceId',
+        'tileId',
+        'actLocTileId',
+        'actResourceId',
+        'licenseNumberTileId',
+        'actSysRefTileId'
+      ];
 
       EditableWorkflow.apply(this, [params]);
 
