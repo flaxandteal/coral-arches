@@ -3,845 +3,283 @@ define([
   'knockout-mapping',
   'underscore',
   'arches',
+  'views/components/workflows/summary-step',
   'templates/views/components/workflows/licensing-workflow/license-cover-letter.htm',
   'plugins/knockout-select2'
-], function (ko, koMapping, _, arches, licenseCoverTemplate) {
+], function (ko, koMapping, _, arches, SummaryStep, licenseCoverTemplate) {
   function viewModel(params) {
-    const self = this;
+    SummaryStep.apply(this, [params]);
 
+    this.currentLanguage = ko.observable({ code: arches.activeLanguage });
     this.resourceData = ko.observable();
     this.relatedResources = ko.observableArray();
-
+    this.contacts_loaded = ko.observable(false)
     this.configKeys = ko.observable({ placeholder: 0 });
     this.textReady = ko.observable(true)
-
-    _.extend(this, params.form);
-
-    self.currentLanguage = ko.observable({ code: arches.activeLanguage });
-
+    
     this.template = ko.observable("licence-cover-letter")
     this.templateOptions = ko.observable([
       { text: 'Cover', id: 'licence-cover-letter', file: 'Licence Covering Letter.docx' },
       { text: 'Final Report', id: 'final-report-letter', file: 'final-report-letter-covid-19.docx' },
       { text: 'Extension', id: 'licence-extension-letter', file: 'extension-licence.docx' }
     ]);
-    
-    self.loading = ko.observable(false);
-    self.pageVm = params.pageVm;
-    self.dirty(true);
 
-    const createTextObject = (value) => ({
-      [self.currentLanguage().code]: {
-        value: value?.toString() || '',
-        direction: 'ltr'
-      }
-    });
+  this.loading = ko.observable(false);
+  this.coverLetterData = ko.observable({})
 
-    self.getTextValue = (textObject) => {
-      if (ko.isObservable(textObject)) {
-        return textObject()?.[self.currentLanguage().code]?.value || '';
-      } else {
-        return textObject?.[self.currentLanguage().code]?.value || '';
-      }
-    };
+  this.licenseNodes = {
+  id: 'license',
+  label: 'License',
+  contacts: {
+    label: 'Contacts',
+    nodegroupId: '6d290832-5891-11ee-a624-0242ac120004',
+    renderNodeIds: [
+      '6d292f88-5891-11ee-a624-0242ac120004',
+      '6d2924b6-5891-11ee-a624-0242ac120004',
+      '6d294784-5891-11ee-a624-0242ac120004',
+      '6d292a2e-5891-11ee-a624-0242ac120004',
+      '6d293532-5891-11ee-a624-0242ac120004',
+    ]
+  },
+  dates: {
+    label: 'Dates',
+    nodegroupId: '05f6b846-5d49-11ee-911e-0242ac130003'
+  },
+  status: {
+    label: 'Application Status',
+    nodegroupId: 'ee5947c6-48b2-11ee-abec-0242ac140007'
+  },
+  decisionMadeBy: {
+    label: 'Decision',
+    nodegroupId: '2749ea5a-48cb-11ee-be76-0242ac140007',
+    renderNodeIds: [
+      '4c58921e-48cc-11ee-9081-0242ac140007',
+      '25f04f6c-48cd-11ee-94b3-0242ac140007',
+      'f3dcbf02-48cb-11ee-9081-0242ac140007',
+      'f6c207ae-5938-11ee-9e74-0242ac130007',
+      'f8765744-69aa-11ee-942a-0242ac130002',
+      '246252e0-69ab-11ee-942a-0242ac130002'
+    ]
+  },
 
-    self.getSavedValue = (key) => {
-      return params.form.savedData()?.coverLetterData[key];
-    };
+  report: {
+    label: 'Report',
+    nodegroupId: 'f060583a-6120-11ee-9fd1-0242ac120003'
+  },
 
-    self.createAddressObject = ({
-      fullAddress,
-      buildingNumberSubSt,
-      city,
-      postcode,
-      subStreet,
-      buildingName,
-      buildingNumber,
-      streetName,
-      locality,
-      county
-    } = {}) => ({
-      fullAddress: ko.observable(fullAddress || createTextObject()),
-      buildingNumberSubSt: ko.observable(buildingNumberSubSt || createTextObject()),
-      city: ko.observable(city || createTextObject()),
-      postcode: ko.observable(postcode || createTextObject()),
-      subStreet: ko.observable(subStreet || createTextObject()),
-      buildingName: ko.observable(buildingName || createTextObject()),
-      buildingNumber: ko.observable(buildingNumber || createTextObject()),
-      streetName: ko.observable(streetName || createTextObject()),
-      locality: ko.observable(locality || createTextObject()),
-      county: ko.observable(county || createTextObject())
-    });
+  systemRef: {
+    label: 'System Reference',
+    nodegroupId: '991c3c74-48b6-11ee-85af-0242ac140007',
+    renderNodeIds: [{ nodeId: '991c49b2-48b6-11ee-85af-0242ac140007', label: 'Application ID' }]
+  },
+  applicationDetails: {
+    label: 'Application Details',
+    nodegroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+    renderNodeIds: [
+      'aec103a2-48cf-11ee-8e4e-0242ac140007',
+      'c2f40174-5dd5-11ee-ae2c-0242ac120008'
+    ]
+  },
+  externalRef: {
+    label: 'External Reference',
+    nodegroupId: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+    renderNodeIds: [{ nodeId: '280b75bc-4e4d-11ee-a340-0242ac140007', label: 'License Number' }]
+  },
 
-    self.loadCoverLetterData = () => {
-      let data = params.form.savedData()?.coverLetterData;
-      return {
-        recipientName: ko.observable(data?.recipientName || createTextObject()),
-        companyName: ko.observable(data?.companyName || createTextObject()),
-        siteName: ko.observable(data?.siteName || createTextObject()),
-        seniorInspectorName: ko.observable(data?.seniorInspectorName || createTextObject()),
-        signedName: ko.observable(data?.signedName || createTextObject()),
-        hasAdditonalFiles: ko.observable(data?.hasAdditonalFiles || false),
-        licenseNumber: ko.observable(data?.licenseNumber || ''),
-        cmReference: ko.observable(data?.cmReference || ''),
-        selectedAddress: ko.observable(data?.selectedAddress || 'applicant'),
-        decisionBy: {
-          name: ko.observable(data?.decisionBy?.name || createTextObject()),
-          date: ko.observable(data?.decisionBy?.date || '')
-        },
-        dates: {
-          acknowledged: ko.observable(data?.dates?.acknowledged || ''),
-          received: ko.observable(data?.dates?.received || ''),
-          sendDate: ko.observable(data?.dates?.received || new Date().toLocaleDateString()),
-        },
-        addresses: {
-          applicant: self.createAddressObject(data?.addresses?.applicant),
-          company: self.createAddressObject(data?.addresses?.company),
-          site: self.createAddressObject(data?.addresses?.site)
-        }
-      };
-    };
-
-    self.coverLetterData = self.loadCoverLetterData();
-
-    this.activityResourceData = ko.observable();
-    this.licenseResourceData = ko.observable();
-    this.actorTileData = ko.observable();
-    this.actorReportData = ko.observable([]);
-    this.reportVals = {};
-
-    this.licenseNo = ko.observable(createTextObject(''));
-    this.bFileNumber = ko.observable(createTextObject(''));
-
-    /**
-     * Contacts
-     */
-    this.contacts_loaded = ko.observable(false);
-    this.applicants = ko.observable({});
-
-    this.applicantList = ko.observable([]);
-
-    this.applicantAddresses = ko.observable([]);
-    this.companies = ko.observable({});
-    this.companyList = ko.observable([]);
-
-    this.applicant = ko.observable(self.getSavedValue('applicant') || createTextObject());
-    this.company = ko.observable(self.getSavedValue('company') || createTextObject());
-    this.companyAddresses = ko.observable([]);
-
-    this.coverLetterData.selectedAddress.subscribe((selected) => {
-      if (!selected) this.coverLetterData.selectedAddress('applicant');
-    }, this);
-
-    this.addressOptions = ko.observable([
-      { text: 'Applicant', id: 'applicant' },
-      { text: 'Company', id: 'company' },
-      { text: 'Site', id: 'site' }
-    ]);
-
-    this.textBody = ko.observable(
-      self.getSavedValue('textBody') ||
-        createTextObject(
-          `
-          <div>Dear [recipient]</div>
-          <div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
-          <br />
-          <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
-          <br />
-          [conditions]
-          <br /><br />
-          <div><em>The Historic Environment Division operates an environmental management system to the requirements of ISO 14001 and would remind all parties of the need to comply with relevant environmental legislation. Legislation covers, but is not limited to, waste management issues, water pollution, air pollution and appropriate storage of materials.</em></div>
-          <br />
-          <div>The division has published an environmental good practice guide for archaeological excavations which may be found at:</div>
-          <br />
-          <a style="color: blue" href="url">https://www.communities-ni.gov.uk/publications/environmental-good-practice-guide-archaeological-excavations</a>
-          `
-        )
-    );
-    
-
-    this.appDateOptions = ko.observable(['received', 'acknowledged']);
-    this.selectedAppDate = ko.observable('received');
-
-    this.sendDateOptions = ko.observable(['today', 'decision', 'acknowledged']);
-    this.selectedSendDate = ko.observable('today');
-
-    this.textPreview = ko.computed(
-      {
-        read: function () {
-          return createTextObject(
-            self.getTextValue(this.textBody()).replace(
-              '[Date]',
-              self.coverLetterData.dates[self.selectedAppDate()] || '[Date]'
-            )
-          );
-        }
-      },
-      this
-    );
-
-    this.preview = function(textObject) {
-      if (typeof(textObject) === 'string') {
-        return textObject.replace(
-          '[Date]',
-          self.coverLetterData.dates[self.selectedAppDate()] || '[Date]')
-        .replace('[recipient]', self.getTextValue(self.coverLetterData.recipientName()) || '[recipient]')
-        .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
-        .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '')
-        .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county]')
-        .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenseNumber) || '[licence_no]')
-        .replace('[send_date]',self.coverLetterData.dates.sendDate || '[send_date]')
-        .replace('[cmref]',self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]')
-        .replace('[decision_by]', self.getTextValue(self.coverLetterData.decisionBy) || '[decision_by]')
-        .replace('[Signature]', self.getTextValue(self.coverLetterData.decisionBy.name) || '[Signature]')
-        .replace('[senior_inspector]', self.getTextValue(self.coverLetterData.seniorInspectorName) ? 
-          "<span>pp</span><span>Senior Inspector: " +  self.getTextValue(self.coverLetterData.seniorInspectorName) + '</span></div>'
-          : "</span></div>")
-        .replace('[to_address]', self.toAddress())
-        .replace('[from_address]', self.fromAddressPreview())
-      }
-    }
-
-    self.fromAddress = ko.observable(
-      self.getSavedValue('fromAddress') ||
-      `<div style="width: 40%; border: 1px solid; text-align: left">
-      <div><span>Historic Environment Division</span></div>
-      <div><span>Ground Floor</span></div>
-      <div><span>NINE Lanyon Place</span></div>
-      <div><span>Town Parks</span></div>
-      <div><span>Belfast</span></div>
-      <div><span>BT1 3LP</span></div>
-      <div><span>Phone: 02890819414</span></div>
-      <div><span>Email: ExcavationsandReports@communities-ni.gov.uk</span></div>
-      <br />
-      <div><span>Our Ref: ${self.getTextValue(self.coverLetterData.cmReference) ? self.getTextValue(self.coverLetterData.cmReference) : '[cmref]'}</span></div>
-      <br />
-      <div><span>Date: [send_date]</div></span>
-      </div>`
-    )
-    // if (self.getTextValue(self.coverLetterData.licenseNumber)) {
-    //   result += `<span>Licence Number: ${self.getTextValue(
-    //     self.coverLetterData.licenseNumber
-    //   )}</span>`;
-    // }
-    self.getAddressValue = (value) => {
-      return self.getTextValue(
-        self.coverLetterData.addresses[self.coverLetterData.selectedAddress()][value]
-      );
-    };
-    this.fromAddressPreview = ko.computed(
-      {
-        read: function () {
-          return self.fromAddress().replace(
-              '[send_date]',
-              self.coverLetterData.dates.sendDate || '[send_date]'
-            ).replace(
-              '[cmref]',
-              self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]'
-            )
-        }
-      },
-      this
-    );
-
-    self.toAddress = ko.computed(() => {
-      let result = '<div style="width: 40%; height: fit-content; border: 1px solid;">';
-      if (self.getTextValue(self.coverLetterData.recipientName())){
-        result += `<div><span>${self.getTextValue(self.coverLetterData.recipientName())}</span></div>`
-      }
-      if (self.getTextValue(self.company())){
-        result += `<div><span>${self.getTextValue(self.company())}</span></div>`
-      }
-      if (self.getAddressValue('buildingName')) {
-        result += `<div><span>${self.getAddressValue('buildingName')}</span></div>`;
-      }
-      if (self.getAddressValue('buildingNumber')) {
-        result += `<div><span>${self.getAddressValue('buildingNumber')}, ${self.getAddressValue('streetName')}</span></div>`;
-      }
-      if (self.getAddressValue('subStreet')) {
-        result += `<div><span>${self.getAddressValue('buildingNumberSubSt') ? self.getAddressValue('buildingNumberSubSt') +', ' : ''}${self.getAddressValue('subStreet')}</span></div>`;
-      }
-      if (self.getAddressValue('city')) {
-        result += `<div><span>${self.getAddressValue('city')}</span></div>`;
-      }
-      if (self.getAddressValue('county')) {
-        result += `<div><span>${self.getAddressValue('county')}</span></div>`;
-      }
-      if (self.getAddressValue('postcode')) {
-        result += `<div><span>${self.getAddressValue('postcode')}</span></div>`;
-      }
-      result += '</div>';
-      return result;
-    }, self);
-
-    this.headerText = ko.observable(`<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
-    <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
-    <div style="display: flex; justify-content: space-around; width: 100%">
-    [to_address][from_address]</div>`)
-
-    this.header = ko.computed(() => {
-      return self.getSavedValue('headerBody') ||
-      self.preview(this.headerText())
-    })
-
-    self.detailsText = ko.observable(
-      `<div style="display: flex; width: 100%; flex-direction: column">
-      <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
-      <div><span><strong>Site: [site][site_address]</strong></span></div>
-      <div><span><strong>Licence Number: [licence_no]</strong></span></div></div>
-      <br />
-      `
-    )
-    self.details = ko.computed(() => {
-      return self.preview(self.detailsText())
-    }
-    );
-
-    self.body = ko.computed(() => {
-      // let result =
-      //   '<div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">';
-      // if (self.getTextValue(self.coverLetterData.recipientName)) {
-      // }
-      // result += `<span style="margin-top: 8px">${
-      //   self.getTextValue(self.textPreview) || 'Please enter information regarding the email!'
-      // }</span>`;
-      // result += '</div>';
-
-      return self.preview(self.getTextValue(self.textBody()));
-    }, self);
-
-    self.footerText = ko.observable(`
-    <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-    <span>Yours sincerely<br />
-    [Signature]
-    </span>
-    [senior_inspector]
-    `)
-
-    self.footer = ko.computed(() => {
-      return self.preview(self.footerText())
-    })
-      
-    self.letter = ko.computed(() => {
-      let result = ''
-        result += self.header();
-        result += self.details();
-        result += self.body();
-        result += self.footer()
-      return result;
-    }, self);
-
-    
-    params.form.save = async () => {
-      if (ko.isObservable(self?.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'])) {
-        self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'](createTextObject(self.letter()));
-      } else {
-        self.tile().data['72e0fc96-53d5-11ee-844f-0242ac130008'] = createTextObject(self.letter());
-      }
-      /**
-       * Save raw cover letter data to a node value.
-       */
-      if (ko.isObservable(self?.tile().data['a99a4236-68e0-11ee-81c3-0242ac130004'])) {
-        self
-          .tile()
-          .data['a99a4236-68e0-11ee-81c3-0242ac130004'](
-            createTextObject(koMapping.toJSON(self.coverLetterData))
-          );
-      } else {
-        self.tile().data['a99a4236-68e0-11ee-81c3-0242ac130004'] = createTextObject(
-          koMapping.toJSON(self.coverLetterData)
-        );
-      }
-      await self.tile().save();
-      params.form.savedData({
-        tileData: koMapping.toJSON(self.tile().data),
-        tileId: self.tile().tileid,
-        resourceInstanceId: self.tile().resourceinstance_id,
-        nodegroupId: self.tile().nodegroup_id,
-        coverLetterData: ko.toJS(self.coverLetterData)
-      });
-      params.form.complete(true);
-      params.form.saving(false);
-    };
-
-    self.getValueFromTiles = (tileData, nodeValueId, validator) => {
-      /**
-       * The validator callback can be used to access the found tile
-       * and validate that another node value is present. Useful for
-       * identifing multiple tiles of the same type.
-       */
-      const result = {
-        tileId: null,
-        value: null,
-        display: null
-      };
-      for (const tile of tileData) {
-        if (!(nodeValueId in tile.data)) continue;
-        if (validator) {
-          if (validator(tile)) {
-            result.tileId = tile.tileid;
-            result.value = tile.data[nodeValueId];
-            result.display = tile.display_values.find((node) => node.nodeid === nodeValueId)?.value;
-            break;
-          }
-          continue;
-        }
-        result.tileId = tile.tileid;
-        result.value = tile.data[nodeValueId];
-        result.display = tile.display_values.find((node) => node.nodeid === nodeValueId)?.value;
-      }
-      return result.tileId ? result : null;
-    };
-
-    self.fetchTileData = async (resourceId) => {
-      const tilesResponse = await window.fetch(
-        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
-      );
-      const data = await tilesResponse.json();
-      return data.tiles;
-    };
-
-    self.hasNodeGroup = (tileData, nodeGroupId) => {
-      return tileData.some((tile) => tile.nodegroup === nodeGroupId);
-    };
-
-    self.setAddressValues = (
-      addressee,
-      {
-        fullAddress,
-        buildingNumberSubSt,
-        city,
-        postcode,
-        subStreet,
-        buildingName,
-        buildingNumber,
-        streetName,
-        locality,
-        county
-      }
-    ) => {
-      if (fullAddress) {
-        self.coverLetterData.addresses[addressee].fullAddress(fullAddress);
-      }
-      if (buildingNumberSubSt) {
-        self.coverLetterData.addresses[addressee].buildingNumberSubSt(buildingNumberSubSt);
-      }
-      if (city) {
-        self.coverLetterData.addresses[addressee].city(city);
-      }
-      if (postcode) {
-        self.coverLetterData.addresses[addressee].postcode(postcode);
-      }
-      if (subStreet) {
-        self.coverLetterData.addresses[addressee].subStreet(subStreet);
-      }
-      if (buildingName) {
-        self.coverLetterData.addresses[addressee].buildingName(buildingName);
-      }
-      if (buildingNumber) {
-        self.coverLetterData.addresses[addressee].buildingNumber(buildingNumber);
-      }
-      if (streetName) {
-        self.coverLetterData.addresses[addressee].streetName(streetName);
-      }
-      if (locality) {
-        self.coverLetterData.addresses[addressee].locality(locality);
-      }
-      if (county) {
-        self.coverLetterData.addresses[addressee].county(county);
-      }
-    };
-
-    
-    self.configureAddress = (
-      tileData,
-      addressee,
-      {
-        fullAddressId,
-        buildingNumberSubStId,
-        cityId,
-        postcodeId,
-        subStreetId,
-        buildingNameId,
-        buildingNumberId,
-        streetNameId,
-        localityId,
-        countyId
-      }
-    ) => {
-      self.setAddressValues(addressee, {
-        fullAddress: self.getValueFromTiles(tileData, fullAddressId)?.value,
-        buildingNumberSubSt: self.getValueFromTiles(tileData, buildingNumberSubStId)?.value,
-        city: self.getValueFromTiles(tileData, cityId)?.value,
-        postcode: self.getValueFromTiles(tileData, postcodeId)?.value,
-        subStreet: self.getValueFromTiles(tileData, subStreetId)?.value,
-        buildingName: self.getValueFromTiles(tileData, buildingNameId)?.value,
-        buildingNumber: self.getValueFromTiles(tileData, buildingNumberId)?.value,
-        streetName: self.getValueFromTiles(tileData, streetNameId)?.value,
-        locality: self.getValueFromTiles(tileData, localityId)?.value,
-        county: self.getValueFromTiles(tileData, countyId)?.value
-      });
-    };
-
-    self.loadData = async () => {
-      self.loading(true);
-      try {
-        const licenseTiles = await self.fetchTileData(self.resourceId());
-
-        const licenseNo = self.getValueFromTiles(
-          licenseTiles,
-          '280b75bc-4e4d-11ee-a340-0242ac140007',
-          (tile) => {
-            return (
-              tile.data?.['280b7a9e-4e4d-11ee-a340-0242ac140007'] ===
-              '9a383c95-b795-4d76-957a-39f84bcee49e'
-            );
-          }
-        );
-        if (licenseNo) {
-          self.coverLetterData.licenseNumber(licenseNo.value);
-        }
-
-        const additionalFiles = self.getValueFromTiles(
-          licenseTiles,
-          '8c5356f4-48ce-11ee-8e4e-0242ac140007'
-        );
-        if (additionalFiles?.value.length) {
-          self.coverLetterData.hasAdditonalFiles(true);
-        }
-
-
-        const contacts = [
-          self.getValueFromTiles(licenseTiles, '6d2924b6-5891-11ee-a624-0242ac120004'),
-          self.getValueFromTiles(licenseTiles, '6d292f88-5891-11ee-a624-0242ac120004')
-        ];
-        if (contacts?.length) {
-          for (const contact of contacts) {
-            for (const resource of contact.value) {
-              const contactTiles = await self.fetchTileData(resource.resourceId);
-              if (self.hasNodeGroup(contactTiles, '4110f741-1a44-11e9-885e-000d3ab1e588')) {
-                // Name nodegroup of person
-                const applicantName = self.getValueFromTiles(
-                  contactTiles,
-                  '5f8ded26-7ef9-11ea-8e29-f875a44e0e11'
-                );
-                if (applicantName) {
-                  self.coverLetterData.recipientName(applicantName.value);
-                }
-                self.configureAddress(contactTiles, 'applicant', {
-                  fullAddressId: 'b3a27611-effb-11eb-a79c-a87eeabdefba',
-                  buildingNumberSubStId: 'b3a27615-effb-11eb-8b46-a87eeabdefba',
-                  cityId: 'b3a27617-effb-11eb-a80f-a87eeabdefba',
-                  postcodeId: 'b3a27619-effb-11eb-a66d-a87eeabdefba',
-                  subStreetId: 'b3a2761b-effb-11eb-bcf9-a87eeabdefba',
-                  buildingNameId: 'b3a2761d-effb-11eb-9867-a87eeabdefba',
-                  buildingNumberId: 'b3a2761f-effb-11eb-9059-a87eeabdefba',
-                  streetNameId: 'b3a27621-effb-11eb-83e6-a87eeabdefba',
-                  localityId: 'b3a28c1a-effb-11eb-a811-a87eeabdefba',
-                  countyId: 'b3a28c1d-effb-11eb-95a1-a87eeabdefba'
-                });
-              }
-              if (self.hasNodeGroup(contactTiles, 'af3b0116-29a9-11eb-8333-f875a44e0e11')) {
-                // Name nodegroup of company
-                const companyName = self.getValueFromTiles(
-                  contactTiles,
-                  'e8431c61-8098-11ea-8b01-f875a44e0e11'
-                );
-                if (companyName) {
-                  self.coverLetterData.companyName(companyName.value);
-                }
-                self.configureAddress(contactTiles, 'company', {
-                  fullAddressId: '9e7907c7-eff3-11eb-b606-a87eeabdefba',
-                  buildingNumberSubStId: '9e7907cb-eff3-11eb-83b1-a87eeabdefba',
-                  cityId: '9e7907cd-eff3-11eb-b0f1-a87eeabdefba',
-                  postcodeId: '9e7907cf-eff3-11eb-8412-a87eeabdefba',
-                  subStreetId: '9e7907d1-eff3-11eb-9d65-a87eeabdefba',
-                  buildingNameId: '9e7907d3-eff3-11eb-ac11-a87eeabdefba',
-                  buildingNumberId: '9e7907d5-eff3-11eb-a511-a87eeabdefba',
-                  streetNameId: '9e7907d7-eff3-11eb-8e7a-a87eeabdefba',
-                  localityId: '9e791cfb-eff3-11eb-bdaf-a87eeabdefba',
-                  countyId: '9e791cfe-eff3-11eb-9c35-a87eeabdefba'
-                });
-              }
-            }
-          }
-        }
-
-        const decisionByDate = self.getValueFromTiles(
-          licenseTiles,
-          '4c58921e-48cc-11ee-9081-0242ac140007'
-        );
-        if (decisionByDate) {
-          self.coverLetterData.decisionBy.date(decisionByDate.value);
-        }
-
-        const decisionBy = self.getValueFromTiles(
-          licenseTiles,
-          'f3dcbf02-48cb-11ee-9081-0242ac140007'
-        );
-        if (decisionBy?.value.length) {
-          const decisionByTiles = await self.fetchTileData(decisionBy.value[0].resourceId);
-          const decisionByName = self.getValueFromTiles(
-            decisionByTiles,
-            '5f8ded26-7ef9-11ea-8e29-f875a44e0e11'
-          );
-          self.coverLetterData.decisionBy.name(decisionByName.value);
-        }
-
-        const associatedActivitys = self.getValueFromTiles(
-          licenseTiles,
-          'a9f53f00-48b6-11ee-85af-0242ac140007'
-        );
-        if (associatedActivitys?.value.length) {
-          // Assuming only one activity has been assigned upto this point
-          const activityTiles = await self.fetchTileData(associatedActivitys.value[0].resourceId);
-          const siteName = self.getValueFromTiles(
-            activityTiles,
-            '4a7be135-9938-11ea-b0e2-f875a44e0e11'
-          );
-          if (siteName) {
-            self.coverLetterData.siteName(siteName.value);
-          }
-          const cmReference = self.getValueFromTiles(
-            activityTiles,
-            '589d4dc7-edf9-11eb-9856-a87eeabdefba',
-            (tile) => {
-              return (
-                tile.data?.['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'] ===
-                '19afd557-cc21-44b4-b1df-f32568181b2c'
-              );
-            }
-          );
-          if (cmReference) {
-            self.coverLetterData.cmReference(cmReference.value);
-          }
-          self.configureAddress(activityTiles, 'site', {
-            fullAddressId: 'a5419224-f121-11eb-9ca7-a87eeabdefba',
-            buildingNumberSubStId: 'a541b922-f121-11eb-9fa2-a87eeabdefba',
-            cityId: 'a541e023-f121-11eb-b770-a87eeabdefba',
-            postcodeId: 'a541e025-f121-11eb-8212-a87eeabdefba',
-            subStreetId: 'a541e027-f121-11eb-ba26-a87eeabdefba',
-            buildingNameId: 'a541e029-f121-11eb-802c-a87eeabdefba',
-            buildingNumberId: 'a541b925-f121-11eb-9264-a87eeabdefba',
-            streetNameId: 'a541b927-f121-11eb-8377-a87eeabdefba',
-            localityId: 'a541b930-f121-11eb-a30c-a87eeabdefba',
-            countyId: 'a541e034-f121-11eb-8803-a87eeabdefba'
-          });
-        }
-
-        const acknowledgedDate = self.getValueFromTiles(
-          licenseTiles,
-          '0a914884-48b4-11ee-90a8-0242ac140007'
-        );
-        if (acknowledgedDate) {
-          self.coverLetterData.dates.acknowledged(acknowledgedDate.value);
-        }
-
-        const receivedDate = self.getValueFromTiles(
-          licenseTiles,
-          '6b96c722-48c7-11ee-ba3a-0242ac140007'
-        );
-        if (receivedDate) {
-          self.coverLetterData.dates.received(receivedDate.value);
-        }
-
-      } catch (error) {
-        console.error('Failed loading data for cover letter: ', error);
-        /**
-         * TODO: Display error banner to user
-         */
-      }
-      self.loading(false);
-    };
-    self.template.subscribe(temp => {
-      self.textReady(false)
-      if (temp === 'final-report-letter') {
-
-        self.textBody(
-          createTextObject(
-          `<br />
-          <div>Dear [recipient]</div>
-          <div>Thank you for your report and associated documentation which we received in this office regarding the above-mentioned excavation.</div>
-          <br />
-          <div>The report was deemed to be final on [report_approved] and it and the associated documentation have been passed to HERoNI for uploading to the map viewer.</div>
-          <br />
-          <div>I would like to thank you for your co-operation and can confirm that you have met all of Historic Environment Division's conditions associated with this licence.</div>
-          `)
-        )
-        self.detailsText(
-          `<div style="display: flex; width: 100%; flex-direction: column">
-            <div><strong>EXCAVATION REPORT FOR: [site][site_address]</strong></span></div>
-            <div><span><strong>Licence Number: [licence_no]</strong></span></div>
-          </div>
-          `
-        )
-        self.headerText(
-          `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
-           <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
-           <div style="display: flex; justify-content: space-around; width: 100%">
-           [to_address][from_address]</div>`
-        )
-        self.footerText((`
-          <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-          <span>Yours sincerely<br />
-          [Signature]
-          </span>
-          [senior_inspector]`)
-        )
-      } else if (temp === 'licence-cover-letter'){
-        self.textBody(
-          createTextObject(
-          `<div>Dear [recipient]</div>
-          <div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
-          <br />
-          <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
-          <br />
-          [conditions]
-          <br /><br />
-          <div><em>The Historic Environment Division operates an environmental management system to the requirements of ISO 14001 and would remind all parties of the need to comply with relevant environmental legislation. Legislation covers, but is not limited to, waste management issues, water pollution, air pollution and appropriate storage of materials.</em></div>
-          <br />
-          <div>The division has published an environmental good practice guide for archaeological excavations which may be found at:</div>
-          <br />
-          <a style="color: blue" href="url">https://www.communities-ni.gov.uk/publications/environmental-good-practice-guide-archaeological-excavations</a>
-          `)
-        )
-        self.detailsText(
-          `<div style="display: flex; width: 100%; flex-direction: column">
-          <div><strong>APPLICATION FOR AN EXCAVATION LICENCE</strong><div>
-          <div><span><strong>Site: [site][site_address]</strong></span></div>
-          <div><span><strong>Licence Number: [licence_no]
-          </strong></span></div></div>
-          <br />
-        `)
-
-
-        self.footerText((`
-          <div style="display: flex; width: 100%; flex-direction: column; margin: 24px 0 16px 0">
-          <span>Yours sincerely<br />
-          [Signature]
-          </span>
-          [senior_inspector]
-          `)
-        )
-        self.headerText(
-          `<div style="display: flex; align-items: end; width: 100%; flex-direction: column">
-           <img style="width: 30%" src="https://www.jobapplyni.com/image/logo-DfC-stacked.png" />
-           <div style="display: flex; justify-content: space-around; width: 100%">
-           [to_address][from_address]</div>`
-        )
-          } else if (temp === 'licence-extension-letter') {
-            self.textBody(
-              createTextObject(
-              `<div>The Department for Communities for Northern Ireland (hereinafter referred to as “the Department”), in exercise of its power under Section 41 of the above-mentioned Order, hereby extends the license of <strong>[recipient]</strong>  (hereinafter referred to as “the Licensee”) to dig or excavate for purposes of archaeological evaluation in or under part of the Townland (town) of <strong>[town]</strong> in the County of <strong>[county]</strong> being the archaeological site or reputed site known as <strong>[site]</strong>  for a further period of <strong>[duration], commencing on [valid_from] and ceasing on [valid_to].</strong></div>
-              <br />
-              <div><strong>All conditions stated in the original Licence are applicable to this Extension. In addition, the Department also requires that:</strong></div>
-              <br />
-              <div><strong>In advance of commencement of further archaeological works under this licence, the licensee must inform the Department of the start date of the excavation, name of the licensee / director, licence number, contact phone number for the licensee / director, reason for excavation, and likely duration.</strong></div>
-              `)
-            )
-
-            self.detailsText(`<br /><br />`)
-
-            self.headerText(`<div style="width: 100%; border: solid; text-align: center;">
-                <div><strong>DEPARTMENT FOR COMMUNITIES</strong></div>
-                  <br />
-                <div><strong><em>Historic Monuments and Archaeological Objects (Northern Ireland) Order 1995</em></strong></div>
-                  <br />
-                <div><strong>extension of licence to excavate for archaeological purposes</strong></div>
-                </div>
-              `)
-
-            self.footerText(`
-            <div> <span style="width: 20ch;"> Authorised Officer </span><span><u>[Signature]</u></span></div>
-            <div> <span style="width: 20ch; padding-right: 7ch"> Dated this </span><span><u>[send_date]</u></span></div>
-            <div> <span style="width: 20ch; padding-right: 2ch"> Licence Number </span><span><u>[licence_no]</u></span></div>
-            `)
-          }
-      self.textReady(true)
-    })
-
-    if (!params.form.savedData()?.['tileId']) {
-      // Run fetch prefill data if there hasn't previously been a saved letter
-      self.loadData();
-    }
-    this.useTemplate = function () {
-      chosenTemp = Object.entries(this.templateOptions()).filter(([key, value]) => {return value.id === this.template()})
-      console.log("chosen", chosenTemp)
-      console.log(chosenTemp[0][1])
-
-      templateFile = chosenTemp[0][1].file
-      console.log("the file", templateFile)
-      console.log("sending ", self.coverLetterData)
-      stringLetterData = {}
-      for (let key of Object.keys(self.coverLetterData)) {
-        console.log("____________________")
-        console.log(key)
-        if (ko.isObservable(self.coverLetterData[key])) {
-          console.log("is observable")
-          stringLetterData[key] = self.getTextValue(self.coverLetterData[key]())
-          console.log(self.coverLetterData[key]())
-        } else {
-          stringLetterData[key] = self.coverLetterData[key]
-          for (let subkey of Object.keys(self.coverLetterData[key])) {
-            if (ko.isObservable(self.coverLetterData[key][subkey])) {
-              stringLetterData[key][subkey] = self.getTextValue(self.coverLetterData[key][subkey]())
-            } else {
-              stringLetterData[key][subkey] = self.getTextValue(self.coverLetterData[key][subkey])
-          }
-        }
-        }
-      }
-      stringLetterData['from_address'] = self.fromAddress()
-      .replaceAll("</div>", "")      
-      .replaceAll("</span>", "")
-      .replaceAll("<span>", "")
-      .replaceAll("<div>", "")
-      .replaceAll("<br />", "")
-      .replaceAll("<", "")
-      .replaceAll(">", "")
-      .replaceAll('div style="width: 40%; border: 1px solid; text-align: left"', "")
-      .replace("[cmref]", stringLetterData["cmReference"])
-      .replace("[send_date]", self.coverLetterData.dates.sendDate)
-      stringLetterData['to_address'] = self.toAddress()
-      .replaceAll("</div>", "\n")      
-      .replaceAll("</span>", "")
-      .replaceAll("<span>", "")
-      .replaceAll("<div>", "")
-      .replaceAll("<br />", "")
-      .replaceAll("<", "")
-      .replaceAll(">", "")
-      .replaceAll('div style="width: 40%; height: fit-content; border: 1px solid;"', "")
-      console.log("want to send", JSON.stringify(stringLetterData))
-      
-      window.fetch("http://localhost:8000/templategenerator" + "?coverLetterData=" + JSON.stringify(stringLetterData) + "&template=" + templateFile)
-      .then((response) => response.blob())
-      .then((myBlob) => {
-        const blobUrl = URL.createObjectURL(myBlob);
-        const link = document.createElement("a");
-
-        // Set link's href to point to the Blob URL
-        link.href = blobUrl;
-        link.download = "test-download.docx";
-
-        // Append link to the body
-        document.body.appendChild(link);
-
-        // Dispatch click event on the link
-        // This is necessary as link.click() does not work on the latest firefox
-        link.dispatchEvent(
-          new MouseEvent('click', { 
-            bubbles: true, 
-            cancelable: true, 
-            view: window 
-      })
-    );
-
-    // Remove link from body
-    document.body.removeChild(link);
-    });
-
-    }
+  excavationType: {
+    label: 'Excavation Type',
+    nodegroupId: '6e071042-5d45-11ee-88b0-0242ac120008',
+    renderNodeIds: ['6e071042-5d45-11ee-88b0-0242ac120008']
+  },
+  communication: {
+    label: 'Email',
+    nodegroupId: '6840f820-48ce-11ee-8e4e-0242ac140007',
+    renderNodeIds: [
+      '684110e4-48ce-11ee-8e4e-0242ac140007',
+      '68410b3a-48ce-11ee-8e4e-0242ac140007',
+      { nodeId: '684113a0-48ce-11ee-8e4e-0242ac140007', defaultValue: 'None Provided' }
+    ]
+  },
+  associatedActivities: {
+    label: 'Associated Activities',
+    nodegroupId: 'a9f53f00-48b6-11ee-85af-0242ac140007'
+  },
+  digitalFiles: {
+    label: 'Digital Files',
+    nodegroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
+  },
+  coverLetter: {
+    visible: false,
+    nodegroupId: '0dcf7c74-53d5-11ee-844f-0242ac130008',
+    renderNodeIds: ['72e0fc96-53d5-11ee-844f-0242ac130008']
   }
+};
+
+this.activityNodes = {
+  id: 'activity',
+  label: 'Activity',
+  name: {
+    label: 'Name',
+    nodegroupId: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
+    renderNodeIds: ['4a7be135-9938-11ea-b0e2-f875a44e0e11']
+  },
+  systemRef: {
+    label: 'System Reference',
+    nodegroupId: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
+    renderNodeIds: [
+      { nodeId: 'e7d69603-9939-11ea-9e7f-f875a44e0e11', label: 'Application ID' },
+      { nodeId: 'e7d69604-9939-11ea-baef-f875a44e0e11', label: 'Planning Reference' }
+    ]
+  },
+  externalRef: {
+    label: 'External Reference',
+    nodegroupId: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+    renderNodeIds: [
+      '589d4dc7-edf9-11eb-9856-a87eeabdefba',
+      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+    ]
+  },
+  areaType: {
+    label: 'Area',
+    nodegroupId: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+    renderNodeIds: [
+      'a5416b53-f121-11eb-a507-a87eeabdefba',
+      'a541922e-f121-11eb-b2f6-a87eeabdefba'
+    ]
+  },
+  address: {
+    label: 'Address',
+    nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
+    renderNodeIds: [
+      'a5419224-f121-11eb-9ca7-a87eeabdefba',
+      'a541e034-f121-11eb-8803-a87eeabdefba',
+      'a541e030-f121-11eb-aaf7-a87eeabdefba',
+      'a541e029-f121-11eb-802c-a87eeabdefba',
+      'a541e027-f121-11eb-ba26-a87eeabdefba',
+      'a541e025-f121-11eb-8212-a87eeabdefba',
+      'a541e023-f121-11eb-b770-a87eeabdefba',
+      'a541b930-f121-11eb-a30c-a87eeabdefba',
+      'a541b927-f121-11eb-8377-a87eeabdefba',
+      'a541b925-f121-11eb-9264-a87eeabdefba',
+      'a541b922-f121-11eb-9fa2-a87eeabdefba'
+    ]
+  },
+  associatedActivities: {
+    label: 'Associated Activities',
+    nodegroupId: 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11'
+  },
+  digitalFiles: {
+    label: 'Digital Files',
+    nodegroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11'
+  }
+};
+
+this.digitalFilesNodes = {
+  id: 'digital-files',
+  label: 'Digital Object',
+  name: {
+    label: 'Name',
+    nodegroupId: 'c61ab163-9513-11ea-9bb6-f875a44e0e11',
+    renderNodeIds: ['c61ab16c-9513-11ea-89a4-f875a44e0e11']
+  },
+  files: {
+    label: 'Files',
+    nodegroupId: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+    renderNodeIds: ['96f8830a-8490-11ea-9aba-f875a44e0e11']
+  }
+};
+
+this.coverLetterHtml = ko.observable();
+
+this.getData = async () => {
+  await this.renderResourceIds(this.resourceid, this.licenseNodes);
+
+  let digitalFileResourceIds = this.getResourceIds(this.licenseNodes.id, 'digitalFiles');
+
+  await this.renderResourceIds(
+    this.getResourceIds(this.licenseNodes.id, 'associatedActivities'),
+    this.activityNodes
+  );
+  await this.renderResourceIds(
+    this.getResourceIds(this.activityNodes.id, 'associatedActivities'),
+    this.activityNodes
+  );
+
+  digitalFileResourceIds = [
+    ...digitalFileResourceIds,
+    ...this.getResourceIds(this.activityNodes.id, 'digitalFiles')
+  ];
+
+  await this.renderResourceIds(digitalFileResourceIds, this.digitalFilesNodes);
+
+  this.coverLetterHtml(
+    this.getDisplayValue(
+      this.licenseNodes.id,
+      'coverLetter',
+      '72e0fc96-53d5-11ee-844f-0242ac130008'
+    )
+  );
+      console.log("HELLO NEW YORK", this.renderedNodegroups())
+      coverLetterData = {}
+      for (const [topKey, topValue] of Object.entries(this.renderedNodegroups())) {
+        console.log("top", topKey)
+        this.renderedNodegroups()[topKey].forEach(modelObject => {
+          console.log("mod: ",modelObject)
+          Object.values(modelObject).forEach(nodegroup => {
+            console.log("nodegroup", nodegroup)
+            if (nodegroup.data) {
+              nodegroup.data.forEach(tile => {
+                console.log("tile", tile)
+                tile.forEach(node => {
+                  console.log("node", node)
+                  coverLetterData[node.label] = node.displayValue
+                })
+              })
+            }
+          })
+          })
+        }
+      console.log("DUCK", coverLetterData)
+      this.coverLetterData(coverLetterData)
+};
+
+this.loadData();
+
+
+this.useTemplate = function () {
+  chosenTemp = Object.entries(this.templateOptions()).filter(([key, value]) => {return value.id === this.template()})
+
+  templateFile = chosenTemp[0][1].file
+
+  window.fetch("http://localhost:8000/templategenerator" + "?coverLetterData=" + JSON.stringify(this.coverLetterData()) + "&template=" + templateFile)
+  .then((response) => response.blob())
+  .then((myBlob) => {
+    const blobUrl = URL.createObjectURL(myBlob);
+    const link = document.createElement("a");
+
+    // Set link's href to point to the Blob URL
+    link.href = blobUrl;
+    link.download = "test-download.docx";
+
+    // Append link to the body
+    document.body.appendChild(link);
+
+    // Dispatch click event on the link
+    // This is necessary as link.click() does not work on the latest firefox
+    link.dispatchEvent(
+      new MouseEvent('click', { 
+        bubbles: true, 
+        cancelable: true, 
+        view: window 
+  })
+);
+
+// Remove link from body
+document.body.removeChild(link);
+});
+
+}
+}
 
   ko.components.register('license-cover-letter', {
     viewModel: viewModel,
