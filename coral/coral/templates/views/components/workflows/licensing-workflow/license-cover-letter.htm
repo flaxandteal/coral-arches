@@ -30,7 +30,8 @@
           }
       }"
       ></div>
-      <div
+      <!-- ko if: renderedNodegroups() -->
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -69,11 +70,12 @@
             pageVm: $root
           }
       }"
-      ></div>
+      ></div> -->
+      <!-- /ko -->
 
       <!-- ko if: contacts_loaded -->
 
-      <div data-bind="if: selectedAddress() === 'Applicant'">
+      <!-- <div data-bind="if: selectedAddress() === 'Applicant'">
         <div
           data-bind="component: {
           name: 'domain-select-widget',
@@ -102,9 +104,9 @@
             pageVm: $root
           }
       }"
-        ></div>
+        ></div> -->
 
-        <div
+        <!-- <div
           data-bind="component: {
         name: 'domain-select-widget',
         node: {
@@ -130,9 +132,9 @@
         }
     }"
         ></div>
-      </div>
+      </div> -->
 
-      <div data-bind="if: selectedAddress() === 'Company'">
+      <!-- <div data-bind="if: selectedAddress() === 'Company'">
         <div
           data-bind="component: {
       name: 'domain-select-widget',
@@ -185,12 +187,12 @@
       pageVm: $root
     }
 }"
-        ></div>
-      </div>
+        ></div> -->
+      <!-- </div> -->
       <!-- /ko -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
             name: 'text-widget',
             params: {
@@ -203,10 +205,10 @@
                 pageVm: $root
             }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
         name: 'datepicker-widget',
         params: {
@@ -229,10 +231,10 @@
             pageVm: $root
         }
       }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
         name: 'datepicker-widget',
         params: {
@@ -255,10 +257,10 @@
             pageVm: $root
         }
       }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
         name: 'datepicker-widget',
         params: {
@@ -281,10 +283,10 @@
             pageVm: $root
         }
       }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: { 
@@ -297,10 +299,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -313,10 +315,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -329,10 +331,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -345,10 +347,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -361,10 +363,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -377,10 +379,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -393,10 +395,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -409,10 +411,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -425,10 +427,10 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -441,11 +443,11 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <!-- ko if: textReady -->
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'rich-text-widget',
           params: {
@@ -459,13 +461,13 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
     </div>
     <!-- /ko -->
   </div>
   <div class="card-component" style="width: 100%">
     <div class="row widget-wrapper">
-      <div
+      <!-- <div
         data-bind="component: {
           name: 'cover-letter-widget',
           params: {
@@ -478,7 +480,8 @@
             pageVm: $root
           }
         }"
-      ></div>
+      ></div> -->
+      <button data-bind="click: useTemplate">docx</button>
       {% comment %}
       <div style="border: 5px solid black; padding: 10px; max-width: 500px; width: 100%">
         <!-- HEADER -->

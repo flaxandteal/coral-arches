@@ -17,20 +17,20 @@ class TemplateGenerator(View):
         template = "coral/docx/" + request.GET.get('template') if request.GET.get('template') else 'coral/docx/new_doc.docx'
         doc = DocxTemplate(template)
         cover_letter_data = json.loads(request.GET.get('coverLetterData'))
+        print("COVERDATA",cover_letter_data)
+        # context = { 
+        #     'recipient' : cover_letter_data['recipientName'],
+        #     'company' : cover_letter_data['companyName'],
+        #     'site': cover_letter_data['siteName'],
+        #     'licence_number': cover_letter_data['licenseNumber'],
+        #     'cmref': cover_letter_data['cmReference'],
+        #     'Date' : cover_letter_data['received'] if 'received' in cover_letter_data.keys() else '',
+        #     'send_date' : cover_letter_data['send_date'] if 'send_date' in cover_letter_data.keys() else '',
+        #     'from_address': cover_letter_data['from_address'],
+        #     'to_address': cover_letter_data['to_address'],
+        # }
 
-        context = { 
-            'recipient' : cover_letter_data['recipientName'],
-            'company' : cover_letter_data['companyName'],
-            'site': cover_letter_data['siteName'],
-            'licence_number': cover_letter_data['licenseNumber'],
-            'cmref': cover_letter_data['cmReference'],
-            'Date' : cover_letter_data['received'] if 'received' in cover_letter_data.keys() else '',
-            'send_date' : cover_letter_data['send_date'] if 'send_date' in cover_letter_data.keys() else '',
-            'from_address': cover_letter_data['from_address'],
-            'to_address': cover_letter_data['to_address'],
-        }
-
-        doc.render(context)
+        doc.render(cover_letter_data)
         doc.save("coral/docx/temp" + name)
         file = open("coral/docx/temp" + name, 'rb')
         return HttpResponse(file, content_type='application/octet-stream')
