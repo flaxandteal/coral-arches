@@ -316,7 +316,7 @@ GRAPH_MODEL_CACHE_TIMEOUT = None
 
 OAUTH_CLIENT_ID = ''  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
-APP_VERSION = '0.6.4'
+APP_VERSION = '0.8.7'
 APP_TITLE = 'HED | Heritage Data Management'
 COPYRIGHT_TEXT = 'All Rights Reserved.'
 COPYRIGHT_YEAR = '2022-'
