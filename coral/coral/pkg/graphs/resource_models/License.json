@@ -1,7 +1,7 @@
 {
     "graph": [
         {
-            "author": "Taylor North and Owen McEvoy",
+            "author": " Taylor North and Owen McEvoy",
             "cards": [
                 {
                     "active": true,
@@ -29,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -143,7 +143,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application Status"
                     },
@@ -212,7 +212,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Names"
                     },
@@ -282,7 +282,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Contacts"
                     },
@@ -318,7 +318,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type"
                     },
@@ -352,7 +352,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -379,7 +379,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -395,13 +395,13 @@
                     "constraints": [
                         {
                             "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
-                            "constraintid": "6ed5594e-37ca-4052-8e55-0d262228b739",
+                            "constraintid": "486450c7-15e2-4d68-995e-f2c62ab788eb",
                             "nodes": [],
                             "uniquetoallinstances": false
                         },
                         {
                             "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
-                            "constraintid": "486450c7-15e2-4d68-995e-f2c62ab788eb",
+                            "constraintid": "6ed5594e-37ca-4052-8e55-0d262228b739",
                             "nodes": [],
                             "uniquetoallinstances": false
                         }
@@ -419,7 +419,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -459,7 +459,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dates"
                     },
@@ -526,7 +526,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application"
                     },
@@ -1850,7 +1850,7 @@
                     "node_id": "6d2924b6-5891-11ee-a624-0242ac120004",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "f3ff0ab8-c626-4bbf-88dd-420ce66c0724"
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
@@ -2542,6 +2542,24 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
+                    "config": {
+                        "acceptedFiles": "",
+                        "label": "Signature",
+                        "maxFilesize": "200",
+                        "placeholder": "",
+                        "rerender": true
+                    },
+                    "id": "b6eaf4ed-05b2-4f47-b294-01641b05e0a3",
+                    "label": {
+                        "en": "Signature"
+                    },
+                    "node_id": "fd8eeb80-770e-11ee-a6cc-0242ac120002",
+                    "sortorder": 7,
+                    "visible": true,
+                    "widget_id": "bd3ea0fd-ac4f-4c06-9a9d-fc643a84d61c"
                 },
                 {
                     "card_id": "bc499950-48c8-11ee-8859-0242ac140007",
@@ -3844,6 +3862,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "edgeid": "48922395-cfb1-4ccb-8fd9-5713c2f4f2f1",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P148_has_component",
+                    "rangenode_id": "fd8eeb80-770e-11ee-a6cc-0242ac120002"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "0dcf7c74-53d5-11ee-844f-0242ac130008",
                     "edgeid": "4c77714e-ef2f-4b8c-8353-5fb3871cedd6",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -5088,6 +5115,16 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "991c3c74-48b6-11ee-85af-0242ac140007"
+                        ]
+                    },
+                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "04ad63b4-3d39-4ce9-95b1-f9fb7b479912"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",
@@ -5106,22 +5143,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "20fe5200-7cb3-4fc7-9be2-2a06fa9b1f1d"
-                },
-                {
-                    "config": {
-                        "triggering_nodegroups": [
-                            "991c3c74-48b6-11ee-85af-0242ac140007"
-                        ]
-                    },
-                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "d89494ef-a50e-4060-9bb9-fb9abe75ab02"
+                    "id": "797680d3-d6db-440e-959e-13ff076aa636"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -9007,7 +9034,7 @@
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
-                    "issearchable": true,
+                    "issearchable": false,
                     "istopnode": false,
                     "name": "Status",
                     "nodegroup_id": "ee5947c6-48b2-11ee-abec-0242ac140007",
@@ -9015,14 +9042,38 @@
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P41i_was_classified_by",
                     "sortorder": 0
+                },
+                {
+                    "alias": "signature",
+                    "config": {
+                        "activateMax": false,
+                        "maxFileSize": null,
+                        "maxFiles": 1
+                    },
+                    "datatype": "file-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Signature",
+                    "nodegroup_id": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "nodeid": "fd8eeb80-770e-11ee-a6cc-0242ac120002",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P148_has_component",
+                    "sortorder": 0
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                "notes": null,
-                "publicationid": "0f0d4512-74a5-11ee-b1d0-0242ac130008",
-                "published_time": "2023-10-27T08:44:36.601",
+                "notes": "adding signature field to Decision nodegroup",
+                "publicationid": "1b2b9c96-771a-11ee-b2e4-0242ac120002",
+                "published_time": "2023-10-30T11:47:30.376",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
@@ -9050,7 +9101,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Designed to support fields required to manage the creation of Licenses, including their dates, communications and people involved"
+                "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
             "version": ""
@@ -9060,6 +9111,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "5.10.0-21-amd64"
     }
 }
