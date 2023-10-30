@@ -20,29 +20,78 @@ define([
       params.configKeys = ['id_placeholder', 'label', 'disabled'];
       WidgetViewModel.apply(this, [params]);
 
-      const self = this;
+      this.currentLanguage = ko.observable({ code: arches.activeLanguage });
+      this.idValue = ko.observable();
 
-      self.currentLanguage = ko.observable({ code: arches.activeLanguage });
+      // this.totalApplications = ko.observable();
+      // this.totalApplicationsRequest = null;
 
-      if (ko.isObservable(self.value)) {
-        self.idValue = ko.isObservable(self.value()[arches.activeLanguage]?.value) 
-          ? ko.unwrap(self.value()[arches.activeLanguage]?.value) 
-          : self.value()[arches.activeLanguage]?.value;
+      // this.getTotalApplications = async () => {
+      //   console.log('sending request');
+      //   if (this.totalApplicationsRequest) {
+      //     this.totalApplicationsRequest.abort();
+      //   }
+
+      //   this.totalApplicationsRequest = $.ajax({
+      //     type: 'GET',
+      //     url: arches.urls.search_results,
+      //     data: {
+      //       'paging-filter': 1,
+      //       tiles: true,
+      //       format: 'tilecsv',
+      //       reportlink: 'false',
+      //       precision: '6',
+      //       total: '0',
+      //       'advanced-search': JSON.stringify([
+      //         {
+      //           op: 'and',
+      //           '991c5326-48b6-11ee-85af-0242ac140007': { op: 'not_null', lang: 'en', val: '' },
+      //           '991c4340-48b6-11ee-85af-0242ac140007': { op: 'not_null', val: '' },
+      //           '991c49b2-48b6-11ee-85af-0242ac140007': { op: 'not_null', lang: 'en', val: '' }
+      //         }
+      //       ])
+      //     },
+      //     context: this,
+      //     success: function (response) {
+      //       console.log('search response: ', response);
+      //     },
+      //     error: function (response, status, error) {
+      //       console.error(response, status, error);
+      //     },
+      //     complete: function (request, status) {
+      //       //
+      //     }
+      //   });
+      // };
+
+      if (ko.isObservable(this.value)) {
+        this.idValue(
+          ko.isObservable(this.value()[arches.activeLanguage]?.value)
+            ? ko.unwrap(this.value()[arches.activeLanguage]?.value)
+            : this.value()[arches.activeLanguage]?.value
+        );
       } else {
-        self.idValue = ko.isObservable(self.value[arches.activeLanguage]?.value) 
-          ? ko.unwrap(self.value[arches.activeLanguage]?.value) 
-          : self.value[arches.activeLanguage]?.value;
+        this.idValue(
+          ko.isObservable(this.value[arches.activeLanguage]?.value)
+            ? ko.unwrap(this.value[arches.activeLanguage]?.value)
+            : this.value[arches.activeLanguage]?.value
+        );
       }
 
-      if (!self.idValue) {
-        self.idValue = uuid.generate();
-        self.value({
+      if (!this.idValue()) {
+        const year = new Date().getFullYear();
+        const id = Math.random().toString(20).substr(2, 6).toUpperCase();
+        this.idValue(`AP/${year}/${id}`);
+        this.value({
           [arches.activeLanguage]: {
-            value: self.idValue,
+            value: this.idValue(),
             direction: 'ltr'
           }
         });
       }
+
+      console.log('before');
+      console.log('after');
     },
     template: autoGenerateIdTemplate
   });
