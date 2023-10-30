@@ -23,75 +23,89 @@ define([
       this.currentLanguage = ko.observable({ code: arches.activeLanguage });
       this.idValue = ko.observable();
 
-      // this.totalApplications = ko.observable();
-      // this.totalApplicationsRequest = null;
+      this.createId = async () => {
+        const newId = (length = 6) => {
+          const year = new Date().getFullYear();
+          const id = Math.random().toString(20).substr(2, length).toUpperCase();
+          return `AP/${year}/${id}`;
+        };
 
-      // this.getTotalApplications = async () => {
-      //   console.log('sending request');
-      //   if (this.totalApplicationsRequest) {
-      //     this.totalApplicationsRequest.abort();
-      //   }
+        let id = newId();
 
-      //   this.totalApplicationsRequest = $.ajax({
-      //     type: 'GET',
-      //     url: arches.urls.search_results,
-      //     data: {
-      //       'paging-filter': 1,
-      //       tiles: true,
-      //       format: 'tilecsv',
-      //       reportlink: 'false',
-      //       precision: '6',
-      //       total: '0',
-      //       'advanced-search': JSON.stringify([
-      //         {
-      //           op: 'and',
-      //           '991c5326-48b6-11ee-85af-0242ac140007': { op: 'not_null', lang: 'en', val: '' },
-      //           '991c4340-48b6-11ee-85af-0242ac140007': { op: 'not_null', val: '' },
-      //           '991c49b2-48b6-11ee-85af-0242ac140007': { op: 'not_null', lang: 'en', val: '' }
-      //         }
-      //       ])
-      //     },
-      //     context: this,
-      //     success: function (response) {
-      //       console.log('search response: ', response);
-      //     },
-      //     error: function (response, status, error) {
-      //       console.error(response, status, error);
-      //     },
-      //     complete: function (request, status) {
-      //       //
-      //     }
-      //   });
-      // };
+        let unique = false;
+        let attempts = 0;
+        const maxAttempts = 10;
 
-      if (ko.isObservable(this.value)) {
-        this.idValue(
-          ko.isObservable(this.value()[arches.activeLanguage]?.value)
-            ? ko.unwrap(this.value()[arches.activeLanguage]?.value)
-            : this.value()[arches.activeLanguage]?.value
-        );
-      } else {
-        this.idValue(
-          ko.isObservable(this.value[arches.activeLanguage]?.value)
-            ? ko.unwrap(this.value[arches.activeLanguage]?.value)
-            : this.value[arches.activeLanguage]?.value
-        );
-      }
+        while (!unique && attempts <= maxAttempts) {
+          attempts++;
+          await $.ajax({
+            type: 'GET',
+            url: arches.urls.search_results,
+            data: {
+              'paging-filter': 1,
+              tiles: true,
+              format: 'tilecsv',
+              reportlink: 'false',
+              precision: '6',
+              total: '0',
+              'advanced-search': JSON.stringify([
+                {
+                  op: 'and',
+                  '991c5326-48b6-11ee-85af-0242ac140007': { op: 'not_null', lang: 'en', val: '' },
+                  '991c4340-48b6-11ee-85af-0242ac140007': { op: 'not_null', val: '' },
+                  '991c49b2-48b6-11ee-85af-0242ac140007': {
+                    op: '~',
+                    lang: 'en',
+                    val: id
+                  }
+                }
+              ])
+            },
+            context: this,
+            success: function (response) {
+              unique = response.results.hits.total.value === 0;
+            },
+            error: function (response, status, error) {
+              console.error(response, status, error);
+            },
+            complete: function (request, status) {
+              if (unique) {
+                this.idValue(id);
+              } else {
+                id = newId();
+              }
+            }
+          });
+        }
+      };
 
-      if (!this.idValue()) {
-        const year = new Date().getFullYear();
-        const id = Math.random().toString(20).substr(2, 6).toUpperCase();
-        this.idValue(`AP/${year}/${id}`);
-        this.value({
-          [arches.activeLanguage]: {
-            value: this.idValue(),
-            direction: 'ltr'
-          }
-        });
-      }
+      this.init = async () => {
+        if (ko.isObservable(this.value)) {
+          this.idValue(
+            ko.isObservable(this.value()[arches.activeLanguage]?.value)
+              ? ko.unwrap(this.value()[arches.activeLanguage]?.value)
+              : this.value()[arches.activeLanguage]?.value
+          );
+        } else {
+          this.idValue(
+            ko.isObservable(this.value[arches.activeLanguage]?.value)
+              ? ko.unwrap(this.value[arches.activeLanguage]?.value)
+              : this.value[arches.activeLanguage]?.value
+          );
+        }
 
-      console.log('before');
-      console.log('after');
+        if (!this.idValue()) {
+          await this.createId();
+          this.value({
+            [arches.activeLanguage]: {
+              value: this.idValue(),
+              direction: 'ltr'
+            }
+          });
+        }
+      };
+
+      this.init();
     },
     template: autoGenerateIdTemplate
   });
