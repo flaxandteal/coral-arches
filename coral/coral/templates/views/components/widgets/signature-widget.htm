@@ -1,0 +1,87 @@
+{% extends "views/components/widgets/base.htm" %}
+{% load i18n %}
+
+{% block form %}
+<div class="card-component">
+        <!-- ko if: filesJSON().length === 0 -->
+    <div class="row widget-wrapper">
+        <label class="control-label widget-input-label" for="" data-bind="text:label"></label>
+            <canvas style="height: 300px; width: 100%;" id="canvas"></canvas>
+        <button class="btn btn-shim btn-labeled btn-lg fa fa-caret-right btn-mint" data-bind="click: save">
+            <span data-bind="text: $root.translations.save"></span>
+        </button>
+    <button class="btn btn-shim btn-labeled btn-lg fa fa-caret-right btn-mint" data-bind="click: edit">
+        <span data-bind="text: $root.translations.edit"></span>
+    </button>
+
+    </div>
+    <!-- /ko -->
+    <!-- ko if: filesJSON().length > 0 && selectedPhoto() -->
+    <label class="control-label widget-input-label" for="" data-bind="text:label"></label>
+    <div class="dz-previews" data-bind="css: uniqueidClass">
+        <canvas style="height: 0px; width: 100%;" id="canvas"></canvas>
+        
+        
+        <div class="gallery" style="position: relative" data-bind="event: { 'mouseover': toggleHoveredOverImage, 'mouseleave': toggleHoveredOverImage }">
+            <div class="preview">
+                <img class="dz-img" data-bind="attr: {src: ko.unwrap(selectedPhoto().url) ? selectedPhoto().url : selectedPhoto().content}">
+            </div>
+            <!-- ko if: hoveredOverImage() === true -->
+            <!-- <div class="thumbnail-container" style="width: 100%; display: flex; justify-content: space-between; position: absolute; bottom: 0px" data-bind="visible: true"> -->
+            <div class="thumbnail-container" data-bind="gallery: pan, duration: 400, scrolldistance: 100, thumbnailclass: 'gallery-thumbnails'">
+                <div class="thumbnail-gallery-controls left" data-bind="click: function(){updatePan('left')}"><i class="fa fa-angle-left"></i></div>
+                <div class="gallery-thumbnails">
+                    <!-- ko foreach: filesJSON -->
+                    <div style='position: relative'>
+                        <div data-bind="click: $parent.removeFile, visible: ko.unwrap(selected)">
+                            <button class="btn btn-xs dz-cancel"><i class="ion ion-close"></i></button>
+                        </div>
+                        <img class="dz-img" data-bind="attr: {src: ko.unwrap(url) ? url : content }, click: $parent.selectPhoto">
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <div class="thumbnail-gallery-controls right" data-bind="click: function(){updatePan('right')}"><i class="fa fa-angle-right"></i></div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+
+{% endblock form %}
+
+{% block report %}
+<dt data-bind="text: label"></dt>
+
+<!-- ko if: uploadedFiles().length === 0 -->
+<dd>{% trans "None" %}</dd>
+<!-- /ko -->
+
+<!-- ko foreach: reportFiles() -->
+<dd>
+    <a class="" data-bind="attr: {href: url}">
+        <i class="ion ion-forward"></i>
+        <span data-bind="text: name"></span>
+    </a>
+</dd>
+<!-- /ko -->
+
+<!-- ko if: reportImages().length > 0 -->
+<dd>
+    <div id="report-image-grid" class="report-image-grid">
+        <!-- ko foreach: reportImages() -->
+        <div class="rp-image-grid-item">
+            <a id="" class="" target="_blank" data-bind="attr: {href: url}">
+                <img class="img-responsive" data-bind="attr: {src: url, alt: name}">
+            </a>
+        </div>
+        <!-- /ko -->
+    </div>
+</dd>
+<!-- /ko -->
+{% endblock report %}
+
+{% block display_value %}
+<!-- <div>DISPLAY</div> -->
+<span data-bind="text: displayValue() + ' {% trans "files uploaded" %}'"></span>
+{% endblock display_value %}
