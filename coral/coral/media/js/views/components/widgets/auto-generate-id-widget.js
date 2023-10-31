@@ -25,9 +25,14 @@ define([
       self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
       self.idValue = ko.observable();
+
       self.newId = (length = 6) => {
         const year = new Date().getFullYear();
-        const id = Math.random().toString(20).substr(2, length).toUpperCase();
+        const base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        let id = '';
+        for (let i = 0; i < length; i++) {
+          id += base62chars[Math.floor(Math.random() * 62)];
+        }
         return `${params.config().prefix}/${year}/${id}`;
       };
 
