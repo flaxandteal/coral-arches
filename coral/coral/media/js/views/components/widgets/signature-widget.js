@@ -18,7 +18,8 @@ define([
                 
             })
             this.selectedPhoto = ko.observable();
-            this.selectedPhoto(this.filesJSON()[0]);
+            this.selectedPhoto(this.filesJSON()[0] || this.uploadedFiles()[0]);
+            console.log("photo",this.selectedPhoto())
             this.selectPhoto = function(photo) {
                 self.filesJSON().forEach(function(f) {
                     f.selected(false);
@@ -46,7 +47,6 @@ define([
                 canvas.getContext("2d").scale(ratio, ratio);
                 pad.clear(); // otherwise isEmpty() might return incorrect value
             }
-            this.selectedPhoto = ko.observable();
             this.filesJSON.subscribe(function(val){
                 console.log("sigi files", val)
                 val.forEach(function(photo){

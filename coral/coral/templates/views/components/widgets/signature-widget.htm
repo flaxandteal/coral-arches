@@ -10,13 +10,13 @@
         <button class="btn btn-shim btn-labeled btn-lg fa fa-caret-right btn-mint" data-bind="click: save">
             <span data-bind="text: $root.translations.save"></span>
         </button>
-    <button class="btn btn-shim btn-labeled btn-lg fa fa-caret-right btn-mint" data-bind="click: edit">
+    <!-- <button class="btn btn-shim btn-labeled btn-lg fa fa-caret-right btn-mint" data-bind="click: edit">
         <span data-bind="text: $root.translations.edit"></span>
-    </button>
+    </button> -->
 
     </div>
     <!-- /ko -->
-    <!-- ko if: filesJSON().length > 0 && selectedPhoto() -->
+    <!-- ko if: filesJSON().length > 0 && selectedPhoto() || uploadedFiles().length > 0 && selectedPhoto() -->
     <label class="control-label widget-input-label" for="" data-bind="text:label"></label>
     <div class="dz-previews" data-bind="css: uniqueidClass">
         <canvas style="height: 0px; width: 100%;" id="canvas"></canvas>
