@@ -17,7 +17,10 @@ class TemplateGenerator(View):
         template = "coral/docx/" + request.GET.get('template') if request.GET.get('template') else 'coral/docx/new_doc.docx'
         doc = DocxTemplate(template)
         cover_letter_data = json.loads(request.GET.get('coverLetterData'))
-        print("COVERDATA",cover_letter_data)
+        context = {}
+        for [key, val] in cover_letter_data.items():
+            context[key.replace(' ', '_')] = val
+        print("COVERDATA",cover_letter_data, context)
         # context = { 
         #     'recipient' : cover_letter_data['recipientName'],
         #     'company' : cover_letter_data['companyName'],
@@ -30,7 +33,7 @@ class TemplateGenerator(View):
         #     'to_address': cover_letter_data['to_address'],
         # }
 
-        doc.render(cover_letter_data)
+        doc.render(context)
         doc.save("coral/docx/temp" + name)
         file = open("coral/docx/temp" + name, 'rb')
         return HttpResponse(file, content_type='application/octet-stream')

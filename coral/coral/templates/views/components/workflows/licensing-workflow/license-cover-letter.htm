@@ -31,7 +31,7 @@
       }"
       ></div>
       <!-- ko if: renderedNodegroups() -->
-      <!-- <div
+      <div
         data-bind="component: {
           name: 'text-widget',
           params: {
@@ -40,7 +40,7 @@
               },
               value: coverLetterData.recipientName,
               loading: loading,
-              form: $data,
+              form: form,
               pageVm: $root
           }
       }"
@@ -66,16 +66,16 @@
             },
             value: coverLetterData.selectedAddress,
             loading: loading,
-            form: $data,
+            form: form,
             pageVm: $root
           }
       }"
-      ></div> -->
+      ></div>
       <!-- /ko -->
 
       <!-- ko if: contacts_loaded -->
 
-      <!-- <div data-bind="if: selectedAddress() === 'Applicant'">
+      <div data-bind="if: selectedAddress() === 'Applicant'">
         <div
           data-bind="component: {
           name: 'domain-select-widget',
@@ -104,9 +104,9 @@
             pageVm: $root
           }
       }"
-        ></div> -->
+        ></div>
 
-        <!-- <div
+        <div
           data-bind="component: {
         name: 'domain-select-widget',
         node: {
@@ -132,7 +132,7 @@
         }
     }"
         ></div>
-      </div> -->
+      </div>
 
       <!-- <div data-bind="if: selectedAddress() === 'Company'">
         <div
