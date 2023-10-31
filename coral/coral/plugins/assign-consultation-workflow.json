@@ -1,0 +1,13 @@
+{
+    "pluginid": "37a99cef-91aa-463c-855a-58fae28871d2",
+    "name": "Assign Consultation",
+    "icon": "fa fa-check",
+    "component": "views/components/plugins/assign-consultation-workflow",
+    "componentname": "assign-consultation-workflow",
+    "config": {
+      "show": false
+    },
+    "slug": "assign-consultation-workflow",
+    "sortorder": 0
+  }
+  
