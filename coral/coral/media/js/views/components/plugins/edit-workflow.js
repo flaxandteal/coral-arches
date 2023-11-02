@@ -237,7 +237,10 @@ define([
 
     this.loadPCResponseData = async (resourceId) => {
       const componentData = {};
-      const planningConsultationTiles = this.fetchTileData(resourceId);
+      const planningConsultationTiles = await this.fetchTileData(resourceId);
+      this.resourceName(
+        this.getNameFromNodeId(planningConsultationTiles, '18436d9e-c60b-4fb6-ad09-9458e270e993')
+      );
       planningConsultationTiles.forEach((tile) => {
         componentData[tile.nodegroup] = {
           value: JSON.stringify({

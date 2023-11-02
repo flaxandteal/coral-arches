@@ -13,21 +13,23 @@ define([
 
       this.stepConfig = [
         {
-          title: 'Select Consultation',
+          title: 'Selected Consultation',
           name: 'init-step',
           required: true,
           layoutSections: [
             {
               componentConfigs: [
                 {
-                  componentName: 'consultation-select-step',
-                  uniqueInstanceName: 'select-step',
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'con-id',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
-                    graphids: ['8effdca4-ffb6-482b-94b8-4d35fb5c88c5'],
-                    nodegroupid: 'c853846a-7948-42c8-a089-63ebe34b49e4'
-                    // hiddenNodes: ['991c4340-48b6-11ee-85af-0242ac140007']
+                    nodegroupid: 'c853846a-7948-42c8-a089-63ebe34b49e4',
+                    hiddenNodes: [
+                      '6a94dbfc-2d16-4534-8e63-1cbb8d643335',
+                      '0629475d-a758-4483-8481-8d68025a28a7'
+                    ]
                   }
                 }
               ]
@@ -41,26 +43,13 @@ define([
           layoutSections: [
             {
               componentConfigs: [
-                {
-                  componentName: 'consultation-select-step',
-                  uniqueInstanceName: 'select-step',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
-                    graphids: ['8effdca4-ffb6-482b-94b8-4d35fb5c88c5'],
-                    nodegroupid: 'c853846a-7948-42c8-a089-63ebe34b49e4'
-                    // hiddenNodes: ['991c4340-48b6-11ee-85af-0242ac140007']
-                  }
-                }
                 // {
-                //   componentName: 'select-resource-step',
+                //   componentName: 'default-card',
                 //   uniqueInstanceName: 'select-step',
                 //   tilesManaged: 'one',
                 //   parameters: {
                 //     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
-                //     graphids: ['8effdca4-ffb6-482b-94b8-4d35fb5c88c5'],
                 //     nodegroupid: 'c853846a-7948-42c8-a089-63ebe34b49e4'
-                //     // hiddenNodes: ['991c4340-48b6-11ee-85af-0242ac140007']
                 //   }
                 // }
               ]
