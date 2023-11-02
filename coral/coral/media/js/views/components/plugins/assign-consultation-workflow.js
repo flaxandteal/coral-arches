@@ -3,7 +3,8 @@ define([
     'arches',
     'viewmodels/workflow',
     'templates/views/components/plugins/assign-consultation-workflow.htm',
-    'views/components/workflows/related-document-upload'
+    'views/components/workflows/related-document-upload',
+    'views/components/workflows/licensing-workflow/widget-labeller',
   ], function (ko, arches, Workflow, assignConsultationWorkflowTemplate) {
     return ko.components.register('assign-consultation-workflow', {
       viewModel: function (params) {
