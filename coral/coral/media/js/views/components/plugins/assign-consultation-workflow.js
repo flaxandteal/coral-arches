@@ -146,6 +146,7 @@ define([
                     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
                     nodegroupid: 'c853846a-7948-42c8-a089-63ebe34b49e4',
                     resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+                    tileid: "['init-step']['app-id'][0]['tileId']",
 
                     labels: [['Primary Reference Number', 'Entry Number']],
                     hiddenNodes: [
