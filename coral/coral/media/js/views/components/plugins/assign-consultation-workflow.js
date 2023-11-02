@@ -49,22 +49,19 @@ define([
             {
               componentConfigs: [
                 {
-                  componentConfigs: [
-                    {
-                      componentName: 'default-card',
-                      uniqueInstanceName: 'app-id',
-                      tilesManaged: 'one',
-                      parameters: {
-                        graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
-                        nodegroupid: 'fe1ca5cb-b642-48ae-b680-19a580a76b45',
-                        hiddenNodes: [
-                          'e4bf04ba-5edd-4b5d-8afe-59fb100773fc',
-                          '4d0137d7-1ad9-4b71-ba2c-867f743ae3ce',
-                          '7c6a3aea-29bb-4611-8786-4136acd44f10'
-                        ]
-                      }
-                    }
-                  ]
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'con-name',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: 'fe1ca5cb-b642-48ae-b680-19a580a76b45',
+                    resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+                    hiddenNodes: [
+                      'e4bf04ba-5edd-4b5d-8afe-59fb100773fc',
+                      '4d0137d7-1ad9-4b71-ba2c-867f743ae3ce',
+                      '7c6a3aea-29bb-4611-8786-4136acd44f10'
+                    ]
+                  }
                 },
                 {
                   componentName: 'widget-labeller',
