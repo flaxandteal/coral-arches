@@ -68,6 +68,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create or edit a License for an Excavation Activity"
+      },
+      {
+        "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
+        "slug": "hm-consultation-response-workflow",
+        "name": "HM Planning Consultation",
+        "icon": "fa fa-reply",
+        "bgColor": "#d45797",
+        "circleColor": "#e868aa",
+        "desc": "Respond to a planning consultation"
       }
     ],
     "show": true
