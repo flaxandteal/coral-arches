@@ -235,6 +235,22 @@ define([
       return componentData;
     };
 
+    this.loadPCResponseData = async (resourceId) => {
+      const componentData = {};
+      const planningConsultationTiles = this.fetchTileData(resourceId);
+      planningConsultationTiles.forEach((tile) => {
+        componentData[tile.nodegroup] = {
+          value: JSON.stringify({
+            tileData: koMapping.toJSON(tile.data),
+            resourceInstanceId: tile.resourceinstance,
+            tileId: tile.tileid,
+            nodegroupId: tile.nodegroup
+          })
+        };
+      });
+      return componentData;
+    };
+
     this.openRecent = async (resourceId) => {
       localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
       await this.loadResourceData(resourceId);
