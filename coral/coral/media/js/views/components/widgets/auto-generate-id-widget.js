@@ -24,25 +24,88 @@ define([
 
       self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
-      if (ko.isObservable(self.value)) {
-        self.idValue = ko.isObservable(self.value()[arches.activeLanguage]?.value) 
-          ? ko.unwrap(self.value()[arches.activeLanguage]?.value) 
-          : self.value()[arches.activeLanguage]?.value;
-      } else {
-        self.idValue = ko.isObservable(self.value[arches.activeLanguage]?.value) 
-          ? ko.unwrap(self.value[arches.activeLanguage]?.value) 
-          : self.value[arches.activeLanguage]?.value;
-      }
+      self.idValue = ko.observable();
 
-      if (!self.idValue) {
-        self.idValue = uuid.generate();
-        self.value({
-          [arches.activeLanguage]: {
-            value: self.idValue,
-            direction: 'ltr'
-          }
-        });
-      }
+      this.createId = async () => {
+        const newId = (length = 6) => {
+          const year = new Date().getFullYear();
+          const id = Math.random().toString(20).substr(2, length).toUpperCase();
+          return `AP/${year}/${id}`;
+        };
+
+        let id = newId();
+
+        let unique = false;
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        while (!unique && attempts <= maxAttempts) {
+          attempts++;
+          await $.ajax({
+            type: 'GET',
+            url: arches.urls.search_results,
+            data: {
+              'paging-filter': 1,
+              tiles: true,
+              format: 'tilecsv',
+              reportlink: 'false',
+              precision: '6',
+              total: '0',
+              'advanced-search': JSON.stringify([
+                {
+                  op: 'and',
+                  '991c5326-48b6-11ee-85af-0242ac140007': { op: 'not_null', lang: 'en', val: '' },
+                  '991c4340-48b6-11ee-85af-0242ac140007': { op: 'not_null', val: '' },
+                  '991c49b2-48b6-11ee-85af-0242ac140007': {
+                    op: '~',
+                    lang: 'en',
+                    val: id
+                  }
+                }
+              ])
+            },
+            context: this,
+            success: function (response) {
+              unique = response.results.hits.total.value === 0;
+            },
+            error: function (response, status, error) {
+              console.error(response, status, error);
+            },
+            complete: function (request, status) {
+              if (!unique) {
+                id = newId();
+              }
+            }
+          });
+        }
+        return id;
+      };
+
+      (async () => {
+        if (ko.isObservable(self.value)) {
+          self.idValue(
+            ko.isObservable(self.value()[arches.activeLanguage]?.value)
+              ? ko.unwrap(self.value()[arches.activeLanguage]?.value)
+              : self.value()[arches.activeLanguage]?.value
+          );
+        } else {
+          self.idValue(
+            ko.isObservable(self.value[arches.activeLanguage]?.value)
+              ? ko.unwrap(self.value[arches.activeLanguage]?.value)
+              : self.value[arches.activeLanguage]?.value
+          );
+        }
+
+        if (!self.idValue()) {
+          self.idValue(await this.createId());
+          self.value({
+            [arches.activeLanguage]: {
+              value: self.idValue(),
+              direction: 'ltr'
+            }
+          });
+        }
+      })();
     },
     template: autoGenerateIdTemplate
   });
