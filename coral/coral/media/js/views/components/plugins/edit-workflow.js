@@ -242,7 +242,18 @@ define([
         this.getNameFromNodeId(planningConsultationTiles, '18436d9e-c60b-4fb6-ad09-9458e270e993')
       );
       planningConsultationTiles.forEach((tile) => {
-        componentData[tile.nodegroup] = {
+        let nodegroupId = tile.nodegroup;
+        const externalRefSource = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
+        if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
+          /**
+           * This nodegroup is populated multiple times but in this workflow it's
+           * ID has only been used once so it won't have the suffix applied. Should
+           * the nodegroup for external ref be used more than once uncomment this and
+           * setup the other external refs suffixes.
+           */
+          // nodegroupId += '|cm-ref'; // This is set to match the unique instance name from the workflow
+        }
+        componentData[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
             resourceInstanceId: tile.resourceinstance,
