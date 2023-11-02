@@ -77,6 +77,15 @@
         "bgColor": "#d45797",
         "circleColor": "#e868aa",
         "desc": "Respond to a planning consultation"
+      },
+      {
+        "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
+        "slug": "excavation-site-visit",
+        "name": "Excavation Site Visit",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A site visit regarding an Article 42 Excavation"
       }
     ],
     "show": true

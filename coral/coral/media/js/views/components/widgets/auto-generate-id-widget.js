@@ -17,7 +17,7 @@ define([
    */
   return ko.components.register('auto-generate-id-widget', {
     viewModel: function (params) {
-      params.configKeys = ['id_placeholder', 'label', 'disabled'];
+      params.configKeys = ['id_placeholder', 'label', 'disabled', 'prefix'];
       WidgetViewModel.apply(this, [params]);
 
       const self = this;
@@ -26,14 +26,28 @@ define([
 
       self.idValue = ko.observable();
 
-      this.createId = async () => {
-        const newId = (length = 6) => {
-          const year = new Date().getFullYear();
-          const id = Math.random().toString(20).substr(2, length).toUpperCase();
-          return `AP/${year}/${id}`;
-        };
+      self.newId = (length = 6) => {
+        const year = new Date().getFullYear();
+        const base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        let id = '';
+        for (let i = 0; i < length; i++) {
+          id += base62chars[Math.floor(Math.random() * 62)];
+        }
+        return `${params.config().prefix}/${year}/${id}`;
+      };
 
-        let id = newId();
+      self.prefix.subscribe((value) => {
+        console.log('idValue changed: ', value);
+        self.value({
+          [arches.activeLanguage]: {
+            value: self.idValue(),
+            direction: 'ltr'
+          }
+        });
+      }, self);
+
+      this.createId = async () => {
+        let id = self.newId();
 
         let unique = false;
         let attempts = 0;
@@ -73,7 +87,7 @@ define([
             },
             complete: function (request, status) {
               if (!unique) {
-                id = newId();
+                id = self.newId();
               }
             }
           });
