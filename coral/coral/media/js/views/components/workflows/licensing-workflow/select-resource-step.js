@@ -58,7 +58,6 @@ define([
 
                 if (dat[0]){
 
-                    console.log("dat problem",dat[0], dat)
                     if (ko.isObservable(dat[0].resourceId)){
                         siteResourceId = dat[0].resourceId()
                 } else {
@@ -112,7 +111,6 @@ define([
                         
                     }
                     ).then(function () {
-                        console.log("the id of it", self.archiveTileId())
                         params.form.savedData({
                             tileData: koMapping.toJSON(self.tile().data),
                             resourceInstanceId: self.tile().resourceinstance_id,
