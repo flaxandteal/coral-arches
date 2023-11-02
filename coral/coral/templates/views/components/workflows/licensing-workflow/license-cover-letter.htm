@@ -6,32 +6,6 @@
     <div class="row widget-wrapper">
       <div
         data-bind="component: {
-          name: 'domain-radio-widget',
-          node: {
-            'config': {
-              'options': templateOptions,
-            },
-          },
-          params: {
-            node: {
-            'config': {
-              'options': templateOptions,
-              },
-              'configKeys': configKeys
-            },
-            config: {
-              'label': 'Selected Template',
-              'options': templateOptions,
-            },
-            value: template,
-            loading: loading,
-            form: $data,
-            pageVm: $root
-          }
-      }"
-      ></div>
-      <div
-        data-bind="component: {
           name: 'text-widget',
           params: {
               config: {
@@ -242,7 +216,7 @@
                 },
             },
             config: {
-                'label': 'Acknowledged Date',
+                'label': 'Acknowledged/Send Date',
                 'maxDate': '',
                 'minDate': '',
                 'viewMode': 'days',
@@ -250,32 +224,6 @@
                 'defaultValue': ''
             },
             value: coverLetterData.dates.acknowledged,
-            loading: loading,
-            form: $data,
-            pageVm: $root
-        }
-      }"
-      ></div>
-    </div>
-    <div class="row widget-wrapper">
-      <div
-        data-bind="component: {
-        name: 'datepicker-widget',
-        params: {
-            node: {
-                config: {
-                    'dateFormat': 'DD-MM-YYYY',
-                },
-            },
-            config: {
-                'label': 'Send Date',
-                'maxDate': '',
-                'minDate': '',
-                'viewMode': 'days',
-                'dateFormat': 'DD-MM-YYYY',
-                'defaultValue': ''
-            },
-            value: coverLetterData.dates.sendDate,
             loading: loading,
             form: $data,
             pageVm: $root
@@ -443,7 +391,6 @@
         }"
       ></div>
     </div>
-    <!-- ko if: textReady -->
     <div class="row widget-wrapper">
       <div
         data-bind="component: {
@@ -461,7 +408,6 @@
         }"
       ></div>
     </div>
-    <!-- /ko -->
   </div>
   <div class="card-component" style="width: 100%">
     <div class="row widget-wrapper">
@@ -548,14 +494,12 @@
         </div>
         <!-- FOOTER -->
         <div style="display: flex; width: 100%; flex-direction: column">
-          
-          <span
-            data-bind="text: 'Yours sincerely \n ' + (getTextValue(signed) || 'Signature required!')"
-          ></span>
           <!-- ko if: getTextValue(seniorInspector) -->
-          <span>pp</span>
           <span data-bind="text: 'Senior Inspector: ' + getTextValue(seniorInspector)"></span>
           <!-- /ko -->
+          <span
+            data-bind="text: 'Signed: ' + (getTextValue(signed) || 'Signature required!')"
+          ></span>
         </div>
       </div>
       {% endcomment %}
