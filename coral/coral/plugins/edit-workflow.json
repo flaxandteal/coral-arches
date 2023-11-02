@@ -12,6 +12,12 @@
         "name": "Excavation Licensing",
         "graphId": "cc5da227-24e7-4088-bb83-a564c4331efd",
         "setupFunction": "loadLicenseData"
+      },
+      {
+        "slug": "assign-consultation-workflow",
+        "name": "Assign Consultation",
+        "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
+        "setupFunction": "loadAssignConsultationData"
       }
     ]
   },
