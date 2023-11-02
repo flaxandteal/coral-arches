@@ -15,6 +15,12 @@
 
 {% block config_form %}
 <div class="control-label">
+    {% trans "Prefix" %}
+  </div>
+  <div class="col-xs-12 crud-widget-container">
+    <input type="" placeholder="{% trans "Prefix" %}" id="" class="form-control input-md widget-input" data-bind="textInput: prefix">
+  </div>
+<div class="control-label">
     {% trans "Placeholder" %}
 </div>
 <div class="col-xs-12 crud-widget-container">
