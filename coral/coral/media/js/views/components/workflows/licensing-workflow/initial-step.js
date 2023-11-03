@@ -17,7 +17,7 @@ define([
     self.tile().dirty.subscribe(function (val) {
       self.dirty(val);
     });
-
+    console.log("init-step active")
     self.pageVm = params.pageVm;
 
     self.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
@@ -56,7 +56,7 @@ define([
             saveActivityLocation(),
             saveRelationship()
           ]);
-
+          console.log("activity stuff", responses)
           if (responses.every((response) => response.ok)) {
             params.form.savedData({
               tileData: koMapping.toJSON(self.tile().data),
@@ -69,6 +69,7 @@ define([
               actLocTileId: self.actLocTileId,
               licenseNumberTileId: self.licenseNumberTileId
             });
+            console.log("saved Data", params.form.savedData())
             params.form.complete(true);
             params.form.saving(false);
           } else {
@@ -127,7 +128,7 @@ define([
             licenseNumberRef['External Cross Reference Number']['@tile_id'];
         }
       }
-
+      console.log("echo!", response)
       return response;
     };
 
