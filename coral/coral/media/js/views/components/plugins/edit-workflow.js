@@ -56,6 +56,52 @@ define([
       this.loading(false);
     };
 
+    this.loadAssignConsultationData = async (resourceId) => {
+      const componentData = {};
+      const planningConsultationTiles = await this.fetchTileData(resourceId);
+      this.resourceName(
+        this.getNameFromNodeId(planningConsultationTiles, '18436d9e-c60b-4fb6-ad09-9458e270e993')
+      );
+      planningConsultationTiles.forEach((tile) => {
+        let nodegroupId = tile.nodegroup;
+        if (nodegroupId === 'c853846a-7948-42c8-a089-63ebe34b49e4') {
+          componentData[nodegroupId + '|app-id'] = {
+            value: JSON.stringify({
+              tileData: koMapping.toJSON(tile.data),
+              resourceInstanceId: tile.resourceinstance,
+              tileId: tile.tileid,
+              nodegroupId: tile.nodegroup
+            })
+          };
+          componentData[nodegroupId + '|entry-number'] = {
+            value: JSON.stringify({
+              tileData: koMapping.toJSON(tile.data),
+              resourceInstanceId: tile.resourceinstance,
+              tileId: tile.tileid,
+              nodegroupId: tile.nodegroup
+            })
+          };
+          return;
+        }
+        const externalRefSource = tile.data['a45c0772-01ab-4867-abb7-675f470fd08f'];
+        if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
+          nodegroupId += '|cm-ref';
+        }
+        if (externalRefSource === '5fabe56e-ab1f-4b80-9a5b-f4dcf35efc27') {
+          nodegroupId += '|plan-ref';
+        }
+        componentData[nodegroupId] = {
+          value: JSON.stringify({
+            tileData: koMapping.toJSON(tile.data),
+            resourceInstanceId: tile.resourceinstance,
+            tileId: tile.tileid,
+            nodegroupId: tile.nodegroup
+          })
+        };
+      });
+      return componentData;
+    };
+
     /**
      * TODO: Refactor this into utility methods to make it easier
      * to create more setup functions.
