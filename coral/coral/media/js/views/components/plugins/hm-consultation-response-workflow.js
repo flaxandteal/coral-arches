@@ -119,10 +119,51 @@ define([
         {
           title: 'Application Summary',
           name: 'app-sum-step',
+          workflowstepclass: 'workflow-form-component',
           layoutSections: [
             {
               componentConfigs: [
-                //
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'con-name',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: 'fe1ca5cb-b642-48ae-b680-19a580a76b45',
+                    resourceid: "['init-step']['con-id'][0]['resourceInstanceId']",
+                    hiddenNodes: [
+                      'e4bf04ba-5edd-4b5d-8afe-59fb100773fc',
+                      '4d0137d7-1ad9-4b71-ba2c-867f743ae3ce',
+                      '7c6a3aea-29bb-4611-8786-4136acd44f10'
+                    ]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'plan-ref',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: '87b1b187-39ec-46dc-95e6-bf5c1727bd30',
+                    resourceid: "['init-step']['con-id'][0]['resourceInstanceId']",
+
+                    labels: [['Cross Reference', 'Planning Reference']],
+                    hiddenNodes: [
+                      '879c793c-757f-42a4-8951-e6accc35de7e',
+                      '52b4cd82-ada8-4ce8-844a-c5325b11e1a4',
+                      'e7be1fd8-c6cc-4cdd-951e-e88cae6306a9',
+                      'a45c0772-01ab-4867-abb7-675f470fd08f',
+                      '89315741-f2df-41e7-90a3-14927751a293',
+                      '90b26978-7a09-40de-b0f1-f261fcfbb9b5'
+                    ],
+                    prefilledNodes: [
+                      [
+                        'a45c0772-01ab-4867-abb7-675f470fd08f',
+                        '5fabe56e-ab1f-4b80-9a5b-f4dcf35efc27'
+                      ]
+                    ]
+                  }
+                }
               ]
             }
           ]
@@ -133,7 +174,16 @@ define([
           layoutSections: [
             {
               componentConfigs: [
-                //
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'planning-area',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: '54186783-3315-4205-ad1e-87a22157086c',
+                    resourceid: "['init-step']['con-id'][0]['resourceInstanceId']"
+                  }
+                }
               ]
             }
           ]
@@ -161,6 +211,8 @@ define([
           ]
         }
       ];
+
+      this.safeArrayAccesses = ['resourceInstanceId', 'tileId', 'disable', 'disabled'];
 
       EditableWorkflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
