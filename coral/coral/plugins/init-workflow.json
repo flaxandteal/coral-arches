@@ -76,7 +76,16 @@
         "icon": "fa fa-reply",
         "bgColor": "#d45797",
         "circleColor": "#e868aa",
-        "desc": "Respond to a planning consultation"
+        "desc": "Respond to a planning consultation regarding a Historic Monument"
+      },
+      {
+        "workflowid": "fae7b96a-8a86-43cf-bcb8-a84b012f9150",
+        "slug": "edit-workflow?workflow-slug=hb-consultation-response-workflow",
+        "name": "HB Planning Consultation",
+        "icon": "fa fa-reply",
+        "bgColor": "#d45797",
+        "circleColor": "#e868aa",
+        "desc": "Respond to a planning consultation regarding a Historic Building"
       },
       {
         "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",

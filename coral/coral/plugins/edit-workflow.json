@@ -25,6 +25,13 @@
         "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
         "setupFunction": "loadPCResponseData",
         "disableStartNew": true
+      },
+      {
+        "slug": "hb-consultation-response-workflow",
+        "name": "HB Planning Consultation Response",
+        "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
+        "setupFunction": "loadPCResponseData",
+        "disableStartNew": true
       }
     ]
   },
