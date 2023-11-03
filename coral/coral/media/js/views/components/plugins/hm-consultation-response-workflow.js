@@ -10,8 +10,6 @@ define([
     viewModel: function (params) {
       this.componentName = 'hm-consultation-response-workflow';
 
-      console.log('hm-consultation-response-workflow');
-
       this.stepConfig = [
         {
           title: 'Selected Consultation',
@@ -211,8 +209,6 @@ define([
           ]
         }
       ];
-
-      this.safeArrayAccesses = ['resourceInstanceId', 'tileId', 'disable', 'disabled'];
 
       EditableWorkflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
