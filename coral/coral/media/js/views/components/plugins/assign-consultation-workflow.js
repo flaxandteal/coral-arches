@@ -14,10 +14,6 @@ define([
           title: 'Initialise Consultation',
           name: 'init-step',
           required: true,
-          informationboxdata: {
-            heading: 'Important Information',
-            text: 'Please provide a name for the consultation'
-          },
           layoutSections: [
             {
               componentConfigs: [
@@ -41,7 +37,7 @@ define([
         {
           title: 'Assign Consultation',
           name: 'application-details',
-          required: true,
+          // required: true,
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Applicant Details'
@@ -202,7 +198,7 @@ define([
         {
           title: 'Area Details',
           name: 'area-details',
-          required: true,
+          // required: true,
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Area Details'
@@ -279,7 +275,7 @@ define([
         {
           title: 'Action',
           name: 'consultation-action',
-          required: true,
+          // required: true,
           informationboxdata: {
             heading: 'Action'
           },

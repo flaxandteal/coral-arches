@@ -1,0 +1,12 @@
+{
+  "pluginid": "f57f2a3c-1277-4002-8f10-57c094e7a8ea",
+  "name": "HM Planning Consultation",
+  "icon": "fa fa-reply",
+  "component": "views/components/plugins/hm-consultation-response-workflow",
+  "componentname": "hm-consultation-response-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "hm-consultation-response-workflow",
+  "sortorder": 0
+}
