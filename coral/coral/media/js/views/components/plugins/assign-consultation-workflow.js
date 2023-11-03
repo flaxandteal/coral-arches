@@ -3,7 +3,8 @@ define([
   'arches',
   'viewmodels/workflow',
   'templates/views/components/plugins/assign-consultation-workflow.htm',
-  'views/components/workflows/related-document-upload'
+  'views/components/workflows/related-document-upload',
+  'views/components/workflows/licensing-workflow/widget-labeller'
 ], function (ko, arches, Workflow, assignConsultationWorkflowTemplate) {
   return ko.components.register('assign-consultation-workflow', {
     viewModel: function (params) {
@@ -13,10 +14,6 @@ define([
           title: 'Initialise Consultation',
           name: 'init-step',
           required: true,
-          informationboxdata: {
-            heading: 'Important Information',
-            text: 'Please provide a name for the consultation'
-          },
           layoutSections: [
             {
               componentConfigs: [
@@ -40,7 +37,7 @@ define([
         {
           title: 'Assign Consultation',
           name: 'application-details',
-          required: true,
+          // required: true,
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Applicant Details'
@@ -201,7 +198,7 @@ define([
         {
           title: 'Area Details',
           name: 'area-details',
-          required: true,
+          // required: true,
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Area Details'
@@ -278,7 +275,7 @@ define([
         {
           title: 'Action',
           name: 'consultation-action',
-          required: true,
+          // required: true,
           informationboxdata: {
             heading: 'Action'
           },
