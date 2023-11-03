@@ -261,11 +261,11 @@ define([
                   uniqueInstanceName: 'planning-ref',
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
-                    nodegroupid: 'f5aeaa90-3127-475d-886a-9fc62742de4f',
-                    resourceid: "['init-step']['app-id'][0]['resourceInstanceId']"
-
-                    //   labels: [['Cross Reference', 'Planning Reference']],
+                    graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
+                    nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+                    resourceModelId: "['init-step']['app-id'][0]['resourceInstanceId']",
+                    resourceModelDigitalObjectNodeGroupId: 'f5aeaa90-3127-475d-886a-9fc62742de4f',
+                    fileObjectNamePrefix: 'Consultation Files for '
                   }
                 }
               ]
