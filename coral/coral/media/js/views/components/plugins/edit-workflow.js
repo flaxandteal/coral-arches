@@ -243,15 +243,12 @@ define([
       );
       planningConsultationTiles.forEach((tile) => {
         let nodegroupId = tile.nodegroup;
-        const externalRefSource = tile.data['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'];
+        const externalRefSource = tile.data['a45c0772-01ab-4867-abb7-675f470fd08f'];
         if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
-          /**
-           * This nodegroup is populated multiple times but in this workflow it's
-           * ID has only been used once so it won't have the suffix applied. Should
-           * the nodegroup for external ref be used more than once uncomment this and
-           * setup the other external refs suffixes.
-           */
-          // nodegroupId += '|cm-ref'; // This is set to match the unique instance name from the workflow
+          nodegroupId += '|cm-ref';
+        }
+        if (externalRefSource === '5fabe56e-ab1f-4b80-9a5b-f4dcf35efc27') {
+          nodegroupId += '|plan-ref';
         }
         componentData[nodegroupId] = {
           value: JSON.stringify({
