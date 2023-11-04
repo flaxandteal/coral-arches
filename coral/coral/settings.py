@@ -25,6 +25,32 @@ class Concept:
 class GeoJSON:
     pass
 
+GROUPINGS = {
+    "groups": {
+        "allowed_relationships": {
+            "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member": (True, True),
+        },
+        "root_group": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+        "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a"
+    },
+    "sets": {
+        "allowed_relationships": {
+            "http://www.cidoc-crm.org/cidoc-crm/P10i_contains": (True, True),
+        },
+        "root_group": "74e496c7-ec7e-43b8-a7b3-05bacf496794",
+        "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220"
+    },
+    "permissions": {
+        "allowed_relationships": {
+            "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member": (True, False),
+            "http://www.cidoc-crm.org/cidoc-crm/P104i_applies_to": (True, True),
+            "http://www.cidoc-crm.org/cidoc-crm/P10i_contains": (True, True),
+        },
+        "root_group": "74e496c7-ec7e-43b8-a7b3-05bacf496794",
+    }
+}
+
+
 APP_NAME = 'coral'
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 APP_PATHNAME = os.getenv("APP_PATHNAME", "")
@@ -47,6 +73,17 @@ WELL_KNOWN_RESOURCE_MODELS = [
         },
     ),
     dict(
+        model_name="Bibliographic Source",
+        graphid="24d7b54f-5464-11e9-a86b-000d3ab1e588",
+        __str__=lambda st: st.name,
+        name={
+            "type": str,
+            "lang": "en",
+            "nodegroupid": "03e2984b-8ecf-11ea-8f83-f875a44e0e11",
+            "nodeid": "03e2984e-8ecf-11ea-b95f-f875a44e0e11",
+        },
+    ),
+    dict(
         model_name="Person",
         graphid="22477f01-1a44-11e9-b0a9-000d3ab1e588",
         user_account={
@@ -55,6 +92,57 @@ WELL_KNOWN_RESOURCE_MODELS = [
             "nodegroupid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
             "nodeid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
         },
+    ),
+    dict(
+        model_name="Set",
+        graphid="b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+        __str__=lambda st: st.title_text,
+        members={
+            "type": "@[resource]",
+            "lang": "en",
+            "nodegroupid": "7383b2c6-705c-11ee-977f-0242ac140008",
+            "nodeid": "7383b2c6-705c-11ee-977f-0242ac140008",
+        },
+        nested_sets={
+            "type": "@[resource]",
+            "lang": "en",
+            "nodegroupid": "08bdee88-705d-11ee-8f59-0242ac140008",
+            "nodeid": "08bdee88-705d-11ee-8f59-0242ac140008",
+        },
+    ),
+    dict(
+        model_name="Group",
+        __str__=lambda grp: grp.name,
+        graphid="07883c9e-b25c-11e9-975a-a4d18cec433a",
+        members={
+            "lang": "en",
+            "nodegroupid": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "nodeid": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+        },
+        permissions={
+            "type": "semantic",
+            "lang": "en",
+            "nodegroupid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+            "nodeid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+        },
+        **{
+            "permissions/action": {
+                "type": [Concept],
+                "lang": "en",
+                "nodegroupid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+                "nodeid": "7cb692b2-7072-11ee-bb7a-0242ac140008",
+            },
+            "permissions/object": {
+                "type": "@resource",
+                "lang": "en",
+                "nodegroupid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+                "nodeid": "448bcdb8-7071-11ee-8b8c-0242ac140008",
+            }
+        },
+    ),
+    dict(
+        model_name="Organization",
+        graphid="d4a88461-5463-11e9-90d9-000d3ab1e588",
     )
 ]
 if WELL_KNOWN_MAPPING_FILE:
@@ -119,6 +207,29 @@ WEBPACK_LOADER = {
     },
 }
 
+CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
+
+DAUTHZ = {
+    # DEFAULT Dauthz enforcer
+    "DEFAULT": {
+        # Casbin model setting.
+        "MODEL": {
+            # Available Settings: "file", "text"
+            "CONFIG_TYPE": "file",
+            "CONFIG_FILE_PATH": CASBIN_MODEL,
+            "CONFIG_TEXT": "",
+        },
+        # Casbin adapter .
+        "ADAPTER": {
+            "NAME": "casbin_adapter.adapter.Adapter",
+            # 'OPTION_1': '',
+        },
+        "LOG": {
+            # Changes whether Dauthz will log messages to the Logger.
+            "ENABLED": False,
+        },
+    },
+}
 PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
 #PERMISSION_FRAMEWORK = "arches_default_deny.ArchesDefaultDenyPermissionFramework"
 
@@ -212,6 +323,7 @@ INSTALLED_APPS = (
     "oauth2_provider",
     "django_celery_results",
     "compressor",
+    "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",
     "casbin_adapter.apps.CasbinAdapterConfig",
@@ -229,6 +341,7 @@ MIDDLEWARE = [
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "dauthz.middlewares.request_middleware.RequestMiddleware",
     # "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
     # "silk.middleware.SilkyMiddleware",
@@ -264,6 +377,11 @@ FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
+
+AUTHENTICATION_BACKENDS += tuple(
+    *AUTHENTICATION_BACKENDS,
+    "dauthz.backends.CasbinBackend",
+)
 
 if (LOG_LEVEL := os.getenv("LOG_LEVEL", "")):
     pass

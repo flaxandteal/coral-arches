@@ -37,16 +37,17 @@ class UserDataType(BaseDataType):
         return []
 
     def get_display_value(self, tile, node, **kwargs):
+        if (user := self.get_user(tile, node)):
+            return user.email
+        return None
+
+    def get_user(self, tile, node):
         data = self.get_tile_data(tile)
-        logger.error("data x")
-        logger.error(data)
         if data:
             raw_value = data.get(str(node.nodeid))
-            logger.error(raw_value)
             if raw_value is not None:
                 user = User.objects.get(pk=int(raw_value))
-                logger.error(user)
-                return user.email
+                return user
 
     def compile_json(self, tile, node, **kwargs):
         json = super().compile_json(tile, node, **kwargs)

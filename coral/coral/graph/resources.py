@@ -66,8 +66,6 @@ class DataTypes:
         node = models.Node.objects.get(nodeid=nodeid)
         if nodeid not in self.related_nodes:
             assert str(nodeid) in self.node_datatypes and self.node_datatypes[str(nodeid)].startswith("resource-instance")
-            self.related_nodes[nodeid] = {}
-            logging.error("N %s %s", str(node), str(node.config))
             self.related_nodes[nodeid] = {
                 "name": related_field,
                 "model_name": model_name,
@@ -75,7 +73,6 @@ class DataTypes:
             }
         assert related_field.split("/")[-1] == self.related_nodes[nodeid]["name"].split("/")[-1], f"{related_field} != {self.related_nodes[nodeid]['name']}"
         self.related_nodes[nodeid]["relatable_graphs"] += [str(graph["graphid"]) for graph in node.config["graphs"] if str(graph["graphid"]) in self.graphs]
-        logging.error(">%s", str(self.related_nodes[nodeid]["relatable_graphs"]))
         return self.related_nodes[nodeid]["name"]
 
     def _build_semantic(self, nodeid, semantic_field, field, field_info, model_name, model_class_name):
@@ -212,7 +209,7 @@ class DataTypes:
                 for n, value in enumerate(collection["back"].values()):
                     pairs[value] = (value, n)
                 if len(pairs) != len(collection["back"]):
-                    print(f"WARNING: duplicate enum entries for {field}")
+                    logging.error(f"WARNING: duplicate enum entries for {field}")
                 raw_type = graphene.Enum(string_to_enum(field), list(pairs.values()))
 
                 return graphene.Argument(graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else raw_type)
@@ -222,7 +219,6 @@ class DataTypes:
                     graph for graph in self.related_nodes[info["nodeid"]]["relatable_graphs"]
                     if graph in allowed_graphs
                 ]
-                logging.error("%s]", str(graphs))
                 assert len(graphs) > 0, "Relations must relate a graph that is well-known"
                 if len(graphs) == 1:
                     graph = graphs[0]
@@ -266,7 +262,6 @@ class DataTypes:
             # AGPL Arches
             datatype = self.node_datatypes[info["nodeid"]]
             datatype_instance = self.datatype_factory.get_instance(datatype)
-            logging.error("%s %s %s", str(datatype_instance), str(info), str(datatype))
             if isinstance(datatype_instance, ConceptDataType) or isinstance(datatype_instance, ConceptListDataType):
                 collection = self.collections[info["nodeid"]]
                 # We lose the conceptid here, so cannot spot duplicates, but the idea is
@@ -275,7 +270,7 @@ class DataTypes:
                 for n, value in enumerate(collection["back"].values()):
                     pairs[value] = (value, n)
                 if len(pairs) != len(collection["back"]):
-                    print(f"WARNING: duplicate enum entries for {field}")
+                    logging.error(f"WARNING: duplicate enum entries for {field}")
                 raw_type = graphene.Enum(string_to_enum(field), list(pairs.values()))
 
                 return graphene.List(raw_type) if isinstance(datatype_instance, ConceptListDataType) else graphene.Field(raw_type)

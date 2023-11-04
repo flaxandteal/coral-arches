@@ -15,24 +15,97 @@ from arches.app.models.concept import get_preflabel_from_conceptid
 from arches.app.search.elasticsearch_dsl_builder import Bool, Match, Query, Nested, Terms, MaxAgg, Aggregation
 from tabulate import tabulate
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, Union, Dict
 from django.dispatch import Signal
 from django.db.models.signals import post_init, post_delete, pre_save, post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
-from arches.app.models.models import ResourceXResource, TileModel, Node
-from arches.app.models.concept import get_preflabel_from_valueid
+from arches.app.models.models import ResourceXResource, TileModel, Node, NodeGroup
+from arches.app.models.concept import get_preflabel_from_valueid, Concept
 from arches.app.models.tile import Tile as TileProxyModel
 from coral import settings
 from arches.app.models.system_settings import settings as system_settings
-from arches.app.datatypes.datatypes import EDTFDataType, GeojsonFeatureCollectionDataType
+from arches.app.datatypes.datatypes import EDTFDataType, GeojsonFeatureCollectionDataType, StringDataType
+from arches.app.datatypes.concept_types import ConceptDataType
 from ._bulk_create import BulkImportWKRM
+from coral.datatypes.user import UserDataType
 #from arches.app.models import TileModel
 
 STAGING_TEST = False
 COUNT = 0
+LOAD_FULL_NODE_OBJECTS = True
+LOAD_ALL_NODES = True
 
+class UserViewModel(str):
+    _tile: Tile
+    _nodeid: uuid.UUID
+    _user_datatype: UserDataType
+
+    def __new__(cls, tile, node, user_datatype):
+        display_value = user_datatype.get_display_value(
+            tile,
+            Node(nodeid=node.nodeid),
+        )
+        mystr = super(UserViewModel, cls).__new__(cls, display_value)
+        cls._tile = tile
+        cls._nodeid = node.nodeid
+        cls._user_datatype = user_datatype
+        return mystr
+
+    @property
+    def user(self):
+        user = User.objects.get(pk=int(self._tile.data[str(self._nodeid)]))
+        return user
+
+class StringViewModel(str):
+    _tile: Tile
+    _nodeid: uuid.UUID
+    _string_datatype: StringDataType
+
+    def __new__(cls, tile, node, string_datatype, language=None):
+        display_value = string_datatype.get_display_value(
+            tile,
+            Node(nodeid=node.nodeid),
+            language=language
+        )
+        mystr = super(StringViewModel, cls).__new__(cls, display_value)
+        cls._tile = tile
+        cls._nodeid = node.nodeid
+        cls._string_datatype = string_datatype
+        return mystr
+
+    def lang(self, language):
+        return self._string_datatype.get_display_value(
+            self._tile, Node(nodeid=self._nodeid), language=language
+        )
+
+class ConceptViewModel(str):
+    _concept_id: uuid.UUID
+    _concept_datatype: ConceptDataType
+
+    def __new__(cls, concept_id: Union[str, uuid.UUID], concept_datatype):
+        _concept_id = concept_id if isinstance(concept_id, uuid.UUID) else uuid.UUID(concept_id)
+        mystr = super(ConceptViewModel, cls).__new__(cls, str(_concept_id))
+        mystr._concept_id = concept_id
+        mystr._concept_datatype = concept_datatype
+        return mystr
+
+    @property
+    @lru_cache
+    def value(self):
+        return self._concept_datatype.get_value(self._concept_id)
+
+    @property
+    @lru_cache
+    def text(self):
+        return self.value.value
+
+    @property
+    @lru_cache
+    def lang(self):
+        return self.value.language
 
 class RelationList(collections.UserList):
     def __init__(self, related_to, key, nodeid, tileid, *args, **kwargs):
@@ -75,10 +148,10 @@ _WELL_KNOWN_RESOURCE_MODELS = [
 ]
 
 class ResourceModelWrapper:
-    name: str
+    model_name: str
     graphid: str
     id: str
-    _nodes: dict = {}
+    _nodes: dict = None
     _values: dict = None
     _cross_record: dict = None
     _lazy: bool = False
@@ -89,10 +162,10 @@ class ResourceModelWrapper:
     resource: Resource
 
     def __getitem__(self, key):
-        return self.__getitem__(key)
+        return self.__getattr__(key)
 
     def __setitem__(self, key, value):
-        return self.__setitem__(key, value)
+        return self.__setattr__(key, value)
 
     def __setattr__(self, key, value):
         key, value = self._set_value(key, value)
@@ -110,7 +183,11 @@ class ResourceModelWrapper:
             if self._lazy and not self._filled:
                 self.fill_from_resource(self._related_prefetch)
                 return self.__getattr__(key)
-            return None
+            # Semantic nodes say they don't collect multiple values, but they have multiple children
+            return [] if (datatype := self._nodes[key].get("datatype", None)) and datatype[1].collects_multiple_values() or datatype[0] == "semantic" else None
+        # FIXME: special case for backwards compatibility
+        if key == "name":
+            return self._model_name
         raise AttributeError(f"No well-known attribute {key}")
 
     def delete(self):
@@ -318,6 +395,8 @@ class ResourceModelWrapper:
     @classmethod
     def find(cls, resourceinstanceid):
         resource = Resource.objects.get(resourceinstanceid=resourceinstanceid)
+        if str(resource.graph_id) != cls.graphid:
+            raise RuntimeError(f"Using find against wrong resource type: {resource.graph_id} for {cls.graphid}")
         if resource:
             return cls.from_resource(resource)
         return None
@@ -340,6 +419,28 @@ class ResourceModelWrapper:
             from arches.app.datatypes.datatypes import DataTypeFactory
             cls.__datatype_factory = DataTypeFactory()
         return cls.__datatype_factory
+
+    @classmethod
+    @lru_cache
+    def _node_objects(cls, load_all=False):
+        if not LOAD_FULL_NODE_OBJECTS:
+            raise RuntimeError("Attempt to load full node objects when asked not to")
+
+        if load_all:
+            fltr = {"graph_id": cls.graphid}
+        else:
+            fltr = {"nodeid__in": [node["nodeid"] for node in cls._nodes.values()]}
+        return {str(node.nodeid): node for node in Node.objects.filter(**fltr)}
+
+    @classmethod
+    @lru_cache
+    def _nodegroup_objects(cls) -> Dict[str, NodeGroup]:
+        if not LOAD_FULL_NODE_OBJECTS:
+            raise RuntimeError("Attempt to load full node objects when asked not to")
+
+        return {str(nodegroup.nodegroupid): nodegroup for nodegroup in NodeGroup.objects.filter(
+            nodegroupid__in=[node["nodegroupid"] for node in cls._nodes.values()]
+        )}
 
     @classmethod
     def _node_datatypes(cls):
@@ -369,8 +470,54 @@ class ResourceModelWrapper:
             for nodeid in tile.data:
                 if nodeid in class_nodes:
                     key = class_nodes[nodeid]
-                    typ = cls._nodes[key].get("type", str)
-                    lang = cls._nodes[key].get("lang", None)
+                    node = cls._nodes[key]
+                    datatype_name, datatype = node.get("datatype", (None, None))
+                    typ = node.get("type", None)
+                    if LOAD_FULL_NODE_OBJECTS:
+                        node_obj = cls._node_objects()[nodeid]
+                    else:
+                        node_obj = Node(
+                            pk=nodeid,
+                            nodeid=nodeid,
+                            nodegroup_id=node["nodegroupid"],
+                            graph_id=self.graphid
+                        )
+                    if typ is None:
+                        if datatype is None:
+                            datatype = datatype_factory.get_instance("string")
+                        multiple_values = self._nodegroup_objects()[node["nodegroupid"]].cardinality == "n"
+                    else:
+                        multiple_values = isinstance(typ, list)
+                        if typ == str or typ == [str]:
+                            datatype_name = "string"
+                        elif typ in (int, [int], float, [float]):
+                            datatype_name = "number"
+                        elif typ in (bool, "boolean"):
+                            datatype_name = "boolean"
+                        elif typ in ("date", "datetime"):
+                            datatype_name = "date"
+                        elif typ == EDTFDataType:
+                            datatype_name = "edtf"
+                        elif typ == settings.GeoJSON:
+                            datatype_name = "geojson-feature-collection"
+                        elif typ == settings.Concept:
+                            datatype_name = "concept"
+                        elif typ == [settings.Concept]:
+                            datatype_name = "concept-list"
+                        elif typ.startswith("@") and (typ[1:] in _resource_models or typ[1:] == "resource" or typ[1:] == "[resource]"):
+                            if (typ[1], typ[-1]) == ("[", "]"):
+                                datatype_name = "resource-instance-list"
+                            else:
+                                datatype_name = "resource-instance"
+                        elif isinstance(typ, str):
+                            datatype_name= typ
+
+                        try:
+                            datatype = datatype_factory.get_instance(datatype_name)
+                        except:
+                            raise NotImplementedError(f"{key} {typ}")
+
+                    lang = node.get("lang", None)
                     if "/" in key:
                         _semantic_node, key = key.split("/")
                         if semantic_node is None:
@@ -385,59 +532,67 @@ class ResourceModelWrapper:
                     else:
                         values = all_values
 
-                    if typ == str or typ == [str]:
-                        if lang is not None and tile.data[nodeid] is not None:
-                            text = tile.data[nodeid][lang]["value"]
-                        else:
-                            text = tile.data[nodeid]
-                        if typ == [str]:
+                    if datatype_name in ("resource-instance", "resource-instance-list"):
+                        if isinstance(tile.data[nodeid], list):
+                            values[key] = RelationList(self, key, nodeid, tile.tileid)
+                            for datum in tile.data[nodeid]:
+                                if (
+                                    related := attempt_well_known_resource_model(datum["resourceId"], related_prefetch, x=datum, lazy=True)
+                                ) is not None:
+                                    values[key].append(related)
+                        elif tile.data[nodeid]:
+                            values[key] = attempt_well_known_resource_model(tile.data[nodeid], related_prefetch, x=datum, lazy=True)
+                    elif datatype.datatype_name == "string":
+                        text = self._make_string_from_tile_and_node(tile, node_obj)
+                        if multiple_values:
                             values.setdefault(key, [])
                             values[key].append(text)
                         else:
                             values[key] = text
-                    elif typ == int:
-                        values[key] = tile.data[nodeid]
-                    elif typ == float:
-                        values[key] = tile.data[nodeid]
-                    elif typ == "boolean":
-                        values[key] = tile.data[nodeid]
-                    elif typ == date:
-                        values[key] = tile.data[nodeid]
-                    elif typ == datetime:
-                        values[key] = tile.data[nodeid]
-                    elif typ == EDTFDataType:
-                        values[key] = tile.data[nodeid]
-                    elif typ == settings.GeoJSON:
-                        values[key] = tile.data[nodeid]
-                    elif typ == settings.Concept:
-                        values[key] = tile.data[nodeid]
-                    elif typ == [settings.Concept]:
-                        values[key] = tile.data[nodeid]
-                    elif isinstance(typ, str):
-                        if typ.startswith("@") and (typ[1:] in _resource_models or typ[1:] == "resource" or typ[1:] == "[resource]"):
-                            if isinstance(tile.data[nodeid], list):
-                                values[key] = RelationList(self, key, nodeid, tile.tileid)
-                                for datum in tile.data[nodeid]:
-                                    if (
-                                        related := attempt_well_known_resource_model(datum["resourceId"], related_prefetch, x=datum, lazy=True)
-                                    ) is not None:
-                                        values[key].append(related)
-                            elif tile.data[nodeid]:
-                                values[key] = attempt_well_known_resource_model(tile.data[nodeid], related_prefetch, x=datum, lazy=True)
+                    elif datatype.datatype_name == "concept-list":
+                        values[key] = [
+                            self.make_concept(concept_id)
+                            for concept_id in tile.data[nodeid]
+                            if concept_id
+                        ]
+                    elif datatype.datatype_name == "concept":
+                        values[key] = self.make_concept(tile.data[nodeid]) if tile.data[nodeid] else None
+                    elif datatype.datatype_name == "user":
+                        value = self._make_user_from_tile_and_node(tile, node_obj)
+                        if multiple_values:
+                            values.setdefault(key, [])
+                            values[key].append(value)
                         else:
-                            try:
-                                datatype_factory.get_instance(typ)
-                            except:
-                                raise NotImplementedError(f"{key} {typ}")
-                            else:
-                                values[key] = tile.data[nodeid]
+                            values[key] = value
+                    elif datatype.collects_multiple_values():
+                        values[key] = datatype.to_json(tile, node_obj)
                     else:
-                        raise NotImplementedError(f"{key} {typ}")
+                        value = datatype.get_display_value(tile, node_obj, language=lang)
+                        if multiple_values:
+                            values.setdefault(key, [])
+                            values[key].append(value)
+                        else:
+                            values[key] = value
             if semantic_node:
                 all_values.setdefault(semantic_node, [])
                 all_values[semantic_node].append(semantic_values)
         self._values.update(all_values)
         self._filled = True
+
+    @classmethod
+    def _make_user_from_tile_and_node(cls, tile, node):
+        string_datatype = cls._datatype_factory().get_instance("user")
+        return UserViewModel(tile, node, string_datatype)
+
+    @classmethod
+    def _make_string_from_tile_and_node(cls, tile, node):
+        string_datatype = cls._datatype_factory().get_instance("string")
+        return StringViewModel(tile, node, string_datatype)
+
+    @classmethod
+    def make_concept(cls, concept_id):
+        concept_datatype = cls._datatype_factory().get_instance("concept")
+        return ConceptViewModel(concept_id, concept_datatype)
 
     @classmethod
     def from_resource(cls, resource, x=None, lazy=False, related_prefetch=None):
@@ -515,6 +670,8 @@ class ResourceModelWrapper:
                 value: Any = values[key]
                 typ = node["type"]
                 logger.error(typ)
+                if value is None:
+                    continue
                 if typ == [settings.Semantic]:
                     tiles.setdefault(node["nodegroupid"], [])
                     if "parentnodegroup_id" in node:
@@ -565,7 +722,6 @@ class ResourceModelWrapper:
                     single = True
                 elif typ == "user":
                     single = True
-                    logger.error("USER")
                 elif typ == date:
                     single = True
                     value = datetime.strptime(value, "%Y-%m-%d").strftime("%Y-%m-%d")
@@ -581,7 +737,6 @@ class ResourceModelWrapper:
                 elif typ == [settings.Concept]:
                     single = True
                 elif "lang" in node:
-                    logger.error("LUSER")
                     if typ == str:
                         single = True
                         value = {node["lang"]: {"value": value, "direction": "ltr"}} # FIXME: rtl
@@ -722,12 +877,29 @@ class ResourceModelWrapper:
         if not well_known_resource_model:
             raise RuntimeError("Must try to wrap a real model")
 
-        cls.name = well_known_resource_model.model_name
+        cls._model_name = well_known_resource_model.model_name
+        cls._nodes = {}
         cls.graphid = well_known_resource_model.graphid
         cls._wkrm = well_known_resource_model
-        cls._nodes = well_known_resource_model.nodes
         cls._nodes_loaded = {}
         cls.post_save = Signal()
+        if LOAD_FULL_NODE_OBJECTS and LOAD_ALL_NODES:
+            for node_obj in cls._node_objects(load_all=True).values():
+                # The root node will not have a nodegroup, but we do not need it
+                if node_obj.nodegroup_id:
+                    cls._nodes[str(node_obj.alias)] = {
+                        "nodeid": str(node_obj.nodeid),
+                        "nodegroupid": str(node_obj.nodegroup_id),
+                        "type": node_obj.datatype,
+                    }
+            # Ensure defined nodes overwrite the autoloaded ones
+            cls._nodes.update(well_known_resource_model.nodes)
+            nodegroups = cls._nodegroup_objects()
+            for node in cls._nodes.values():
+                if (parentnodegroup_id := nodegroups[node["nodegroupid"]].parentnodegroup_id):
+                    node["parentnodegroup_id"] = str(parentnodegroup_id)
+        for node in cls._nodes.values():
+            node["datatype"] = cls._datatype(node["nodeid"])
 
 @receiver(post_save, sender=Tile)
 def check_resource_instance_on_tile_save(sender, instance, **kwargs):

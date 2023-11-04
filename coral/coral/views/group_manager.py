@@ -43,31 +43,6 @@ def get_resource_relationship_types():
 
 
 class GroupManagerView(View):
-    GROUPINGS = {
-        "groups": {
-            "allowed_relationships": {
-                "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member": (True, True),
-            },
-            "root_group": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
-            "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a"
-        },
-        "sets": {
-            "allowed_relationships": {
-                "http://www.cidoc-crm.org/cidoc-crm/P10i_contains": (True, True),
-            },
-            "root_group": "74e496c7-ec7e-43b8-a7b3-05bacf496794",
-            "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220"
-        },
-        "permissions": {
-            "allowed_relationships": {
-                "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member": (True, False),
-                "http://www.cidoc-crm.org/cidoc-crm/P104i_applies_to": (True, True),
-                "http://www.cidoc-crm.org/cidoc-crm/P10i_contains": (True, True),
-            },
-            "root_group": "74e496c7-ec7e-43b8-a7b3-05bacf496794",
-        }
-    }
-
     graphs = (
         models.GraphModel.objects.all()
         .exclude(pk=settings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID)
@@ -87,7 +62,7 @@ class GroupManagerView(View):
         nav_menu=True,
     ):
         try:
-            grouping_config = self.GROUPINGS[grouping]
+            grouping_config = settings.GROUPINGS[grouping]
         except KeyError:
             ret  = {
                 "error": "unknown-grouping",
@@ -139,7 +114,6 @@ class GroupManagerView(View):
                 )
                 if not core_resources:
                     core_resources.update(related_resources)
-                print(related_resources.get("resource_relationships"))
                 if related_resources.get("resource_relationships"):
                     relationships = [
                         rr for rr in related_resources["resource_relationships"] if _test_relationship(resourceid, rr)

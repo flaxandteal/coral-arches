@@ -6,7 +6,7 @@ logging.getLogger("casbin_adapter").setLevel(logging.ERROR)
 
 from django.core.exceptions import ObjectDoesNotExist
 from arches.app.models.system_settings import settings
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.models import User, Permission, Group as DjangoGroup
 from django.contrib.gis.db.models import Model
 from django.core.cache import caches
 from guardian.backends import check_support, ObjectPermissionBackend
@@ -34,7 +34,13 @@ from arches.app.search.elasticsearch_dsl_builder import Bool, Query, Terms, Nest
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 
+from coral.resource_model_wrappers import Person, Organization, Set, Group, ResourceModelWrapper
+
 logger = logging.getLogger(__name__)
+
+
+class NoSubjectError(RuntimeError):
+    pass
 
 class CasbinPermissionFramework(PermissionFramework):
     @property
@@ -57,10 +63,16 @@ class CasbinPermissionFramework(PermissionFramework):
 
     @staticmethod
     def _subj_to_str(subj):
+        if isinstance(subj, Person):
+            if subj.user_account is None:
+                raise NoSubjectError(subj)
+            subj = f"u:{subj.user_account.user.pk}"
         if isinstance(subj, User):
             subj = f"u:{subj.pk}"
+        elif isinstance(subj, Organization):
+            subj = f"u:{subj.id}"
         elif isinstance(subj, Group):
-            subj = f"g:{subj.pk}"
+            subj = f"g:{subj.id}"
         elif isinstance(subj, str) and ":" in subj:
             return subj
         else:
@@ -73,6 +85,10 @@ class CasbinPermissionFramework(PermissionFramework):
             raise NotImplementedError()
         elif isinstance(obj, str) and ":" in obj:
             return obj
+        elif isinstance(obj, Set):
+            obj = f"g2:{obj.id}"
+        elif isinstance(obj, ResourceModelWrapper):
+            obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
             obj = f"ri:{obj.pk}"
         elif isinstance(obj, NodeGroup):
@@ -85,8 +101,48 @@ class CasbinPermissionFramework(PermissionFramework):
             obj = f"o:{obj.pk}"
         return obj
 
+    def recalculate_table(self):
+        groups = settings.GROUPINGS["groups"]
+        root_group = Group.find(groups["root_group"])
+        self._enforcer.clear_policy()
+
+        def _fill_group(group):
+            group_key = self._subj_to_str(group)
+            for member in group.members:
+                if isinstance(member, Group):
+                    member_key = self._subj_to_str(member)
+                    self._enforcer.add_named_grouping_policy("g", member_key, group_key)
+                    _fill_group(member)
+                elif member.user_account:
+                    member_key = self._subj_to_str(member)
+                    self._enforcer.add_role_for_user(member_key, group_key)
+                else:
+                    logger.warn("A membership rule was not added as no User was attached %s", member.full_name)
+            for permission in group.permissions:
+                for act in permission["action"]:
+                    for obj in permission["object"]:
+                        obj_key = self._obj_to_str(obj)
+                        self._enforcer.add_policy(group_key, obj_key, act)
+        _fill_group(root_group)
+
+        sets = settings.GROUPINGS["sets"]
+        root_set = Set.find(sets["root_group"])
+
+        def _fill_set(st):
+            set_key = self._obj_to_str(st)
+            if st.nested_sets:
+                for nst in st.nested_sets:
+                    nested_set_key = self._obj_to_str(nst)
+                    self._enforcer.add_named_grouping_policy("g2", nested_set_key, set_key)
+                    _fill_set(nst)
+            if st.members:
+                for member in st.members:
+                    member_key = self._obj_to_str(member)
+                    self._enforcer.add_named_grouping_policy("g2", member_key, set_key)
+        _fill_set(root_set)
+        self._enforcer.save_policy()
+
     def update_permissions_for_user(self, user):
-        logger.error("u4g")
         perms = {(self._obj_to_str(permission), permission.codename) for permission in user.user_permissions.all()}
         user = self._subj_to_str(user)
         was = {(obj, act) for _, obj, act in self._enforcer.get_permissions_for_user(user)}
@@ -111,9 +167,13 @@ class CasbinPermissionFramework(PermissionFramework):
             self._enforcer.remove_policy(group, obj, act)
         self._enforcer.save_policy()
 
+    def _django_group_to_ri(self, django_group: DjangoGroup):
+        # TODO: a more robust mapping
+        group = Group.where(name==django_group.name)
+        return group
+
     def update_groups_for_user(self, user):
-        logger.error("g4u")
-        groups = {self._subj_to_str(group) for group in user.groups.all()}
+        groups = {self._subj_to_str(self._django_group_to_ri(group)) for group in user.groups.all()}
         user = self._subj_to_str(user)
         was = set(self._enforcer.get_roles_for_user(user))
         logger.error(was)
@@ -123,7 +183,6 @@ class CasbinPermissionFramework(PermissionFramework):
         for group in was - groups:
             self._enforcer.delete_role_for_user(user, group)
         self._enforcer.save_policy()
-        self._enforcer.model.print_policy()
 
     def assign_perm(self, perm, user_or_group, obj=None):
         try:
@@ -132,7 +191,6 @@ class CasbinPermissionFramework(PermissionFramework):
             obj = [obj]
 
         subj = self._subj_to_str(user_or_group)
-        print(obj, "OBJ", subj)
         for o in obj:
             o = self._obj_to_str(o)
 
@@ -141,7 +199,8 @@ class CasbinPermissionFramework(PermissionFramework):
             self._enforcer.add_policy(subj, o, perm)
         self._enforcer.save_policy()
 
-    def get_permission_backend(self):
+    @staticmethod
+    def get_permission_backend():
         return CasbinBackend()
 
     def remove_perm(self, perm, user_or_group=None, obj=None):
@@ -346,7 +405,9 @@ class CasbinPermissionFramework(PermissionFramework):
             user_permissions = set()
             group_permissions = set()
             subj = self._subj_to_str(user)
+            print(subj, self._enforcer.get_implicit_roles_for_user(subj))
             for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(subj):
+                print(sub, obj, act)
                 if obj == f"ri:{resourceid}":
                     if sub == f"u:{user.pk}":
                         user_perms.add(act)
