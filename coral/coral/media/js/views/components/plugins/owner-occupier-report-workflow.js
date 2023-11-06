@@ -148,17 +148,17 @@ define([
                 //     nodegroupid: ''
                 //   }
                 // },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'vacant', // Needs location tile id
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '426430e4-eabf-11ed-9e22-72d420f37f11',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['monumentResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['monumentLocTileId']"
-                  }
-                },
+                // {
+                //   componentName: 'default-card',
+                //   uniqueInstanceName: 'vacant', // Needs location tile id, also currently not working
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
+                //     nodegroupid: '426430e4-eabf-11ed-9e22-72d420f37f11',
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['monumentResourceId']",
+                //     parenttileid: "['init-step']['app-id'][0]['monumentLocTileId']"
+                //   }
+                // },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'derelict', // Needs location tile id
@@ -196,7 +196,7 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '4264388c-eabf-11ed-9e22-72d420f37f11',
+                    nodegroupid: '4263d086-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['monumentResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['monumentLocTileId']"
                   }
@@ -257,6 +257,7 @@ define([
         {
           title: 'Interior / Exterior Design',
           name: 'design-step',
+          workflowstepclass: 'workflow-form-component',
           layoutSections: [
             {
               componentConfigs: [
@@ -305,6 +306,7 @@ define([
         {
           title: 'Historical Information',
           name: 'historicial-step',
+          workflowstepclass: 'workflow-form-component',
           layoutSections: [
             {
               componentConfigs: [
