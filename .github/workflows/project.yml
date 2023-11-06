@@ -31,16 +31,19 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Check Branch
+        id: check-branch
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/develop' ]]; then
             echo "Push event is on the 'develop' branch."
+            echo "::set-output name=on_develop::true"
           else
             echo "Push event is not on the 'develop' branch. Exiting workflow."
-            exit 1
+            echo "::set-output name=on_develop::false"
           fi
 
       - name: Read Existing Version
         id: read-version
+        if: steps.check-branch.outputs.on_develop == 'true'
         run: |
           python_file="./coral/coral/settings.py"
           current_version=$(grep -oE "APP_VERSION = '[0-9]+\.[0-9]+\.[0-9]+'" "$python_file" | cut -d"'" -f2)
@@ -49,6 +52,7 @@ jobs:
 
       - name: Determine New Version
         id: determine-version
+        if: steps.check-branch.outputs.on_develop == 'true'
         run: |
           merge_message="${{ github.event.head_commit.message }}"
           current_version="${{ steps.read-version.outputs.current_version }}"
@@ -66,16 +70,17 @@ jobs:
           echo "New Version: $new_version"
           echo "::set-output name=new_version::$new_version"
 
-      # - name: Update Python File
-      #   id: update-python-file
-      #   run: |
-      #     python_file="./coral/coral/settings.py"
-      #     new_version="${{ steps.determine-version.outputs.new_version }}"
-      #     sed -i "s/APP_VERSION = '.*'/APP_VERSION = '$new_version'/" "$python_file"
+      - name: Update Python File
+        id: update-python-file
+        if: steps.check-branch.outputs.on_develop == 'true'
+        run: |
+          python_file="./coral/coral/settings.py"
+          new_version="${{ steps.determine-version.outputs.new_version }}"
+          sed -i "s/APP_VERSION = '.*'/APP_VERSION = '$new_version'/" "$python_file"
 
       # - name: Commit and Push Changes
       #   id: commit-changes
-      #   if:  steps.read-version.outputs.current_version != steps.determine-version.outputs.new_version
+      #   if: steps.check-branch.outputs.on_develop == 'true' && steps.read-version.outputs.current_version != steps.determine-version.outputs.new_version
       #   run: |
       #     python_file="./coral/coral/settings.py"
       #     git pull
