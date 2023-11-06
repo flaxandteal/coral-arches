@@ -62,7 +62,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'planning-ref',
+                  uniqueInstanceName: 'plan-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
@@ -258,7 +258,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'related-document-upload',
-                  uniqueInstanceName: 'planning-ref',
+                  uniqueInstanceName: 'file-upload',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',

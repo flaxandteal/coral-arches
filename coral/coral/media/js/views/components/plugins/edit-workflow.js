@@ -10,7 +10,7 @@ define([
     this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
     this.WORKFLOW_RECENTLY_EDITED_LABEL = 'workflow-recently-edited';
-
+    const self = this
     this.editableWorkflows = params.editableWorkflows;
     this.selectedResource = ko.observable();
     this.workflowUrl = ko.observable();
@@ -58,10 +58,28 @@ define([
 
     this.loadAssignConsultationData = async (resourceId) => {
       const componentData = {};
+      
       const planningConsultationTiles = await this.fetchTileData(resourceId);
       this.resourceName(
         this.getNameFromNodeId(planningConsultationTiles, '18436d9e-c60b-4fb6-ad09-9458e270e993')
       );
+      for (tile of planningConsultationTiles) {
+        if (tile.nodegroup === 'f5aeaa90-3127-475d-886a-9fc62742de4f'){
+          const planningDigitalFilesTiles = await self.fetchTileData(tile.data['f5aeaa90-3127-475d-886a-9fc62742de4f'][0].resourceId)
+          planningDigitalFilesTiles.forEach((tile) => {
+            componentData[tile.nodegroup] = {
+              value: JSON.stringify({
+                tileData: koMapping.toJSON(tile.data),
+                resourceInstanceId: tile.resourceinstance,
+                tileId: tile.tileid,
+                nodegroupId: tile.nodegroup
+              })
+            };
+
+        })
+      }
+    } 
+      
       planningConsultationTiles.forEach((tile) => {
         let nodegroupId = tile.nodegroup;
         if (nodegroupId === 'c853846a-7948-42c8-a089-63ebe34b49e4') {
@@ -81,8 +99,21 @@ define([
               nodegroupId: tile.nodegroup
             })
           };
+          
           return;
         }
+        if (tile.nodegroup === 'f5aeaa90-3127-475d-886a-9fc62742de4f') {
+          componentData[tile.nodegroup] = {
+            value: JSON.stringify({
+              tileData: koMapping.toJSON(tile.data),
+              resourceInstanceId: tile.resourceinstance,
+              tileId: tile.tileid,
+              nodegroupId: tile.nodegroup
+            })
+          }
+
+        
+      }
         const externalRefSource = tile.data['a45c0772-01ab-4867-abb7-675f470fd08f'];
         if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
           nodegroupId += '|cm-ref';
@@ -90,6 +121,7 @@ define([
         if (externalRefSource === '5fabe56e-ab1f-4b80-9a5b-f4dcf35efc27') {
           nodegroupId += '|plan-ref';
         }
+
         componentData[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
@@ -99,6 +131,17 @@ define([
           })
         };
       });
+      const planningDigitalFiles = planningConsultationTiles.find(
+        (tile) => tile.nodegroup === '8c5356f4-48ce-11ee-8e4e-0242ac140007'
+      );
+      if (planningDigitalFiles) {
+        const planningDigitalFilesTiles = await this.fetchTileData(
+          licenseDigitalFiles.data['8c5356f4-48ce-11ee-8e4e-0242ac140007'][0].resourceId
+        );
+        planningDigitalFilesTiles.forEach((tile) => {
+          
+        });
+      }
       return componentData;
     };
 
@@ -171,7 +214,6 @@ define([
           acitivityResourceId = response.results.hits.hits[0]?._id;
         },
         error: (response, status, error) => {
-          console.error(error);
         },
         complete: (request, status) => {
           //
@@ -375,7 +417,6 @@ define([
     };
 
     this.init = async () => {
-      console.log('Init edit workflow: ', params);
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
