@@ -408,7 +408,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Monuments and Areas"
                     },
@@ -1300,7 +1300,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -10691,28 +10691,6 @@
             "functions_x_graphs": [
                 {
                     "config": {
-                        "descriptor_types": {
-                            "description": {
-                                "nodegroup_id": "de487c5c-b0cc-49de-ae1b-f5d47ab51700",
-                                "string_template": "<Consultation Description>"
-                            },
-                            "map_popup": {
-                                "nodegroup_id": "de487c5c-b0cc-49de-ae1b-f5d47ab51700",
-                                "string_template": "<Consultation Description>"
-                            },
-                            "name": {
-                                "nodegroup_id": "fe1ca5cb-b642-48ae-b680-19a580a76b45",
-                                "string_template": "<Consultation Name>"
-                            }
-                        },
-                        "triggering_nodegroups": []
-                    },
-                    "function_id": "60000000-0000-0000-0000-000000000001",
-                    "graph_id": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
-                    "id": "0d7dac6c-c9c1-4fe1-842a-dea094d80227"
-                },
-                {
-                    "config": {
                         "cons_status_list_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
                         "cons_status_list_nodeid": "8d41e4d3-a250-11e9-8977-00224800b26d",
                         "cons_status_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
@@ -10723,12 +10701,34 @@
                     },
                     "function_id": "96efa95a-1e2c-4562-ac1f-b415796f9f75",
                     "graph_id": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
-                    "id": "3c627f8a-d79b-4501-b42c-6ebb5ca03b03"
+                    "id": "927262d8-e878-4342-ab97-ed2fd99dfd60"
+                },
+                {
+                    "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "de487c5c-b0cc-49de-ae1b-f5d47ab51700",
+                                "string_template": "<Consultation Description>"
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "de487c5c-b0cc-49de-ae1b-f5d47ab51700",
+                                "string_template": "<Consultation Description>"
+                            },
+                            "name": {
+                                "nodegroup_id": "c853846a-7948-42c8-a089-63ebe34b49e4",
+                                "string_template": "<Legacy ID>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
+                    "id": "f9e0fbdd-11f4-47d9-9838-cc576c92c9d5"
                 }
             ],
             "graphid": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
             "iconclass": "fa fa-briefcase",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -14812,17 +14812,17 @@
                         },
                         "options": [
                             {
-                                "id": "4877dda1-af20-46e1-9782-6844575f9ab6",
-                                "selected": false,
-                                "text": {
-                                    "en": "No"
-                                }
-                            },
-                            {
                                 "id": "9d1ad6ea-cb16-4015-a6c0-c312e83973f6",
                                 "selected": false,
                                 "text": {
                                     "en": "Yes"
+                                }
+                            },
+                            {
+                                "id": "4877dda1-af20-46e1-9782-6844575f9ab6",
+                                "selected": false,
+                                "text": {
+                                    "en": "No"
                                 }
                             }
                         ]
@@ -17259,10 +17259,10 @@
                         },
                         "options": [
                             {
-                                "id": "dcaf8850-9cfc-44ea-9fd4-0ca419806e2b",
+                                "id": "5cc97bfd-d76f-40fc-be60-fbb9dfb28fc4",
                                 "selected": false,
                                 "text": {
-                                    "en": "Agent"
+                                    "en": "Planning Officer"
                                 }
                             },
                             {
@@ -17273,10 +17273,10 @@
                                 }
                             },
                             {
-                                "id": "5cc97bfd-d76f-40fc-be60-fbb9dfb28fc4",
+                                "id": "dcaf8850-9cfc-44ea-9fd4-0ca419806e2b",
                                 "selected": false,
                                 "text": {
-                                    "en": "Planning Officer"
+                                    "en": "Agent"
                                 }
                             }
                         ]
