@@ -7,6 +7,15 @@
   "config": {
     "workflows": [
       {
+        "workflowid": "a043cd44-e478-41d7-8e92-44e5c1615da2",
+        "slug": "registry-workflow",
+        "name": "Registry Workflow",
+        "icon": "fa fa-building",
+        "bgColor": "#87bceb",
+        "circleColor": "#a7cdf0",
+        "desc": "Adding or editing details of files stored in a registry"
+      },
+      {
         "workflowid": "b2778828-a6ac-6481-c38b-fd463d878f1f",
         "slug": "application-area",
         "name": "Application Area",
