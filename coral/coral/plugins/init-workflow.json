@@ -104,6 +104,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "A workflow for the designation of a heritage at risk"
+      },
+      {
+        "workflowid": "9be06de1-ee30-4e29-a965-27e4c21a24f2",
+        "slug": "ghnus-designation",
+        "name": "Gazetteer of Historic Nucleated Urban Settlement (GHNUS)",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A workflow for the designation of a GHNUS"
       }
     ],
     "show": true
