@@ -25,6 +25,15 @@
         "desc": "Advice on the potential work related to an application area"
       },
       {
+        "workflowid": "37a99cef-91aa-463c-855a-58fae28871d2",
+        "slug": "assign-consultation-workflow",
+        "name": "Assign Consultation",
+        "icon": "fa fa-file",
+        "bgColor": "#62a3db",
+        "circleColor": "#8bbfea",
+        "desc": "Assign a Consultation to the appropriate team"
+      },
+      {
         "workflowid": "4dc9bd5a-6e5c-440d-ae3c-af94396e2d72",
         "slug": "communication-workflow",
         "name": "Communication",
@@ -59,6 +68,33 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create or edit a License for an Excavation Activity"
+      },
+      {
+        "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
+        "slug": "edit-workflow?workflow-slug=hm-consultation-response-workflow",
+        "name": "HM Planning Consultation",
+        "icon": "fa fa-reply",
+        "bgColor": "#d45797",
+        "circleColor": "#e868aa",
+        "desc": "Respond to a planning consultation regarding a Historic Monument"
+      },
+      {
+        "workflowid": "fae7b96a-8a86-43cf-bcb8-a84b012f9150",
+        "slug": "edit-workflow?workflow-slug=hb-consultation-response-workflow",
+        "name": "HB Planning Consultation",
+        "icon": "fa fa-reply",
+        "bgColor": "#d45797",
+        "circleColor": "#e868aa",
+        "desc": "Respond to a planning consultation regarding a Historic Building"
+      },
+      {
+        "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
+        "slug": "excavation-site-visit",
+        "name": "Excavation Site Visit",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A site visit regarding an Article 42 Excavation"
       }
     ],
     "show": true

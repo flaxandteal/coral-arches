@@ -1,9 +1,10 @@
 define([
+  'jquery',
   'knockout',
   'knockout-mapping',
   'arches',
   'templates/views/components/plugins/edit-workflow.htm'
-], function (ko, koMapping, arches, editWorkflowTemplate) {
+], function ($, ko, koMapping, arches, editWorkflowTemplate) {
   const editWorkflow = function (params) {
     this.WORKFLOW_LABEL = 'workflow-slug';
     this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
@@ -89,19 +90,54 @@ define([
           }
         });
       }
-      const relatedActivitiesTile = licenseTiles.find(
-        (tile) => tile.nodegroup === 'a9f53f00-48b6-11ee-85af-0242ac140007'
+
+      const licenseSysRefTile = licenseTiles.find(
+        (tile) => tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007'
       );
-      /**
-       * FIXME: Currently dosen't support multiple associated activities.
-       * Needs a search implemented to find an activity with the same system
-       * reference ID assigned to the License.
-       */
-      const activityTiles = await this.fetchTileData(
-        relatedActivitiesTile.data['a9f53f00-48b6-11ee-85af-0242ac140007'][0].resourceId
-      );
+      let acitivityResourceId = null;
+      await $.ajax({
+        type: 'GET',
+        url: arches.urls.search_results,
+        data: {
+          'paging-filter': 1,
+          tiles: true,
+          format: 'tilecsv',
+          reportlink: 'false',
+          precision: '6',
+          total: '0',
+          'advanced-search': JSON.stringify([
+            {
+              op: 'and',
+              'e7d69602-9939-11ea-b514-f875a44e0e11': { op: 'eq', val: '' },
+              'e7d69603-9939-11ea-9e7f-f875a44e0e11': {
+                op: '~',
+                lang: 'en',
+                val: licenseSysRefTile?.data['991c49b2-48b6-11ee-85af-0242ac140007'][
+                  arches.activeLanguage
+                ].value
+              },
+              'e7d69604-9939-11ea-baef-f875a44e0e11': { op: '~', lang: 'en', val: '' }
+            }
+          ])
+        },
+        context: this,
+        success: (response) => {
+          acitivityResourceId = response.results.hits.hits[0]?._id;
+        },
+        error: (response, status, error) => {
+          console.error(error);
+        },
+        complete: (request, status) => {
+          //
+        }
+      });
+      const activityTiles = await this.fetchTileData(acitivityResourceId);
+
       const actLocTile = activityTiles.find(
         (tile) => tile.nodegroup === 'a5416b49-f121-11eb-8e2c-a87eeabdefba'
+      );
+      const actSysRefTile = activityTiles.find(
+        (tile) => tile.nodegroup === 'e7d695ff-9939-11ea-8fff-f875a44e0e11'
       );
       activityTiles.forEach((tile) => {
         if (tile.nodegroup in manyTilesManagedNodegroups) {
@@ -148,6 +184,9 @@ define([
           }
         });
       }
+      const licenseExtRefTile = licenseTiles.find(
+        (tile) => tile.nodegroup === '280b6cfc-4e4d-11ee-a340-0242ac140007'
+      );
       licenseTiles.forEach((tile) => {
         if (tile.nodegroup in manyTilesManagedNodegroups) {
           manyTilesManagedNodegroups[tile.nodegroup].push(tile);
@@ -177,6 +216,13 @@ define([
           value['actLocTileId'] = actLocTile.tileid;
           value['actResourceId'] = actLocTile.resourceinstance;
         }
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && actSysRefTile) {
+          value['actSysRefTileId'] = actSysRefTile.tileid;
+        }
+        if (tile.nodegroup === '991c3c74-48b6-11ee-85af-0242ac140007' && licenseExtRefTile) {
+          value['licenseNumberTileId'] = licenseExtRefTile.tileid;
+        }
+
         componentData[tile.nodegroup] = {
           value: JSON.stringify(value)
         };
@@ -184,6 +230,33 @@ define([
       Object.entries(manyTilesManagedNodegroups).forEach(([key, value]) => {
         componentData[key] = {
           value: JSON.stringify(value)
+        };
+      });
+      return componentData;
+    };
+
+    this.loadPCResponseData = async (resourceId) => {
+      const componentData = {};
+      const planningConsultationTiles = await this.fetchTileData(resourceId);
+      this.resourceName(
+        this.getNameFromNodeId(planningConsultationTiles, '18436d9e-c60b-4fb6-ad09-9458e270e993')
+      );
+      planningConsultationTiles.forEach((tile) => {
+        let nodegroupId = tile.nodegroup;
+        const externalRefSource = tile.data['a45c0772-01ab-4867-abb7-675f470fd08f'];
+        if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
+          nodegroupId += '|cm-ref';
+        }
+        if (externalRefSource === '5fabe56e-ab1f-4b80-9a5b-f4dcf35efc27') {
+          nodegroupId += '|plan-ref';
+        }
+        componentData[nodegroupId] = {
+          value: JSON.stringify({
+            tileData: koMapping.toJSON(tile.data),
+            resourceInstanceId: tile.resourceinstance,
+            tileId: tile.tileid,
+            nodegroupId: tile.nodegroup
+          })
         };
       });
       return componentData;
