@@ -45,16 +45,20 @@
     ></div>
   </div>
   <div class="row widget-wrapper" style="display: flex">
+    <!-- ko if: !workflow().disableStartNew -->
     <button
       class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
+      style="min-height: 40.56px"
       data-bind="click: () => {
         window.location.href = workflowUrl();
       }"
     >
       <span>Start New</span>
     </button>
+    <!-- /ko -->
     <button
       class="btn btn-shim btn-labeled btn-lg btn-primary"
+      style="min-height: 40.56px"
       data-bind="click: async () => {
         await editWorkflow();
         window.location.href = workflowUrl();
@@ -64,6 +68,7 @@
     </button>
     <button
       class="btn btn-shim btn-labeled btn-lg btn-danger"
+      style="min-height: 40.56px"
       data-bind="click: clearRecentlyEdited"
     >
       <span>Clear Recents</span>

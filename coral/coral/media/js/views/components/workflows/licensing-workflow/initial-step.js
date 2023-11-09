@@ -17,7 +17,6 @@ define([
     self.tile().dirty.subscribe(function (val) {
       self.dirty(val);
     });
-
     self.pageVm = params.pageVm;
 
     self.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
@@ -40,7 +39,6 @@ define([
       self.applicationId = self
         .tile()
         ?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
-      console.log('License Application ID: ', self.applicationId);
 
       try {
         /**
@@ -56,7 +54,6 @@ define([
             saveActivityLocation(),
             saveRelationship()
           ]);
-
           if (responses.every((response) => response.ok)) {
             params.form.savedData({
               tileData: koMapping.toJSON(self.tile().data),
@@ -97,7 +94,6 @@ define([
           );
         }
       } catch (error) {
-        console.error('Failed to initilise License workflow: ', error);
         self.pageVm.alert(
           new AlertViewModel(
             'ep-alert-red',
@@ -127,7 +123,6 @@ define([
             licenseNumberRef['External Cross Reference Number']['@tile_id'];
         }
       }
-
       return response;
     };
 

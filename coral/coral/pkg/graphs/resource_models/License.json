@@ -183,7 +183,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "File(s)"
                     },
@@ -246,7 +246,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Communications"
                     },
@@ -2469,6 +2469,7 @@
                         "placeholder": {
                             "en": "Enter text"
                         },
+                        "prefix": "EL",
                         "uneditable": false,
                         "width": "100%%"
                     },
