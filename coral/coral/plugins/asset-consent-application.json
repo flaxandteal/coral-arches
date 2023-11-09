@@ -1,0 +1,10 @@
+{
+    "pluginid": "0225bbf1-fad7-4e43-a39f-97fff04c75a3",
+    "name": "Heritage Asset Consent Application",
+    "icon": "fa fa-clipboard",
+    "component": "views/components/plugins/asset-consent-workflow",
+    "componentname": "asset-consent-application",
+    "config": {"show":false},
+    "slug": "asset-consent-application",
+    "sortorder": 0
+}

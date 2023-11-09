@@ -18,11 +18,26 @@ define([
     
     this.pageVm = params.pageVm;
 
+    self.fetchTileData = async (resourceId) => {
+      const tilesResponse = await window.fetch(
+        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
+      );
+      const data = await tilesResponse.json();
+      return data.tiles;
+    };
+
+    if (this.componentData.parameters.heritageAssetData) {
+      heritageAssetId = JSON.parse(this.componentData.parameters.heritageAssetData)['58a2b98f-a255-11e9-9a30-00224800b26d'][0]['resourceId']
+      heritageAssetTiles =  self.fetchTileData(heritageAssetId)
+      console.log("heritage tiles", heritageAssetTiles)
+    }
 
     if (this.componentData.parameters.prefilledNodes) {
       this.componentData.parameters.prefilledNodes?.forEach((prefill) => {
         Object.keys(self.tile().data).forEach((node) => {
           if (node == prefill[0]){
+            console.log("prefilling", prefill)
+            console.log(prefill[1])
             self.tile().data[node](prefill[1])
           }
         })
