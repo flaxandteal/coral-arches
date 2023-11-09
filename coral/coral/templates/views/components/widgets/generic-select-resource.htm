@@ -1,0 +1,18 @@
+<div class="card-component">
+    <div class="row widget-wrapper">
+        <div class="widget-input-label">Select Related Consultation</div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                loading: loading,
+                form: $data,
+                value: resValue,
+                pageVm: $root,
+                graphids: [graphid],
+                disabled: disableResourceSelection,
+                renderContext: 'workflow'
+            }
+        }">
+        </div>
+    </div>
+</div>
