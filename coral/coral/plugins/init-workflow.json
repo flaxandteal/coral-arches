@@ -113,6 +113,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Decision on a Heritage Asset Consent Application"
+      },
+      {
+        "workflowid": "d4dc9711-baff-4f58-ace3-b5f0185446d4",
+        "slug": "damage-report-workflow",
+        "name": "Damage Report",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "Report Damage and proposed repairs on a Heritage Asset"
       }
     ],
     "show": true

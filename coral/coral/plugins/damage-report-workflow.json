@@ -1,0 +1,10 @@
+{
+    "pluginid": "d4dc9711-baff-4f58-ace3-b5f0185446d4",
+    "name": "Damage Report",
+    "icon": "fa fa-clipboard",
+    "component": "views/components/plugins/damage-report",
+    "componentname": "damage-report-workflow",
+    "config": {"show":false},
+    "slug": "damage-report-workflow",
+    "sortorder": 0
+}
