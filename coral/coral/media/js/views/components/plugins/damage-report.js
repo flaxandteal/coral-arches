@@ -272,90 +272,90 @@ define([
                                 //         ]
                                 //     },
                                 // },
-                                { 
-                                    componentName: 'widget-labeller',
-                                    uniqueInstanceName: 'consultation-name', /* unique to step */
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '8d41e49e-a250-11e9-9eab-00224800b26d', //license graph
-                                        nodegroupid: '4ad66f55-951f-11ea-b2e2-f875a44e0e11', //Visit Date & desc
-                                        resourceid: "['asset-select']['selection'][0]['resourceInstanceId']",
-                                        heritageAssetData: "['asset-select']['selection'][0]['tileData']",
-                                        labels: [
-                                            ["Log Date", "Received Date"]
-                                        ],
-                                        hiddenNodes: [
-                                            "4ad69684-951f-11ea-b5c3-f875a44e0e11",
-                                            "4ad66f59-951f-11ea-ab0a-f875a44e0e11",
-                                            "4ad69681-951f-11ea-b8ab-f875a44e0e11",
-                                            "4ad66f58-951f-11ea-9c61-f875a44e0e11",
-                                        ],
-                                        prefilledNodes: [
-                                            ["4ad69684-951f-11ea-b5c3-f875a44e0e11", '{en: {value:"Heritage Asset Consent Application for GNR Main Line Belfast - Border", direction: "ltr"}}']
-                                        ]
-                                    },
-                                },
-                                { 
-                                    componentName: 'widget-labeller',
-                                    uniqueInstanceName: 'consultation-type', /* unique to step */
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '8d41e49e-a250-11e9-9eab-00224800b26d', //license graph
-                                        nodegroupid: '54de6acc-8895-11ea-9067-f875a44e0e11', //Visit Date & desc
-                                        resourceid: "['asset-select']['selection'][0]['resourceInstanceId']",
-                                        labels: [
-                                            ["Log Date", "Received Date"]
-                                        ],
-                                        hiddenNodes: [
-                                            "54de6acc-8895-11ea-9067-f875a44e0e11",
-                                            "4ad66f59-951f-11ea-ab0a-f875a44e0e11",
-                                            "4ad69681-951f-11ea-b8ab-f875a44e0e11",
-                                            "4ad66f58-951f-11ea-9c61-f875a44e0e11",
-                                        ],
-                                        prefilledNodes: [
-                                            ["54de6acc-8895-11ea-9067-f875a44e0e11", "a2fce2b4-2baf-4270-bbf3-2c5999c38ecc"]
-                                        ]
-                                    },
-                                },
+                                // { 
+                                //     componentName: 'widget-labeller',
+                                //     uniqueInstanceName: 'consultation-name', /* unique to step */
+                                //     tilesManaged: 'one',
+                                //     parameters: {
+                                //         graphid: '8d41e49e-a250-11e9-9eab-00224800b26d', //license graph
+                                //         nodegroupid: '4ad66f55-951f-11ea-b2e2-f875a44e0e11', //Visit Date & desc
+                                //         resourceid: "['asset-select']['selection'][0]['resourceInstanceId']",
+                                //         heritageAssetData: "['asset-select']['selection'][0]['tileData']",
+                                //         labels: [
+                                //             ["Log Date", "Received Date"]
+                                //         ],
+                                //         hiddenNodes: [
+                                //             "4ad69684-951f-11ea-b5c3-f875a44e0e11",
+                                //             "4ad66f59-951f-11ea-ab0a-f875a44e0e11",
+                                //             "4ad69681-951f-11ea-b8ab-f875a44e0e11",
+                                //             "4ad66f58-951f-11ea-9c61-f875a44e0e11",
+                                //         ],
+                                //         prefilledNodes: [
+                                //             ["4ad69684-951f-11ea-b5c3-f875a44e0e11", '{en: {value:"Heritage Asset Consent Application for GNR Main Line Belfast - Border", direction: "ltr"}}']
+                                //         ]
+                                //     },
+                                // },
+                                // { 
+                                //     componentName: 'widget-labeller',
+                                //     uniqueInstanceName: 'consultation-type', /* unique to step */
+                                //     tilesManaged: 'one',
+                                //     parameters: {
+                                //         graphid: '8d41e49e-a250-11e9-9eab-00224800b26d', //license graph
+                                //         nodegroupid: '54de6acc-8895-11ea-9067-f875a44e0e11', //Visit Date & desc
+                                //         resourceid: "['asset-select']['selection'][0]['resourceInstanceId']",
+                                //         labels: [
+                                //             ["Log Date", "Received Date"]
+                                //         ],
+                                //         hiddenNodes: [
+                                //             "54de6acc-8895-11ea-9067-f875a44e0e11",
+                                //             "4ad66f59-951f-11ea-ab0a-f875a44e0e11",
+                                //             "4ad69681-951f-11ea-b8ab-f875a44e0e11",
+                                //             "4ad66f58-951f-11ea-9c61-f875a44e0e11",
+                                //         ],
+                                //         prefilledNodes: [
+                                //             ["54de6acc-8895-11ea-9067-f875a44e0e11", "a2fce2b4-2baf-4270-bbf3-2c5999c38ecc"]
+                                //         ]
+                                //     },
+                                // },
                             ],
                         },
                     ],
                 },
-                {
-                    title: 'Relevant Parties',
-                    name: 'consent-contacts',
-                    required: false,
-                    informationboxdata: {
-                        heading: 'Relevant Parties',
-                        text: 'Select all applicants, occupiers of the Heritage Asset (if not the same as the applicant); and agents working on the application',
-                    },
-                    layoutSections: [
-                        {
-                            componentConfigs: [
-                                { 
-                                    componentName: 'widget-labeller',
-                                    uniqueInstanceName: 'contacts', /* unique to step */
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '8d41e49e-a250-11e9-9eab-00224800b26d', //license graph
-                                        nodegroupid: '4ea4a189-184f-11eb-b45e-f875a44e0e11', //Visit Date & desc
-                                        resourceid: "['asset-select']['selection'][0]['resourceInstanceId']",
-                                        hiddenNodes: [
-                                            "4ea4a197-184f-11eb-9152-f875a44e0e11",
-                                            "b7304f4c-3ace-11eb-8884-f875a44e0e11",
-                                            "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
-                                            "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba"
-                                        ],
-                                        labels: [
-                                            ["Agent", "Agent(s)"],
-                                            ["Owner", "Owners or Occupiers"]
-                                        ]
-                                    },
-                                },
-                            ],
-                        },
-                    ],
-                },
+                // {
+                //     title: 'Relevant Parties',
+                //     name: 'consent-contacts',
+                //     required: false,
+                //     informationboxdata: {
+                //         heading: 'Relevant Parties',
+                //         text: 'Select all applicants, occupiers of the Heritage Asset (if not the same as the applicant); and agents working on the application',
+                //     },
+                //     layoutSections: [
+                //         {
+                //             componentConfigs: [
+                //                 { 
+                //                     componentName: 'widget-labeller',
+                //                     uniqueInstanceName: 'contacts', /* unique to step */
+                //                     tilesManaged: 'one',
+                //                     parameters: {
+                //                         graphid: '8d41e49e-a250-11e9-9eab-00224800b26d', //license graph
+                //                         nodegroupid: '4ea4a189-184f-11eb-b45e-f875a44e0e11', //Visit Date & desc
+                //                         resourceid: "['asset-select']['selection'][0]['resourceInstanceId']",
+                //                         hiddenNodes: [
+                //                             "4ea4a197-184f-11eb-9152-f875a44e0e11",
+                //                             "b7304f4c-3ace-11eb-8884-f875a44e0e11",
+                //                             "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
+                //                             "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba"
+                //                         ],
+                //                         labels: [
+                //                             ["Agent", "Agent(s)"],
+                //                             ["Owner", "Owners or Occupiers"]
+                //                         ]
+                //                     },
+                //                 },
+                //             ],
+                //         },
+                //     ],
+                // },
                 {
                     title: 'Proposal',
                     name: 'consent-proposal',
@@ -373,10 +373,13 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '8d41e49e-a250-11e9-9eab-00224800b26d', //license graph
-                                        nodegroupid: '1b0e15e9-8864-11ea-b5f3-f875a44e0e11', //Visit Date & desc
+                                        nodegroupid: 'a5e15f5c-51a3-11eb-b240-f875a44e0e11', //Visit Date & desc
                                         resourceid: "['asset-select']['selection'][0]['resourceInstanceId']",
                                         labels: [
-                                            ["Proposal Description", "Description of proposed works"]
+                                            ["Action", "Details of work to be completed"],
+                                            ["Action by", "Works Carried out by"],
+                                            ["Target Date", "Intended end date"],
+                                            ["Date Entered", "Intended start date"],
                                         ],
                                         hiddenNodes: [
                                             "f279c99d-887e-11ea-9dca-f875a44e0e11"
