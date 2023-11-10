@@ -235,6 +235,27 @@ define([
       return componentData;
     };
 
+    this.loadFlagEnforcementData = async (resourceId) => {
+      console.log('loadFlagEnforcementData: ', resourceId);
+      const componentData = {};
+      const consultationTiles = await this.fetchTileData(resourceId);
+      this.resourceName(
+        this.getNameFromNodeId(consultationTiles, '18436d9e-c60b-4fb6-ad09-9458e270e993')
+      );
+      consultationTiles.forEach((tile) => {
+        let nodegroupId = tile.nodegroup;
+        componentData[nodegroupId] = {
+          value: JSON.stringify({
+            tileData: koMapping.toJSON(tile.data),
+            resourceInstanceId: tile.resourceinstance,
+            tileId: tile.tileid,
+            nodegroupId: tile.nodegroup
+          })
+        };
+      });
+      return componentData;
+    };
+
     this.loadPCResponseData = async (resourceId) => {
       const componentData = {};
       const planningConsultationTiles = await this.fetchTileData(resourceId);
