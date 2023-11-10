@@ -1,0 +1,12 @@
+{
+  "pluginid": "c32ecf8b-f587-4169-a61c-7a53e979eed3",
+  "name": "Flag Enforcement",
+  "icon": "fa fa-flag",
+  "component": "views/components/plugins/flag-enforcement-workflow",
+  "componentname": "flag-enforcement-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "flag-enforcement-workflow",
+  "sortorder": 0
+}
