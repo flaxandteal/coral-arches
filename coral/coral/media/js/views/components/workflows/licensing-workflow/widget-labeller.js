@@ -54,12 +54,20 @@ define([
     });
 
     params.form.save = async () => {
+      console.log(self.tile())
+      savedId = null
+      if (this.componentData.parameters.saveId) {
+        console.log("saving", self.tile()['data']['58a2b98f-a255-11e9-9a30-00224800b26d']()[0]['resourceId']())
+        console.log(self.tile()['data']['58a2b98f-a255-11e9-9a30-00224800b26d']()[0])
+        savedId = self.tile()['data']['58a2b98f-a255-11e9-9a30-00224800b26d']()[0]['resourceId']()
+      }
       await self.tile().save();
       params.form.savedData({
         tileData: koMapping.toJSON(self.tile().data),
         tileId: self.tile().tileid,
         resourceInstanceId: self.tile().resourceinstance_id,
-        nodegroupId: self.tile().nodegroup_id
+        nodegroupId: self.tile().nodegroup_id,
+        savedId: savedId
       });
       params.form.complete(true);
       params.form.saving(false);
