@@ -1,0 +1,12 @@
+{
+  "pluginid": "420c0b00-88c4-42a9-831f-ed0c5280b7a0",
+  "name": "Flagged for Enforcement",
+  "icon": "fa fa-flag",
+  "component": "views/components/plugins/flagged-for-enforcement",
+  "componentname": "flagged-for-enforcement",
+  "config": {
+    "show": true
+  },
+  "slug": "flagged-for-enforcement",
+  "sortorder": 0
+}
