@@ -61,6 +61,15 @@ define([
       };
     };
 
+    this.redirectUrl = ko.observable();
+    this.openFlagged = (resourceId) => {
+      let url = arches.urls.plugin(
+        `edit-workflow?workflow-slug=process-flagged-enforcement-workflow&resource-id=${resourceId}`
+      );
+      console.log('url: ', url);
+      this.redirectUrl(url);
+    };
+
     this.init = async () => {
       this.checkOpenApplications();
     };

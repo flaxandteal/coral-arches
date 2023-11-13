@@ -56,7 +56,14 @@
       <!-- card Tools -->
       <div class="panel-footer" style="height: 53px">
         <div class="pull-right">
-          <button id="f1" class="add-function-button btn btn-primary btn-labeled fa fa-link">
+          <button
+            id="f1"
+            class="add-function-button btn btn-primary btn-labeled fa fa-link"
+            data-bind="click: () => {
+              openFlagged(consultation.resourceinstanceid)
+              window.location.href = redirectUrl();
+            } "
+          >
             <span>Open</span>
           </button>
         </div>
