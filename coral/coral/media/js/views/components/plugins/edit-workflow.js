@@ -65,11 +65,18 @@ define([
         this.getNameFromNodeId(monumentTiles, '676d47ff-9c1c-11ea-b07f-f875a44e0e11')
       );
       monumentTiles.forEach((tile) => {
-        if (tile.nodegroup in manyTilesManagedNodegroups) {
-          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
-          return;
+        let nodegroupId = tile.nodegroup
+        const actorRole = tile.data['96826222-0262-11eb-9e58-f875a44e0e11'];
+        if (actorRole === '0d5f1ee2-2910-46d9-858f-4040f113a79c') {
+          nodegroupId += '|occupier'; // This is set to match the unique instance name from the workflow
         }
-        componentData[tile.nodegroup] = {
+        if (actorRole === '17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06') {
+          nodegroupId += '|owner'; // This is set to match the unique instance name from the workflow
+        }
+        if (actorRole === '58efc6e4-840b-43e5-b91f-0cf087833e75') {
+          nodegroupId += '|field-worker'; // This is set to match the unique instance name from the workflow
+        }
+        componentData[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
             resourceInstanceId: tile.resourceinstance,

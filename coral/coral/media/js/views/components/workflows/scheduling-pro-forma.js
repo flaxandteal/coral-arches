@@ -3,7 +3,8 @@ define([
     'arches',
     'viewmodels/editable-workflow',
     'templates/views/components/plugins/consultation-workflow.htm',
-    'views/components/workflows/related-document-upload'
+    'views/components/workflows/related-document-upload',
+    'views/components/workflows/designation/initial-step'
   ], function (ko, arches, EditableWorkflow, licensingWorkflowTemplate) {
     return ko.components.register('asset-scheduling-workflow', {
       viewModel: function (params) {
@@ -21,20 +22,39 @@ define([
                     {
                       componentConfigs: [
                         {
-                          componentName: 'default-card',
-                          uniqueInstanceName: 'app-id',
-                          tilesManaged: 'one',
-                          parameters: {
-                            graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
-                            nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
-                            hiddenNodes: [
-                              '325a441c-efe4-11eb-9283-a87eeabdefba',
-                              '325a4418-efe4-11eb-9bdf-a87eeabdefba',
-                              '325a2f32-efe4-11eb-880e-a87eeabdefba',
-                              '325a2f36-efe4-11eb-97c6-a87eeabdefba'
-                          ]
-                          }
-                        }
+                            componentName: 'initial-step-monument',
+                            uniqueInstanceName: 'app-id',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
+                              hiddenNodes: [
+                                '325a441c-efe4-11eb-9283-a87eeabdefba',
+                                '325a4418-efe4-11eb-9bdf-a87eeabdefba',
+                                '325a2f32-efe4-11eb-880e-a87eeabdefba',
+                                '325a2f36-efe4-11eb-97c6-a87eeabdefba'
+                            ]
+                            }
+                          },
+                        // {
+                        //   componentName: 'widget-labeller',
+                        //   uniqueInstanceName: 'app-loc',
+                        //   tilesManaged: 'one',
+                        //   parameters: {
+                        //     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                        //     nodegroupid: '87d39b2e-f44f-11eb-9a4a-a87eeabdefba',
+                        //     hiddenNodes: [
+                        //         '87d39b2e-f44f-11eb-9a4a-a87eeabdefba',
+                        //       '325a441c-efe4-11eb-9283-a87eeabdefba',
+                        //       '325a4418-efe4-11eb-9bdf-a87eeabdefba',
+                        //       '325a2f32-efe4-11eb-880e-a87eeabdefba',
+                        //       '325a2f36-efe4-11eb-97c6-a87eeabdefba'
+                        //   ],
+                        //   prefilledNodes: [
+                        //     ["87d39b2e-f44f-11eb-9a4a-a87eeabdefba", {}]
+                        //   ]
+                        //   }
+                        // }
                       ]
                     }
                   ]
@@ -79,10 +99,10 @@ define([
                                 "f17f6589-efc7-11eb-9b90-a87eeabdefba"
                             ],
                             prefilledNodes: [
-                                ["f17f658a-efc7-11eb-a216-a87eeabdefba", ""]
+                                ["f17f658a-efc7-11eb-a216-a87eeabdefba", "804a489a-be93-463b-b1f6-4f473b644279"]
                             ],
                             labels: [
-                                ["External Cross Reference", "SMR"]
+                                ["Cross Reference", "SMR"]
                             ]
                           }
                         },
@@ -98,6 +118,9 @@ define([
                               'ba34557b-b554-11ea-ab95-f875a44e0e11',
                               'ba345579-b554-11ea-9232-f875a44e0e11'
                             ],
+                            prefilledNodes: [
+                                ["ba34557b-b554-11ea-ab95-f875a44e0e11", "6cd61658-6c0d-46fa-a898-b4d0545cfe34"]
+                              ],
                             labels: [
                                 ["Description", "Monument Type"]
                             ]
@@ -105,7 +128,60 @@ define([
                         },
                         {
                             componentName: 'widget-labeller',
-                            uniqueInstanceName: 'monument-actors',
+                            uniqueInstanceName: 'monument-townland',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: '87d38725-f44f-11eb-8d4b-a87eeabdefba',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              parentile: "['init-step']['app-id'][0]['locTileId']",
+                              hiddenNodes: [
+                                '87d3d7c5-f44f-11eb-8459-a87eeabdefba',
+                                '87d3d7c2-f44f-11eb-8ddc-a87eeabdefba',
+                                '87d3c3eb-f44f-11eb-be3c-a87eeabdefba'
+                              ],
+                              // using Town instead of townland since we dont have it locally
+                              prefilledNodes: [
+                                ["87d3d7c5-f44f-11eb-8459-a87eeabdefba", "24ca1cb9-c4d1-4cbc-9990-df74e6eb346e"]
+                              ],
+                              labels: [
+                                  ["Area Name", "Townland"]
+                              ]
+                            }
+                          },
+                          {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'monument-land-use',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: '87d38728-f44f-11eb-900d-a87eeabdefba',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              parentile: "['init-step']['app-id'][0]['locTileId']",
+                              hiddenNodes: [
+                                '87d3c3f0-f44f-11eb-87e0-a87eeabdefba',
+                                '87d3c2a4-f44f-11eb-a170-a87eeabdefba',
+                                '87d3c3f9-f44f-11eb-bed4-a87eeabdefba',
+                                '87d3d7c9-f44f-11eb-a734-a87eeabdefba',
+                                '87d3d7bb-f44f-11eb-8fad-a87eeabdefba',
+                                '87d3d7e4-f44f-11eb-9d29-a87eeabdefba',
+                                '87d3d7c0-f44f-11eb-8304-a87eeabdefba',
+                                '87d3c3fd-f44f-11eb-97d8-a87eeabdefba',
+                                '87d3d7e7-f44f-11eb-bc69-a87eeabdefba'
+                              ],
+                              // using Town instead of townland since we dont have it locally
+                              prefilledNodes: [
+                                ["87d3d7c5-f44f-11eb-8459-a87eeabdefba", "24ca1cb9-c4d1-4cbc-9990-df74e6eb346e"]
+                              ],
+                              labels: [
+                                  ["Area Name", "Townland"]
+                              ]
+                            }
+                          },
+                          
+                        {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'field-worker',
                             tilesManaged: 'one',
                             parameters: {
                               graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -124,13 +200,13 @@ define([
                                 ['96826222-0262-11eb-9e58-f875a44e0e11', '58efc6e4-840b-43e5-b91f-0cf087833e75'],
                               ],
                               labels: [
-                                ["Actor", "Field Worker"]
+                                ["Person or Organization", "Field Worker"]
                               ]
                             }
                           },
                           {
                             componentName: 'widget-labeller',
-                            uniqueInstanceName: 'monument-actors',
+                            uniqueInstanceName: 'owner',
                             tilesManaged: 'one',
                             parameters: {
                               graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -149,13 +225,13 @@ define([
                                 ['96826222-0262-11eb-9e58-f875a44e0e11', '17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06'],
                               ],
                               labels: [
-                                ["Actor", "Owner(s)"]
+                                ["Person or Organization", "Owner(s)"]
                               ]
                             }
                           },
                           {
                             componentName: 'widget-labeller',
-                            uniqueInstanceName: 'monument-actors',
+                            uniqueInstanceName: 'occupier',
                             tilesManaged: 'one',
                             parameters: {
                               graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -175,7 +251,67 @@ define([
                                 ['96826222-0262-11eb-9e58-f875a44e0e11', '0d5f1ee2-2910-46d9-858f-4040f113a79c'],
                               ],
                               labels: [
-                                ["Actor", "Occupier(s)"]
+                                ["Person or Organization", "Occupier(s)"]
+                              ]
+                            }
+                          },
+                          {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'monument-condition',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: 'ba342e69-b554-11ea-a027-f875a44e0e11',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              hiddenNodes: [
+                                'ba34557b-b554-11ea-ab95-f875a44e0e11',
+                                'ba345579-b554-11ea-9232-f875a44e0e11'
+                              ],
+                              prefilledNodes: [
+                                ["ba34557b-b554-11ea-ab95-f875a44e0e11", "6611eb43-8e2e-4416-a86f-f830a376010b"]
+                              ],
+                              labels: [
+                                  ["Description", "Condition"]
+                              ]
+                            }
+                          },
+                          {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'monument-threats',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: 'ba342e69-b554-11ea-a027-f875a44e0e11',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              hiddenNodes: [
+                                'ba34557b-b554-11ea-ab95-f875a44e0e11',
+                                'ba345579-b554-11ea-9232-f875a44e0e11'
+                              ],
+                              prefilledNodes: [
+                                ["ba34557b-b554-11ea-ab95-f875a44e0e11", "935d5a08-b805-412f-b53c-d9bf65b4d719"]
+                              ],
+                              labels: [
+                                  ["Description", "Threats"]
+                              ]
+                            }
+                          },
+                          {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'scheduling-reason',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: 'ba342e69-b554-11ea-a027-f875a44e0e11',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              hiddenNodes: [
+                                'ba34557b-b554-11ea-ab95-f875a44e0e11',
+                                'ba345579-b554-11ea-9232-f875a44e0e11'
+                              ],
+                              prefilledNodes: [
+                                ["ba34557b-b554-11ea-ab95-f875a44e0e11", "463a7c8a-f608-4d84-b5ab-4bab8522a715"]
+                              ],
+                              labels: [
+                                  ["Description", "Reason for Scheduling"]
                               ]
                             }
                           },
@@ -188,6 +324,7 @@ define([
         this.safeArrayAccesses = [
           'resourceInstanceId',
           'tileId',
+          'locTileId'
         ];
   
         EditableWorkflow.apply(this, [params]);
