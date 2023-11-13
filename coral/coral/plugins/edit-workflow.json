@@ -17,7 +17,7 @@
         "slug": "archive-catalog-workflow",
         "name": "Archive and Cataloging",
         "graphId": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
-        "setupFunction": "loadResourceData"
+        "setupFunction": "loadArchiveData"
       },
       {
         "slug": "hm-consultation-response-workflow",

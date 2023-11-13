@@ -56,6 +56,25 @@ define([
       this.loading(false);
     };
 
+    this.loadArchiveData = async(archiveResourceId) => {
+      const archiveTiles = await this.fetchTileData(archiveResourceId);
+      componentData = {}
+      this.resourceName(
+        this.getNameFromNodeId(archiveTiles, '145f961b-9ad2-11ea-bf90-f875a44e0e11')
+      );
+      archiveTiles.forEach(tile => {
+        componentData[tile.nodegroupId] = {
+          value: JSON.stringify({
+            tileData: koMapping.toJSON(tile.data),
+            resourceInstanceId: tile.resourceinstance,
+            tileId: tile.tileid,
+            nodegroupId: tile.nodegroup
+          })
+        }
+      })
+      console.log(JSON.stringify(componentData))
+      return componentData
+    }
     /**
      * TODO: Refactor this into utility methods to make it easier
      * to create more setup functions.
@@ -89,6 +108,7 @@ define([
             };
           }
         });
+        
       }
 
       const licenseSysRefTile = licenseTiles.find(
@@ -228,6 +248,7 @@ define([
         };
       });
       Object.entries(manyTilesManagedNodegroups).forEach(([key, value]) => {
+        console.log("progres before fail", key, value)
         componentData[key] = {
           value: JSON.stringify(value)
         };
