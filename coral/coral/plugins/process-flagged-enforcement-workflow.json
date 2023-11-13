@@ -1,0 +1,12 @@
+{
+  "pluginid": "f68c3752-1b78-4550-af82-9171f76302c5",
+  "name": "Process Flagged Enforcement",
+  "icon": "fa fa-flag",
+  "component": "views/components/plugins/process-flagged-enforcement-workflow",
+  "componentname": "process-flagged-enforcement-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "process-flagged-enforcement-workflow",
+  "sortorder": 0
+}
