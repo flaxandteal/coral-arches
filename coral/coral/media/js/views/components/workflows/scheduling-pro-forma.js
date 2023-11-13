@@ -106,7 +106,7 @@ define([
                         {
                             componentName: 'widget-labeller',
                             uniqueInstanceName: 'monument-actors',
-                            tilesManaged: 'many',
+                            tilesManaged: 'one',
                             parameters: {
                               graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
                               nodegroupid: '9682621d-0262-11eb-ab33-f875a44e0e11',
@@ -118,8 +118,65 @@ define([
                                 '96826227-0262-11eb-a1c0-f875a44e0e11',
                                 '96826229-0262-11eb-853d-f875a44e0e11',
                                 '9682622a-0262-11eb-a0ef-f875a44e0e11',
+                                '96826222-0262-11eb-9e58-f875a44e0e11'
                               ],
-                              
+                              prefilledNodes: [
+                                ['96826222-0262-11eb-9e58-f875a44e0e11', '58efc6e4-840b-43e5-b91f-0cf087833e75'],
+                              ],
+                              labels: [
+                                ["Actor", "Field Worker"]
+                              ]
+                            }
+                          },
+                          {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'monument-actors',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: '9682621d-0262-11eb-ab33-f875a44e0e11',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              hiddenNodes: [
+                                '96826228-0262-11eb-8862-f875a44e0e11',
+                                '96826226-0262-11eb-97d4-f875a44e0e11',
+                                '96826224-0262-11eb-b74c-f875a44e0e11',
+                                '96826227-0262-11eb-a1c0-f875a44e0e11',
+                                '96826229-0262-11eb-853d-f875a44e0e11',
+                                '9682622a-0262-11eb-a0ef-f875a44e0e11',
+                                '96826222-0262-11eb-9e58-f875a44e0e11'
+                              ],
+                              prefilledNodes: [
+                                ['96826222-0262-11eb-9e58-f875a44e0e11', '17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06'],
+                              ],
+                              labels: [
+                                ["Actor", "Owner(s)"]
+                              ]
+                            }
+                          },
+                          {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'monument-actors',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: '9682621d-0262-11eb-ab33-f875a44e0e11',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              hiddenNodes: [
+                                '96826228-0262-11eb-8862-f875a44e0e11',
+                                '96826226-0262-11eb-97d4-f875a44e0e11',
+                                '96826224-0262-11eb-b74c-f875a44e0e11',
+                                '96826227-0262-11eb-a1c0-f875a44e0e11',
+                                '96826229-0262-11eb-853d-f875a44e0e11',
+                                '9682622a-0262-11eb-a0ef-f875a44e0e11',
+                                '96826222-0262-11eb-9e58-f875a44e0e11'
+                              ],
+                              // using patron id for now since we don't have occupier in roletype concept
+                              prefilledNodes: [
+                                ['96826222-0262-11eb-9e58-f875a44e0e11', '0d5f1ee2-2910-46d9-858f-4040f113a79c'],
+                              ],
+                              labels: [
+                                ["Actor", "Occupier(s)"]
+                              ]
                             }
                           },
                       ]
