@@ -70,6 +70,15 @@
         "desc": "Create or edit a License for an Excavation Activity"
       },
       {
+        "workflowid": "9ea29d4e-4ebc-4142-8d6c-68603430302b",
+        "slug": "edit-workflow?workflow-slug=asset-scheduling-workflow",
+        "name": "Scheduling Pro-forma",
+        "icon": "fa fa-file-text",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "Add an asset to the Query List or change it's schedule"
+      },
+      {
         "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
         "slug": "edit-workflow?workflow-slug=hm-consultation-response-workflow",
         "name": "HM Planning Consultation",

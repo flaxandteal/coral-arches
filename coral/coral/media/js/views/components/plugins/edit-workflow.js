@@ -55,7 +55,32 @@ define([
       localStorage.setItem(this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL, JSON.stringify(componentData));
       this.loading(false);
     };
-
+    this.loadMonumentData = async (monumentResourceId) => {
+      const monumentTiles = await this.fetchTileData(monumentResourceId);
+      componentData = {};
+      const manyTilesManagedNodegroups = {
+        '9682621d-0262-11eb-ab33-f875a44e0e11': [],
+      };
+      this.resourceName(
+        this.getNameFromNodeId(monumentTiles, '676d47ff-9c1c-11ea-b07f-f875a44e0e11')
+      );
+      monumentTiles.forEach((tile) => {
+        if (tile.nodegroup in manyTilesManagedNodegroups) {
+          manyTilesManagedNodegroups[tile.nodegroup].push(tile);
+          return;
+        }
+        componentData[tile.nodegroup] = {
+          value: JSON.stringify({
+            tileData: koMapping.toJSON(tile.data),
+            resourceInstanceId: tile.resourceinstance,
+            tileId: tile.tileid,
+            nodegroupId: tile.nodegroup
+          })
+        };
+      });
+      console.log(JSON.stringify(componentData));
+      return componentData;
+    };
     /**
      * TODO: Refactor this into utility methods to make it easier
      * to create more setup functions.
