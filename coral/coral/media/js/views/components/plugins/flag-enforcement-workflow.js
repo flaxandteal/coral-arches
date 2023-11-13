@@ -49,7 +49,11 @@ define([
                   parameters: {
                     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
                     nodegroupid: '8e5cdd80-7fc9-11ee-b550-0242ac130008',
-                    resourceid: "['init-step']['con-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['con-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      '7ac11ed6-821b-11ee-8351-0242ac130008',
+                      'edb66c0c-821b-11ee-9793-0242ac130008'
+                    ]
                   }
                 }
               ]
