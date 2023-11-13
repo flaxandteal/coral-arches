@@ -10,6 +10,7 @@ define([
     this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
     this.WORKFLOW_RECENTLY_EDITED_LABEL = 'workflow-recently-edited';
+    this.RESOURCE_ID_LABEL = 'resource-id';
 
     this.editableWorkflows = params.editableWorkflows;
     this.selectedResource = ko.observable();
@@ -30,6 +31,11 @@ define([
     this.getWorkflowSlug = () => {
       let searchParams = new URLSearchParams(window.location.search);
       return searchParams.get(this.WORKFLOW_LABEL);
+    };
+
+    this.getResourceIdFromUrl = () => {
+      let searchParams = new URLSearchParams(window.location.search);
+      return searchParams.get(this.RESOURCE_ID_LABEL);
     };
 
     this.getWorkflowData = () => {
@@ -350,6 +356,7 @@ define([
     };
 
     this.init = async () => {
+      this.loading(true);
       console.log('Init edit workflow: ', params);
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
@@ -358,8 +365,16 @@ define([
       this.recentlyEdited(
         JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_EDITED_LABEL)) || {}
       );
+      if (this.workflow().checkForResourceId) {
+        this.selectedResource(this.getResourceIdFromUrl());
+        if (!this.selectedResource()) return;
+        await this.editWorkflow();
+        window.location.href = this.workflowUrl();
+        return;
+      }
 
       await this.validateRecentlyEdited(this.recentlyEdited()[this.workflowSlug()]);
+      this.loading(false);
     };
 
     this.init();
