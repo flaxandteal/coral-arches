@@ -90,10 +90,10 @@ define([
         if (descriptionType === '463a7c8a-f608-4d84-b5ab-4bab8522a715') {
           nodegroupId += '|scheduling-reason'
         }
-        if (externalRef === '804a489a-be93-463b-b1f6-4f473b644279') {
+        if (externalRefSource === '804a489a-be93-463b-b1f6-4f473b644279') {
           nodegroupId += '|monument-smr'
         }
-        if (externalRef === '19afd557-cc21-44b4-b1df-f32568181b2c') {
+        if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
           nodegroupId += '|monument-cmref'
         }
         componentData[nodegroupId] = {

@@ -11,7 +11,7 @@ define([
         this.componentName = 'asset-scheduling-workflow';
         this.stepConfig = [
           {
-            title: 'Initialise Archive Source',
+            title: 'Initialise',
             name: 'init-step',
             required: true,
             informationboxdata: {
@@ -60,7 +60,7 @@ define([
                   ]
                 },
                 {
-                  title: 'Pro-forma',
+                  title: 'Heritage Asset Details',
                   name: 'app-details-step',
                   required: false,
                   workflowstepclass: 'workflow-form-component',
@@ -75,14 +75,35 @@ define([
                             graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
                             nodegroupid: '676d47f9-9c1c-11ea-9aa0-f875a44e0e11',
                             hiddenNodes: [
-                              '676d47fe-9c1c-11ea-aa28-f875a44e0e11',
                               '676d47fc-9c1c-11ea-b5b0-f875a44e0e11',
                               '676d47fd-9c1c-11ea-9d73-f875a44e0e11'
                             ],
-                      resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-  
+                            resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                            labels: [
+                                ["Name Type", "Type of Heritage Asset"]
+                            ]
                           },
                         },
+                        {
+                            componentName: 'widget-labeller',
+                            uniqueInstanceName: 'monument-type',
+                            tilesManaged: 'one',
+                            parameters: {
+                              graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                              nodegroupid: 'ba342e69-b554-11ea-a027-f875a44e0e11',
+                              resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                              hiddenNodes: [
+                                'ba34557b-b554-11ea-ab95-f875a44e0e11',
+                                'ba345579-b554-11ea-9232-f875a44e0e11'
+                              ],
+                              prefilledNodes: [
+                                  ["ba34557b-b554-11ea-ab95-f875a44e0e11", "6cd61658-6c0d-46fa-a898-b4d0545cfe34"]
+                                ],
+                              labels: [
+                                  ["Description", "Heritage Asset Type (Other)"]
+                              ]
+                            }
+                          },
                         {
                           componentName: 'widget-labeller',
                           uniqueInstanceName: 'monument-smr',
@@ -103,26 +124,6 @@ define([
                             ],
                             labels: [
                                 ["Cross Reference", "SMR"]
-                            ]
-                          }
-                        },
-                        {
-                          componentName: 'widget-labeller',
-                          uniqueInstanceName: 'monument-type',
-                          tilesManaged: 'one',
-                          parameters: {
-                            graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
-                            nodegroupid: 'ba342e69-b554-11ea-a027-f875a44e0e11',
-                            resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                            hiddenNodes: [
-                              'ba34557b-b554-11ea-ab95-f875a44e0e11',
-                              'ba345579-b554-11ea-9232-f875a44e0e11'
-                            ],
-                            prefilledNodes: [
-                                ["ba34557b-b554-11ea-ab95-f875a44e0e11", "6cd61658-6c0d-46fa-a898-b4d0545cfe34"]
-                              ],
-                            labels: [
-                                ["Description", "Monument Type"]
                             ]
                           }
                         },
@@ -407,6 +408,11 @@ define([
                           graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
                           nodegroupid: '6af2a0cb-efc5-11eb-8436-a87eeabdefba',
                           resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                          hiddenNodes: [
+                            '6af2b697-efc5-11eb-8152-a87eeabdefba',
+                            '6af2a0d0-efc5-11eb-ab44-a87eeabdefba',
+                            '6af2b69e-efc5-11eb-801e-a87eeabdefba'
+                          ]
                         }
                       }
                     ]

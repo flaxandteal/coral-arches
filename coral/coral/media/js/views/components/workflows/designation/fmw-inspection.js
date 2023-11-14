@@ -431,6 +431,10 @@ define([
                           graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
                           nodegroupid: '6af2a0cb-efc5-11eb-8436-a87eeabdefba',
                           resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                          hiddenNodes: [
+                            '6af2b697-efc5-11eb-8152-a87eeabdefba',
+                            '6af2a0d0-efc5-11eb-ab44-a87eeabdefba'
+                          ]
                         }
                       }
                     ]
