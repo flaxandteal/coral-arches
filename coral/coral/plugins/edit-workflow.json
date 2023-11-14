@@ -26,6 +26,13 @@
         "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
         "setupFunction": "loadPCResponseData",
         "disableStartNew": true
+      },
+      {
+        "slug": "monument-revision-workflow",
+        "name": "Monument Revision",
+        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "setupFunction": "loadMonumentRevisionData",
+        "disableStartNew": true
       }
     ]
   },
