@@ -319,6 +319,100 @@ define([
                    }
               ]
             },
+            {
+                title: 'Geospatial Details',
+                name: 'geospaital-step',
+                required: false,
+                workflowstepclass: 'workflow-form-component',
+                informationboxdata: {
+                  heading: 'Location Details'
+                },
+                layoutSections: [
+                  {
+                    componentConfigs: [
+                      {
+                        componentName: 'default-card',
+                        uniqueInstanceName: 'geometry-info',
+                        tilesManaged: 'one',
+                        parameters: {
+                          graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                          nodegroupid: '87d3872b-f44f-11eb-bd0c-a87eeabdefba',
+                          resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                          parentile: "['init-step']['app-id'][0]['locTileId']",
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                title: 'Documentation',
+                name: 'file-upload-step',
+                required: false,
+                layoutSections: [
+                  {
+                    componentConfigs: [
+                      {
+                        /**
+                         * Using custom component to handle the creation of Digital
+                         * Objects that will then be automatically named and related
+                         * to the Excavation License model.
+                         */
+                        componentName: 'related-document-upload',
+                        uniqueInstanceName: 'file-upload',
+                        tilesManaged: 'one',
+                        parameters: {
+                          /**
+                           * Using Digital Object graph id and the file upload
+                           * node group id.
+                           */
+                          graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
+                          nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+      
+                          /**
+                           * These can be difficult to work with. Sometimes the `tileId` will be all
+                           * lowercase and sometimes it will be camel case. This will vary between workflows.
+                           */
+                          resourceModelId:
+                            "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                          resourceTileId: "['init-step']['app-id'][0]['tileId']",
+      
+                          /**
+                           * This needs to refer to the Excavation models
+                           * Digital object node group.
+                           */
+                          resourceModelDigitalObjectNodeGroupId: 'fc6b6b0b-5118-11eb-b342-f875a44e0e11'
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                title: 'Designation and Protection Assignment',
+                name: 'assignment-step',
+                required: false,
+                workflowstepclass: 'workflow-form-component',
+                informationboxdata: {
+                  heading: 'Designation and Protection Assignment'
+                },
+                layoutSections: [
+                  {
+                    componentConfigs: [
+                      {
+                        componentName: 'default-card',
+                        uniqueInstanceName: 'designation-info',
+                        tilesManaged: 'one',
+                        parameters: {
+                          graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
+                          nodegroupid: '6af2a0cb-efc5-11eb-8436-a87eeabdefba',
+                          resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
         ];
   
         this.safeArrayAccesses = [

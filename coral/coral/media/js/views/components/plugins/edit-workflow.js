@@ -67,6 +67,7 @@ define([
       monumentTiles.forEach((tile) => {
         let nodegroupId = tile.nodegroup
         const actorRole = tile.data['96826222-0262-11eb-9e58-f875a44e0e11'];
+        const descriptionType = tile.data['ba34557b-b554-11ea-ab95-f875a44e0e11']
         if (actorRole === '0d5f1ee2-2910-46d9-858f-4040f113a79c') {
           nodegroupId += '|occupier'; // This is set to match the unique instance name from the workflow
         }
@@ -75,6 +76,18 @@ define([
         }
         if (actorRole === '58efc6e4-840b-43e5-b91f-0cf087833e75') {
           nodegroupId += '|field-worker'; // This is set to match the unique instance name from the workflow
+        }
+        if (descriptionType === '6cd61658-6c0d-46fa-a898-b4d0545cfe34') {
+          nodegroupId += '|monument-type'
+        }
+        if (descriptionType === '935d5a08-b805-412f-b53c-d9bf65b4d719') {
+          nodegroupId += '|monument-threats'
+        }
+        if (descriptionType === '6611eb43-8e2e-4416-a86f-f830a376010b') {
+          nodegroupId += '|monument-condition'
+        }
+        if (descriptionType === '463a7c8a-f608-4d84-b5ab-4bab8522a715') {
+          nodegroupId += '|scheduling-reason'
         }
         componentData[nodegroupId] = {
           value: JSON.stringify({
