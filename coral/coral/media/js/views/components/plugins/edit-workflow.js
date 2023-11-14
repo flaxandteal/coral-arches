@@ -68,6 +68,7 @@ define([
         let nodegroupId = tile.nodegroup
         const actorRole = tile.data['96826222-0262-11eb-9e58-f875a44e0e11'];
         const descriptionType = tile.data['ba34557b-b554-11ea-ab95-f875a44e0e11']
+        const externalRefSource = tile.data['f17f6581-efc7-11eb-b09f-a87eeabdefba']
         if (actorRole === '0d5f1ee2-2910-46d9-858f-4040f113a79c') {
           nodegroupId += '|occupier'; // This is set to match the unique instance name from the workflow
         }
@@ -88,6 +89,12 @@ define([
         }
         if (descriptionType === '463a7c8a-f608-4d84-b5ab-4bab8522a715') {
           nodegroupId += '|scheduling-reason'
+        }
+        if (externalRef === '804a489a-be93-463b-b1f6-4f473b644279') {
+          nodegroupId += '|monument-smr'
+        }
+        if (externalRef === '19afd557-cc21-44b4-b1df-f32568181b2c') {
+          nodegroupId += '|monument-cmref'
         }
         componentData[nodegroupId] = {
           value: JSON.stringify({
