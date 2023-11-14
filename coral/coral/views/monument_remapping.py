@@ -13,7 +13,7 @@ import uuid
 # MONUMENT_GRAPH_ID = '076f9381-7b00-11e9-8d6b-80000b44d1d9'
 
 
-class MyTestEndpoint(View):
+class MonumentRemapping(View):
     def __init__(self):
         pass
 
@@ -125,13 +125,13 @@ class MyTestEndpoint(View):
 
         return JSONResponse(
             {
-                "resource": resource,
-                "graph": graph,
-                "rev_graph": rev_graph,
-                "mapping": mapping,
-                "graph.nodes": graph.nodes,
-                "tiles": tiles,
-                "nodegroup_map": nodegroup_map,
-                "remapped_tiles": remapped_tiles,
+                # "resource": resource,
+                # "graph": graph,
+                # "rev_graph": rev_graph,
+                # "mapping": mapping,
+                # "graph.nodes": graph.nodes,
+                # "tiles": tiles,
+                # "nodegroup_map": nodegroup_map,
+                "tiles": remapped_tiles,
             }
         )

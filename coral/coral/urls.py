@@ -9,6 +9,7 @@ from coral.views.resource import ResourceDescriptors
 from coral.views.active_consultations import ActiveConsultationsView
 from arches.app.views import main
 from arches.app.views.user import UserManagerView
+from coral.views.my_test_endpoint import MonumentRemapping
 
 uuid_regex = settings.UUID_REGEX
 
@@ -33,6 +34,7 @@ urlpatterns = [
     url(r'^'+settings.APP_PATHNAME+'/plugins/correspondence-workflow', PluginView.as_view(), name='correspondence-workflow'),
     url(r'^'+settings.APP_PATHNAME+'/plugins/communication-workflow', PluginView.as_view(), name='communication-workflow'),
     url(r'^'+settings.APP_PATHNAME+'/plugins/init-workflow', PluginView.as_view(), name='init-workflow'),
+    url(r'^my-test-endpoint', MonumentRemapping.as_view(), name="my_test_endpoint"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.SHOW_LANGUAGE_SWITCH is True:
