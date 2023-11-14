@@ -101,6 +101,14 @@ class MonumentRemapping(View):
             found_mapping = nodegroup_map[nodegroup_id]
             print("found_mapping: ", found_mapping)
 
+            print("nodegroup_id: ", nodegroup_id)
+            print(
+                "42635b60-eabf-11ed-9e22-72d420f37f11: ",
+                nodegroup_id == "42635b60-eabf-11ed-9e22-72d420f37f11",
+            )
+            if found_mapping[nodegroup_id] == "42635b60-eabf-11ed-9e22-72d420f37f11":
+                continue
+
             if not found_mapping:
                 print("WARNING: Mapping not found ", tile)
 
@@ -118,8 +126,8 @@ class MonumentRemapping(View):
 
             new_tile["data"] = new_data
 
-            new_tile["tileid"] = str(uuid.uuid4())
-            new_tile["resourceinstance_id"] = None
+            new_tile["tileid"] = None
+            new_tile["resourceinstance_id"] = str(uuid.uuid4())
 
             remapped_tiles.append(new_tile)
 
