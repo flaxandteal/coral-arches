@@ -11,6 +11,7 @@ define([
         {
           title: 'Selected Monument',
           name: 'init-step',
+          workflowstepclass: 'workflow-form-component',
           layoutSections: [
             {
               componentConfigs: [
@@ -25,6 +26,27 @@ define([
                       '4264ab14-eabf-11ed-9e22-72d420f37f11',
                       '42649ca0-eabf-11ed-9e22-72d420f37f11'
                     ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Name Monument',
+          name: 'name-step',
+          workflowstepclass: 'workflow-form-component',
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'monument-name',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
+                    nodegroupid: '4263977e-eabf-11ed-9e22-72d420f37f11',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 }
               ]

@@ -262,6 +262,27 @@ define([
       return componentData;
     };
 
+    this.loadMonumentRevisionData = async (resourceId) => {
+      console.log(' arches.urls.root : ', arches.urls.root);
+      const monumentTiles = (
+        await (
+          await window.fetch(arches.urls.root + `monument_remapping?resource-id=${resourceId}`)
+        ).json()
+      ).tiles;
+      const componentData = {};
+      monumentTiles.forEach((tile) => {
+        componentData[tile.nodegroup_id] = {
+          value: JSON.stringify({
+            tileData: koMapping.toJSON(tile.data),
+            resourceInstanceId: tile.resourceinstance,
+            tileId: tile.tileid,
+            nodegroupId: tile.nodegroup_id
+          })
+        };
+      });
+      return componentData;
+    };
+
     this.openRecent = async (resourceId) => {
       localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
       await this.loadResourceData(resourceId);
