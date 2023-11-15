@@ -271,12 +271,12 @@ define([
       ).tiles;
       const componentData = {};
       monumentTiles.forEach((tile) => {
-        componentData[tile.nodegroup_id] = {
+        componentData[tile.nodegroup] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
             resourceInstanceId: tile.resourceinstance,
             tileId: tile.tileid,
-            nodegroupId: tile.nodegroup_id
+            nodegroupId: tile.nodegroup
           })
         };
       });

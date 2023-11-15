@@ -112,7 +112,9 @@ class MonumentRemapping(View):
             if not found_mapping:
                 print("WARNING: Mapping not found ", tile)
 
-            new_tile["nodegroup_id"] = found_mapping[nodegroup_id]
+            # nodegroup from the tiles endpoint has no _id at the end
+            del new_tile["nodegroup_id"]
+            new_tile["nodegroup"] = found_mapping[nodegroup_id]
 
             new_data = {}
 
