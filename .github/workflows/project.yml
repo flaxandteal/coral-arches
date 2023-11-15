@@ -92,6 +92,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  dump-context:
+    runs-on: [self-hosted]
+    steps:
+      - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
   Build-Arches:
     runs-on: [self-hosted]
     needs: [update-version]
