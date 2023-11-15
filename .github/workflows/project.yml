@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - develop
-      - wip/feature/owner-occupier-report-workflow
 
 env:
   # Using the 7.5-bug version of the container is throwing an error for an
