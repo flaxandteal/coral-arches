@@ -42,7 +42,6 @@ define([
         }
       }
     });
-    console.log(self, params);
 
     this.retrieveFile = function () {
       var tiles = params.requirements.tiles;

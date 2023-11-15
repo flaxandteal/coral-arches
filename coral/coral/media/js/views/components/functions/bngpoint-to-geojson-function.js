@@ -16,7 +16,6 @@ define([
   return ko.components.register('views/components/functions/bngpoint-to-geojson-function', {
     viewModel: function (params) {
       FunctionViewModel.apply(this, arguments);
-      console.log('Running a sample function');
       var self = this;
       this.nodesBNG = ko.observableArray();
       this.nodesGeoJSON = ko.observableArray();
@@ -29,19 +28,16 @@ define([
             if (ng === node.nodeid) {
               self.triggering_nodegroups.push(node.nodegroup_id);
               params.config.bng_nodegroup = node.nodegroup_id;
-              console.log('bng_nodegroup', self.bng_nodegroup);
             }
           }
         });
       });
 
       this.geojson_node.subscribe(function (o_n) {
-        console.log('GeoJSON node id:', o_n);
         _.each(self.nodesGeoJSON(), function (node) {
           if (node.datatype !== 'semantic') {
             if (o_n === node.nodeid) {
               params.config.geojson_nodegroup = node.nodegroup_id;
-              console.log('geojson_nodegroup', self.geojson_nodegroup);
             }
           }
         });

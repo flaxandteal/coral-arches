@@ -19,26 +19,21 @@ define([
 
       this.geojson_input_node.subscribe(function (ng) {
         self.nodesGeoJSON().forEach((node) => {
-          console.log('node', node);
-          console.log('ng', ng);
           if (node.datatype !== 'semantic') {
             if (ng === node.nodeid) {
               self.triggering_nodegroups.push(node.nodegroup_id);
               params.config.geojson_input_nodegroup = node.nodegroup_id;
-              console.log('geojson_input_nodegroup', self.geojson_input_nodegroup);
             }
           }
         });
       });
 
       // this.utm_list_node.subscribe(function(o_n){
-      //     console.log('UTM list node id:', o_n);
       //     self.nodesUTM().forEach(node => {
       //         if (node.datatype !== "semantic"){
 
       //             if (o_n === node.nodeid){
       //                 params.config.utm_list_nodegroup = node.nodegroup_id;
-      //                 console.log("utm_list_nodegroup",self.utm_list_nodegroup);
       //             }
       //         }
 
@@ -46,12 +41,10 @@ define([
       // })
 
       this.utm_output_node.subscribe(function (o_n) {
-        console.log('UTM node id:', o_n);
         self.nodesUTM().forEach((node) => {
           if (node.datatype !== 'semantic') {
             if (o_n === node.nodeid) {
               params.config.utm_output_nodegroup = node.nodegroup_id;
-              console.log('utm_output_nodegroup', self.utm_output_nodegroup);
             }
           }
         });

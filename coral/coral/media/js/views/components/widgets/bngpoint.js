@@ -28,11 +28,9 @@ define([
       this.messageVisible = ko.observable(false);
       if (this.value()) {
         this.bngVal = ko.observable(this.value());
-        //console.log("This Value",this.coordFormat());
       } else {
         this.bngVal = ko.observable();
 
-        //console.log(this.coordFormat());
       }
 
       this.finalGridNumber = function (numberIn) {
@@ -40,7 +38,6 @@ define([
         var fullNumber = 5;
         while (numberIn.length < fullNumber) {
           numberIn = numberIn + '0';
-          console.log(numberIn);
         }
         return numberIn;
       };
@@ -52,7 +49,6 @@ define([
           gridSquareLetters = gridSquareLetters.toUpperCase();
           var gridSquareNumbers = alphaBNG.substring(2);
           var gridSquareNumbersSplit = gridSquareNumbers.length / 2;
-          console.log(BNGKeys);
 
           if (BNGKeys.includes(gridSquareLetters)) {
             var gridSquareEasting = gridSquareNumbers.substring(0, gridSquareNumbersSplit);
@@ -65,13 +61,11 @@ define([
               gridSquareLetters + finalGridSquareEasting + finalGridSquareNorthing;
             return finalGridReference;
           } else {
-            console.log(
               'Could not return a correct Alphanumeric grid reference.  Please check your input absolute grid reference and try again.'
             );
             return '';
           }
         } catch (err) {
-          console.log(
             err +
               '\nCould not return a correct Alphanumeric grid reference.  Please check your input absolute grid reference and try again.'
           );
@@ -87,7 +81,6 @@ define([
           var absoluteBNG = absoluteBNG.replace(',', '');
           var absoluteBNGAsNumber = Number(absoluteBNG);
           if (isNaN(absoluteBNGAsNumber)) {
-            console.log(
               'Entered valid is not numeric.  Please check your input absolute grid reference and try again.'
             );
             return '';
@@ -121,14 +114,12 @@ define([
                 gridSquare + finalMainEastingAbsoluteBNG + finalMainNorthingAbsoluteBNG;
               return finalOutputGridReference;
             } else {
-              console.log(
                 'Grid square is not within the boundary of England.  Please check your input absolute grid reference and try again.'
               );
               return '';
             }
           }
         } catch (err) {
-          console.log(
             err +
               '\nIssue transforming input coordinates into an Alphanumeric grid reference.  Please check your value is in a correct format at try again.'
           );
@@ -160,10 +151,8 @@ define([
 
             return reprojectAlphaOSGB;
           } catch (err) {
-            console.log(err);
           }
         } catch (err) {
-          console.log(
             err +
               '\nIssue reprojecting long/lat coordinates.  Please check your value is in a correct format at try again.'
           );
@@ -269,9 +258,6 @@ define([
 
         pre = this.bngVal();
 
-        console.log(this.coordFormat());
-        console.log(pre);
-        console.log(this.isSelected());
         var gridLettersValueArray = Object.keys(gridSquare);
         if (this.isSelected() === true) {
           this.errorMessage('');

@@ -37,7 +37,6 @@ define([
       };
 
       self.prefix.subscribe((value) => {
-        console.log('idValue changed: ', value);
         self.value({
           [arches.activeLanguage]: {
             value: self.idValue(),

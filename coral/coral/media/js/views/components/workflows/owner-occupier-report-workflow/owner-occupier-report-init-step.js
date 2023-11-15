@@ -67,7 +67,6 @@ define([
               monumentLocTileId: self.monumentLocTileId,
               consultationNumberTileId: self.consultationNumberTileId
             });
-            console.log('params.form.savedData(): ', params.form.savedData());
             params.form.complete(true);
             params.form.saving(false);
           } else {

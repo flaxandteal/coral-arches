@@ -205,8 +205,6 @@ define([
           '72e0fc96-53d5-11ee-844f-0242ac130008'
         )
       );
-
-      console.log('License Final Step: ', this.renderedNodegroups());
     };
 
     this.loadData();
