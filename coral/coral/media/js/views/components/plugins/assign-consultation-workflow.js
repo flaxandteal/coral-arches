@@ -145,7 +145,7 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
                     tileid: "['init-step']['app-id'][0]['tileId']",
 
-                    labels: [['Primary Reference Number', 'Entry Number']],
+                    labels: [['Primary Reference Number', 'Entry Number (for audit purpose only)']],
                     hiddenNodes: [
                       '18436d9e-c60b-4fb6-ad09-9458e270e993',
                       'f3dbc907-f986-4bfd-a47a-e786d905ca76',
