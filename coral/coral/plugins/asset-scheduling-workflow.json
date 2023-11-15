@@ -2,7 +2,7 @@
   "pluginid": "9ea29d4e-4ebc-4142-8d6c-68603430302b",
   "name": "Heritage Asset",
   "icon": "fa fa-check",
-  "component": "views/components/workflows/scheduling-pro-forma",
+  "component": "views/components/plugins/asset-scheduling-workflow",
   "componentname": "asset-scheduling-workflow",
   "config": {
     "show": false
