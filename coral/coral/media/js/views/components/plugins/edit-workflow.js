@@ -10,7 +10,7 @@ define([
     this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
     this.WORKFLOW_RECENTLY_EDITED_LABEL = 'workflow-recently-edited';
-    const self = this
+    const self = this;
     this.editableWorkflows = params.editableWorkflows;
     this.selectedResource = ko.observable();
     this.workflowUrl = ko.observable();
@@ -58,14 +58,16 @@ define([
 
     this.loadAssignConsultationData = async (resourceId) => {
       const componentData = {};
-      
+
       const planningConsultationTiles = await this.fetchTileData(resourceId);
       this.resourceName(
         this.getNameFromNodeId(planningConsultationTiles, '18436d9e-c60b-4fb6-ad09-9458e270e993')
       );
       for (tile of planningConsultationTiles) {
-        if (tile.nodegroup === 'f5aeaa90-3127-475d-886a-9fc62742de4f'){
-          const planningDigitalFilesTiles = await self.fetchTileData(tile.data['f5aeaa90-3127-475d-886a-9fc62742de4f'][0].resourceId)
+        if (tile.nodegroup === 'f5aeaa90-3127-475d-886a-9fc62742de4f') {
+          const planningDigitalFilesTiles = await self.fetchTileData(
+            tile.data['f5aeaa90-3127-475d-886a-9fc62742de4f'][0].resourceId
+          );
           planningDigitalFilesTiles.forEach((tile) => {
             componentData[tile.nodegroup] = {
               value: JSON.stringify({
@@ -75,11 +77,10 @@ define([
                 nodegroupId: tile.nodegroup
               })
             };
-
-        })
+          });
+        }
       }
-    } 
-      
+
       planningConsultationTiles.forEach((tile) => {
         let nodegroupId = tile.nodegroup;
         if (nodegroupId === 'c853846a-7948-42c8-a089-63ebe34b49e4') {
@@ -99,7 +100,7 @@ define([
               nodegroupId: tile.nodegroup
             })
           };
-          
+
           return;
         }
         if (tile.nodegroup === 'f5aeaa90-3127-475d-886a-9fc62742de4f') {
@@ -110,10 +111,8 @@ define([
               tileId: tile.tileid,
               nodegroupId: tile.nodegroup
             })
-          }
-
-        
-      }
+          };
+        }
         const externalRefSource = tile.data['a45c0772-01ab-4867-abb7-675f470fd08f'];
         if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
           nodegroupId += '|cm-ref';
@@ -138,9 +137,7 @@ define([
         const planningDigitalFilesTiles = await this.fetchTileData(
           licenseDigitalFiles.data['8c5356f4-48ce-11ee-8e4e-0242ac140007'][0].resourceId
         );
-        planningDigitalFilesTiles.forEach((tile) => {
-          
-        });
+        planningDigitalFilesTiles.forEach((tile) => {});
       }
       return componentData;
     };
@@ -213,8 +210,7 @@ define([
         success: (response) => {
           acitivityResourceId = response.results.hits.hits[0]?._id;
         },
-        error: (response, status, error) => {
-        },
+        error: (response, status, error) => {},
         complete: (request, status) => {
           //
         }
