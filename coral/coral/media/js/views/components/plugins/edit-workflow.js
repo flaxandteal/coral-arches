@@ -46,7 +46,11 @@ define([
 
     this.getNameFromNodeId = (tiles, nodeId) => {
       const tile = tiles.find((tile) => nodeId in tile.data);
-      return tile?.display_values.find((dv) => dv.nodeid === nodeId)?.value || '';
+      if (tile?.display_values) {
+        return tile?.display_values.find((dv) => dv.nodeid === nodeId)?.value || '';
+      } else {
+        return tile.data[nodeId][arches.activeLanguage].value;
+      }
     };
 
     this.loadResourceData = async (resourceId) => {
@@ -58,7 +62,7 @@ define([
 
     this.loadMonumentData = async (monumentResourceId) => {
       const monumentTiles = await this.fetchTileData(monumentResourceId);
-      componentData = {};
+      const componentData = {};
       const manyTilesManagedNodegroups = {
         '9682621d-0262-11eb-ab33-f875a44e0e11': []
       };
@@ -106,7 +110,6 @@ define([
           })
         };
       });
-      console.log(JSON.stringify(componentData));
       return componentData;
     };
     /**
@@ -316,15 +319,48 @@ define([
     };
 
     this.loadMonumentRevisionData = async (resourceId) => {
-      console.log(' arches.urls.root : ', arches.urls.root);
       const monumentTiles = (
         await (
           await window.fetch(arches.urls.root + `monument_remapping?resource-id=${resourceId}`)
         ).json()
       ).tiles;
       const componentData = {};
+      this.resourceName(
+        this.getNameFromNodeId(monumentTiles, '426539a8-eabf-11ed-9e22-72d420f37f11')
+      );
       monumentTiles.forEach((tile) => {
-        componentData[tile.nodegroup] = {
+        let nodegroupId = tile.nodegroup;
+        const actorRole = tile.data['4266ed98-eabf-11ed-9e22-72d420f37f11'];
+        const descriptionType = tile.data['42647ff4-eabf-11ed-9e22-72d420f37f11'];
+        // const externalRefSource = tile.data['f17f6581-efc7-11eb-b09f-a87eeabdefba'];
+        if (actorRole === '0d5f1ee2-2910-46d9-858f-4040f113a79c') {
+          nodegroupId += '|occupier';
+        }
+        if (actorRole === '17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06') {
+          nodegroupId += '|owner';
+        }
+        if (actorRole === '58efc6e4-840b-43e5-b91f-0cf087833e75') {
+          nodegroupId += '|field-worker';
+        }
+        if (descriptionType === '6cd61658-6c0d-46fa-a898-b4d0545cfe34') {
+          nodegroupId += '|monument-type';
+        }
+        if (descriptionType === '935d5a08-b805-412f-b53c-d9bf65b4d719') {
+          nodegroupId += '|monument-threats';
+        }
+        if (descriptionType === '6611eb43-8e2e-4416-a86f-f830a376010b') {
+          nodegroupId += '|monument-condition';
+        }
+        if (descriptionType === '463a7c8a-f608-4d84-b5ab-4bab8522a715') {
+          nodegroupId += '|scheduling-reason';
+        }
+        // if (externalRefSource === '804a489a-be93-463b-b1f6-4f473b644279') {
+        //   nodegroupId += '|monument-smr';
+        // }
+        // if (externalRefSource === '19afd557-cc21-44b4-b1df-f32568181b2c') {
+        //   nodegroupId += '|monument-cmref';
+        // }
+        componentData[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
             resourceInstanceId: tile.resourceinstance,
