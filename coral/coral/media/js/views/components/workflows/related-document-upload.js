@@ -17,7 +17,8 @@ define([
      */
     this.resourceModelId = ko.observable(ko.unwrap(params.resourceModelId));
     this.resourceModelDigitalObjectNodeGroupId = params.resourceModelDigitalObjectNodeGroupId;
-    this.resourceModelDigitalObjectNodeId = params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
+    this.resourceModelDigitalObjectNodeId =
+      params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
     this.fileObjectNamePrefix = params?.fileObjectNamePrefix || 'Files for ';
 
     /**
@@ -137,11 +138,11 @@ define([
        * In the example of excavation license the `Files (D1)` nodegroup
        * has two identical uuids. One refers to the nodegroup and the other
        * to the node. This is used twice to provide the resource relationship.
-       * 
-       * On line 171 it isn't necessary to wrap the object in an array for 
+       *
+       * On line 171 it isn't necessary to wrap the object in an array for
        * resource-instance-list datatypes. It will automatically get covnerted
        * on the backend.
-       * 
+       *
        * This can be found in datatypes.py on line 2080.
        */
       const fileTileTemplate = {

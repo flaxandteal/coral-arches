@@ -8,35 +8,35 @@ define([
 ], function (_, ko, koMapping, uuid, arches, widgetLabeller) {
   function viewModel(params) {
     const self = this;
-
     _.extend(this, params.form);
     self.tile()?.dirty.subscribe(function (val) {
       self.dirty(val);
     });
-    this.graphid = params.graphid
-    this.graphids = params.graphids ? params.graphids : [this.graphid]
-    
-    this.pageVm = params.pageVm;
+    this.graphid = params.graphid;
+    this.graphids = params.graphids ? params.graphids : [this.graphid];
 
+    this.pageVm = params.pageVm;
 
     if (this.componentData.parameters.prefilledNodes) {
       this.componentData.parameters.prefilledNodes?.forEach((prefill) => {
         Object.keys(self.tile().data).forEach((node) => {
-          if (node == prefill[0]){
-            self.tile().data[node](prefill[1])
+          if (node == prefill[0]) {
+            self.tile().data[node](prefill[1]);
           }
-        })
-      })
+        });
+      });
     }
 
-    this.card()?.widgets().forEach((widget) => {
-      widget.graphids = this.graphids ? this.graphids : [this.graphid]
-      params.labels?.forEach(([prevLabel, newLabel]) => {
-        if (widget.label() === prevLabel) {
-          widget.label(newLabel)
-        }
-      })
-    });
+    this.card()
+      ?.widgets()
+      .forEach((widget) => {
+        widget.graphids = this.graphids ? this.graphids : [this.graphid];
+        params.labels?.forEach(([prevLabel, newLabel]) => {
+          if (widget.label() === prevLabel) {
+            widget.label(newLabel);
+          }
+        });
+      });
 
     params.form.save = async () => {
       await self.tile().save();

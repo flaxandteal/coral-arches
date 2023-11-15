@@ -1,12 +1,12 @@
 {
-    "pluginid": "fae7b96a-8a86-43cf-bcb8-a84b012f9150",
-    "name": "HB Planning Consultation",
-    "icon": "fa fa-reply",
-    "component": "views/components/plugins/hb-consultation-response-workflow",
-    "componentname": "hb-consultation-response-workflow",
-    "config": {
-      "show": false
-    },
-    "slug": "hb-consultation-response-workflow",
-    "sortorder": 0
+  "pluginid": "fae7b96a-8a86-43cf-bcb8-a84b012f9150",
+  "name": "HB Planning Consultation",
+  "icon": "fa fa-reply",
+  "component": "views/components/plugins/hb-consultation-response-workflow",
+  "componentname": "hb-consultation-response-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "hb-consultation-response-workflow",
+  "sortorder": 0
 }

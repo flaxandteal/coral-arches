@@ -124,9 +124,7 @@ define([
         success: (response) => {
           acitivityResourceId = response.results.hits.hits[0]?._id;
         },
-        error: (response, status, error) => {
-          console.error(error);
-        },
+        error: (response, status, error) => {},
         complete: (request, status) => {
           //
         }
@@ -329,7 +327,6 @@ define([
     };
 
     this.init = async () => {
-      console.log('Init edit workflow: ', params);
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
