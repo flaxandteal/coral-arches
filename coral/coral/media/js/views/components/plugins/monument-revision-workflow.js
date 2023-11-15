@@ -103,18 +103,18 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: 'f17f6581-efc7-11eb-b09f-a87eeabdefba',
+                    nodegroupid: '42633a18-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      'f17f6587-efc7-11eb-b56f-a87eeabdefba',
-                      'f17f6585-efc7-11eb-8ac0-a87eeabdefba',
-                      'f17f6586-efc7-11eb-917d-a87eeabdefba',
-                      'f17f658a-efc7-11eb-a216-a87eeabdefba',
-                      'f17f6589-efc7-11eb-9b90-a87eeabdefba'
+                      '42648b20-eabf-11ed-9e22-72d420f37f11',
+                      '42648792-eabf-11ed-9e22-72d420f37f11',
+                      '426489b8-eabf-11ed-9e22-72d420f37f11',
+                      '42648f30-eabf-11ed-9e22-72d420f37f11',
+                      '42648de6-eabf-11ed-9e22-72d420f37f11'
                     ],
                     prefilledNodes: [
                       [
-                        'f17f658a-efc7-11eb-a216-a87eeabdefba',
+                        '42648f30-eabf-11ed-9e22-72d420f37f11',
                         '804a489a-be93-463b-b1f6-4f473b644279'
                       ]
                     ],
@@ -127,18 +127,18 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '87d38725-f44f-11eb-8d4b-a87eeabdefba',
+                    nodegroupid: '4263afc0-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     parentile: "['init-step']['app-id'][0]['locTileId']",
                     hiddenNodes: [
-                      '87d3d7c5-f44f-11eb-8459-a87eeabdefba',
-                      '87d3d7c2-f44f-11eb-8ddc-a87eeabdefba',
-                      '87d3c3eb-f44f-11eb-be3c-a87eeabdefba'
+                      '42665f36-eabf-11ed-9e22-72d420f37f11',
+                      '42665a18-eabf-11ed-9e22-72d420f37f11',
+                      '42661b02-eabf-11ed-9e22-72d420f37f11'
                     ],
                     // using Town instead of townland since we dont have it locally
                     prefilledNodes: [
                       [
-                        '87d3d7c5-f44f-11eb-8459-a87eeabdefba',
+                        '42665f36-eabf-11ed-9e22-72d420f37f11',
                         '24ca1cb9-c4d1-4cbc-9990-df74e6eb346e'
                       ]
                     ],
@@ -151,24 +151,24 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '87d38728-f44f-11eb-900d-a87eeabdefba',
+                    nodegroupid: '4263c596-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     parentile: "['init-step']['app-id'][0]['locTileId']",
                     hiddenNodes: [
-                      '87d3c3f0-f44f-11eb-87e0-a87eeabdefba',
-                      '87d3c2a4-f44f-11eb-a170-a87eeabdefba',
-                      '87d3c3f9-f44f-11eb-bed4-a87eeabdefba',
-                      '87d3d7c9-f44f-11eb-a734-a87eeabdefba',
-                      '87d3d7bb-f44f-11eb-8fad-a87eeabdefba',
-                      '87d3d7e4-f44f-11eb-9d29-a87eeabdefba',
-                      '87d3d7c0-f44f-11eb-8304-a87eeabdefba',
-                      '87d3c3fd-f44f-11eb-97d8-a87eeabdefba',
-                      '87d3d7e7-f44f-11eb-bc69-a87eeabdefba'
+                      '426622aa-eabf-11ed-9e22-72d420f37f11',
+                      '42661508-eabf-11ed-9e22-72d420f37f11',
+                      '42662ff2-eabf-11ed-9e22-72d420f37f11',
+                      '42666576-eabf-11ed-9e22-72d420f37f11',
+                      '42664f32-eabf-11ed-9e22-72d420f37f11',
+                      '42668ee8-eabf-11ed-9e22-72d420f37f11',
+                      '42665748-eabf-11ed-9e22-72d420f37f11',
+                      '42663588-eabf-11ed-9e22-72d420f37f11',
+                      '42669352-eabf-11ed-9e22-72d420f37f11'
                     ],
                     // using Town instead of townland since we dont have it locally
                     prefilledNodes: [
                       [
-                        '87d3d7c5-f44f-11eb-8459-a87eeabdefba',
+                        '42665f36-eabf-11ed-9e22-72d420f37f11',
                         '24ca1cb9-c4d1-4cbc-9990-df74e6eb346e'
                       ]
                     ],
@@ -182,20 +182,20 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '9682621d-0262-11eb-ab33-f875a44e0e11',
+                    nodegroupid: '4264513c-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      '96826228-0262-11eb-8862-f875a44e0e11',
-                      '96826226-0262-11eb-97d4-f875a44e0e11',
-                      '96826224-0262-11eb-b74c-f875a44e0e11',
-                      '96826227-0262-11eb-a1c0-f875a44e0e11',
-                      '96826229-0262-11eb-853d-f875a44e0e11',
-                      '9682622a-0262-11eb-a0ef-f875a44e0e11',
-                      '96826222-0262-11eb-9e58-f875a44e0e11'
+                      '4266f66c-eabf-11ed-9e22-72d420f37f11',
+                      '4266f3ba-eabf-11ed-9e22-72d420f37f11',
+                      '4266f086-eabf-11ed-9e22-72d420f37f11',
+                      '4266f4fa-eabf-11ed-9e22-72d420f37f11',
+                      '4266f7ca-eabf-11ed-9e22-72d420f37f11',
+                      '4266f914-eabf-11ed-9e22-72d420f37f11',
+                      '4266ed98-eabf-11ed-9e22-72d420f37f11'
                     ],
                     prefilledNodes: [
                       [
-                        '96826222-0262-11eb-9e58-f875a44e0e11',
+                        '4266ed98-eabf-11ed-9e22-72d420f37f11',
                         '58efc6e4-840b-43e5-b91f-0cf087833e75'
                       ]
                     ],
@@ -208,20 +208,20 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '9682621d-0262-11eb-ab33-f875a44e0e11',
+                    nodegroupid: '4264513c-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      '96826228-0262-11eb-8862-f875a44e0e11',
-                      '96826226-0262-11eb-97d4-f875a44e0e11',
-                      '96826224-0262-11eb-b74c-f875a44e0e11',
-                      '96826227-0262-11eb-a1c0-f875a44e0e11',
-                      '96826229-0262-11eb-853d-f875a44e0e11',
-                      '9682622a-0262-11eb-a0ef-f875a44e0e11',
-                      '96826222-0262-11eb-9e58-f875a44e0e11'
+                      '4266f66c-eabf-11ed-9e22-72d420f37f11',
+                      '4266f3ba-eabf-11ed-9e22-72d420f37f11',
+                      '4266f086-eabf-11ed-9e22-72d420f37f11',
+                      '4266f4fa-eabf-11ed-9e22-72d420f37f11',
+                      '4266f7ca-eabf-11ed-9e22-72d420f37f11',
+                      '4266f914-eabf-11ed-9e22-72d420f37f11',
+                      '4266ed98-eabf-11ed-9e22-72d420f37f11'
                     ],
                     prefilledNodes: [
                       [
-                        '96826222-0262-11eb-9e58-f875a44e0e11',
+                        '4266ed98-eabf-11ed-9e22-72d420f37f11',
                         '17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06'
                       ]
                     ],
@@ -234,21 +234,21 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '9682621d-0262-11eb-ab33-f875a44e0e11',
+                    nodegroupid: '4264513c-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      '96826228-0262-11eb-8862-f875a44e0e11',
-                      '96826226-0262-11eb-97d4-f875a44e0e11',
-                      '96826224-0262-11eb-b74c-f875a44e0e11',
-                      '96826227-0262-11eb-a1c0-f875a44e0e11',
-                      '96826229-0262-11eb-853d-f875a44e0e11',
-                      '9682622a-0262-11eb-a0ef-f875a44e0e11',
-                      '96826222-0262-11eb-9e58-f875a44e0e11'
+                      '4266f66c-eabf-11ed-9e22-72d420f37f11',
+                      '4266f3ba-eabf-11ed-9e22-72d420f37f11',
+                      '4266f086-eabf-11ed-9e22-72d420f37f11',
+                      '4266f4fa-eabf-11ed-9e22-72d420f37f11',
+                      '4266f7ca-eabf-11ed-9e22-72d420f37f11',
+                      '4266f914-eabf-11ed-9e22-72d420f37f11',
+                      '4266ed98-eabf-11ed-9e22-72d420f37f11'
                     ],
                     // using patron id for now since we don't have occupier in roletype concept
                     prefilledNodes: [
                       [
-                        '96826222-0262-11eb-9e58-f875a44e0e11',
+                        '4266ed98-eabf-11ed-9e22-72d420f37f11',
                         '0d5f1ee2-2910-46d9-858f-4040f113a79c'
                       ]
                     ],
@@ -339,7 +339,7 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '87d3872b-f44f-11eb-bd0c-a87eeabdefba',
+                    nodegroupid: '4263d086-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     parentile: "['init-step']['app-id'][0]['locTileId']"
                   }
@@ -384,7 +384,7 @@ define([
                      * This needs to refer to the Excavation models
                      * Digital object node group.
                      */
-                    resourceModelDigitalObjectNodeGroupId: 'fc6b6b0b-5118-11eb-b342-f875a44e0e11'
+                    resourceModelDigitalObjectNodeGroupId: 'f9b96458-83bc-11ee-b751-0242ac130007'
                   }
                 }
               ]
@@ -408,12 +408,12 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                    nodegroupid: '6af2a0cb-efc5-11eb-8436-a87eeabdefba',
+                    nodegroupid: '4263a002-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
-                      '6af2b697-efc5-11eb-8152-a87eeabdefba',
-                      '6af2a0d0-efc5-11eb-ab44-a87eeabdefba',
-                      '6af2b69e-efc5-11eb-801e-a87eeabdefba'
+                      '42656e96-eabf-11ed-9e22-72d420f37f11',
+                      '42655d8e-eabf-11ed-9e22-72d420f37f11',
+                      '426586b0-eabf-11ed-9e22-72d420f37f11'
                     ]
                   }
                 }
