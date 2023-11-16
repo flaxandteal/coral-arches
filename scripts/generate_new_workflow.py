@@ -180,7 +180,7 @@ define([
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python3 scripts/generate_new_workflow.py {user-provided-name}")
+        print("Usage: python3 scripts/generate_new_workflow.py {workflow-slug}")
         sys.exit(1)
 
     user_provided_name = sys.argv[1]
