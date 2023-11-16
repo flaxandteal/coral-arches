@@ -2,7 +2,7 @@
   "pluginid": "11ef6850-5f9b-49ad-b8cd-3d278badd996",
   "name": "DC Report",
   "icon": "fa fa-check",
-  "component": "views/components/workflows/surveys/dc-report-survey",
+  "component": "views/components/plugins/survey-dc-report",
   "componentname": "survey-dc-report",
   "config": {
     "show": false
