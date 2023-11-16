@@ -124,9 +124,9 @@ if __name__ == "__main__":
     all_plugins = list(set(registered_plugins + available_plugins))
 
     has_change = False
-    special_cases = ["Bulk Data Manager", "Image Service Manager"]
+    special_plugin_cases = ["Bulk Data Manager", "Image Service Manager"]
     for idx, plugin in enumerate(all_plugins):
-        if plugin in special_cases:
+        if plugin in special_plugin_cases:
             continue
         if plugin not in registered_plugins:
             register_type(names_to_slugs[plugin], "plugin")
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
     all_widgets = list(set(registered_widgets + available_widgets))
 
-    special_cases = [
+    special_widget_cases = [
         "file-widget",
         "resource-instance-select-widget",
         "concept-multiselect-widget",
@@ -167,6 +167,8 @@ if __name__ == "__main__":
         "switch-widget",
     ]
     for widget in all_widgets:
+        if widget in special_widget_cases:
+            continue
         if widget not in registered_widgets:
             register_type(widget, "widget")
             has_change = True
