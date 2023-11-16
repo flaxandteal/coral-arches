@@ -1,11 +1,11 @@
 define([
   'knockout',
   'arches',
-  'viewmodels/workflow',
+  'viewmodels/editable-workflow',
   'templates/views/components/plugins/assign-consultation-workflow.htm',
   'views/components/workflows/related-document-upload',
   'views/components/workflows/licensing-workflow/widget-labeller'
-], function (ko, arches, Workflow, assignConsultationWorkflowTemplate) {
+], function (ko, arches, EditableWorkflow, assignConsultationWorkflowTemplate) {
   return ko.components.register('assign-consultation-workflow', {
     viewModel: function (params) {
       this.componentName = 'assign-consultation-workflow';
@@ -62,7 +62,7 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'planning-ref',
+                  uniqueInstanceName: 'plan-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
@@ -258,7 +258,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'related-document-upload',
-                  uniqueInstanceName: 'planning-ref',
+                  uniqueInstanceName: 'file-upload',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
@@ -299,7 +299,7 @@ define([
           ]
         }
       ];
-      Workflow.apply(this, [params]);
+      EditableWorkflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
     template: assignConsultationWorkflowTemplate
