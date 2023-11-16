@@ -1,7 +1,7 @@
-import os
 import uuid
 import json
 import sys
+import subprocess
 
 
 def create_file(file_path, content):
@@ -36,6 +36,38 @@ def update_init_workflow_file(user_provided_name, plugin_id):
     # Write the updated JSON back to the init-workflow.json file
     with open(init_workflow_file_path, "w") as file:
         json.dump(data, file, indent=2)
+
+
+def call_command(command, description, show_output=False):
+    try:
+        # Run the command and capture the output
+        result = subprocess.run(
+            command,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+
+        # Access the output and error (if any)
+        output = result.stdout
+        error = result.stderr
+
+        # Print the output and error
+        if show_output:
+            print("Output:", output)
+        if error:
+            print("Error:", error)
+        if description:
+            print(description)
+
+    except subprocess.CalledProcessError as e:
+        # If the command returns a non-zero exit code, an exception is raised
+        print(f"Command failed with exit code {e.returncode}: {e.stderr}")
+    except Exception as e:
+        # Handle other exceptions
+        print(f"An error occurred: {e}")
 
 
 def generate_files(user_provided_name):
@@ -121,9 +153,29 @@ define([
     create_file(json_file_path, json_content)
     create_file(htm_file_path, htm_content)
     create_file(js_file_path, js_content)
+    print("New files have been created")
 
     # Update init-workflow.json file
     update_init_workflow_file(user_provided_name, plugin_id)
+
+    # Register new workflow
+    call_command(
+        command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py plugin register -s coral/plugins/{user_provided_name}.json'",
+        description="New workflow has been registered",
+    )
+
+    # Update init workflow
+    call_command(
+        command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py plugin update -s coral/plugins/init-workflow.json'",
+        description="Init workflow has been updated with new workflow",
+    )
+
+    # Rebuild webpack
+    print("Rebuilding webpack...")
+    call_command(
+        command=f"docker exec -ti coral-arches_arches_1 /bin/sh -c '. ../ENV/bin/activate; cd coral; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'",
+        description="Webpack finished rebuilding",
+    )
 
 
 if __name__ == "__main__":
