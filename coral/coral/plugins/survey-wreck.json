@@ -2,12 +2,12 @@
     "pluginid": "6479c9ff-4290-49a3-926f-ebb73b3f3808",
     "name": "Wreck HRDB",
     "icon": "fa fa-check",
-    "component": "views/components/workflows/surveys/wreck-survey",
-    "componentname": "wreck-survey",
+    "component": "views/components/plugins/survey-wreck-workflow",
+    "componentname": "survey-wreck",
     "config": {
       "show": false
     },
-    "slug": "wreck-survey",
+    "slug": "survey-wreck",
     "sortorder": 0
   }
   
