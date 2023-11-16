@@ -83,17 +83,19 @@ def get_registered_plugins():
     return registered_plugins
 
 
-def register_type(plugin, type):
+def register_type(slug, type):
+    print(f"Registering {type}: {slug}")
     call_command(
-        command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py {type} register -s coral/plugins/{plugin}.json'",
-        message=f"Registered plugin: {plugin}",
+        command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py {type} register -s coral/{type}s/{slug}.json'",
+        message=f"Registered {type}: {slug}",
     )
 
 
-def unregister_type(plugin, type):
+def unregister_type(name, type):
+    print(f"Unregistering {type}: {name}")
     call_command(
-        command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py {type} unregister -n \"{plugin}\"'",
-        message=f"Unregistered plugin: {plugin}",
+        command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py {type} unregister -n \"{name}\"'",
+        message=f"Unregistered {type}: {name}",
     )
 
 
