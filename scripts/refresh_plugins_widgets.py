@@ -6,7 +6,6 @@ import json
 
 def call_command(command, message=None, show_output=False):
     try:
-        # Run the command and capture the output
         result = subprocess.run(
             command,
             shell=True,
@@ -16,11 +15,9 @@ def call_command(command, message=None, show_output=False):
             text=True,
         )
 
-        # Access the output and error (if any)
         output = result.stdout
         error = result.stderr
 
-        # Print the output and error
         if show_output:
             print("Output:", output)
         if error:
@@ -31,10 +28,8 @@ def call_command(command, message=None, show_output=False):
         return output
 
     except subprocess.CalledProcessError as e:
-        # If the command returns a non-zero exit code, an exception is raised
         print(f"Command failed with exit code {e.returncode}: {e.stderr}")
     except Exception as e:
-        # Handle other exceptions
         print(f"An error occurred: {e}")
 
 
@@ -43,22 +38,15 @@ def get_available_plugins():
     available_plugins = []
     names_to_slugs = {}
 
-    # Iterate through all files in the folder
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
-
-        # Check if the file is a JSON file
         if os.path.isfile(file_path) and filename.endswith(".json"):
-            # Open and load the JSON file
             with open(file_path, "r") as json_file:
                 json_data = json.load(json_file)
-
-                # Check if the 'name' field exists in the JSON data
                 if "name" in json_data:
                     available_plugins.append(json_data["name"])
                     names_to_slugs[json_data["name"]] = json_data["slug"]
 
-    # print(available_plugins)
     return available_plugins, names_to_slugs
 
 
@@ -67,19 +55,16 @@ def get_registered_plugins():
         command="docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py plugin list'",
     )
 
-    # Use regex to find the items after the specified message
     matches = re.search(
         r"(?<=URL namespace \'oauth2\' isn\'t unique\.)\s*([\s\S]*$)", listed_plugins
     )
 
-    # Remove leading and trailing whitespace from each match
     registered_plugins = [
         item.strip() for item in matches.group(1).split("\n") if item.strip()
     ]
 
     registered_plugins = registered_plugins[1:-1]
 
-    # print(registered_plugins)
     return registered_plugins
 
 
@@ -104,42 +89,31 @@ def get_registered_widgets():
         command="docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py widget list'",
     )
 
-    # Use regex to find the items after the specified message
     matches = re.search(
         r"(?<=URL namespace \'oauth2\' isn\'t unique\.)\s*([\s\S]*$)", listed_plugins
     )
 
-    # Remove leading and trailing whitespace from each match
     registered_widgets = [
         item.strip() for item in matches.group(1).split("\n") if item.strip()
     ]
 
     registered_widgets = registered_widgets[1:-1]
 
-    # print(registered_widgets)
     return registered_widgets
 
 
 def get_available_widgets():
     folder_path = "coral/coral/widgets"
     available_widgets = []
-    names_to_slugs = {}
 
-    # Iterate through all files in the folder
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
-
-        # Check if the file is a JSON file
         if os.path.isfile(file_path) and filename.endswith(".json"):
-            # Open and load the JSON file
             with open(file_path, "r") as json_file:
                 json_data = json.load(json_file)
-
-                # Check if the 'name' field exists in the JSON data
                 if "name" in json_data:
                     available_widgets.append(json_data["name"])
 
-    # print(available_widgets)
     return available_widgets
 
 
