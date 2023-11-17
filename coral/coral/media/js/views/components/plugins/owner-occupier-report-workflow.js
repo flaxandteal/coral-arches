@@ -2,10 +2,10 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/owner-occupier-report-workflow.htm',
+  'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/licensing-workflow/widget-labeller',
   'views/components/workflows/owner-occupier-report-workflow/owner-occupier-report-init-step'
-], function (ko, arches, EditableWorkflow, ownerOccupierReportTemplate) {
+], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('owner-occupier-report-workflow', {
     viewModel: function (params) {
       this.componentName = 'owner-occupier-report-workflow';
@@ -426,6 +426,6 @@ define([
 
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: ownerOccupierReportTemplate
+    template: workflowTemplate
   });
 });
