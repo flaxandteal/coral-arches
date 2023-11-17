@@ -6,7 +6,7 @@ define([
   'views/components/workflows/communication-workflow/communication-select-resource',
   'views/components/workflows/communication-workflow/upload-document-step',
   'views/components/workflows/communication-workflow/communication-final-step'
-], function (ko, arches, Workflow, communicationWorkflowTemplate) {
+], function (ko, arches, Workflow, workflowTemplate) {
   return ko.components.register('communication-workflow', {
     viewModel: function (params) {
       this.componentName = 'communication-workflow';
@@ -209,6 +209,6 @@ define([
       Workflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: communicationWorkflowTemplate
+    template: workflowTemplate
   });
 });
