@@ -4,8 +4,8 @@ define([
   'viewmodels/workflow',
   'viewmodels/workflow-step',
   'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/correspondence-select-resource',
-  'views/components/workflows/correspondence-final-step'
+  'views/components/workflows/correspondence-workflow/correspondence-select-resource',
+  'views/components/workflows/correspondence-workflow/correspondence-final-step'
 ], function (ko, arches, Workflow, Step, workflowTemplate) {
   return ko.components.register('correspondence-workflow', {
     viewModel: function (params) {
