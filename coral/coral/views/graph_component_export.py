@@ -33,27 +33,29 @@ class GraphComponentExport(View):
                 continue
             alias_to_node_id[nodegroup_id][node.alias] = node_id
 
-        component_configs = {}
+        component_configs = []
 
         for nodegroup_id, alias_nodes in alias_to_node_id.items():
-            component_configs[nodegroup_id] = {
-                "componentName": "default-card",
-                "uniqueInstanceName": nodegroup_id,
-                "tilesManaged": "one",
-                "parameters": {
-                    "resourceid": "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    "graphid": graph_id,
-                    "nodegroupid": nodegroup_id,
-                    "semanticName": alias_nodes["semantic_name"]
-                    if alias_nodes.get("semantic_name")
-                    else "No semantic name",
-                    "hiddenNodes": [
-                        f"'{node_id2}', // {alias2}"
-                        for alias2, node_id2 in alias_nodes.items()
-                        if alias2 != "semantic_name"
-                    ],
-                },
-            }
+            component_configs.append(
+                {
+                    "componentName": "default-card",
+                    "uniqueInstanceName": nodegroup_id,
+                    "tilesManaged": "one",
+                    "parameters": {
+                        "resourceid": "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                        "graphid": graph_id,
+                        "nodegroupid": nodegroup_id,
+                        "semanticName": alias_nodes["semantic_name"]
+                        if alias_nodes.get("semantic_name")
+                        else "No semantic name",
+                        "hiddenNodes": [
+                            f"'{node_id2}', // {alias2}"
+                            for alias2, node_id2 in alias_nodes.items()
+                            if alias2 != "semantic_name"
+                        ],
+                    },
+                }
+            )
 
         # Uncomment to get JSON response of data
         # return JSONResponse(
