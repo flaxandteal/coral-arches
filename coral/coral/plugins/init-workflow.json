@@ -99,6 +99,33 @@
         "desc": "A site visit regarding an Article 42 Excavation"
       },
       {
+        "workflowid": "11ef6850-5f9b-49ad-b8cd-3d278badd996",
+        "slug": "dc-report-workflow",
+        "name": "DC Report",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A survey for a district council monument"
+      },
+      {
+        "workflowid": "6479c9ff-4290-49a3-926f-ebb73b3f3808",
+        "slug": "survey-wreck-workflow",
+        "name": "Wreck Survey",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A survey for a wreck of a ship, airplane, or tank"
+      },
+      {
+        "workflowid": "e34db664-76be-482a-9ee7-ea34695aa2db",
+        "slug": "thatch-roof-condition-workflow",
+        "name": "Thatch Roof Condition Survey",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A survey for a thatched roof building"
+      },
+      {
         "workflowid": "c264d055-5cd4-4b13-ab6e-34b0bfba9607",
         "slug": "heritage-at-risk-workflow",
         "name": "Heritage at Risk",
@@ -133,24 +160,6 @@
         "bgColor": "#3057c9",
         "circleColor": "#416df0",
         "desc": "Complete an survey report for the Owner Occupier"
-      },
-      {
-        "workflowid": "11ef6850-5f9b-49ad-b8cd-3d278badd996",
-        "slug": "dc-report-workflow",
-        "name": "DC Report",
-        "icon": "fa fa-clipboard",
-        "bgColor": "#689480",
-        "circleColor": "#79b59a",
-        "desc": "A survey for a district council monument"
-      },
-      {
-        "workflowid": "e34db664-76be-482a-9ee7-ea34695aa2db",
-        "slug": "thatch-roof-condition-workflow",
-        "name": "Thatch Roof Condition Survey",
-        "icon": "fa fa-clipboard",
-        "bgColor": "#689480",
-        "circleColor": "#79b59a",
-        "desc": "A survey for a thatched roof building"
       }
     ],
     "show": true
