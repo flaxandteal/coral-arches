@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^'+settings.APP_PATHNAME+'/plugins/correspondence-workflow', PluginView.as_view(), name='correspondence-workflow'),
     url(r'^'+settings.APP_PATHNAME+'/plugins/communication-workflow', PluginView.as_view(), name='communication-workflow'),
     url(r'^'+settings.APP_PATHNAME+'/plugins/init-workflow', PluginView.as_view(), name='init-workflow'),
-    url(r'^graph-mapping-dump', GraphMappingDump.as_view(), name='graph-mapping-dump'),
+    url(r'^graph-component-export', GraphMappingDump.as_view(), name='graph-mapping-dump'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.SHOW_LANGUAGE_SWITCH is True:
