@@ -2,11 +2,11 @@ define([
   'knockout',
   'arches',
   'viewmodels/workflow',
-  'templates/views/components/plugins/assign-consultation-workflow.htm'
-], function (ko, arches, Workflow, thatchRoofSurveyTemplate) {
-  return ko.components.register('survey-thatch-roof-condition', {
+  'templates/views/components/plugins/default-workflow.htm'
+], function (ko, arches, Workflow, workflowTemplate) {
+  return ko.components.register('thatch-roof-condition-workflow', {
     viewModel: function (params) {
-      this.componentName = 'survey-thatch-roof-condition';
+      this.componentName = 'thatch-roof-condition-workflow';
       this.stepConfig = [
         {
           title: 'Initialise Survey',
@@ -179,6 +179,6 @@ define([
       Workflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: thatchRoofSurveyTemplate
+    template: workflowTemplate
   });
 });
