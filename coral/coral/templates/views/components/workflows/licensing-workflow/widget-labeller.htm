@@ -1,32 +1,15 @@
-    <!-- ko component: {
-        name: 'default-card',
-        params: {
-            card: ko.unwrap(card),
-            tile: ko.unwrap(tile),
-            provisionalTileViewModel: provisionalTileViewModel,
-            reviewer: reviewer,
-            loading: loading,
-            graphids: graphids,
-            form: $data,
-            state: 'form',
-            pageVm: $data.pageVm
-        }
-    } --><!-- /ko -->
-    <!-- ko if: childCards().length > 0 -->
-    <!-- ko foreach { data: childCards(), as child } -->
-        <!-- ko component: {
-            name: 'default-card',
-            params: {
-                card: child.card,
-                tile: child.tile,
-                provisionalTileViewModel: provisionalTileViewModel,
-                reviewer: reviewer,
-                loading: loading,
-                graphids: graphids,
-                form: $data,
-                state: 'form',
-                pageVm: $data.pageVm
-            }
-        } --><!-- /ko -->
-    <!-- /ko -->
-    <!-- /ko -->
+<!-- ko component: {
+    name: 'default-card',
+    params: {
+        card: ko.unwrap(card),
+        tile: ko.unwrap(tile),
+        provisionalTileViewModel: provisionalTileViewModel,
+        reviewer: reviewer,
+        loading: loading,
+        graphids: graphids,
+        form: $data,
+        state: 'form',
+        pageVm: $data.pageVm
+    }
+} -->
+<!-- /ko -->
