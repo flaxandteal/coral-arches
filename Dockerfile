@@ -8,6 +8,7 @@ ENV ARCHES_PROJECT $ARCHES_PROJECT
 COPY entrypoint.sh ${WEB_ROOT}/
 COPY ${ARCHES_PROJECT} ${WEB_ROOT}/${ARCHES_PROJECT}/
 # Install packages required to build the python libs, then remove them
+RUN sed -i "/postgresql/d" /etc/apt/sources.list
 RUN set -ex \
     && BUILD_DEPS=" \
         libxslt-dev \
