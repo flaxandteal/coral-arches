@@ -2,11 +2,11 @@ define([
   'knockout',
   'arches',
   'viewmodels/workflow',
-  'templates/views/components/plugins/application-area.htm'
-], function (ko, arches, Workflow, applicationAreaTemplate) {
-  return ko.components.register('heritage-at-risk', {
+  'templates/views/components/plugins/default-workflow.htm'
+], function (ko, arches, Workflow, workflowTemplate) {
+  return ko.components.register('heritage-at-risk-workflow', {
     viewModel: function (params) {
-      this.componentName = 'heritage-at-risk';
+      this.componentName = 'heritage-at-risk-workflow';
       this.stepConfig = [
         {
           title: 'Heritage Identification',
@@ -21,7 +21,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'heritage-site-name' /* unique to step */,
+                  uniqueInstanceName: 'heritage-site-name',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -46,7 +46,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'location' /* unique to step */,
+                  uniqueInstanceName: 'location',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -73,7 +73,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'designtion-status' /* unique to step */,
+                  uniqueInstanceName: 'designtion-status',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -84,7 +84,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'category-date' /* unique to step */,
+                  uniqueInstanceName: 'category-date',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -95,7 +95,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'owner-details' /* unique to step */,
+                  uniqueInstanceName: 'owner-details',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -121,7 +121,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'heritage-system-ref' /* unique to step */,
+                  uniqueInstanceName: 'heritage-system-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -131,7 +131,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'external-refs' /* unique to step */,
+                  uniqueInstanceName: 'external-refs',
                   tilesManaged: 'many',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
@@ -149,6 +149,6 @@ define([
       Workflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: applicationAreaTemplate
+    template: workflowTemplate
   });
 });

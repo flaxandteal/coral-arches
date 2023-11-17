@@ -2,9 +2,9 @@
   "pluginid": "c264d055-5cd4-4b13-ab6e-34b0bfba9607",
   "name": "Heritage At Risk",
   "icon": "fa fa-clipboard",
-  "component": "views/components/workflows/designations/heritage-at-risk",
-  "componentname": "heritage-at-risk",
+  "component": "views/components/plugins/heritage-at-risk-workflow",
+  "componentname": "heritage-at-risk-workflow",
   "config": { "show": false },
-  "slug": "heritage-at-risk",
+  "slug": "heritage-at-risk-workflow",
   "sortorder": 0
 }
