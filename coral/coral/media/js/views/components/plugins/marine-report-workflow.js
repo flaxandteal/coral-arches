@@ -2,12 +2,13 @@ define([
   'knockout',
   'arches',
   'viewmodels/workflow',
-  'templates/views/components/plugins/assign-consultation-workflow.htm'
-], function (ko, arches, Workflow, marineReportSurveyTemplate) {
-  return ko.components.register('marine-report', {
+  'templates/views/components/plugins/default-workflow.htm'
+], function (ko, arches, Workflow, workflowTemplate) {
+  return ko.components.register('marine-report-workflow', {
     viewModel: function (params) {
-      this.componentName = 'marine-report';
-      (this.stepConfig = [
+      this.componentName = 'marine-report-workflow';
+
+      this.stepConfig = [
         {
           title: 'Marine (HRDB)',
           name: 'hrdb-marine',
@@ -22,7 +23,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'system-ref' /* unique to step */,
+                  uniqueInstanceName: 'system-ref',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -48,7 +49,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'cargo' /* unique to step */,
+                  uniqueInstanceName: 'cargo',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -58,7 +59,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'nationalities' /* unique to step */,
+                  uniqueInstanceName: 'nationalities',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -68,7 +69,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'survey-condition-notes-summary' /* unique to step */,
+                  uniqueInstanceName: 'survey-condition-notes-summary',
                   tilesManaged: 'many',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -78,7 +79,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'designation-and-protection' /* unique to step */,
+                  uniqueInstanceName: 'designation-and-protection',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -88,7 +89,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'asset-dimensions' /* unique to step */,
+                  uniqueInstanceName: 'asset-dimensions',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -98,7 +99,7 @@ define([
                 },
                 // {
                 //     componentName: 'voyages',
-                //     uniqueInstanceName: 'asset-dimensions', /* unique to step */
+                //     uniqueInstanceName: 'asset-dimensions',
                 //     tilesManaged: 'one',
                 //     parameters: {
                 //         graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -108,7 +109,7 @@ define([
                 // },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'external-refs' /* unique to step */,
+                  uniqueInstanceName: 'external-refs',
                   tilesManaged: 'many',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -118,7 +119,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'craft-type' /* unique to step */,
+                  uniqueInstanceName: 'craft-type',
                   tilesManaged: 'many',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -128,7 +129,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'craft-name' /* unique to step */,
+                  uniqueInstanceName: 'craft-name',
                   tilesManaged: 'many',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -138,7 +139,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'craft-owner' /* unique to step */,
+                  uniqueInstanceName: 'craft-owner',
                   tilesManaged: 'many',
                   parameters: {
                     graphid: '49bac32e-5464-11e9-a6e2-000d3ab1e588',
@@ -150,10 +151,11 @@ define([
             }
           ]
         }
-      ]),
-        Workflow.apply(this, [params]);
+      ];
+
+      Workflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: marineReportSurveyTemplate
+    template: workflowTemplate
   });
 });
