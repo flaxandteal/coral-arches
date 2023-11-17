@@ -26,7 +26,7 @@
       },
       {
         "workflowid": "37a99cef-91aa-463c-855a-58fae28871d2",
-        "slug": "assign-consultation-workflow",
+        "slug": "edit-workflow?workflow-slug=assign-consultation-workflow",
         "name": "Assign Consultation",
         "icon": "fa fa-file",
         "bgColor": "#62a3db",
@@ -104,6 +104,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "A workflow for the designation of a heritage at risk"
+      },
+      {
+        "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
+        "slug": "owner-occupier-report-workflow",
+        "name": "Owner Occupier Report",
+        "icon": "fa fa-reply",
+        "bgColor": "#3057c9",
+        "circleColor": "#416df0",
+        "desc": "Complete an survey report for the Owner Occupier"
       }
     ],
     "show": true

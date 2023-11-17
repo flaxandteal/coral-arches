@@ -1,0 +1,12 @@
+{
+  "pluginid": "15bd5fce-078c-4cbe-b9b4-07507f1bdc1f",
+  "name": "Owner Occupier Report",
+  "icon": "fa fa-reply",
+  "component": "views/components/plugins/owner-occupier-report-workflow",
+  "componentname": "owner-occupier-report-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "owner-occupier-report-workflow",
+  "sortorder": 0
+}
