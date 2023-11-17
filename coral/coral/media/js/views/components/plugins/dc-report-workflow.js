@@ -2,11 +2,11 @@ define([
   'knockout',
   'arches',
   'viewmodels/workflow',
-  'templates/views/components/plugins/assign-consultation-workflow.htm'
-], function (ko, arches, Workflow, dcReportSurveyTemplate) {
-  return ko.components.register('survey-dc-report', {
+  'templates/views/components/plugins/default-workflow.htm'
+], function (ko, arches, Workflow, workflowTemplate) {
+  return ko.components.register('dc-report-workflow', {
     viewModel: function (params) {
-      this.componentName = 'survey-dc-report';
+      this.componentName = 'dc-report-workflow';
       this.stepConfig = [
         {
           title: 'DC Report Reference',
@@ -334,6 +334,6 @@ define([
       Workflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: dcReportSurveyTemplate
+    template: workflowTemplate
   });
 });
