@@ -2,8 +2,8 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/hm-consultation-response-workflow.htm',
-  'views/components/workflows/licensing-workflow/widget-labeller'
+  'templates/views/components/plugins/default-workflow.htm',
+  'views/components/workflows/widget-labeller'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('hm-consultation-response-workflow', {
     viewModel: function (params) {
