@@ -2,11 +2,11 @@ define([
   'knockout',
   'arches',
   'viewmodels/workflow',
-  'templates/views/components/plugins/application-area.htm'
-], function (ko, arches, Workflow, applicationAreaTemplate) {
-  return ko.components.register('ghnus-designation', {
+  'templates/views/components/plugins/default-workflow.htm'
+], function (ko, arches, Workflow, workflowTemplate) {
+  return ko.components.register('ghnus-designation-workflow', {
     viewModel: function (params) {
-      this.componentName = 'ghnus-designation';
+      this.componentName = 'ghnus-designation-workflow';
       this.stepConfig = [
         {
           title: 'GHNUS',
@@ -21,7 +21,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'ghnus-site-name' /* unique to step */,
+                  uniqueInstanceName: 'ghnus-site-name',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '78b32d8c-b6f2-11ea-af42-f875a44e0e11',
@@ -46,7 +46,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'description' /* unique to step */,
+                  uniqueInstanceName: 'description',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '78b32d8c-b6f2-11ea-af42-f875a44e0e11',
@@ -73,7 +73,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'ghnus-map' /* unique to step */,
+                  uniqueInstanceName: 'ghnus-map',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '78b32d8c-b6f2-11ea-af42-f875a44e0e11',
@@ -84,7 +84,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'location-type' /* unique to step */,
+                  uniqueInstanceName: 'location-type',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '78b32d8c-b6f2-11ea-af42-f875a44e0e11',
@@ -95,7 +95,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'location-refs' /* unique to step */,
+                  uniqueInstanceName: 'location-refs',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '78b32d8c-b6f2-11ea-af42-f875a44e0e11',
@@ -113,6 +113,6 @@ define([
       Workflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: applicationAreaTemplate
+    template: workflowTemplate
   });
 });
