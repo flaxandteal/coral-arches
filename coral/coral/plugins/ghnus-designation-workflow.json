@@ -1,0 +1,10 @@
+{
+  "pluginid": "9be06de1-ee30-4e29-a965-27e4c21a24f2",
+  "name": "Gazetteer of Historic Nucleated Urban Settlement",
+  "icon": "fa fa-clipboard",
+  "component": "views/components/plugins/ghnus-designation-workflow",
+  "componentname": "ghnus-designation-workflow",
+  "config": { "show": false },
+  "slug": "ghnus-designation-workflow",
+  "sortorder": 0
+}

@@ -106,6 +106,24 @@
         "desc": "A workflow for the designation of a heritage at risk"
       },
       {
+        "workflowid": "e8270582-ddef-4bc3-84e1-bbc160767822",
+        "slug": "industrial-heritage-record-workflow",
+        "name": "Industrial Heritage Record",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A workflow for the designation of an Industrial Heritage Record"
+      },
+      {
+        "workflowid": "9be06de1-ee30-4e29-a965-27e4c21a24f2",
+        "slug": "ghnus-designation-workflow",
+        "name": "Gazetteer of Historic Nucleated Urban Settlement (GHNUS)",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A workflow for the designation of a GHNUS"
+      },
+      {
         "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
         "slug": "owner-occupier-report-workflow",
         "name": "Owner Occupier Report",
