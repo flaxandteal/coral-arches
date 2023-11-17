@@ -5,9 +5,9 @@ define([
   'viewmodels/workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'viewmodels/workflow-step',
-  'views/components/workflows/consultation/consultation-dates-step',
-  'views/components/workflows/consultation/consultation-map-step',
-  'views/components/workflows/consultation/consultations-final-step'
+  'views/components/workflows/consultation-workflow/consultation-dates-step',
+  'views/components/workflows/consultation-workflow/consultation-map-step',
+  'views/components/workflows/consultation-workflow/consultations-final-step'
 ], function (ko, $, arches, Workflow, workflowTemplate) {
   return ko.components.register('consultation-workflow', {
     viewModel: function (params) {
