@@ -70,7 +70,7 @@ def call_command(command, description, show_output=False):
         print(f"An error occurred: {e}")
 
 
-def generate_files(user_provided_name):
+def generate_files(user_provided_name, use_default_htm=True):
     if "workflow" not in user_provided_name:
         user_provided_name += "-workflow"
 
@@ -112,7 +112,7 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/{user_provided_name}.htm',
+  'templates/views/components/plugins/{'default-workflow' if use_default_htm else user_provided_name}.htm',
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {{
   return ko.components.register('{user_provided_name}', {{
     viewModel: function (params) {{
@@ -126,7 +126,7 @@ define([
             {{
               componentConfigs: [
                 {{
-                  componentName: 'initial-step',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'app-id',
                   tilesManaged: 'one',
                   parameters: {{
@@ -151,7 +151,8 @@ define([
 
     # Create files
     create_file(json_file_path, json_content)
-    create_file(htm_file_path, htm_content)
+    if not use_default_htm:
+        create_file(htm_file_path, htm_content)
     create_file(js_file_path, js_content)
     print("New files have been created")
 

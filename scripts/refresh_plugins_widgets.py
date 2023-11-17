@@ -123,18 +123,18 @@ if __name__ == "__main__":
 
     all_plugins = list(set(registered_plugins + available_plugins))
 
-    has_change = False
+    has_plugin_change = False
     special_plugin_cases = ["Bulk Data Manager", "Image Service Manager"]
     for idx, plugin in enumerate(all_plugins):
         if plugin in special_plugin_cases:
             continue
         if plugin not in registered_plugins:
             register_type(names_to_slugs[plugin], "plugin")
-            has_change = True
+            has_plugin_change = True
             continue
         if plugin not in available_plugins:
             unregister_type(plugin, "plugin")
-            has_change = True
+            has_plugin_change = True
             continue
 
     registered_widgets = get_registered_widgets()
@@ -142,6 +142,7 @@ if __name__ == "__main__":
 
     all_widgets = list(set(registered_widgets + available_widgets))
 
+    has_widget_change = False
     special_widget_cases = [
         "file-widget",
         "resource-instance-select-widget",
@@ -171,14 +172,26 @@ if __name__ == "__main__":
             continue
         if widget not in registered_widgets:
             register_type(widget, "widget")
-            has_change = True
+            has_widget_change = True
             continue
         if widget not in available_widgets:
             unregister_type(widget, "widget")
-            has_change = True
+            has_widget_change = True
             continue
 
-    if has_change:
+    if has_plugin_change:
+        print("Updating: init-workflow")
+        call_command(
+            command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py plugin update -s coral/plugins/init-workflow.json'",
+            message="Updated: init-workflow",
+        )
+        print("Updating: edit-workflow")
+        call_command(
+            command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py plugin update -s coral/plugins/edit-workflow.json'",
+            message="Updated: edit-workflow",
+        )
+
+    if has_plugin_change or has_widget_change:
         print("Rebuilding webpack...")
         call_command(
             command=f"docker exec -ti coral-arches_arches_1 /bin/sh -c '. ../ENV/bin/activate; cd coral; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'",

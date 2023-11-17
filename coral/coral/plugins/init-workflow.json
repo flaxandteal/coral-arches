@@ -5,10 +5,10 @@
   "component": "views/components/plugins/init-workflow",
   "componentname": "init-workflow",
   "config": {
-    "workflows": [
+    "unusedArchesWorkflows": [
       {
         "workflowid": "b2778828-a6ac-6481-c38b-fd463d878f1f",
-        "slug": "application-area",
+        "slug": "application-area-workflow",
         "name": "Application Area",
         "icon": "fa fa-building",
         "bgColor": "#87bceb",
@@ -44,7 +44,7 @@
       },
       {
         "workflowid": "0b1499e0-6cdc-403b-a2e3-499c2201069d",
-        "slug": "site-visit",
+        "slug": "site-visit-workflow",
         "name": "Site Visit",
         "icon": "fa fa-clipboard",
         "bgColor": "#716FE0",
@@ -59,7 +59,9 @@
         "bgColor": "#fed04f",
         "circleColor": "#fedc7d",
         "desc": "Letter or other document sent to an applicant"
-      },
+      }
+    ],
+    "workflows": [
       {
         "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
         "slug": "edit-workflow?workflow-slug=licensing-workflow",
@@ -89,7 +91,7 @@
       },
       {
         "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
-        "slug": "excavation-site-visit",
+        "slug": "excavation-site-visit-workflow",
         "name": "Excavation Site Visit",
         "icon": "fa fa-clipboard",
         "bgColor": "#689480",
