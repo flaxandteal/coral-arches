@@ -133,6 +133,24 @@
         "bgColor": "#3057c9",
         "circleColor": "#416df0",
         "desc": "Complete an survey report for the Owner Occupier"
+      },
+      {
+        "workflowid": "11ef6850-5f9b-49ad-b8cd-3d278badd996",
+        "slug": "dc-report-workflow",
+        "name": "DC Report",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A survey for a district council monument"
+      },
+      {
+        "workflowid": "e34db664-76be-482a-9ee7-ea34695aa2db",
+        "slug": "thatch-roof-condition-workflow",
+        "name": "Thatch Roof Condition Survey",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A survey for a thatched roof building"
       }
     ],
     "show": true
