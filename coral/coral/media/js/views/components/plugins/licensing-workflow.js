@@ -4,7 +4,7 @@ define([
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
-  'views/components/workflows/licensing-workflow/widget-labeller',
+  'views/components/workflows/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'

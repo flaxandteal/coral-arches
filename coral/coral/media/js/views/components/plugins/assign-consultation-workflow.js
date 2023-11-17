@@ -4,7 +4,7 @@ define([
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/widget-labeller'
+  'views/components/workflows/widget-labeller'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('assign-consultation-workflow', {
     viewModel: function (params) {

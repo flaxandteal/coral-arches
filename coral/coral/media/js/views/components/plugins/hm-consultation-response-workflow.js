@@ -3,7 +3,7 @@ define([
   'arches',
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/licensing-workflow/widget-labeller'
+  'views/components/workflows/widget-labeller'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('hm-consultation-response-workflow', {
     viewModel: function (params) {
