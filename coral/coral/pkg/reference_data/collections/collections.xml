@@ -48242,5 +48242,35 @@
       <skos:Concept rdf:about="http://arches:8000/f96d1f54-5029-491d-826d-c12c3344d5dc"/>
     </skos:member>
   </skos:Collection>
+  <!-- / -->
+    <!-- Assignment Actions -->
+  <skos:Collection rdf:about="http://arches:8000/20033dec-abaf-47bd-9fba-6499f770b792">
+    <skos:prefLabel xml:lang="en">
+    {"id": "3be16da4-406e-400e-aea8-8866b707b132", "value": "Assignment Actions"}
+    </skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/20036da4-fa63-47bd-9fba-6499f770b792"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/20036da4-19da-47bd-9fba-6499f770b792"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5d4dcb3b-888a-4441-96ca-215783471def"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f96d1f54-6105-491d-826d-c12c3344d5dc"/>
+    </skos:member>
+        <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/20036da4-c1d2-47bd-9fba-6499f770b792"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5d4dcb3b-ef01-4441-96ca-215783471def"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f96d1f54-f0e5-491d-826d-c12c3344d5dc"/>
+    </skos:member>
+  </skos:Collection>
+  <!-- / -->
+
 
 </rdf:RDF>
