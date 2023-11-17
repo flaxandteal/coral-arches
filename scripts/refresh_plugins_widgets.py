@@ -185,6 +185,11 @@ if __name__ == "__main__":
             command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py plugin update -s coral/plugins/init-workflow.json'",
             message="Updated: init-workflow",
         )
+        print("Updating: edit-workflow")
+        call_command(
+            command=f"docker exec -ti coral-arches_arches_1 bash -c 'source ../ENV/bin/activate && python manage.py plugin update -s coral/plugins/edit-workflow.json'",
+            message="Updated: edit-workflow",
+        )
 
     if has_plugin_change or has_widget_change:
         print("Rebuilding webpack...")
