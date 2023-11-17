@@ -283,17 +283,31 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'consultation-action',
-                  tilesManaged: 'one',
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'consultation-assignment',
+                  tilesManaged: 'many',
                   parameters: {
                     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
-                    nodegroupid: '8d5175ba-e6bc-4f59-ac49-e208168c12cf',
+                    nodegroupid: 'd32e7158-8541-11ee-8217-0242ac140002',
                     resourceid: "['init-step']['app-id'][0]['resourceInstanceId']"
-
-                    //   labels: [['Cross Reference', 'Planning Reference']],
                   }
                 }
+                /** Currently commented becuase this is an actual action nodegroup and might be required
+                 *  but it seems from the penpot that we really just want to manage assignments here
+                 *  and have to label that as an action. It's possible HED decide they need both
+                 */
+                // {
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'consultation-action',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                //     nodegroupid: '8d5175ba-e6bc-4f59-ac49-e208168c12cf',
+                //     resourceid: "['init-step']['app-id'][0]['resourceInstanceId']"
+
+                //     //   labels: [['Cross Reference', 'Planning Reference']],
+                //   }
+                // }
               ]
             }
           ]
