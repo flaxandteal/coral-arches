@@ -8,7 +8,7 @@
     "workflows": [
       {
         "workflowid": "b2778828-a6ac-6481-c38b-fd463d878f1f",
-        "slug": "application-area",
+        "slug": "application-area-workflow",
         "name": "Application Area",
         "icon": "fa fa-building",
         "bgColor": "#87bceb",
@@ -44,7 +44,7 @@
       },
       {
         "workflowid": "0b1499e0-6cdc-403b-a2e3-499c2201069d",
-        "slug": "site-visit",
+        "slug": "site-visit-workflow",
         "name": "Site Visit",
         "icon": "fa fa-clipboard",
         "bgColor": "#716FE0",
