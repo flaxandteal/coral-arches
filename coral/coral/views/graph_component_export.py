@@ -24,9 +24,14 @@ class GraphComponentExport(View):
 
         for node in graph.nodes.values():
             nodegroup_id = str(node.nodegroup_id)
+            node_id = str(node.nodeid)
             if nodegroup_id not in alias_to_node_id:
                 alias_to_node_id[nodegroup_id] = {}
-            alias_to_node_id[nodegroup_id][node.alias] = str(node.nodeid)
+            if node_id == nodegroup_id:
+                alias_to_node_id[nodegroup_id]["semantic_name"] = node.name
+            if node.datatype == "semantic":
+                continue
+            alias_to_node_id[nodegroup_id][node.alias] = node_id
 
         component_configs = {}
 
@@ -36,12 +41,16 @@ class GraphComponentExport(View):
                 "uniqueInstanceName": nodegroup_id,
                 "tilesManaged": "one",
                 "parameters": {
+                    "resourceid": "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     "graphid": graph_id,
                     "nodegroupid": nodegroup_id,
-                    "resourceid": "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    "semanticName": alias_nodes["semantic_name"]
+                    if alias_nodes.get("semantic_name")
+                    else "No semantic name",
                     "hiddenNodes": [
                         f"'{node_id2}', // {alias2}"
                         for alias2, node_id2 in alias_nodes.items()
+                        if alias2 != "semantic_name"
                     ],
                 },
             }
