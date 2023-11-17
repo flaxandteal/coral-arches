@@ -5,7 +5,7 @@
   "component": "views/components/plugins/init-workflow",
   "componentname": "init-workflow",
   "config": {
-    "workflows": [
+    "unusedArchesWorkflows": [
       {
         "workflowid": "b2778828-a6ac-6481-c38b-fd463d878f1f",
         "slug": "application-area-workflow",
@@ -59,7 +59,9 @@
         "bgColor": "#fed04f",
         "circleColor": "#fedc7d",
         "desc": "Letter or other document sent to an applicant"
-      },
+      }
+    ],
+    "workflows": [
       {
         "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
         "slug": "edit-workflow?workflow-slug=licensing-workflow",
