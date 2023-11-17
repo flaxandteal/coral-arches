@@ -26,7 +26,7 @@
       },
       {
         "workflowid": "37a99cef-91aa-463c-855a-58fae28871d2",
-        "slug": "assign-consultation-workflow",
+        "slug": "edit-workflow?workflow-slug=assign-consultation-workflow",
         "name": "Assign Consultation",
         "icon": "fa fa-file",
         "bgColor": "#62a3db",
@@ -122,6 +122,42 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "A survey for a thatched roof building"
+      },
+      {
+        "workflowid": "c264d055-5cd4-4b13-ab6e-34b0bfba9607",
+        "slug": "heritage-at-risk-workflow",
+        "name": "Heritage at Risk",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A workflow for the designation of a heritage at risk"
+      },
+      {
+        "workflowid": "e8270582-ddef-4bc3-84e1-bbc160767822",
+        "slug": "industrial-heritage-record-workflow",
+        "name": "Industrial Heritage Record",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A workflow for the designation of an Industrial Heritage Record"
+      },
+      {
+        "workflowid": "9be06de1-ee30-4e29-a965-27e4c21a24f2",
+        "slug": "ghnus-designation-workflow",
+        "name": "Gazetteer of Historic Nucleated Urban Settlement (GHNUS)",
+        "icon": "fa fa-clipboard",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A workflow for the designation of a GHNUS"
+      },
+      {
+        "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
+        "slug": "owner-occupier-report-workflow",
+        "name": "Owner Occupier Report",
+        "icon": "fa fa-reply",
+        "bgColor": "#3057c9",
+        "circleColor": "#416df0",
+        "desc": "Complete an survey report for the Owner Occupier"
       }
     ],
     "show": true
