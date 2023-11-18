@@ -13,6 +13,16 @@ create: docker
 	echo $(shell id -u)
 	FORUSER=$(shell id -u) $(DOCKER_COMPOSE_COMMAND) run -e FORUSER=$(shell id -u) --entrypoint /bin/sh arches_base -c ". ../ENV/bin/activate; apt install -y git; pip install 'pyjwt<2.1,>=2.0.0' 'cryptography<3.4.0' --only-binary cryptography --only-binary cffi; cd /local_root; ls -ltr; id -u; arches-project create $(ARCHES_PROJECT) && mv docker Makefile $(ARCHES_PROJECT); ls -ltr; echo \$${FORUSER}; groupadd -g \$${FORUSER} externaluser; useradd -u \$${FORUSER} -g \$${FORUSER} externaluser; chown -R \$${FORUSER}:\$${FORUSER} $(ARCHES_PROJECT); echo \$$?; ls -ltr $(ARCHES_PROJECT)"
 
+cypress.config.js: dl-docker
+	cp docker/tests/cypress.config.js $(ARCHES_PROJECT_ROOT)
+	cp -R docker/tests/cypress $(ARCHES_PROJECT_ROOT)
+
+.PHONY: cypress
+cypress: cypress.config.js
+
+.PHONY: test
+test: cypress
+
 .PHONY: docker
 docker: dl-docker
 
@@ -55,7 +65,7 @@ build: docker
 	$(DOCKER_COMPOSE_COMMAND) stop
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
-	$(TOOLKIT_FOLDER)/act.py . load_package --yes
+	if [ -z $(ARCHES_PROJECT)/pkg ]; then $(TOOLKIT_FOLDER)/act.py . load_package --yes; fi
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_yarn_build_development
 	$(DOCKER_COMPOSE_COMMAND) stop
 	@echo "IF THIS IS YOUR FIRST TIME RUNNING make build AND YOU HAVE NOT ALREADY, MAKE SURE TO UPDATE urls.py (see make help)"
