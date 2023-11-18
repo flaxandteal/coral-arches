@@ -1,0 +1,356 @@
+name: Build Arches project
+run-name: Build Arches project
+on: [push]
+env:
+  ARCHES_BASE: flaxandteal/arches_base
+  ARCHES_PROJECT: coral
+jobs:
+  Build-Arches:
+    runs-on: [self-hosted]
+    outputs:
+      image: ${{ steps.extract_image_name.outputs.image_name }}
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Set up Docker Context for Buildx
+        id: buildx-context
+        run: |
+          docker context create builders
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          version: latest
+          endpoint: builders
+      # name: Build docker backend image
+      # run: |
+      #   docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
+      - name: Log in to Github
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ghcr.io/flaxandteal/arches_${{ env.ARCHES_PROJECT }}
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          file: docker/Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            ARCHES_BASE=${{ env.ARCHES_BASE }}
+            ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+      - name: Extract image name
+        id: extract_image_name
+        run: |
+          name=${{ fromJSON(steps.build.outputs.metadata)['image.name'] }}
+          echo "image_name=$name" >> $GITHUB_OUTPUT
+  Build-Arches-Static:
+    runs-on: [self-hosted]
+    needs: [Build-Arches]
+    outputs:
+      image: ${{ steps.extract_image_name.outputs.image_name }}
+    container:
+      image: docker:dind
+
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      # name: Build docker backend image
+      # run: |
+      #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+      - name: Log in to Github
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker Context for Buildx
+        id: buildx-context
+        run: |
+          docker context create builders
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          version: latest
+          endpoint: builders
+          buildkitd-flags: '--allow-insecure-entitlement network.host'
+          driver-opts: |
+              network=host
+      - name: Build and push Docker image
+        run: docker run --rm --network host willwill/wait-for-it -h localhost -p 8000 -t 0
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ghcr.io/flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static
+      - name: Build and push Docker image
+        id: buildx
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          file: docker/Dockerfile.static
+          network: host
+          allow: network.host
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            ARCHES_DYNAMIC_IMAGE=${{ needs['Build-Arches'].outputs.image }}
+            ARCHES_ENVIRONMENT=development
+            ARCHES_BASE=${{ env.ARCHES_BASE }}
+            ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+            ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
+      - name: Extract image name
+        id: extract_image_name
+        run: |
+          name=${{ fromJSON(steps.buildx.outputs.metadata)['image.name'] }}
+          echo "image_name=$name" >> $GITHUB_OUTPUT
+    services:
+      elasticsearch:
+        image: elasticsearch:8.4.0
+        ports:
+          - "9200:9200"
+          - "9300:9300"
+        env:
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+        options: >-
+          --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+      db:
+        image: flaxandteal/arches_coral_postgres
+        #volumes:
+        #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+        ports:
+          - '5432:5432'
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASS: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
+          TZ: PST
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
+
+      arches:
+        image: "${{ needs['Build-Arches'].outputs.image }}"
+        env:
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          ARCHES_ROOT: "/web_root/arches"
+          COMPRESS_OFFLINE: "False"
+          COMPRESS_ENABLED: "False"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
+          DOMAIN_NAMES: "localhost"
+          PYTHONUNBUFFERED: "0"
+          STATIC_URL: "/static/"
+          STATIC_ROOT: "/static_root"
+          WEB_ROOT: "/web_root"
+          TZ: "PST"
+        ports:
+          - '8000:8000'
+        options: >-
+          --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 1000
+  Build-Arches-Final:
+    needs: [Build-Arches-Static, Build-Arches]
+    runs-on: [self-hosted]
+    container:
+      image: docker:dind
+    outputs:
+      image: ${{ steps.extract_image_name.outputs.image_name }}
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      # name: Build docker backend image
+      # run: |
+      #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+      - name: Log in to Github
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ghcr.io/flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static_py
+      - name: Set up Docker Context for Buildx
+        id: buildx-context
+        run: |
+          docker context create builders
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          version: latest
+          endpoint: builders
+          buildkitd-flags: '--allow-insecure-entitlement network.host'
+          driver-opts: |
+              network=host
+      - name: Build and push Docker image
+        id: buildx
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          file: docker/Dockerfile.static-py
+          network: host
+          allow: network.host
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VERSION=${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+            ARCHES_STATIC_IMAGE=${{ needs['Build-Arches-Static'].outputs.image }}
+            ARCHES_DYNAMIC_IMAGE=${{ needs['Build-Arches'].outputs.image }}
+            ARCHES_BASE=${{ env.ARCHES_BASE }}
+            ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
+      - name: Extract image name
+        id: extract_image_name
+        run: |
+          name=${{ fromJSON(steps.buildx.outputs.metadata)['image.name'] }}
+          echo "image_name=$name" >> $GITHUB_OUTPUT
+  Test-Arches:
+    runs-on: [self-hosted]
+    needs: [Build-Arches-Final]
+    container:
+      image: cypress/included:12.3.0
+    env:
+      HOME: ""
+      DEBUG: "cypress:*"
+      CYPRESS_BASE_URL: http://arches:8000
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          browser: firefox
+          install: false
+          wait-on: 'http://arches:8000'
+          wait-on-timeout: 6000
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+    services:
+      elasticsearch:
+        image: elasticsearch:8.4.0
+        ports:
+          - "9200:9200"
+          - "9300:9300"
+        env:
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+        options: >-
+          --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+      db:
+        image: flaxandteal/arches_coral_postgres
+        #volumes:
+        #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+        ports:
+          - '5432:5432'
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASS: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
+          TZ: PST
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
+
+      arches:
+        image: "${{ needs['Build-Arches-Final'].outputs.image }}"
+        env:
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          COMPRESS_OFFLINE: "False"
+          INSTALL_CORAL_PACKAGE: "True"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
+          DOMAIN_NAMES: "arches"
+          PYTHONUNBUFFERED: "0"
+          TZ: "PST"
+        ports:
+          - '8000:8000'
+        options: >-
+          --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 1000
