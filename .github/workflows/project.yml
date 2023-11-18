@@ -76,6 +76,9 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
@@ -164,6 +167,7 @@ jobs:
       arches:
         image: "${{ needs['Build-Arches'].outputs.image }}"
         env:
+          ALLOW_BOOTSTRAP: "True"
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           ARCHES_ROOT: "/web_root/arches"
           COMPRESS_OFFLINE: "False"
@@ -208,6 +212,9 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
@@ -269,6 +276,9 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
@@ -325,6 +335,7 @@ jobs:
       arches:
         image: "${{ needs['Build-Arches-Final'].outputs.image }}"
         env:
+          ALLOW_BOOTSTRAP: "True"
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
           INSTALL_CORAL_PACKAGE: "True"
