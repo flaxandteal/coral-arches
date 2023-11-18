@@ -69,14 +69,16 @@ jobs:
     needs: [Build-Arches]
     outputs:
       image: ${{ steps.extract_image_name.outputs.image_name }}
-    container:
-      image: docker:dind
-
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
       - name: Log in to Github
         uses: docker/login-action@v2
         with:
@@ -208,6 +210,11 @@ jobs:
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
       - name: Log in to Github
         uses: docker/login-action@v2
         with:
