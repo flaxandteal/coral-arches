@@ -1,9 +1,0 @@
-{
-  "widgetid": "b96d9bc9-34c2-413c-9d88-b879f7a335da",
-  "name": "map-with-latlon-widget",
-  "component": "views/components/widgets/map-with-latlon",
-  "defaultconfig": {"zoom": 0, "pitch": 0.0, "basemap": "streets", "bearing": 0.0, "centerX": 0, "centerY": 0, "maxZoom": 20, "minZoom": 0, "rerender": true, "defaultValue": "", "featureColor": "#FF0000", "geometryTypes": [{"id": "Point", "text": "Point"}, {"id": "Line", "text": "Line"}, {"id": "Polygon", "text": "Polygon"}], "overlayConfigs": [], "overlayOpacity": 0.0, "geocodeProvider": "10000000-0000-0000-0000-010000000000", "geocoderVisible": true, "defaultValueType": "", "featureLineWidth": 1, "featurePointSize": 3, "geocodePlaceholder": "Search"},
-  "helptext": null,
-  "datatype": "geojson-feature-collection"
-}
-    
