@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - develop
+      - fix/upgrade-base
 
 env:
   # Using the 7.5-bug version of the container is throwing an error for an
