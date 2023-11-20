@@ -1,3 +1,4 @@
 [submodule "coral/docker"]
 	path = coral/docker
 	url = https://github.com/flaxandteal/arches-container-toolkit
+	branch = bug/fixing-issues-when-setting-up-coral

@@ -2,7 +2,7 @@ default: help
 
 TOOLKIT_REPO = https://github.com/flaxandteal/arches-container-toolkit
 TOOLKIT_FOLDER = docker
-TOOLKIT_RELEASE = main
+TOOLKIT_RELEASE = bug/fixing-issues-when-setting-up-coral
 ARCHES_PROJECT ?= $(shell ls -1 */__init__.py | head -n 1 | sed 's/\/.*//g')
 ARCHES_BASE = flaxandteal/arches_base
 ARCHES_PROJECT_ROOT = $(shell pwd)/
