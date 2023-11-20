@@ -1,0 +1,333 @@
+{
+    "graph": [
+        {
+            "author": "",
+            "cards": [
+                {
+                    "active": true,
+                    "cardid": "ab8074bc-1838-11ea-af5e-c4d9877d154e",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": {
+                        "en": ""
+                    },
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Radiocarbon Calendar Age Assignment"
+                    },
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "sortorder": null,
+                    "visible": true
+                }
+            ],
+            "cards_x_nodes_x_widgets": [],
+            "color": null,
+            "config": {},
+            "deploymentdate": null,
+            "deploymentfile": null,
+            "description": {
+                "en": ""
+            },
+            "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "edgeid": "ab8074c4-1838-11ea-a9af-c4d9877d154e",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "ab8074c3-1838-11ea-920a-c4d9877d154e"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "edgeid": "ab8074c5-1838-11ea-8bdd-c4d9877d154e",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span",
+                    "rangenode_id": "ab8074c2-1838-11ea-9a67-c4d9877d154e"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ab8074c2-1838-11ea-9a67-c4d9877d154e",
+                    "edgeid": "ab8074c6-1838-11ea-9cad-c4d9877d154e",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "ab8074c1-1838-11ea-9b34-c4d9877d154e"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "edgeid": "ab8074c7-1838-11ea-b6a0-c4d9877d154e",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "ab8074be-1838-11ea-be39-c4d9877d154e"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ab8074c2-1838-11ea-9a67-c4d9877d154e",
+                    "edgeid": "ab8074c8-1838-11ea-860c-c4d9877d154e",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "ab8074bf-1838-11ea-8853-c4d9877d154e"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "edgeid": "ab808846-1838-11ea-9716-c4d9877d154e",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "ab8074c0-1838-11ea-ba47-c4d9877d154e"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "edgeid": "ab808847-1838-11ea-9458-c4d9877d154e",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "name": null,
+                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L55_has_inventory_no",
+                    "rangenode_id": "ab8074bd-1838-11ea-a31c-c4d9877d154e"
+                }
+            ],
+            "functions_x_graphs": [],
+            "graphid": "ab806134-1838-11ea-95a5-c4d9877d154e",
+            "iconclass": "fa fa-delicious",
+            "is_editable": true,
+            "isresource": false,
+            "jsonldcontext": null,
+            "name": {
+                "en": "Radiocarbon Calendar Age Assignment"
+            },
+            "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "parentnodegroup_id": null
+                }
+            ],
+            "nodes": [
+                {
+                    "alias": "radiocarbon_calendar_age_assignment",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": true,
+                    "name": "Radiocarbon Calendar Age Assignment",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment",
+                    "parentproperty": "",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "delta_r",
+                    "config": {},
+                    "datatype": "number",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "delta R",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074bd-1838-11ea-a31c-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E60_Number",
+                    "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L55_has_inventory_no",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "probability_type",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Probability Type",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074be-1838-11ea-be39-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "to_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "To-Date",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074bf-1838-11ea-8853-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "chronological_unit",
+                    "config": {
+                        "rdmCollection": null
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Chronological Unit",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074c0-1838-11ea-ba47-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "from_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "From Date",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074c1-1838-11ea-9b34-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "time_span_phase",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Time-Span Phase",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074c2-1838-11ea-9a67-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "calibration_curve_type",
+                    "config": {
+                        "rdmCollection": "78cf1b4d-ffd2-4109-bc88-be530a66d91e"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Calibration Curve Type",
+                    "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                    "nodeid": "ab8074c3-1838-11ea-920a-c4d9877d154e",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                }
+            ],
+            "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+            "publication": {
+                "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                "notes": null,
+                "publicationid": "99156284-06d9-11ed-ad22-acde48001122",
+                "published_time": "2022-07-18T15:38:36.433",
+                "user_id": 1
+            },
+            "relatable_resource_model_ids": [],
+            "resource_2_resource_constraints": [],
+            "root": {
+                "alias": "radiocarbon_calendar_age_assignment",
+                "config": {},
+                "datatype": "semantic",
+                "description": "",
+                "exportable": false,
+                "fieldname": "",
+                "graph_id": "ab806134-1838-11ea-95a5-c4d9877d154e",
+                "hascustomalias": false,
+                "is_collector": true,
+                "isrequired": false,
+                "issearchable": true,
+                "istopnode": true,
+                "name": "Radiocarbon Calendar Age Assignment",
+                "nodegroup_id": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                "nodeid": "ab8074ba-1838-11ea-91f3-c4d9877d154e",
+                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment",
+                "sortorder": 0
+            },
+            "slug": null,
+            "subtitle": {
+                "en": ""
+            },
+            "template_id": "50000000-0000-0000-0000-000000000001",
+            "version": ""
+        }
+    ]
+}
