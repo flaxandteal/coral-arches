@@ -378,7 +378,7 @@ FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
 
-AUTHENTICATION_BACKENDS += tuple(
+AUTHENTICATION_BACKENDS += (
     *AUTHENTICATION_BACKENDS,
     "dauthz.backends.CasbinBackend",
 )
