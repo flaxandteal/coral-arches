@@ -240,6 +240,50 @@ define([
                 },
                 {
                   componentName: 'widget-labeller',
+                  uniqueInstanceName: 'County',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: '15a04d62-4119-40f6-aad5-df3d316898a8',
+                    resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+                    hiddenNodes: [
+                      'b09531de-fe72-41fd-bd2b-b9d401d8e82a',
+                      'e35ef3d4-2883-46db-8028-c84a5a7b9923'
+                    ],
+                    /** Using Town as type in lieu of towlands option */
+                    prefilledNodes: [
+                      [
+                        'b09531de-fe72-41fd-bd2b-b9d401d8e82a',
+                        '74e2eb43-49fc-41e9-8d61-388c01878573'
+                      ]
+                    ],
+                    labels: [['Area Name', 'County']]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'distric-council',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: '15a04d62-4119-40f6-aad5-df3d316898a8',
+                    resourceid: "['init-step']['app-id'][0]['resourceInstanceId']",
+                    hiddenNodes: [
+                      'b09531de-fe72-41fd-bd2b-b9d401d8e82a',
+                      'e35ef3d4-2883-46db-8028-c84a5a7b9923'
+                    ],
+                    /** Using Town as type in lieu of towlands option */
+                    prefilledNodes: [
+                      [
+                        'b09531de-fe72-41fd-bd2b-b9d401d8e82a',
+                        'b96dee9b-d268-4eae-bd21-0b0a67848e00'
+                      ]
+                    ],
+                    labels: [['Area Name', 'District Council']]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'related-activities',
                   tilesManaged: 'one',
                   parameters: {
