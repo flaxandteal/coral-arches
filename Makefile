@@ -58,6 +58,10 @@ endif
 endif
 	@if [ "$$(diff Makefile $(TOOLKIT_FOLDER)/Makefile)" != "" ]; then echo "Your Makefile in this directory does not match the one in directory [$(TOOLKIT_FOLDER)], do you need to update it by copying it over this one or vice versa?"; echo; fi
 
+.PHONY: rebuild-images
+rebuild-images: docker
+	$(DOCKER_COMPOSE_COMMAND) build
+
 .PHONY: build
 build: docker
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
@@ -65,7 +69,8 @@ build: docker
 	$(DOCKER_COMPOSE_COMMAND) stop
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
-	if [ -z $(ARCHES_PROJECT)/pkg ]; then $(TOOLKIT_FOLDER)/act.py . load_package --yes; fi
+
+	if [ -d $(ARCHES_PROJECT)/pkg ]; then $(TOOLKIT_FOLDER)/act.py . load_package --yes; fi
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_yarn_build_development
 	$(DOCKER_COMPOSE_COMMAND) stop
 	@echo "IF THIS IS YOUR FIRST TIME RUNNING make build AND YOU HAVE NOT ALREADY, MAKE SURE TO UPDATE urls.py (see make help)"
@@ -98,6 +103,10 @@ yarn-development: docker
 .PHONY: docker-compose
 docker-compose: docker
 	$(DOCKER_COMPOSE_COMMAND) $(shell echo $(CMD))
+
+.PHONY: manage
+manage: docker
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; python manage.py $(CMD)'
 
 .PHONY: clean
 clean: docker

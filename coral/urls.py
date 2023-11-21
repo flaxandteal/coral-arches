@@ -14,5 +14,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += [
-        re_path(r'^static/(?P<path>.*)\$', views.serve)
+        re_path(r'^static/(?P<path>.*)$', views.serve)
     ]
