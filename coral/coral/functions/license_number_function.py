@@ -2,6 +2,7 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 import datetime
+from django.db.models import Q, Max
 
 # ResourceInstance - arches/arches/app/models/models.py
 # an example of post_save() - arches/arches/app/models/tile.py
@@ -18,6 +19,7 @@ EXTERNAL_REF_NODEGROUP = "280b6cfc-4e4d-11ee-a340-0242ac140007"
 EXTERNAL_REF_SOURCE_NODE = "280b7a9e-4e4d-11ee-a340-0242ac140007"
 EXTERNAL_REF_NUMBER_NODE = "280b75bc-4e4d-11ee-a340-0242ac140007"
 EXTERNAL_REF_NOTE_NODE = "280b78fa-4e4d-11ee-a340-0242ac140007"
+EXTERNAL_REF_EXCAVATION_VALUE = "9a383c95-b795-4d76-957a-39f84bcee49e"
 
 STATUS_NODEGROUP = "ee5947c6-48b2-11ee-abec-0242ac140007"
 STATUS_NODE = "fb18edd0-48b8-11ee-84da-0242ac140007"
@@ -41,32 +43,35 @@ def license_number_format(year, index):
 
 
 def get_latest_license_number(license_instance_id):
-    latest_license = None
+    latest_license_number_tile = None
     try:
-        latest_license = (
-            Resource.objects.filter(graph_id=LICENSE_GRAPH_ID)
-            .exclude(resourceinstanceid=license_instance_id)
-            .latest("createdtime")
+        external_ref_number_exists = {
+            f"data__{EXTERNAL_REF_NUMBER_NODE}__isnull": False,
+            f"data__{EXTERNAL_REF_NUMBER_NODE}__exact": "",
+        }
+        query_result = Tile.objects.filter(
+            ~Q(**external_ref_number_exists),
+            nodegroup_id=EXTERNAL_REF_NODEGROUP,
+            data__contains={
+                # Check external reference source for 'Excavation'
+                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE
+            },
+        ).exclude(resourceinstance_id=license_instance_id)
+        query_result = query_result.annotate(
+            most_recent=Max("resourceinstance__createdtime")
         )
+        query_result = query_result.order_by("-most_recent")
+        latest_license_number_tile = query_result.first()
     except Resource.DoesNotExist:
         return
 
-    resource_instance_id = str(latest_license.resourceinstanceid)
-    latest_license_number_tile = Tile.objects.filter(
-        resourceinstance_id=resource_instance_id,
-        nodegroup_id=EXTERNAL_REF_NODEGROUP,
-        data__contains={
-            # Check external reference source for 'Excavation'
-            EXTERNAL_REF_SOURCE_NODE: "9a383c95-b795-4d76-957a-39f84bcee49e"
-        },
-    ).first()
-
-    license_number = (
+    latest_license_number = (
         latest_license_number_tile.data.get(EXTERNAL_REF_NUMBER_NODE)
         .get("en")
         .get("value")
-        .split("/")
     )
+    print("Previous license number: ", latest_license_number)
+    license_number = latest_license_number.split("/")
     return {"year": license_number[1], "index": int(license_number[2])}
 
 
@@ -125,7 +130,7 @@ def generate_license_number(license_instance_id, attempts=0):
                     "en": {"direction": "ltr", "value": license_number}
                 },
                 # Check external reference source for 'Excavation'
-                EXTERNAL_REF_SOURCE_NODE: "9a383c95-b795-4d76-957a-39f84bcee49e",
+                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
             },
         ).first()
     except Exception as e:
@@ -192,12 +197,12 @@ class LicenseNumberFunction(BaseFunction):
                         "en": {"direction": "ltr", "value": license_number}
                     },
                     # Set external reference source as 'Excavation'
-                    EXTERNAL_REF_SOURCE_NODE: "9a383c95-b795-4d76-957a-39f84bcee49e",
+                    EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
                     # Set empty value for rich text widget
                     EXTERNAL_REF_NOTE_NODE: {"en": {"value": "", "direction": "ltr"}},
                 },
             )
-            # Configure the license name with the number included
+            # Configure the license name with the license number included
             license_name_tile = Tile.objects.get(
                 resourceinstance_id=resource_instance_id,
                 nodegroup_id=LICENSE_NAME_NODEGROUP,
