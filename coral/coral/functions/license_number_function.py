@@ -6,24 +6,34 @@ import datetime
 # ResourceInstance - arches/arches/app/models/models.py
 # an example of post_save() - arches/arches/app/models/tile.py
 
+
+LICENSE_GRAPH_ID = "cc5da227-24e7-4088-bb83-a564c4331efd"
+LICENSE_NAME_NODEGROUP = "59d65ec0-48b9-11ee-84da-0242ac140007"
+LICENSE_NAME_NODE = "59d6676c-48b9-11ee-84da-0242ac140007"
+
+SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
+SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
+
+EXTERNAL_REF_NODEGROUP = "280b6cfc-4e4d-11ee-a340-0242ac140007"
+EXTERNAL_REF_SOURCE_NODE = "280b7a9e-4e4d-11ee-a340-0242ac140007"
+EXTERNAL_REF_NUMBER_NODE = "280b75bc-4e4d-11ee-a340-0242ac140007"
+EXTERNAL_REF_NOTE_NODE = "280b78fa-4e4d-11ee-a340-0242ac140007"
+
+STATUS_NODEGROUP = "ee5947c6-48b2-11ee-abec-0242ac140007"
+STATUS_NODE = "fb18edd0-48b8-11ee-84da-0242ac140007"
+STATUS_FINAL_VALUE = "8c454982-c470-437d-a9c6-87460b07b3d9"
+
 details = {
     "functionid": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
     "name": "License Number",
     "type": "node",
     "description": "Automatically generates a new license number after checking the database",
     "defaultconfig": {
-        "triggering_nodegroups": ["991c3c74-48b6-11ee-85af-0242ac140007"]
+        "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, STATUS_NODEGROUP]
     },
     "classname": "LicenseNumberFunction",
     "component": "",
 }
-
-LICENSE_GRAPH_ID = "cc5da227-24e7-4088-bb83-a564c4331efd"
-
-EXTERNAL_REF_NODEGROUP = "280b6cfc-4e4d-11ee-a340-0242ac140007"
-EXTERNAL_REF_SOURCE_NODE = "280b7a9e-4e4d-11ee-a340-0242ac140007"
-EXTERNAL_REF_NUMBER_NODE = "280b75bc-4e4d-11ee-a340-0242ac140007"
-EXTERNAL_REF_NOTE_NODE = "280b78fa-4e4d-11ee-a340-0242ac140007"
 
 
 def license_number_format(year, index):
@@ -132,6 +142,50 @@ def generate_license_number(license_instance_id, attempts=0):
 class LicenseNumberFunction(BaseFunction):
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
+
+        print("tile: ", tile)
+        print("tile.nodegroup: ", tile.nodegroup)
+
+        tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
+        print("tile_nodegroup_id: ", tile_nodegroup_id)
+
+        if tile_nodegroup_id == SYSTEM_REF_NODEGROUP:
+            status_tile = None
+            try:
+                status_tile = Tile.objects.filter(
+                    resourceinstance_id=resource_instance_id,
+                    nodegroup_id=STATUS_NODEGROUP,
+                ).first()
+                print("status_tile: ", status_tile)
+            except Resource.DoesNotExist:
+                status_tile = None
+
+            if not status_tile:
+                print("status_tile does not exist")
+                app_id = (
+                    tile.data.get(SYSTEM_REF_RESOURCE_ID_NODE).get("en").get("value")
+                )
+                # Set the licese name to use the app id
+                Tile.objects.get_or_create(
+                    resourceinstance_id=resource_instance_id,
+                    nodegroup_id=LICENSE_NAME_NODEGROUP,
+                    data={
+                        LICENSE_NAME_NODE: {
+                            "en": {
+                                "direction": "ltr",
+                                "value": f"Excavation License {app_id}",
+                            }
+                        }
+                    },
+                )
+                return
+
+        print("passed checks")
+
+        if tile_nodegroup_id == STATUS_NODEGROUP:
+            if tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
+                return
+
         license_number = generate_license_number(resource_instance_id)
 
         if not license_number:
@@ -155,9 +209,9 @@ class LicenseNumberFunction(BaseFunction):
             # Configure the license name with the number included
             Tile.objects.get_or_create(
                 resourceinstance_id=resource_instance_id,
-                nodegroup_id="59d65ec0-48b9-11ee-84da-0242ac140007",
+                nodegroup_id=LICENSE_NAME_NODEGROUP,
                 data={
-                    "59d6676c-48b9-11ee-84da-0242ac140007": {
+                    LICENSE_NAME_NODE: {
                         "en": {
                             "direction": "ltr",
                             "value": f"Excavation License {license_number}",
