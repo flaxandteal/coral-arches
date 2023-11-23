@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+>
+  <skos:ConceptScheme rdf:about="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d">
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/f4e2cec4-e9e1-4f35-9ec0-015c642883d2">
+        <skos:prefLabel xml:lang="en">
+        {"id": "f8dcf283-6445-4d88-a0d1-dea9e82770dc", "value": "Listed Building Consent"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fd4dcb3b-9d73-4441-96ca-215783471def">
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "f0923333-fcf3-4c62-bde9-2d36b4f96df0", "value": "Pre Application Discussion"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fc17ed6f-ba77-4e69-a175-494fd1d19f9f">
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "f485b136-ce58-4d36-898e-5aae1f1cfcc4", "value": "General Permitted Development Order"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fcf7d018-6042-4961-a794-9d6690981731">
+        <skos:prefLabel xml:lang="en">
+        {"id": "f32c503c-1ef8-40fb-aebf-21eee475315b", "value": "Discharge of conditions"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/f96d1f54-5029-491d-826d-c12c3344d5df">
+        <skos:prefLabel xml:lang="en">
+        {"id": "f03a27ae-41fa-4875-a525-e9c9559b73a9", "value": "Environmental Impact Assessment Consultation"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fa6d1f54-5029-491d-826d-c12c3344d5df">
+        <skos:prefLabel xml:lang="en">
+        {"id": "fa3a27ae-41fa-4875-a525-e9c9559b73a9", "value": "Environmental Impact Assessment Determination"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fa6d1f54-8489-491d-826d-c12c3344d5df">
+        <skos:prefLabel xml:lang="en">
+        {"id": "fa3a27ae-41fa-8489-a525-e9c9559b73a9", "value": "Other consents"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fa6d1f54-9271-491d-826d-c12c3344d5df">
+        <skos:prefLabel xml:lang="en">
+        {"id": "fa3a27ae-41fa-9271-a525-e9c9559b73a9", "value": "District Council error"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fa6d1f54-1441-491d-826d-c12c3344d5df">
+        <skos:prefLabel xml:lang="en">
+        {"id": "fa3a27ae-41fa-1441-a525-e9c9559b73a9", "value": "IT error"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/f5b79f83-7d42-4c15-b0cc-16c214166b8d"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <dcterms:title xml:lang="en">
+    {"id": "f47267f8-8a5f-4c6a-a172-45f5c06f33ce", "value": "Planning Categories"}
+    </dcterms:title>
+  </skos:ConceptScheme>
+</rdf:RDF>

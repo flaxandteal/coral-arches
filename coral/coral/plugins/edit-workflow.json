@@ -20,6 +20,12 @@
         "setupFunction": "loadArchiveData"
       },
       {
+        "slug": "assign-consultation-workflow",
+        "name": "Assign Consultation",
+        "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
+        "setupFunction": "loadAssignConsultationData"
+      },
+      {
         "slug": "hm-consultation-response-workflow",
         "name": "HM Planning Consultation Response",
         "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
