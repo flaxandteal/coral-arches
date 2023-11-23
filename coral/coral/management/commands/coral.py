@@ -173,6 +173,9 @@ class Command(BaseCommand):
             self.reload_plugins_widgets()
 
     def reload_plugins_widgets(self, *args, **options):
+        # TODO: Needs to validate the difference beween arches plugins/widgets
+        # to avoid using an array of arches plugins/widgets in special cases
+
         registered_plugins = []
         registered_widgets = []
         try:
