@@ -67,7 +67,7 @@ jobs:
           if [[ $merge_message =~ "feature" ]]; then
             new_version=$(echo "$current_version" | awk -F'.' -v OFS='.' '{$2 = $2 + 1; print}')
           elif [[ $merge_message =~ "bug" ]]; then
-            new_version="0.$(echo $current_version | cut -d'.' -f2).$(( ${current_version##*.} + 1 ))"
+            new_version="${current_version:0:1}.$(echo $current_version | cut -d'.' -f2).$(( ${current_version##*.} + 1 ))"
           elif [[ $merge_message =~ "release" ]]; then
             new_version="$(( ${current_version%%.*} + 1 )).0.0"
           else
