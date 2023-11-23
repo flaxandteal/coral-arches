@@ -72,7 +72,6 @@ define([
           })
         };
       });
-      console.log(JSON.stringify(componentData));
       return componentData;
     };
 
@@ -332,7 +331,6 @@ define([
         };
       });
       Object.entries(manyTilesManagedNodegroups).forEach(([key, value]) => {
-        console.log('progres before fail', key, value);
         componentData[key] = {
           value: JSON.stringify(value)
         };
