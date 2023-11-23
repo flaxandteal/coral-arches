@@ -100,23 +100,23 @@ define([
                     labels: [['Cross Reference', 'CM Reference']]
                   }
                 },
-                {
-                  componentName: 'widget-labeller',
-                  uniqueInstanceName: 'license-no',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: [
-                      '280b78fa-4e4d-11ee-a340-0242ac140007',
-                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
-                      '280b7238-4e4d-11ee-a340-0242ac140007'
-                    ],
-                    labels: [['Cross Reference', 'License Number']]
-                  }
-                },
+                // {
+                //   componentName: 'widget-labeller',
+                //   uniqueInstanceName: 'license-no',
+                //   tilesManaged: 'one',
+                //   parameters: {
+                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                //     nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+                //     tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
+                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                //     hiddenNodes: [
+                //       '280b78fa-4e4d-11ee-a340-0242ac140007',
+                //       '280b7a9e-4e4d-11ee-a340-0242ac140007',
+                //       '280b7238-4e4d-11ee-a340-0242ac140007'
+                //     ],
+                //     labels: [['Cross Reference', 'License Number']]
+                //   }
+                // },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'app-contacts',
