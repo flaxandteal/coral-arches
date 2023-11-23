@@ -142,12 +142,7 @@ def generate_license_number(license_instance_id, attempts=0):
 class LicenseNumberFunction(BaseFunction):
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
-
-        print("tile: ", tile)
-        print("tile.nodegroup: ", tile.nodegroup)
-
         tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
-        print("tile_nodegroup_id: ", tile_nodegroup_id)
 
         if tile_nodegroup_id == SYSTEM_REF_NODEGROUP:
             status_tile = None
@@ -156,12 +151,10 @@ class LicenseNumberFunction(BaseFunction):
                     resourceinstance_id=resource_instance_id,
                     nodegroup_id=STATUS_NODEGROUP,
                 ).first()
-                print("status_tile: ", status_tile)
             except Resource.DoesNotExist:
                 status_tile = None
 
             if not status_tile:
-                print("status_tile does not exist")
                 app_id = (
                     tile.data.get(SYSTEM_REF_RESOURCE_ID_NODE).get("en").get("value")
                 )
@@ -179,8 +172,6 @@ class LicenseNumberFunction(BaseFunction):
                     },
                 )
                 return
-
-        print("passed checks")
 
         if tile_nodegroup_id == STATUS_NODEGROUP:
             if tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
@@ -207,18 +198,14 @@ class LicenseNumberFunction(BaseFunction):
                 },
             )
             # Configure the license name with the number included
-            Tile.objects.get_or_create(
+            license_name_tile = Tile.objects.get(
                 resourceinstance_id=resource_instance_id,
                 nodegroup_id=LICENSE_NAME_NODEGROUP,
-                data={
-                    LICENSE_NAME_NODE: {
-                        "en": {
-                            "direction": "ltr",
-                            "value": f"Excavation License {license_number}",
-                        }
-                    }
-                },
             )
+            license_name_tile.data[LICENSE_NAME_NODE]["en"][
+                "value"
+            ] = f"Excavation License {license_number}"
+            license_name_tile.save()
         except Exception as e:
             print("Failed saving license number external ref or license name: ", e)
             raise e
