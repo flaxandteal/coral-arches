@@ -1,13 +1,12 @@
 {
   "pluginid": "7089fecd-c110-4b03-bbff-5f3cc78a92b8",
-  "name": "Archive Cataloging",
-    "icon": "fa fa-check",
-    "component": "views/components/plugins/archive-catalog-workflow",
-    "componentname": "archive-catalog-workflow",
-    "config": {
-      "show": false
-    },
-    "slug": "archive-catalog-workflow",
-    "sortorder": 0
-  }
-  
+  "name": "Archive Cataloguing",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/archive-catalog-workflow",
+  "componentname": "archive-catalog-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "archive-catalog-workflow",
+  "sortorder": 0
+}
