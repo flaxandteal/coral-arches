@@ -88,9 +88,17 @@ def generate_license_number(license_instance_id, attempts=0):
 
     ext_ref_tile = None
     try:
-        ext_ref_tile = Tile.objects.filter(
-            resourceinstance_id=license_instance_id, nodegroup_id=EXTERNAL_REF_NODEGROUP
-        ).first()
+        ext_ref_number_not_generated = {
+            f"data__{EXTERNAL_REF_NUMBER_NODE}__en__value__exact": "Not generated",
+        }
+        ext_ref_tile = (
+            Tile.objects.filter(
+                resourceinstance_id=license_instance_id,
+                nodegroup_id=EXTERNAL_REF_NODEGROUP,
+            )
+            .exclude(**ext_ref_number_not_generated)
+            .first()
+        )
     except Exception as e:
         print("Failed checking if license number tile already exists!")
         return retry()
