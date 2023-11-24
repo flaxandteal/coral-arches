@@ -45,24 +45,28 @@ def license_number_format(year, index):
 def get_latest_license_number(license_instance_id):
     latest_license_number_tile = None
     try:
-        external_ref_number_exists = {
-            f"data__{EXTERNAL_REF_NUMBER_NODE}__isnull": False,
-            f"data__{EXTERNAL_REF_NUMBER_NODE}__exact": "",
+        ext_ref_number_generated = {
+            f"data__{EXTERNAL_REF_NUMBER_NODE}__en__value__icontains": "AE",
         }
         query_result = Tile.objects.filter(
-            ~Q(**external_ref_number_exists),
             nodegroup_id=EXTERNAL_REF_NODEGROUP,
             data__contains={
                 # Check external reference source for 'Excavation'
-                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE
+                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
             },
+            **ext_ref_number_generated,
         ).exclude(resourceinstance_id=license_instance_id)
         query_result = query_result.annotate(
             most_recent=Max("resourceinstance__createdtime")
         )
         query_result = query_result.order_by("-most_recent")
         latest_license_number_tile = query_result.first()
-    except Resource.DoesNotExist:
+    except Exception as e:
+        print(f"Failed querying for previous license number tile: {e}")
+        raise e
+
+    print("latest_license_number_tile: ", latest_license_number_tile)
+    if not latest_license_number_tile:
         return
 
     latest_license_number = (
@@ -70,7 +74,7 @@ def get_latest_license_number(license_instance_id):
         .get("en")
         .get("value")
     )
-    print("Previous license number: ", latest_license_number)
+    print(f"Previous license number: {latest_license_number}")
     license_number = latest_license_number.split("/")
     return {"year": license_number[1], "index": int(license_number[2])}
 
@@ -88,19 +92,19 @@ def generate_license_number(license_instance_id, attempts=0):
 
     ext_ref_tile = None
     try:
-        ext_ref_number_not_generated = {
-            f"data__{EXTERNAL_REF_NUMBER_NODE}__en__value__exact": "Not generated",
+        ext_ref_number_generated = {
+            f"data__{EXTERNAL_REF_NUMBER_NODE}__en__value__icontains": "AE",
         }
-        ext_ref_tile = (
-            Tile.objects.filter(
-                resourceinstance_id=license_instance_id,
-                nodegroup_id=EXTERNAL_REF_NODEGROUP,
-            )
-            .exclude(**ext_ref_number_not_generated)
-            .first()
-        )
+        ext_ref_tile = Tile.objects.filter(
+            resourceinstance_id=license_instance_id,
+            nodegroup_id=EXTERNAL_REF_NODEGROUP,
+            data__contains={
+                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
+            },
+            **ext_ref_number_generated,
+        ).first()
     except Exception as e:
-        print("Failed checking if license number tile already exists!")
+        print(f"Failed checking if license number tile already exists: {e}")
         return retry()
 
     if ext_ref_tile:
@@ -111,7 +115,7 @@ def generate_license_number(license_instance_id, attempts=0):
     try:
         latest_license_number = get_latest_license_number(license_instance_id)
     except Exception as e:
-        print("Failed getting the previously used license number: ", e)
+        print(f"Failed getting the previously used license number: {e}")
         return retry()
 
     year = str(datetime.datetime.now().year)
@@ -142,7 +146,7 @@ def generate_license_number(license_instance_id, attempts=0):
             },
         ).first()
     except Exception as e:
-        print("Failed validating license number: ", e)
+        print(f"Failed validating license number: {e}")
         return retry()
 
     if ext_ref_tile:
@@ -220,7 +224,7 @@ class LicenseNumberFunction(BaseFunction):
             ] = f"Excavation License {license_number}"
             license_name_tile.save()
         except Exception as e:
-            print("Failed saving license number external ref or license name: ", e)
+            print(f"Failed saving license number external ref or license name: {e}")
             raise e
 
         return
