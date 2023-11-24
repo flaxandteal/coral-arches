@@ -7,6 +7,7 @@ define([
   'views/components/workflows/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
+  'views/components/workflows/licensing-workflow/fetch-generated-license-number',
   'views/components/workflows/related-document-upload'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -147,7 +148,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-generated-license-number',
                   uniqueInstanceName: 'app-status',
                   tilesManaged: 'one',
                   parameters: {
