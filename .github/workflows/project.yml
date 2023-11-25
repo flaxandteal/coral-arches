@@ -69,8 +69,6 @@ jobs:
     needs: [Build-Arches]
     outputs:
       image: ${{ steps.extract_image_name.outputs.image_name }}
-    container:
-      image: docker:dind
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -208,8 +206,6 @@ jobs:
   Build-Arches-Final:
     needs: [Build-Arches-Static, Build-Arches]
     runs-on: [self-hosted]
-    container:
-      image: docker:dind
     outputs:
       image: ${{ steps.extract_image_name.outputs.image_name }}
     steps:
