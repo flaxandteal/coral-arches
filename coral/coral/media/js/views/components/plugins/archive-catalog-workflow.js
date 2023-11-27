@@ -96,7 +96,8 @@ define([
                       'e31709dd-b469-11ea-ae1c-f875a44e0e11',
                       'c69aa19d-fe7b-11ea-9e10-f875a44e0e11',
                       '3001afdf-b46a-11ea-a528-f875a44e0e11'
-                    ]
+                    ],
+                    hiddenCard: true
                   }
                 }
               ]
