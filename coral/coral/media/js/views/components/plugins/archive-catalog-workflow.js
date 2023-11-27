@@ -43,7 +43,7 @@ define([
         {
           title: 'Archive Source Details',
           name: 'app-details-step',
-          required: false,
+          required: true,
           workflowstepclass: 'workflow-form-component',
           layoutSections: [
             {
