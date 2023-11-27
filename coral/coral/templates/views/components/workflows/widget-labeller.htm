@@ -1,4 +1,6 @@
-<!-- ko component: {
+<!-- ko if: !hiddenCard -->
+<div>
+  <!-- ko component: {
     name: 'default-card',
     params: {
         card: ko.unwrap(card),
@@ -12,4 +14,6 @@
         pageVm: $data.pageVm
     }
 } -->
+  <!-- /ko -->
+</div>
 <!-- /ko -->
