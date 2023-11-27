@@ -148,16 +148,6 @@ define([
                   }
                 },
                 {
-                  componentName: 'fetch-generated-license-number',
-                  uniqueInstanceName: 'app-status',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                  }
-                },
-                {
                   componentName: 'widget-labeller',
                   uniqueInstanceName: 'excavation-type',
                   tilesManaged: 'one',
@@ -526,10 +516,31 @@ define([
         {
           title: 'Excavation Report',
           name: 'excavation-report-step',
+          workflowstepclass: 'workflow-form-component',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
+                {
+                  componentName: 'fetch-generated-license-number',
+                  uniqueInstanceName: 'app-status',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'report-info',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
                 {
                   /**
                    * Using custom component to handle the creation of Digital
@@ -545,16 +556,6 @@ define([
                     resourceModelId: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
                     fileObjectNamePrefix: 'Site report files for '
-                  }
-                },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'report-info',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 }
               ]
