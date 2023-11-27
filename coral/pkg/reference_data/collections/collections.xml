@@ -48244,9 +48244,6 @@
   </skos:Collection>
   <!-- Planning Category-->
     <skos:Collection rdf:about="http://arches:8000/f1c3237e-69fc-4cce-a12e-04ef1e053739">
-    <skos:member>
-      <skos:Concept rdf:about="http://arches:8000/f4e2cec4-e9e1-8a35-9ec0-015c642883d2"/>
-    </skos:member>
     <skos:prefLabel xml:lang="en">
     {"id": "f67e07bb-b492-478c-8d85-fab34c91389f", "value": "Planning Categories"}
     </skos:prefLabel>
