@@ -21,7 +21,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'widget-labeller',
                   uniqueInstanceName: 'app-id',
                   tilesManaged: 'one',
                   parameters: {
@@ -32,7 +32,8 @@ define([
                       '3bdc39fb-9a93-11ea-b4fe-f875a44e0e11',
                       '3bdc39fe-9a93-11ea-a936-f875a44e0e11',
                       '3bdc3a00-9a93-11ea-8254-f875a44e0e11'
-                    ]
+                    ],
+                    labels: [['ResourceID', 'File ID (key)']]
                   }
                 }
               ]
@@ -49,7 +50,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'widget-labeller',
-                  uniqueInstanceName: 'site-name',
+                  uniqueInstanceName: 'source-title',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b07cfa6f-894d-11ea-82aa-f875a44e0e11',
@@ -59,7 +60,36 @@ define([
                       '145f961a-9ad2-11ea-948a-f875a44e0e11',
                       '145f9618-9ad2-11ea-925e-f875a44e0e11'
                     ],
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    labels: [['Archive Source Name', 'File title']],
+                    prefilledNodes: [
+                      [
+                        '145f9618-9ad2-11ea-925e-f875a44e0e11',
+                        '500a41d4-e52b-4448-9c08-fe9f0de7d8da'
+                      ]
+                    ]
+                  }
+                },
+                {
+                  componentName: 'widget-labeller',
+                  uniqueInstanceName: 'source-subtitle',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b07cfa6f-894d-11ea-82aa-f875a44e0e11',
+                    nodegroupid: '145f9615-9ad2-11ea-b4d3-f875a44e0e11',
+                    hiddenNodes: [
+                      '145f9619-9ad2-11ea-83ec-f875a44e0e11',
+                      '145f961a-9ad2-11ea-948a-f875a44e0e11',
+                      '145f9618-9ad2-11ea-925e-f875a44e0e11'
+                    ],
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    labels: [['Archive Source Name', 'Subtitle']],
+                    prefilledNodes: [
+                      [
+                        '145f9618-9ad2-11ea-925e-f875a44e0e11',
+                        'c109d688-2ff4-45c5-873c-1a2ebc93d4fa'
+                      ]
+                    ]
                   }
                 },
                 {
@@ -142,6 +172,30 @@ define([
                   parameters: {
                     graphid: 'b07cfa6f-894d-11ea-82aa-f875a44e0e11',
                     nodegroupid: 'c69aa19d-fe7b-11ea-9e10-f875a44e0e11',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    parenttileid: "['app-details-step']['archive-holding'][0]['tileId']",
+                    labels: [['Repository owner', 'Responsible Team(s)']]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Repository Loan History',
+          name: 'loan-history',
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'source-loan-history',
+                  tilesManaged: 'many',
+                  parameters: {
+                    graphid: 'b07cfa6f-894d-11ea-82aa-f875a44e0e11',
+                    nodegroupid: '557ea8f6-8d37-11ee-9a1b-0242ac130004',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     parenttileid: "['app-details-step']['archive-holding'][0]['tileId']"
                   }
