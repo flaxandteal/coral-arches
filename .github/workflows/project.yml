@@ -122,6 +122,7 @@ jobs:
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
+            PUBLIC_SERVER_ADDRESS=http://localhost:8000/
       - name: Extract image name
         id: extract_image_name
         run: |
