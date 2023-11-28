@@ -753,35 +753,6 @@
               },
               {
                   "active": true,
-                  "cardid": "9b532b13-5ff5-4a3a-b4b3-55d7d987ea1e",
-                  "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                  "config": null,
-                  "constraints": [],
-                  "cssclass": null,
-                  "description": {
-                      "en": ""
-                  },
-                  "graph_id": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
-                  "helpenabled": false,
-                  "helptext": {
-                      "en": ""
-                  },
-                  "helptitle": {
-                      "en": ""
-                  },
-                  "instructions": {
-                      "en": ""
-                  },
-                  "is_editable": true,
-                  "name": {
-                      "en": "New Node"
-                  },
-                  "nodegroup_id": "c33fddfe-8541-11ee-8217-0242ac140002",
-                  "sortorder": null,
-                  "visible": true
-              },
-              {
-                  "active": true,
                   "cardid": "a4438094-f7dd-4203-81e6-af6c533e1a8c",
                   "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                   "config": null,
@@ -10806,12 +10777,6 @@
                   "cardinality": "1",
                   "legacygroupid": null,
                   "nodegroupid": "c0c98765-b217-443d-ba91-cb720cd630aa",
-                  "parentnodegroup_id": null
-              },
-              {
-                  "cardinality": "1",
-                  "legacygroupid": null,
-                  "nodegroupid": "c33fddfe-8541-11ee-8217-0242ac140002",
                   "parentnodegroup_id": null
               },
               {
