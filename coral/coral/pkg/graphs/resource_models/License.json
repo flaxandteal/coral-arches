@@ -183,7 +183,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "File(s)"
                     },
@@ -246,7 +246,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Communications"
                     },
@@ -776,7 +776,7 @@
                         "defaultValue": {
                             "en": {
                                 "direction": "ltr",
-                                "value": null
+                                "value": "Generated once status is \"Final\""
                             }
                         },
                         "i18n_properties": [
@@ -787,7 +787,7 @@
                         "placeholder": {
                             "en": "Enter text"
                         },
-                        "uneditable": false,
+                        "uneditable": true,
                         "width": "100%"
                     },
                     "id": "280b8070-4e4d-11ee-a340-0242ac140007",
@@ -1839,6 +1839,7 @@
                             "placeholder"
                         ],
                         "label": "Applicant",
+                        "limit": 6,
                         "placeholder": {
                             "en": ""
                         }
@@ -5089,6 +5090,17 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "991c3c74-48b6-11ee-85af-0242ac140007",
+                            "ee5947c6-48b2-11ee-abec-0242ac140007"
+                        ]
+                    },
+                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "4d2b7ec7-a91f-48ee-bdbf-e5fbe946b2fb"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",
@@ -5107,17 +5119,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "20fe5200-7cb3-4fc7-9be2-2a06fa9b1f1d"
-                },
-                {
-                    "config": {
-                        "triggering_nodegroups": [
-                            "991c3c74-48b6-11ee-85af-0242ac140007"
-                        ]
-                    },
-                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "d89494ef-a50e-4060-9bb9-fb9abe75ab02"
+                    "id": "9b6e7fa2-e452-4fed-9163-1455265ad233"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -9019,7 +9021,13 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": null,
+            "publication": {
+                "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                "notes": "Added default text for license number field to say generated and disabled editing",
+                "publicationid": "bdb8e490-8d41-11ee-8b59-0242ac190008",
+                "published_time": "2023-11-27T16:26:39.046",
+                "user_id": 1
+            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
