@@ -14,6 +14,12 @@
         "setupFunction": "loadLicenseData"
       },
       {
+        "slug": "archive-catalog-workflow",
+        "name": "Archive and Cataloguing",
+        "graphId": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+        "setupFunction": "loadArchiveData"
+      },
+      {
         "slug": "assign-consultation-workflow",
         "name": "Assign Consultation",
         "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",

@@ -2,13 +2,14 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/licensing-workflow.htm',
+  'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
-  'views/components/workflows/licensing-workflow/widget-labeller',
+  'views/components/workflows/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
+  'views/components/workflows/licensing-workflow/fetch-generated-license-number',
   'views/components/workflows/related-document-upload'
-], function (ko, arches, EditableWorkflow, licensingWorkflowTemplate) {
+], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
       this.componentName = 'licensing-workflow';
@@ -107,7 +108,6 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    tileid: "['init-step']['app-id'][0]['licenseNumberTileId']",
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
                       '280b78fa-4e4d-11ee-a340-0242ac140007',
@@ -144,16 +144,6 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                  }
-                },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'app-status',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 },
@@ -526,10 +516,31 @@ define([
         {
           title: 'Excavation Report',
           name: 'excavation-report-step',
+          workflowstepclass: 'workflow-form-component',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
+                {
+                  componentName: 'fetch-generated-license-number',
+                  uniqueInstanceName: 'app-status',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'report-info',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
                 {
                   /**
                    * Using custom component to handle the creation of Digital
@@ -545,16 +556,6 @@ define([
                     resourceModelId: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
                     fileObjectNamePrefix: 'Site report files for '
-                  }
-                },
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'report-info',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 }
               ]
@@ -620,6 +621,6 @@ define([
 
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: licensingWorkflowTemplate
+    template: workflowTemplate
   });
 });

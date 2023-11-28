@@ -48271,4 +48271,41 @@
     </skos:member>
   </skos:Collection>
   <!-- / -->
+  <!-- Planning Category-->
+    <skos:Collection rdf:about="http://arches:8000/f1c3237e-69fc-4cce-a12e-04ef1e053739">
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f4e2cec4-e9e1-8a35-9ec0-015c642883d2"/>
+    </skos:member>
+    <skos:prefLabel xml:lang="en">
+    {"id": "f67e07bb-b492-478c-8d85-fab34c91389f", "value": "Planning Categories"}
+    </skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="f4e2cec4-e9e1-4f35-9ec0-015c642883d2"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="fd4dcb3b-9d73-4441-96ca-215783471def"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="fc17ed6f-ba77-4e69-a175-494fd1d19f9f"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="fcf7d018-6042-4961-a794-9d6690981731"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="f96d1f54-5029-491d-826d-c12c3344d5df"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="fa6d1f54-5029-491d-826d-c12c3344d5df"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="fa6d1f54-8489-491d-826d-c12c3344d5df"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="fa6d1f54-9271-491d-826d-c12c3344d5df"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="fa6d1f54-1441-491d-826d-c12c3344d5df"/>
+    </skos:member>
+  </skos:Collection>
+
 </rdf:RDF>

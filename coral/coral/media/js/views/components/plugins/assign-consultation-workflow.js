@@ -2,10 +2,10 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/assign-consultation-workflow.htm',
+  'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/widget-labeller'
-], function (ko, arches, EditableWorkflow, assignConsultationWorkflowTemplate) {
+  'views/components/workflows/widget-labeller'
+], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('assign-consultation-workflow', {
     viewModel: function (params) {
       this.componentName = 'assign-consultation-workflow';
@@ -334,6 +334,6 @@ define([
       EditableWorkflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: assignConsultationWorkflowTemplate
+    template: workflowTemplate
   });
 });
