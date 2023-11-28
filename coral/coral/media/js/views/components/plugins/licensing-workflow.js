@@ -2,13 +2,13 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/licensing-workflow.htm',
+  'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
-  'views/components/workflows/licensing-workflow/widget-labeller',
+  'views/components/workflows/widget-labeller',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/related-document-upload'
-], function (ko, arches, EditableWorkflow, licensingWorkflowTemplate) {
+], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
       this.componentName = 'licensing-workflow';
@@ -620,6 +620,6 @@ define([
 
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: licensingWorkflowTemplate
+    template: workflowTemplate
   });
 });
