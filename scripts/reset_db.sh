@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # A full log of this script will be output to the file described below.
-LOG_FILE="reset_db.ansi"
+LOG_FILE="reset_db.log"
 exec &> >(tee "$LOG_FILE")
 
 docker rm -f ${ARCHES_FOLDER:-coral}_db_1
