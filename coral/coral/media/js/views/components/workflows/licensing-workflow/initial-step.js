@@ -24,7 +24,7 @@ define([
     self.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
     self.actResourceId = params.form.savedData()?.actResourceId;
     self.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
-    self.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
+    // self.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
     self.applicationId = '';
 
     self.licenseSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
@@ -50,7 +50,7 @@ define([
         const activityResponse = await saveActivitySystemRef();
         if (activityResponse.ok) {
           responses = await Promise.all([
-            getLicenseRefTileId(),
+            // getLicenseRefTileId(),
             saveActivityLocation(),
             saveRelationship()
           ]);
@@ -63,8 +63,8 @@ define([
               actSysRefTileId: self.actSysRefTileId,
               actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
               actResourceId: self.actResourceId,
-              actLocTileId: self.actLocTileId,
-              licenseNumberTileId: self.licenseNumberTileId
+              actLocTileId: self.actLocTileId
+              // licenseNumberTileId: self.licenseNumberTileId
             });
             params.form.complete(true);
             params.form.saving(false);
@@ -106,25 +106,25 @@ define([
       }
     };
 
-    const getLicenseRefTileId = async () => {
-      const response = await window.fetch(
-        arches.urls.api_resources(self.resourceId() + '?format=json&compact=false')
-      );
+    // const getLicenseRefTileId = async () => {
+    //   const response = await window.fetch(
+    //     arches.urls.api_resources(self.resourceId() + '?format=json&compact=false')
+    //   );
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.resource['External Cross References']) {
-          const licenseNumberRef = data.resource['External Cross References'].find((ref) => {
-            if (ref['External Cross Reference Source']['@value'] === 'Excavation') {
-              return ref;
-            }
-          });
-          self.licenseNumberTileId =
-            licenseNumberRef['External Cross Reference Number']['@tile_id'];
-        }
-      }
-      return response;
-    };
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     if (data.resource['External Cross References']) {
+    //       const licenseNumberRef = data.resource['External Cross References'].find((ref) => {
+    //         if (ref['External Cross Reference Source']['@value'] === 'Excavation') {
+    //           return ref;
+    //         }
+    //       });
+    //       self.licenseNumberTileId =
+    //         licenseNumberRef['External Cross Reference Number']['@tile_id'];
+    //     }
+    //   }
+    //   return response;
+    // };
 
     const saveActivitySystemRef = async () => {
       const actSystemRefTemplate = {
