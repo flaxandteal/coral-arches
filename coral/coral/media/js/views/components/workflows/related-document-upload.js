@@ -49,7 +49,6 @@ define([
       await self.tile().save();
       const digitalResourceNameTile = await saveDigitalResourceName();
       if (digitalResourceNameTile?.ok) {
-        console.log('logging self.tile(): ', self.tile());
         if (this.createRelationship()) {
           const relationship = await saveRelationship();
           if (!relationship?.ok) {
