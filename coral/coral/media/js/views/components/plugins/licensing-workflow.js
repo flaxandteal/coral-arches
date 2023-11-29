@@ -4,7 +4,7 @@ define([
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/licensing-workflow/initial-step',
-  'views/components/workflows/widget-labeller',
+  'views/components/workflows/default-card-util',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-license-number',
@@ -48,7 +48,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'site-name',
                   tilesManaged: 'one',
                   parameters: {
@@ -63,7 +63,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'planning-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -79,7 +79,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'cm-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -102,7 +102,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'license-no',
                   tilesManaged: 'one',
                   parameters: {
@@ -148,7 +148,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'excavation-type',
                   tilesManaged: 'one',
                   parameters: {
@@ -237,7 +237,8 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
+                  // componentName: 'default-card',
                   uniqueInstanceName: 'location-names',
                   tilesManaged: 'many',
                   parameters: {
@@ -265,7 +266,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'asset-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -290,7 +291,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'pow-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -315,7 +316,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'associated-activities',
                   tilesManaged: 'one',
                   parameters: {
@@ -326,7 +327,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'associated-site',
                   tilesManaged: 'one',
                   parameters: {
@@ -429,7 +430,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'decision-made-by',
                   tilesManaged: 'one',
                   parameters: {
@@ -453,7 +454,7 @@ define([
         //     {
         //       componentConfigs: [
         //         {
-        //           componentName: 'widget-labeller',
+        //           componentName: 'default-card-util',
         //           uniqueInstanceName: 'site-name',
         //           tilesManaged: 'one',
         //           parameters: {
@@ -469,7 +470,7 @@ define([
         //           }
         //         },
         //         {
-        //           componentName: 'widget-labeller',
+        //           componentName: 'default-card-util',
         //           uniqueInstanceName: 'license-no',
         //           tilesManaged: 'one',
         //           parameters: {
@@ -486,7 +487,7 @@ define([
         //           }
         //         },
         //         {
-        //           componentName: 'widget-labeller',
+        //           componentName: 'default-card-util',
         //           uniqueInstanceName: 'cm-ref',
         //           tilesManaged: 'one',
         //           parameters: {

@@ -50,7 +50,7 @@ define([
             {
               componentConfigs: [
                 // {
-                //     componentName: 'widget-labeller',
+                //     componentName: 'default-card-util',
                 //     uniqueInstanceName: 'excavation-artifact',
                 //     tilesManaged: 'one',
                 //     visible: false,
@@ -65,7 +65,7 @@ define([
                 //     },
                 // },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'excavation-archive',
                   tilesManaged: 'one',
                   visible: false,

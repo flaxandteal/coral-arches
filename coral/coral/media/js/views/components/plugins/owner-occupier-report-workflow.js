@@ -3,7 +3,7 @@ define([
   'arches',
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/widget-labeller',
+  'views/components/workflows/default-card-util',
   'views/components/workflows/owner-occupier-report-workflow/owner-occupier-report-init-step'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('owner-occupier-report-workflow', {

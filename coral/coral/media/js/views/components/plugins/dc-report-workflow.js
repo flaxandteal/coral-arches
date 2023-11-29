@@ -151,7 +151,7 @@ define([
                 //     },
                 // },
                 // {
-                //     componentName: 'widget-labeller',
+                //     componentName: 'default-card-util',
                 //     uniqueInstanceName: 'conservation-area', /* unique to step */
                 //     tilesManaged: 'one',
                 //     parameters: {
@@ -352,7 +352,7 @@ define([
         //         {
         //             componentConfigs: [
         //                 {
-        //                     componentName: 'widget-labeller',
+        //                     componentName: 'default-card-util',
         //                     uniqueInstanceName: 'location-info', /* unique to step */
         //                     tilesManaged: 'one',
         //                     parameters: {

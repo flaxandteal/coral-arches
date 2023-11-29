@@ -3,7 +3,7 @@ define([
   'arches',
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/widget-labeller'
+  'views/components/workflows/default-card-util'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('hm-consultation-response-workflow', {
     viewModel: function (params) {
@@ -43,7 +43,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'cm-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -70,7 +70,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'consultation-action',
                   tilesManaged: 'one',
                   parameters: {
@@ -89,7 +89,7 @@ define([
                   }
                 }
                 // {
-                //   componentName: 'widget-labeller',
+                //   componentName: 'default-card-util',
                 //   uniqueInstanceName: 'received-date',
                 //   tilesManaged: 'one',
                 //   parameters: {
@@ -136,7 +136,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'plan-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -172,7 +172,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'planning-area',
                   tilesManaged: 'one',
                   parameters: {

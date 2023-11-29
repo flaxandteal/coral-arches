@@ -4,7 +4,7 @@ define([
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/widget-labeller'
+  'views/components/workflows/default-card-util'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('assign-consultation-workflow', {
     viewModel: function (params) {
@@ -61,7 +61,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'plan-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -87,7 +87,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'cm-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -114,7 +114,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'received-date',
                   tilesManaged: 'one',
                   parameters: {
@@ -136,7 +136,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'entry-number',
                   tilesManaged: 'one',
                   parameters: {
@@ -158,7 +158,7 @@ define([
                 },
                 // todo classification
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'developent-type',
                   tilesManaged: 'one',
                   parameters: {
@@ -207,7 +207,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'planning-area',
                   tilesManaged: 'one',
                   parameters: {
@@ -217,7 +217,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'townland',
                   tilesManaged: 'one',
                   parameters: {
@@ -239,7 +239,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'related-activities',
                   tilesManaged: 'one',
                   parameters: {
@@ -249,7 +249,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'related-monuments',
                   tilesManaged: 'one',
                   parameters: {
@@ -315,7 +315,7 @@ define([
                  *  and have to label that as an action. It's possible HED decide they need both
                  */
                 // {
-                //   componentName: 'widget-labeller',
+                //   componentName: 'default-card-util',
                 //   uniqueInstanceName: 'consultation-action',
                 //   tilesManaged: 'one',
                 //   parameters: {

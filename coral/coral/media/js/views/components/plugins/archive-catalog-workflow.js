@@ -21,7 +21,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'app-id',
                   tilesManaged: 'one',
                   parameters: {
@@ -49,7 +49,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'source-title',
                   tilesManaged: 'one',
                   parameters: {
@@ -71,7 +71,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'source-subtitle',
                   tilesManaged: 'one',
                   parameters: {
@@ -93,7 +93,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'archive-type',
                   tilesManaged: 'one',
                   parameters: {
@@ -103,7 +103,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'archive-description',
                   tilesManaged: 'one',
                   parameters: {
@@ -114,7 +114,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'archive-holding',
                   tilesManaged: 'one',
                   parameters: {
@@ -143,7 +143,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'source-creation',
                   tilesManaged: 'one',
                   parameters: {
@@ -166,7 +166,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'source-location',
                   tilesManaged: 'one',
                   parameters: {
