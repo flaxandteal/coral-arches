@@ -48271,7 +48271,38 @@
     </skos:member>
   </skos:Collection>
   <!-- / -->
-  <!-- Planning Category-->
+  <!-- Development Types -->
+  <skos:Collection rdf:about="http://arches:8000/3428b649-de18-447a-9e6f-a623bb035c9b">
+    <skos:prefLabel xml:lang="en">
+    {"id": "4831a625-a736-4004-8778-f820cb08178d", "value": "Development Types"}
+    </skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-1ab1-9e6f-a623bb035c9b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-8664-9e6f-a623bb035c9b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-9220-9e6f-a623bb035c9b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-9f22-9e6f-a623bb035c9b"/>
+    </skos:member>
+        <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-8eac-9e6f-a623bb035c9b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-7be2-9e6f-a623bb035c9b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-6b40-9e6f-a623bb035c9b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b649-de18-dd00-9e6f-a623bb035c9b"/>
+    </skos:member>
+  </skos:Collection>
+  <!-- / -->  
+  <!-- Planning Category--><!-- Planning Category-->
     <skos:Collection rdf:about="http://arches:8000/f1c3237e-69fc-4cce-a12e-04ef1e053739">
     <skos:member>
       <skos:Concept rdf:about="http://arches:8000/f4e2cec4-e9e1-8a35-9ec0-015c642883d2"/>

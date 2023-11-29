@@ -140,6 +140,17 @@ define([
           nodegroupId += '|plan-ref';
         }
 
+        const areaType = tile.data['f055d584-8e04-11ee-85e6-0242ac190002'];
+        if (areaType === '24ca1cb9-c4d1-4cbc-9990-df74e6eb346e') {
+          nodegroupId += '|townland';
+        }
+        if (areaType === '74e2eb43-49fc-41e9-8d61-388c01878573') {
+          nodegroupId += '|county';
+        }
+        if (areaType === 'b66856da-9c70-4a88-ad56-00e68dab16a4') {
+          nodegroupId += '|distric-council';
+        }
+
         componentData[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
