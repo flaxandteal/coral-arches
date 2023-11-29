@@ -220,7 +220,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'app-reason',
                   tilesManaged: 'one',
                   parameters: {
@@ -254,7 +254,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'location-data-tile',
                   tilesManaged: 'one',
                   parameters: {
@@ -327,7 +327,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'county',
                   tilesManaged: 'one',
                   parameters: {
@@ -355,7 +355,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'distric-council',
                   tilesManaged: 'one',
                   parameters: {
