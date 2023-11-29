@@ -13,12 +13,12 @@ define([
     self.tile()?.dirty.subscribe(function (val) {
       self.dirty(val);
     });
+    self.tiles([self.tile()]);
+
     this.graphid = params.graphid;
     this.graphids = params.graphids ? params.graphids : [this.graphid];
 
-    this.pageVm = params.pageVm;
-
-    this.hiddenCard = params.hiddenCard ? true : false;
+    this.hiddenCard = params?.hiddenCard || false;
 
     if (this.componentData.parameters.prefilledNodes) {
       this.componentData.parameters.prefilledNodes?.forEach((prefill) => {
@@ -40,18 +40,6 @@ define([
           }
         });
       });
-
-    params.form.save = async () => {
-      await self.tile().save();
-      params.form.savedData({
-        tileData: koMapping.toJSON(self.tile().data),
-        tileId: self.tile().tileid,
-        resourceInstanceId: self.tile().resourceinstance_id,
-        nodegroupId: self.tile().nodegroup_id
-      });
-      params.form.complete(true);
-      params.form.saving(false);
-    };
   }
 
   ko.components.register('widget-labeller', {
