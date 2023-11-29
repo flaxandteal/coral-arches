@@ -121,7 +121,11 @@ define([
         stepConfig.layoutSections = stepConfig.layoutSections.map((layoutSection) => {
           layoutSection.componentConfigs = layoutSection.componentConfigs.map((config) => {
             Object.entries(config.parameters).forEach(([key, value]) => {
-              if (value.includes('[') && value.includes(']')) {
+              if (
+                (typeof value === 'string' || value instanceof String) &&
+                value.includes('[') &&
+                value.includes(']')
+              ) {
                 const isSafe = this.safeArrayAccesses.some((keyIdx) => value.includes(keyIdx));
                 if (!isSafe) {
                   delete config.parameters[key];
