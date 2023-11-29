@@ -19,6 +19,8 @@ define([
 
     this.pageVm = params.pageVm;
 
+    this.hiddenCard = params.hiddenCard ? true : false;
+
     if (this.componentData.parameters.prefilledNodes) {
       this.componentData.parameters.prefilledNodes?.forEach((prefill) => {
         Object.keys(self.tile().data).forEach((node) => {

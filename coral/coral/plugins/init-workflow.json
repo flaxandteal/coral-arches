@@ -63,6 +63,15 @@
         "desc": "Create or edit a License for an Excavation Activity"
       },
       {
+        "workflowid": "7089fecd-c110-4b03-bbff-5f3cc78a92b8",
+        "slug": "edit-workflow?workflow-slug=archive-catalog-workflow",
+        "name": "Archive Cataloguing",
+        "icon": "fa fa-file-text",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "A workflow for Archive Sources and Cataloguing"
+      },
+      {
         "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
         "slug": "edit-workflow?workflow-slug=hm-consultation-response-workflow",
         "name": "HM Planning Consultation",
