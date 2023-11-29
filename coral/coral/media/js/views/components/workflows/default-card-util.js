@@ -4,7 +4,7 @@ define([
   'knockout-mapping',
   'uuid',
   'arches',
-  'templates/views/components/workflows/widget-labeller.htm'
+  'templates/views/components/workflows/default-card-util.htm'
 ], function (_, ko, koMapping, uuid, arches, widgetLabeller) {
   function viewModel(params) {
     const self = this;
@@ -42,7 +42,7 @@ define([
       });
   }
 
-  ko.components.register('widget-labeller', {
+  ko.components.register('default-card-util', {
     viewModel: viewModel,
     template: widgetLabeller
   });
