@@ -38,6 +38,21 @@
         "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
         "setupFunction": "loadPCResponseData",
         "disableStartNew": true
+      },
+      {
+        "slug": "flag-enforcement-workflow",
+        "name": "Flag Enforcement",
+        "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
+        "setupFunction": "loadFlagEnforcementData",
+        "disableStartNew": true
+      },
+      {
+        "slug": "process-flagged-enforcement-workflow",
+        "name": "Process Flagged Enforcement",
+        "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
+        "setupFunction": "loadFlagEnforcementData",
+        "disableStartNew": true,
+        "checkForResourceId": true
       }
     ]
   },
