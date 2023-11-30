@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+>
+  <skos:ConceptScheme rdf:about="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53">
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/f96d1f54-f0e5-491d-826d-c12c3344d5dc">
+        <skos:prefLabel xml:lang="en">
+        {"id": "c5c33b30-750f-4e15-9ada-a289d8d401e7", "value": "Duplicate Consultation with no new info - Admin return to DfI"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/20036da4-fa63-47bd-9fba-6499f770b792">
+        <skos:inScheme rdf:resource="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "6048157b-38ca-4da7-9330-783bd31c5fa6", "value": "Assign To Both HM and HB"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/20036da4-19da-47bd-9fba-6499f770b792">
+        <skos:inScheme rdf:resource="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "ceabbf84-74fe-430e-a5a7-fb056d0c4f7e", "value": "Assign To HB"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/5d4dcb3b-888a-4441-96ca-215783471def">
+        <skos:prefLabel xml:lang="en">
+        {"id": "be220fe1-75c0-4cf3-a2dc-c3d247c5da4f", "value": "Assign To HM"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/f96d1f54-6105-491d-826d-c12c3344d5dc">
+        <skos:prefLabel xml:lang="en">
+        {"id": "e1d2441e-f435-4e1e-a987-f0fbf14fc5c4", "value": "Re-Assign to HB"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/20036da4-c1d2-47bd-9fba-6499f770b792">
+        <skos:prefLabel xml:lang="en">
+        {"id": "bc814732-a492-4d78-b3da-0b81cece32d3", "value": "Re-Assign To HM"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/5d4dcb3b-ef01-4441-96ca-215783471def">
+        <skos:prefLabel xml:lang="en">
+        {"id": "fb1860f8-ea13-479c-99f5-f4ca926e56bb", "value": "Reject as duplicate"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9831657c-d068-4edf-b919-ad06e7c3ce53"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <dcterms:title xml:lang="en">
+    {"id": "8987268c-5f90-4937-bbdd-c3ff7e460663", "value": "Assignment Actions"}
+    </dcterms:title>
+  </skos:ConceptScheme>
+</rdf:RDF>

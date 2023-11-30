@@ -10,6 +10,8 @@ from coral.views.active_consultations import ActiveConsultationsView
 from arches.app.views import main
 from arches.app.views.user import UserManagerView
 from coral.views.monument_remapping import MonumentRemapping
+from coral.views.graph_component_export import GraphComponentExport
+
 
 uuid_regex = settings.UUID_REGEX
 
@@ -35,6 +37,7 @@ urlpatterns = [
     url(r'^'+settings.APP_PATHNAME+'/plugins/communication-workflow', PluginView.as_view(), name='communication-workflow'),
     url(r'^'+settings.APP_PATHNAME+'/plugins/init-workflow', PluginView.as_view(), name='init-workflow'),
     url(r'^monument_remapping', MonumentRemapping.as_view(), name="monument_remapping"),
+    url(r'^graph-component-export', GraphComponentExport.as_view(), name='graph-mapping-dump'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.SHOW_LANGUAGE_SWITCH is True:
