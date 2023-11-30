@@ -43,7 +43,7 @@ define([
 
     this.pageVm = params.pageVm;
 
-    this.createRelationship = ko.observable(!!!self.tile().tileid);
+    this.createRelationship = ko.observable(!self.tile().tileid);
 
     params.form.save = async () => {
       await self.tile().save();
