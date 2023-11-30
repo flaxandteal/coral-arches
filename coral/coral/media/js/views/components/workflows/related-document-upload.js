@@ -41,6 +41,16 @@ define([
       self.dirty(val);
     });
 
+    if (params?.label) {
+      this.card()
+        ?.widgets()
+        .forEach((widget) => {
+          if (widget.label() === 'File') {
+            widget.label(params.label);
+          }
+        });
+    }
+
     this.pageVm = params.pageVm;
 
     this.createRelationship = ko.observable(!self.tile().tileid);
