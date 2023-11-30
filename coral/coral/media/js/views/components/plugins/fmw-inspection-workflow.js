@@ -2,9 +2,9 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/consultation-workflow.htm',
+  'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/related-document-upload'
-], function (ko, arches, EditableWorkflow, licensingWorkflowTemplate) {
+], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('fmw-inspection-workflow', {
     viewModel: function (params) {
       this.componentName = 'fmw-inspection-workflow';
@@ -459,6 +459,6 @@ define([
 
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
-    template: licensingWorkflowTemplate
+    template: workflowTemplate
   });
 });
