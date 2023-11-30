@@ -3,7 +3,8 @@ define([
   'arches',
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/related-document-upload'
+  'views/components/workflows/related-document-upload',
+  'views/components/workflows/default-card-util'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('fmw-inspection-workflow', {
     viewModel: function (params) {
@@ -21,7 +22,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'initial-step-monument',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'app-id',
                   tilesManaged: 'one',
                   parameters: {
@@ -36,7 +37,7 @@ define([
                   }
                 }
                 // {
-                //   componentName: 'widget-labeller',
+                //   componentName: 'default-card-util',
                 //   uniqueInstanceName: 'app-loc',
                 //   tilesManaged: 'one',
                 //   parameters: {
@@ -67,7 +68,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-smr',
                   tilesManaged: 'one',
                   parameters: {
@@ -91,7 +92,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'site-name',
                   tilesManaged: 'one',
                   parameters: {
@@ -106,7 +107,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-cmref',
                   tilesManaged: 'one',
                   parameters: {
@@ -130,7 +131,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-type',
                   tilesManaged: 'one',
                   parameters: {
@@ -151,7 +152,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-townland',
                   tilesManaged: 'one',
                   parameters: {
@@ -175,7 +176,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-land-use',
                   tilesManaged: 'one',
                   parameters: {
@@ -206,7 +207,7 @@ define([
                 },
 
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'field-worker',
                   tilesManaged: 'one',
                   parameters: {
@@ -233,7 +234,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-condition',
                   tilesManaged: 'one',
                   parameters: {
@@ -254,7 +255,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-recommendations',
                   tilesManaged: 'one',
                   parameters: {
@@ -276,7 +277,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'scheduling-reason',
                   tilesManaged: 'one',
                   parameters: {
@@ -297,7 +298,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'owner',
                   tilesManaged: 'one',
                   parameters: {
@@ -323,7 +324,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'occupier',
                   tilesManaged: 'one',
                   parameters: {

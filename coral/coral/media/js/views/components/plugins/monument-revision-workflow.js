@@ -2,7 +2,8 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/monument-revision-workflow.htm'
+  'templates/views/components/plugins/monument-revision-workflow.htm',
+  'views/components/workflows/default-card-util'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('monument-revision-workflow', {
     viewModel: function (params) {
@@ -31,7 +32,7 @@ define([
                   }
                 }
                 // {
-                //   componentName: 'widget-labeller',
+                //   componentName: 'default-card-util',
                 //   uniqueInstanceName: 'app-loc',
                 //   tilesManaged: 'one',
                 //   parameters: {
@@ -62,7 +63,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'site-name',
                   tilesManaged: 'one',
                   parameters: {
@@ -77,7 +78,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-type',
                   tilesManaged: 'one',
                   parameters: {
@@ -98,7 +99,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-smr',
                   tilesManaged: 'one',
                   parameters: {
@@ -122,7 +123,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-townland',
                   tilesManaged: 'one',
                   parameters: {
@@ -146,7 +147,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-land-use',
                   tilesManaged: 'one',
                   parameters: {
@@ -177,7 +178,7 @@ define([
                 },
 
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'field-worker',
                   tilesManaged: 'one',
                   parameters: {
@@ -203,7 +204,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'owner',
                   tilesManaged: 'one',
                   parameters: {
@@ -229,7 +230,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'occupier',
                   tilesManaged: 'one',
                   parameters: {
@@ -256,7 +257,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-condition',
                   tilesManaged: 'one',
                   parameters: {
@@ -277,7 +278,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-threats',
                   tilesManaged: 'one',
                   parameters: {
@@ -298,7 +299,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'widget-labeller',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'scheduling-reason',
                   tilesManaged: 'one',
                   parameters: {
