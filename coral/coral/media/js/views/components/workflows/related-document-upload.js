@@ -17,7 +17,8 @@ define([
      */
     this.resourceModelId = ko.observable(ko.unwrap(params.resourceModelId));
     this.resourceModelDigitalObjectNodeGroupId = params.resourceModelDigitalObjectNodeGroupId;
-    this.resourceModelDigitalObjectNodeId = params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
+    this.resourceModelDigitalObjectNodeId =
+      params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
     this.fileObjectNamePrefix = params?.fileObjectNamePrefix || 'Files for ';
 
     /**
@@ -42,28 +43,33 @@ define([
 
     this.pageVm = params.pageVm;
 
+    this.createRelationship = ko.observable(!self.tile().tileid);
+
     params.form.save = async () => {
       await self.tile().save();
       const digitalResourceNameTile = await saveDigitalResourceName();
       if (digitalResourceNameTile?.ok) {
-        const relationship = await saveRelationship();
-        if (relationship?.ok) {
-          /**
-           * Using the savedData method will allow you to configure parameters
-           * that should be present if the user returns to this card after
-           * saving the step.
-           */
-          params.form.savedData({
-            tileData: koMapping.toJSON(self.tile().data),
-            tileId: self.tile().tileid,
-            resourceInstanceId: self.tile().resourceinstance_id,
-            nodegroupId: self.tile().nodegroup_id,
-            digitalResourceNameTileId: self.digitalResourceNameTileId,
-            digitalFileNodeTileId: self.digitalFileNodeTileId
-          });
-          params.form.complete(true);
-          params.form.saving(false);
+        if (this.createRelationship()) {
+          const relationship = await saveRelationship();
+          if (!relationship?.ok) {
+            return;
+          }
         }
+        /**
+         * Using the savedData method will allow you to configure parameters
+         * that should be present if the user returns to this card after
+         * saving the step.
+         */
+        params.form.savedData({
+          tileData: koMapping.toJSON(self.tile().data),
+          tileId: self.tile().tileid,
+          resourceInstanceId: self.tile().resourceinstance_id,
+          nodegroupId: self.tile().nodegroup_id,
+          digitalResourceNameTileId: self.digitalResourceNameTileId,
+          digitalFileNodeTileId: self.digitalFileNodeTileId
+        });
+        params.form.complete(true);
+        params.form.saving(false);
       }
     };
 
@@ -137,11 +143,11 @@ define([
        * In the example of excavation license the `Files (D1)` nodegroup
        * has two identical uuids. One refers to the nodegroup and the other
        * to the node. This is used twice to provide the resource relationship.
-       * 
-       * On line 171 it isn't necessary to wrap the object in an array for 
+       *
+       * On line 171 it isn't necessary to wrap the object in an array for
        * resource-instance-list datatypes. It will automatically get covnerted
        * on the backend.
-       * 
+       *
        * This can be found in datatypes.py on line 2080.
        */
       const fileTileTemplate = {
