@@ -364,6 +364,13 @@ define([
       );
       consultationTiles.forEach((tile) => {
         let nodegroupId = tile.nodegroup;
+        if (
+          nodegroupId === '87b1b187-39ec-46dc-95e6-bf5c1727bd30' &&
+          tile.data['a45c0772-01ab-4867-abb7-675f470fd08f'] !==
+            '42a754b1-d69d-40d7-ab5d-25b18a9e1fbe'
+        ) {
+          return;
+        }
         componentData[nodegroupId] = {
           value: JSON.stringify({
             tileData: koMapping.toJSON(tile.data),
