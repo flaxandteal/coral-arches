@@ -2,7 +2,7 @@
   "pluginid": "dc58f918-ba96-438d-9123-506e0d7304ec",
   "name": "FMW Inspection",
   "icon": "fa fa-check",
-  "component": "views/components/workflows/fmw-inspection-workflow",
+  "component": "views/components/plugins/fmw-inspection-workflow",
   "componentname": "fmw-inspection-workflow",
   "config": {
     "show": false
