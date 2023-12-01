@@ -1,0 +1,13 @@
+{
+    "pluginid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
+    "name": "Workflow Builder",
+    "icon": "fa fa-check",
+    "component": "views/components/plugins/workflow-builder",
+    "componentname": "workflow-builder",
+    "config": {
+      "show": true
+    },
+    "slug": "workflow-builder",
+    "sortorder": 0
+  }
+  
