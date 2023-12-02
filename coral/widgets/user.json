@@ -1,0 +1,10 @@
+{
+    "widgetid": "8e113d7f-668c-400c-824e-087167ad5d9d",
+    "name": "user",
+    "component": "views/components/widgets/user",
+    "defaultconfig": {
+        "placeholder": "Provide the username, ID or email."
+    },
+    "helptext": null,
+    "datatype": "user"
+}
