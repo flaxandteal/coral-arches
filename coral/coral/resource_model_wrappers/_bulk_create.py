@@ -19,7 +19,7 @@ from django.core.files.storage import default_storage
 from django.db import connection
 from django.db.models.functions import Lower
 from django.db.utils import IntegrityError, ProgrammingError
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
 from arches.app.datatypes.datatypes import DataTypeFactory
 from arches.app.models.models import GraphModel, Node, NodeGroup, FunctionXGraph
 from arches.app.models.system_settings import settings
@@ -126,9 +126,9 @@ def temp_get_primary_descriptor_from_nodes(self, resource, config, context=None)
                             value = ""
                         result = result.replace("<%s>" % node.name, str(value))
     except ValueError:
-        logger.error(_("Invalid nodegroupid, {0}, participating in descriptor function.").format(config["nodegroup_id"]))
+        logger.error(("Invalid nodegroupid, {0}, participating in descriptor function.").format(config["nodegroup_id"]))
     if result.strip() == "":
-        result = _("Undefined")
+        result = ("Undefined")
     return result
 primary_descriptors.PrimaryDescriptorsFunction.get_primary_descriptor_from_nodes = temp_get_primary_descriptor_from_nodes
 
@@ -317,8 +317,8 @@ class BulkImportWKRM(BaseImportModule):
                 return {
                     "status": 400,
                     "success": False,
-                    "title": _("Failed to complete load"),
-                    "message": _("Unable to insert record into staging table"),
+                    "title": ("Failed to complete load"),
+                    "message": ("Unable to insert record into staging table"),
                 }
 
         logger.error("%s Loading event completed", str(datetime.now()))

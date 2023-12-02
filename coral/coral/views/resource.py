@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
 from django.http import HttpResponseNotFound
-from django.utils.translation import get_language, ugettext as _
+from django.utils.translation import get_language, gettext_lazy as _
 from django.views.generic import View
 from arches.app.models.resource import Resource
 from arches.app.utils.response import JSONResponse
@@ -35,7 +35,7 @@ class ResourceDescriptors(View):
         language_codes = (get_language(), settings.LANGUAGE_CODE)
 
         descriptor = document["_source"][descriptor_type]
-        result = descriptor[0] if len(descriptor) > 0 else { "value": _("Undefined") }
+        result = descriptor[0] if len(descriptor) > 0 else { "value": ("Undefined") }
         for language_code in language_codes:
             for entry in descriptor:
                 if entry["language"] == language_code and entry["value"] != "":
@@ -82,6 +82,6 @@ class ResourceDescriptors(View):
                 ret.update(additional_data)
                 return JSONResponse(ret)
             except Exception as e:
-                logger.exception(_('Failed to fetch resource instance descriptors'))
+                logger.exception(('Failed to fetch resource instance descriptors'))
 
         return HttpResponseNotFound()

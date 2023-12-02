@@ -5,7 +5,7 @@ import logging
 import uuid
 from django.db.models.signals import post_save
 from math import perm
-from django.utils.translation import get_language, ugettext as _
+from django.utils.translation import get_language, gettext_lazy as _
 from django.contrib.auth.models import User, Group
 from django.dispatch import receiver
 from guardian.shortcuts import assign_perm, remove_perm, get_user_perms, get_group_perms
@@ -69,6 +69,6 @@ def _checking_search_results(request, returnDsl=False):
         return JSONResponse(ret)
     except Exception as e:
         logger.traceback(e)
-        ret  = {"message": _("There was an error retrieving the search results")}
+        ret  = {"message": "There was an error retrieving the search results"}
         return JSONErrorResponse(ret, status=500)
 arches.app.views.search.search_results = _checking_search_results

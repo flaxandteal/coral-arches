@@ -169,7 +169,7 @@ class CasbinPermissionFramework(PermissionFramework):
 
     def _django_group_to_ri(self, django_group: DjangoGroup):
         # TODO: a more robust mapping
-        group = Group.where(name==django_group.name)
+        group = Group.where(name=django_group.name)
         return group
 
     def update_groups_for_user(self, user):

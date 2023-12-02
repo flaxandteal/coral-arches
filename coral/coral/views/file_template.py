@@ -30,7 +30,7 @@ from html.parser import HTMLParser
 from html.entities import name2codepoint
 from django.core.files.uploadedfile import UploadedFile
 from django.http import HttpRequest, HttpResponseNotFound
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import View
 from arches.app.datatypes.datatypes import DataTypeFactory
 from arches.app.models import models

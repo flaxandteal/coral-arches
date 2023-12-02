@@ -279,6 +279,7 @@ KIBANA_CONFIG_BASEPATH = "kibana"  # must match Kibana config.yml setting (serve
 LOAD_DEFAULT_ONTOLOGY = False
 LOAD_PACKAGE_ONTOLOGIES = True
 ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://arches:8000/"
+PUBLIC_SERVER_ADDRESS = "http://arches:8000/"
 SPARQL_ENDPOINT_PROVIDERS = ({"SPARQL_ENDPOINT_PROVIDER": {"en": {"values": "arches.app.utils.data_management.sparql_providers.aat_provider.AAT_Provider"}}},)
 
 DATABASES = {
@@ -329,6 +330,8 @@ INSTALLED_APPS = (
     "casbin_adapter.apps.CasbinAdapterConfig",
 )
 
+ARCHES_APPLICATIONS = ()
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -341,11 +344,24 @@ MIDDLEWARE = [
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "dauthz.middlewares.request_middleware.RequestMiddleware",
+    #"dauthz.middlewares.request_middleware.RequestMiddleware",
     # "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
     # "silk.middleware.SilkyMiddleware",
 ]
+
+STATICFILES_DIRS = build_staticfiles_dirs(
+    root_dir=ROOT_DIR,
+    app_root=APP_ROOT,
+    arches_applications=ARCHES_APPLICATIONS,
+)
+
+TEMPLATES = build_templates_config(
+    root_dir=ROOT_DIR,
+    debug=DEBUG,
+    app_root=APP_ROOT,
+    arches_applications=ARCHES_APPLICATIONS,
+)
 
 ALLOWED_HOSTS = []
 
@@ -563,7 +579,7 @@ LANGUAGE_CODE = "en"
 # a list of language codes can be found here http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGES = [
 #   ('de', _('German')),
-    ('en', _('English')),
+    ('en', ('English')),
 #   ('en-gb', _('British English')),
 #   ('es', _('Spanish')),
 ]
@@ -592,14 +608,12 @@ from arches.settings_docker import *
 #COMPRESS_PRECOMPILERS = ()
 # returns an output that can be read by NODEJS
 if __name__ == "__main__":
-    print(
-        json.dumps({
-            'ARCHES_NAMESPACE_FOR_DATA_EXPORT': ARCHES_NAMESPACE_FOR_DATA_EXPORT,
-            'STATIC_URL': STATIC_URL,
-            'COMPRESS_URL': COMPRESS_URL,
-            'ROOT_DIR': ROOT_DIR,
-            'APP_ROOT': APP_ROOT,
-            'WEBPACK_DEVELOPMENT_SERVER_PORT': WEBPACK_DEVELOPMENT_SERVER_PORT,
-        })
+    transmit_webpack_django_config(
+        root_dir=ROOT_DIR,
+        app_root=APP_ROOT,
+        arches_applications=ARCHES_APPLICATIONS,
+        public_server_address=PUBLIC_SERVER_ADDRESS,
+        static_url=STATIC_URL,
+        webpack_development_server_port=WEBPACK_DEVELOPMENT_SERVER_PORT,
     )
     sys.stdout.flush()

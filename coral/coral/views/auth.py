@@ -34,7 +34,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.html import strip_tags
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.http import urlencode
 from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
@@ -63,17 +63,17 @@ logger = logging.getLogger(__name__)
 
 def _person_decrypt(person):
     if not person:
-        raise (Exception(_("User can only be signed up by linking to a pre-known Person.")))
+        raise (Exception(("User can only be signed up by linking to a pre-known Person.")))
 
     AES = AESCipher(settings.SECRET_KEY)
     try:
         person_id = AES.decrypt(person)
     except Exception:
-        raise (Exception(_("User can only be signed up by linking to a pre-known Person with encrypted ID.")))
+        raise (Exception(("User can only be signed up by linking to a pre-known Person with encrypted ID.")))
 
     person = Person.find(person_id)
     if not person:
-        raise (Exception(_("User can only be signed up by linking to a pre-known Person.")))
+        raise (Exception(("User can only be signed up by linking to a pre-known Person.")))
 
     return person
 
@@ -86,7 +86,7 @@ class PersonSignupView(View):
         confirmation_message = ""
 
         if not settings.ENABLE_PERSON_USER_SIGNUP:
-            raise (Exception(_("User signup has been disabled. Please contact your administrator.")))
+            raise (Exception(("User signup has been disabled. Please contact your administrator.")))
 
         person = request.GET.get("person", "")
         logger.error(str(_person_decrypt(person)))
@@ -116,7 +116,7 @@ class PersonSignupView(View):
         _person_decrypt(person)
 
         if not settings.ENABLE_PERSON_USER_SIGNUP:
-            raise (Exception(_("User signup has been disabled. Please contact your administrator.")))
+            raise (Exception(("User signup has been disabled. Please contact your administrator.")))
 
         if form.is_valid():
             AES = AESCipher(settings.SECRET_KEY)
@@ -131,13 +131,13 @@ class PersonSignupView(View):
 
             admin_email = settings.ADMINS[0][1] if settings.ADMINS else ""
             email_context = {
-                "button_text": _("Signup for Arches"),
+                "button_text": ("Signup for Arches"),
                 "link": confirmation_link,
-                "greeting": _(
+                "greeting": (
                     "Thanks for your interest in Arches. Click on link below \
                     to confirm your email address! Use your email address to login."
                 ),
-                "closing": _(
+                "closing": (
                     "This link expires in 24 hours.  If you can't get to it before then, \
                     don't worry, you can always try again with the same email address."
                 ),
@@ -147,11 +147,11 @@ class PersonSignupView(View):
             text_content = strip_tags(html_content)  # this strips the html, so people will have the text as well.
 
             # create the email, and attach the HTML version as well.
-            msg = EmailMultiAlternatives(_("Welcome to Arches!"), text_content, admin_email, [form.cleaned_data["email"]])
+            msg = EmailMultiAlternatives(("Welcome to Arches!"), text_content, admin_email, [form.cleaned_data["email"]])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
 
-            confirmation_message = _(
+            confirmation_message = (
                 "An email has been sent to <br><strong>%s</strong><br> with a link to activate your account" % form.cleaned_data["email"]
             )
             showform = False
@@ -175,7 +175,7 @@ class PersonSignupView(View):
 class PersonConfirmSignupView(View):
     def get(self, request):
         if not settings.ENABLE_PERSON_USER_SIGNUP:
-            raise (Exception(_("User signup has been disabled. Please contact your administrator.")))
+            raise (Exception(("User signup has been disabled. Please contact your administrator.")))
 
         link = request.GET.get("link", None)
         AES = AESCipher(settings.SECRET_KEY)
@@ -208,7 +208,7 @@ class PersonConfirmSignupView(View):
                     pass
         else:
             logger.error("INVALID3")
-            form.errors["ts"] = [_("The signup link has expired, please try signing up again.  Thanks!")]
+            form.errors["ts"] = [("The signup link has expired, please try signing up again.  Thanks!")]
         logger.error("INVALID4")
 
         return render(
