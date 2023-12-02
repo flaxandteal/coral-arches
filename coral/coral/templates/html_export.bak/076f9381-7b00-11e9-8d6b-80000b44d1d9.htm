@@ -3,15 +3,16 @@
 <html lang="en">
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Area</title>
+      <title>Monument</title>
       {% include 'html_export/milligram.htm' %}
       {% include 'html_export/custom_style.htm' %}
    </head>
    <body>
       <header>
          {% include 'html_export/custom_header.htm' %}
-         <h1>Areas</h1>
+         <h1>Monument</h1>
       </header>
       <main>
          {% for resource in resources %}
@@ -42,11 +43,11 @@
          <hr/>
          {% endif %}
 
-         {# Area Names #}
-         {% if resource_data|has_key:"Area Names" %}
+         {# Monument Names #}
+         {% if resource_data|has_key:"Monument Names" %}
          <section >
             <div class="container">
-               <h3>Area Names</h3>
+               <h3>Monument Names</h3>
                <div class="row">
                   <div class="column">
                      <div class="keeptogether">
@@ -55,16 +56,16 @@
                               <div class="rcell">Name</div>
                               <div class="rcell">Name Type</div>
                            </div>
-                           {% for names in resource_data|val_from_key:"Area Names" %}
+                           {% for names in resource_data|val_from_key:"Monument Names" %}
                            <div class="rrow">
                               <div class="rcell" data-title="Name">
-                                 {% if names|has_key:"Area Name" %}
-                                 {{ names|val_from_key:"Area Name"|val_from_key:"@display_value" }}
+                                 {% if names|has_key:"Monument Name" %}
+                                 {{ names|val_from_key:"Monument Name"|val_from_key:"@display_value" }}
                                  {% endif %}
                               </div>
                               <div class="rcell" data-title="Name Type">
-                                 {% if names|has_key:"Area Name Use Type" %}
-                                 {{ names|val_from_key:"Area Name Use Type"|val_from_key:"@display_value" }}
+                                 {% if names|has_key:"Monument Name Use Type" %}
+                                 {{ names|val_from_key:"Monument Name Use Type"|val_from_key:"@display_value" }}
                                  {% endif %}
                               </div>
                            </div>
@@ -77,6 +78,7 @@
          </section>
          <hr/>
          {% endif %}
+
 
          {# Designation and Protection Assignment #}
          {% if resource_data|has_key:"Designation and Protection Assignment" %}
@@ -114,13 +116,13 @@
          <hr/>
          {% endif %}
 
+
          {# Location Data #}
          {% if resource_data|has_key:"Location Data" %}
          <section>
             <div class="container location-details">
                <h3>Location Information</h3>
                <div class="row">
-                  {% if resource_data|val_from_key:"Location Data"|has_key:"National Grid References" %}
                   <div class="column">
                      <h4>National Grid References</h4>
                      <p>{% if resource_data|val_from_key:"Location Data"|has_key:"National Grid References" %}
@@ -132,30 +134,32 @@
                            {% else %}
                               {{ resource_data|val_from_key:"Location Data"|val_from_key:"National Grid References"|val_from_key:"National Grid Reference"|val_from_key:"@display_value" }}
                            {% endif %}
-                        {% endwith %}
-                        {% endif %}
+                              {% endwith %}
+                     {% endif %}
                   </p>
                   </div>
-                  {% endif %}
-                  {% if resource_data|val_from_key:"Location Data"|has_key:"Localities/Administrative Areas" %}
                   <div class="column">
+                     <div class="keeptogether"></div>
                      <div class="keeptogether">
                         <div>
                            <h4>Localities/Administrative Areas</h4>
                            <p>
+                              {% if resource_data|val_from_key:"Location Data"|has_key:"Localities/Administrative Areas" %}
                               {% for area in resource_data|val_from_key:"Location Data"|val_from_key:"Localities/Administrative Areas" %}
+
                               {# there is a bug that passes a dict if there are no addresses in this branch... let's check for a key to stop this from causing odd artifacts #}
                               {% if area|val_from_key:"Area Type"|has_key:"@display_value" %}
                                  <strong>{{ area|val_from_key:"Area Type"|val_from_key:"@display_value" }}:</strong> {{ area|val_from_key:"Area Names"|val_from_key:"Area Name"|val_from_key:"@display_value" }}</br/>
                               {% else %}
                                  {{ area|val_from_key:"Area Names"|val_from_key:"Area Name"|val_from_key:"@display_value" }}</br/>
                               {% endif %}
+
                               {% endfor %}
+                              {% endif %}
                            </p>
                         </div>
                      </div>
                   </div>
-                  {% endif %}
                </div>
                {# there is a bug that passes a dict if there are no addresses in this branch... let's check for a key to stop this from causing odd artifacts #}
                {% with address_check=resource_data|val_from_key:"Location Data"|val_from_key:"Addresses" %}
@@ -200,38 +204,6 @@
                <div class="row">
                   <div class="column">
                      <div class="keeptogether">
-                        {% for desc in resource_data|val_from_key:"Descriptions" %}
-                           {% ifequal desc|val_from_key:"Description Type"|val_from_key:"@display_value" "Summary" %}
-                           <div>
-                              <p>
-                                 <strong>Description Type :</strong>{{ desc|val_from_key:"Description Type"|val_from_key:"@display_value" }}<br>
-                                 {{ desc|val_from_key:"Description"|val_from_key:"@display_value"|safe }}
-                              </p>
-                           </div>
-                           {% endifequal %}
-                        {% endfor %}
-                        {% for desc in resource_data|val_from_key:"Descriptions" %}
-                           {% ifequal desc|val_from_key:"Description Type"|val_from_key:"@display_value" "Full" %}
-                           <div>
-                              <p>
-                                 <strong>Description Type :</strong>{{ desc|val_from_key:"Description Type"|val_from_key:"@display_value" }}<br>
-                                 {{ desc|val_from_key:"Description"|val_from_key:"@display_value"|safe }}
-                              </p>
-                           </div>
-                           {% endifequal %}
-                        {% endfor %}
-                        {% for desc in resource_data|val_from_key:"Descriptions" %}
-                           {% ifnotequal desc|val_from_key:"Description Type"|val_from_key:"@display_value" "Summary" %}
-                           {% ifnotequal desc|val_from_key:"Description Type"|val_from_key:"@display_value" "Full" %}
-                           <div>
-                              <p>
-                                 <strong>Description Type: </strong>{{ desc|val_from_key:"Description Type"|val_from_key:"@display_value" }}<br>
-                                 {{ desc|val_from_key:"Description"|val_from_key:"@display_value"|safe }}
-                              </p>
-                           </div>
-                           {% endifnotequal %}
-                           {% endifnotequal %}
-                        {% endfor %}
                      </div>
                   </div>
                </div>
@@ -239,6 +211,7 @@
          </section>
          <hr/>
          {% endif %}
+
 
          {# Bibliographic Source Citation #}
          {% if resource_data|has_key:"Bibliographic Source Citation" %}
@@ -272,33 +245,37 @@
          <hr/>
          {% endif %}
 
-         {# Construction Phase #}
+         {# Monument Construction Phase #}
          {% if resource_data|has_key:"Construction Phases" %}
          <section>
             <div class="container">
-               <h3>Construction Phases</h3>
+               <h3>Monument Construction Phases</h3>
                <div class="row">
                   <div class="column">
                      <div class="keeptogether">
                         <div class="rtable">
                            <div class="rrow rheader">
-                              <div class="rcell">Construction Phase Type</div>
-                              <div class="rcell">Cultural Period</div>
+                              <div class="rcell">Construction Phase</div>
+                              <div class="rcell">Period</div>
+                              <div class="rcell">Monument Type</div>
                               <div class="rcell">Construction Phase Start Date</div>
                               <div class="rcell">Construction Phase End Date</div>
                            </div>
                            {% for conphase in resource_data|val_from_key:"Construction Phases" %}
                            <div class="rrow">
-                              <div class="rcell" data-title="Construction Phase Type">
+                              <div class="rcell" data-title="Construction Phase">
                                     {{ conphase|val_from_key:"Construction Phase Type"|val_from_key:"@display_value" }}
                               </div>
-                              <div class="rcell" data-title="Cultural Period">
+                              <div class="rcell" data-title="Period">
                                  {{ conphase|val_from_key:"Cultural Period"|val_from_key:"@display_value" }}
                               </div>
-                              <div class="rcell" data-title="Construction Phase Start Date">
+                              <div class="rcell" data-title="Monument Type">
+                                 {{ conphase|val_from_key:"Phase Classification"|val_from_key:"Monument Type"|val_from_key:"@display_value" }}
+                              </div>
+                              <div class="rcell" data-title="Phase Start Date">
                                  {{ conphase|val_from_key:"Construction Phase Timespan"|val_from_key:"Construction Phase Start Date"|val_from_key:"@display_value" }}
                               </div>
-                              <div class="rcell" data-title="Construction Phase End Date">
+                              <div class="rcell" data-title="Phase End Date">
                                  {{ conphase|val_from_key:"Construction Phase Timespan"|val_from_key:"Construction Phase End Date"|val_from_key:"@display_value" }}
                               </div>
 
@@ -313,18 +290,19 @@
          <hr/>
          {% endif %}
 
-         {# Use Phase #}
+
+         {# Monument Use Phase #}
          {% if resource_data|has_key:"Use Phase" %}
          <section>
             <div class="container">
-               <h3>Use Phases</h3>
+               <h3>Monument Use Phases</h3>
                <div class="row">
                   <div class="column">
                      <div class="keeptogether">
                         <div class="rtable">
                            <div class="rrow rheader">
                               <div class="rcell">Functional Type</div>
-                              <div class="rcell">Use Phase Period</div>
+                              <div class="rcell">Period</div>
                               <div class="rcell">Use Phase Start Date</div>
                               <div class="rcell">Use Phase End Date</div>
                            </div>
@@ -333,13 +311,13 @@
                               <div class="rcell" data-title="Functional Type">
                                     {{ usephase|val_from_key:"Use Phase Classification"|val_from_key:"Functional Type"|val_from_key:"@display_value" }}
                               </div>
-                              <div class="rcell" data-title="Use Phase Period">
+                              <div class="rcell" data-title="Period">
                                  {{ usephase|val_from_key:"Use Phase Period"|val_from_key:"@display_value" }}
                               </div>
-                              <div class="rcell" data-title="Use Phase Start Date">
+                              <div class="rcell" data-title="Phase Start Date">
                                  {{ usephase|val_from_key:"Use Phase Timespan"|val_from_key:"Use Phase Start Date"|val_from_key:"@display_value" }}
                               </div>
-                              <div class="rcell" data-title="Use Phase End Date">
+                              <div class="rcell" data-title="Phase End Date">
                                  {{ usephase|val_from_key:"Use Phase Timespan"|val_from_key:"Use Phase End Date"|val_from_key:"@display_value" }}
                               </div>
 
@@ -355,8 +333,26 @@
          {% endif %}
 
 
+         {# Parent Monument #}
+         {% if resource_data|has_key:"Parent Monument" %}
+         <section>
+            <div class="container">
+                <h3>Parent Monument</h3>
+               <div class="row">
+                  <div class="column">
+                    <div class="keeptogether">
+                        {{resource_data|val_from_key:"Parent Monument"|val_from_key:"@display_value"}}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <hr/>
+         {% endif %}
+
+
          {# Associated Monuments/Areas/Artefacts/Maritime Vessels/Historic Aircraft #}
-         {% if resource_data|has_key:"Associated Monuments, Areas and Artefacts"  %}
+         {% if resource_data|has_key:"Associated Monuments, Areas and Artefacts" %}
          <section>
              <div class="container">
                  <h3>Associated Monuments, Areas and Artefacts</h3>
@@ -456,3 +452,4 @@
       </main>
    </body>
 </html>
+

@@ -220,38 +220,6 @@
                 <div class="row">
                     <div class="column">
                         <div class="keeptogether">
-                        {% for desc in resource_data|val_from_key:"Activity Descriptions" %}
-                        {% ifequal desc|val_from_key:"Activity Description Type"|val_from_key:"@display_value" "Summary" %}
-                        <div>
-                            <p>
-                                <strong>Description Type :</strong>{{ desc|val_from_key:"Activity Description Type"|val_from_key:"@display_value" }}<br>
-                                {{ desc|val_from_key:"Activity Description"|val_from_key:"@display_value"|safe }}
-                            </p>
-                        </div>
-                        {% endifequal %}
-                        {% endfor %}
-                        {% for desc in resource_data|val_from_key:"Activity Descriptions" %}
-                        {% ifequal desc|val_from_key:"Activity Description Type"|val_from_key:"@display_value" "Full" %}
-                        <div>
-                            <p>
-                                <strong>Description Type :</strong>{{ desc|val_from_key:"Activity Description Type"|val_from_key:"@display_value" }}<br>
-                                {{ desc|val_from_key:"Activity Description"|val_from_key:"@display_value"|safe }}
-                            </p>
-                        </div>
-                        {% endifequal %}
-                        {% endfor %}
-                        {% for desc in resource_data|val_from_key:"Activity Descriptions" %}
-                        {% ifnotequal desc|val_from_key:"Activity Description Type"|val_from_key:"@display_value" "Summary" %}
-                        {% ifnotequal desc|val_from_key:"Activity Description Type"|val_from_key:"@display_value" "Full" %}
-                        <div>
-                            <p>
-                                <strong>Description Type: </strong>{{ desc|val_from_key:"Activity Description Type"|val_from_key:"@display_value" }}<br>
-                                {{ desc|val_from_key:"Activity Description"|val_from_key:"@display_value"|safe }}
-                            </p>
-                        </div>
-                        {% endifnotequal %}
-                        {% endifnotequal %}
-                        {% endfor %}
                         </div>
                     </div>
                 </div>
