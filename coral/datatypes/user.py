@@ -24,13 +24,9 @@ logger = logging.getLogger(__name__)
 
 class UserDataType(BaseDataType):
     def append_to_document(self, document, nodevalue, nodeid, tile, provisional=False):
-        logger.error("append to doc")
-        logger.error(nodevalue)
         document["strings"].append({"string": nodevalue, "nodegroup_id": tile.nodegroup_id})
 
     def get_search_terms(self, nodevalue, nodeid=None):
-        logger.error("search terms")
-        logger.error(nodevalue)
         if nodevalue:
             user = User.objects.get(pk=int(nodevalue))
             return [user.email]

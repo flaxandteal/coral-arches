@@ -16,47 +16,28 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-import base64
-import io
-
-from django.http import response
-from arches.app.utils.external_oauth_backend import ExternalOauthAuthenticationBackend
-import qrcode
-import pyotp
 import time
-import requests
 from datetime import datetime, timedelta
-from django.http import HttpResponse
-from django.http.response import HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django.utils.http import urlencode
 from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.decorators import login_required
-from django.contrib.sessions.models import Session
+from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
-from django.core.exceptions import ValidationError
+import django.db.utils
 import django.contrib.auth.password_validation as validation
 from arches import __version__
-from arches.app.utils.response import JSONResponse, Http401Response
 from coral.utils.forms import CoralUserCreationForm
-from arches.app.models import models
 from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
-from arches.app.utils.permission_backend import user_is_resource_reviewer
-from django.core.exceptions import ValidationError
 from arches.app.views.auth import *
-from coral.resource_model_wrappers import Person
+from arches_orm import Person
 import logging
 
 logger = logging.getLogger(__name__)
@@ -72,8 +53,9 @@ def _person_decrypt(person):
         raise (Exception(("User can only be signed up by linking to a pre-known Person with encrypted ID.")))
 
     person = Person.find(person_id)
+
     if not person:
-        raise (Exception(("User can only be signed up by linking to a pre-known Person.")))
+        raise (Exception(("User can only be signed up by linking to a pre-known resource.")))
 
     return person
 
@@ -89,7 +71,6 @@ class PersonSignupView(View):
             raise (Exception(("User signup has been disabled. Please contact your administrator.")))
 
         person = request.GET.get("person", "")
-        logger.error(str(_person_decrypt(person)))
 
         return render(
             request,
@@ -186,30 +167,31 @@ class PersonConfirmSignupView(View):
         del userinfo["person_enc"]
 
         form = CoralUserCreationForm(userinfo)
-        logger.error("INVALID0")
-        if datetime.fromtimestamp(userinfo["ts"]) + timedelta(days=1) >= datetime.fromtimestamp(int(time.time())):
-            logger.error("INVALID1")
-            if form.is_valid():
-                logger.error("INVALID2")
-                user = form.save()
-                logger.error(user.pk)
-                person.user_account = user.pk
-                person.save()
-                crowdsource_editor_group = Group.objects.get(name=settings.USER_SIGNUP_GROUP)
-                user.groups.add(crowdsource_editor_group)
-                return redirect(reverse("auth") + "?registration_success=true")
-            else:
-                logger.error("INVALID")
-                try:
-                    for error in form.errors.as_data()["username"]:
-                        if error.code == "unique":
-                            return redirect("auth")
-                except:
-                    pass
+
+        if person.user_account:
+            form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
         else:
-            logger.error("INVALID3")
-            form.errors["ts"] = [("The signup link has expired, please try signing up again.  Thanks!")]
-        logger.error("INVALID4")
+            if datetime.fromtimestamp(userinfo["ts"]) + timedelta(days=1) >= datetime.fromtimestamp(int(time.time())):
+                if form.is_valid():
+                    user = form.save()
+                    person.user_account = user.pk
+                    try:
+                        person.save()
+                    except django.db.utils.ProgrammingError:
+                        form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
+                    else:
+                        crowdsource_editor_group = Group.objects.get(name=settings.USER_SIGNUP_GROUP)
+                        user.groups.add(crowdsource_editor_group)
+                        return redirect(reverse("auth") + "?registration_success=true")
+                else:
+                    try:
+                        for error in form.errors.as_data()["username"]:
+                            if error.code == "unique":
+                                return redirect("auth")
+                    except:
+                        pass
+            else:
+                form.errors["ts"] = [("The signup link has expired, please try signing up again.  Thanks!")]
 
         return render(
             request,

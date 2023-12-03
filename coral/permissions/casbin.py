@@ -7,36 +7,26 @@ logging.getLogger("casbin_adapter").setLevel(logging.ERROR)
 from django.core.exceptions import ObjectDoesNotExist
 from arches.app.models.system_settings import settings
 from django.contrib.auth.models import User, Permission, Group as DjangoGroup
-from django.contrib.gis.db.models import Model
-from django.core.cache import caches
-from guardian.backends import check_support, ObjectPermissionBackend
-from guardian.core import ObjectPermissionChecker
 import logging
 from guardian.shortcuts import (
-    get_perms,
-    get_group_perms,
-    get_user_perms,
     get_users_with_perms,
-    get_groups_with_perms,
-    get_perms_for_model,
 )
-from guardian.exceptions import NotUserNorGroup
 from arches.app.models.resource import Resource
 
-from guardian.models import GroupObjectPermission, UserObjectPermission
-from guardian.exceptions import WrongAppError
-from guardian.shortcuts import assign_perm, get_perms, remove_perm, get_group_perms, get_user_perms
+from guardian.models import GroupObjectPermission
 
-import inspect
 from arches.app.models.models import *
 from arches.app.models.models import ResourceInstance, MapLayer
-from arches.app.search.elasticsearch_dsl_builder import Bool, Query, Terms, Nested
+from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 
-from coral.resource_model_wrappers import Person, Organization, Set, Group, ResourceModelWrapper
+from arches_orm import Person, Organization, Set, Group, ResourceModelWrapper
 
 logger = logging.getLogger(__name__)
+REMAPPINGS = {
+    "a69c21b4-34e2-4781-b6c8-5c539e6fe14a": ["change_resourceinstance", "view_resourceinstance", "delete_resourceinstance"]
+}
 
 
 class NoSubjectError(RuntimeError):
@@ -170,6 +160,10 @@ class CasbinPermissionFramework(PermissionFramework):
     def _django_group_to_ri(self, django_group: DjangoGroup):
         # TODO: a more robust mapping
         group = Group.where(name=django_group.name)
+        if not group:
+            group = Group.create(name=django_group.name)
+        else:
+            group = group[0]
         return group
 
     def update_groups_for_user(self, user):
@@ -398,6 +392,9 @@ class CasbinPermissionFramework(PermissionFramework):
 
         logger.debug(f"Checking resource instance permissions: {user} {resourceid}")
 
+        # FIXME: This is inefficient but may avoid some initial caching errors
+        self.recalculate_table()
+
         try:
             resource = ResourceInstance.objects.get(resourceinstanceid=resourceid)
             result["resource"] = resource
@@ -405,14 +402,19 @@ class CasbinPermissionFramework(PermissionFramework):
             user_permissions = set()
             group_permissions = set()
             subj = self._subj_to_str(user)
-            print(subj, self._enforcer.get_implicit_roles_for_user(subj))
+            obj = self._obj_to_str(resource)
+            obj_grps = self._enforcer.get_implicit_roles_for_user(obj)
             for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(subj):
-                print(sub, obj, act)
-                if obj == f"ri:{resourceid}":
+                act = REMAPPINGS.get(act, act)
+                if obj in obj_grps:
                     if sub == f"u:{user.pk}":
-                        user_perms.add(act)
+                        permissions = user_permissions
                     else:
-                        group_perms.add(act)
+                        permissions = group_permissions
+                    if isinstance(act, list):
+                        permissions |= set(act)
+                    else:
+                        permissions.add(act)
             all_perms = user_permissions | group_permissions
 
             if len(all_perms) == 0:  # no permissions assigned. permission _not_ implied
@@ -426,7 +428,6 @@ class CasbinPermissionFramework(PermissionFramework):
                     result["permitted"] = True
                     return result
 
-                group_permissions = self.get_group_perms(user, resource)
                 if "no_access_to_resourceinstance" in group_permissions:  # group is restricted - no user override
                     result["permitted"] = False
                     return result
@@ -468,6 +469,7 @@ class CasbinPermissionFramework(PermissionFramework):
             users_with_perms = {}
             for user, perm in users:
                 users_with_perms.setdefault(user, set())
+                perm = REMAPPINGS.get(perm, perm)
                 users_with_perms[user].add(perm)
         else:
             return users

@@ -15,6 +15,31 @@ try:
 except ImportError:
     pass
 
+GROUPINGS = {
+    "groups": {
+        "allowed_relationships": {
+            "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member": (True, True),
+        },
+        "root_group": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+        "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a"
+    },
+    "sets": {
+        "allowed_relationships": {
+            "http://www.cidoc-crm.org/cidoc-crm/P10i_contains": (True, True),
+        },
+        "root_group": "74e496c7-ec7e-43b8-a7b3-05bacf496794",
+        "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220"
+    },
+    "permissions": {
+        "allowed_relationships": {
+            "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member": (True, False),
+            "http://www.cidoc-crm.org/cidoc-crm/P104i_applies_to": (True, True),
+            "http://www.cidoc-crm.org/cidoc-crm/P10i_contains": (True, True),
+        },
+        "root_group": "74e496c7-ec7e-43b8-a7b3-05bacf496794",
+    }
+}
+
 APP_NAME = 'coral'
 APP_VERSION = semantic_version.Version(major=0, minor=0, patch=0)
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -28,10 +53,75 @@ WEBPACK_LOADER = {
     },
 }
 
+CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
+
+DAUTHZ = {
+    # DEFAULT Dauthz enforcer
+    "DEFAULT": {
+        # Casbin model setting.
+        "MODEL": {
+            # Available Settings: "file", "text"
+            "CONFIG_TYPE": "file",
+            "CONFIG_FILE_PATH": CASBIN_MODEL,
+            "CONFIG_TEXT": "",
+        },
+        # Casbin adapter .
+        "ADAPTER": {
+            "NAME": "casbin_adapter.adapter.Adapter",
+            # 'OPTION_1': '',
+        },
+        "LOG": {
+            # Changes whether Dauthz will log messages to the Logger.
+            "ENABLED": False,
+        },
+    },
+}
+PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
 DATATYPE_LOCATIONS.append('coral.datatypes')
 FUNCTION_LOCATIONS.append('coral.functions')
 ETL_MODULE_LOCATIONS.append('coral.etl_modules')
 SEARCH_COMPONENT_LOCATIONS.append('coral.search_components')
+PERMISSION_FRAMEWORK_LOCATIONS.append('coral.permissions')
+TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'functions', 'templates'))
+TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'widgets', 'templates'))
+TEMPLATES[0]['DIRS'].insert(0, os.path.join(APP_ROOT, 'templates'))
+
+WELL_KNOWN_RESOURCE_MODELS = [
+    dict(
+        model_name="Person",
+        graphid="22477f01-1a44-11e9-b0a9-000d3ab1e588",
+        user_account={
+            "type": "user",
+            "lang": "en",
+            "nodegroupid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+            "nodeid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
+        },
+    ),
+    {
+        "model_name": "Group",
+        "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+        "permissions/object": {
+            "type": "@Set",
+            "lang": "en",
+            "nodegroupid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+            "nodeid": "448bcdb8-7071-11ee-8b8c-0242ac140008",
+        },
+        "permissions/action": {
+            "type": "concept-list",
+            "lang": "en",
+            "nodegroupid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+            "nodeid": "7cb692b2-7072-11ee-bb7a-0242ac140008",
+        }
+    },
+    dict(
+        model_name="Set",
+        graphid="b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+    ),
+    dict(
+        model_name="Organization",
+        graphid="d4a88461-5463-11e9-90d9-000d3ab1e588",
+    ),
+]
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 
@@ -127,8 +217,10 @@ INSTALLED_APPS = (
     "oauth2_provider",
     "django_celery_results",
     "compressor",
+    "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",
+    "casbin_adapter.apps.CasbinAdapterConfig",
 )
 
 ARCHES_APPLICATIONS = ()
@@ -190,8 +282,21 @@ STATIC_ROOT = os.path.join(APP_ROOT, "staticfiles")
 # when hosting Arches under a sub path set this value to the sub path eg : "/{sub_path}/"
 FORCE_SCRIPT_NAME = None
 
+FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
+
+AUTHENTICATION_BACKENDS += (
+    *AUTHENTICATION_BACKENDS,
+    "dauthz.backends.CasbinBackend",
+)
+
+if (LOG_LEVEL := os.getenv("LOG_LEVEL", "")):
+    pass
+elif DEBUG or {os.getenv(debug_env, "False").lower() for debug_env in ("DJANGO_DEBUG", "DEBUG")} & {"true", "1"}:
+    LOG_LEVEL = "DEBUG"
+else:
+    LOG_LEVEL = "WARNING"
 
 LOGGING = {
     'version': 1,
@@ -263,9 +368,9 @@ GRAPH_MODEL_CACHE_TIMEOUT = None
 
 OAUTH_CLIENT_ID = ''  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
-APP_TITLE = 'Arches | Heritage Data Management'
+APP_TITLE = 'HED | Heritage Data Management'
 COPYRIGHT_TEXT = 'All Rights Reserved.'
-COPYRIGHT_YEAR = '2019'
+COPYRIGHT_YEAR = '2022-'
 
 ENABLE_CAPTCHA = False
 # RECAPTCHA_PUBLIC_KEY = ''
@@ -285,6 +390,10 @@ EMAIL_HOST_USER = "xxxx@xxx.com"
 # EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# If True, allows for user self creation via the signup view. If False, users can only be created via the Django admin view.
+ENABLE_USER_SIGNUP = False
+ENABLE_PERSON_USER_SIGNUP = True
 
 CELERY_BROKER_URL = "" # RabbitMQ --> "amqp://guest:guest@localhost",  Redis --> "redis://localhost:6379/0"
 CELERY_ACCEPT_CONTENT = ['json']
