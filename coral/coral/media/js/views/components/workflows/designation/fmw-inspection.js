@@ -2,7 +2,7 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/consultation-workflow.htm',
+  'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/related-document-upload'
 ], function (ko, arches, EditableWorkflow, licensingWorkflowTemplate) {
   return ko.components.register('fmw-inspection-workflow', {
