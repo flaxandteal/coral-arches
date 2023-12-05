@@ -109,6 +109,7 @@ define([
                   tilesManaged: 'one',
                   parameters: {
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    parenttileid: "['init-step']['app-id'][0]['locationTileId']",
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
                     nodegroupid: '4263afc0-eabf-11ed-9e22-72d420f37f11',
                     semanticName: 'Localities/Administrative Areas',
@@ -164,7 +165,7 @@ define([
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
                     nodegroupid: '4263c596-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['location-data-tile'][0]['tileId']",
+                    parenttileid: "['init-step']['app-id'][0]['locationTileId']",
                     hiddenNodes: [
                       '426622aa-eabf-11ed-9e22-72d420f37f11',
                       '42661508-eabf-11ed-9e22-72d420f37f11',
@@ -352,7 +353,7 @@ define([
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
                     nodegroupid: '4263d086-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['location-data-tile'][0]['tileId']"
+                    parenttileid: "['init-step']['app-id'][0]['locationTileId']"
                   }
                 }
               ]
