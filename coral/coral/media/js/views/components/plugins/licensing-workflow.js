@@ -349,10 +349,28 @@ define([
         {
           title: 'Additional Files',
           name: 'file-upload-step',
+          workflowstepclass: 'workflow-form-component',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: '1fe572ec-8f8a-11ee-87af-0242ac190008',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '1fe572ec-8f8a-11ee-87af-0242ac190008',
+                    semanticName: 'Files Checklist',
+                    hiddenNodes: [
+                      // '64cb3004-8f8a-11ee-88d1-0242ac190008', // application_form,
+                      // '2080e35c-8f8b-11ee-88d1-0242ac190008', // pow,
+                      // '86b114f8-8f8b-11ee-845d-0242ac190008', // council_letter,
+                      // 'c6404a76-8f8b-11ee-845d-0242ac190008', // developer_funding_form
+                    ]
+                  }
+                },
                 {
                   /**
                    * Using custom component to handle the creation of Digital
@@ -382,7 +400,9 @@ define([
                      * This needs to refer to the Excavation models
                      * Digital object node group.
                      */
-                    resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007'
+                    resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007',
+
+                    label: 'Please upload the required files below'
                   }
                 }
               ]
