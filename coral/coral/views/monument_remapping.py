@@ -43,6 +43,7 @@ class MonumentRemapping(View):
             revision_graph_id = "4262df46-eabf-11ed-9e22-72d420f37f11"
             rev_graph = Graph.objects.filter(pk=revision_graph_id).first()
 
+            # Create the Monument alias mapping
             for node in graph.nodes.values():
                 if node.alias in exlucded_aliases:
                     continue
@@ -55,6 +56,8 @@ class MonumentRemapping(View):
                         "revision": {},
                     }
 
+            # Creates the Revision alias mapping if the alias
+            # does not already exist in the mappings
             for node in rev_graph.nodes.values():
                 if node.alias in exlucded_aliases:
                     continue
@@ -72,6 +75,11 @@ class MonumentRemapping(View):
                         "node_id": str(node.nodeid),
                     }
 
+            # Creates a dictionary with the key being the Monument nodegroup
+            # and the value being a dictionary containing the lookups. Node
+            # values are grouped by nodegroup
+            # Each key, value will be:
+            # Monument Nodegroup/Node = Rev Monument Nodegroup/Node
             for key, item in mapping.items():
                 monument_nodegroup_id = item["monument"].get("nodegroup_id")
                 if not monument_nodegroup_id:
@@ -86,52 +94,38 @@ class MonumentRemapping(View):
                     print("WARNING: revision_nodegroup_id missing", key, item)
                 revision_node_id = item["revision"].get("node_id")
 
-                # nodegroup_map[monument_nodegroup_id]["alias"] = key
                 nodegroup_map[str(monument_nodegroup_id)][
                     str(monument_nodegroup_id)
                 ] = str(revision_nodegroup_id)
                 nodegroup_map[str(monument_nodegroup_id)][str(monument_node_id)] = str(
                     revision_node_id
                 )
+        else:
+            raise Exception("No resource found")
 
         tiles = Tile.objects.filter(resourceinstance=resource_instance_id)
-
         remapped_tiles = []
 
+        # Create new revision monument resource
         new_rev_resource = Resource.objects.create(
             graph=rev_graph,
         )
-        print("new_rev_resource: ", new_rev_resource.resourceinstanceid)
-
         new_resource_id = str(new_rev_resource.resourceinstanceid)
 
-        # new_location_data_tile = {
-        #     "data": {},
-        #     "tileid": None,
-        #     "resourceinstance": new_resource_id,
-        #     "nodegroup": "426401a0-eabf-11ed-9e22-72d420f37f11",
-        #     "parenttile_id": None,
-        #     "provisionaledits": None,
-        #     "sortorder": 0,
-        #     "tiles": [],
-        # }
+        # Create a new location data tile to use for the revision monument
         new_location_data_tile, success = Tile.objects.get_or_create(
             resourceinstance_id=new_resource_id,
             nodegroup_id="426401a0-eabf-11ed-9e22-72d420f37f11",
             data={},
         )
 
-        for edge in rev_graph.edges.values():
-            print("edge: ", edge.rangenode_id)
-
+        # Find all nodegroups which are children of revision monuments location data
         location_data_nodegroups = [
             str(edge.rangenode_id)
             for edge in rev_graph.edges.values()
             if str(edge.domainnode_id) == "426401a0-eabf-11ed-9e22-72d420f37f11"
         ]
-        print("location_data_nodegroups: ", location_data_nodegroups)
 
-        location_data_tile_exists = False
         for tile in tiles:
             new_tile = copy.deepcopy(tile)
             new_tile = new_tile.serialize()
@@ -141,12 +135,11 @@ class MonumentRemapping(View):
 
             # This ignores the system ref nodegroup from MONUMENT
             # to allow a new one to be created for MONUMENT REVISION
-            if found_mapping[nodegroup_id] == "42635b60-eabf-11ed-9e22-72d420f37f11":
-                continue
+            # if found_mapping[nodegroup_id] == "42635b60-eabf-11ed-9e22-72d420f37f11":
+            #     continue
 
-            # Location data MONUMENT nodegroup id
+            # Ignore location data tile MONUMENT nodegroup id
             if nodegroup_id == "87d39b2e-f44f-11eb-9a4a-a87eeabdefba":
-                location_data_tile_exists = True
                 continue
 
             if not found_mapping:
@@ -165,17 +158,11 @@ class MonumentRemapping(View):
                     print("WARNING: Key not in found mapping ", key, value)
                 new_data[found_mapping[key]] = value
 
-            if new_tile["parenttile_id"]:
-                print("had parent tile: ", dict(new_tile))
-
             new_tile["data"] = new_data
             new_tile["tileid"] = None
 
-            print('new_tile["nodegroup"]: ', new_tile["nodegroup"])
+            # Assign the location data tile to location data nodegroups
             if new_tile["nodegroup"] in location_data_nodegroups:
-                print("true! this tile is part of location data")
-                print("new_location_data_tile: ", new_location_data_tile)
-                print("new_location_data_tile.tileid: ", new_location_data_tile.tileid)
                 new_tile["parenttile_id"] = new_location_data_tile.tileid
             else:
                 new_tile["parenttile_id"] = None
@@ -184,27 +171,6 @@ class MonumentRemapping(View):
 
             remapped_tiles.append(new_tile)
 
-        # # "data": {},
-        # # "nodegroup_id": "f0550a8c-8e04-11ee-85e6-0242ac190002",
-        # # "parenttile_id": null,
-        # # "provisionaledits": null,
-        # # "resourceinstance_id": "def2bb9d-d4da-4113-9b86-9e871d4be0e9",
-        # # "sortorder": 0,
-        # # "tileid": "7036b4c7-9e85-44d8-afd0-079df143bb2c",
-        # # "tiles": []
-        # # if not location_data_tile_exists:
-        # print("creating location data tile")
-        # new_location_data_tile = {
-        #     "data": {},
-        #     "tileid": None,
-        #     "resourceinstance": new_resource_id,
-        #     "nodegroup": "426401a0-eabf-11ed-9e22-72d420f37f11",
-        #     "parenttile_id": None,
-        #     "provisionaledits": None,
-        #     "sortorder": 0,
-        #     "tiles": [],
-        # }
-
         for tile in remapped_tiles:
             tile, success = Tile.objects.get_or_create(
                 resourceinstance_id=tile["resourceinstance"],
@@ -212,17 +178,6 @@ class MonumentRemapping(View):
                 data=tile["data"],
                 parenttile=new_location_data_tile if tile["parenttile_id"] else None,
             )
-
-        # tile, success = Tile.objects.get_or_create(
-        #     resourceinstance_id=new_resource_id,
-        #     nodegroup_id="426401a0-eabf-11ed-9e22-72d420f37f11",
-        #     data={},
-        # )
-        # print("tile: ", tile)
-
-        # new_location_data_tile["tileid"] = tile.tileid
-
-        # remapped_tiles.append(new_location_data_tile)
 
         return JSONResponse(
             {
@@ -234,6 +189,6 @@ class MonumentRemapping(View):
                 # "tiles_orig": tiles,
                 # "nodegroup_map": nodegroup_map,
                 "resourceinstance_id": new_resource_id,
-                "tiles": remapped_tiles,
+                # "tiles": remapped_tiles,
             }
         )
