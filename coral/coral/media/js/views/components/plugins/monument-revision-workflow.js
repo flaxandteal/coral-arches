@@ -31,25 +31,6 @@ define([
                     ]
                   }
                 }
-                // {
-                //   componentName: 'default-card-util',
-                //   uniqueInstanceName: 'app-loc',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
-                //     nodegroupid: '87d39b2e-f44f-11eb-9a4a-a87eeabdefba',
-                //     hiddenNodes: [
-                //         '87d39b2e-f44f-11eb-9a4a-a87eeabdefba',
-                //       '4264ab14-eabf-11ed-9e22-72d420f37f11',
-                //       '4264a560-eabf-11ed-9e22-72d420f37f11',
-                //       '42649b38-eabf-11ed-9e22-72d420f37f11',
-                //       '4264a10a-eabf-11ed-9e22-72d420f37f11'
-                //   ],
-                //   prefilledNodes: [
-                //     ["87d39b2e-f44f-11eb-9a4a-a87eeabdefba", {}]
-                //   ]
-                //   }
-                // }
               ]
             }
           ]
@@ -127,16 +108,19 @@ define([
                   uniqueInstanceName: 'monument-townland',
                   tilesManaged: 'one',
                   parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
                     nodegroupid: '4263afc0-eabf-11ed-9e22-72d420f37f11',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parentile: "['init-step']['app-id'][0]['locTileId']",
+                    semanticName: 'Localities/Administrative Areas',
                     hiddenNodes: [
-                      '42665f36-eabf-11ed-9e22-72d420f37f11',
-                      '42665a18-eabf-11ed-9e22-72d420f37f11',
-                      '42661b02-eabf-11ed-9e22-72d420f37f11'
+                      // '42661800-eabf-11ed-9e22-72d420f37f11', // area_name_metatype,
+                      // '4266195e-eabf-11ed-9e22-72d420f37f11', // area_name,
+                      // '42661b02-eabf-11ed-9e22-72d420f37f11', // area_name_type,
+                      // '4266426c-eabf-11ed-9e22-72d420f37f11', // area_currency_metatype,
+                      // '4266540a-eabf-11ed-9e22-72d420f37f11', // area_metatype,
+                      // '42665a18-eabf-11ed-9e22-72d420f37f11', // area_currency_type,
+                      // '42665f36-eabf-11ed-9e22-72d420f37f11' // area_type
                     ],
-                    // using Town instead of townland since we dont have it locally
                     prefilledNodes: [
                       [
                         '42665f36-eabf-11ed-9e22-72d420f37f11',
@@ -147,6 +131,32 @@ define([
                   }
                 },
                 {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'monument-land-use',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
+                    nodegroupid: '4263c596-eabf-11ed-9e22-72d420f37f11',
+                    semanticName: 'Land Use Classification Assignment',
+                    hiddenNodes: [
+                      // '4265f6e0-eabf-11ed-9e22-72d420f37f11', // land_use_notes_metatype,
+                      // '4265f866-eabf-11ed-9e22-72d420f37f11', // land_use_notes_language_metatype,
+                      // '42661508-eabf-11ed-9e22-72d420f37f11', // land_use_assessment_start_date,
+                      // '42661fd0-eabf-11ed-9e22-72d420f37f11', // land_use_classification,
+                      // '426622aa-eabf-11ed-9e22-72d420f37f11', // geology,
+                      // '42662ff2-eabf-11ed-9e22-72d420f37f11', // land_use_assessment_end_date,
+                      // '42663588-eabf-11ed-9e22-72d420f37f11', // land_use_notes_value,
+                      // '426655ea-eabf-11ed-9e22-72d420f37f11', // land_use_metatype,
+                      // '42665748-eabf-11ed-9e22-72d420f37f11', // land_use_notes_type,
+                      // '42668ee8-eabf-11ed-9e22-72d420f37f11', // land_use_notes_language,
+                      // '42669078-eabf-11ed-9e22-72d420f37f11', // sub_soil_metatype,
+                      // '426691ea-eabf-11ed-9e22-72d420f37f11', // geology_metatype,
+                      // '42669352-eabf-11ed-9e22-72d420f37f11' // sub_soil
+                    ]
+                  }
+                },
+                {
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'monument-land-use',
                   tilesManaged: 'one',
@@ -154,7 +164,7 @@ define([
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
                     nodegroupid: '4263c596-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parentile: "['init-step']['app-id'][0]['locTileId']",
+                    parenttileid: "['init-step']['location-data-tile'][0]['tileId']",
                     hiddenNodes: [
                       '426622aa-eabf-11ed-9e22-72d420f37f11',
                       '42661508-eabf-11ed-9e22-72d420f37f11',
@@ -208,7 +218,7 @@ define([
                   uniqueInstanceName: 'owner',
                   tilesManaged: 'one',
                   parameters: {
-                    graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
+                    graphid: '4262df46-eabf-11ed-9e22-72d420f3f7f11',
                     nodegroupid: '4264513c-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     hiddenNodes: [
@@ -342,7 +352,7 @@ define([
                     graphid: '4262df46-eabf-11ed-9e22-72d420f37f11',
                     nodegroupid: '4263d086-eabf-11ed-9e22-72d420f37f11',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parentile: "['init-step']['app-id'][0]['locTileId']"
+                    parenttileid: "['init-step']['location-data-tile'][0]['tileId']"
                   }
                 }
               ]
