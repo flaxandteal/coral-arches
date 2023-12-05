@@ -203,6 +203,58 @@ define([
               ]
             }
           ]
+        },
+        {
+          title: 'Audit Information',
+          name: 'loan-history',
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'audit-step',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    graphid: 'b07cfa6f-894d-11ea-82aa-f875a44e0e11',
+                    nodegroupid: 'a919d0f9-ee15-11eb-aef6-a87eeabdefba',
+                    semanticName: 'Audit Metadata'
+                    // "hiddenNodes": [
+                    //   'a919d0fc-ee15-11eb-a3c0-a87eeabdefba', // creator_name_type,
+                    //   'a919d0fd-ee15-11eb-acd0-a87eeabdefba', // creation_date_qualifier_metatype,
+                    //   'a919d0fe-ee15-11eb-ab36-a87eeabdefba', // creation_end_date,
+                    //   'a919d0ff-ee15-11eb-8376-a87eeabdefba', // audit_notes_metatype,
+                    //   'a919d101-ee15-11eb-86b7-a87eeabdefba', // update_name_metatype,
+                    //   'a919d102-ee15-11eb-941c-a87eeabdefba', // creation_date,
+                    //   'a919d103-ee15-11eb-b718-a87eeabdefba', // updater_name_type,
+                    //   'a919d104-ee15-11eb-9bf1-a87eeabdefba', // creator_name_use_metatype,
+                    //   'a919d105-ee15-11eb-a8e4-a87eeabdefba', // update_date_qualifier_metatype,
+                    //   'a919d107-ee15-11eb-8238-a87eeabdefba', // creator_name_use_type,
+                    //   'a919d108-ee15-11eb-bd9e-a87eeabdefba', // creator_name_currency,
+                    //   'a919d109-ee15-11eb-bd82-a87eeabdefba', // creator_name_metatype,
+                    //   'a919d10a-ee15-11eb-9405-a87eeabdefba', // validation,
+                    //   'a919d10b-ee15-11eb-b0a5-a87eeabdefba', // updater_name_use_metatype,
+                    //   'a919d10d-ee15-11eb-b28c-a87eeabdefba', // audit_note,
+                    //   'a919d10f-ee15-11eb-b927-a87eeabdefba', // audit_notes_type,
+                    //   'a919d110-ee15-11eb-82a3-a87eeabdefba', // update_end_date,
+                    //   'a919d111-ee15-11eb-9308-a87eeabdefba', // date_of_last_update,
+                    //   'a919d112-ee15-11eb-96b8-a87eeabdefba', // updater_name_currency,
+                    //   'a919e57a-ee15-11eb-b478-a87eeabdefba', // creator_name,
+                    //   'a919e57b-ee15-11eb-bb3a-a87eeabdefba', // updater_name_use_type,
+                    //   'a919e57c-ee15-11eb-9949-a87eeabdefba', // creator_name_currency_metatype,
+                    //   'a919e57f-ee15-11eb-95f1-a87eeabdefba', // creation_date_qualifier,
+                    //   'a919e581-ee15-11eb-bf25-a87eeabdefba', // update_date_qualifier,
+                    //   'a919e582-ee15-11eb-a76d-a87eeabdefba', // updater_name,
+                    //   'a919e583-ee15-11eb-9afe-a87eeabdefba', // updater_name_currency_metatype,
+                    //   'a919e584-ee15-11eb-9162-a87eeabdefba', // validation_metatype
+                    // ]
+                  }
+                }
+              ]
+            }
+          ]
         }
       ];
 
