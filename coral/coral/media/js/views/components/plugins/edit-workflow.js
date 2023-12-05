@@ -10,7 +10,6 @@ define([
     this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
     this.WORKFLOW_RECENTLY_EDITED_LABEL = 'workflow-recently-edited';
-    const self = this;
     this.editableWorkflows = params.editableWorkflows;
     this.selectedResource = ko.observable();
     this.workflowUrl = ko.observable();
@@ -49,7 +48,7 @@ define([
       if (tile?.display_values) {
         return tile?.display_values.find((dv) => dv.nodeid === nodeId)?.value || '';
       } else {
-        return tile.data[nodeId][arches.activeLanguage].value;
+        return tile?.data[nodeId][arches.activeLanguage].value;
       }
     };
 
@@ -142,7 +141,7 @@ define([
       );
       for (tile of planningConsultationTiles) {
         if (tile.nodegroup === 'f5aeaa90-3127-475d-886a-9fc62742de4f') {
-          const planningDigitalFilesTiles = await self.fetchTileData(
+          const planningDigitalFilesTiles = await this.fetchTileData(
             tile.data['f5aeaa90-3127-475d-886a-9fc62742de4f'][0].resourceId
           );
           planningDigitalFilesTiles.forEach((tile) => {
@@ -436,17 +435,29 @@ define([
     };
 
     this.loadMonumentRevisionData = async (resourceId) => {
-      const monumentTiles = (
+      const SYS_REF_NODEGROUP = '42635b60-eabf-11ed-9e22-72d420f37f11';
+      const LOCATION_DATA_NODEGROUP = '426401a0-eabf-11ed-9e22-72d420f37f11';
+      const monumentRevisionId = (
         await (
           await window.fetch(arches.urls.root + `monument_remapping?resource-id=${resourceId}`)
         ).json()
-      ).tiles;
+      ).resourceinstance_id;
+      const monumentTiles = await this.fetchTileData(monumentRevisionId);
       const componentData = {};
       this.resourceName(
         this.getNameFromNodeId(monumentTiles, '426539a8-eabf-11ed-9e22-72d420f37f11')
       );
+      let sysRef = null;
       monumentTiles.forEach((tile) => {
         let nodegroupId = tile.nodegroup;
+        // System reference nodegroup
+        if (nodegroupId === SYS_REF_NODEGROUP) {
+          sysRef = tile;
+          return;
+        }
+        if (nodegroupId === LOCATION_DATA_NODEGROUP) {
+          locationTile = tile;
+        }
         const actorRole = tile.data['4266ed98-eabf-11ed-9e22-72d420f37f11'];
         const descriptionType = tile.data['42647ff4-eabf-11ed-9e22-72d420f37f11'];
         // const externalRefSource = tile.data['f17f6581-efc7-11eb-b09f-a87eeabdefba'];
@@ -486,6 +497,15 @@ define([
           })
         };
       });
+      componentData[sysRef.nodegroup] = {
+        value: JSON.stringify({
+          tileData: koMapping.toJSON(sysRef.data),
+          resourceInstanceId: sysRef.resourceinstance,
+          tileId: sysRef.tileid,
+          nodegroupId: sysRef.nodegroup,
+          locationTileId: locationTile.tileid
+        })
+      };
       return componentData;
     };
 
