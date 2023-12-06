@@ -412,7 +412,7 @@ define([
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'designation-info',
-                  tilesManaged: 'one',
+                  tilesManaged: 'many',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
                     nodegroupid: '6af2a0cb-efc5-11eb-8436-a87eeabdefba',
@@ -420,7 +420,8 @@ define([
                     hiddenNodes: [
                       '6af2b697-efc5-11eb-8152-a87eeabdefba',
                       '6af2a0d0-efc5-11eb-ab44-a87eeabdefba',
-                      '6af2b69e-efc5-11eb-801e-a87eeabdefba'
+                      '6af2b69e-efc5-11eb-801e-a87eeabdefba',
+                      '6af2b6a3-efc5-11eb-af76-a87eeabdefba'
                     ]
                   }
                 }
