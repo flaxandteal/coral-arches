@@ -173,7 +173,22 @@ define([
                     labels: [['Primary Reference Number', 'Entry Number (for audit purpose only)']]
                   }
                 },
-                // todo classification
+                // TODO: classification
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'planning-category',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: 'dabe81b6-9427-11ee-8a08-0242ac190007',
+                    semanticName: 'Planning Category',
+                    hiddenNodes: [
+                      // '01cc27a4-9428-11ee-af28-0242ac190007', // planning_metatype,
+                      // 'dabe81b6-9427-11ee-8a08-0242ac190007', // planning_category
+                    ]
+                  }
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'developent-type',
