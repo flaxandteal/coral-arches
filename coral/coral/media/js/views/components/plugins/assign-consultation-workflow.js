@@ -432,6 +432,7 @@ define([
         {
           title: 'Location Details',
           name: 'location-details',
+          workflowstepclass: 'workflow-form-component',
           required: true,
           layoutSections: [
             {
@@ -481,6 +482,22 @@ define([
                       // 'f0564f96-8e04-11ee-85e6-0242ac190002', // full_address_metatype,
                       // 'f0565130-8e04-11ee-85e6-0242ac190002', // county_value,
                       // 'f05652f2-8e04-11ee-85e6-0242ac190002', // street_metatype
+                    ]
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'location-description',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    graphid: '8effdca4-ffb6-482b-94b8-4d35fb5c88c5',
+                    nodegroupid: 'f054fea2-8e04-11ee-85e6-0242ac190002',
+                    semanticName: 'Location Descriptions',
+                    hiddenNodes: [
+                      // 'f0560248-8e04-11ee-85e6-0242ac190002', // location_description_metatype,
+                      // 'f0558ea8-8e04-11ee-85e6-0242ac190002', // location_description,
+                      'f055da52-8e04-11ee-85e6-0242ac190002' // location_description_type
                     ]
                   }
                 }
