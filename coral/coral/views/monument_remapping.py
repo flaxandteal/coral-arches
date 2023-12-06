@@ -30,9 +30,13 @@ class MonumentRemapping(View):
         mapping = {}
         nodegroup_map = {}
 
-        # 'monument' is the root node
-        # 'monument_revision' only exists on monument
-        exlucded_aliases = ["monument", "monument_revision"]
+        # 'monument' is the root node for Monument
+        # 'monument_revision' is the root node for Monument Revision
+        exlucded_aliases = [
+            "monument",
+            "monument_revision",
+            "associated_monument_revisions",
+        ]
 
         rev_graph = None
         graph = None
@@ -112,6 +116,42 @@ class MonumentRemapping(View):
         )
         new_resource_id = str(new_rev_resource.resourceinstanceid)
 
+        # Create relationship between monument and revision
+        revision_index = None
+        associated_revision_tile, success = Tile.objects.get_or_create(
+            resourceinstance_id=str(resource.resourceinstanceid),
+            nodegroup_id="b2beddfc-9380-11ee-8e6f-0242ac190007",
+            data={},
+        )
+        if associated_revision_tile:
+            print("associated_revision_tile: ", associated_revision_tile.data)
+            related_resources = associated_revision_tile.data.get(
+                "b2beddfc-9380-11ee-8e6f-0242ac190007", []
+            )
+
+            if not len(related_resources):
+                related_resources = [
+                    {
+                        "resourceId": new_resource_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": "",
+                    }
+                ]
+            else:
+                related_resources.append(
+                    {
+                        "resourceId": new_resource_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": "",
+                    }
+                )
+            associated_revision_tile.data[
+                "b2beddfc-9380-11ee-8e6f-0242ac190007"
+            ] = related_resources
+            revision_index = len(related_resources)
+
+            associated_revision_tile.save()
+
         # Create a new location data tile to use for the revision monument
         new_location_data_tile, success = Tile.objects.get_or_create(
             resourceinstance_id=new_resource_id,
@@ -131,19 +171,25 @@ class MonumentRemapping(View):
             new_tile = new_tile.serialize()
 
             nodegroup_id = str(new_tile["nodegroup_id"])
-            found_mapping = nodegroup_map[nodegroup_id]
+            found_mapping = nodegroup_map.get(nodegroup_id)
+
+            if not found_mapping:
+                print("WARNING: Mapping not found ", tile)
+                continue
 
             # This ignores the system ref nodegroup from MONUMENT
             # to allow a new one to be created for MONUMENT REVISION
-            # if found_mapping[nodegroup_id] == "42635b60-eabf-11ed-9e22-72d420f37f11":
+            if found_mapping[nodegroup_id] == "42635b60-eabf-11ed-9e22-72d420f37f11":
+                current_value = new_tile["data"][
+                    "325a430a-efe4-11eb-810b-a87eeabdefba"
+                ]["en"]["value"]
+                new_tile["data"]["325a430a-efe4-11eb-810b-a87eeabdefba"]["en"][
+                    "value"
+                ] = f"Revision {revision_index}: {current_value}"
             #     continue
 
             # Ignore location data tile MONUMENT nodegroup id
             if nodegroup_id == "87d39b2e-f44f-11eb-9a4a-a87eeabdefba":
-                continue
-
-            if not found_mapping:
-                print("WARNING: Mapping not found ", tile)
                 continue
 
             # nodegroup from the tiles endpoint has no _id at the end
