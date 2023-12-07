@@ -239,6 +239,8 @@ CACHES = {
     },
 }
 
+PERMISSION_FRAMEWORK = "arches_default_deny.ArchesDefaultDenyPermissionFramework"
+
 # Hide nodes and cards in a report that have no data
 HIDE_EMPTY_NODES_IN_REPORT = False
 
