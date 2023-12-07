@@ -12,7 +12,7 @@ urlpatterns = [
 # if settings.SHOW_LANGUAGE_SWITCH is True:
 #     urlpatterns = i18n_patterns(*urlpatterns)
 
-if settings.DEBUG:
+if settings.DEBUG or settings.SERVE_STATIC:
     urlpatterns += [
         re_path(r'^static/(?P<path>.*)$', views.serve)
     ]

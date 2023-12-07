@@ -156,6 +156,8 @@ STATICFILES_DIRS = build_staticfiles_dirs(
     arches_applications=ARCHES_APPLICATIONS,
 )
 
+SERVE_STATIC = os.getenv("SERVE_STATIC", "True") == "True"
+
 TEMPLATES = build_templates_config(
     root_dir=ROOT_DIR,
     debug=DEBUG,
