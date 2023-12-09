@@ -14,7 +14,7 @@ define([
 
     this.addStep = () => {
       console.log('adding step');
-      let stepName = 'Step ' + (this.workflowSteps().length + 1);
+      let stepName = ko.observable('Step ' + (this.workflowSteps().length + 1));
       this.workflowSteps().push(stepName);
       this.workflowSteps.valueHasMutated();
       const step = new WorkflowBuilderStep({
