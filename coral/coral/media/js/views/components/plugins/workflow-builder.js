@@ -17,6 +17,8 @@ define([
 
     this.openWorkflowBuilder = (graphId) => {
       console.log('graphId: ', graphId);
+      const url = `workflow-builder-editor?graph-id=${graphId}`;
+      window.location.href = arches.urls.plugin(url);
     };
 
     this.init = async () => {

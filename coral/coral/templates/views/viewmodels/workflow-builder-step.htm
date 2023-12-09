@@ -1,0 +1,21 @@
+<div>
+  <!-- ko with: step -->
+  <span data-bind="text: $data.stepName"></span>
+  <span data-bind="text: $data.name"></span>
+  <div data-bind="text: JSON.stringify($data)"></div>
+  <div data-bind="text: JSON.stringify(name)"></div>
+  <div>Hello world</div>
+  <div class="row widget-wrapper">
+    <div class="form-group">
+      <label class="control-label widget-input-label" for="" data-bind="text: 'Step Name'"></label>
+      <div class="col-xs-12">
+        <input
+          type="text"
+          data-bind="textInput: $data.stepName, attr: {placeholder: 'Please provide a step name'}"
+          class="form-control input-lg widget-input"
+        />
+      </div>
+    </div>
+  </div>
+  <!-- /ko -->
+</div>
