@@ -9,28 +9,24 @@ define([
   const WorkflowBuilderStep = function (params) {
     _.extend(this, params);
 
-    console.log('before: ', JSON.stringify(this));
-    console.log('before 1: ', JSON.stringify(params));
-
     this.title = params?.title || 'default';
-
-    this.title.subscribe((value) => {
-      console.log('this.title updated: ', value);
-    });
+    this.cards = ko.observableArray();
 
     this.init = () => {
       console.log('workflow-builder-step: ', this, params);
-      console.log('after: ', JSON.stringify(this));
-      console.log('after 1: ', JSON.stringify(params));
-      console.log('this.title: ', this.title);
-      console.log('this.title(): ', this.title());
+    };
+
+    this.addCard = () => {
+      this.cards().push({
+        title: 'Card ' + (this.cards().length + 1)
+      });
+      this.cards.valueHasMutated();
     };
 
     this.init();
   };
 
   ko.components.register('workflow-builder-step', {
-    // viewModel: WorkflowBuilderStep,
     template: template
   });
 
