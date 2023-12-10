@@ -27,7 +27,7 @@
       <div class="workflow-nav-tabs">
         <ul class="nav nav-tabs workflow-nav-tab-list">
           <!--ko foreach: {data: workflowSteps(), as: 'workflowStep', noChildContext: true} -->
-          <li class="workflow-nav-tab-list-item">
+          <li class="workflow-nav-tab-list-item" data-bind="click: () => switchStep($index())">
             <div class="workflow-nav-tab">
               <div
                 style="
@@ -40,7 +40,7 @@
                 <!-- <span style="margin-right: 4px">
                   <i class="fa fa-plus"></i>
                 </span> -->
-                <span style="font-size: 14px" data-bind="text: workflowStep"></span>
+                <span style="font-size: 14px" data-bind="text: workflowStep.title"></span>
               </div>
             </div>
           </li>
@@ -70,7 +70,7 @@
     </div>
 
     <div class="tabbed-workflow-step-container">
-      <workflow-builder-step params="step: test()"></workflow-builder-step>
+      <workflow-builder-step params="step: activeStep()"></workflow-builder-step>
     </div>
 
     <div class="tabbed-workflow-footer">

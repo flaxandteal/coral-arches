@@ -10,31 +10,34 @@ define([
   const pageViewModel = function (params) {
     this.workflowName = ko.observable('Workflow Builder Editor');
     this.workflowSteps = ko.observableArray();
-    this.test = ko.observable();
+    this.activeStep = ko.observable();
 
     this.addStep = () => {
       console.log('adding step');
       let stepName = ko.observable('Step ' + (this.workflowSteps().length + 1));
-      this.workflowSteps().push(stepName);
-      this.workflowSteps.valueHasMutated();
+      // this.workflowSteps().push(stepName);
       const step = new WorkflowBuilderStep({
-        name: stepName
+        title: stepName
       });
-      this.test(step);
+      this.workflowSteps().push(step);
+      this.workflowSteps.valueHasMutated();
+      if (!this.activeStep()) {
+        console.log('setting active step');
+        this.activeStep(this.workflowSteps()[0]);
+      }
     };
 
     this.updatePan = (direction) => {
       console.log('direction: ', direction);
     };
 
+    this.switchStep = (stepIdx) => {
+      console.log('changing step idx: ', stepIdx);
+      this.activeStep(this.workflowSteps()[stepIdx]);
+    };
+
     this.init = async () => {
       console.log('workflow-builder-editor');
-      //
-      // this.test(
-      //   new WorkflowBuilderStep({
-      //     name: '123'
-      //   })
-      // );
     };
 
     this.init();

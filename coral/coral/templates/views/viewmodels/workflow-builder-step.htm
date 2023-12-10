@@ -1,14 +1,14 @@
 <div>
   <!-- ko with: step -->
-  <div data-bind="text: $data.name"></div>
+  <div data-bind="text: $data.title"></div>
   <div>Hello world</div>
   <div class="row widget-wrapper">
     <div class="form-group">
-      <label class="control-label widget-input-label" for="" data-bind="text: 'Step Name'"></label>
+      <label class="control-label widget-input-label" for="" data-bind="text: 'Step Title'"></label>
       <div class="col-xs-12">
         <input
           type="text"
-          data-bind="textInput: $data.name, attr: {placeholder: 'Please provide a step name'}"
+          data-bind="textInput: $data.title, attr: {placeholder: 'Please provide a step title'}"
           class="form-control input-lg widget-input"
         />
       </div>

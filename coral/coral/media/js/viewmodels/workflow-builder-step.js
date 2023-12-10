@@ -12,18 +12,18 @@ define([
     console.log('before: ', JSON.stringify(this));
     console.log('before 1: ', JSON.stringify(params));
 
-    this.name = params?.name || 'default';
+    this.title = params?.title || 'default';
 
-    this.name.subscribe((value) => {
-      console.log('this.name updated: ', value);
+    this.title.subscribe((value) => {
+      console.log('this.title updated: ', value);
     });
 
     this.init = () => {
       console.log('workflow-builder-step: ', this, params);
       console.log('after: ', JSON.stringify(this));
       console.log('after 1: ', JSON.stringify(params));
-      console.log('this.name: ', this.name);
-      console.log('this.name(): ', this.name());
+      console.log('this.title: ', this.title);
+      console.log('this.title(): ', this.title());
     };
 
     this.init();
