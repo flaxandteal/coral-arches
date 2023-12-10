@@ -23,13 +23,6 @@ GROUPINGS = {
         "root_group": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
         "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a"
     },
-    "sets": {
-        "allowed_relationships": {
-            "http://www.cidoc-crm.org/cidoc-crm/P10i_contains": (True, True),
-        },
-        "root_group": "74e496c7-ec7e-43b8-a7b3-05bacf496794",
-        "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220"
-    },
     "permissions": {
         "allowed_relationships": {
             "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member": (True, False),
@@ -118,8 +111,16 @@ WELL_KNOWN_RESOURCE_MODELS = [
         graphid="b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
     ),
     dict(
+        model_name="Logical Set",
+        graphid="5b8b4084-9687-11ee-8782-0242ac140006",
+    ),
+    dict(
         model_name="Organization",
         graphid="d4a88461-5463-11e9-90d9-000d3ab1e588",
+    ),
+    dict(
+        model_name="Archive Source",
+        graphid="b07cfa6f-894d-11ea-82aa-f875a44e0e11",
     ),
 ]
 

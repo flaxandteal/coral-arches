@@ -57,10 +57,6 @@ class Command(BaseCommand):
                 if isinstance(policy, list) and len(policy) == 3:
                     group_x_set.append((att(policy[0]), att(policy[1]), Group.make_concept(policy[2])))
 
-        test = User.objects.get(email="test20@example.com")
-        crowdsource_editor_group = DjangoGroup.objects.get(name=settings.USER_SIGNUP_GROUP)
-        test.groups.append(crowdsource_editor_group)
-        framework.update_groups_for_user(test)
         print("GROUP === ACTION ===> SET")
         for grp, st, act in group_x_set:
             print(grp.name, "----", act.text, "---->", st.title_text)
@@ -76,11 +72,15 @@ class Command(BaseCommand):
                     group_tree.setdefault(prnt.id, {"children": [], "ri": prnt, "has_parent": False})
                     group_tree[prnt.id].setdefault("children", [])
                     prefix = policy[0].split(":", 1)[0]
-                    if prefix in ("ri", "g", "g2"):
-                        chld = att(policy[0])
-                        group_tree.setdefault(chld.id, {"ri": chld})
-                        group_tree[chld.id]["has_parent"] = True
-                        group_tree[prnt.id]["children"].append(group_tree[chld.id])
+                    if prefix in ("ri", "g", "g2", "g2l"):
+                        try:
+                            chld = att(policy[0])
+                        except Resource.DoesNotExist:
+                            logging.error("Missing %s", policy[0])
+                        else:
+                            group_tree.setdefault(chld.id, {"ri": chld})
+                            group_tree[chld.id]["has_parent"] = True
+                            group_tree[prnt.id]["children"].append(group_tree[chld.id])
                     elif prefix == "u":
                         group_tree[prnt.id]["children"].append(User.objects.get(pk=int(policy[0][2:])))
                     else:

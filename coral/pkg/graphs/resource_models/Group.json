@@ -33,7 +33,7 @@
                     "instructions": {
                         "en": "(Can select multiple for languages by adding)"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Name of Group"
                     },
@@ -212,7 +212,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Permissions"
                     },
@@ -731,12 +731,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "id": "14b8764b-2782-4c51-a029-bda3385c618a"
+                    "id": "e0c6c904-5aad-44f7-a2b3-11da9a82d689"
                 }
             ],
             "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
             "iconclass": "fa fa-users",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -1118,11 +1118,22 @@
                     "config": {
                         "graphs": [
                             {
+                                "graphid": "5b8b4084-9687-11ee-8782-0242ac140006",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Logical Set",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            },
+                            {
                                 "graphid": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P104i_applies_to",
                                 "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P104_is_subject_to",
-                                "useOntologyRelationship": true,
-                                "name": "Set"
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Set",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P104i_applies_to",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": true
                             }
                         ],
                         "searchDsl": "",
@@ -1339,9 +1350,8 @@
             "publication": {
                 "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                 "notes": null,
-                "publicationid": "37a90ea6-7073-11ee-9538-0242ac140008",
-                "published_time": "2023-10-22T00:37:45.244",
-                "user_id": 1
+                "publicationid": "869d8670-96a4-11ee-b1c3-0242ac140006",
+                "published_time": "2023-12-09T15:06:27.233"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -1377,6 +1387,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "/bin/sh: 1: git: not found",
         "os": "Linux",
-        "os version": "5.10.0-1050-oem"
+        "os version": "6.5.0-14-generic"
     }
 }

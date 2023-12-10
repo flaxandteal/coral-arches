@@ -1,4 +1,5 @@
 import logging
+from arches.app.views.search import build_search
 from dauthz.backends.casbin_backend import CasbinBackend
 # https://github.com/casbin/pycasbin/issues/323
 logging.disable(logging.NOTSET)
@@ -12,20 +13,25 @@ from guardian.shortcuts import (
     get_users_with_perms,
 )
 from arches.app.models.resource import Resource
+from urllib.parse import parse_qs
 
 from guardian.models import GroupObjectPermission
 
 from arches.app.models.models import *
 from arches.app.models.models import ResourceInstance, MapLayer
+from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 
-from arches_orm import Person, Organization, Set, Group, ResourceModelWrapper
+from arches_orm import Person, Organization, Set, LogicalSet, Group, ResourceModelWrapper
 
 logger = logging.getLogger(__name__)
 REMAPPINGS = {
-    "a69c21b4-34e2-4781-b6c8-5c539e6fe14a": ["change_resourceinstance", "view_resourceinstance", "delete_resourceinstance"]
+    "809598ac-6dc5-498e-a7af-52b1381942a4": ["change_resourceinstance"],
+    "33a0218b-b1cc-42d8-9a79-31a6b2147893": ["delete_resourceinstance"],
+    "70415d03-b11b-48a6-b989-933d788ffc88": ["view_resourceinstance"],
+    "45d54859-bf3c-48f2-a387-55a0050ff572": ["execute_resourceinstance"],
 }
 
 
@@ -77,6 +83,8 @@ class CasbinPermissionFramework(PermissionFramework):
             return obj
         elif isinstance(obj, Set):
             obj = f"g2:{obj.id}"
+        elif isinstance(obj, LogicalSet):
+            obj = f"g2l:{obj.id}"
         elif isinstance(obj, ResourceModelWrapper):
             obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
@@ -96,6 +104,8 @@ class CasbinPermissionFramework(PermissionFramework):
         root_group = Group.find(groups["root_group"])
         self._enforcer.clear_policy()
 
+        sets = []
+
         def _fill_group(group):
             group_key = self._subj_to_str(group)
             for member in group.members:
@@ -112,24 +122,35 @@ class CasbinPermissionFramework(PermissionFramework):
                 for act in permission["action"]:
                     for obj in permission["object"]:
                         obj_key = self._obj_to_str(obj)
-                        self._enforcer.add_policy(group_key, obj_key, act)
-        _fill_group(root_group)
+                        if obj_key.startswith("g2"):
+                            sets.append(obj_key)
+                        self._enforcer.add_policy(group_key, obj_key, str(act.conceptid))
 
-        sets = settings.GROUPINGS["sets"]
-        root_set = Set.find(sets["root_group"])
+        _fill_group(root_group)
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
-            if st.nested_sets:
-                for nst in st.nested_sets:
-                    nested_set_key = self._obj_to_str(nst)
-                    self._enforcer.add_named_grouping_policy("g2", nested_set_key, set_key)
-                    _fill_set(nst)
-            if st.members:
-                for member in st.members:
-                    member_key = self._obj_to_str(member)
-                    self._enforcer.add_named_grouping_policy("g2", member_key, set_key)
-        _fill_set(root_set)
+            sets.remove(set_key)
+            # We do not currently handle nesting of logical sets
+            if isinstance(st, Set):
+                if st.nested_sets:
+                    for nst in st.nested_sets:
+                        nested_set_key = self._obj_to_str(nst)
+                        self._enforcer.add_named_grouping_policy("g2", nested_set_key, set_key)
+                        _fill_set(nst)
+                if st.members:
+                    for member in st.members:
+                        member_key = self._obj_to_str(member)
+                        self._enforcer.add_named_grouping_policy("g2", member_key, set_key)
+
+        while sets:
+            obj_key = sets[0]
+            if obj_key.startswith("g2l:"):
+                root_set = LogicalSet.find(obj_key.split(":")[1])
+            else:
+                root_set = Set.find(obj_key.split(":")[1])
+            _fill_set(root_set)
+
         self._enforcer.save_policy()
 
     def update_permissions_for_user(self, user):
@@ -396,14 +417,21 @@ class CasbinPermissionFramework(PermissionFramework):
         self.recalculate_table()
 
         try:
-            resource = ResourceInstance.objects.get(resourceinstanceid=resourceid)
+            resource = Resource(resourceinstanceid=resourceid)
             result["resource"] = resource
+            index = resource.get_index()
+            sets = [
+                st.get("id") for st in index.get("_source", {}).get("sets", {})
+            ]
+            sets = [st.split(":") for st in sets if st and st and ":" in st]
+            objs = [self._obj_to_str(resource)] + [":".join(("g2l" if st[0] == "l" else "g2", st[1])) for st in sets]
 
             user_permissions = set()
             group_permissions = set()
             subj = self._subj_to_str(user)
-            obj = self._obj_to_str(resource)
-            obj_grps = self._enforcer.get_implicit_roles_for_user(obj)
+            obj_grps = list(objs)
+            for obj in objs:
+                obj_grps += self._enforcer.get_implicit_roles_for_user(obj)
             for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(subj):
                 act = REMAPPINGS.get(act, act)
                 if obj in obj_grps:
