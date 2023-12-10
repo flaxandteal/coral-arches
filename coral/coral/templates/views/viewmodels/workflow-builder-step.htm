@@ -1,19 +1,5 @@
 <div>
   <!-- ko with: step -->
-  <!-- <div data-bind="text: $data.title"></div>
-  <div>Hello world</div>
-  <div class="row widget-wrapper">
-    <div class="form-group">
-      <label class="control-label widget-input-label" for="" data-bind="text: 'Step Title'"></label>
-      <div class="col-xs-12">
-        <input
-          type="text"
-          data-bind="textInput: $data.title, attr: {placeholder: 'Please provide a step title'}"
-          class="form-control input-lg widget-input"
-        />
-      </div>
-    </div>
-  </div> -->
   <div class="card-component">
     <div class="row widget-wrapper">
       <div class="form-group">
@@ -32,21 +18,18 @@
       </div>
     </div>
   </div>
-  <!-- ko foreach: {data: cards(), as: 'card', noChildContext: true} -->
   <div>
-    <div class="card-component">
-      <div data-bind="text: card.title"></div>
-      <div class="row widget-wrapper">Placeholder for field</div>
-    </div>
-  </div>
-  <!-- /ko -->
-  <div
-    class="card-component"
-    style="padding: 15px 25px 15px 25px !important; background: #eceef0"
-    data-bind="click: () => addCard()"
-  >
-    <div style="display: flex; justify-content: center; align-items: center">
-      <div><i class="fa fa-plus"></i></div>
+    <!-- ko foreach: {data: cards(), as: 'card', noChildContext: true} -->
+    <workflow-builder-card params="card: card"></workflow-builder-card>
+    <!-- /ko -->
+    <div
+      class="card-component"
+      style="padding: 15px 25px 15px 25px !important; background: #eceef0"
+      data-bind="click: () => addCard()"
+    >
+      <div style="display: flex; justify-content: center; align-items: center">
+        <div><i class="fa fa-plus"></i></div>
+      </div>
     </div>
   </div>
   <!-- /ko -->

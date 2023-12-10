@@ -4,8 +4,9 @@ define([
   'knockout',
   'knockout-mapping',
   'arches',
-  'templates/views/viewmodels/workflow-builder-step.htm'
-], function ($, _, ko, koMapping, arches, template) {
+  'templates/views/viewmodels/workflow-builder-step.htm',
+  'viewmodels/workflow-builder-card'
+], function ($, _, ko, koMapping, arches, template, WorkflowBuilderCard) {
   const WorkflowBuilderStep = function (params) {
     _.extend(this, params);
 
@@ -17,9 +18,10 @@ define([
     };
 
     this.addCard = () => {
-      this.cards().push({
+      const card = new WorkflowBuilderCard({
         title: 'Card ' + (this.cards().length + 1)
       });
+      this.cards().push(card);
       this.cards.valueHasMutated();
     };
 
