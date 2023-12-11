@@ -3,17 +3,28 @@
   <div>
     <div class="card-component">
       <div data-bind="text: title"></div>
-      <div class="row widget-wrapper">
-        <select
-          data-bind="
-            options: components, 
-            optionsText: (item) => {
-              return item.parameters.semanticName
+      <div class="row widget-wrapper"></div>
+      <div
+        data-bind="component: {
+          name: 'domain-select-widget',
+          params: {
+            node: {
+              config: {
+                options: nodegroupOptions,
+                multiple: false
+              },
+              configKeys: configKeys
             },
-            value: selectedNodegroup
-          "
-        ></select>
-      </div>
+            config: {
+              label: 'Selected Nodegroup',
+            },
+            value: selectedNodegroup,
+            loading: false,
+            form: $data,
+            pageVm: $root
+          }
+      }"
+      ></div>
       <div
         data-bind="component: {
           name: 'domain-radio-widget',

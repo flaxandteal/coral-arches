@@ -36,9 +36,11 @@ define([
 
     this.currentComponentData = ko.observable();
 
+    this.nodegroupOptions = ko.observableArray();
     this.selectedNodegroup.subscribe((value) => {
-      const data = JSON.parse(JSON.stringify(value));
+      const data = JSON.parse(JSON.stringify(this.components()[value]));
       delete data.parameters.resourceid;
+      data.parameters.parenttileid = '1234';
       console.log(this.title, data);
       this.currentComponentData(data);
       this.loadAbstractComponent(this.currentComponentData());
@@ -56,6 +58,15 @@ define([
           arches.urls.root + `workflow-builder/graph-components?graph-id=${graphId}`
         )
       ).json();
+      const nodegroupOptions = data.component_configs.map((item, idx) => {
+        return {
+          text: item.parameters.semanticName,
+          id: idx
+        };
+      });
+      console.log('nodegroupOptions: ', nodegroupOptions);
+      this.nodegroupOptions(nodegroupOptions);
+      this.components(data.component_configs);
       return data.component_configs;
     };
 
