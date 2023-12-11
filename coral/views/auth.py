@@ -37,7 +37,7 @@ from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 from arches.app.views.auth import *
-from arches_orm import Person
+from arches_orm.models import Person
 import logging
 
 logger = logging.getLogger(__name__)

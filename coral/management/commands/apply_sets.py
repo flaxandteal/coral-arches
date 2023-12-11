@@ -24,7 +24,8 @@ from django.contrib.auth.models import User, Group as DjangoGroup
 from arches.app.utils.permission_backend import assign_perm
 from arches.app.models.system_settings import settings
 from arches.app.models.resource import Resource
-from arches_orm import attempt_well_known_resource_model, Group, Set, LogicalSet
+from arches_orm import attempt_well_known_resource_model
+from arches_orm.models import Group, Set, LogicalSet
 from coral.permissions.casbin import CasbinPermissionFramework
 from arches.app.search.components.base import SearchFilterFactory
 from arches.app.views.search import build_search

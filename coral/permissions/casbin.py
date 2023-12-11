@@ -24,7 +24,8 @@ from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 
-from arches_orm import Person, Organization, Set, LogicalSet, Group, ResourceModelWrapper
+from arches_orm.models import Person, Organization, Set, LogicalSet, Group
+from arches_orm import ResourceModelWrapper
 
 logger = logging.getLogger(__name__)
 REMAPPINGS = {
