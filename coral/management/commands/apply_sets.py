@@ -37,13 +37,12 @@ from coral import settings
 logging.basicConfig()
 
 class Command(BaseCommand):
-    """
-    Commands for adding arches test users
+    """Recalculate ES resource->set mapping.
 
     """
 
     def add_arguments(self, parser):
-        ... # parser.add_argument("operation", nargs="?")
+        ...
 
     def handle(self, *args, **options):
         table = self.apply_sets()
@@ -82,11 +81,15 @@ class Command(BaseCommand):
             print(results)
 
     def apply_sets(self, resourceinstanceid=None):
-        framework = CasbinPermissionFramework()
+        """Apply set mappings to resources.
+
+        Run update-by-queries to mark/unmark sets against resources in Elasticsearch.
+        """
+
         from arches.app.search.search_engine_factory import SearchEngineInstance as _se
+
         logical_sets = LogicalSet.all()
         for logical_set in logical_sets:
-            print(logical_set.member_definition)
             if logical_set.member_definition:
                 # user=True is shorthand for "do not restrict by user"
                 parameters = parse_qs(logical_set.member_definition)

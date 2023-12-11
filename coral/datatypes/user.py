@@ -1,13 +1,19 @@
+"""User data type for associating with models.
+
+Datatype to extend possible node values to Django users.
+"""
+
+
 import logging
 
 from arches.app.datatypes.base import BaseDataType
-from arches.app.models.models import Widget
-from arches.app.models.system_settings import settings
+from arches.app.models.models import Widget, Node
+from arches.app.models.tile import Tile
 from django.contrib.auth.models import User
 
-text = Widget.objects.get(name="user")
+text: Widget = Widget.objects.get(name="user")
 
-details = {
+details: dict[str, str | Widget | bool | None] = {
     "datatype": "user",
     "iconclass": "fa fa-location-arrow",
     "modulename": "user.py",
@@ -20,11 +26,15 @@ details = {
     "issearchable": False,
 }
 
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 class UserDataType(BaseDataType):
+    """DataType for a Django User."""
+
     def append_to_document(self, document, nodevalue, nodeid, tile, provisional=False):
-        document["strings"].append({"string": nodevalue, "nodegroup_id": tile.nodegroup_id})
+        document["strings"].append(
+            {"string": nodevalue, "nodegroup_id": tile.nodegroup_id}
+        )
 
     def get_search_terms(self, nodevalue, nodeid=None):
         if nodevalue:
@@ -37,7 +47,7 @@ class UserDataType(BaseDataType):
             return user.email
         return None
 
-    def get_user(self, tile, node):
+    def get_user(self, tile: Tile, node: Node) -> User:
         data = self.get_tile_data(tile)
         if data:
             raw_value = data.get(str(node.nodeid))
