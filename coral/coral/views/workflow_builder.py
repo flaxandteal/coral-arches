@@ -35,3 +35,58 @@ class WorkflowBuilder(View):
         )
 
         return JSONResponse({"resources": JSONDeserializer().deserialize(resources)})
+
+
+class WorkflowBuilderGraphComponents(View):
+    def __init__(self):
+        pass
+
+    def get(self, request):
+        graph_id = request.GET.get("graph-id")
+        graph = Graph.objects.filter(pk=graph_id).first()
+
+        alias_to_node_id = {}
+
+        for node in graph.nodes.values():
+            nodegroup_id = str(node.nodegroup_id)
+            node_id = str(node.nodeid)
+            if nodegroup_id not in alias_to_node_id:
+                alias_to_node_id[nodegroup_id] = {}
+            if node_id == nodegroup_id:
+                alias_to_node_id[nodegroup_id]["semantic_name"] = node.name
+            if node.datatype == "semantic":
+                continue
+            alias_to_node_id[nodegroup_id][node.alias] = node_id
+
+        component_configs = []
+
+        for nodegroup_id, alias_nodes in alias_to_node_id.items():
+            component_configs.append(
+                {
+                    "componentName": "default-card",
+                    "uniqueInstanceName": nodegroup_id,
+                    "tilesManaged": "one",
+                    "parameters": {
+                        "renderContext": "workflow",
+                        "resourceid": "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                        "graphid": graph_id,
+                        "nodegroupid": nodegroup_id,
+                        "semanticName": alias_nodes["semantic_name"]
+                        if alias_nodes.get("semantic_name")
+                        else "No semantic name",
+                        # "hiddenNodes": [
+                        #     f"{node_id2}"
+                        #     for alias2, node_id2 in alias_nodes.items()
+                        #     if alias2 != "semantic_name"
+                        # ],
+                    },
+                }
+            )
+
+        return JSONResponse(
+            {
+                "graph": graph,
+                "alias_to_node_id": alias_to_node_id,
+                "component_configs": component_configs,
+            }
+        )
