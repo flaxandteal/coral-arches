@@ -4,8 +4,19 @@
     <div class="card-component">
       <div data-bind="text: title"></div>
       <div class="row widget-wrapper">
-        <select data-bind="options: optionsNodegroups, value: selectedNodegroup"></select>
+        <select
+          data-bind="
+            options: components, 
+            optionsText: (item) => {
+              return item.parameters.semanticName
+            },
+            value: selectedNodegroup
+          "
+        ></select>
       </div>
+      <workflow-component-abstract
+        params="component: workflowComponentAbstract()"
+      ></workflow-component-abstract>
     </div>
   </div>
   <!-- /ko -->
