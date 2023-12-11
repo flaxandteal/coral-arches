@@ -14,6 +14,26 @@
           "
         ></select>
       </div>
+      <div
+        data-bind="component: {
+          name: 'domain-radio-widget',
+          params: {  
+            node: {
+              config: {
+                options: tileManagedOptions,
+              },
+              configKeys: configKeys
+            },
+            config: {
+              label: 'Tiles Managed',
+            },
+            value: selectedTileManaged,
+            loading: false,
+            form: $data,
+            pageVm: $root
+          }
+      }"
+      ></div>
       <workflow-component-abstract
         params="component: workflowComponentAbstract()"
       ></workflow-component-abstract>

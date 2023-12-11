@@ -17,12 +17,31 @@ define([
 
     this.workflowComponentAbstract = ko.observable();
 
+    // Annoyingly 'one' as the ID will be selected when
+    // 'none' is selected because the code does an includes check
+    this.tileManagedOptions = ko.observableArray([
+      { text: 'One', id: 'tile_one' },
+      { text: 'Many', id: 'tile_many' },
+      { text: 'None', id: 'tile_none' }
+    ]);
+    this.selectedTileManaged = ko.observable('tile_one');
+
+    this.configKeys = ko.observable({ placeholder: 0 });
+
+    this.selectedTileManaged.subscribe((value) => {
+      console.log('this.selectedTileManaged: ', value);
+      this.currentComponentData().tilesManaged = value.replace('tile_', '');
+      this.loadAbstractComponent(this.currentComponentData());
+    });
+
+    this.currentComponentData = ko.observable();
+
     this.selectedNodegroup.subscribe((value) => {
       const data = JSON.parse(JSON.stringify(value));
       delete data.parameters.resourceid;
       console.log(this.title, data);
-
-      this.loadAbstractComponent(data);
+      this.currentComponentData(data);
+      this.loadAbstractComponent(this.currentComponentData());
     });
 
     this.components = ko.observableArray();
