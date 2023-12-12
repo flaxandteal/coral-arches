@@ -30,7 +30,7 @@ define([
 
     this.selectedTileManaged.subscribe((value) => {
       console.log('this.selectedTileManaged: ', value);
-      this.currentComponentData().tilesManaged = value.replace('tile_', '');
+      this.currentComponentData().tilesManaged = value?.replace('tile_', '');
       this.loadAbstractComponent(this.currentComponentData());
     });
 
@@ -40,7 +40,7 @@ define([
     this.selectedNodegroup.subscribe((value) => {
       const data = JSON.parse(JSON.stringify(this.components()[value]));
       delete data.parameters.resourceid;
-      data.parameters.parenttileid = '1234';
+      data.parameters.parenttileid = 'dummy-id';
       console.log(this.title, data);
       this.currentComponentData(data);
       this.loadAbstractComponent(this.currentComponentData());
@@ -93,6 +93,9 @@ define([
         outerSaveOnQuit: null,
         isStepActive: this.isStepActive
       });
+      workflowCA.getCardResourceIdOrGraphId = () => {
+        return componentData.parameters.graphid + '/override';
+      };
       this.isStepActive(true);
       this.workflowComponentAbstract(workflowCA);
       console.log('this.workflowComponentAbstract(): ', this.workflowComponentAbstract());
