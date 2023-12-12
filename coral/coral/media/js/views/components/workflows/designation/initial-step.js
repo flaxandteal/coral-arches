@@ -35,12 +35,9 @@ define([
          * function will handle it. If we configured the name from here after
          * the function we would get a cardinality error.
          */
-        console.log('resid', self.resourceId());
         let responses = [];
 
         const saveLocation = async () => {
-          console.log('saving');
-          console.log(self.resourceId());
           const locationTemplate = {
             data: {},
             nodegroup_id: '87d39b2e-f44f-11eb-9a4a-a87eeabdefba',
@@ -49,14 +46,12 @@ define([
             tileid: null,
             sortorder: 0
           };
-          console.log('templated');
 
           if (!self.locTileId) {
             self.locTileId = uuid.generate();
           } else {
             locationTemplate.tileid = self.locTileId;
           }
-          console.log('locid', self.locTileId);
           const locationTile = await window.fetch(arches.urls.api_tiles(self.locTileId), {
             method: 'POST',
             credentials: 'include',
@@ -74,9 +69,7 @@ define([
         };
         const locationResponse = await saveLocation();
         if (locationResponse.ok) {
-          console.log('ok');
           if (responses.every((response) => response.ok)) {
-            console.log('in the if');
             params.form.savedData({
               tileData: koMapping.toJSON(self.tile().data),
               tileId: self.tile().tileid,
