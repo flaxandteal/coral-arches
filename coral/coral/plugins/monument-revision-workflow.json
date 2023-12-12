@@ -1,0 +1,12 @@
+{
+  "pluginid": "debacc3d-9425-488b-b515-9d79d8386761",
+  "name": "Monument Revision",
+  "icon": "fa fa-magnifying-glass",
+  "component": "views/components/plugins/monument-revision-workflow",
+  "componentname": "monument-revision-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "monument-revision-workflow",
+  "sortorder": 0
+}
