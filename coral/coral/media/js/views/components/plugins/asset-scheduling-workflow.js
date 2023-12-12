@@ -4,7 +4,7 @@ define([
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/designation/initial-step',
+  'views/components/workflows/asset-scheduling-workflow/initial-step',
   'views/components/workflows/default-card-util'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('asset-scheduling-workflow', {
