@@ -1,17 +1,16 @@
 define([
   'knockout',
   'arches',
-  'viewmodels/workflow',
+  'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm'
-], function (ko, arches, Workflow, workflowTemplate) {
+], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
       this.componentName = params.plugin.slug;
 
-      console.log('params: ', params);
       this.stepConfig = params.stepData;
 
-      Workflow.apply(this, [params]);
+      EditableWorkflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');
     },
     template: workflowTemplate
