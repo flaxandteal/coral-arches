@@ -36,6 +36,24 @@ define([
       this.activeStep(this.workflowSteps()[stepIdx]);
     };
 
+    this.getWorkflowData = () => {
+      const data = {
+        pluginid: 'd1c8bdf2-11e0-4cf7-b412-c329346f4c48',
+        name: 'My Custom Workflow',
+        icon: 'fa fa-check',
+        component: 'views/components/plugins/workflow-builder-loader',
+        componentname: 'workflow-builder-loader',
+        config: {
+          show: false,
+          stepData: this.workflowSteps().map((step) => step.getStepData())
+        },
+        slug: 'my-custom-workflow',
+        sortorder: 0
+      };
+      console.log('this.getWorkflowData(): ', data);
+      return data;
+    };
+
     this.init = async () => {
       console.log('workflow-builder-editor');
     };

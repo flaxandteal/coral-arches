@@ -25,6 +25,27 @@ define([
       this.cards.valueHasMutated();
     };
 
+    this.titleToId = () => {
+      return this.title().toLowerCase().split(' ').join('-');
+    };
+
+    this.getStepData = () => {
+      return {
+        title: this.title(),
+        name: this.titleToId(),
+        required: false,
+        // informationboxdata: {
+        //   heading: '',
+        //   text: ''
+        // },
+        layoutSections: [
+          {
+            componentConfigs: this.cards().map((card) => card.getComponentData())
+          }
+        ]
+      };
+    };
+
     this.init();
   };
 

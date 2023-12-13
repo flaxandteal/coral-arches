@@ -101,6 +101,20 @@ define([
       console.log('this.workflowComponentAbstract(): ', this.workflowComponentAbstract());
     };
 
+    this.getComponentData = () => {
+      return {
+        componentName: this.currentComponentData().componentName,
+        tilesManaged: this.currentComponentData().tilesManaged,
+        uniqueInstanceName: this.currentComponentData().uniqueInstanceName,
+        parameters: {
+          graphid: this.currentComponentData().parameters.graphid,
+          nodegroupid: this.currentComponentData().parameters.nodegroupid,
+          resourceid: this.currentComponentData().parameters.resourceid,
+          semanticName: this.currentComponentData().parameters.semanticName
+        }
+      };
+    };
+
     this.init = async () => {
       console.log('workflow-builder-card: ', this, params);
       this.components(await this.loadComponents());

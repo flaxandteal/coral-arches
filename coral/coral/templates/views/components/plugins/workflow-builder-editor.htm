@@ -8,11 +8,11 @@
         </div>
       </div>
 
-      <div style="display: inline-flex; width: 335px; justify-content: flex-end">
-        <!-- <button data-bind="click: finishWorkflow" class="btn btn-success">
+      <div style="display: inline-flex">
+        <button data-bind="click: () => getWorkflowData('clicked')" class="btn btn-success">
           <i class="fa fa-check"></i>
-          <span>{% trans "Save and Complete Workflow" %}</span>
-        </button> -->
+          <span>Complete</span>
+        </button>
         <!-- <button data-bind="click: quitWorkflow" class="btn btn-danger">
           <i class="ion-android-cancel"></i>
           <span>{% trans "Delete Workflow" %}</span>
