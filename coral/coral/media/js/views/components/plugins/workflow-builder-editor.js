@@ -36,7 +36,7 @@ define([
       this.activeStep(this.workflowSteps()[stepIdx]);
     };
 
-    this.getWorkflowData = () => {
+    this.getWorkflowData = async () => {
       const data = {
         pluginid: 'd1c8bdf2-11e0-4cf7-b412-c329346f4c48',
         name: 'My Custom Workflow',
@@ -50,6 +50,21 @@ define([
         slug: 'my-custom-workflow',
         sortorder: 0
       };
+      await $.ajax({
+        type: 'POST',
+        url: '/workflow-builder/register',
+        data: JSON.stringify(data),
+        context: this,
+        success: (response) => {
+          console.log(response);
+        },
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        },
+        complete: (request, status) => {
+          console.log(request, status);
+        }
+      });
       console.log('this.getWorkflowData(): ', data);
       return data;
     };
