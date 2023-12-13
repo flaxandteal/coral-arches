@@ -94,6 +94,25 @@ define([
                 },
                 {
                   componentName: 'default-card-util',
+                  uniqueInstanceName: 'archive-name',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b07cfa6f-894d-11ea-82aa-f875a44e0e11',
+                    nodegroupid: '145f9615-9ad2-11ea-b4d3-f875a44e0e11',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      '145f9618-9ad2-11ea-925e-f875a44e0e11', // archive_source_name_use_type,
+                      '145f9619-9ad2-11ea-83ec-f875a44e0e11', // archive_source_name_currency,
+                      '145f961a-9ad2-11ea-948a-f875a44e0e11', // archive_source_name_type,
+                      // '145f961b-9ad2-11ea-bf90-f875a44e0e11', // archive_source_name,
+                      '145f961c-9ad2-11ea-a0f2-f875a44e0e11', // archive_source_name_metatype,
+                      '145f961d-9ad2-11ea-bb96-f875a44e0e11', // archive_source_name_use_metatype,
+                      '145f961e-9ad2-11ea-bbd1-f875a44e0e11' // archive_source_name_currency_metatype
+                    ]
+                  }
+                },
+                {
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'archive-type',
                   tilesManaged: 'one',
                   parameters: {
