@@ -167,7 +167,7 @@ class WorkflowBuilderCardOverride(api.Card):
                                     # we don't send that tile back to the client.
                                     append_tile = False
                                 else:
-                                    # if the tile has authoritaive data and the current user is not the owner,
+                                    # if the tile has authoritative data and the current user is not the owner,
                                     # we don't send the provisional data of other users back to the client.
                                     tile.provisionaledits = None
                 if append_tile is True:
