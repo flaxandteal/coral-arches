@@ -63,6 +63,24 @@
         "desc": "Create or edit a License for an Excavation Activity"
       },
       {
+        "workflowid": "9ea29d4e-4ebc-4142-8d6c-68603430302b",
+        "slug": "edit-workflow?workflow-slug=asset-scheduling-workflow",
+        "name": "Heritage Asset",
+        "icon": "fa fa-file-text",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "Add an asset to the Query List or change it's schedule"
+      },
+      {
+        "workflowid": "9ea29d4e-4ebc-4142-8d6c-68603430302b",
+        "slug": "edit-workflow?workflow-slug=fmw-inspection-workflow",
+        "name": "FMW Inspection",
+        "icon": "fa fa-file-text",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "Record an Inspection of a Heritage Asset"
+      },
+      {
         "workflowid": "7089fecd-c110-4b03-bbff-5f3cc78a92b8",
         "slug": "edit-workflow?workflow-slug=archive-catalog-workflow",
         "name": "Archive Cataloguing",
@@ -106,6 +124,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "A site visit regarding an Article 42 Excavation"
+      },
+      {
+        "workflowid": "e02ef3b6-5636-4b6e-a5a9-dfe067624464",
+        "slug": "edit-workflow?workflow-slug=monument-revision-workflow",
+        "name": "Monument Revision",
+        "icon": "fa fa-magnifying-glass",
+        "bgColor": "#6a0ecc",
+        "circleColor": "#781adb",
+        "desc": "Submit a revision to change an existing monument"
       },
       {
         "workflowid": "11ef6850-5f9b-49ad-b8cd-3d278badd996",
