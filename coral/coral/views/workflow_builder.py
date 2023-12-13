@@ -275,3 +275,50 @@ class WorkflowBuilderWorkflowRegister(View):
         instance.save()
 
         return JSONResponse({"data": data})
+
+
+class WorkflowBuilderWorkflowPlugins(View):
+    def __init__(self):
+        pass
+
+    def post(self, request):
+        print("request.body: ", request.body)
+        data = json.loads(request.body.decode("utf-8"))
+
+        try:
+            uuid.UUID(data["pluginid"])
+        except:
+            data["pluginid"] = str(uuid.uuid4())
+            print("Registering plugin with pluginid: {}".format(data["pluginid"]))
+
+        instance = models.Plugin(
+            pluginid=data["pluginid"],
+            name=data["name"],
+            icon=data["icon"],
+            component=data["component"],
+            componentname=data["componentname"],
+            config=data["config"],
+            slug=data["slug"],
+            sortorder=data["sortorder"],
+        )
+
+        instance.save()
+
+        return JSONResponse({"data": data})
+
+    def get(self, request, slug=None):
+        if slug:
+            plugin = models.Plugin.objects.get(slug=slug)
+            return JSONResponse({"workflow": workflow_builder_plugins})
+        instances = None
+        try:
+            instances = models.Plugin.objects.all()
+        except Exception as e:
+            print(e)
+
+        workflow_builder_plugins = []
+        for instance in instances:
+            if "stepData" in instance.config:
+                workflow_builder_plugins.append(instance)
+
+        return JSONResponse({"workflows": workflow_builder_plugins})

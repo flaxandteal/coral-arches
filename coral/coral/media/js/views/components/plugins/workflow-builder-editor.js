@@ -11,6 +11,7 @@ define([
     this.workflowName = ko.observable('Workflow Builder Editor');
     this.workflowSteps = ko.observableArray();
     this.activeStep = ko.observable();
+    this.graphId = ko.observable();
 
     this.addStep = () => {
       console.log('adding step');
@@ -71,6 +72,12 @@ define([
 
     this.init = async () => {
       console.log('workflow-builder-editor');
+      let searchParams = new URLSearchParams(window.location.search);
+      let workflowSlug = searchParams.get('workflow-slug');
+      const workflow = await (
+        await window.fetch(arches.urls.root + `workflow-builder/plugins?slug=${workflowSlug}`)
+      ).json();
+      console.log('existing workflow: ', workflow);
     };
 
     this.init();
