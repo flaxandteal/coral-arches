@@ -10,12 +10,17 @@ define([
   const WorkflowBuilderCard = function (params) {
     _.extend(this, params);
 
+    this.cardHasLoaded = ko.observable(false);
     this.title = params?.title || 'default';
 
-    this.selectedNodegroup = ko.observable();
-    this.optionsNodegroups = ko.observableArray(['test', 'test1', 'test3']);
-
     this.workflowComponentAbstract = ko.observable();
+    this.isStepActive = ko.observable(false);
+    this.currentComponentData = ko.observable();
+
+    this.components = ko.observableArray();
+
+    this.nodegroupOptions = ko.observableArray();
+    this.selectedNodegroup = ko.observable();
 
     // Annoyingly 'one' as the ID will be selected when
     // 'none' is selected because the code does an includes check
@@ -28,46 +33,19 @@ define([
 
     this.configKeys = ko.observable({ placeholder: 0 });
 
-    this.selectedTileManaged.subscribe((value) => {
-      console.log('this.selectedTileManaged: ', value);
-      this.currentComponentData().tilesManaged = value?.replace('tile_', '');
-      this.loadAbstractComponent(this.currentComponentData());
-    });
-
-    this.currentComponentData = ko.observable();
-
-    this.nodegroupOptions = ko.observableArray();
-    this.selectedNodegroup.subscribe((value) => {
-      const data = JSON.parse(JSON.stringify(this.components()[value]));
-      delete data.parameters.resourceid;
-      data.parameters.parenttileid = 'dummy-id';
-      console.log(this.title, data);
-      this.currentComponentData(data);
-      this.loadAbstractComponent(this.currentComponentData());
-    });
-
-    this.components = ko.observableArray();
-
-    this.isStepActive = ko.observable(false);
-
-    this.loadComponents = async () => {
-      let searchParams = new URLSearchParams(window.location.search);
-      let graphId = searchParams.get('graph-id');
-      const data = await (
-        await window.fetch(
-          arches.urls.root + `workflow-builder/graph-components?graph-id=${graphId}`
-        )
-      ).json();
+    this.loadGraphComponents = async () => {
+      const data = await $.getJSON(
+        arches.urls.root + `workflow-builder/graph-components?graph-id=${this.graphId()}`
+      );
       const nodegroupOptions = data.component_configs.map((item, idx) => {
         return {
           text: item.parameters.semanticName,
+          nodegroupid: item.parameters.nodegroupid,
           id: idx
         };
       });
-      console.log('nodegroupOptions: ', nodegroupOptions);
       this.nodegroupOptions(nodegroupOptions);
       this.components(data.component_configs);
-      return data.component_configs;
     };
 
     this.loadAbstractComponent = (componentData) => {
@@ -88,17 +66,67 @@ define([
           console.log('lockExternalStep was called');
         },
         lockableExternalSteps: [],
-        workflowId: '1234',
+        workflowId: '',
         alert: null,
         outerSaveOnQuit: null,
         isStepActive: this.isStepActive
       });
+      /**
+       * This endpoint was created only to add additional tiles
+       * that don't exist. These tiles are used to provide additional
+       * cards to the topCards.
+       *
+       * For example the 'Location Data' nodegroup has nested nodegroups.
+       * These nodegroups will only load if the parent tile (Location Data)
+       * exists in the returned tiles because the tile will provide the cards.
+       *
+       * A dummy-id has been created to match the tile returned to the parenttileid
+       * of the node config. This will eventually need to be changed if there
+       * are multiple components that require a parenttileid.
+       */
       workflowCA.getCardResourceIdOrGraphId = () => {
-        return componentData.parameters.graphid + '/override';
+        return this.graphId() + '/override';
       };
       this.isStepActive(true);
       this.workflowComponentAbstract(workflowCA);
-      console.log('this.workflowComponentAbstract(): ', this.workflowComponentAbstract());
+    };
+
+    this.graphId = ko.computed(() => {
+      if (this.currentComponentData()?.parameters.graphid) {
+        return this.currentComponentData()?.parameters.graphid;
+      }
+      const searchParams = new URLSearchParams(window.location.search);
+      const graphId = searchParams.get('graph-id');
+      if (graphId) {
+        return graphId;
+      }
+    }, this);
+
+    this.loadComponent = () => {
+      if (this.currentComponentData()) {
+        this.selectedNodegroup(
+          this.nodegroupOptions().findIndex(
+            (option) => option.nodegroupid === this.currentComponentData().parameters.nodegroupid
+          )
+        );
+        this.selectedTileManaged('tile_' + this.currentComponentData().tilesManaged);
+        this.loadAbstractComponent(this.currentComponentData());
+      }
+    };
+
+    this.setupSubscriptions = () => {
+      this.selectedTileManaged.subscribe((value) => {
+        this.currentComponentData().tilesManaged = value?.replace('tile_', '');
+        this.loadAbstractComponent(this.currentComponentData());
+      });
+
+      this.selectedNodegroup.subscribe((value) => {
+        const data = JSON.parse(JSON.stringify(this.components()[value]));
+        data.parameters.resourceid = '';
+        data.parameters.parenttileid = 'dummy-id';
+        this.currentComponentData(data);
+        this.loadAbstractComponent(this.currentComponentData());
+      });
     };
 
     this.getComponentData = () => {
@@ -116,9 +144,11 @@ define([
     };
 
     this.init = async () => {
-      console.log('workflow-builder-card: ', this, params);
-      this.components(await this.loadComponents());
-      console.log('this.components: ', this.components());
+      this.currentComponentData(params?.componentData);
+      await this.loadGraphComponents();
+      this.loadComponent();
+      this.setupSubscriptions();
+      this.cardHasLoaded(true);
     };
 
     this.init();

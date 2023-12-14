@@ -15,7 +15,8 @@ define([
 
     this.addCard = (cardData) => {
       const card = new WorkflowBuilderCard({
-        title: 'Card ' + (this.cards().length + 1)
+        title: 'Card ' + (this.cards().length + 1),
+        componentData: cardData
       });
       this.cards().push(card);
       this.cards.valueHasMutated();
