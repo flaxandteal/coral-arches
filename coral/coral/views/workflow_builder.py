@@ -1,5 +1,5 @@
 from django.views.generic import View
-from arches.app.utils.response import JSONResponse
+from arches.app.utils.response import JSONResponse, HttpResponse
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from arches.app.utils.permission_backend import get_createable_resource_types
@@ -306,10 +306,11 @@ class WorkflowBuilderWorkflowPlugins(View):
 
         return JSONResponse({"data": data})
 
-    def get(self, request, slug=None):
+    def get(self, request):
+        slug = request.GET.get("slug")
         if slug:
             plugin = models.Plugin.objects.get(slug=slug)
-            return JSONResponse({"workflow": workflow_builder_plugins})
+            return JSONResponse({"workflow": plugin})
         instances = None
         try:
             instances = models.Plugin.objects.all()
@@ -322,3 +323,26 @@ class WorkflowBuilderWorkflowPlugins(View):
                 workflow_builder_plugins.append(instance)
 
         return JSONResponse({"workflows": workflow_builder_plugins})
+
+
+class WorkflowBuilderPluginExport(View):
+    def get(self, request):
+        slug = request.GET.get("slug")
+        plugin = models.Plugin.objects.get(slug=slug)
+        filename = f"{slug}.json"
+        json_data = json.dumps(
+            {
+                "pluginid": str(plugin.pluginid),
+                "name": plugin.name,
+                "icon": plugin.icon,
+                "component": plugin.component,
+                "componentname": plugin.componentname,
+                "config": plugin.config,
+                "slug": plugin.slug,
+                "sortorder": plugin.sortorder,
+            },
+            indent=2,
+        )
+        response = HttpResponse(json_data, content_type="application/json")
+        response["Content-Disposition"] = f"attachment; filename={filename}"
+        return response
