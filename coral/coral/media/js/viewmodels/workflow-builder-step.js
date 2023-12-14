@@ -10,7 +10,7 @@ define([
   const WorkflowBuilderStep = function (params) {
     _.extend(this, params);
 
-    this.title = params?.title || 'default';
+    this.title = ko.observable(params?.title);
     this.cards = ko.observableArray();
 
     this.init = () => {

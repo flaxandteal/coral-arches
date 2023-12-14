@@ -17,22 +17,15 @@ define([
     this.workflowPlugin = ko.observable();
 
     this.addStep = () => {
-      console.log('adding step');
-      let stepName = ko.observable('Step ' + (this.workflowSteps().length + 1));
-      // this.workflowSteps().push(stepName);
+      const stepName = `Step ${this.workflowSteps().length + 1}`;
       const step = new WorkflowBuilderStep({
         title: stepName
       });
       this.workflowSteps().push(step);
       this.workflowSteps.valueHasMutated();
       if (!this.activeStep()) {
-        console.log('setting active step');
         this.activeStep(this.workflowSteps()[0]);
       }
-    };
-
-    this.updatePan = (direction) => {
-      console.log('direction: ', direction);
     };
 
     this.switchStep = (stepIdx) => {
