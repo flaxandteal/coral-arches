@@ -13,7 +13,8 @@ define([
     this.activeStep = ko.observable();
 
     this.graphId = ko.observable();
-    this.workflowSlug = ko.observable();
+
+    this.workflowPlugin = ko.observable();
 
     this.addStep = () => {
       console.log('adding step');
@@ -40,7 +41,7 @@ define([
 
     this.getWorkflowData = async () => {
       const data = {
-        pluginid: 'd1c8bdf2-11e0-4cf7-b412-c329346f4c48',
+        pluginid: this.workflowPluginId(),
         name: 'My Custom Workflow',
         icon: 'fa fa-check',
         component: 'views/components/plugins/workflow-builder-loader',
@@ -52,22 +53,14 @@ define([
         slug: 'my-custom-workflow',
         sortorder: 0
       };
-      await $.ajax({
+      const workflowPlugin = await $.ajax({
         type: 'POST',
         url: '/workflow-builder/register',
+        dataType: 'json',
         data: JSON.stringify(data),
-        context: this,
-        success: (response) => {
-          console.log(response);
-        },
-        error: (response, status, error) => {
-          console.log(response, status, error);
-        },
-        complete: (request, status) => {
-          console.log(request, status);
-        }
+        context: this
       });
-      console.log('this.getWorkflowData(): ', data);
+      this.workflowPlugin(workflowPlugin);
       return data;
     };
 
@@ -85,23 +78,32 @@ define([
       }
     };
 
-    this.loadWorkflowSlug = () => {
-      let searchParams = new URLSearchParams(window.location.search);
-      let workflowSlug = searchParams.get('workflow-slug');
-      this.workflowSlug(workflowSlug);
+    this.workflowSlug = ko.computed(() => {
+      if (this.workflowPlugin()?.slug) {
+        return this.workflowPlugin()?.slug;
+      }
+      const searchParams = new URLSearchParams(window.location.search);
+      const workflowSlug = searchParams.get('workflow-slug');
+      if (workflowSlug) {
+        return workflowSlug;
+      }
+    }, this);
+
+    this.workflowPluginId = ko.computed(() => {
+      return this.workflowPlugin()?.pluginid || '';
+    }, this);
+
+    this.loadExistingWorkflow = async () => {
+      if (this.workflowSlug()) {
+        const workflow = $.getJSON(
+          arches.urls.root + `workflow-builder/plugins?slug=${this.workflowSlug()}`
+        );
+        console.log('Loaded existing workflow: ', workflow);
+      }
     };
 
     this.init = async () => {
-      console.log('workflow-builder-editor');
-      this.loadWorkflowSlug();
-      if (this.workflowSlug()) {
-        const workflow = await (
-          await window.fetch(
-            arches.urls.root + `workflow-builder/plugins?slug=${this.workflowSlug()}`
-          )
-        ).json();
-        console.log('Loaded existing workflow: ', workflow);
-      }
+      await this.loadExistingWorkflow();
     };
 
     this.init();
