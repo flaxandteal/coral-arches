@@ -3,15 +3,18 @@
   <div class="tabbed-workflow">
     <div class="tabbed-workflow-title-bar">
       <div style="display: flex; flex-direction: row">
-        <div class="workflow-name" data-bind="text: workflowName()">
-          {% trans "Insert Workflow Name" %}
-        </div>
+        <div class="workflow-name" data-bind="text: workflowName()"></div>
       </div>
 
       <div style="display: inline-flex">
-        <button data-bind="click: () => getWorkflowData('clicked')" class="btn btn-success">
-          <i class="fa fa-check"></i>
-          <span>Complete</span>
+        <button data-bind="click: () => getWorkflowData()" class="btn btn-success">
+          <span>Publish</span>
+        </button>
+        <button
+          data-bind="click: () => exportWorkflow(), disable: !workflowSlug()"
+          class="btn btn-primary"
+        >
+          <span>Export</span>
         </button>
         <!-- <button data-bind="click: quitWorkflow" class="btn btn-danger">
           <i class="ion-android-cancel"></i>

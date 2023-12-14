@@ -11,7 +11,9 @@ define([
     this.workflowName = ko.observable('Workflow Builder Editor');
     this.workflowSteps = ko.observableArray();
     this.activeStep = ko.observable();
+
     this.graphId = ko.observable();
+    this.workflowSlug = ko.observable();
 
     this.addStep = () => {
       console.log('adding step');
@@ -33,7 +35,6 @@ define([
     };
 
     this.switchStep = (stepIdx) => {
-      console.log('changing step idx: ', stepIdx);
       this.activeStep(this.workflowSteps()[stepIdx]);
     };
 
@@ -70,14 +71,37 @@ define([
       return data;
     };
 
-    this.init = async () => {
-      console.log('workflow-builder-editor');
+    this.exportWorkflow = async () => {
+      if (this.workflowSlug()) {
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute(
+          'href',
+          arches.urls.root + `workflow-builder/export?slug=${this.workflowSlug()}`
+        );
+        downloadAnchorNode.setAttribute('download', `${this.workflowSlug()}.json`);
+        document.body.appendChild(downloadAnchorNode); // Required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+      }
+    };
+
+    this.loadWorkflowSlug = () => {
       let searchParams = new URLSearchParams(window.location.search);
       let workflowSlug = searchParams.get('workflow-slug');
-      const workflow = await (
-        await window.fetch(arches.urls.root + `workflow-builder/plugins?slug=${workflowSlug}`)
-      ).json();
-      console.log('existing workflow: ', workflow);
+      this.workflowSlug(workflowSlug);
+    };
+
+    this.init = async () => {
+      console.log('workflow-builder-editor');
+      this.loadWorkflowSlug();
+      if (this.workflowSlug()) {
+        const workflow = await (
+          await window.fetch(
+            arches.urls.root + `workflow-builder/plugins?slug=${this.workflowSlug()}`
+          )
+        ).json();
+        console.log('Loaded existing workflow: ', workflow);
+      }
     };
 
     this.init();
