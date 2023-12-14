@@ -95,10 +95,10 @@ define([
 
     this.loadExistingWorkflow = async () => {
       if (this.workflowSlug()) {
-        const workflow = $.getJSON(
+        const workflow = await $.getJSON(
           arches.urls.root + `workflow-builder/plugins?slug=${this.workflowSlug()}`
         );
-        console.log('Loaded existing workflow: ', workflow);
+        this.workflowPlugin(workflow);
       }
     };
 
