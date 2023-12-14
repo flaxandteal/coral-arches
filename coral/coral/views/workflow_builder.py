@@ -247,42 +247,11 @@ class WorkflowBuilderCardOverride(api.Card):
         return JSONResponse(context, indent=4)
 
 
-class WorkflowBuilderWorkflowRegister(View):
-    def __init__(self):
-        pass
-
-    def post(self, request):
-        print("request.body: ", request.body)
-        data = json.loads(request.body.decode("utf-8"))
-
-        try:
-            uuid.UUID(data["pluginid"])
-        except:
-            data["pluginid"] = str(uuid.uuid4())
-            print("Registering plugin with pluginid: {}".format(data["pluginid"]))
-
-        instance = models.Plugin(
-            pluginid=data["pluginid"],
-            name=data["name"],
-            icon=data["icon"],
-            component=data["component"],
-            componentname=data["componentname"],
-            config=data["config"],
-            slug=data["slug"],
-            sortorder=data["sortorder"],
-        )
-
-        instance.save()
-
-        return JSONResponse({"data": data})
-
-
 class WorkflowBuilderWorkflowPlugins(View):
     def __init__(self):
         pass
 
     def post(self, request):
-        print("request.body: ", request.body)
         data = json.loads(request.body.decode("utf-8"))
 
         try:
@@ -304,7 +273,7 @@ class WorkflowBuilderWorkflowPlugins(View):
 
         instance.save()
 
-        return JSONResponse({"data": data})
+        return JSONResponse(data)
 
     def get(self, request):
         slug = request.GET.get("slug")
