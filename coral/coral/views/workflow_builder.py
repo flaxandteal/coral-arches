@@ -278,8 +278,8 @@ class WorkflowBuilderWorkflowPlugins(View):
     def get(self, request):
         slug = request.GET.get("slug")
         if slug:
-            plugin = models.Plugin.objects.get(slug=slug)
-            return JSONResponse({"workflow": plugin})
+            workflow = models.Plugin.objects.get(slug=slug)
+            return JSONResponse(workflow)
         instances = None
         try:
             instances = models.Plugin.objects.all()
