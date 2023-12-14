@@ -39,7 +39,7 @@ define([
       this.activeStep(this.workflowSteps()[stepIdx]);
     };
 
-    this.getWorkflowData = async () => {
+    this.registerWorkflow = async () => {
       const data = {
         pluginid: this.workflowPluginId(),
         name: 'My Custom Workflow',
