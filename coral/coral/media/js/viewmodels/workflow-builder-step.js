@@ -10,14 +10,10 @@ define([
   const WorkflowBuilderStep = function (params) {
     _.extend(this, params);
 
-    this.title = ko.observable(params?.title);
+    this.title = ko.observable(params?.title || '');
     this.cards = ko.observableArray();
 
-    this.init = () => {
-      console.log('workflow-builder-step: ', this, params);
-    };
-
-    this.addCard = () => {
+    this.addCard = (cardData) => {
       const card = new WorkflowBuilderCard({
         title: 'Card ' + (this.cards().length + 1)
       });
@@ -25,14 +21,20 @@ define([
       this.cards.valueHasMutated();
     };
 
-    this.titleToId = () => {
-      return this.title().toLowerCase().split(' ').join('-');
+    this.loadCards = (cards) => {
+      cards?.forEach((cardData) => {
+        this.addCard(cardData);
+      });
     };
+
+    this.titleAsId = ko.computed(() => {
+      return this.title().toLowerCase().split(' ').join('-');
+    }, this);
 
     this.getStepData = () => {
       return {
         title: this.title(),
-        name: this.titleToId(),
+        name: this.titleAsId(),
         required: false,
         // informationboxdata: {
         //   heading: '',
@@ -44,6 +46,10 @@ define([
           }
         ]
       };
+    };
+
+    this.init = () => {
+      this.loadCards(params?.cards);
     };
 
     this.init();

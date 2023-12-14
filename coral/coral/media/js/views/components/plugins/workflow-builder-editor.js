@@ -16,16 +16,23 @@ define([
 
     this.workflowPlugin = ko.observable();
 
-    this.addStep = () => {
-      const stepName = `Step ${this.workflowSteps().length + 1}`;
+    this.addStep = (stepData) => {
+      const title = stepData?.title || `Step ${this.workflowSteps().length + 1}`;
       const step = new WorkflowBuilderStep({
-        title: stepName
+        title: title,
+        cards: stepData?.layoutSections[0].componentConfigs
       });
       this.workflowSteps().push(step);
       this.workflowSteps.valueHasMutated();
       if (!this.activeStep()) {
         this.activeStep(this.workflowSteps()[0]);
       }
+    };
+
+    this.loadSteps = (steps) => {
+      steps?.forEach((stepData) => {
+        this.addStep(stepData);
+      });
     };
 
     this.switchStep = (stepIdx) => {
@@ -97,6 +104,7 @@ define([
 
     this.init = async () => {
       await this.loadExistingWorkflow();
+      this.loadSteps(this.workflowPlugin()?.config.stepData);
     };
 
     this.init();
