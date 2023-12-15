@@ -293,6 +293,30 @@ class WorkflowBuilderWorkflowPlugins(View):
 
         return JSONResponse({"workflows": workflow_builder_plugins})
 
+    def put(self, request):
+        data = json.loads(request.body.decode("utf-8"))
+
+        plugin = models.Plugin.objects.get(pk=data["pluginid"])
+        plugin.icon = data["icon"]
+        plugin.component = data["component"]
+        plugin.componentname = data["componentname"]
+        plugin.config = data["config"]
+
+        plugin.save()
+
+        return JSONResponse(
+            {
+                "pluginid": str(plugin.pluginid),
+                "name": plugin.name,
+                "icon": plugin.icon,
+                "component": plugin.component,
+                "componentname": plugin.componentname,
+                "config": plugin.config,
+                "slug": plugin.slug,
+                "sortorder": plugin.sortorder,
+            }
+        )
+
 
 class WorkflowBuilderPluginExport(View):
     def get(self, request):
