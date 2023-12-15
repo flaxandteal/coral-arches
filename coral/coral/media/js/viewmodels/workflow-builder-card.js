@@ -100,6 +100,7 @@ define([
       if (graphId) {
         return graphId;
       }
+      return params.graphId;
     }, this);
 
     this.loadComponent = () => {

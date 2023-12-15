@@ -20,7 +20,8 @@ define([
       const title = stepData?.title || `Step ${this.workflowSteps().length + 1}`;
       const step = new WorkflowBuilderStep({
         title: title,
-        cards: stepData?.layoutSections[0].componentConfigs
+        cards: stepData?.layoutSections[0].componentConfigs,
+        graphId: this.graphId()
       });
       this.workflowSteps().push(step);
       this.workflowSteps.valueHasMutated();
@@ -61,10 +62,10 @@ define([
         context: this
       });
       this.workflowPlugin(workflowPlugin);
-      return data;
     };
 
     this.exportWorkflow = async () => {
+      await this.updateWorkflow();
       if (this.workflowSlug()) {
         var downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute(
@@ -78,6 +79,33 @@ define([
       }
     };
 
+    this.updateWorkflow = async () => {
+      const data = {
+        pluginid: this.workflowPluginId(),
+        name: 'My Custom Workflow',
+        icon: 'fa fa-check',
+        component: 'views/components/plugins/workflow-builder-loader',
+        componentname: 'workflow-builder-loader',
+        config: {
+          show: false,
+          stepData: this.workflowSteps().map((step) => step.getStepData())
+        },
+        slug: 'my-custom-workflow',
+        sortorder: 0
+      };
+      const workflowPlugin = await $.ajax({
+        type: 'PUT',
+        url: '/workflow-builder/update',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
+      this.workflowPlugin(workflowPlugin);
+    };
+
     this.workflowSlug = ko.computed(() => {
       if (this.workflowPlugin()?.slug) {
         return this.workflowPlugin()?.slug;
@@ -86,6 +114,21 @@ define([
       const workflowSlug = searchParams.get('workflow-slug');
       if (workflowSlug) {
         return workflowSlug;
+      }
+    }, this);
+
+    /**
+     * Temporary solution to grab the graph id
+     */
+    this.graphId = ko.computed(() => {
+      if (this.workflowPlugin()) {
+        return this.workflowPlugin()?.config?.stepData?.[0].layoutSections?.[0]
+          .componentConfigs?.[0].parameters.graphid;
+      }
+      const searchParams = new URLSearchParams(window.location.search);
+      const graphId = searchParams.get('graph-id');
+      if (graphId) {
+        return graphId;
       }
     }, this);
 

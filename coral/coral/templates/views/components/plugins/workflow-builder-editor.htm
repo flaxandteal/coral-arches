@@ -19,6 +19,12 @@
         >
           <span>Export</span>
         </button>
+        <button
+          data-bind="click: () => updateWorkflow(), disable: !workflowPluginId()"
+          class="btn btn-primary"
+        >
+          <span>Update</span>
+        </button>
         <!-- <button data-bind="click: quitWorkflow" class="btn btn-danger">
           <i class="ion-android-cancel"></i>
           <span>{% trans "Delete Workflow" %}</span>

@@ -12,11 +12,13 @@ define([
 
     this.title = ko.observable(params?.title || '');
     this.cards = ko.observableArray();
+    this.graphId = params?.graphId;
 
     this.addCard = (cardData) => {
       const card = new WorkflowBuilderCard({
         title: 'Card ' + (this.cards().length + 1),
-        componentData: cardData
+        componentData: cardData,
+        graphId: this.graphId
       });
       this.cards().push(card);
       this.cards.valueHasMutated();
@@ -37,6 +39,7 @@ define([
         title: this.title(),
         name: this.titleAsId(),
         required: false,
+        workflowstepclass: 'workflow-form-component',
         // informationboxdata: {
         //   heading: '',
         //   text: ''
