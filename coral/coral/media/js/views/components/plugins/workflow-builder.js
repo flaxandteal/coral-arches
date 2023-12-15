@@ -17,13 +17,11 @@ define([
     this.workflows = ko.observable();
 
     this.openWorkflowBuilderWithGraph = (graphId) => {
-      console.log('graphId: ', graphId);
       const url = `workflow-builder-editor?graph-id=${graphId}`;
       window.location.href = arches.urls.plugin(url);
     };
 
     this.openWorkflowBuilderWithWorkflow = (slug) => {
-      console.log('workflow-slug: ', slug);
       const url = `workflow-builder-editor?workflow-slug=${slug}`;
       window.location.href = arches.urls.plugin(url);
     };
@@ -35,8 +33,6 @@ define([
       const workflows = await (
         await window.fetch(arches.urls.root + `workflow-builder/plugins`)
       ).json();
-      console.log('resources: ', resources);
-      console.log('workflows: ', workflows);
       this.resources(resources.resources);
       this.workflows(workflows.workflows);
     };
