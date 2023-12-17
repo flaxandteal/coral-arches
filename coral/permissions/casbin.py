@@ -176,9 +176,12 @@ class CasbinPermissionFramework(PermissionFramework):
 
     def _django_group_to_ri(self, django_group: DjangoGroup):
         # TODO: a more robust mapping
-        group = Group.where(name=django_group.name)
+        group = Group.where(name={"en": {"value": django_group.name, "direction": "ltr"}})
         if not group:
-            group = Group.create(name=django_group.name)
+            group = Group.create()
+            basic_info = group.basic_info.append()
+            basic_info.name = django_group.name
+            group.save()
         else:
             group = group[0]
         return group
