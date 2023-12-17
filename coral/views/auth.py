@@ -37,12 +37,13 @@ from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 from arches.app.views.auth import *
-from arches_orm.models import Person
 import logging
 
 logger = logging.getLogger(__name__)
 
 def _person_decrypt(person):
+    from arches_orm.models import Person
+
     if not person:
         raise (Exception(("User can only be signed up by linking to a pre-known Person.")))
 
