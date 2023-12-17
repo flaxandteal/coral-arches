@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from urllib.parse import parse_qs
 import logging
+import time
 import readline
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User, Group as DjangoGroup
@@ -48,6 +49,7 @@ class Command(BaseCommand):
         table = self.apply_sets()
 
     def _apply_set(self, se, set_id, set_query):
+        results = []
         for add_not_remove in (True, False):
             dsl = Query(se=se)
             bool_query = Bool()
@@ -77,8 +79,8 @@ class Command(BaseCommand):
                     "logicalSets": sets
                 }
             })
-            results = update_by_query.run(index=RESOURCES_INDEX)
-            print(results)
+            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=False))
+        return results
 
     def apply_sets(self, resourceinstanceid=None):
         """Apply set mappings to resources.
@@ -89,6 +91,7 @@ class Command(BaseCommand):
         from arches.app.search.search_engine_factory import SearchEngineInstance as _se
 
         logical_sets = LogicalSet.all()
+        results = []
         for logical_set in logical_sets:
             if logical_set.member_definition:
                 # user=True is shorthand for "do not restrict by user"
@@ -110,7 +113,7 @@ class Command(BaseCommand):
                         permitted_nodegroups=True # This should be ignored as user==True
                     )
                     return inner_dsl.dsl["query"]
-                self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query)
+                results += self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query)
 
         sets = Set.all()
         for regular_set in sets:
@@ -122,7 +125,18 @@ class Command(BaseCommand):
                     bool_query.must(Terms(field="_id", terms=[str(member.id) for member in regular_set.members]))
                     query.add_query(bool_query)
                     return query.dsl["query"]
-                self._apply_set(_se, f"r:{regular_set.id}", _regular_set_query)
+                results += self._apply_set(_se, f"r:{regular_set.id}", _regular_set_query)
 
+        tasks_client = _se.make_tasks_client()
+        while results:
+            result = results[0]
+            task_id = result["task"]
+            status = tasks_client.get(task_id=task_id)
+            if status["completed"]:
+                print(status["task"])
+                results.remove(result)
+            else:
+                print(task_id, "not yet completed")
+            time.sleep(0.5)
         framework = CasbinPermissionFramework()
         framework.recalculate_table()
