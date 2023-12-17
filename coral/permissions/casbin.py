@@ -25,7 +25,7 @@ from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 
 from arches_orm.models import Person, Organization, Set, LogicalSet, Group
-from arches_orm import ResourceModelWrapper
+from arches_orm.wrapper import ResourceWrapper
 
 logger = logging.getLogger(__name__)
 REMAPPINGS = {
@@ -61,9 +61,9 @@ class CasbinPermissionFramework(PermissionFramework):
     @staticmethod
     def _subj_to_str(subj):
         if isinstance(subj, Person):
-            if subj.user_account is None:
+            if not subj.user_account:
                 raise NoSubjectError(subj)
-            subj = f"u:{subj.user_account.user.pk}"
+            subj = f"u:{subj.user_account.pk}"
         if isinstance(subj, User):
             subj = f"u:{subj.pk}"
         elif isinstance(subj, Organization):
@@ -86,7 +86,7 @@ class CasbinPermissionFramework(PermissionFramework):
             obj = f"g2:{obj.id}"
         elif isinstance(obj, LogicalSet):
             obj = f"g2l:{obj.id}"
-        elif isinstance(obj, ResourceModelWrapper):
+        elif isinstance(obj, ResourceWrapper):
             obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
             obj = f"ri:{obj.pk}"
@@ -120,8 +120,8 @@ class CasbinPermissionFramework(PermissionFramework):
                 else:
                     logger.warn("A membership rule was not added as no User was attached %s", member.full_name)
             for permission in group.permissions:
-                for act in permission["action"]:
-                    for obj in permission["object"]:
+                for act in permission.action:
+                    for obj in permission.object:
                         obj_key = self._obj_to_str(obj)
                         if obj_key.startswith("g2"):
                             sets.append(obj_key)
@@ -158,8 +158,6 @@ class CasbinPermissionFramework(PermissionFramework):
         perms = {(self._obj_to_str(permission), permission.codename) for permission in user.user_permissions.all()}
         user = self._subj_to_str(user)
         was = {(obj, act) for _, obj, act in self._enforcer.get_permissions_for_user(user)}
-        logger.error(was)
-        logger.error(perms)
         for obj, act in perms - was:
             self._enforcer.add_policy(user, obj, act)
         for obj, act in was - perms:
@@ -167,12 +165,9 @@ class CasbinPermissionFramework(PermissionFramework):
         self._enforcer.save_policy()
 
     def update_permissions_for_group(self, group):
-        logger.error("p4g")
         perms = {(self._obj_to_str(permission), permission.codename) for permission in group.permissions.all()}
         group = self._subj_to_str(group)
         was = {(obj, act) for _, obj, act in self._enforcer.get_permissions_for_user(group)}
-        logger.error(was)
-        logger.error(perms)
         for obj, act in perms - was:
             self._enforcer.add_policy(group, obj, act)
         for obj, act in was - perms:
@@ -192,8 +187,6 @@ class CasbinPermissionFramework(PermissionFramework):
         groups = {self._subj_to_str(self._django_group_to_ri(group)) for group in user.groups.all()}
         user = self._subj_to_str(user)
         was = set(self._enforcer.get_roles_for_user(user))
-        logger.error(was)
-        logger.error(groups)
         for group in groups - was:
             self._enforcer.add_role_for_user(user, group)
         for group in was - groups:
@@ -260,9 +253,6 @@ class CasbinPermissionFramework(PermissionFramework):
             permissions
             if (obj is None or tobj == obj)
         }
-        logger.error(str(perms))
-
-        logger.debug(f"Fetching permissions: {obj} {perms}")
 
         return perms
 

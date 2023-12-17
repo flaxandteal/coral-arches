@@ -24,8 +24,7 @@ from django.contrib.auth.models import User, Group as DjangoGroup
 from arches.app.utils.permission_backend import assign_perm
 from arches.app.models.system_settings import settings
 from arches.app.models.resource import Resource
-from arches_orm import attempt_well_known_resource_model
-from arches_orm.models import Group, Set, LogicalSet
+from arches_orm.models import Set, LogicalSet
 from coral.permissions.casbin import CasbinPermissionFramework
 from arches.app.search.components.base import SearchFilterFactory
 from arches.app.views.search import build_search
@@ -79,7 +78,6 @@ class Command(BaseCommand):
                 }
             })
             results = update_by_query.run(index=RESOURCES_INDEX)
-            print(results)
 
     def apply_sets(self, resourceinstanceid=None):
         """Apply set mappings to resources.
@@ -124,3 +122,6 @@ class Command(BaseCommand):
                     query.add_query(bool_query)
                     return query.dsl["query"]
                 self._apply_set(_se, f"r:{regular_set.id}", _regular_set_query)
+
+        framework = CasbinPermissionFramework()
+        framework.recalculate_table()

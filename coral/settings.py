@@ -222,6 +222,7 @@ INSTALLED_APPS = (
     # "silk",
     "coral",
     "casbin_adapter.apps.CasbinAdapterConfig",
+    "arches_orm.arches_django.apps.ArchesORMConfig",
 )
 
 ARCHES_APPLICATIONS = ()
@@ -346,8 +347,6 @@ CACHES = {
         'LOCATION': 'user_permission_cache',
     },
 }
-
-PERMISSION_FRAMEWORK = "arches_default_deny.ArchesDefaultDenyPermissionFramework"
 
 # Hide nodes and cards in a report that have no data
 HIDE_EMPTY_NODES_IN_REPORT = False
