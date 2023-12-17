@@ -118,7 +118,7 @@ class CasbinPermissionFramework(PermissionFramework):
                     member_key = self._subj_to_str(member)
                     self._enforcer.add_role_for_user(member_key, group_key)
                 else:
-                    logger.warn("A membership rule was not added as no User was attached %s", member.full_name)
+                    logger.warn("A membership rule was not added as no User was attached %s", member.id)
             for permission in group.permissions:
                 for act in permission.action:
                     for obj in permission.object:
