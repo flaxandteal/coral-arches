@@ -70,7 +70,6 @@ class Command(BaseCommand):
                 source = "ctx._source.sets.addAll(params.logicalSets)"
                 sets = [{"id": str(set_id)}]
             dsl.add_query(bool_query)
-            print(source, sets)
             update_by_query = UpdateByQuery(se=se, query=dsl, script={
                 "lang": "painless",
                 "source": source,
