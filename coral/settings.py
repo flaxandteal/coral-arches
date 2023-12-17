@@ -79,6 +79,8 @@ TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'functions', 'templates'))
 TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'widgets', 'templates'))
 TEMPLATES[0]['DIRS'].insert(0, os.path.join(APP_ROOT, 'templates'))
 
+ANONYMOUS_SETS = []
+
 WELL_KNOWN_RESOURCE_MODELS = [
     dict(
         model_name="Person",

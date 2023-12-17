@@ -531,6 +531,29 @@ class CasbinPermissionFramework(PermissionFramework):
 
         return result
 
+    def get_sets_for_user(self, user, perm):
+        # TODO: add possibility of a default anonymous set(s) from settings
+        if not user:
+            return set()
+        if user.is_superuser is True:
+            return None
+
+        sets = set()
+        subj = self._subj_to_str(user)
+
+        # FIXME: Right now, this does not address nested sets...
+        for _, obj, act in self._enforcer.get_implicit_permissions_for_user(subj):
+            act = REMAPPINGS.get(act, act)
+            if (isinstance(act, list) and perm in act) or act == perm:
+                sets.add(obj)
+
+        # TODO: tidy up prefixing - we may not want to harmonize as the "g" is
+        # specific to Casbin, but at least make the mapping less ad-hoc.
+        sets = [st.split(":") for st in sets]
+        return {
+            ":".join(("l" if st[0] == "g2l" else "s", st[1])) for st in sets
+        }
+
     def get_groups_for_object(self, perm, obj):
         raise NotImplementedError()
         """

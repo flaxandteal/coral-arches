@@ -78,6 +78,7 @@ class Command(BaseCommand):
                 }
             })
             results = update_by_query.run(index=RESOURCES_INDEX)
+            print(results)
 
     def apply_sets(self, resourceinstanceid=None):
         """Apply set mappings to resources.
