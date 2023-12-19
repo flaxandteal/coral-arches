@@ -1,5 +1,6 @@
 import logging
 from arches.app.views.search import build_search
+from guardian.backends import ObjectPermissionBackend
 from dauthz.backends.casbin_backend import CasbinBackend
 # https://github.com/casbin/pycasbin/issues/323
 logging.disable(logging.NOTSET)
@@ -23,6 +24,7 @@ from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
+from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group
 
 from arches_orm.models import Person, Organization, Set, LogicalSet, Group
 from arches_orm.wrapper import ResourceWrapper
@@ -60,6 +62,8 @@ class CasbinPermissionFramework(PermissionFramework):
 
     @staticmethod
     def _subj_to_str(subj):
+        if isinstance(subj, DjangoGroup):
+            subj = CasbinPermissionFramework._django_group_to_ri(subj)
         if isinstance(subj, Person):
             if not subj.user_account:
                 raise NoSubjectError(subj)
@@ -119,6 +123,15 @@ class CasbinPermissionFramework(PermissionFramework):
                     self._enforcer.add_role_for_user(member_key, group_key)
                 else:
                     logger.warn("A membership rule was not added as no User was attached %s", member.id)
+            # This is a workaround for now, to avoid losing nodegroup restriction entirely.
+            # The (RI) Group names will be matched to Django groups, and those used to build the nodegroup
+            # permissions.
+            # for django_group in self._ri_to_django_groups(group):
+            #     nodegroups = get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True)
+            #     for nodegroup, perms in nodegroups.items():
+            #         for act in perms:
+            #             obj_key = self._obj_to_str(nodegroup)
+            #             self._enforcer.add_policy(group_key, obj_key, str(act))
             for permission in group.permissions:
                 for act in permission.action:
                     for obj in permission.object:
@@ -175,7 +188,12 @@ class CasbinPermissionFramework(PermissionFramework):
             self._enforcer.remove_policy(group, obj, act)
         self._enforcer.save_policy()
 
-    def _django_group_to_ri(self, django_group: DjangoGroup):
+    @staticmethod
+    def _ri_to_django_groups(group: Group):
+        return DjangoGroup.objects.filter(name__in=[basic_info.name for basic_info in group.basic_info]).all()
+
+    @staticmethod
+    def _django_group_to_ri(django_group: DjangoGroup):
         # TODO: a more robust mapping
         group = Group.where(name={"en": {"value": django_group.name, "direction": "ltr"}})
         if not group:
@@ -188,7 +206,7 @@ class CasbinPermissionFramework(PermissionFramework):
         return group
 
     def update_groups_for_user(self, user):
-        groups = {self._subj_to_str(self._django_group_to_ri(group)) for group in user.groups.all()}
+        groups = {self._subj_to_str(group) for group in user.groups.all()}
         user = self._subj_to_str(user)
         was = set(self._enforcer.get_roles_for_user(user))
         for group in groups - was:
@@ -203,14 +221,34 @@ class CasbinPermissionFramework(PermissionFramework):
         except:
             obj = [obj]
 
-        subj = self._subj_to_str(user_or_group)
-        for o in obj:
-            o = self._obj_to_str(o)
+        logger.warning("No permission assignment available outside Groups/Sets at present")
+        return
 
-            logger.debug(f"Assigning permission: {o} {subj}")
+        if not user_or_group:
+            return
+        if isinstance(user_or_group, DjangoGroup):
+            group = CasbinPermissionFramework._django_group_to_ri(user_or_group)
+        elif isinstance(user_or_group, Group):
+            group = user_or_group
+        else:
+            raise RuntimeError(f"Not currently possible to assign permissions except to groups in this framework, not {user_or_group}")
 
-            self._enforcer.add_policy(subj, o, perm)
-        self._enforcer.save_policy()
+        if not group:
+            raise RuntimeError("Must have a group to assign permissions to")
+
+        data_filter = group.data_filters.append()
+        data_filter.object_n1 = str(obj)
+        data_filter.permission = str(perm)
+        group.save()
+
+        #subj = self._subj_to_str(user_or_group)
+        #for o in obj:
+        #    o = self._obj_to_str(o)
+
+        #    logger.debug(f"Assigning permission: {o} {subj}")
+
+        #    self._enforcer.add_policy(subj, o, perm)
+        #self._enforcer.save_policy()
 
     @staticmethod
     def get_permission_backend():
