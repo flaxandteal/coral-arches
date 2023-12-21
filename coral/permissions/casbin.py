@@ -221,15 +221,16 @@ class CasbinPermissionFramework(PermissionFramework):
         except:
             obj = [obj]
 
-        logger.warning("No permission assignment available outside Groups/Sets at present")
-        return
-
         if not user_or_group:
             return
         if isinstance(user_or_group, DjangoGroup):
             group = CasbinPermissionFramework._django_group_to_ri(user_or_group)
         elif isinstance(user_or_group, Group):
             group = user_or_group
+        elif isinstance(user_or_group, User):
+            # Arches will always do this for a normal web save.
+            logger.warning(f"Not currently possible to assign permissions except to groups in this framework, not {user_or_group}")
+            return
         else:
             raise RuntimeError(f"Not currently possible to assign permissions except to groups in this framework, not {user_or_group}")
 
@@ -538,7 +539,7 @@ class CasbinPermissionFramework(PermissionFramework):
     def get_groups_with_perms(self, obj, attach_perms=False):
         # FIXME: this may not work - it might need roles
         groups = self._get_with_perms("g", obj, attach_perms)
-        return Group.objects.filter(pk__in=groups)
+        return DjangoGroup.objects.filter(pk__in=groups)
 
     def get_restricted_users(self, resource):
         """
