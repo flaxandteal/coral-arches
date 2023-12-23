@@ -69,7 +69,6 @@ DAUTHZ = {
         },
     },
 }
-PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
 DATATYPE_LOCATIONS.append('coral.datatypes')
 FUNCTION_LOCATIONS.append('coral.functions')
 ETL_MODULE_LOCATIONS.append('coral.etl_modules')
@@ -291,10 +290,15 @@ FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
 
-AUTHENTICATION_BACKENDS += (
-    *AUTHENTICATION_BACKENDS,
-    "dauthz.backends.CasbinBackend",
-)
+USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
+if USE_CASBIN:
+    AUTHENTICATION_BACKENDS += (
+        *AUTHENTICATION_BACKENDS,
+        "dauthz.backends.CasbinBackend",
+    )
+    PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
+else:
+    PERMISSION_FRAMEWORK = "arches_allow_with_credentials.ArchesAllowWithCredentialsFramework"
 
 if (LOG_LEVEL := os.getenv("LOG_LEVEL", "")):
     pass
