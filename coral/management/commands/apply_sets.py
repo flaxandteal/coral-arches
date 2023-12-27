@@ -113,7 +113,8 @@ class Command(BaseCommand):
                         permitted_nodegroups=True # This should be ignored as user==True
                     )
                     return inner_dsl.dsl["query"]
-                results += self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query)
+                results = self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query)
+                self.wait_for_completion(_se, results)
 
         sets = Set.all()
         for regular_set in sets:
@@ -125,8 +126,13 @@ class Command(BaseCommand):
                     bool_query.must(Terms(field="_id", terms=[str(member.id) for member in regular_set.members]))
                     query.add_query(bool_query)
                     return query.dsl["query"]
-                results += self._apply_set(_se, f"r:{regular_set.id}", _regular_set_query)
+                results = self._apply_set(_se, f"r:{regular_set.id}", _regular_set_query)
+                self.wait_for_completion(_se, results)
 
+        framework = CasbinPermissionFramework()
+        framework.recalculate_table()
+
+    def wait_for_completion(self, _se, results):
         tasks_client = _se.make_tasks_client()
         while results:
             result = results[0]
@@ -138,5 +144,3 @@ class Command(BaseCommand):
             else:
                 print(task_id, "not yet completed")
             time.sleep(0.5)
-        framework = CasbinPermissionFramework()
-        framework.recalculate_table()

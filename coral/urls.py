@@ -28,5 +28,9 @@ urlpatterns = [
 
 if settings.DEBUG or settings.SERVE_STATIC:
     urlpatterns += [
-        re_path(r'^static/(?P<path>.*)$', views.serve)
+        re_path(r'^static/(?P<path>.*)$', views.serve),
     ]
+    if settings.DEBUG:
+        urlpatterns += [
+            re_path("__debug__/", include("debug_toolbar.urls")),
+        ]

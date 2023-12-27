@@ -1,25 +1,25 @@
 import logging
-from arches.app.views.search import build_search
-from guardian.backends import ObjectPermissionBackend
+from guardian.core import ObjectPermissionChecker
 from dauthz.backends.casbin_backend import CasbinBackend
 # https://github.com/casbin/pycasbin/issues/323
 logging.disable(logging.NOTSET)
 logging.getLogger("casbin_adapter").setLevel(logging.ERROR)
 
 from django.core.exceptions import ObjectDoesNotExist
-from arches.app.models.system_settings import settings
+from arches.app.models.system_settings import settings, SystemSettings
 from django.contrib.auth.models import User, Permission, Group as DjangoGroup
 import logging
 from guardian.shortcuts import (
     get_users_with_perms,
 )
 from arches.app.models.resource import Resource
-from urllib.parse import parse_qs
+from django.db import transaction
 
 from guardian.models import GroupObjectPermission
 
 from arches.app.models.models import *
 from arches.app.models.models import ResourceInstance, MapLayer
+from arches.app.models.graph import Graph
 from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
@@ -63,7 +63,7 @@ class CasbinPermissionFramework(PermissionFramework):
     @staticmethod
     def _subj_to_str(subj):
         if isinstance(subj, DjangoGroup):
-            subj = CasbinPermissionFramework._django_group_to_ri(subj)
+            subj = f"dg:{subj.pk}"
         if isinstance(subj, Person):
             if not subj.user_account:
                 raise NoSubjectError(subj)
@@ -90,6 +90,8 @@ class CasbinPermissionFramework(PermissionFramework):
             obj = f"g2:{obj.id}"
         elif isinstance(obj, LogicalSet):
             obj = f"g2l:{obj.id}"
+        elif isinstance(obj, Graph) or isinstance(obj, GraphModel):
+            obj = f"gp:{obj.pk}"
         elif isinstance(obj, ResourceWrapper):
             obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
@@ -105,9 +107,53 @@ class CasbinPermissionFramework(PermissionFramework):
         return obj
 
     def recalculate_table(self):
+        with transaction.atomic():
+            self._recalculate_table_real()
+
+    def _recalculate_table_real(self):
         groups = settings.GROUPINGS["groups"]
         root_group = Group.find(groups["root_group"])
         self._enforcer.clear_policy()
+
+        # We bank permissions for all Django groups for nodegroups,
+        # (implicitly resource models) and map layers, but nothing else.
+        for django_group in DjangoGroup.objects.all():
+            group_key = self._subj_to_str(django_group)
+            nodegroups = {
+                nodegroup: set(perms)
+                for nodegroup, perms in
+                get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True).items()
+            }
+            for nodegroup, perms in nodegroups.items():
+                nodegroup_key = self._obj_to_str(nodegroup)
+                if not perms:
+                    perms.add(":any:")
+                for perm in perms:
+                    self._enforcer.add_policy(group_key, nodegroup_key, str(perm))
+            nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph")
+            graph_perms = {}
+            for node in nodes:
+                graph_perms.setdefault(node.graph, set())
+                graph_perms[node.graph] |= set(nodegroups[node.nodegroup])
+            for graph, perms in graph_perms.items():
+                if graph.isresource and str(graph.pk) != SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID:
+                    graph_key = self._obj_to_str(graph)
+                    for perm in perms:
+                        self._enforcer.add_policy(group_key, graph_key, str(perm))
+            map_layer_perms = ObjectPermissionChecker(django_group)
+            for map_layer in MapLayer.objects.all():
+                perms = set(map_layer_perms.get_perms(map_layer))
+                map_layer_key = self._obj_to_str(map_layer)
+                if not perms:
+                    perms.add(":any:")
+                for perm in perms:
+                    self._enforcer.add_policy(group_key, map_layer_key, str(perm))
+        for user in User.objects.all():
+            user_key = self._subj_to_str(user)
+            for group in user.groups.all():
+                group_key = self._subj_to_str(group)
+                self._enforcer.add_named_grouping_policy("g", user_key, group_key)
+                self._enforcer.add_named_grouping_policy("g", user_key, f"dgn:{group.name}")
 
         sets = []
 
@@ -224,9 +270,9 @@ class CasbinPermissionFramework(PermissionFramework):
         if not user_or_group:
             return
         if isinstance(user_or_group, DjangoGroup):
-            group = CasbinPermissionFramework._django_group_to_ri(user_or_group)
-        elif isinstance(user_or_group, Group):
             group = user_or_group
+        elif isinstance(user_or_group, Group):
+            group = CasbinPermissionFramework._ri_to_django_group(user_or_group)
         elif isinstance(user_or_group, User):
             # Arches will always do this for a normal web save.
             logger.warning(f"Not currently possible to assign permissions except to groups in this framework, not {user_or_group}")
@@ -237,19 +283,7 @@ class CasbinPermissionFramework(PermissionFramework):
         if not group:
             raise RuntimeError("Must have a group to assign permissions to")
 
-        data_filter = group.data_filters.append()
-        data_filter.object_n1 = str(obj)
-        data_filter.permission = str(perm)
-        group.save()
-
-        #subj = self._subj_to_str(user_or_group)
-        #for o in obj:
-        #    o = self._obj_to_str(o)
-
-        #    logger.debug(f"Assigning permission: {o} {subj}")
-
-        #    self._enforcer.add_policy(subj, o, perm)
-        #self._enforcer.save_policy()
+        return assign_perm(perm, user_or_group, obj=obj)
 
     @staticmethod
     def get_permission_backend():
@@ -262,6 +296,7 @@ class CasbinPermissionFramework(PermissionFramework):
         self._enforcer.remove_policy(subj, obj, perm)
         self._enforcer.save_policy()
 
+    # This is slow and should be avoided where possible.
     def get_perms(self, user_or_group, obj):
         return {
             act for sub, tobj, act in
@@ -312,7 +347,7 @@ class CasbinPermissionFramework(PermissionFramework):
             resource.createdtime = resource_instance.createdtime
             resource.index()
 
-    def get_map_layers_by_perm(self, user, perms, any_perm=True):
+    def get_map_layers_by_perm(self, user, perms, any_perm=True, not_perms=None):
         """
         returns a list of node groups that a user has the given permission on
 
@@ -345,13 +380,16 @@ class CasbinPermissionFramework(PermissionFramework):
                 if obj.startswith("ml:"):
                     ml = obj[3:]
                     user_permissions.setdefault(ml, set())
-                    user_permissions[ml].add(act)
+                    if act != ":any:":
+                        user_permissions[ml].add(act)
 
             for map_layer in MapLayer.objects.all():
                 if map_layer.addtomap is True and map_layer.isoverlay is False:
                     permitted_map_layers.append(map_layer)
                 else:  # if no explicit permissions, object is considered accessible by all with group permissions
                     explicit_map_layer_perms = user_permissions.get(self._obj_to_str(map_layer), set())
+                    if not_perms and set(not_perms) & explicit_map_layer_perms:
+                        continue
                     if len(explicit_map_layer_perms):
                         if any_perm:
                             if len(set(formatted_perms) & set(explicit_map_layer_perms)):
@@ -365,25 +403,15 @@ class CasbinPermissionFramework(PermissionFramework):
             return permitted_map_layers
 
     def user_can_read_map_layers(self, user):
-        map_layers_with_read_permission = self.get_map_layers_by_perm(user, ['models.read_maplayer'])
-        map_layers_allowed = []
+        map_layers_with_read_permission = self.get_map_layers_by_perm(user, ['models.read_maplayer'], not_perms={'no_access_to_maplayer'})
 
-        for map_layer in map_layers_with_read_permission:
-            if ('no_access_to_maplayer' not in self.get_user_perms(user, map_layer)) or (map_layer.addtomap is False and map_layer.isoverlay is False):
-                map_layers_allowed.append(map_layer)
-
-        return map_layers_allowed
+        return map_layers_with_read_permission
 
 
     def user_can_write_map_layers(self, user):
-        map_layers_with_write_permission = self.get_map_layers_by_perm(user, ['models.write_maplayer'])
-        map_layers_allowed = []
+        map_layers_with_write_permission = self.get_map_layers_by_perm(user, ['models.write_maplayer'], not_perms={'no_access_to_maplayer'})
 
-        for map_layer in map_layers_with_write_permission:
-            if ('no_access_to_maplayer' not in self.get_user_perms(user, map_layer)) or (map_layer.addtomap is False and map_layer.isoverlay is False):
-                map_layers_allowed.append(map_layer)
-
-        return map_layers_allowed
+        return map_layers_with_write_permission
 
     def get_nodegroups_by_perm(self, user, perms, any_perm=True):
         """
@@ -398,6 +426,8 @@ class CasbinPermissionFramework(PermissionFramework):
 
         logger.debug(f"Fetching node group permissions: {user} {perms}")
 
+        if user and user.is_superuser:
+            return list(NodeGroup.objects.values_list("nodegroupid", flat=True))
         if not isinstance(perms, list):
             perms = [perms]
 
@@ -416,11 +446,10 @@ class CasbinPermissionFramework(PermissionFramework):
             if obj.startswith("ng:"):
                 ng = obj[3:]
                 targets.setdefault(ng, set())
-                targets[ng].add(act)
+                if act != ":any:":
+                    targets[ng].add(act)
 
-        for nodegroup in NodeGroup.objects.all():
-            explicit_perms = targets.get(str(nodegroup.pk), set())
-
+        for nodegroup, explicit_perms in targets.items():
             if len(explicit_perms):
                 if any_perm:
                     if len(set(formatted_perms) & set(explicit_perms)):
@@ -431,7 +460,7 @@ class CasbinPermissionFramework(PermissionFramework):
             else:  # if no explicit permissions, object is considered accessible by all with group permissions
                 permitted_nodegroups.add(nodegroup)
 
-        return permitted_nodegroups
+        return list(permitted_nodegroups)
 
     def check_resource_instance_permissions(self, user, resourceid, permission):
         """
@@ -446,9 +475,6 @@ class CasbinPermissionFramework(PermissionFramework):
         result = {}
 
         logger.debug(f"Checking resource instance permissions: {user} {resourceid}")
-
-        # FIXME: This is inefficient but may avoid some initial caching errors
-        self.recalculate_table()
 
         try:
             resource = Resource(resourceinstanceid=resourceid)
@@ -581,7 +607,6 @@ class CasbinPermissionFramework(PermissionFramework):
         if user.is_superuser is True:
             return None
 
-        self.recalculate_table()
         sets = set()
         subj = self._subj_to_str(user)
 
@@ -624,3 +649,152 @@ class CasbinPermissionFramework(PermissionFramework):
                 results["hits"]["hits"] += results_scrolled["hits"]["hits"]
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         return restricted_ids
+
+    def user_has_resource_model_permissions(self, user, perms, resource):
+        """
+        Checks if a user has any explicit permissions to a model's nodegroups
+
+        Arguments:
+        user -- the user to check
+        perms -- the permssion string eg: "read_nodegroup" or list of strings
+        resource -- a resource instance to check if a user has permissions to that resource's type specifically
+
+        """
+
+        # Only considers groups a user is assigned to.
+        if user.is_superuser:
+            return True
+        groups = self._enforcer.get_implicit_users_for_resource(f"gp:{resource.graph_id}")
+        group_ids = {
+            group[3:] for group, _, act in groups
+            if group.startswith("dg:") and
+            (not perms or act in perms)
+        }
+        return bool(group_ids & {str(group.pk) for group in user.groups.all()})
+
+
+    def user_can_read_resource(self, user, resourceid=None):
+        """
+        Requires that a user be able to read an instance and read a single nodegroup of a resource
+
+        """
+        if user.is_authenticated:
+            if user.is_superuser:
+                return True
+            if resourceid not in [None, ""]:
+                result = self.check_resource_instance_permissions(user, resourceid, "view_resourceinstance")
+                if result is not None:
+                    if result["permitted"] == "unknown":
+                        return self.user_has_resource_model_permissions(user, ["models.read_nodegroup"], result["resource"])
+                    else:
+                        return result["permitted"]
+                else:
+                    return None
+
+            return len(self.get_resource_types_by_perm(user, ["models.read_nodegroup"])) > 0
+        return False
+
+    def get_resource_types_by_perm(self, user, perms):
+        if user.is_superuser:
+            graphs = list(Graph.objects.values_list("graphid", flat=True))
+            return graphs
+        # Only considers groups a user is assigned to.
+        allowed = set()
+        subj = self._subj_to_str(user)
+        graphs = self._enforcer.get_implicit_permissions_for_user(subj)
+        for _, graph, act in graphs:
+            if not graph.startswith("gp:"):
+                continue
+            if not perms or act in perms or act == ":any:":
+                allowed.add(graph[3:])
+        return list(allowed)
+
+    def user_can_edit_resource(self, user, resourceid=None):
+        """
+        Requires that a user be able to edit an instance and delete a single nodegroup of a resource
+
+        """
+        if user.is_authenticated:
+            if user.is_superuser:
+                return True
+            if resourceid not in [None, ""]:
+                result = self.check_resource_instance_permissions(user, resourceid, "change_resourceinstance")
+                if result is not None:
+                    if result["permitted"] == "unknown":
+                        return user.groups.filter(name__in=settings.RESOURCE_EDITOR_GROUPS).exists() or self.user_can_edit_model_nodegroups(
+                            user, result["resource"]
+                        )
+                    else:
+                        return result["permitted"]
+                else:
+                    return None
+
+            return user.groups.filter(name__in=settings.RESOURCE_EDITOR_GROUPS).exists() or len(self.get_editable_resource_types(user)) > 0
+        return False
+
+
+    def user_can_delete_resource(self, user, resourceid=None):
+        """
+        Requires that a user be permitted to delete an instance
+
+        """
+        if user.is_authenticated:
+            if user.is_superuser:
+                return True
+            if resourceid not in [None, ""]:
+                result = self.check_resource_instance_permissions(user, resourceid, "delete_resourceinstance")
+                if result is not None:
+                    if result["permitted"] == "unknown":
+                        nodegroups = self.get_nodegroups_by_perm(user, "models.delete_nodegroup")
+                        tiles = TileModel.objects.filter(resourceinstance_id=resourceid)
+                        protected_tiles = {str(tile.nodegroup_id) for tile in tiles} - {str(nodegroup.nodegroupid) for nodegroup in nodegroups}
+                        if len(protected_tiles) > 0:
+                            return False
+                        return user.groups.filter(name__in=settings.RESOURCE_EDITOR_GROUPS).exists() or self.user_can_delete_model_nodegroups(
+                            user, result["resource"]
+                        )
+                    else:
+                        return result["permitted"]
+                else:
+                    return None
+        return False
+
+
+    def user_can_read_concepts(self, user):
+        """
+        Requires that a user is a part of the RDM Administrator group
+
+        """
+
+        if user.is_authenticated:
+            return self.user_in_group_by_name(user, ["RDM Administrator"])
+        return False
+
+
+    def user_is_resource_editor(self, user):
+        """
+        Single test for whether a user is in the Resource Editor group
+        """
+
+        return self.user_in_group_by_name(user, ["Resource Editor"])
+
+
+    def user_is_resource_reviewer(self, user):
+        """
+        Single test for whether a user is in the Resource Reviewer group
+        """
+
+        return self.user_in_group_by_name(user, ["Resource Reviewer"])
+
+
+    def user_is_resource_exporter(self, user):
+        """
+        Single test for whether a user is in the Resource Exporter group
+        """
+
+        return self.user_in_group_by_name(user, ["Resource Exporter"])
+
+    def user_in_group_by_name(self, user, names):
+        subj = self._subj_to_str(user)
+        roles = self._enforcer.get_roles_for_user(subj)
+        return any(f"dgn:{name}" in roles for name in names)

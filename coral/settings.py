@@ -226,6 +226,8 @@ INSTALLED_APPS = (
     "casbin_adapter.apps.CasbinAdapterConfig",
     "arches_orm.arches_django.apps.ArchesORMConfig",
 )
+if DEBUG:
+    INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
 
 ARCHES_APPLICATIONS = ()
 
@@ -245,6 +247,12 @@ MIDDLEWARE = [
     "arches.app.utils.middleware.SetAnonymousUser",
     # "silk.middleware.SilkyMiddleware",
 ]
+if DEBUG:
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    import socket
+    hostname, __, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+
 
 STATICFILES_DIRS = build_staticfiles_dirs(
     root_dir=ROOT_DIR,
