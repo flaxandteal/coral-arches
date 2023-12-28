@@ -126,8 +126,6 @@ class CasbinPermissionFramework(PermissionFramework):
             }
             for nodegroup, perms in nodegroups.items():
                 nodegroup_key = self._obj_to_str(nodegroup)
-                if not perms:
-                    perms.add(":any:")
                 for perm in perms:
                     self._enforcer.add_policy(group_key, nodegroup_key, str(perm))
             nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph")
@@ -144,8 +142,6 @@ class CasbinPermissionFramework(PermissionFramework):
             for map_layer in MapLayer.objects.all():
                 perms = set(map_layer_perms.get_perms(map_layer))
                 map_layer_key = self._obj_to_str(map_layer)
-                if not perms:
-                    perms.add(":any:")
                 for perm in perms:
                     self._enforcer.add_policy(group_key, map_layer_key, str(perm))
         for user in User.objects.all():
@@ -380,8 +376,7 @@ class CasbinPermissionFramework(PermissionFramework):
                 if obj.startswith("ml:"):
                     ml = obj[3:]
                     user_permissions.setdefault(ml, set())
-                    if act != ":any:":
-                        user_permissions[ml].add(act)
+                    user_permissions[ml].add(act)
 
             for map_layer in MapLayer.objects.all():
                 if map_layer.addtomap is True and map_layer.isoverlay is False:
@@ -426,8 +421,9 @@ class CasbinPermissionFramework(PermissionFramework):
 
         logger.debug(f"Fetching node group permissions: {user} {perms}")
 
+        all_nodegroups = list(NodeGroup.objects.values_list("nodegroupid", flat=True))
         if user and user.is_superuser:
-            return list(NodeGroup.objects.values_list("nodegroupid", flat=True))
+            return all_nodegroups
         if not isinstance(perms, list):
             perms = [perms]
 
@@ -442,12 +438,11 @@ class CasbinPermissionFramework(PermissionFramework):
         permitted_nodegroups = set()
         targets = {}
         user = self._subj_to_str(user)
-        for sub, obj, act in self._enforcer.get_implicit_permissions_for_user(user):
+        for _, obj, act in self._enforcer.get_implicit_permissions_for_user(user):
             if obj.startswith("ng:"):
                 ng = obj[3:]
                 targets.setdefault(ng, set())
-                if act != ":any:":
-                    targets[ng].add(act)
+                targets[ng].add(act)
 
         for nodegroup, explicit_perms in targets.items():
             if len(explicit_perms):
@@ -459,6 +454,9 @@ class CasbinPermissionFramework(PermissionFramework):
                         permitted_nodegroups.add(nodegroup)
             else:  # if no explicit permissions, object is considered accessible by all with group permissions
                 permitted_nodegroups.add(nodegroup)
+        # If a nodegroup has no explicit permissions, not even appearing
+        # in the Casbin matrix, we add it here.
+        permitted_nodegroups |= set(all_nodegroups) - set(targets)
 
         return list(permitted_nodegroups)
 
@@ -695,18 +693,23 @@ class CasbinPermissionFramework(PermissionFramework):
         return False
 
     def get_resource_types_by_perm(self, user, perms):
+        all_graphs = list(
+            Graph.objects.filter(isresource=True).exclude(pk=SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID).values_list("graphid", flat=True)
+        )
         if user.is_superuser:
-            graphs = list(Graph.objects.values_list("graphid", flat=True))
-            return graphs
+            return all_graphs
         # Only considers groups a user is assigned to.
         allowed = set()
         subj = self._subj_to_str(user)
         graphs = self._enforcer.get_implicit_permissions_for_user(subj)
+        permissioned_graphs = set()
         for _, graph, act in graphs:
             if not graph.startswith("gp:"):
                 continue
-            if not perms or act in perms or act == ":any:":
+            permissioned_graphs.add(graph[3:])
+            if not perms or act in perms:
                 allowed.add(graph[3:])
+        allowed |= set(all_graphs) - set(permissioned_graphs)
         return list(allowed)
 
     def user_can_edit_resource(self, user, resourceid=None):

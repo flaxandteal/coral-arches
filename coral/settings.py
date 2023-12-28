@@ -223,7 +223,6 @@ INSTALLED_APPS = (
     "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",
-    "casbin_adapter.apps.CasbinAdapterConfig",
     "arches_orm.arches_django.apps.ArchesORMConfig",
 )
 if DEBUG:
@@ -301,11 +300,15 @@ DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
 
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
 if USE_CASBIN:
-    AUTHENTICATION_BACKENDS += (
+    AUTHENTICATION_BACKENDS = (
         *AUTHENTICATION_BACKENDS,
         "dauthz.backends.CasbinBackend",
     )
     PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
+    INSTALLED_APPS = (
+        *INSTALLED_APPS,
+        "casbin_adapter.apps.CasbinAdapterConfig"
+    )
 else:
     PERMISSION_FRAMEWORK = "arches_allow_with_credentials.ArchesAllowWithCredentialsFramework"
 
