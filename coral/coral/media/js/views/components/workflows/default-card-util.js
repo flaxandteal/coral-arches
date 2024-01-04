@@ -53,6 +53,84 @@ define([
       params.form.complete(true);
       params.form.saving(false);
     };
+
+    params.form.saveMultiTiles = async () => {
+      self.complete(false);
+      self.saving(true);
+      self.previouslyPersistedComponentData = [];
+
+      let unorderedSavedData = ko.observableArray();
+
+      self.tiles().forEach(function (tile) {
+        tile.save(
+          function (...args) {
+            /* onFail */
+            console.log('multi: onFail: ', args);
+          },
+          function (savedTileData) {
+            unorderedSavedData.push(savedTileData);
+          }
+        );
+      });
+
+      self.tilesToRemove().forEach(function (tile) {
+        tile.deleteTile(
+          function (response) {
+            self.alert(
+              new AlertViewModel(
+                'ep-alert-red',
+                response.responseJSON.title,
+                response.responseJSON.message,
+                null,
+                function () {
+                  return;
+                }
+              )
+            );
+          },
+          function () {
+            self.tilesToRemove.remove(tile);
+            if (self.tilesToRemove().length === 0) {
+              self.complete(true);
+              self.loading(true);
+              self.saving(false);
+            }
+          }
+        );
+      });
+
+      /**
+       * Original version of this method that has been
+       * overridden here didn't end the save if there
+       * wasn't any tiles saved. Multi tile steps can
+       * now progress if no data was provided.
+       */
+      if (self.tiles().length === 0) {
+        self.complete(true);
+        self.loading(true);
+        self.saving(false);
+
+        return;
+      }
+
+      var saveSubscription = unorderedSavedData.subscribe(function (savedData) {
+        if (savedData.length === self.tiles().length) {
+          self.complete(true);
+          self.loading(true);
+          self.saving(false);
+
+          var orderedSavedData = self.tiles().map(function (tile) {
+            return savedData.find(function (datum) {
+              return datum.tileid === tile.tileid;
+            });
+          });
+
+          self.savedData(orderedSavedData.reverse());
+
+          saveSubscription.dispose(); /* self-disposing subscription only runs once */
+        }
+      });
+    };
   }
 
   ko.components.register('default-card-util', {
