@@ -22,6 +22,15 @@ define([
 
       const self = this;
 
+      /**
+       * Hacky, but resets the forced dirty state
+       * removing "Save and Continue" option before
+       * the unique ID has been generated.
+       */
+      setTimeout(() => {
+        this.form.dirty(false);
+      });
+
       self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
       self.idValue = ko.observable();
@@ -112,6 +121,7 @@ define([
 
         if (!self.idValue()) {
           self.idValue(await this.createId());
+          this.form.dirty(true);
           self.value({
             [arches.activeLanguage]: {
               value: self.idValue(),
