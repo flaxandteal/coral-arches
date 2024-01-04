@@ -238,7 +238,6 @@ define([
                 },
                 {
                   componentName: 'default-card-util',
-                  // componentName: 'default-card',
                   uniqueInstanceName: 'location-names',
                   tilesManaged: 'many',
                   parameters: {
@@ -266,7 +265,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'asset-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -291,7 +290,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'pow-ref',
                   tilesManaged: 'one',
                   parameters: {
@@ -316,7 +315,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'associated-activities',
                   tilesManaged: 'one',
                   parameters: {
@@ -327,7 +326,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'associated-site',
                   tilesManaged: 'one',
                   parameters: {
