@@ -75,7 +75,6 @@ define([
        * now progress if no data was provided.
        */
       if (self.tiles().length === 0 && self.tilesToRemove().length === 0) {
-        console.log('awesome 3');
         self.complete(true);
         self.loading(true);
         self.saving(false);
@@ -87,9 +86,8 @@ define([
 
       self.tiles().forEach(function (tile) {
         tile.save(
-          function (...args) {
+          function () {
             /* onFail */
-            console.log('multi: onFail: ', args);
           },
           function (savedTileData) {
             unorderedSavedData.push(savedTileData);
