@@ -54,10 +54,34 @@ define([
       params.form.saving(false);
     };
 
+    /**
+     * Overridden function saveMultiTiles from WorkflowComponentAbstract.
+     *
+     * Fixes:
+     *   - Saving when no tiles are added
+     *   - Clearing local storage after removing a tile
+     *     so the tile won't exist when the user
+     *     returns to that step
+     */
     params.form.saveMultiTiles = async () => {
       self.complete(false);
       self.saving(true);
       self.previouslyPersistedComponentData = [];
+
+      /**
+       * Original version of this method that has been
+       * overridden here didn't end the save if there
+       * wasn't any tiles saved. Multi tile steps can
+       * now progress if no data was provided.
+       */
+      if (self.tiles().length === 0 && self.tilesToRemove().length === 0) {
+        console.log('awesome 3');
+        self.complete(true);
+        self.loading(true);
+        self.saving(false);
+
+        return;
+      }
 
       let unorderedSavedData = ko.observableArray();
 
@@ -90,27 +114,23 @@ define([
           },
           function () {
             self.tilesToRemove.remove(tile);
-            if (self.tilesToRemove().length === 0) {
-              self.complete(true);
-              self.loading(true);
-              self.saving(false);
-            }
+            /**
+             * This functionality wasn't needed
+             */
+            // if (self.tilesToRemove().length === 0) {
+            //   //   self.complete(true);
+            //   //   self.loading(true);
+            //   //   self.saving(false);
+            // }
           }
         );
       });
 
-      /**
-       * Original version of this method that has been
-       * overridden here didn't end the save if there
-       * wasn't any tiles saved. Multi tile steps can
-       * now progress if no data was provided.
-       */
-      if (self.tiles().length === 0) {
+      if (!self.tiles().length) {
         self.complete(true);
         self.loading(true);
         self.saving(false);
-
-        return;
+        self.savedData([]);
       }
 
       var saveSubscription = unorderedSavedData.subscribe(function (savedData) {
