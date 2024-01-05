@@ -4768,6 +4768,15 @@
               },
               {
                   "description": null,
+                  "domainnode_id": "51b3c5f8-abb9-11ee-ad82-0242ac120004",
+                  "edgeid": "5d6c6d41-85ec-498f-bd08-754db2e5193d",
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "name": null,
+                  "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                  "rangenode_id": "2a9b422c-abbc-11ee-a5a2-0242ac120004"
+              },
+              {
+                  "description": null,
                   "domainnode_id": "602c8b3d-1aba-11ec-b119-a87eeabdefba",
                   "edgeid": "602c8b47-1aba-11ec-9d76-a87eeabdefba",
                   "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
@@ -4972,6 +4981,15 @@
                   "name": null,
                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                   "rangenode_id": "93e7cded-eeb7-11eb-b194-a87eeabdefba"
+              },
+              {
+                  "description": null,
+                  "domainnode_id": "2a9b422c-abbc-11ee-a5a2-0242ac120004",
+                  "edgeid": "a40539af-316a-4c37-99b4-280ce7c90360",
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "name": null,
+                  "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2i_is_type_of",
+                  "rangenode_id": "44e68c7c-abbc-11ee-a5a2-0242ac120004"
               },
               {
                   "description": null,
@@ -5308,6 +5326,15 @@
               },
               {
                   "description": null,
+                  "domainnode_id": "a8363ba6-abbc-11ee-a5a2-0242ac120004",
+                  "edgeid": "ada23e9b-ccf0-446c-9b73-90f32898c95c",
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "name": null,
+                  "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
+                  "rangenode_id": "da31bdb0-abbc-11ee-a5a2-0242ac120004"
+              },
+              {
+                  "description": null,
                   "domainnode_id": "66576cda-9b69-11ea-9143-f875a44e0e11",
                   "edgeid": "b256bdb1-b3c8-4435-8c10-1bdc983d030b",
                   "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
@@ -5485,6 +5512,15 @@
                   "name": null,
                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
                   "rangenode_id": "afeae750-8d0f-11ee-8f62-0242ac130004"
+              },
+              {
+                  "description": null,
+                  "domainnode_id": "51b3c5f8-abb9-11ee-ad82-0242ac120004",
+                  "edgeid": "dd2e7fff-4d2b-4edd-8e9a-8a6064ad1814",
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "name": null,
+                  "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P137i_is_exemplified_by",
+                  "rangenode_id": "a8363ba6-abbc-11ee-a5a2-0242ac120004"
               },
               {
                   "description": null,
@@ -5674,6 +5710,15 @@
                   "name": null,
                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
                   "rangenode_id": "280988bc-8d39-11ee-bcbe-0242ac130004"
+              },
+              {
+                  "description": null,
+                  "domainnode_id": "a919d0f9-ee15-11eb-aef6-a87eeabdefba",
+                  "edgeid": "eeee78f3-d5b2-419a-a4c7-9afcec8e7516",
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "name": null,
+                  "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                  "rangenode_id": "51b3c5f8-abb9-11ee-ad82-0242ac120004"
               }
           ],
           "functions_x_graphs": [
@@ -6021,6 +6066,53 @@
                   "nodeid": "280988bc-8d39-11ee-bcbe-0242ac130004",
                   "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
                   "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
+                  "sortorder": 0
+              },
+              {
+                  "alias": "review_status",
+                  "config": {
+                      "i18n_config": {
+                          "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                      },
+                      "options": [
+                          {
+                              "id": "2abc75e4-dd00-40ea-b932-fc0a2ae444a0",
+                              "selected": false,
+                              "text": {
+                                  "en": "Reviewed"
+                              }
+                          },
+                          {
+                              "id": "55410081-b3f3-4edf-a06a-a8c12abbc363",
+                              "selected": false,
+                              "text": {
+                                  "en": "In review"
+                              }
+                          },
+                          {
+                              "id": "b75580ef-5d2a-40d0-908c-eb7109041635",
+                              "selected": false,
+                              "text": {
+                                  "en": "Awaiting review"
+                              }
+                          }
+                      ]
+                  },
+                  "datatype": "semantic",
+                  "description": null,
+                  "exportable": false,
+                  "fieldname": null,
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "hascustomalias": false,
+                  "is_collector": false,
+                  "isrequired": false,
+                  "issearchable": true,
+                  "istopnode": false,
+                  "name": "Review Status",
+                  "nodegroup_id": "a919d0f9-ee15-11eb-aef6-a87eeabdefba",
+                  "nodeid": "2a9b422c-abbc-11ee-a5a2-0242ac120004",
+                  "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                  "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                   "sortorder": 0
               },
               {
@@ -7447,6 +7539,75 @@
                   "sortorder": 0
               },
               {
+                  "alias": "status",
+                  "config": {
+                      "i18n_config": {
+                          "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                      },
+                      "options": [
+                          {
+                              "id": "b75580ef-5d2a-40d0-908c-eb7109041635",
+                              "selected": false,
+                              "text": {
+                                  "en": "Awaiting review"
+                              }
+                          },
+                          {
+                              "id": "55410081-b3f3-4edf-a06a-a8c12abbc363",
+                              "selected": false,
+                              "text": {
+                                  "en": "In review"
+                              }
+                          },
+                          {
+                              "id": "2abc75e4-dd00-40ea-b932-fc0a2ae444a0",
+                              "selected": false,
+                              "text": {
+                                  "en": "Reviewed"
+                              }
+                          }
+                      ]
+                  },
+                  "datatype": "domain-value",
+                  "description": null,
+                  "exportable": false,
+                  "fieldname": null,
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "hascustomalias": false,
+                  "is_collector": false,
+                  "isrequired": false,
+                  "issearchable": true,
+                  "istopnode": false,
+                  "name": "Status",
+                  "nodegroup_id": "a919d0f9-ee15-11eb-aef6-a87eeabdefba",
+                  "nodeid": "44e68c7c-abbc-11ee-a5a2-0242ac120004",
+                  "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment",
+                  "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2i_is_type_of",
+                  "sortorder": 0
+              },
+              {
+                  "alias": "audit_review",
+                  "config": {
+                      "en": ""
+                  },
+                  "datatype": "semantic",
+                  "description": null,
+                  "exportable": false,
+                  "fieldname": null,
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "hascustomalias": false,
+                  "is_collector": false,
+                  "isrequired": false,
+                  "issearchable": true,
+                  "istopnode": false,
+                  "name": "Audit Review",
+                  "nodegroup_id": "a919d0f9-ee15-11eb-aef6-a87eeabdefba",
+                  "nodeid": "51b3c5f8-abb9-11ee-ad82-0242ac120004",
+                  "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                  "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                  "sortorder": 0
+              },
+              {
                   "alias": "loan_history",
                   "config": {
                       "en": ""
@@ -8025,6 +8186,53 @@
                   "nodeid": "9a97f6fe-8d0f-11ee-8f62-0242ac130004",
                   "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
                   "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
+                  "sortorder": 0
+              },
+              {
+                  "alias": "review_timespan",
+                  "config": {
+                      "i18n_config": {
+                          "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                      },
+                      "options": [
+                          {
+                              "id": "2abc75e4-dd00-40ea-b932-fc0a2ae444a0",
+                              "selected": false,
+                              "text": {
+                                  "en": "Reviewed"
+                              }
+                          },
+                          {
+                              "id": "55410081-b3f3-4edf-a06a-a8c12abbc363",
+                              "selected": false,
+                              "text": {
+                                  "en": "In review"
+                              }
+                          },
+                          {
+                              "id": "b75580ef-5d2a-40d0-908c-eb7109041635",
+                              "selected": false,
+                              "text": {
+                                  "en": "Awaiting review"
+                              }
+                          }
+                      ]
+                  },
+                  "datatype": "semantic",
+                  "description": null,
+                  "exportable": false,
+                  "fieldname": null,
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "hascustomalias": false,
+                  "is_collector": false,
+                  "isrequired": false,
+                  "issearchable": true,
+                  "istopnode": false,
+                  "name": "Review Timespan",
+                  "nodegroup_id": "a919d0f9-ee15-11eb-aef6-a87eeabdefba",
+                  "nodeid": "a8363ba6-abbc-11ee-a5a2-0242ac120004",
+                  "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E49_Time_Appellation",
+                  "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P137i_is_exemplified_by",
                   "sortorder": 0
               },
               {
@@ -9288,6 +9496,54 @@
                   "sortorder": 0
               },
               {
+                  "alias": "last_review_date",
+                  "config": {
+                      "dateFormat": "YYYY-MM-DD",
+                      "i18n_config": {
+                          "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                      },
+                      "options": [
+                          {
+                              "id": "b75580ef-5d2a-40d0-908c-eb7109041635",
+                              "selected": false,
+                              "text": {
+                                  "en": "Awaiting review"
+                              }
+                          },
+                          {
+                              "id": "55410081-b3f3-4edf-a06a-a8c12abbc363",
+                              "selected": false,
+                              "text": {
+                                  "en": "In review"
+                              }
+                          },
+                          {
+                              "id": "2abc75e4-dd00-40ea-b932-fc0a2ae444a0",
+                              "selected": false,
+                              "text": {
+                                  "en": "Reviewed"
+                              }
+                          }
+                      ]
+                  },
+                  "datatype": "date",
+                  "description": null,
+                  "exportable": false,
+                  "fieldname": null,
+                  "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "hascustomalias": false,
+                  "is_collector": false,
+                  "isrequired": false,
+                  "issearchable": true,
+                  "istopnode": false,
+                  "name": "Last Review Date",
+                  "nodegroup_id": "a919d0f9-ee15-11eb-aef6-a87eeabdefba",
+                  "nodeid": "da31bdb0-abbc-11ee-a5a2-0242ac120004",
+                  "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
+                  "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
+                  "sortorder": 0
+              },
+              {
                   "alias": "extent",
                   "config": {},
                   "datatype": "semantic",
@@ -9813,8 +10069,8 @@
           "publication": {
               "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
               "notes": null,
-              "publicationid": "d1feaf70-abb4-11ee-a961-0242ac120004",
-              "published_time": "2024-01-05T10:26:00.065",
+              "publicationid": "64f63264-abbd-11ee-8c76-0242ac120004",
+              "published_time": "2024-01-05T11:27:22.608",
               "user_id": 1
           },
           "relatable_resource_model_ids": [],
