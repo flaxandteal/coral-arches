@@ -3,7 +3,7 @@ run-name: Reset Develop Database
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 23 * * *'
 
 jobs:
   reset-db-jupyter:
@@ -16,6 +16,15 @@ jobs:
         run: |
           echo "$GITHUB_CONTEXT"
 
-      - name: Say Hi
-        run: |
-          echo "Hi"
+      - name: Set up Python
+        uses: actions/setup-python@v3
+
+      # - uses: yaananth/run-notebook@v2
+      #   env:
+      #     RUNNER: ${{ toJson(runner) }}
+      #     SECRETS: ${{ toJson(secrets) }}
+      #     GITHUB: ${{ toJson(github) }}
+      #   with:
+      #     notebook: "./Process - 01.ipynb"
+      #     isReport: False
+      #     poll: True
