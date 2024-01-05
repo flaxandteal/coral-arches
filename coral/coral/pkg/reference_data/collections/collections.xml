@@ -48186,7 +48186,7 @@
   <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/3512940f-f611-3130-a12a-b6169d0a3df0"/>
   <skos:Concept rdf:about="https://keystone.historicengland.org.uk/rdm/a5adddec-c2fa-383a-afcb-ad558388cce6"/>
 
-  <!-- Below are Concepts added by Owen-->
+  <!-- Below are Concepts added by F&T -->
   <!-- Application Stages -->
   <skos:Collection rdf:about="http://arches:8000/8ca41a78-479a-4d87-831d-08b640910126">
     <skos:member>
@@ -48220,7 +48220,7 @@
       <skos:Concept rdf:about="http://arches:8000/c74e97d2-6951-426d-a480-a1643011f1b5"/>
     </skos:member>
   </skos:Collection>
-  <!-- / -->
+  <!-- Application Stages -->
   <!-- Excavation Types -->
   <skos:Collection rdf:about="http://arches:8000/b1c3237e-69fc-4cce-a12e-04ef1e053722">
     <skos:member>
@@ -48242,8 +48242,27 @@
       <skos:Concept rdf:about="http://arches:8000/f96d1f54-5029-491d-826d-c12c3344d5dc"/>
     </skos:member>
   </skos:Collection>
-  <!-- / -->
-    <!-- Assignment Actions -->
+  <!-- Excavation Types -->
+  <!-- Archive File Status -->
+  <skos:Collection rdf:about="http://arches:8000/0c7c25f9-7b61-4527-bdf1-20790198f12c">
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/7b45d35c-4d78-441c-b4e5-1d0e7b3cf051"/>
+    </skos:member>
+    <skos:prefLabel xml:lang="en">
+    {"id": "7d83d452-8e68-442f-b639-1c8caba08bb7", "value": "Archive File Status"}
+    </skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2ad238df-b5bc-4def-82e9-ff6395fdd2c7"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4c767b85-414c-4c58-9f87-b520504fa17b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/1a593553-39fb-4b5c-8ba8-07bd51fc8351"/>
+    </skos:member>
+  </skos:Collection>
+  <!-- Archive File Status -->
+  <!-- Assignment Actions -->
   <skos:Collection rdf:about="http://arches:8000/20033dec-abaf-47bd-9fba-6499f770b792">
     <skos:prefLabel xml:lang="en">
     {"id": "3be16da4-406e-400e-aea8-8866b707b132", "value": "Assignment Actions"}
@@ -48270,7 +48289,7 @@
       <skos:Concept rdf:about="http://arches:8000/f96d1f54-f0e5-491d-826d-c12c3344d5dc"/>
     </skos:member>
   </skos:Collection>
-  <!-- / -->
+  <!-- Assignment Actions -->
   <!-- Development Types -->
   <skos:Collection rdf:about="http://arches:8000/3428b649-de18-447a-9e6f-a623bb035c9b">
     <skos:prefLabel xml:lang="en">
@@ -48301,7 +48320,7 @@
       <skos:Concept rdf:about="http://arches:8000/3428b649-de18-dd00-9e6f-a623bb035c9b"/>
     </skos:member>
   </skos:Collection>
-  <!-- / -->  
+  <!-- Development Types -->  
   <!-- Planning Category-->
     <skos:Collection rdf:about="http://arches:8000/f1c3237e-69fc-4cce-a12e-04ef1e053739">
     <skos:prefLabel xml:lang="en">
@@ -48336,5 +48355,4 @@
     </skos:member>
   </skos:Collection>
   <!-- Planning Category-->
-
 </rdf:RDF>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+>
+  <skos:ConceptScheme rdf:about="http://arches:8000/85c85ce2-e018-43b9-95ba-c7ab4d3aff4c">
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/7b45d35c-4d78-441c-b4e5-1d0e7b3cf051">
+        <skos:prefLabel xml:lang="en">
+        {"id": "e09d3d38-d12c-457a-a311-ad733a9bf22e", "value": "Home"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/85c85ce2-e018-43b9-95ba-c7ab4d3aff4c"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/1a593553-39fb-4b5c-8ba8-07bd51fc8351">
+        <skos:inScheme rdf:resource="http://arches:8000/85c85ce2-e018-43b9-95ba-c7ab4d3aff4c"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "30923333-fcf3-4c62-bde9-2d36b4f96df0", "value": "Loan"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/2ad238df-b5bc-4def-82e9-ff6395fdd2c7">
+        <skos:inScheme rdf:resource="http://arches:8000/85c85ce2-e018-43b9-95ba-c7ab4d3aff4c"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "a30796cb-5a2f-42e6-b5f0-c174fb344c39", "value": "Missing"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/4c767b85-414c-4c58-9f87-b520504fa17b">
+        <skos:prefLabel xml:lang="en">
+        {"id": "db84baba-2913-4b11-8bf5-862b10b10d38", "value": "Destroyed"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/85c85ce2-e018-43b9-95ba-c7ab4d3aff4c"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <dcterms:title xml:lang="en">
+    {"id": "2c194e8f-c0d8-42d7-adb1-f2ff3c6649ec", "value": "Archive File Status"}
+    </dcterms:title>
+  </skos:ConceptScheme>
+</rdf:RDF>
