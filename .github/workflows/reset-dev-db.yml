@@ -1,0 +1,21 @@
+name: Reset Develop Database
+run-name: Reset Develop Database
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  reset-db-jupyter:
+    runs-on: [self-hosted]
+
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Say Hi
+        run: |
+          echo "Hi"
