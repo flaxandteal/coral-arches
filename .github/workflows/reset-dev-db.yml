@@ -1,3 +1,6 @@
+name: Reset Develop Database
+run-name: Reset Develop Database
+
 on:
   schedule:
     - cron: '*/5 * * * *'
