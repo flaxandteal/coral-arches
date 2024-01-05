@@ -110,10 +110,8 @@ jobs:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Pull latest
-        run: |
-          echo "Pulling latest to include workflow commits."
-          git pull
+        with:
+          ref: ${{ github.ref }}
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
@@ -174,10 +172,8 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Pull latest
-        run: |
-          echo "Pulling latest to include workflow commits."
-          git pull
+        with:
+          ref: ${{ github.ref }}
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
@@ -314,10 +310,8 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Pull latest
-        run: |
-          echo "Pulling latest to include workflow commits."
-          git pull
+        with:
+          ref: ${{ github.ref }}
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
@@ -371,10 +365,8 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Pull latest
-        run: |
-          echo "Pulling latest to include workflow commits."
-          git pull
+        with:
+          ref: ${{ github.ref }}
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
