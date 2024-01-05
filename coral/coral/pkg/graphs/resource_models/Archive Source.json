@@ -31,7 +31,7 @@
                   "instructions": {
                       "en": "Enter the name of the archive source."
                   },
-                  "is_editable": false,
+                  "is_editable": true,
                   "name": {
                       "en": "Archive Source Names"
                   },
@@ -276,7 +276,7 @@
                   "instructions": {
                       "en": "Use to record the creation, extent and location of the archive source"
                   },
-                  "is_editable": false,
+                  "is_editable": true,
                   "name": {
                       "en": "Archive Holding"
                   },
@@ -310,7 +310,7 @@
                   "instructions": {
                       "en": "Used to record a textual description of the archive source. Where appropriate, different types of description may be recorded."
                   },
-                  "is_editable": false,
+                  "is_editable": true,
                   "name": {
                       "en": "Descriptions"
                   },
@@ -555,7 +555,7 @@
                   "instructions": {
                       "en": ""
                   },
-                  "is_editable": false,
+                  "is_editable": true,
                   "name": {
                       "en": "Archive Source Type"
                   },
@@ -8237,34 +8237,7 @@
               },
               {
                   "alias": "audit_metadata",
-                  "config": {
-                      "i18n_config": {
-                          "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                      },
-                      "options": [
-                          {
-                              "id": "b75580ef-5d2a-40d0-908c-eb7109041635",
-                              "selected": false,
-                              "text": {
-                                  "en": "Awaiting review"
-                              }
-                          },
-                          {
-                              "id": "55410081-b3f3-4edf-a06a-a8c12abbc363",
-                              "selected": false,
-                              "text": {
-                                  "en": "In review"
-                              }
-                          },
-                          {
-                              "id": "2abc75e4-dd00-40ea-b932-fc0a2ae444a0",
-                              "selected": false,
-                              "text": {
-                                  "en": "Reviewed"
-                              }
-                          }
-                      ]
-                  },
+                  "config": {},
                   "datatype": "semantic",
                   "description": "",
                   "exportable": false,
@@ -10045,17 +10018,10 @@
                       },
                       "options": [
                           {
-                              "id": "e5da0938-d343-4c60-8016-8484001882eb",
+                              "id": "ae8bad7d-e0ca-4d93-b41f-c0419e94bfa5",
                               "selected": false,
                               "text": {
-                                  "en": "Destroyed"
-                              }
-                          },
-                          {
-                              "id": "c5398d24-e93c-40ac-8f39-f80365ea551b",
-                              "selected": false,
-                              "text": {
-                                  "en": "Missing"
+                                  "en": "Home"
                               }
                           },
                           {
@@ -10066,10 +10032,17 @@
                               }
                           },
                           {
-                              "id": "ae8bad7d-e0ca-4d93-b41f-c0419e94bfa5",
+                              "id": "c5398d24-e93c-40ac-8f39-f80365ea551b",
                               "selected": false,
                               "text": {
-                                  "en": "Home"
+                                  "en": "Missing"
+                              }
+                          },
+                          {
+                              "id": "e5da0938-d343-4c60-8016-8484001882eb",
+                              "selected": false,
+                              "text": {
+                                  "en": "Destroyed"
                               }
                           }
                       ]
