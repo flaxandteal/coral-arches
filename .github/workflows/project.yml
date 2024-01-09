@@ -61,7 +61,7 @@ jobs:
         id: determine-version
         if: steps.check-branch.outputs.on_develop == 'true'
         run: |
-          merge_message=${{ github.event.head_commit.message }}
+          merge_message=$(printf "%q" "${{ github.event.head_commit.message }}")
           current_version="${{ steps.read-version.outputs.current_version }}"
 
           if [[ $merge_message =~ "feature" ]]; then
