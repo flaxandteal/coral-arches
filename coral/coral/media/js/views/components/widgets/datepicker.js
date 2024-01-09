@@ -108,7 +108,6 @@ define([
     }
 
     this.value.subscribe(() => {
-        console.log('oggaga bogaga')
       this.setDateOfDataEntry();
     });
 
