@@ -20,7 +20,7 @@
 Cypress.Commands.add("login", () => {
     cy.visit('/auth/?next=/index.htm');
 
-    cy.get(':nth-child(3) > .input-group > .form-control').type("admin");
-    cy.get(':nth-child(4) > .input-group > .form-control').type(`admin{enter}`);
+    cy.get('.input-group > .floating-label-group > input[name="username"].form-control').type(`admin{enter}`);
+    cy.get('.input-group > .floating-label-group > input[name="password"].form-control').type(`admin{enter}`);
   
 });
