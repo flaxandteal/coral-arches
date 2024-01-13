@@ -42,10 +42,21 @@ class Command(BaseCommand):
 
     """
 
+    print_statistics = False
+
     def add_arguments(self, parser):
-        ...
+        parser.add_argument(
+            "-s",
+            "--statistics",
+            action="store_true",
+            dest="print_statistics",
+            help="Do extra searches to provide relevant statistics?",
+        )
+
 
     def handle(self, *args, **options):
+        self.print_statistics = True if options["print_statistics"] else False
+
         table = self.apply_sets()
 
     def _apply_set(self, se, set_id, set_query):
@@ -92,6 +103,7 @@ class Command(BaseCommand):
 
         logical_sets = LogicalSet.all()
         results = []
+        print("Print statistics?", self.print_statistics)
         for logical_set in logical_sets:
             if logical_set.member_definition:
                 # user=True is shorthand for "do not restrict by user"
@@ -113,8 +125,20 @@ class Command(BaseCommand):
                         permitted_nodegroups=True # This should be ignored as user==True
                     )
                     return inner_dsl.dsl["query"]
+                if self.print_statistics:
+                    dsl = Query(se=_se)
+                    dsl.add_query(_logical_set_query())
+                    count = dsl.count(index=RESOURCES_INDEX)
+                    print("Logical Set:", logical_set.id)
+                    print("Definition:", logical_set.member_definition)
+                    print("Count:", count)
                 results = self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query)
                 self.wait_for_completion(_se, results)
+                if self.print_statistics:
+                    dsl = Query(se=_se)
+                    dsl.add_query(Nested(path="sets", query=Terms(field="sets.id", terms=[f"l:{logical_set.id}"])))
+                    count = dsl.count(index=RESOURCES_INDEX)
+                    print("Applies to by search:", count)
 
         sets = Set.all()
         for regular_set in sets:
@@ -139,7 +163,6 @@ class Command(BaseCommand):
             task_id = result["task"]
             status = tasks_client.get(task_id=task_id)
             if status["completed"]:
-                print(status["task"])
                 results.remove(result)
             else:
                 print(task_id, "not yet completed")

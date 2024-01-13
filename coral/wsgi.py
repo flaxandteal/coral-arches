@@ -34,3 +34,10 @@ application = get_wsgi_application()
 
 from arches.app.models.system_settings import settings
 settings.update_from_db()
+
+if os.getenv("CASBIN_LISTEN", False):
+    import threading
+    from coral.permissions.casbin import trigger
+    t = threading.Thread(target=trigger.listen)
+    t.setDaemon(True)
+    t.start()

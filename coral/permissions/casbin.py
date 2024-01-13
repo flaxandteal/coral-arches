@@ -1,4 +1,6 @@
 import logging
+import pika
+import time
 from guardian.core import ObjectPermissionChecker
 from dauthz.backends.casbin_backend import CasbinBackend
 # https://github.com/casbin/pycasbin/issues/323
@@ -175,6 +177,7 @@ class CasbinPermissionFramework(PermissionFramework):
             #             obj_key = self._obj_to_str(nodegroup)
             #             self._enforcer.add_policy(group_key, obj_key, str(act))
             for permission in group.permissions:
+                print(permission.action, [self._obj_to_str(obj) for obj in permission.object])
                 for act in permission.action:
                     for obj in permission.object:
                         obj_key = self._obj_to_str(obj)
@@ -209,6 +212,9 @@ class CasbinPermissionFramework(PermissionFramework):
 
         self._enforcer.save_policy()
         self._enforcer.load_policy()
+
+        if os.getenv("CASBIN_LISTEN", False):
+            trigger.request_reload()
 
     def update_permissions_for_user(self, user):
         perms = {(self._obj_to_str(permission), permission.codename) for permission in user.user_permissions.all()}
@@ -802,3 +808,99 @@ class CasbinPermissionFramework(PermissionFramework):
         subj = self._subj_to_str(user)
         roles = self._enforcer.get_roles_for_user(subj)
         return any(f"dgn:{name}" in roles for name in names)
+
+from contextlib import contextmanager
+from uuid import uuid4
+
+_PROCESS_KEY = str(uuid4())
+
+import time
+import threading
+
+class CasbinTrigger:
+    wait_time = int(os.getenv("CASBIN_DEBOUNCE_SECONDS", 5))
+    _timer = None
+
+    @staticmethod
+    @contextmanager
+    def connect():
+        credentials = pika.PlainCredentials(
+            settings.RABBITMQ_USER,
+            settings.RABBITMQ_PASS
+        )
+        parameters = pika.ConnectionParameters(
+            host=settings.RABBITMQ_HOST,
+            credentials=credentials,
+        )
+        connection = pika.BlockingConnection(parameters)
+        channel = connection.channel()
+        channel.exchange_declare(exchange=settings.CASBIN_RELOAD_QUEUE, exchange_type="fanout")
+        channel.queue_declare(queue=_PROCESS_KEY, durable=False)
+        channel.queue_bind(exchange=settings.CASBIN_RELOAD_QUEUE, queue=_PROCESS_KEY, routing_key=settings.CASBIN_RELOAD_QUEUE)
+        channel.basic_qos(prefetch_count=1)
+        try:
+            yield channel
+        finally:
+            connection.close()
+
+    def listen(self):
+        from arches.app.utils.permission_backend import _get_permission_framework
+        casbin_framework = _get_permission_framework()
+
+        self._timer
+
+        def _reload_real():
+            self._timer = None
+            print("Policy loading")
+            casbin_framework._enforcer.load_policy()
+            print("Policy loaded")
+
+        def _reload(channel, method, properties, body):
+            try:
+                if body:
+                    body = json.loads(body)
+
+                # Helps avoid unnecessary reloading in the producer.
+                if not body or body.get("processKey", True) != str(_PROCESS_KEY):
+                    if self._timer is not None:
+                        print("CASBIN-TRIGGER: debounce")
+                        self._timer.cancel()
+                    else:
+                        print("CASBIN-TRIGGER: setting up")
+                    self._timer = threading.Timer(
+                        self.wait_time,
+                        _reload_real
+                    )
+                    self._timer.start()
+                    print("CASBIN-TRIGGER: resetting in", self.wait_time)
+                else:
+                    print("CASBIN-TRIGGER: ignoring reload request")
+
+                channel.basic_ack(delivery_tag=method.delivery_tag)
+            except:
+                logger.exception("Casbin listener exception")
+
+        with self.connect() as channel:
+            print("Consuming")
+            channel.basic_consume(
+                queue=_PROCESS_KEY,
+                on_message_callback=_reload,
+            )
+            channel.start_consuming()
+            print("Exiting Casbin listener")
+
+    def request_reload(self):
+        timestamp = time.time()
+        with self.connect() as channel:
+            channel.basic_publish(
+                exchange=settings.CASBIN_RELOAD_QUEUE,
+                routing_key=settings.CASBIN_RELOAD_QUEUE,
+                body=json.dumps({"processKey": str(_PROCESS_KEY)}),
+                properties=pika.BasicProperties(
+                    delivery_mode=pika.DeliveryMode.Transient,
+                    timestamp=int(timestamp),
+                    expiration="1000",
+                )
+            )
+
+trigger = CasbinTrigger()

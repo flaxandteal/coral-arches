@@ -47,6 +47,7 @@ WEBPACK_LOADER = {
 }
 
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
+CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
 
 DAUTHZ = {
     # DEFAULT Dauthz enforcer
@@ -143,6 +144,7 @@ ROOT_URLCONF = 'coral.urls'
 # Modify this line as needed for your project to connect to elasticsearch with a password that you generate
 ES_TIMEOUT = int(os.getenv("ES_TIMEOUT", "60"))
 ELASTICSEARCH_CONNECTION_OPTIONS = {"request_timeout": ES_TIMEOUT, "verify_certs": False, "basic_auth": ("elastic", "E1asticSearchforArche5")}
+ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": os.environ.get("ESHOST", "localhost"), "port": int(os.environ.get("ESPORT", 9200))}]
 
 # If you need to connect to Elasticsearch via an API key instead of username/password, use the syntax below:
 # ELASTICSEARCH_CONNECTION_OPTIONS = {"timeout": 30, "verify_certs": False, "api_key": "<ENCODED_API_KEY>"}
@@ -185,9 +187,9 @@ DATABASES = {
         "CONN_MAX_AGE": 0,
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "HOST": "localhost",
-        "NAME": "coral",
+        "NAME": "arches2",
         "OPTIONS": {},
-        "PASSWORD": "postgis",
+        "PASSWORD": "postgres",
         "PORT": "5432",
         "POSTGIS_TEMPLATE": "template_postgis",
         "TEST": {
@@ -418,6 +420,9 @@ CELERY_BROKER_URL = "" # RabbitMQ --> "amqp://guest:guest@localhost",  Redis -->
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'django-db' # Use 'django-cache' if you want to use your cache as your backend
 CELERY_TASK_SERIALIZER = 'json'
+RABBITMQ_USER = os.getenv("RABBITMQ_USER")
+RABBITMQ_PASS = os.getenv("RABBITMQ_PASS")
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
 
 
 CELERY_SEARCH_EXPORT_EXPIRES = 24 * 3600  # seconds
