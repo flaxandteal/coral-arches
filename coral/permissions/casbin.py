@@ -693,9 +693,10 @@ class CasbinPermissionFramework(PermissionFramework):
         return False
 
     def get_resource_types_by_perm(self, user, perms):
-        all_graphs = list(
+        all_graphs = [
+            str(graph_id) for graph_id in
             Graph.objects.filter(isresource=True).exclude(pk=SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID).values_list("graphid", flat=True)
-        )
+        ]
         if user.is_superuser:
             return all_graphs
         # Only considers groups a user is assigned to.
