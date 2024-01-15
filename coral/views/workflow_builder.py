@@ -8,7 +8,7 @@ from arches.app.views import api
 import json
 import uuid
 from django.views.generic import View
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from arches.app.models import models
 from arches.app.models.graph import Graph
 from arches.app.models.resource import Resource
