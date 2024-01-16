@@ -28,7 +28,7 @@ class WorkflowBuilder(View):
     def get(self, request):
         createable = get_createable_resource_types(request.user)
         resources = JSONSerializer().serialize(
-            createable,
+            Graph.objects.filter(pk__in=createable),
             exclude=[
                 "functions",
                 "ontology",
