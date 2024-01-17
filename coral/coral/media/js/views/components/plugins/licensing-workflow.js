@@ -102,22 +102,6 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card-util',
-                  uniqueInstanceName: 'license-no',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: [
-                      '280b78fa-4e4d-11ee-a340-0242ac140007',
-                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
-                      '280b7238-4e4d-11ee-a340-0242ac140007'
-                    ],
-                    labels: [['Cross Reference', 'License Number']]
-                  }
-                },
-                {
                   componentName: 'default-card',
                   uniqueInstanceName: 'app-contacts',
                   tilesManaged: 'one',
@@ -434,8 +418,54 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    labels: [['Decision Type', 'Decision']]
+                    labels: [
+                      ['Decision Type', 'Cur grade E decision'],
+                      ['Decision Approved By', 'Made by (D)'],
+                      ['Decision Made By', 'Made by (E)'],
+                      ['License Valid From Date', 'Issue Date'],
+                      ['License Valid To Date', 'Valid until']
+                    ]
                     // hiddenNodes: ['f6c207ae-5938-11ee-9e74-0242ac130007']
+                  }
+                },
+                {
+                  componentName: 'default-card-util',
+                  uniqueInstanceName: 'license-no',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: [
+                      '280b78fa-4e4d-11ee-a340-0242ac140007',
+                      '280b7a9e-4e4d-11ee-a340-0242ac140007',
+                      '280b7238-4e4d-11ee-a340-0242ac140007'
+                    ],
+                    labels: [['Cross Reference', 'License Number']]
+                  }
+                },
+                {
+                  componentName: 'default-card-util',
+                  uniqueInstanceName: 'decision-cm-ref',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    hiddenNodes: [
+                      '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                      '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
+                      '589d4dca-edf9-11eb-83ea-a87eeabdefba'
+                    ],
+                    prefilledNodes: [
+                      // Source set to Heritage Environment Record Number
+                      [
+                        '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
+                        '19afd557-cc21-44b4-b1df-f32568181b2c'
+                      ]
+                    ],
+                    tileid: "['app-details-step']['cm-ref'][0]['tileId']",
+                    labels: [['Cross Reference', 'CM Container Number']]
                   }
                 }
               ]
@@ -575,6 +605,91 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '0dcf7c74-53d5-11ee-844f-0242ac130008',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Ammendments',
+          name: 'ammendments-step',
+          workflowstepclass: 'workflow-form-component',
+          required: false,
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card-util',
+                  uniqueInstanceName: 'former-licensee',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '6d290832-5891-11ee-a624-0242ac120004',
+                    semanticName: 'Contacts',
+                    hiddenNodes: [
+                      '06a6e618-b540-11ee-bfa1-0242ac120007', // licensee_currency,
+                      '6d29144e-5891-11ee-a624-0242ac120004', // planning_officer_metatype,
+                      '6d2916d8-5891-11ee-a624-0242ac120004', // company_role_metatype,
+                      '6d2919b2-5891-11ee-a624-0242ac120004', // company_role_type,
+                      '6d2921fa-5891-11ee-a624-0242ac120004', // excavation_director_role_type,
+                      '6d2924b6-5891-11ee-a624-0242ac120004', // applicant,
+                      '6d292772-5891-11ee-a624-0242ac120004', // applicant_role_metatype,
+                      '6d292a2e-5891-11ee-a624-0242ac120004', // excavation_director,
+                      '6d292cf4-5891-11ee-a624-0242ac120004', // applicant_role_type,
+                      '6d292f88-5891-11ee-a624-0242ac120004', // company,
+                      '6d29323a-5891-11ee-a624-0242ac120004', // excavation_director_role_metatype,
+                      '6d293532-5891-11ee-a624-0242ac120004', // planning_officer,
+                      '6d29392e-5891-11ee-a624-0242ac120004', // planning_officer_role_type,
+                      '6d2941f8-5891-11ee-a624-0242ac120004', // licensee_role_metatype,
+                      '6d2944f0-5891-11ee-a624-0242ac120004' // licensee_role_type,
+                      //'6d294784-5891-11ee-a624-0242ac120004' // licensee
+                    ],
+                    labels: [['Licensees', 'Former licensee(s)']],
+                    prefilledNodes: [
+                      [
+                        '06a6e618-b540-11ee-bfa1-0242ac120007',
+                        'c2051d53-40e7-4a2d-a4b4-02a31da37fd1'
+                      ]
+                    ]
+                    // tileid: '[app-details-step][app-contacts][0][tileId]'
+                  }
+                },
+                {
+                  componentName: 'default-card-util',
+                  uniqueInstanceName: 'new-licensee',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '6d290832-5891-11ee-a624-0242ac120004',
+                    semanticName: 'Contacts',
+                    hiddenNodes: [
+                      '06a6e618-b540-11ee-bfa1-0242ac120007', // licensee_currency,
+                      '6d29144e-5891-11ee-a624-0242ac120004', // planning_officer_metatype,
+                      '6d2916d8-5891-11ee-a624-0242ac120004', // company_role_metatype,
+                      '6d2919b2-5891-11ee-a624-0242ac120004', // company_role_type,
+                      '6d2921fa-5891-11ee-a624-0242ac120004', // excavation_director_role_type,
+                      '6d2924b6-5891-11ee-a624-0242ac120004', // applicant,
+                      '6d292772-5891-11ee-a624-0242ac120004', // applicant_role_metatype,
+                      '6d292a2e-5891-11ee-a624-0242ac120004', // excavation_director,
+                      '6d292cf4-5891-11ee-a624-0242ac120004', // applicant_role_type,
+                      '6d292f88-5891-11ee-a624-0242ac120004', // company,
+                      '6d29323a-5891-11ee-a624-0242ac120004', // excavation_director_role_metatype,
+                      '6d293532-5891-11ee-a624-0242ac120004', // planning_officer,
+                      '6d29392e-5891-11ee-a624-0242ac120004', // planning_officer_role_type,
+                      '6d2941f8-5891-11ee-a624-0242ac120004', // licensee_role_metatype,
+                      '6d2944f0-5891-11ee-a624-0242ac120004' // licensee_role_type,
+                      //'6d294784-5891-11ee-a624-0242ac120004' // licensee
+                    ],
+                    labels: [['Licensees', 'New licensee']],
+                    prefilledNodes: [
+                      [
+                        '06a6e618-b540-11ee-bfa1-0242ac120007',
+                        'c2051d53-40e7-4a2d-a4b4-02a31da37fd1'
+                      ]
+                    ]
                   }
                 }
               ]
