@@ -1,0 +1,143 @@
+{
+  "pluginid": "cdf928fb-8666-4eea-a9ce-aeb0830192fc",
+  "name": "Respond to Enforcement",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": true,
+    "stepData": [
+      {
+        "name": "bce6a91f-700a-46d3-a4ae-1b6ee5bf7134",
+        "title": "Initial step",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "",
+                  "nodegroupid": "ba39c036-b551-11ee-94ee-0242ac120006",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "e6d7f67f-32b7-494e-a076-e14c4a93d618",
+        "title": "Enforcement Decision",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
+                  "semanticName": "Associated Resources"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "7f891f99-81b1-4c2c-b4d5-1b9280139b88"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "2a6b7040-b555-11ee-baf6-0242ac120006",
+                  "semanticName": "Enforcement Names"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "11c194ab-42f2-4ddd-8e78-99b29a648846"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "ac823b90-b555-11ee-805b-0242ac120006",
+                  "semanticName": "Enforcement Status"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "b1ac7536-e5d4-4937-94d2-5717d5154eca"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "25e2708a-b557-11ee-805b-0242ac120006"
+                  ],
+                  "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
+                  "semanticName": "External Cross References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "6db3d5be-a865-49e9-9e76-5cbc19396641"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "25e2708a-b557-11ee-805b-0242ac120006"
+                  ],
+                  "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
+                  "semanticName": "External Cross References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "0e300bb1-27b2-449e-a808-4a8911bf4a57"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "7b7c6466-b556-11ee-baf6-0242ac120006",
+                  "semanticName": "Agreed Action Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "f021791d-bf7e-425d-9734-aefeff94ce43"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "b6cef4d4-b556-11ee-805b-0242ac120006",
+                  "semanticName": "Current Position Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "f9275f2b-4d04-4614-879c-8dd3fea7a8c2"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "f3fbe146-b556-11ee-805b-0242ac120006",
+                  "semanticName": "Result Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "0f9b5e41-2646-472b-82ab-2738d6237b90"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "respond-to-enforcement-workflow",
+  "sortorder": 0
+}
