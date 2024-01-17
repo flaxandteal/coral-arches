@@ -149,6 +149,17 @@ define([
                 },
                 {
                   componentName: 'default-card-util',
+                  uniqueInstanceName: 'excavation-status',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    labels: [['Status', 'Stage of Application']]
+                  }
+                },
+                {
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'excavation-type',
                   tilesManaged: 'one',
                   parameters: {
@@ -220,17 +231,47 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'address-info',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
                     hiddenNodes: [
-                      'a541922b-f121-11eb-a081-a87eeabdefba',
-                      'a5419222-f121-11eb-8b1f-a87eeabdefba',
-                      'a541e02a-f121-11eb-83b2-a87eeabdefba',
-                      'a541e02d-f121-11eb-b36f-a87eeabdefba'
+                      'a5419221-f121-11eb-a173-a87eeabdefba', // full_address_type,
+                      'a5419222-f121-11eb-8b1f-a87eeabdefba', // address_status,
+                      'a5419224-f121-11eb-9ca7-a87eeabdefba', // full_address,
+                      'a541b91c-f121-11eb-beb5-a87eeabdefba', // postcode_metatype,
+                      'a541b91d-f121-11eb-adf3-a87eeabdefba', // address_currency_metatype,
+                      'a541b91e-f121-11eb-94ea-a87eeabdefba', // address_status_metatype,
+                      'a541b91f-f121-11eb-b90b-a87eeabdefba', // locality_type,
+                      'a541b920-f121-11eb-89e7-a87eeabdefba', // building_number_type,
+                      'a541b921-f121-11eb-ba56-a87eeabdefba', // building_number_sub_street_type,
+                      'a541b922-f121-11eb-9fa2-a87eeabdefba', // building_number_sub_street_value,
+                      'a541b925-f121-11eb-9264-a87eeabdefba', // building_number_value,
+                      //'a541b927-f121-11eb-8377-a87eeabdefba', // street_value,
+                      'a541b928-f121-11eb-aaf3-a87eeabdefba', // locality_metatype,
+                      'a541b929-f121-11eb-bd03-a87eeabdefba', // building_number_sub_street_metatype,
+                      'a541b92a-f121-11eb-b6d1-a87eeabdefba', // town_or_city_metatype,
+                      'a541b92b-f121-11eb-ade9-a87eeabdefba', // county_type,
+                      'a541b92c-f121-11eb-b09e-a87eeabdefba', // sub_street_type,
+                      'a541b92d-f121-11eb-8993-a87eeabdefba', // county_metatype,
+                      'a541b92e-f121-11eb-a98d-a87eeabdefba', // building_name_metatype,
+                      'a541b92f-f121-11eb-b035-a87eeabdefba', // sub_street_metatype,
+                      'a541b930-f121-11eb-a30c-a87eeabdefba', // locality_value,
+                      //'a541e023-f121-11eb-b770-a87eeabdefba', // town_or_city_value,
+                      //'a541e025-f121-11eb-8212-a87eeabdefba', // postcode_value,
+                      'a541e027-f121-11eb-ba26-a87eeabdefba', // sub_street_value,
+                      'a541e029-f121-11eb-802c-a87eeabdefba', // building_name_value,
+                      'a541e02a-f121-11eb-83b2-a87eeabdefba', // building_name_type,
+                      'a541e02b-f121-11eb-9462-a87eeabdefba', // building_number_metatype,
+                      'a541e02d-f121-11eb-b36f-a87eeabdefba', // address_currency,
+                      'a541e02e-f121-11eb-b7f9-a87eeabdefba', // town_or_city_type,
+                      'a541e02f-f121-11eb-8d6a-a87eeabdefba', // street_type,
+                      'a541e030-f121-11eb-aaf7-a87eeabdefba', // postcode_type,
+                      'a541e033-f121-11eb-9f81-a87eeabdefba', // full_address_metatype,
+                      //'a541e034-f121-11eb-8803-a87eeabdefba', // county_value,
+                      'a541e035-f121-11eb-a3d9-a87eeabdefba' // street_metatype
                     ],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
@@ -239,16 +280,30 @@ define([
                 {
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'location-names',
-                  tilesManaged: 'many',
+                  tilesManaged: 'one',
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
                     parenttileid: "['init-step']['app-id'][0]['actLocTileId']",
-                    hiddenNodes: ['a541922b-f121-11eb-a081-a87eeabdefba'],
+                    hiddenNodes: [
+                      'a5416b52-f121-11eb-9724-a87eeabdefba', // area_name_metatype,
+                      //'a5416b53-f121-11eb-a507-a87eeabdefba', // area_name,
+                      'a5416b54-f121-11eb-8b8d-a87eeabdefba', // area_name_type,
+                      'a541921a-f121-11eb-93b5-a87eeabdefba', // area_currency_metatype,
+                      'a5419227-f121-11eb-9683-a87eeabdefba', // area_metatype,
+                      'a541922b-f121-11eb-a081-a87eeabdefba', // area_currency_type,
+                      'a541922e-f121-11eb-b2f6-a87eeabdefba' // area_type
+                    ],
+                    prefilledNodes: [
+                      [
+                        'a541922e-f121-11eb-b2f6-a87eeabdefba',
+                        '26910978-5742-d0db-8b63-ec8d65ce5198'
+                      ]
+                    ],
                     labels: [
-                      ['Area Name', 'Additional Area Name'],
-                      ['Area Type', 'Area Type For Additional Name']
+                      ['Area Name', 'Townland']
+                      // ['Area Type', 'Area Type For Additional Name']
                     ]
                   }
                 },
