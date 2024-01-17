@@ -69,6 +69,9 @@ define([
         lockExternalStep: () => {
           console.log('lockExternalStep was called');
         },
+        workflowHistory: {
+          componentdata: null
+        },
         lockableExternalSteps: [],
         workflowId: '',
         alert: null,
