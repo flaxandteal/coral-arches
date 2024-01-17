@@ -98,7 +98,7 @@ define([
                         '19afd557-cc21-44b4-b1df-f32568181b2c'
                       ]
                     ],
-                    labels: [['Cross Reference', 'CM Reference']]
+                    labels: [['Cross Reference', 'CM Container Number']]
                   }
                 },
                 {
