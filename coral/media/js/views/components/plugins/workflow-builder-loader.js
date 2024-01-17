@@ -2,7 +2,8 @@ define([
   'knockout',
   'arches',
   'viewmodels/editable-workflow',
-  'templates/views/components/plugins/default-workflow.htm'
+  'templates/views/components/plugins/default-workflow.htm',
+  'views/components/workflows/default-card-util'
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
