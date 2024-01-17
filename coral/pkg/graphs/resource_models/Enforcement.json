@@ -3268,10 +3268,10 @@
                         },
                         "options": [
                             {
-                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
+                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
                                 "selected": false,
                                 "text": {
-                                    "en": "Received"
+                                    "en": "Closed"
                                 }
                             },
                             {
@@ -3282,10 +3282,10 @@
                                 }
                             },
                             {
-                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
+                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
                                 "selected": false,
                                 "text": {
-                                    "en": "Closed"
+                                    "en": "Received"
                                 }
                             }
                         ],
@@ -3571,7 +3571,12 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": null,
+            "publication": {
+                "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                "notes": null,
+                "publicationid": "d97f48d4-b557-11ee-a648-0242ac120006",
+                "published_time": "2024-01-17T16:45:41.084"
+            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
