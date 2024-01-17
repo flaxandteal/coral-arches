@@ -196,23 +196,27 @@ define([
     });
 
     this.getComponentData = () => {
+      const { tilesManaged, uniqueInstanceName, parameters } = this.currentComponentData();
+      const { graphid, nodegroupid, semanticName, hiddenNodes } = parameters;
+      const { resourceIdPath } =
+        this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()];
       return {
-        componentName: this.currentComponentData().componentName,
-        tilesManaged: this.currentComponentData().tilesManaged,
-        uniqueInstanceName: this.currentComponentData().uniqueInstanceName,
+        componentName: 'default-card-util', // TODO: Allow for custom components,
+        tilesManaged: tilesManaged,
+        uniqueInstanceName: uniqueInstanceName,
         parameters: {
-          graphid: this.currentComponentData().parameters.graphid,
-          nodegroupid: this.currentComponentData().parameters.nodegroupid,
-          resourceid:
-            this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()]?.resourceIdPath,
-          semanticName: this.currentComponentData().parameters.semanticName,
-          hiddenNodes: this.currentComponentData().parameters.hiddenNodes
+          ...(params?.componentData.parameters || {}), // Custom params can be provided manually
+          graphid: graphid,
+          nodegroupid: nodegroupid,
+          resourceid: resourceIdPath,
+          semanticName: semanticName,
+          hiddenNodes: hiddenNodes
         }
       };
     };
 
     this.init = async () => {
-      this.currentComponentData(params?.componentData);
+      this.currentComponentData(JSON.parse(JSON.stringify(this.componentData || {})));
       await this.loadGraphComponents();
       this.loadComponent();
       this.loadComponentNodes();
