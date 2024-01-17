@@ -1,0 +1,82 @@
+{
+  "pluginid": "9b0f5bb0-4346-4957-b966-47cd973eba54",
+  "name": "Request Enforcement",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": true,
+    "stepData": [
+      {
+        "name": "088b8e62-614a-4756-8eaa-24aea7543269",
+        "title": "Initial step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "",
+                  "nodegroupid": "ba39c036-b551-11ee-94ee-0242ac120006",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "967ef37c-56df-4566-8480-31593fe0ba5d"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "ee3ece72-c916-4114-a33e-6bc12aea2f9b",
+        "title": "Enforcement Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "f0b99550-b551-11ee-805b-0242ac120006",
+                  "semanticName": "Associated Actors"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "c9e8f671-755f-4a2f-8359-538b46c1cf5a"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "229501c2-b552-11ee-805b-0242ac120006",
+                  "semanticName": "Flagged Date"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "75bf121f-d931-4939-b6da-ee8fab5dc3f2"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "89bf628e-b552-11ee-805b-0242ac120006",
+                  "semanticName": "Reason Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "97bc42fd-14a4-446f-bf0b-1824c6ee6850"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "request-enforcement-workflow",
+  "sortorder": 0
+}
