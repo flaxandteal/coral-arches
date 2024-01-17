@@ -213,7 +213,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -910,7 +910,7 @@
                     },
                     "node_id": "b6cefe84-b556-11ee-805b-0242ac120006",
                     "sortorder": 1,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -1981,7 +1981,7 @@
             "functions_x_graphs": [],
             "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
             "iconclass": "fa fa-asterisk",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -3268,10 +3268,10 @@
                         },
                         "options": [
                             {
-                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
+                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
                                 "selected": false,
                                 "text": {
-                                    "en": "Closed"
+                                    "en": "Received"
                                 }
                             },
                             {
@@ -3282,10 +3282,10 @@
                                 }
                             },
                             {
-                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
+                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
                                 "selected": false,
                                 "text": {
-                                    "en": "Received"
+                                    "en": "Closed"
                                 }
                             }
                         ],
@@ -3574,8 +3574,8 @@
             "publication": {
                 "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                 "notes": null,
-                "publicationid": "d97f48d4-b557-11ee-a648-0242ac120006",
-                "published_time": "2024-01-17T16:45:41.084"
+                "publicationid": "8990ed6c-b559-11ee-805b-0242ac120006",
+                "published_time": "2024-01-17T16:57:45.975"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
