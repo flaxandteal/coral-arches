@@ -12,6 +12,7 @@ define([
     _.extend(this, params);
 
     this.title = ko.observable(params?.title || '');
+    this.required = ko.observable(params?.required || false); // TODO: Implement toggle
     this.cards = ko.observableArray();
     this.graphId = params?.graphId;
 
@@ -48,6 +49,7 @@ define([
         name: this.stepId,
         required: false,
         workflowstepclass: 'workflow-form-component',
+        required: this.required(),
         // informationboxdata: {
         //   heading: '',
         //   text: ''

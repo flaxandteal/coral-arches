@@ -28,6 +28,7 @@ define([
         title: title,
         cards: stepData?.layoutSections[0].componentConfigs,
         graphId: this.graphId(),
+        required: stepData?.required || false,
         stepId: stepData?.name || uuid.generate(),
         parentWorkflow: this
       });
