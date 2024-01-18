@@ -24,21 +24,46 @@ define([
           precision: '6',
           total: '0',
           'advanced-search': JSON.stringify([
+            { op: 'and', 'c9711ef6-b555-11ee-baf6-0242ac120006': { op: 'null', val: '' } },
             {
-              op: 'and',
-              'ec9c324c-7fc9-11ee-ab5a-0242ac130008': { val: 't' },
-              '3f7e60a2-7fca-11ee-9154-0242ac130008': { op: 'not_null', lang: 'en', val: '' }
+              op: 'or',
+              'c9711ef6-b555-11ee-baf6-0242ac120006': {
+                op: 'eq',
+                val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
+              }
+            },
+            {
+              op: 'or',
+              'c9711ef6-b555-11ee-baf6-0242ac120006': {
+                op: 'eq',
+                val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
+              }
             }
           ])
         },
         context: this,
-        success: function (response) {
+        success: async function (response) {
           console.log('response: ', response);
-          this.consultations(
-            response.results.hits.hits.map((hit) => {
-              return hit._source;
-            })
+          console.log('arches.urls: ', arches.urls);
+          console.log(
+            'arches.urls.resource_tiles: ',
+            arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '')
           );
+
+          const enforcements = response.results.hits.hits.map((hit) => {
+            return hit._source;
+          });
+
+          for (const enforcement of enforcements) {
+            enforcement.tiles = (await $.getJSON(
+              arches.urls.resource_tiles.replace(
+                'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+                enforcement.resourceinstanceid
+              )
+            )).tiles;
+          }
+
+          this.consultations(enforcements);
           console.log('this.consultations: ', this.consultations());
         },
         error: function (response, status, error) {},
@@ -49,24 +74,40 @@ define([
     this.getDescription = (consultation) => {
       console.log('consultation: ', consultation);
       const descriptionTile = consultation.tiles.find((tile) => {
-        return tile.nodegroup_id === '8e5cdd80-7fc9-11ee-b550-0242ac130008';
+        return tile.nodegroup === '89bf628e-b552-11ee-805b-0242ac120006';
+      });
+      const statusTile = consultation.tiles.find((tile) => {
+        return tile.nodegroup === 'ac823b90-b555-11ee-805b-0242ac120006';
       });
       console.log('descriptionTile: ', descriptionTile);
       return {
-        required: descriptionTile.data['ec9c324c-7fc9-11ee-ab5a-0242ac130008'],
+        status: statusTile?.data['c9711ef6-b555-11ee-baf6-0242ac120006'],
         description:
-          descriptionTile.data['3f7e60a2-7fca-11ee-9154-0242ac130008'][arches.activeLanguage][
+          descriptionTile?.data['89bf6c48-b552-11ee-805b-0242ac120006'][arches.activeLanguage][
             'value'
           ]
       };
     };
 
+    this.getStatusText = (nodeValueId) => {
+      switch (nodeValueId) {
+        case '185bbad6-eb0f-424d-8802-fb4d93a64625':
+          return 'Received';
+        case '58f1046b-2d43-4cd3-9636-436893e0ac6d':
+          return 'In progress';
+        case 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b':
+          return 'Closed';
+        default:
+          return 'New';
+      }
+    };
+
     this.redirectUrl = ko.observable();
+
     this.openFlagged = (resourceId) => {
       let url = arches.urls.plugin(
         `edit-workflow?workflow-slug=process-flagged-enforcement-workflow&resource-id=${resourceId}`
       );
-      console.log('url: ', url);
       this.redirectUrl(url);
     };
 

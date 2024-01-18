@@ -1,61 +1,23 @@
 <div style="margin: 15px; display: flex-wrap: wrap;">
-  {% comment %}
-  <h5>Recently edited</h5>
-  <!-- ko if: !recentlyEditedResources().length -->
-  <span>None available</span>
-  <!-- /ko -->
-  <!-- ko foreach: { data: recentlyEditedResources(), as: 'edited', noChildContext: true } -->
-  <div
-    style="
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 4px 6px;
-      border-radius: 3px;
-      cursor: pointer;
-      margin-bottom: 8px;
-    "
-    data-bind="click: async () => {
-      await openRecent(edited.resourceId);
-      window.location.href = workflowUrl();
-    }"
-  >
-    <span data-bind="text: edited.name"></span>
-  </div>
-  <!-- /ko -->
-</div>
-{% endcomment %} {% comment %}
-<div class="card-component" style="width: 100%">
-  {% endcomment %}
   <!-- ko foreach: { data: consultations, as: 'consultation', noChildContext: true } -->
-  <!-- Function -->
   <div class="card-grid-item">
     <div class="panel mar-no">
-      <!-- Function Name -->
       <div class="panel-heading">
         <h3 id="f1-name" class="panel-title library-card-panel-title">
-          {% comment %}
-          <i class="text-center fa fa-code"></i>
-          {% endcomment %}
-          <span data-bind="text: consultation.displayname">BNG Point to GeoJSON</span>
+          <span data-bind="text: consultation.displayname"></span>
         </h3>
       </div>
-
-      <!-- Abstract -->
       <div
         class="panel-body library-card-body"
         data-bind="html: getDescription(consultation).description"
-      >
-        <span>Required: True</span>
-      </div>
-
-      <!-- Selectable -->
-      <div class="selectable" style="display: none">
-        <i class="ion-ios-checkmark"></i>
-      </div>
-
-      <!-- card Tools -->
-      <div class="panel-footer" style="height: 53px">
-        <div class="pull-right">
+      ></div>
+      <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between">
+        <div>
+          <span>
+            Status: <span data-bind="text: getStatusText(getDescription(consultation).status)"></span>
+          </span>
+        </div>
+        <div>
           <button
             id="f1"
             class="add-function-button btn btn-primary btn-labeled fa fa-link"
@@ -71,57 +33,4 @@
     </div>
   </div>
   <!-- /ko -->
-  {% comment %}
-  <div class="row widget-wrapper">
-    <h4 data-bind="text: workflow().name"></h4>
-  </div>
-  <div class="row widget-wrapper">
-    <div
-      data-bind="component: {
-        name: 'resource-instance-select-widget',
-        params: {
-          graphids: [
-            graphId(),
-          ],
-          config: {
-            label: 'Select License',
-            placeholder: 'Start new or please select below',
-          },
-          renderContext: 'workflow',
-          value: selectedResource
-        }
-      }"
-    ></div>
-  </div>
-  <div class="row widget-wrapper" style="display: flex">
-    <!-- ko if: !workflow().disableStartNew -->
-    <button
-      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
-      style="min-height: 40.56px"
-      data-bind="click: () => {
-        window.location.href = workflowUrl();
-      }"
-    >
-      <span>Start New</span>
-    </button>
-    <!-- /ko -->
-    <button
-      class="btn btn-shim btn-labeled btn-lg btn-primary"
-      style="min-height: 40.56px"
-      data-bind="click: async () => {
-        await editWorkflow();
-        window.location.href = workflowUrl();
-      }, disable: !selectedResource()"
-    >
-      <span>Edit Selected</span>
-    </button>
-    <button
-      class="btn btn-shim btn-labeled btn-lg btn-danger"
-      style="min-height: 40.56px"
-      data-bind="click: clearRecentlyEdited"
-    >
-      <span>Clear Recents</span>
-    </button>
-  </div>
-  {% endcomment %}
 </div>
