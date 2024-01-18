@@ -48243,6 +48243,22 @@
     </skos:member>
   </skos:Collection>
   <!-- Excavation Types -->
+  <!-- Excavation Licence Decisions -->
+  <skos:Collection rdf:about="http://arches:8000/b1c3237e-69fc-4cce-a12e-25d123275c7e">
+    <skos:prefLabel xml:lang="en">
+    {"id": "478bbb09-a254-44d8-b2d5-2020db00a468", "value": "Excavation Licence Decisions"}
+    </skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/05b79f83-8156-4c15-88bc-25d123275c7e"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/05b79f83-8156-4c15-9fac-25d123275c7e"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/05b79f83-8156-4c15-ae20-25d123275c7e"/>
+    </skos:member>
+  </skos:Collection>
+  <!-- Excavation Licence Decisions -->
   <!-- Archive File Status -->
   <skos:Collection rdf:about="http://arches:8000/0c7c25f9-7b61-4527-bdf1-20790198f12c">
     <skos:member>
@@ -48355,4 +48371,5 @@
     </skos:member>
   </skos:Collection>
   <!-- Planning Category-->
+
 </rdf:RDF>

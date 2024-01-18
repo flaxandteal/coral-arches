@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+>
+  <skos:ConceptScheme rdf:about="http://arches:8000/05b79f83-7d42-4c15-b0cc-25d123275c7e">
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/05b79f83-8156-4c15-88bc-25d123275c7e">
+        <skos:prefLabel xml:lang="en">
+        {"id": "e1a5165b-32c1-43fa-8396-7b3882442507", "value": "Grant Licence"}
+        </skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/05b79f83-7d42-4c15-b0cc-25d123275c7e"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/05b79f83-8156-4c15-9fac-25d123275c7e">
+        <skos:inScheme rdf:resource="http://arches:8000/05b79f83-7d42-4c15-b0cc-25d123275c7e"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "477f886b-dc83-4858-95e4-2374c3ec6e4d", "value": "Re-Assign Licensee"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/05b79f83-8156-4c15-ae20-25d123275c7e">
+        <skos:inScheme rdf:resource="http://arches:8000/05b79f83-7d42-4c15-b0cc-25d123275c7e"/>
+        <skos:prefLabel xml:lang="en">
+        {"id": "bab6bee2-30d1-487c-9b58-a0abfddeb39a", "value": "Extend Licence"}
+        </skos:prefLabel>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <dcterms:title xml:lang="en">
+    {"id": "c41952fc-7ed6-4a3f-acb4-b8abaee5bb87", "value": "Excavation Licence Decisions"}
+    </dcterms:title>
+  </skos:ConceptScheme>
+</rdf:RDF>
