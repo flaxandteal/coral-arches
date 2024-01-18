@@ -205,7 +205,7 @@ define([
         tilesManaged: tilesManaged,
         uniqueInstanceName: uniqueInstanceName,
         parameters: {
-          ...(params?.componentData.parameters || {}), // Custom params can be provided manually
+          ...(params?.componentData?.parameters || {}), // Custom params can be provided manually
           graphid: graphid,
           nodegroupid: nodegroupid,
           resourceid: resourceIdPath,
