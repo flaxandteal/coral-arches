@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "06750408-b5e6-11ee-a372-0242ac120006",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "{\"en\": \"\"}",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Crime References"
+                    },
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "sortorder": 13,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "22950596-b552-11ee-805b-0242ac120006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -51,7 +78,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "External Cross References"
+                        "en": "CM Reference"
                     },
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "sortorder": 13,
@@ -213,7 +240,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -305,6 +332,130 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "06750408-b5e6-11ee-a372-0242ac120006",
+                    "config": {
+                        "defaultValue": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Crime Reference Note Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "06751812-b5e6-11ee-a372-0242ac120006",
+                    "label": {
+                        "en": "Crime Reference Note Metatype"
+                    },
+                    "node_id": "067516fa-b5e6-11ee-a372-0242ac120006",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "06750408-b5e6-11ee-a372-0242ac120006",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": null
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Crime Reference Note",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "06751bc8-b5e6-11ee-a372-0242ac120006",
+                    "label": {
+                        "en": "Crime Reference Note"
+                    },
+                    "node_id": "0675113c-b5e6-11ee-a372-0242ac120006",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000005"
+                },
+                {
+                    "card_id": "06750408-b5e6-11ee-a372-0242ac120006",
+                    "config": {
+                        "defaultValue": "27e7896d-0c65-47a0-8fcd-93c9adda9410",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Crime Reference Source",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "06751d08-b5e6-11ee-a372-0242ac120006",
+                    "label": {
+                        "en": "Crime Reference Source"
+                    },
+                    "node_id": "0675142a-b5e6-11ee-a372-0242ac120006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "06750408-b5e6-11ee-a372-0242ac120006",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": null
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Crime Reference Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "06751f74-b5e6-11ee-a372-0242ac120006",
+                    "label": {
+                        "en": "Crime Reference Number"
+                    },
+                    "node_id": "06750cf0-b5e6-11ee-a372-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "06750408-b5e6-11ee-a372-0242ac120006",
+                    "config": {
+                        "defaultValue": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Crime Reference Note Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "067521a4-b5e6-11ee-a372-0242ac120006",
+                    "label": {
+                        "en": "Crime Reference Note Type"
+                    },
+                    "node_id": "067509f8-b5e6-11ee-a372-0242ac120006",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "22950596-b552-11ee-805b-0242ac120006",
                     "config": {
                         "defaultValue": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
@@ -375,7 +526,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Cross Reference Note Metatype",
+                        "label": "CM Reference Note Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -383,7 +534,7 @@
                     },
                     "id": "25e274c2-b557-11ee-805b-0242ac120006",
                     "label": {
-                        "en": "Cross Reference Note Metatype"
+                        "en": "CM Reference Note Metatype"
                     },
                     "node_id": "25e273c8-b557-11ee-805b-0242ac120006",
                     "sortorder": 4,
@@ -393,31 +544,6 @@
                 {
                     "card_id": "25e264c8-b557-11ee-805b-0242ac120006",
                     "config": {
-                        "i18n_properties": [
-                            "url_label_placeholder",
-                            "url_placeholder"
-                        ],
-                        "label": "URL",
-                        "link_color": "#0055a0",
-                        "url_label_placeholder": {
-                            "en": "Enter URL Label... "
-                        },
-                        "url_placeholder": {
-                            "en": "Enter URL... "
-                        }
-                    },
-                    "id": "25e27648-b557-11ee-805b-0242ac120006",
-                    "label": {
-                        "en": "URL"
-                    },
-                    "node_id": "25e266bc-b557-11ee-805b-0242ac120006",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "ca0c43ff-af73-4349-bafd-53ff9f22eebd"
-                },
-                {
-                    "card_id": "25e264c8-b557-11ee-805b-0242ac120006",
-                    "config": {
                         "defaultValue": {
                             "en": {
                                 "direction": "ltr",
@@ -427,7 +553,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Cross Reference Note",
+                        "label": "CM Reference Note",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -437,7 +563,7 @@
                     },
                     "id": "25e277b0-b557-11ee-805b-0242ac120006",
                     "label": {
-                        "en": "Cross Reference Note"
+                        "en": "CM Reference Note"
                     },
                     "node_id": "25e26e82-b557-11ee-805b-0242ac120006",
                     "sortorder": 2,
@@ -447,11 +573,11 @@
                 {
                     "card_id": "25e264c8-b557-11ee-805b-0242ac120006",
                     "config": {
-                        "defaultValue": null,
+                        "defaultValue": "19afd557-cc21-44b4-b1df-f32568181b2c",
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Cross Reference Source",
+                        "label": "CM Reference Source",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -459,11 +585,11 @@
                     },
                     "id": "25e27882-b557-11ee-805b-0242ac120006",
                     "label": {
-                        "en": "Cross Reference Source"
+                        "en": "CM Reference Source"
                     },
                     "node_id": "25e2708a-b557-11ee-805b-0242ac120006",
                     "sortorder": 1,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -478,7 +604,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Cross Reference",
+                        "label": "CM Reference",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -488,7 +614,7 @@
                     },
                     "id": "25e2794a-b557-11ee-805b-0242ac120006",
                     "label": {
-                        "en": "Cross Reference"
+                        "en": "CM Reference"
                     },
                     "node_id": "25e26afe-b557-11ee-805b-0242ac120006",
                     "sortorder": 0,
@@ -502,7 +628,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Cross Reference Note Type",
+                        "label": "CM Reference Note Type",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -510,7 +636,7 @@
                     },
                     "id": "25e27a9e-b557-11ee-805b-0242ac120006",
                     "label": {
-                        "en": "Cross Reference Note Type"
+                        "en": "CM Reference Note Type"
                     },
                     "node_id": "25e268f6-b557-11ee-805b-0242ac120006",
                     "sortorder": 3,
@@ -1448,6 +1574,60 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "067509f8-b5e6-11ee-a372-0242ac120006",
+                    "edgeid": "0675629a-b5e6-11ee-a372-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "067516fa-b5e6-11ee-a372-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "06750f70-b5e6-11ee-a372-0242ac120006",
+                    "edgeid": "06756416-b5e6-11ee-a372-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "0675113c-b5e6-11ee-a372-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "edgeid": "06756588-b5e6-11ee-a372-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "rangenode_id": "06750f70-b5e6-11ee-a372-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "edgeid": "067566fa-b5e6-11ee-a372-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
+                    "rangenode_id": "0675142a-b5e6-11ee-a372-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "edgeid": "0675686c-b5e6-11ee-a372-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "06750cf0-b5e6-11ee-a372-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "06750f70-b5e6-11ee-a372-0242ac120006",
+                    "edgeid": "067569ca-b5e6-11ee-a372-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "067509f8-b5e6-11ee-a372-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "229501c2-b552-11ee-805b-0242ac120006",
                     "edgeid": "2295498e-b552-11ee-805b-0242ac120006",
                     "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
@@ -1472,15 +1652,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "22951144-b552-11ee-805b-0242ac120006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "25e2611c-b557-11ee-805b-0242ac120006",
-                    "edgeid": "25e2b798-b557-11ee-805b-0242ac120006",
-                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "25e266bc-b557-11ee-805b-0242ac120006"
                 },
                 {
                     "description": null,
@@ -1607,6 +1778,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P130i_features_are_also_found_on",
                     "rangenode_id": "25e2611c-b557-11ee-805b-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "8f30b1ba-b551-11ee-94ee-0242ac120006",
+                    "edgeid": "51771b86-aec8-4c7a-8c72-203ba2fb968c",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P130i_features_are_also_found_on",
+                    "rangenode_id": "0674ff12-b5e6-11ee-a372-0242ac120006"
                 },
                 {
                     "description": null,
@@ -1981,13 +2161,19 @@
             "functions_x_graphs": [],
             "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
             "iconclass": "fa fa-asterisk",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
                 "en": "Enforcement"
             },
             "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "parentnodegroup_id": null
+                },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
@@ -2056,6 +2242,167 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "crime_references",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": "{\"en\": \"\"}",
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Crime References",
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "nodeid": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P130i_features_are_also_found_on",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "crime_reference_description_type",
+                    "config": {
+                        "rdmCollection": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Crime Reference Description Type",
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "nodeid": "067509f8-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "crime_reference_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "CriRef",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Crime Reference Number",
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "nodeid": "06750cf0-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "crime_reference_notes",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Crime Reference Notes",
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "nodeid": "06750f70-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "crime_reference_description",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "CriRefNote",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Crime Reference Description",
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "nodeid": "0675113c-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "crime_reference_source",
+                    "config": {
+                        "rdmCollection": "06bbe5d2-93e8-43df-a4f4-5667648fd2ef"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "CriRefSour",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Crime Reference Source",
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "nodeid": "0675142a-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E32_Authority_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "crime_reference_description_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Crime Reference Description Metatype",
+                    "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "nodeid": "067516fa-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "flagged_date",
                     "config": {
@@ -2149,8 +2496,10 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "external_cross_references",
-                    "config": {},
+                    "alias": "cm_references",
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "semantic",
                     "description": "{\"en\": \"\"}",
                     "exportable": false,
@@ -2161,37 +2510,16 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "External Cross References",
+                    "name": "CM References",
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "nodeid": "25e2611c-b557-11ee-805b-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P130i_features_are_also_found_on",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
+                    "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "url",
-                    "config": {},
-                    "datatype": "url",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "URL",
-                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "URL",
-                    "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
-                    "nodeid": "25e266bc-b557-11ee-805b-0242ac120006",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
-                },
-                {
-                    "alias": "external_cross_reference_description_type",
+                    "alias": "cm_reference_description_type",
                     "config": {
                         "rdmCollection": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
                     },
@@ -2205,38 +2533,42 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "External Cross Reference Description Type",
+                    "name": "CM Reference Description Type",
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "nodeid": "25e268f6-b557-11ee-805b-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
+                    "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "external_cross_reference_number",
-                    "config": {},
+                    "alias": "cm_reference_number",
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "ExRef",
+                    "fieldname": "CmRef",
                     "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "External Cross Reference Number",
+                    "name": "CM Reference Number",
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "nodeid": "25e26afe-b557-11ee-805b-0242ac120006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
+                    "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "external_cross_reference_notes",
-                    "config": {},
+                    "alias": "cm_reference_notes",
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "semantic",
                     "description": null,
                     "exportable": false,
@@ -2247,60 +2579,62 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "External Cross Reference Notes",
+                    "name": "CM Reference Notes",
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "nodeid": "25e26c7a-b557-11ee-805b-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
+                    "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "external_cross_reference_description",
-                    "config": {},
+                    "alias": "cm_reference_description",
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "ExRefNote",
+                    "fieldname": "CmRefNote",
                     "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "External Cross Reference Description",
+                    "name": "CM Reference Description",
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "nodeid": "25e26e82-b557-11ee-805b-0242ac120006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
+                    "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "external_cross_reference_source",
+                    "alias": "cm_reference_source",
                     "config": {
                         "rdmCollection": "06bbe5d2-93e8-43df-a4f4-5667648fd2ef"
                     },
                     "datatype": "concept",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "XRefSource",
+                    "fieldname": "CmRefSourc",
                     "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "External Cross Reference Source",
+                    "name": "CM Reference Source",
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "nodeid": "25e2708a-b557-11ee-805b-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E32_Authority_Document",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
+                    "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "external_cross_reference_description_metatype",
+                    "alias": "cm_reference_description_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -2314,13 +2648,13 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "External Cross Reference Description Metatype",
+                    "name": "CM Reference Description Metatype",
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "nodeid": "25e273c8-b557-11ee-805b-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": "a179c9ec-06d9-11ed-ad22-acde48001122"
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "enforcement_names",
@@ -3268,10 +3602,10 @@
                         },
                         "options": [
                             {
-                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
+                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
                                 "selected": false,
                                 "text": {
-                                    "en": "Received"
+                                    "en": "Closed"
                                 }
                             },
                             {
@@ -3282,10 +3616,10 @@
                                 }
                             },
                             {
-                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
+                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
                                 "selected": false,
                                 "text": {
-                                    "en": "Closed"
+                                    "en": "Received"
                                 }
                             }
                         ],
@@ -3573,9 +3907,9 @@
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                "notes": null,
-                "publicationid": "8990ed6c-b559-11ee-805b-0242ac120006",
-                "published_time": "2024-01-17T16:57:45.975"
+                "notes": "Crime ref and CM ref are now a branch",
+                "publicationid": "23614396-b5e7-11ee-97f7-0242ac120006",
+                "published_time": "2024-01-18T09:51:23.071"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
