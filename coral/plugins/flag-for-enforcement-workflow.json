@@ -22,7 +22,7 @@
                   "semanticName": "System Reference Numbers"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "967ef37c-56df-4566-8480-31593fe0ba5d"
               }
             ]
@@ -41,14 +41,11 @@
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                   "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "25e2708a-b557-11ee-805b-0242ac120006"
-                  ],
-                  "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
-                  "semanticName": "External Cross References"
+                  "nodegroupid": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                  "semanticName": "Case References"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "c9e8f671-755f-4a2f-8359-538b46c1cf5a"
               },
               {
@@ -59,7 +56,7 @@
                   "semanticName": "Reason Description"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "75bf121f-d931-4939-b6da-ee8fab5dc3f2"
               },
               {
@@ -70,7 +67,7 @@
                   "semanticName": "Associated Actors"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "97bc42fd-14a4-446f-bf0b-1824c6ee6850"
               },
               {
@@ -81,7 +78,7 @@
                   "semanticName": "Flagged Date"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "1c7bdf04-6875-40b5-8e74-b72906acbc86"
               }
             ]
