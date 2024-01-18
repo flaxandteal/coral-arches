@@ -32,6 +32,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "074f0264-b5e8-11ee-8e91-0242ac120006",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "{\"en\": \"\"}",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Case References"
+                    },
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "sortorder": 13,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "22950596-b552-11ee-805b-0242ac120006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -78,7 +105,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "CM Reference"
+                        "en": "CM References"
                     },
                     "nodegroup_id": "25e2611c-b557-11ee-805b-0242ac120006",
                     "sortorder": 13,
@@ -451,6 +478,130 @@
                         "en": "Crime Reference Note Type"
                     },
                     "node_id": "067509f8-b5e6-11ee-a372-0242ac120006",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "074f0264-b5e8-11ee-8e91-0242ac120006",
+                    "config": {
+                        "defaultValue": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Case Reference Note Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "074f0dd6-b5e8-11ee-8e91-0242ac120006",
+                    "label": {
+                        "en": "Case Reference Note Metatype"
+                    },
+                    "node_id": "074f0cdc-b5e8-11ee-8e91-0242ac120006",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "074f0264-b5e8-11ee-8e91-0242ac120006",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": null
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Case Reference Note",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "074f0f7a-b5e8-11ee-8e91-0242ac120006",
+                    "label": {
+                        "en": "Case Reference Note"
+                    },
+                    "node_id": "074f0a16-b5e8-11ee-8e91-0242ac120006",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000005"
+                },
+                {
+                    "card_id": "074f0264-b5e8-11ee-8e91-0242ac120006",
+                    "config": {
+                        "defaultValue": "f666c25d-90a4-4b1d-bca6-465a7e4815ce",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Case Reference Source",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "074f104c-b5e8-11ee-8e91-0242ac120006",
+                    "label": {
+                        "en": "Case Reference Source"
+                    },
+                    "node_id": "074f0b7e-b5e8-11ee-8e91-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "074f0264-b5e8-11ee-8e91-0242ac120006",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": null
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Case Reference",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "074f1114-b5e8-11ee-8e91-0242ac120006",
+                    "label": {
+                        "en": "Case Reference"
+                    },
+                    "node_id": "074f0746-b5e8-11ee-8e91-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "074f0264-b5e8-11ee-8e91-0242ac120006",
+                    "config": {
+                        "defaultValue": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Case Reference Note Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "074f11dc-b5e8-11ee-8e91-0242ac120006",
+                    "label": {
+                        "en": "Case Reference Note Type"
+                    },
+                    "node_id": "074f05d4-b5e8-11ee-8e91-0242ac120006",
                     "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
@@ -1628,6 +1779,60 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "074f05d4-b5e8-11ee-8e91-0242ac120006",
+                    "edgeid": "074f3c8e-b5e8-11ee-8e91-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "074f0cdc-b5e8-11ee-8e91-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "074f08ae-b5e8-11ee-8e91-0242ac120006",
+                    "edgeid": "074f3e14-b5e8-11ee-8e91-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "074f0a16-b5e8-11ee-8e91-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "edgeid": "074f3f86-b5e8-11ee-8e91-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "rangenode_id": "074f08ae-b5e8-11ee-8e91-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "edgeid": "074f40ee-b5e8-11ee-8e91-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
+                    "rangenode_id": "074f0b7e-b5e8-11ee-8e91-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "edgeid": "074f4256-b5e8-11ee-8e91-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "074f0746-b5e8-11ee-8e91-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "074f08ae-b5e8-11ee-8e91-0242ac120006",
+                    "edgeid": "074f43be-b5e8-11ee-8e91-0242ac120006",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "074f05d4-b5e8-11ee-8e91-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "229501c2-b552-11ee-805b-0242ac120006",
                     "edgeid": "2295498e-b552-11ee-805b-0242ac120006",
                     "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
@@ -2043,6 +2248,15 @@
                 {
                     "description": null,
                     "domainnode_id": "8f30b1ba-b551-11ee-94ee-0242ac120006",
+                    "edgeid": "e878f7e1-1906-4836-90ea-633201f1e46b",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P130i_features_are_also_found_on",
+                    "rangenode_id": "074effd0-b5e8-11ee-8e91-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "8f30b1ba-b551-11ee-94ee-0242ac120006",
                     "edgeid": "ee116b0d-fd01-46b1-843a-779ee3ff3e12",
                     "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                     "name": null,
@@ -2172,6 +2386,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "074effd0-b5e8-11ee-8e91-0242ac120006",
                     "parentnodegroup_id": null
                 },
                 {
@@ -2398,6 +2618,167 @@
                     "name": "Crime Reference Description Metatype",
                     "nodegroup_id": "0674ff12-b5e6-11ee-a372-0242ac120006",
                     "nodeid": "067516fa-b5e6-11ee-a372-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "case_references",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": "{\"en\": \"\"}",
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Case References",
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "nodeid": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P130i_features_are_also_found_on",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "case_reference_description_type",
+                    "config": {
+                        "rdmCollection": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Case Reference Description Type",
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "nodeid": "074f05d4-b5e8-11ee-8e91-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "case_reference_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "CaseRef",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Case Reference Number",
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "nodeid": "074f0746-b5e8-11ee-8e91-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "case_reference_notes",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Case Reference Notes",
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "nodeid": "074f08ae-b5e8-11ee-8e91-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "case_reference_description",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "CasRefNote",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Case Reference Description",
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "nodeid": "074f0a16-b5e8-11ee-8e91-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "case_reference_source",
+                    "config": {
+                        "rdmCollection": "06bbe5d2-93e8-43df-a4f4-5667648fd2ef"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "CasRefSour",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Case Reference Source",
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "nodeid": "074f0b7e-b5e8-11ee-8e91-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E32_Authority_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "case_reference_description_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Case Reference Description Metatype",
+                    "nodegroup_id": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                    "nodeid": "074f0cdc-b5e8-11ee-8e91-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
@@ -3907,9 +4288,9 @@
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                "notes": "Crime ref and CM ref are now a branch",
-                "publicationid": "23614396-b5e7-11ee-97f7-0242ac120006",
-                "published_time": "2024-01-18T09:51:23.071"
+                "notes": "Added case ref",
+                "publicationid": "afe25e3a-b5e8-11ee-8e91-0242ac120006",
+                "published_time": "2024-01-18T10:02:28.295"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
