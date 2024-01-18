@@ -1,4 +1,10 @@
 <!-- ko if: !hiddenCard -->
+<!-- ko if: cardTitle -->
+<div
+  class="aher-report-section-title"
+  data-bind="text: cardTitle, style: {'padding-left': '4ch'}"
+></div>
+<!-- /ko -->
 <!-- ko component: {
       name: 'default-card',
       params: {
