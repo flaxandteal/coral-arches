@@ -1,0 +1,22 @@
+{
+  "pluginid": "90d00be6-c447-4fef-8b98-cf0579fb4a65",
+  "name": "Open Workflow",
+  "icon": "fa fa-edit",
+  "component": "views/components/plugins/open-workflow",
+  "componentname": "open-workflow",
+  "config": {
+    "show": false,
+    "editableWorkflows": [
+      {
+        "slug": "respond-to-enforcement-workflow",
+        "name": "Respond to Enforcement",
+        "graphId": "8effdca4-ffb6-482b-94b8-4d35fb5c88c5",
+        "setupFunction": "loadEnforcementData",
+        "disableStartNew": true,
+        "checkForResourceId": true
+      }
+    ]
+  },
+  "slug": "open-workflow",
+  "sortorder": 0
+}
