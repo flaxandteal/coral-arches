@@ -22,7 +22,7 @@
                   "semanticName": "System Reference Numbers"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28"
               }
             ]
@@ -45,7 +45,7 @@
                   "semanticName": "Associated Resources"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "7f891f99-81b1-4c2c-b4d5-1b9280139b88"
               },
               {
@@ -56,7 +56,7 @@
                   "semanticName": "Enforcement Names"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "11c194ab-42f2-4ddd-8e78-99b29a648846"
               },
               {
@@ -67,7 +67,7 @@
                   "semanticName": "Enforcement Status"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "b1ac7536-e5d4-4937-94d2-5717d5154eca"
               },
               {
@@ -81,21 +81,18 @@
                   "semanticName": "External Cross References"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "6db3d5be-a865-49e9-9e76-5cbc19396641"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                   "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "25e2708a-b557-11ee-805b-0242ac120006"
-                  ],
-                  "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
-                  "semanticName": "External Cross References"
+                  "nodegroupid": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                  "semanticName": "Crime References"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "0e300bb1-27b2-449e-a808-4a8911bf4a57"
               },
               {
@@ -106,7 +103,7 @@
                   "semanticName": "Agreed Action Description"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "f021791d-bf7e-425d-9734-aefeff94ce43"
               },
               {
@@ -117,7 +114,7 @@
                   "semanticName": "Current Position Description"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "f9275f2b-4d04-4614-879c-8dd3fea7a8c2"
               },
               {
@@ -128,7 +125,7 @@
                   "semanticName": "Result Description"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "0f9b5e41-2646-472b-82ab-2738d6237b90"
               }
             ]
@@ -140,4 +137,4 @@
   },
   "slug": "respond-to-enforcement-workflow",
   "sortorder": 0
-} 
+}
