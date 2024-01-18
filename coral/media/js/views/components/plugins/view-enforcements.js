@@ -102,13 +102,11 @@ define([
       }
     };
 
-    this.redirectUrl = ko.observable();
-
     this.openFlagged = (resourceId) => {
       let url = arches.urls.plugin(
-        `edit-workflow?workflow-slug=process-flagged-enforcement-workflow&resource-id=${resourceId}`
+        `open-workflow?workflow-slug=respond-to-enforcement-workflow&resource-id=${resourceId}`
       );
-      this.redirectUrl(url);
+      window.location.href = url;
     };
 
     this.init = async () => {
