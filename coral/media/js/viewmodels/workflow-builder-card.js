@@ -216,7 +216,9 @@ define([
     };
 
     this.init = async () => {
-      this.currentComponentData(JSON.parse(JSON.stringify(this.componentData || {})));
+      if (this.componentData) {
+        this.currentComponentData(JSON.parse(JSON.stringify(this.componentData)));
+      }
       await this.loadGraphComponents();
       this.loadComponent();
       this.loadComponentNodes();
