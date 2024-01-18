@@ -29,7 +29,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -183,7 +183,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application Status"
                     },
@@ -322,7 +322,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Contacts"
                     },
@@ -358,7 +358,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type"
                     },
@@ -459,7 +459,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -499,7 +499,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dates"
                     },
@@ -566,7 +566,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application"
                     },
@@ -684,7 +684,7 @@
                         "en": "Acknowledged Date"
                     },
                     "node_id": "ed16bb80-5d4a-11ee-9b75-0242ac130003",
-                    "sortorder": 3,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -704,7 +704,7 @@
                         "en": "Proposed Start Date"
                     },
                     "node_id": "84e2983c-5d49-11ee-911e-0242ac130003",
-                    "sortorder": 0,
+                    "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -1133,7 +1133,7 @@
                         "en": "Actual End Date"
                     },
                     "node_id": "7ee258e0-5d4a-11ee-9b75-0242ac130003",
-                    "sortorder": 4,
+                    "sortorder": 5,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -2215,7 +2215,7 @@
                         "en": "Actual Start Date"
                     },
                     "node_id": "97f6c776-5d4a-11ee-9b75-0242ac130003",
-                    "sortorder": 5,
+                    "sortorder": 4,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -2611,7 +2611,7 @@
                         "en": "Received Date"
                     },
                     "node_id": "58880bd6-5d4a-11ee-9b75-0242ac130003",
-                    "sortorder": 2,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -3608,7 +3608,7 @@
                         "en": "Proposed End Date"
                     },
                     "node_id": "296727f6-5d4a-11ee-9b75-0242ac130003",
-                    "sortorder": 1,
+                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -3656,6 +3656,15 @@
                 "en": ""
             },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "edgeid": "01431ae8-4b56-4e42-a2bc-ce513e979f96",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P148_has_component",
+                    "rangenode_id": "89b77bca-b5f5-11ee-bdc5-0242ac120007"
+                },
                 {
                     "description": null,
                     "domainnode_id": "67ae46da-5d49-11ee-911e-0242ac130003",
@@ -5233,6 +5242,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "6d291f3e-5891-11ee-a624-0242ac120004",
+                    "edgeid": "e11164c2-dd82-4ac4-b337-09556a4abb6c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                    "rangenode_id": "35bac0cc-b550-11ee-9a9d-0242ac120007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "1fe572ec-8f8a-11ee-87af-0242ac190008",
                     "edgeid": "e420b79d-5ccd-4df2-8cb1-92225b8ccf5a",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -5278,7 +5296,7 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "4d2b7ec7-a91f-48ee-bdbf-e5fbe946b2fb"
+                    "id": "95e38edb-2936-4eca-b3dc-c074530c9c3c"
                 },
                 {
                     "config": {
@@ -5300,7 +5318,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "9b6e7fa2-e452-4fed-9163-1455265ad233"
+                    "id": "a54e6ca4-6478-4ccf-90f1-40404a7741f8"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -5664,7 +5682,11 @@
                 {
                     "alias": "decision_type",
                     "config": {
-                        "rdmCollection": "cf2a6919-f8e7-4d06-a5e0-07056aa701f9"
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [],
+                        "rdmCollection": "b1c3237e-69fc-4cce-a12e-25d123275c7e"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -5935,6 +5957,35 @@
                     "nodeid": "33dab998-6121-11ee-9fd1-0242ac120003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E5_Event",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P116i_is_started_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "former_licensee",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                "name": "Person"
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Former Licensee",
+                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
+                    "nodeid": "35bac0cc-b550-11ee-9a9d-0242ac120007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
                     "sortorder": 0
                 },
                 {
@@ -7681,6 +7732,46 @@
                     "nodeid": "86b114f8-8f8b-11ee-845d-0242ac190008",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P41i_was_classified_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "decision_made",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "4baad834-8a1f-411c-b157-bf8a1abae7fe",
+                                "selected": false,
+                                "text": {
+                                    "en": "Granted"
+                                }
+                            },
+                            {
+                                "id": "55b9acf1-e814-494c-a3d2-1d4b428e7008",
+                                "selected": false,
+                                "text": {
+                                    "en": "Not Granted"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Decision Made",
+                    "nodegroup_id": "2749ea5a-48cb-11ee-be76-0242ac140007",
+                    "nodeid": "89b77bca-b5f5-11ee-bdc5-0242ac120007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E89_Propositional_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P148_has_component",
                     "sortorder": 0
                 },
                 {
@@ -9445,8 +9536,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "ab6eccf2-8f8d-11ee-bd6f-0242ac190008",
-                "published_time": "2023-11-30T14:35:12.439",
+                "publicationid": "1a69add2-b60a-11ee-85b0-0242ac120007",
+                "published_time": "2024-01-18T14:01:40.412",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
@@ -9484,6 +9575,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "5.10.0-21-amd64"
     }
 }
