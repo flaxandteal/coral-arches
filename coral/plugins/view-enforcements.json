@@ -1,0 +1,12 @@
+{
+  "pluginid": "420c0b00-88c4-42a9-831f-ed0c5280b7a0",
+  "name": "View Enforcements",
+  "icon": "fa fa-flag",
+  "component": "views/components/plugins/view-enforcements",
+  "componentname": "view-enforcements",
+  "config": {
+    "show": true
+  },
+  "slug": "view-enforcements",
+  "sortorder": 0
+}
