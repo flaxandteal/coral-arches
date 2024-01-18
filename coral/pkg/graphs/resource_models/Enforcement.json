@@ -267,7 +267,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -2372,10 +2372,33 @@
                     "rangenode_id": "c9711ef6-b555-11ee-baf6-0242ac120006"
                 }
             ],
-            "functions_x_graphs": [],
+            "functions_x_graphs": [
+                {
+                    "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "89bf628e-b552-11ee-805b-0242ac120006",
+                                "string_template": "<Description>"
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "ba39c036-b551-11ee-94ee-0242ac120006",
+                                "string_template": "<ResourceID>"
+                            },
+                            "name": {
+                                "nodegroup_id": "ba39c036-b551-11ee-94ee-0242ac120006",
+                                "string_template": "<ResourceID>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                    "id": "aa7b19c3-6e7c-44af-8caa-053cee0f7582"
+                }
+            ],
             "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
             "iconclass": "fa fa-asterisk",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
