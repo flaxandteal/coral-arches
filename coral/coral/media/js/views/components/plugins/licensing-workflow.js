@@ -658,7 +658,7 @@ define([
                 },
                 {
                   componentName: 'default-card-util',
-                  uniqueInstanceName: 'decision-made-by',
+                  uniqueInstanceName: 'assignment-decision-made-by',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -677,7 +677,12 @@ define([
                       //'4c58921e-48cc-11ee-9081-0242ac140007' // decision_date,
                       //'ca121106-69ad-11ee-931f-0242ac130002', // decision_approved_by
                     ],
-                    prefilledNodes: [['25f04f6c-48cd-11ee-94b3-0242ac140007', 'Licence Transfer']]
+                    prefilledNodes: [
+                      [
+                        '25f04f6c-48cd-11ee-94b3-0242ac140007',
+                        '8987268c-5f90-4937-bbdd-c3ff7e460663'
+                      ]
+                    ]
                   }
                 }
               ]
