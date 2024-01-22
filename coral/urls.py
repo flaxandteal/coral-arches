@@ -10,6 +10,7 @@ from coral.views.person_user import PersonUserSignupView
 from arches.app.views.plugin import PluginView
 from coral.views.auth import PersonSignupView, PersonConfirmSignupView
 from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport
+from coral.views.open_workflow import OpenWorkflow
 
 
 uuid_regex = settings.UUID_REGEX
@@ -34,6 +35,11 @@ urlpatterns = [
     re_path(r"^workflow-builder/plugins", WorkflowBuilderWorkflowPlugins.as_view(), name="wb_plugins"),
     re_path(r"^workflow-builder/export", WorkflowBuilderPluginExport.as_view(), name="wb_export_plugin"),
     re_path(r"^workflow-builder/update", WorkflowBuilderWorkflowPlugins.as_view(), name="wb_update"),
+
+    #
+    # Open Workflow
+    #
+    re_path(r"^open-workflow", OpenWorkflow.as_view(), name="open_workflow"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.SHOW_LANGUAGE_SWITCH is True:
