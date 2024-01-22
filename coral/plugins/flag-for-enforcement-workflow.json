@@ -8,7 +8,7 @@
     "show": true,
     "stepData": [
       {
-        "name": "088b8e62-614a-4756-8eaa-24aea7543269",
+        "name": "initial-step",
         "title": "Initial step",
         "required": true,
         "layoutSections": [
@@ -23,7 +23,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "967ef37c-56df-4566-8480-31593fe0ba5d"
+                "uniqueInstanceName": "system-reference"
               }
             ]
           }
@@ -31,7 +31,7 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "ee3ece72-c916-4114-a33e-6bc12aea2f9b",
+        "name": "enforcement-details",
         "title": "Enforcement Details",
         "required": false,
         "layoutSections": [
@@ -40,57 +40,57 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "074effd0-b5e8-11ee-8e91-0242ac120006",
                   "semanticName": "Case References"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "c9e8f671-755f-4a2f-8359-538b46c1cf5a"
+                "uniqueInstanceName": "case-reference"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "89bf628e-b552-11ee-805b-0242ac120006",
                   "semanticName": "Reason Description"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "75bf121f-d931-4939-b6da-ee8fab5dc3f2"
+                "uniqueInstanceName": "reason-description"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "f0b99550-b551-11ee-805b-0242ac120006",
                   "semanticName": "Associated Actors"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "97bc42fd-14a4-446f-bf0b-1824c6ee6850"
+                "uniqueInstanceName": "flagged-by"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "229501c2-b552-11ee-805b-0242ac120006",
                   "semanticName": "Flagged Date"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "1c7bdf04-6875-40b5-8e74-b72906acbc86"
+                "uniqueInstanceName": "flagged-date"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['088b8e62-614a-4756-8eaa-24aea7543269']['967ef37c-56df-4566-8480-31593fe0ba5d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
                   "semanticName": "Associated Resources"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "b431a949-01e2-44a6-bcab-511a94a9e0f5"
+                "uniqueInstanceName": "associated-resources"
               }
             ]
           }

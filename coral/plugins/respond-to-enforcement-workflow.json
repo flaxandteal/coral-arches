@@ -8,7 +8,7 @@
     "show": true,
     "stepData": [
       {
-        "name": "bce6a91f-700a-46d3-a4ae-1b6ee5bf7134",
+        "name": "initial-step",
         "title": "Initial step",
         "required": true,
         "layoutSections": [
@@ -23,7 +23,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28"
+                "uniqueInstanceName": "system-reference"
               }
             ]
           }
@@ -31,8 +31,8 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "e6d7f67f-32b7-494e-a076-e14c4a93d618",
-        "title": "Enforcement Decision",
+        "name": "enforcement-details",
+        "title": "Enforcement Details",
         "required": false,
         "layoutSections": [
           {
@@ -40,45 +40,45 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
                   "semanticName": "Associated Resources"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "7f891f99-81b1-4c2c-b4d5-1b9280139b88"
+                "uniqueInstanceName": "associated-resources"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "2a6b7040-b555-11ee-baf6-0242ac120006",
                   "semanticName": "Enforcement Names"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "11c194ab-42f2-4ddd-8e78-99b29a648846"
+                "uniqueInstanceName": "enforcement-name"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "ac823b90-b555-11ee-805b-0242ac120006",
                   "semanticName": "Enforcement Status"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "b1ac7536-e5d4-4937-94d2-5717d5154eca"
+                "uniqueInstanceName": "enforcement-status"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "25e2708a-b557-11ee-805b-0242ac120006"
                   ],
                   "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
-                  "semanticName": "External Cross References"
+                  "semanticName": "Case References"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -87,46 +87,57 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "0674ff12-b5e6-11ee-a372-0242ac120006",
                   "semanticName": "Crime References"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "0e300bb1-27b2-449e-a808-4a8911bf4a57"
+                "uniqueInstanceName": "crime-reference"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "89bf628e-b552-11ee-805b-0242ac120006",
+                  "semanticName": "Reason Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "reason-description"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "7b7c6466-b556-11ee-baf6-0242ac120006",
                   "semanticName": "Agreed Action Description"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "f021791d-bf7e-425d-9734-aefeff94ce43"
+                "uniqueInstanceName": "agreed-action-description"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "b6cef4d4-b556-11ee-805b-0242ac120006",
                   "semanticName": "Current Position Description"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "f9275f2b-4d04-4614-879c-8dd3fea7a8c2"
+                "uniqueInstanceName": "current-position-description"
               },
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['bce6a91f-700a-46d3-a4ae-1b6ee5bf7134']['b46dc8e5-332e-4f33-b3c3-18ce1b5dfc28'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "f3fbe146-b556-11ee-805b-0242ac120006",
                   "semanticName": "Result Description"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "0f9b5e41-2646-472b-82ab-2738d6237b90"
+                "uniqueInstanceName": "result-description"
               }
             ]
           }
