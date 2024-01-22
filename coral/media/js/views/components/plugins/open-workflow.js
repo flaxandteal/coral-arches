@@ -7,12 +7,12 @@ define([
 ], function ($, ko, koMapping, arches, pageTemplate) {
   const openWorkflowViewModel = function (params) {
     this.WORKFLOW_LABEL = 'workflow-slug';
-    this.WORKFLOW_EDIT_MODE_LABEL = 'workflow-edit-mode';
+    this.WORKFLOW_OPEN_MODE_LABEL = 'workflow-open-mode';
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
-    this.WORKFLOW_RECENTLY_EDITED_LABEL = 'workflow-recently-edited';
+    this.WORKFLOW_RECENTLY_OPENED_LABEL = 'workflow-recently-opened';
     this.RESOURCE_ID_LABEL = 'resource-id';
 
-    this.editableWorkflows = params.editableWorkflows;
+    this.openableWorkflows = params.openableWorkflows;
     this.selectedResource = ko.observable();
     this.workflowUrl = ko.observable();
     this.workflowSlug = ko.observable();
@@ -21,10 +21,10 @@ define([
     this.loading = ko.observable(false);
 
     this.resourceName = ko.observable();
-    this.recentlyEdited = ko.observable();
+    this.recentlyOpened = ko.observable();
 
     this.recentlyOpenedResources = ko.computed(() => {
-      const items = this.recentlyEdited()?.[this.workflowSlug()];
+      const items = this.recentlyOpened()?.[this.workflowSlug()];
       return items ? Object.values(items) : [];
     }, this);
 
@@ -39,7 +39,7 @@ define([
     };
 
     this.getWorkflowData = () => {
-      return this.editableWorkflows.find((workflow) => workflow.slug === this.workflowSlug());
+      return this.openableWorkflows.find((workflow) => workflow.slug === this.workflowSlug());
     };
 
     this.fetchTileData = async (resourceId) => {
@@ -63,43 +63,43 @@ define([
     };
 
     this.openRecent = async (resourceId) => {
-      localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
+      localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
       await this.loadResourceData(resourceId);
     };
 
-    this.editWorkflow = async () => {
-      localStorage.setItem(this.WORKFLOW_EDIT_MODE_LABEL, JSON.stringify(true));
-      await this.loadResourceData(this.selectedResource());
-      this.updateRecentlyEdited(this.selectedResource());
+    this.openWorkflow = async () => {
+      localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
+      // await this.loadResourceData(this.selectedResource());
+      this.updateRecentlyOpened(this.selectedResource());
     };
 
-    this.updateRecentlyEdited = (resourceId) => {
+    this.updateRecentlyOpened = (resourceId) => {
       const slug = this.workflowSlug();
-      const newEdit = {
+      const newOpen = {
         name: this.resourceName(),
         resourceId: resourceId
       };
-      if (!(slug in this.recentlyEdited())) {
-        this.recentlyEdited()[slug] = {
-          [resourceId]: newEdit
+      if (!(slug in this.recentlyOpened())) {
+        this.recentlyOpened()[slug] = {
+          [resourceId]: newOpen
         };
       } else {
-        this.recentlyEdited()[slug][resourceId] = newEdit;
+        this.recentlyOpened()[slug][resourceId] = newOpen;
       }
       localStorage.setItem(
-        this.WORKFLOW_RECENTLY_EDITED_LABEL,
-        JSON.stringify(this.recentlyEdited())
+        this.WORKFLOW_RECENTLY_OPENED_LABEL,
+        JSON.stringify(this.recentlyOpened())
       );
     };
 
-    this.saveRecentlyEdited = () => {
+    this.saveRecentlyOpened = () => {
       localStorage.setItem(
-        this.WORKFLOW_RECENTLY_EDITED_LABEL,
-        JSON.stringify(this.recentlyEdited())
+        this.WORKFLOW_RECENTLY_OPENED_LABEL,
+        JSON.stringify(this.recentlyOpened())
       );
     };
 
-    this.validateRecentlyEdited = async (workflows) => {
+    this.validateRecentlyOpened = async (workflows) => {
       const removeWorkflows = [];
 
       const validate = (resourceId) =>
@@ -113,40 +113,40 @@ define([
 
       await Promise.all(Object.values(workflows).map(({ resourceId }) => validate(resourceId)));
 
-      const recentlyEdited = this.recentlyEdited();
+      const recentlyOpened = this.recentlyOpened();
       removeWorkflows.forEach((resourceId) => {
-        delete recentlyEdited[this.workflowSlug()][resourceId];
+        delete recentlyOpened[this.workflowSlug()][resourceId];
       });
-      this.recentlyEdited(recentlyEdited);
-      this.saveRecentlyEdited();
+      this.recentlyOpened(recentlyOpened);
+      this.saveRecentlyOpened();
     };
 
-    this.clearRecentlyEdited = () => {
-      const recentlyEdited = this.recentlyEdited();
-      recentlyEdited[this.workflowSlug()] = {};
-      this.recentlyEdited(recentlyEdited);
-      this.saveRecentlyEdited();
+    this.clearRecentlyOpened = () => {
+      const recentlyOpened = this.recentlyOpened();
+      recentlyOpened[this.workflowSlug()] = {};
+      this.recentlyOpened(recentlyOpened);
+      this.saveRecentlyOpened();
     };
 
     this.init = async () => {
       this.loading(true);
-      console.log('Init edit workflow: ', params);
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
       this.graphId(this.workflow().graphId);
-      this.recentlyEdited(
+      this.recentlyOpened(
         JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_EDITED_LABEL)) || {}
       );
       if (this.workflow().checkForResourceId) {
         this.selectedResource(this.getResourceIdFromUrl());
         if (!this.selectedResource()) return;
-        await this.editWorkflow();
+        this.workflowUrl(arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.getResourceIdFromUrl()}`);
+        await this.openWorkflow();
         window.location.href = this.workflowUrl();
         return;
       }
 
-      await this.validateRecentlyEdited(this.recentlyEdited()[this.workflowSlug()]);
+      await this.validateRecentlyOpened(this.recentlyOpened()[this.workflowSlug()]);
       this.loading(false);
     };
 
