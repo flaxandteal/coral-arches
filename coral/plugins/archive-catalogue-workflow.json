@@ -1,0 +1,160 @@
+{
+  "pluginid": "7bd039e2-299f-4c4d-b088-5c671c7011cf",
+  "name": "Archive Catalogue",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": true,
+    "stepData": [
+      {
+        "name": "537040c2-f0a3-4b54-97c2-cffcc2e95370",
+        "title": "Initial step",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "",
+                  "hiddenNodes": [
+                    "3bdc39fd-9a93-11ea-83f6-f875a44e0e11",
+                    "3bdc39fb-9a93-11ea-b4fe-f875a44e0e11"
+                  ],
+                  "nodegroupid": "3bdc39f8-9a93-11ea-b807-f875a44e0e11",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "d7782f56-fe24-458e-9452-a734fc73d17c"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "20a8afa6-a9a4-42e4-b5b6-81325cd702c5",
+        "title": "Archive Source Creation",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "145f9618-9ad2-11ea-925e-f875a44e0e11",
+                    "145f9619-9ad2-11ea-83ec-f875a44e0e11"
+                  ],
+                  "nodegroupid": "145f9615-9ad2-11ea-b4d3-f875a44e0e11",
+                  "semanticName": "Archive Source Names"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "8aafa01f-fa50-4a41-9564-47457e539684"
+              },
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "82d4bdbe-b9d2-11ee-8beb-0242ac180006",
+                  "semanticName": "Subtitles"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "2c8ec309-caff-4efb-8c9a-510243529de8"
+              },
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "1ced403a-b9d1-11ee-8beb-0242ac180006",
+                  "semanticName": "File ID"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "b8229870-5078-49e3-88b7-7eb90f071940"
+              },
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "c78190bf-1aba-11ec-8bb8-a87eeabdefba",
+                  "semanticName": "Archive Source Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "2720c3e1-1d62-46a7-8987-e1ffd41a028e"
+              },
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "ea060124-b9d1-11ee-b981-0242ac180006",
+                  "semanticName": "Archive Status"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "8a7780e2-d084-4ced-acd0-8f5f0d004124"
+              },
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "6a7f9283-9ad3-11ea-992b-f875a44e0e11"
+                  ],
+                  "nodegroupid": "6a7f6b8b-9ad3-11ea-a265-f875a44e0e11",
+                  "semanticName": "Descriptions"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "759b43a2-da35-4610-bba2-83f5cc85d45e"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "6c0777cd-6ea0-429d-85b5-4681def6eb22",
+        "title": "Repository Storage Location",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "66576cda-9b69-11ea-9143-f875a44e0e11",
+                  "semanticName": "Archive Holding"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "65e9ea08-8046-497d-9f5f-879eacfb132c"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "a488d110-8661-47c0-a029-bca78f066f60",
+        "title": "On Loan",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": []
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "archive-catalogue-workflow",
+  "sortorder": 0
+}
