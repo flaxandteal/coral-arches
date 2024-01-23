@@ -16,10 +16,16 @@ class OpenWorkflow(View):
         # Find workflow structure
         # FIXME: What if a resource id appears in another workflows history
         # FIXME: Get upstream Arches workflow slug into the database table
+        # FIXME: Need to handle many tiles being stored as arrays
         found_history = None
         for history in histories:
             for componentdata in history.componentdata.values():
-                if componentdata['value']['resourceInstanceId'] == resource_instance_id:
+                if type(componentdata['value']) == list:
+                    for manycomponentdata in componentdata['value']:
+                        if manycomponentdata['resourceinstance_id'] == resource_instance_id:
+                            found_history = history
+                            break
+                elif componentdata['value']['resourceInstanceId'] == resource_instance_id: 
                     found_history = history
                     break
         
