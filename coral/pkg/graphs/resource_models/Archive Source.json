@@ -3517,7 +3517,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Storage Area Name Type",
+                        "label": "Storage Room Name Type",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -3525,7 +3525,7 @@
                     },
                     "id": "c69ac91e-fe7b-11ea-a140-f875a44e0e11",
                     "label": {
-                        "en": "Storage Area Name Type"
+                        "en": "Storage Room Name Type"
                     },
                     "node_id": "c69ac90a-fe7b-11ea-9c59-f875a44e0e11",
                     "sortorder": 9,
@@ -3539,7 +3539,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Storage Area Name Metatype",
+                        "label": "Storage Room Name Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -3547,7 +3547,7 @@
                     },
                     "id": "c69ac91f-fe7b-11ea-9425-f875a44e0e11",
                     "label": {
-                        "en": "Storage Area Name Metatype"
+                        "en": "Storage Room Name Metatype"
                     },
                     "node_id": "c69ac90b-fe7b-11ea-85b2-f875a44e0e11",
                     "sortorder": 10,
@@ -3587,17 +3587,17 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Storage Area Name",
+                        "label": "Storage Room Name",
                         "maxLength": null,
                         "placeholder": {
-                            "en": "Where known, enter the name of the storage area within the building, eg. Box 4, Shelf 3, Room 27"
+                            "en": "Where known, enter the name of the storage area within the building, eg. Room 27"
                         },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c69ac921-fe7b-11ea-b843-f875a44e0e11",
                     "label": {
-                        "en": "Storage Area Name"
+                        "en": "Storage Room Name"
                     },
                     "node_id": "c69ac90d-fe7b-11ea-ac06-f875a44e0e11",
                     "sortorder": 8,
@@ -5901,17 +5901,10 @@
                         },
                         "options": [
                             {
-                                "id": "bcd67f05-ad17-4b2a-a5d0-1683f90b0760",
+                                "id": "56688166-4f1f-4513-a76f-50fec0a2d9e7",
                                 "selected": false,
                                 "text": {
-                                    "en": "Open"
-                                }
-                            },
-                            {
-                                "id": "bc4eea01-7e25-4079-a6f2-1f8a327acf2a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Closed"
+                                    "en": "Destroyed"
                                 }
                             },
                             {
@@ -5922,10 +5915,17 @@
                                 }
                             },
                             {
-                                "id": "56688166-4f1f-4513-a76f-50fec0a2d9e7",
+                                "id": "bc4eea01-7e25-4079-a6f2-1f8a327acf2a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Destroyed"
+                                    "en": "Closed"
+                                }
+                            },
+                            {
+                                "id": "bcd67f05-ad17-4b2a-a5d0-1683f90b0760",
+                                "selected": false,
+                                "text": {
+                                    "en": "Open"
                                 }
                             }
                         ]
@@ -9323,7 +9323,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "storage_area_name_type",
+                    "alias": "storage_room_name_type",
                     "config": {
                         "rdmCollection": "3e545767-c46c-4fe7-8754-c24528ba0842"
                     },
@@ -9337,7 +9337,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Storage Area Name Type",
+                    "name": "Storage Room Name Type",
                     "nodegroup_id": "c69aa19d-fe7b-11ea-9e10-f875a44e0e11",
                     "nodeid": "c69ac90a-fe7b-11ea-9c59-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -9346,7 +9346,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "storage_area_name_metatype",
+                    "alias": "storage_room_name_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -9360,7 +9360,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Storage Area Name Metatype",
+                    "name": "Storage Room Name Metatype",
                     "nodegroup_id": "c69aa19d-fe7b-11ea-9e10-f875a44e0e11",
                     "nodeid": "c69ac90b-fe7b-11ea-85b2-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -9392,8 +9392,10 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "storage_area_name",
-                    "config": {},
+                    "alias": "storage_room_name",
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": null,
                     "exportable": true,
@@ -9404,7 +9406,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Storage Area Name",
+                    "name": "Storage Room Name",
                     "nodegroup_id": "c69aa19d-fe7b-11ea-9e10-f875a44e0e11",
                     "nodeid": "c69ac90d-fe7b-11ea-ac06-f875a44e0e11",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
@@ -9413,8 +9415,10 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "storage_area_names",
-                    "config": {},
+                    "alias": "storage_room_names",
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "semantic",
                     "description": "Represents a single node in a graph",
                     "exportable": false,
@@ -9425,7 +9429,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Storage Area Names",
+                    "name": "Storage Room Names",
                     "nodegroup_id": "c69aa19d-fe7b-11ea-9e10-f875a44e0e11",
                     "nodeid": "c69ac90e-fe7b-11ea-84a2-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
@@ -10195,17 +10199,17 @@
                         },
                         "options": [
                             {
-                                "id": "3d27c4c7-cb43-4611-9cde-e463c998279a",
-                                "selected": false,
-                                "text": {
-                                    "en": "War Rooms"
-                                }
-                            },
-                            {
                                 "id": "50aab2e8-ecca-44eb-94bb-2196d692e6a3",
                                 "selected": false,
                                 "text": {
                                     "en": "PRONI"
+                                }
+                            },
+                            {
+                                "id": "3d27c4c7-cb43-4611-9cde-e463c998279a",
+                                "selected": false,
+                                "text": {
+                                    "en": "War Rooms"
                                 }
                             }
                         ]
@@ -10256,8 +10260,8 @@
             "publication": {
                 "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
                 "notes": null,
-                "publicationid": "81d03952-ba04-11ee-987d-0242ac180006",
-                "published_time": "2024-01-23T15:31:41.560"
+                "publicationid": "543e472c-ba09-11ee-987d-0242ac180006",
+                "published_time": "2024-01-23T16:06:12.590"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
