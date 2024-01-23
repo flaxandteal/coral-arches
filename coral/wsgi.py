@@ -32,12 +32,13 @@ os.environ['DJANGO_SETTINGS_MODULE'] = "coral.settings"
 
 from django.core.wsgi import get_wsgi_application
 from django.dispatch import receiver
-from arches.app.models.resource import resource_indexed
 
 application = get_wsgi_application()
 
 from arches.app.models.system_settings import settings
 settings.update_from_db()
+
+from arches.app.models.resource import resource_indexed
 
 @receiver(resource_indexed)
 def update_permissions(sender, instance, **kwargs):
