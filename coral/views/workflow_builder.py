@@ -216,17 +216,20 @@ class WorkflowBuilderCardOverride(api.Card):
                 card["is_writable"] = True
 
         my_tiles = []
-        for card in serialized_cards:
-            if card["name"] == "Location Data":
+        for nodegroup in nodegroups:
+            print('nodegroup: ', nodegroup)
+            if nodegroup.parentnodegroup_id:
+                if len(list(filter(lambda tile: tile['nodegroup_id'] == nodegroup.parentnodegroup_id, my_tiles))):
+                    continue
                 my_tiles.append(
                     {
                         "data": {},
-                        "nodegroup_id": card["nodegroup_id"],
+                        "nodegroup_id": nodegroup.parentnodegroup_id,
                         "parenttile_id": None,
                         "provisionaledits": None,
                         "resourceinstance_id": uuid.uuid4(),
-                        "sortorder": 0,
-                        "tileid": "dummy-id",
+                        "sortorder": 0, 
+                        "tileid": f"{nodegroup.nodegroupid}-{nodegroup.parentnodegroup_id}",
                     }
                 )
 
