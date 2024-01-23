@@ -176,6 +176,29 @@
           }
         ],
         "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "c603014a-4a54-450b-ace6-28861fc123ce",
+        "title": "Archive Loan History",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "98ac662c-ba0a-11ee-987d-0242ac180006",
+                  "semanticName": "Archive Loaning"
+                },
+                "tilesManaged": "many",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "507a4659-bb6b-4f23-a591-2ab74f2de82c"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
       }
     ]
   },
