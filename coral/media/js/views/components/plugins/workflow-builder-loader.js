@@ -3,7 +3,8 @@ define([
   'arches',
   'viewmodels/editable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/default-card-util'
+  'views/components/workflows/default-card-util',
+  'views/components/workflows/workflow-builder-initial-step',
 ], function (ko, arches, EditableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
