@@ -1,11 +1,11 @@
 {
   "pluginid": "cdf928fb-8666-4eea-a9ce-aeb0830192fc",
   "name": "Respond to Enforcement",
-  "icon": "fa fa-check",
+  "icon": "fa fa-asterisk",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
-    "show": true,
+    "show": false,
     "stepData": [
       {
         "name": "initial-step",

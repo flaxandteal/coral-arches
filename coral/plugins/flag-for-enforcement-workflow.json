@@ -1,11 +1,11 @@
 {
   "pluginid": "9b0f5bb0-4346-4957-b966-47cd973eba54",
   "name": "Flag for Enforcement",
-  "icon": "fa fa-check",
+  "icon": "fa fa-asterisk",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
-    "show": true,
+    "show": false,
     "stepData": [
       {
         "name": "initial-step",
