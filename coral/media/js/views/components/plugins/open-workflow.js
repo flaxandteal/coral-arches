@@ -140,7 +140,9 @@ define([
       if (this.workflow().checkForResourceId) {
         this.selectedResource(this.getResourceIdFromUrl());
         if (!this.selectedResource()) return;
-        this.workflowUrl(arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.getResourceIdFromUrl()}`);
+        this.workflowUrl(
+          arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.getResourceIdFromUrl()}`
+        );
         await this.openWorkflow();
         window.location.href = this.workflowUrl();
         return;
