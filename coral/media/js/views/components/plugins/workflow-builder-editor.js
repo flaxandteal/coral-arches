@@ -161,7 +161,12 @@ define([
       const requiredParentTiles = [];
       this.workflowSteps().forEach((step) => {
         step.cards().forEach((card) => {
-          if (card.parentTile()) {
+          if (
+            card.parentTile() &&
+            !requiredParentTiles.find(
+              (parentTile) => parentTile.parentNodegroupId === card.parentTile().parentNodegroupId
+            )
+          ) {
             requiredParentTiles.push(card.parentTile());
           }
         });
