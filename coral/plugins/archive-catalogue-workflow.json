@@ -23,10 +23,16 @@
                     "3bdc39fb-9a93-11ea-b4fe-f875a44e0e11"
                   ],
                   "nodegroupid": "3bdc39f8-9a93-11ea-b807-f875a44e0e11",
-                  "semanticName": "System Reference Numbers"
+                  "semanticName": "System Reference Numbers",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "archiveHolding",
+                      "parentNodegroupId": "66576cda-9b69-11ea-9143-f875a44e0e11"
+                    }
+                  ]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "workflow-builder-initial-step",
                 "uniqueInstanceName": "d7782f56-fe24-458e-9452-a734fc73d17c"
               }
             ]
@@ -36,7 +42,7 @@
       },
       {
         "name": "20a8afa6-a9a4-42e4-b5b6-81325cd702c5",
-        "title": "Archive Source Creation",
+        "title": "Archive Source Details",
         "required": false,
         "layoutSections": [
           {
@@ -121,7 +127,7 @@
       },
       {
         "name": "6c0777cd-6ea0-429d-85b5-4681def6eb22",
-        "title": "Repository Storage Location",
+        "title": "Archive Source Creation",
         "required": false,
         "layoutSections": [
           {
@@ -130,8 +136,13 @@
                 "parameters": {
                   "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
                   "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "66576cda-9b69-11ea-9143-f875a44e0e11",
-                  "semanticName": "Archive Holding"
+                  "hiddenNodes": [
+                    "602c8b3f-1aba-11ec-9d8d-a87eeabdefba",
+                    "3001afeb-b46a-11ea-9c64-f875a44e0e11"
+                  ],
+                  "nodegroupid": "3001afdf-b46a-11ea-a528-f875a44e0e11",
+                  "parenttileid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['archiveHolding']",
+                  "semanticName": "Archive Source Creation"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -144,11 +155,24 @@
       },
       {
         "name": "a488d110-8661-47c0-a029-bca78f066f60",
-        "title": "On Loan",
+        "title": "Repository Storage Location",
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                  "resourceid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "c69aa19d-fe7b-11ea-9e10-f875a44e0e11",
+                  "parenttileid": "['537040c2-f0a3-4b54-97c2-cffcc2e95370']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['archiveHolding']",
+                  "semanticName": "Repository Storage Location"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "7327be9d-6144-466b-b0ec-f74df711e9bc"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"
