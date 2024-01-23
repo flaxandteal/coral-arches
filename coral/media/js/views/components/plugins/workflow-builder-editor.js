@@ -157,13 +157,26 @@ define([
       return this.workflowPlugin()?.pluginid || '';
     }, this);
 
+    this.getRequiredParentTiles = () => {
+      const requiredParentTiles = [];
+      this.workflowSteps().forEach((step) => {
+        step.cards().forEach((card) => {
+          if (card.parentTile()) {
+            requiredParentTiles.push(card.parentTile());
+          }
+        });
+      });
+      return requiredParentTiles;
+    };
+
     this.workflowResourceIdPathOptions = ko.computed(() => {
       const resourceIdPaths = [];
       resourceIdPaths.push({
         text: 'None',
         id: resourceIdPaths.length,
         resourceIdPath: '',
-        tileIdPath: ''
+        tileIdPath: '',
+        basePath: ''
       });
       this.workflowSteps().forEach((step) => {
         step.cards().forEach((card) => {
@@ -174,7 +187,8 @@ define([
             };
             pathData.text += ` > ${card.title()}`;
             pathData.resourceIdPath = `['${step.stepId}']['${card.cardId}'][0]['resourceid']['resourceInstanceId']`;
-            pathData.tileIdPath += `['${step.stepId}']['${card.cardId}'][0]['tileId']`;
+            pathData.tileIdPath = `['${step.stepId}']['${card.cardId}'][0]['tileId']`;
+            pathData.basePath = `['${step.stepId}']['${card.cardId}'][0]['resourceid']`;
             resourceIdPaths.push(pathData);
           }
         });

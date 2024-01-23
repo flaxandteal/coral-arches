@@ -21,6 +21,9 @@ define([
     this.nodegroupOptions = ko.observableArray();
     this.selectedNodegroup = ko.observable();
 
+    this.graphCards = ko.observable();
+    this.parentTile = ko.observable();
+
     // Annoyingly 'one' as the ID will be selected when
     // 'none' is selected because the code does an includes check
     this.tileManagedOptions = ko.observableArray([
@@ -123,6 +126,7 @@ define([
         (option) => option.resourceIdPath === this.currentComponentData().parameters.resourceid
       );
       this.selectedResourceIdPath(resourceIdPathIdx !== -1 ? resourceIdPathIdx : 0);
+      this.configureParentTile(this.currentComponentData().parameters.nodegroupid);
       this.loadAbstractComponent(this.currentComponentData());
     };
 
@@ -132,14 +136,13 @@ define([
 
     this.loadComponentNodes = async () => {
       if (!this.currentComponentData()) return;
-      const cards = await $.getJSON(arches.urls.api_card + this.graphId() + '/override');
-      const cardWidgets = cards.cardwidgets.map((widget) => {
+      const cardWidgets = this.graphCards().cardwidgets.map((widget) => {
         return {
           node_id: widget.node_id,
           visible: widget.visible
         };
       });
-      const nodes = cards.nodes.filter((node) => {
+      const nodes = this.graphCards().nodes.filter((node) => {
         const hasWidget = cardWidgets.find((widget) => {
           return widget.visible && widget.node_id === node.nodeid;
         });
@@ -160,6 +163,40 @@ define([
       );
     };
 
+    this.loadGraphCards = async () => {
+      const cards = await $.getJSON(arches.urls.api_card + this.graphId() + '/override');
+      this.graphCards(cards);
+    };
+
+    this.configureParentTile = (nodegroupId) => {
+      /**
+       * Nodegroups that require a parent tile are discovered
+       * on the backend and identified here.
+       */
+      const cardNodegroup = this.graphCards().nodegroups.find((nodegroup) => {
+        return nodegroup.nodegroupid == nodegroupId;
+      });
+      const parentTile = this.graphCards().tiles.find((tile) => {
+        return tile.nodegroup_id === cardNodegroup.parentnodegroup_id;
+      });
+      this.parentTile(null);
+      if (parentTile) {
+        const parantSemanticName = this.nodegroupOptions().find(
+          (nodegroup) => nodegroup.nodegroupid === parentTile.nodegroup_id
+        ).text;
+        const camelCaseName = (() => {
+          const parts = parantSemanticName.split(' ');
+          parts[0] = parts[0].toLowerCase();
+          return parts.join('');
+        })();
+        this.parentTile({
+          parentNodegroupId: parentTile.nodegroup_id,
+          lookupName: camelCaseName
+        });
+      }
+      this.currentComponentData().parameters.parenttileid = parentTile?.tileid;
+    };
+
     this.setupSubscriptions = () => {
       this.selectedTileManaged.subscribe((value) => {
         this.currentComponentData().tilesManaged = value?.replace('tile_', '');
@@ -170,13 +207,14 @@ define([
       this.selectedNodegroup.subscribe((value) => {
         const data = JSON.parse(JSON.stringify(this.components()[value]));
         data.parameters.resourceid = '';
-        data.parameters.parenttileid = 'dummy-id';
+       
         /**
          * Using a UUID here but it would be better to have
          * a readable name.
          */
         data.uniqueInstanceName = this.cardId;
         this.currentComponentData(data);
+        this.configureParentTile(data.parameters.nodegroupid);
         this.loadAbstractComponent(this.currentComponentData());
         this.loadComponentNodes();
       });
@@ -195,13 +233,31 @@ define([
       return this.parentStep.parentWorkflow.workflowResourceIdPathOptions();
     });
 
+    /**
+     * FIXME: Could be prone to bugs
+     */
+    this.isInitialStep = ko.computed(() => {
+      const index = this.workflowResourceIdPathOptions().findIndex((path) => {
+        return (
+          path?.resourceIdPath.includes(this.cardId) &&
+          path?.resourceIdPath.includes(this.parentStep.stepId)
+        );
+      });
+      return index == 1;
+    }, this);
+
+    this.componentName = ko.computed(() => {
+      return this.isInitialStep() ? 'workflow-builder-initial-step' : 'default-card-util';
+    });
+
     this.getComponentData = () => {
       const { tilesManaged, uniqueInstanceName, parameters } = this.currentComponentData();
       const { graphid, nodegroupid, semanticName, hiddenNodes } = parameters;
       const { resourceIdPath } =
         this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()];
-      return {
-        componentName: 'default-card-util', // TODO: Allow for custom components,
+
+      const componentData = {
+        componentName: this.componentName(),
         tilesManaged: tilesManaged,
         uniqueInstanceName: uniqueInstanceName,
         parameters: {
@@ -213,6 +269,23 @@ define([
           hiddenNodes: hiddenNodes
         }
       };
+
+      if (this.parentTile()) {
+        /**
+         * FIXME: Again reling on the initial step always being the first
+         * - Same as isInitialStep
+         */
+        const { basePath } = this.workflowResourceIdPathOptions()?.[1];
+        const parentTileIdPath = basePath + `['${this.parentTile().lookupName}']`;
+        componentData.parameters.parenttileid = parentTileIdPath;
+      }
+
+      if (this.isInitialStep()) {
+        componentData.parameters.requiredParentTiles =
+          this.parentStep.parentWorkflow.getRequiredParentTiles();
+      }
+
+      return componentData;
     };
 
     this.init = async () => {
@@ -220,6 +293,7 @@ define([
         this.currentComponentData(JSON.parse(JSON.stringify(this.componentData)));
       }
       await this.loadGraphComponents();
+      await this.loadGraphCards();
       this.loadComponent();
       this.loadComponentNodes();
       this.setupSubscriptions();
