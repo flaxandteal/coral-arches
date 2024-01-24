@@ -435,13 +435,13 @@
                     "constraints": [
                         {
                             "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
-                            "constraintid": "6ed5594e-37ca-4052-8e55-0d262228b739",
+                            "constraintid": "486450c7-15e2-4d68-995e-f2c62ab788eb",
                             "nodes": [],
                             "uniquetoallinstances": false
                         },
                         {
                             "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
-                            "constraintid": "486450c7-15e2-4d68-995e-f2c62ab788eb",
+                            "constraintid": "6ed5594e-37ca-4052-8e55-0d262228b739",
                             "nodes": [],
                             "uniquetoallinstances": false
                         }
@@ -3593,6 +3593,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "aa26f6ab-b0fd-48a2-b1a0-ad290f1cd60c",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Decision Made",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "ede10d11-3f3d-4b74-813f-3ad307d8772f",
+                    "label": {
+                        "en": "Decision Made"
+                    },
+                    "node_id": "89b77bca-b5f5-11ee-bdc5-0242ac120007",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                },
+                {
                     "card_id": "aea9e4ca-991b-4dd5-831e-b30b11c7f0ae",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
@@ -5296,7 +5317,7 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "95e38edb-2936-4eca-b3dc-c074530c9c3c"
+                    "id": "3e064e34-0ab7-41ba-995a-95f843b2f62b"
                 },
                 {
                     "config": {
@@ -5318,7 +5339,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "a54e6ca4-6478-4ccf-90f1-40404a7741f8"
+                    "id": "e9ec03e1-a06f-4bc6-921a-54d8bbc4ff44"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -5349,7 +5370,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "2749ea5a-48cb-11ee-be76-0242ac140007",
                     "parentnodegroup_id": null
@@ -9536,8 +9557,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "1a69add2-b60a-11ee-85b0-0242ac120007",
-                "published_time": "2024-01-18T14:01:40.412",
+                "publicationid": "1c9520c4-baa0-11ee-8f0d-0242ac120002",
+                "published_time": "2024-01-24T10:05:33.213",
                 "user_id": 1
             },
             "relatable_resource_model_ids": [],
