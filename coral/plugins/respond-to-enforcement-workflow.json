@@ -1,0 +1,151 @@
+{
+  "pluginid": "cdf928fb-8666-4eea-a9ce-aeb0830192fc",
+  "name": "Respond to Enforcement",
+  "icon": "fa fa-asterisk",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "stepData": [
+      {
+        "name": "initial-step",
+        "title": "Initial step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "",
+                  "nodegroupid": "ba39c036-b551-11ee-94ee-0242ac120006",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "system-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "enforcement-details",
+        "title": "Enforcement Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
+                  "semanticName": "Associated Resources"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "associated-resources"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "2a6b7040-b555-11ee-baf6-0242ac120006",
+                  "semanticName": "Enforcement Names"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "enforcement-name"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "ac823b90-b555-11ee-805b-0242ac120006",
+                  "semanticName": "Enforcement Status"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "enforcement-status"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "25e2708a-b557-11ee-805b-0242ac120006"
+                  ],
+                  "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
+                  "semanticName": "Case References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "6db3d5be-a865-49e9-9e76-5cbc19396641"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "0674ff12-b5e6-11ee-a372-0242ac120006",
+                  "semanticName": "Crime References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "crime-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "89bf628e-b552-11ee-805b-0242ac120006",
+                  "semanticName": "Reason Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "reason-description"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "7b7c6466-b556-11ee-baf6-0242ac120006",
+                  "semanticName": "Agreed Action Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "agreed-action-description"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "b6cef4d4-b556-11ee-805b-0242ac120006",
+                  "semanticName": "Current Position Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "current-position-description"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "f3fbe146-b556-11ee-805b-0242ac120006",
+                  "semanticName": "Result Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "result-description"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "respond-to-enforcement-workflow",
+  "sortorder": 0
+}
