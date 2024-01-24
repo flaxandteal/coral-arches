@@ -103,10 +103,7 @@ define([
       await this.updateWorkflow();
       if (this.workflowId()) {
         const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute(
-          'href',
-          arches.urls.root + `workflow-builder/export?id=${this.workflowId()}`
-        );
+        downloadAnchorNode.setAttribute('href', arches.urls.root + `workflow-builder/export?id=${this.workflowId()}`);
         downloadAnchorNode.setAttribute('download', `${this.workflowSlug()}.json`);
         document.body.appendChild(downloadAnchorNode); // Required for firefox
         downloadAnchorNode.click();
@@ -147,8 +144,8 @@ define([
      */
     this.graphId = ko.computed(() => {
       if (this.workflowPlugin()) {
-        return this.workflowPlugin()?.config?.stepData?.[0]?.layoutSections?.[0]
-          .componentConfigs?.[0]?.parameters.graphid;
+        return this.workflowPlugin()?.config?.stepData?.[0]?.layoutSections?.[0].componentConfigs?.[0]?.parameters
+          .graphid;
       }
       const searchParams = new URLSearchParams(window.location.search);
       const graphId = searchParams.get('graph-id');
@@ -202,9 +199,7 @@ define([
 
     this.loadExistingWorkflow = async () => {
       if (this.workflowId()) {
-        const workflow = await $.getJSON(
-          arches.urls.root + `workflow-builder/plugins?id=${this.workflowId()}`
-        );
+        const workflow = await $.getJSON(arches.urls.root + `workflow-builder/plugins?id=${this.workflowId()}`);
         this.workflowPlugin(workflow);
         this.loadSteps(this.workflowPlugin()?.config.stepData);
         this.workflowName(this.workflowPlugin()?.name);
