@@ -421,7 +421,7 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     labels: [
                       ['Decision Made', 'Cur grade E decision'],
-                      ['Decision Approved By', 'Made by (D)'],
+                      ['Decision Approved By', 'Approved by (D)'],
                       ['Decision Made By', 'Made by (E)'],
                       ['License Valid From Date', 'Issue Date'],
                       ['License Valid To Date', 'Valid until']
@@ -702,12 +702,14 @@ define([
                     cardTitle: 'Extension of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+
                     // tileid: 'd59339e0-5807-4956-ab75-90058a1fbb77',
                     // tileid: "['app-details-step']['cm-ref'][0]['tileId']",
 
                     labels: [
                       ['Decision Made', 'Cur grade E decision'],
-                      ['Decision Approved By', 'Made by (D)'],
+                      ['Decision Approved By', 'Approved By (D)'],
                       ['Decision Made By', 'Requested by'],
                       ['License Valid From Date', 'Valid from'],
                       ['License Valid To Date', 'Valid until']
@@ -715,17 +717,17 @@ define([
                     prefilledNodes: [
                       [
                         '25f04f6c-48cd-11ee-94b3-0242ac140007',
-                        '05b79f83-7d42-4c15-b0cc-25d123275c7e'
+                        'bab6bee2-30d1-487c-9b58-a0abfddeb39a'
                       ]
                     ],
                     hiddenNodes: [
                       // '246252e0-69ab-11ee-942a-0242ac130002', // license_valid_from_date,
                       '25f04f6c-48cd-11ee-94b3-0242ac140007', // decision_type,
-                      //'f3dcbf02-48cb-11ee-9081-0242ac140007', // decision_made_by,
+                      // 'f3dcbf02-48cb-11ee-9081-0242ac140007', // decision_made_by,
                       'f6c207ae-5938-11ee-9e74-0242ac130007', // decision_notes,
                       // 'f8765744-69aa-11ee-942a-0242ac130002', // license_valid_to_date,
-                      '4c58921e-48cc-11ee-9081-0242ac140007', // decision_date,
-                      'ca121106-69ad-11ee-931f-0242ac130002' // decision_approved_by
+                      '4c58921e-48cc-11ee-9081-0242ac140007' // decision_date,
+                      // 'ca121106-69ad-11ee-931f-0242ac130002' // decision_approved_by
                     ]
                   }
                 }
