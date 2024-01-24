@@ -1,11 +1,11 @@
 {
-    "name": "Historic Aircraft Template",
-    "component": "views/components/reports/historic-aircraft",
+    "name": "Archive Source Template",
+    "component": "views/components/reports/archive-source",
     "defaultconfig": {
         "uncompacted_reporting": true
     },
-    "description": "Historic Aircraft report",
-    "componentname": "historic-aircraft-report",
-    "templateid": "655f86f0-643a-4df4-be8b-9e9030d2ff94",
+    "description": "Archive Source report",
+    "componentname": "archive-source-report",
+    "templateid": "75e5968a-72cf-4a07-8e0d-1cc3e81d34c8",
     "preload_resource_data": false
 }

@@ -18,6 +18,7 @@ define([
     this.graphid = params.graphid;
     this.graphids = params.graphids ? params.graphids : [this.graphid];
     this.hiddenCard = params?.hiddenCard || false;
+    this.cardTitle = params?.cardTitle || '';
 
     this.hiddenCard = params?.hiddenCard || false;
 
