@@ -76,6 +76,7 @@ define([
         componentname: 'workflow-builder-loader',
         config: {
           show: this.showWorkflowInSidebar(),
+          graphId: this.graphId(),
           stepData: this.workflowSteps().map((step) => step.getStepData())
         },
         slug: this.workflowSlug(),
@@ -138,14 +139,11 @@ define([
     }, this);
 
     /**
-     * Temporary solution to grab the graph id.
-     * FIXME: Need to setup a way of storing multiple
-     * graph IDs
+     * TODO: Need to setup a way of storing multiple graph IDs
      */
     this.graphId = ko.computed(() => {
       if (this.workflowPlugin()) {
-        return this.workflowPlugin()?.config?.stepData?.[0]?.layoutSections?.[0].componentConfigs?.[0]?.parameters
-          .graphid;
+        return this.workflowPlugin().config.graphId;
       }
       const searchParams = new URLSearchParams(window.location.search);
       const graphId = searchParams.get('graph-id');
