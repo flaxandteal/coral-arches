@@ -5,7 +5,7 @@ define([
   'knockout-mapping',
   'uuid',
   'arches',
-  'templates/views/components/workflows/licensing-workflow/initial-step.htm',
+  'templates/views/components/workflows/licensing-workflow/license-initial-step.htm',
   'viewmodels/alert',
   'bindings/select2-query'
 ], function ($, _, ko, koMapping, uuid, arches, initialStep, AlertViewModel) {
@@ -20,9 +20,9 @@ define([
     self.pageVm = params.pageVm;
 
     self.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
-    self.actLocTileId = params.form.savedData()?.actLocTileId;
+    self.actLocTileId = params.form.savedData()?.activityLocationTileId;
     self.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
-    self.actResourceId = params.form.savedData()?.actResourceId;
+    self.actResourceId = params.form.savedData()?.activityResourceId;
     self.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
     // self.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
     self.applicationId = '';
@@ -62,8 +62,8 @@ define([
               nodegroupId: self.tile().nodegroup_id,
               actSysRefTileId: self.actSysRefTileId,
               actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
-              actResourceId: self.actResourceId,
-              actLocTileId: self.actLocTileId
+              activityResourceId: self.actResourceId,
+              activityLocationTileId: self.actLocTileId
               // licenseNumberTileId: self.licenseNumberTileId
             });
             params.form.complete(true);
@@ -304,7 +304,7 @@ define([
     };
   }
 
-  ko.components.register('initial-step', {
+  ko.components.register('license-initial-step', {
     viewModel: viewModel,
     template: initialStep
   });
