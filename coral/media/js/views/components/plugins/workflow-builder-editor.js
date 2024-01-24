@@ -93,12 +93,16 @@ define([
         context: this
       });
       this.workflowPlugin(workflowPlugin);
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.delete('graph-id');
+      currentUrl.searchParams.append('workflow-id', this.workflowPlugin().pluginid);
+      history.replaceState(null, null, currentUrl.href);
     };
 
     this.exportWorkflow = async () => {
       await this.updateWorkflow();
       if (this.workflowId()) {
-        var downloadAnchorNode = document.createElement('a');
+        const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute(
           'href',
           arches.urls.root + `workflow-builder/export?id=${this.workflowId()}`
@@ -126,8 +130,8 @@ define([
     };
 
     this.workflowId = ko.computed(() => {
-      if (this.workflowPlugin()?.id) {
-        return this.workflowPlugin()?.id;
+      if (this.workflowPlugin()?.pluginid) {
+        return this.workflowPlugin().pluginid;
       }
       const searchParams = new URLSearchParams(window.location.search);
       const workflowId = searchParams.get('workflow-id');
