@@ -118,177 +118,28 @@ define([
           ]
         },
         {
-          
-        }
-
-        // {
-        //   title: 'Application Details',
-        //   name: 'app-details-step',
-        //   required: false,
-        //   workflowstepclass: 'workflow-form-component',
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'site-name',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-        //             nodegroupid: '4a7bba1d-9938-11ea-86aa-f875a44e0e11',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //             hiddenNodes: [
-        //               '4a7bba20-9938-11ea-92e7-f875a44e0e11',
-        //               '4a7bba21-9938-11ea-8f0f-f875a44e0e11'
-        //             ],
-        //             labels: [['Activity Name', 'Site Name']]
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'planning-ref',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-        //             nodegroupid: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //             tileid: "['init-step']['app-id'][0]['resourceid']['actSysRefTileId']",
-        //             hiddenNodes: [
-        //               'e7d69603-9939-11ea-9e7f-f875a44e0e11',
-        //               'e7d69602-9939-11ea-b514-f875a44e0e11'
-        //             ],
-        //             labels: [['Legacy ID', 'Planning Reference']]
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'cm-ref',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-        //             nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //             hiddenNodes: [
-        //               '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-        //               '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-        //               '589d4dca-edf9-11eb-83ea-a87eeabdefba'
-        //             ],
-        //             prefilledNodes: [
-        //               // Source set to Heritage Environment Record Number
-        //               [
-        //                 '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-        //                 '19afd557-cc21-44b4-b1df-f32568181b2c'
-        //               ]
-        //             ],
-        //             labels: [['Cross Reference', 'CM Container Number']]
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'app-contacts',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: '6d290832-5891-11ee-a624-0242ac120004',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-        //             hiddenNodes: ['35bac0cc-b550-11ee-9a9d-0242ac120007']
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'app-dates',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: '05f6b846-5d49-11ee-911e-0242ac130003',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'app-notes',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'excavation-status',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: 'ee5947c6-48b2-11ee-abec-0242ac140007',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-        //             labels: [['Status', 'Stage of Application']]
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'excavation-type',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: '6e071042-5d45-11ee-88b0-0242ac120008',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-        //           }
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
-        // {
-        //   title: 'Geospatial Details',
-        //   name: 'geospaital-step',
-        //   required: false,
-        //   workflowstepclass: 'workflow-form-component',
-        //   informationboxdata: {
-        //     heading: 'Location Details'
-        //   },
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'geometry-info',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-        //             nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
-        //             // hiddenNodes: [
-        //             //   'a541922b-f121-11eb-a081-a87eeabdefba',
-        //             //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
-        //             //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
-        //             //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
-        //             // ],
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //             parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
-        //           }
-        //         }
-        //         // {
-        //         //   componentName: 'default-card',
-        //         //   uniqueInstanceName: 'grid-info',
-        //         //   tilesManaged: 'one',
-        //         //   parameters: {
-        //         //     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-        //         //     nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
-        //         //     // hiddenNodes: [
-        //         //     //   'a541922b-f121-11eb-a081-a87eeabdefba',
-        //         //     //   'a5419222-f121-11eb-8b1f-a87eeabdefba',
-        //         //     //   'a541e02a-f121-11eb-83b2-a87eeabdefba',
-        //         //     //   'a541e02d-f121-11eb-b36f-a87eeabdefba'
-        //         //     // ],
-        //         //     renderContext: 'workflow',
-        //         //     resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //         //     parenttileid: "['init-step']['app-id'][0]['actLocTileId']"
-        //         //   }
-        //         // }
-        //       ]
-        //     }
-        //   ]
-        // },
+          title: 'Geospatial Details',
+          name: 'geospaital-step',
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'geometry-info',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
+                    parenttileid: "['init-step']['app-id'][0]['activityLocationTileId']"
+                  }
+                }
+              ]
+            }
+          ]
+        },
         // {
         //   title: 'Location Details',
         //   name: 'location-step',
