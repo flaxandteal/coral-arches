@@ -17,10 +17,12 @@ define([
     this.isStepActive = ko.observable(false);
     this.currentComponentData = ko.observable();
 
-    this.components = ko.observableArray();
-
-    this.nodegroupOptions = ko.observableArray();
-    this.selectedNodegroup = ko.observable();
+    this.nodegroupOptions = ko.observableArray([{ 
+      text: "None", 
+      nodegroupId: "", 
+      id: 0 
+    }]);
+    this.selectedNodegroup = ko.observable(0);
 
     this.graphCards = ko.observable();
     this.parentTile = ko.observable();
@@ -37,7 +39,7 @@ define([
     this.hiddenNodeOptions = ko.observableArray();
     this.selectedHiddenNodes = ko.observableArray();
 
-    this.selectedResourceIdPath = ko.observable();
+    this.selectedResourceIdPath = ko.observable(0);
 
     this.configKeys = ko.observable({ placeholder: 0 });
 
@@ -45,15 +47,18 @@ define([
       const data = await $.getJSON(
         arches.urls.root + `workflow-builder/graph-components?graph-id=${this.graphId()}`
       );
-      const nodegroupOptions = data.component_configs.map((item, idx) => {
-        return {
-          text: item.parameters.semanticName,
-          nodegroupid: item.parameters.nodegroupid,
-          id: idx
-        };
-      });
+      const nodegroupOptions = [
+        { text: "None", nodegroupId: "", id: 0 },
+        ...data.component_configs.map((item, idx) => {
+          return {
+            text: item.parameters.semanticName,
+            nodegroupId: item.parameters.nodegroupid,
+            component: item,
+            id: idx + 1, // Offset for none
+          };
+        }),
+      ];
       this.nodegroupOptions(nodegroupOptions);
-      this.components(data.component_configs);
     };
 
     this.loadAbstractComponent = (componentData) => {
@@ -61,18 +66,12 @@ define([
       let workflowCA = new WorkflowComponentAbstract({
         componentData: componentData,
         workflowComponentAbstractId: null,
-        isValidComponentPath: () => {
-          console.log('isValidComponentPath was called');
-        },
-        getDataFromComponentPath: () => {
-          console.log('getDataFromComponentPath was called');
-        },
+        isValidComponentPath: () => undefined,
+        getDataFromComponentPath: () => undefined,
+        lockExternalStep: () => undefined,
         title: 'Step title',
         isStepSaving: false,
         locked: false,
-        lockExternalStep: () => {
-          console.log('lockExternalStep was called');
-        },
         workflowHistory: {
           componentdata: null
         },
@@ -104,7 +103,7 @@ define([
 
     this.graphId = ko.computed(() => {
       if (this.currentComponentData()?.parameters.graphid) {
-        return this.currentComponentData()?.parameters.graphid;
+        return this.currentComponentData().parameters.graphid;
       }
       const searchParams = new URLSearchParams(window.location.search);
       const graphId = searchParams.get('graph-id');
@@ -118,7 +117,7 @@ define([
       if (!this.currentComponentData()) return;
       this.selectedNodegroup(
         this.nodegroupOptions().findIndex(
-          (option) => option.nodegroupid === this.currentComponentData().parameters.nodegroupid
+          (option) => option.nodegroupId === this.currentComponentData().parameters.nodegroupid
         )
       );
       this.selectedTileManaged('tile_' + this.currentComponentData().tilesManaged);
@@ -183,7 +182,7 @@ define([
       this.parentTile(null);
       if (parentTile) {
         const parentSemanticName = this.nodegroupOptions().find(
-          (nodegroup) => nodegroup.nodegroupid === parentTile.nodegroup_id
+          (nodegroup) => nodegroup.nodegroupId === parentTile.nodegroup_id
         ).text;
         const camelCaseName = (() => {
           const parts = parentSemanticName.split(' ');
@@ -206,7 +205,7 @@ define([
       });
 
       this.selectedNodegroup.subscribe((value) => {
-        const data = JSON.parse(JSON.stringify(this.components()[value]));
+        const data = JSON.parse(JSON.stringify(this.nodegroupOptions()[value].component));
         data.parameters.resourceid = '';
        
         /**
@@ -240,8 +239,8 @@ define([
     this.isInitialStep = ko.computed(() => {
       const index = this.workflowResourceIdPathOptions().findIndex((path) => {
         return (
-          path?.resourceIdPath.includes(this.cardId) &&
-          path?.resourceIdPath.includes(this.parentStep.stepId)
+          path.resourceIdPath?.includes(this.cardId) &&
+          path.resourceIdPath?.includes(this.parentStep.stepId)
         );
       });
       return index == 1;
@@ -252,14 +251,8 @@ define([
     });
 
     this.getComponentData = () => {
-      if (!this.currentComponentData()) {
-        /**
-         * TODO: Show alert
-         */
-        throw new Error('No nodegroup provided for a card. Please remove or configure the card.')
-      }
-      const { tilesManaged, uniqueInstanceName, parameters } = this.currentComponentData();
-      const { graphid, nodegroupid, semanticName, hiddenNodes } = parameters;
+      const { tilesManaged, uniqueInstanceName, parameters } = this.currentComponentData() || {};
+      const { graphid, nodegroupid, semanticName, hiddenNodes } = parameters || {};
       const { resourceIdPath } =
         this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()];
 
@@ -288,8 +281,12 @@ define([
       }
 
       if (this.isInitialStep()) {
-        componentData.parameters.requiredParentTiles =
-          this.parentStep.parentWorkflow.getRequiredParentTiles();
+        const parentTiles = this.parentStep.parentWorkflow.getRequiredParentTiles();
+        if (parentTiles.length) {
+          componentData.parameters.requiredParentTiles =
+            this.parentStep.parentWorkflow.getRequiredParentTiles();
+        }
+
       }
 
       return componentData;
@@ -299,15 +296,14 @@ define([
       if (this.componentData) {
         this.currentComponentData(JSON.parse(JSON.stringify(this.componentData)));
       }
-      await this.loadGraphComponents();
-      await this.loadGraphCards();
+      await Promise.all([
+        this.loadGraphComponents(),
+        this.loadGraphCards()
+      ])
       this.loadComponent();
       this.loadComponentNodes();
       this.setupSubscriptions();
       this.cardHasLoaded(true);
-      if (!this.selectedResourceIdPath()) {
-        this.selectedResourceIdPath(0);
-      }
     };
 
     this.init();
