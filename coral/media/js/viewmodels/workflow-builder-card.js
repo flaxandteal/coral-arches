@@ -5,8 +5,9 @@ define([
   'knockout-mapping',
   'arches',
   'templates/views/viewmodels/workflow-builder-card.htm',
-  'views/components/workflows/workflow-component-abstract'
-], function ($, _, ko, koMapping, arches, template, WorkflowComponentAbstract) {
+  'views/components/workflows/workflow-component-abstract',
+  'viewmodels/alert'
+], function ($, _, ko, koMapping, arches, template, WorkflowComponentAbstract, AlertViewModel) {
   const WorkflowBuilderCard = function (params) {
     _.extend(this, params);
 
@@ -181,11 +182,11 @@ define([
       });
       this.parentTile(null);
       if (parentTile) {
-        const parantSemanticName = this.nodegroupOptions().find(
+        const parentSemanticName = this.nodegroupOptions().find(
           (nodegroup) => nodegroup.nodegroupid === parentTile.nodegroup_id
         ).text;
         const camelCaseName = (() => {
-          const parts = parantSemanticName.split(' ');
+          const parts = parentSemanticName.split(' ');
           parts[0] = parts[0].toLowerCase();
           return parts.join('');
         })();
@@ -251,6 +252,12 @@ define([
     });
 
     this.getComponentData = () => {
+      if (!this.currentComponentData()) {
+        /**
+         * TODO: Show alert
+         */
+        throw new Error('No nodegroup provided for a card. Please remove or configure the card.')
+      }
       const { tilesManaged, uniqueInstanceName, parameters } = this.currentComponentData();
       const { graphid, nodegroupid, semanticName, hiddenNodes } = parameters;
       const { resourceIdPath } =
@@ -272,7 +279,7 @@ define([
 
       if (this.parentTile()) {
         /**
-         * FIXME: Again reling on the initial step always being the first
+         * FIXME: Again relying on the initial step always being the first
          * - Same as isInitialStep
          */
         const { basePath } = this.workflowResourceIdPathOptions()?.[1];
@@ -298,6 +305,9 @@ define([
       this.loadComponentNodes();
       this.setupSubscriptions();
       this.cardHasLoaded(true);
+      if (!this.selectedResourceIdPath()) {
+        this.selectedResourceIdPath(0);
+      }
     };
 
     this.init();
