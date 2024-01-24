@@ -178,9 +178,9 @@ define([
       resourceIdPaths.push({
         text: 'None',
         id: resourceIdPaths.length,
-        resourceIdPath: '',
-        tileIdPath: '',
-        basePath: ''
+        resourceIdPath: undefined,
+        tileIdPath: undefined,
+        basePath: undefined
       });
       this.workflowSteps().forEach((step) => {
         step.cards().forEach((card) => {
