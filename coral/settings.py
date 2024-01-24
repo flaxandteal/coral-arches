@@ -137,7 +137,8 @@ UPLOADED_FILES_DIR = "uploadedfiles"
 SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", os.getenv("DJANGO_DEBUG", False))
+# DEBUG = os.getenv("DEBUG", os.getenv("DJANGO_DEBUG", False))
+DEBUG = False
 
 ROOT_URLCONF = 'coral.urls'
 
