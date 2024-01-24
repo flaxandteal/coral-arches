@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 class OpenWorkflow(View):
     def get(self, request):
         resource_instance_id = request.GET.get("resource-id")
+        workflow_id = request.GET.get("workflow-id")
         histories = models.WorkflowHistory.objects.all()
 
         # Find workflow structure
@@ -20,24 +21,47 @@ class OpenWorkflow(View):
         found_history = None
         for history in histories:
             for componentdata in history.componentdata.values():
-                if type(componentdata['value']) == list:
-                    for manycomponentdata in componentdata['value']:
-                        if manycomponentdata['resourceinstance_id'] == resource_instance_id:
+                if "value" not in componentdata:
+                    continue
+                if type(componentdata["value"]) == list:
+                    for manycomponentdata in componentdata["value"]:
+                        if (
+                            manycomponentdata["resourceinstance_id"]
+                            == resource_instance_id
+                        ):
                             found_history = history
                             break
-                elif componentdata['value']['resourceInstanceId'] == resource_instance_id: 
+                elif (
+                    componentdata["value"]["resourceInstanceId"] == resource_instance_id
+                ):
                     found_history = history
                     break
         
+        # return JSONResponse(found_history)
         # Refresh tiles with latest data
         for componentdata in found_history.componentdata.values():
-            tile = models.TileModel.objects.get(pk=componentdata['value']['tileId'])
-            componentdata['value']['tileData'] = json.dumps(tile.data)
+            if type(componentdata["value"]) == list:
+                for manycomponentdata in componentdata["value"]:
+                    tile = models.TileModel.objects.get(pk=manycomponentdata["tileid"])
+                    manycomponentdata["data"] = tile.data
+            else:
+                tile = models.TileModel.objects.get(pk=componentdata["value"]["tileId"])
+                componentdata["value"]["tileData"] = json.dumps(tile.data)
 
         found_history.completed = False
-        found_history.workflowid = uuid.uuid4()
+        found_history.workflowid = workflow_id
 
-        return JSONResponse(found_history)
+        new_history = models.WorkflowHistory(
+            workflowid=found_history.workflowid,
+            stepdata=found_history.stepdata,
+            componentdata=found_history.componentdata,
+            completed=found_history.completed,
+            user=request.user
+        )
+
+        new_history.save()
+
+        return JSONResponse(new_history)
 
 
 # {
