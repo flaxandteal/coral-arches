@@ -3,7 +3,7 @@
   <!-- ko if: !recentlyOpenedResources().length -->
   <span>None available</span>
   <!-- /ko -->
-  <!-- ko foreach: { data: recentlyOpenedResources(), as: 'edited', noChildContext: true } -->
+  <!-- ko foreach: { data: recentlyOpenedResources(), as: 'opened', noChildContext: true } -->
   <div
     style="
       background: #fff;
@@ -14,11 +14,11 @@
       margin-bottom: 8px;
     "
     data-bind="click: async () => {
-      await openRecent(edited.resourceId);
+      await openRecent(opened.resourceId);
       window.location.href = workflowUrl();
     }"
   >
-    <span data-bind="text: edited.name"></span>
+    <span data-bind="text: opened.name"></span>
   </div>
   <!-- /ko -->
 </div>
@@ -60,16 +60,15 @@
       class="btn btn-shim btn-labeled btn-lg btn-primary"
       style="min-height: 40.56px"
       data-bind="click: async () => {
-        await editWorkflow();
-        window.location.href = workflowUrl();
+        await openWorkflow();
       }, disable: !selectedResource()"
     >
-      <span>Edit Selected</span>
+      <span>Open Selected</span>
     </button>
     <button
       class="btn btn-shim btn-labeled btn-lg btn-danger"
       style="min-height: 40.56px"
-      data-bind="click: clearRecentlyEdited"
+      data-bind="click: clearRecentlyOpened"
     >
       <span>Clear Recents</span>
     </button>

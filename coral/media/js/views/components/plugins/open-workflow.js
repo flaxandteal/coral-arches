@@ -68,9 +68,13 @@ define([
     };
 
     this.openWorkflow = async () => {
+      if (!this.selectedResource()) return;
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
-      // await this.loadResourceData(this.selectedResource());
       this.updateRecentlyOpened(this.selectedResource());
+      this.workflowUrl(
+        arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.selectedResource()}`
+      );
+      window.window.location = this.workflowUrl();
     };
 
     this.updateRecentlyOpened = (resourceId) => {
@@ -100,6 +104,8 @@ define([
     };
 
     this.validateRecentlyOpened = async (workflows) => {
+      if (!workflows) return;
+
       const removeWorkflows = [];
 
       const validate = (resourceId) =>
@@ -135,19 +141,13 @@ define([
       this.workflow(this.getWorkflowData());
       this.graphId(this.workflow().graphId);
       this.recentlyOpened(
-        JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_EDITED_LABEL)) || {}
+        JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_OPENED_LABEL)) || {}
       );
       if (this.workflow().checkForResourceId) {
         this.selectedResource(this.getResourceIdFromUrl());
-        if (!this.selectedResource()) return;
-        this.workflowUrl(
-          arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.getResourceIdFromUrl()}`
-        );
-        await this.openWorkflow();
-        window.location.href = this.workflowUrl();
+        this.openWorkflow();
         return;
       }
-
       await this.validateRecentlyOpened(this.recentlyOpened()[this.workflowSlug()]);
       this.loading(false);
     };

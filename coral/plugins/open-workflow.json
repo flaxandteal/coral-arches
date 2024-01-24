@@ -11,9 +11,13 @@
         "slug": "respond-to-enforcement-workflow",
         "name": "Respond to Enforcement",
         "graphId": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-        "setupFunction": "loadEnforcementData",
         "disableStartNew": true,
         "checkForResourceId": true
+      },
+      {
+        "slug": "archive-catalogue-workflow",
+        "name": "Archive Cataloguing",
+        "graphId": "b07cfa6f-894d-11ea-82aa-f875a44e0e11"
       }
     ]
   },

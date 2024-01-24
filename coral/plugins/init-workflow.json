@@ -61,6 +61,15 @@
         "bgColor": "#518ef0",
         "circleColor": "#3d79d9",
         "desc": "Flag a resource that needs to be enforced"
+      },
+      {
+        "workflowid": "7bd039e2-299f-4c4d-b088-5c671c7011cf",
+        "slug": "open-workflow?workflow-slug=archive-catalogue-workflow",
+        "name": "Archive Cataloguing",
+        "icon": "fa fa-file-text",
+        "bgColor": "#c6d65a",
+        "circleColor": "#a9b84b",
+        "desc": "A workflow for Archive Sources and Cataloguing"
       }
     ],
     "show": true
