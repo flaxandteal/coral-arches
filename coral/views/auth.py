@@ -169,7 +169,18 @@ class PersonConfirmSignupView(View):
 
         form = CoralUserCreationForm(userinfo)
 
-        if person.user_account:
+        try:
+            user_account = person.user_account
+        except AttributeError:
+            print("PERSON", person)
+            print("ROOT", person.get_root())
+            print("ROOT NODE", person._root_node)
+            person._build_nodes()
+            print("ROOT2", person.get_root())
+            print("NODES", person._nodes_real)
+            print("NODEGROUPS", person._nodegroup_objects_real)
+            user_account = None
+        if user_account:
             form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
         else:
             if datetime.fromtimestamp(userinfo["ts"]) + timedelta(days=1) >= datetime.fromtimestamp(int(time.time())):
