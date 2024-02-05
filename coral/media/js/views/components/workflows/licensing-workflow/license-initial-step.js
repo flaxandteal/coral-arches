@@ -24,6 +24,7 @@ define([
     self.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
     self.actResourceId = params.form.savedData()?.activityResourceId;
     self.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
+    self.decisionTileId = params.form.savedData()?.decisionTileId;
     // self.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
     self.applicationId = '';
 
@@ -52,7 +53,8 @@ define([
           responses = await Promise.all([
             // getLicenseRefTileId(),
             saveActivityLocation(),
-            saveRelationship()
+            saveRelationship(),
+            saveDecisionTile()
           ]);
           if (responses.every((response) => response.ok)) {
             params.form.savedData({
@@ -63,7 +65,9 @@ define([
               actSysRefTileId: self.actSysRefTileId,
               actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
               activityResourceId: self.actResourceId,
-              activityLocationTileId: self.actLocTileId
+              activityLocationTileId: self.actLocTileId,
+              decisionTileId: self.decisionTileId,
+
               // licenseNumberTileId: self.licenseNumberTileId
             });
             params.form.complete(true);
@@ -256,6 +260,38 @@ define([
         const nameTileResult = await nameTile.json();
         self.licenseNameTileId = nameTileResult.tileid;
         return nameTile;
+      }
+    };
+
+    const saveDecisionTile = async () => {
+      const tileTemplate = {
+        tileid: '',
+        data: {},
+        nodegroup_id: '2749ea5a-48cb-11ee-be76-0242ac140007',
+        parenttile_id: null,
+        resourceinstance_id: self.resourceId(),
+        sortorder: 0
+      };
+
+      if (!self.decisionTileId) {
+        self.decisionTileId = uuid.generate();
+      } else {
+        tileTemplate.tileid = self.decisionTileId;
+      }
+
+      const tile = await window.fetch(arches.urls.api_tiles(self.decisionTileId), {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(tileTemplate),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (tile?.ok) {
+        const tileJson = await tile.json();
+        self.decisionTileId = tileJson.tileid;
+        return tile;
       }
     };
 

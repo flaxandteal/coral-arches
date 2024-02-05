@@ -301,82 +301,76 @@ define([
             }
           ]
         },
-        // {
-        //   title: 'Record Decision',
-        //   name: 'record-dicision-step',
-        //   workflowstepclass: 'workflow-form-component',
-        //   required: false,
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'decision-made-by',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: '2749ea5a-48cb-11ee-be76-0242ac140007',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-        //             labels: [
-        //               ['Decision Made', 'Cur grade E decision'],
-        //               ['Decision Approved By', 'Approved by (D)'],
-        //               ['Decision Made By', 'Made by (E)'],
-        //               ['License Valid From Date', 'Issue Date'],
-        //               ['License Valid To Date', 'Valid until']
-        //             ],
-        //             prefilledNodes: [
-        //               [
-        //                 '25f04f6c-48cd-11ee-94b3-0242ac140007',
-        //                 'e1a5165b-32c1-43fa-8396-7b3882442507'
-        //               ]
-        //             ],
-        //             hiddenNodes: ['25f04f6c-48cd-11ee-94b3-0242ac140007']
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'license-no',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-        //             hiddenNodes: [
-        //               '280b78fa-4e4d-11ee-a340-0242ac140007',
-        //               '280b7a9e-4e4d-11ee-a340-0242ac140007',
-        //               '280b7238-4e4d-11ee-a340-0242ac140007'
-        //             ],
-        //             labels: [['Cross Reference', 'License Number']]
-        //           }
-        //         },
-        //         {
-        //           componentName: 'default-card-util',
-        //           uniqueInstanceName: 'decision-cm-ref',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-        //             nodegroupid: '589d38f9-edf9-11eb-90f5-a87eeabdefba',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-        //             hiddenNodes: [
-        //               '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-        //               '589d4dcc-edf9-11eb-ae7b-a87eeabdefba',
-        //               '589d4dca-edf9-11eb-83ea-a87eeabdefba'
-        //             ],
-        //             prefilledNodes: [
-        //               // Source set to Heritage Environment Record Number
-        //               [
-        //                 '589d4dcd-edf9-11eb-8a7d-a87eeabdefba',
-        //                 '19afd557-cc21-44b4-b1df-f32568181b2c'
-        //               ]
-        //             ],
-        //             tileid: "['app-details-step']['cm-ref'][0]['tileId']",
-        //             labels: [['Cross Reference', 'CM Container Number']]
-        //           }
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
+        {
+          title: 'Record Decision',
+          name: 'record-dicision-step',
+          workflowstepclass: 'workflow-form-component',
+          required: false,
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'grade-e-decision',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '69f2eb3c-c430-11ee-94bf-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'grade-d-decision',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'c9f504b4-c42d-11ee-94bf-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'license-valid-timespan',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '1887f678-c42d-11ee-bc4b-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                  }
+                },
+                /**
+                 * TODO: Add license number nodegroup with linked tile id
+                 * TODO: Link CM ref to the same tile id
+                 */
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'cm-reference',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'decision-note',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '3fe97968-c436-11ee-94bf-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                  }
+                }
+              ]
+            }
+          ]
+        }
         // // {
         // //   title: 'Site Visit',
         // //   name: 'site-visit-step',
