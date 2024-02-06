@@ -5,7 +5,7 @@ define([
   'uuid',
   'arches',
   'templates/views/components/workflows/default-card-util.htm'
-], function (_, ko, koMapping, uuid, arches, widgetLabeller) {
+], function (_, ko, koMapping, uuid, arches, template) {
   function viewModel(params) {
     const self = this;
 
@@ -18,7 +18,7 @@ define([
     this.graphid = params.graphid;
     this.graphids = params.graphids ? params.graphids : [this.graphid];
     this.hiddenCard = params?.hiddenCard || false;
-    this.cardTitle = params?.cardTitle || '';
+    this.title = ko.observable(params?.title || '')
 
     this.hiddenCard = params?.hiddenCard || false;
 
@@ -154,7 +154,7 @@ define([
 
   ko.components.register('default-card-util', {
     viewModel: viewModel,
-    template: widgetLabeller
+    template: template
   });
 
   return viewModel;

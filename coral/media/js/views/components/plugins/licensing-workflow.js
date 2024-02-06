@@ -6,7 +6,7 @@ define([
   'views/components/workflows/default-card-util',
   'views/components/workflows/licensing-workflow/license-initial-step',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/license-cover-letter',
+  'views/components/workflows/licensing-workflow/license-cover-letter'
   // 'views/components/workflows/licensing-workflow/license-final-step',
   // 'views/components/workflows/licensing-workflow/fetch-generated-license-number',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
@@ -392,6 +392,51 @@ define([
             }
           ]
         },
+        {
+          title: 'Ammendments',
+          name: 'ammendments-step',
+          workflowstepclass: 'workflow-form-component',
+          required: false,
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card-util',
+                  uniqueInstanceName: 'transfer-of-license',
+                  tilesManaged: 'one',
+                  parameters: {
+                    title: 'Transfer of License',
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card-util',
+                  uniqueInstanceName: 'extension-of-license-1',
+                  tilesManaged: 'one',
+                  parameters: {
+                    title: 'Extension of License 1',
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card-util',
+                  uniqueInstanceName: 'extension-of-license-2',
+                  tilesManaged: 'one',
+                  parameters: {
+                    title: 'Extension of License 2',
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                }
+              ]
+            }
+          ]
+        }
         // // {
         // //   title: 'Site Visit',
         // //   name: 'site-visit-step',
