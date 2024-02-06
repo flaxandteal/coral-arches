@@ -22,7 +22,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Number"
                     },
@@ -566,7 +566,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application Details"
                     },
@@ -7974,12 +7974,13 @@
                 {
                     "config": {
                         "triggering_nodegroups": [
-                            "991c3c74-48b6-11ee-85af-0242ac140007"
+                            "991c3c74-48b6-11ee-85af-0242ac140007",
+                            "4f0f655c-48cf-11ee-8e4e-0242ac140007"
                         ]
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "831fea11-0f9c-4f4a-abd7-e86794e242ff"
+                    "id": "93d46cc7-988f-428e-8fb9-bb9d8943742a"
                 },
                 {
                     "config": {
