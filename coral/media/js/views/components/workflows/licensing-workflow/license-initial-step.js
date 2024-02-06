@@ -20,7 +20,7 @@ define([
     self.pageVm = params.pageVm;
 
     self.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
-    self.actLocTileId = params.form.savedData()?.activityLocationTileId;
+    self.activityLocationTileId = params.form.savedData()?.activityLocationTileId;
     self.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
     self.actResourceId = params.form.savedData()?.activityResourceId;
     self.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
@@ -65,7 +65,7 @@ define([
               actSysRefTileId: self.actSysRefTileId,
               actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
               activityResourceId: self.actResourceId,
-              activityLocationTileId: self.actLocTileId,
+              activityLocationTileId: self.activityLocationTileId,
               decisionTileId: self.decisionTileId,
 
               // licenseNumberTileId: self.licenseNumberTileId
@@ -193,13 +193,13 @@ define([
         sortorder: 0
       };
 
-      if (!self.actLocTileId) {
-        self.actLocTileId = uuid.generate();
+      if (!self.activityLocationTileId) {
+        self.activityLocationTileId = uuid.generate();
       } else {
-        actLocationTemplate.tileid = self.actLocTileId;
+        actLocationTemplate.tileid = self.activityLocationTileId;
       }
 
-      const activityTile = await window.fetch(arches.urls.api_tiles(self.actLocTileId), {
+      const activityTile = await window.fetch(arches.urls.api_tiles(self.activityLocationTileId), {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(actLocationTemplate),
@@ -210,7 +210,7 @@ define([
 
       if (activityTile?.ok) {
         const activityTileResult = await activityTile.json();
-        self.actLocTileId = activityTileResult.tileid;
+        self.activityLocationTileId = activityTileResult.tileid;
         return activityTile;
       }
     };
