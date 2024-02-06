@@ -9,8 +9,12 @@ from django.db.models import Q, Max
 
 
 LICENSE_GRAPH_ID = "cc5da227-24e7-4088-bb83-a564c4331efd"
+
 LICENSE_NAME_NODEGROUP = "59d65ec0-48b9-11ee-84da-0242ac140007"
-LICENSE_NAME_NODE = "59d6676c-48b9-11ee-84da-0242ac140007"
+LICENSE_NAME_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
+
+LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+LICENSE_NUMBER_NODE = "6de3741e-c502-11ee-86cf-0242ac180006"
 
 SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
 SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
@@ -21,9 +25,11 @@ EXTERNAL_REF_NUMBER_NODE = "280b75bc-4e4d-11ee-a340-0242ac140007"
 EXTERNAL_REF_NOTE_NODE = "280b78fa-4e4d-11ee-a340-0242ac140007"
 EXTERNAL_REF_EXCAVATION_VALUE = "9a383c95-b795-4d76-957a-39f84bcee49e"
 
-STATUS_NODEGROUP = "ee5947c6-48b2-11ee-abec-0242ac140007"
-STATUS_NODE = "fb18edd0-48b8-11ee-84da-0242ac140007"
+STATUS_NODEGROUP = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
+STATUS_NODE = "a79fedae-bad5-11ee-900d-0242ac180006"
 STATUS_FINAL_VALUE = "8c454982-c470-437d-a9c6-87460b07b3d9"
+
+LICENSE_NUMBER_PREFIX = "AE"
 
 details = {
     "functionid": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
@@ -39,22 +45,18 @@ details = {
 
 
 def license_number_format(year, index):
-    return f"AE/{year}/{str(index).zfill(2)}"
+    return f"{LICENSE_NUMBER_PREFIX}/{year}/{str(index).zfill(2)}"
 
 
 def get_latest_license_number(license_instance_id):
     latest_license_number_tile = None
     try:
-        ext_ref_number_generated = {
-            f"data__{EXTERNAL_REF_NUMBER_NODE}__en__value__icontains": "AE",
+        license_number_generated = {
+            f"data__{LICENSE_NUMBER_NODE}__en__value__icontains": LICENSE_NUMBER_PREFIX,
         }
         query_result = Tile.objects.filter(
-            nodegroup_id=EXTERNAL_REF_NODEGROUP,
-            data__contains={
-                # Check external reference source for 'Excavation'
-                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
-            },
-            **ext_ref_number_generated,
+            nodegroup_id=LICENSE_NUMBER_NODEGROUP,
+            **license_number_generated,
         ).exclude(resourceinstance_id=license_instance_id)
         query_result = query_result.annotate(
             most_recent=Max("resourceinstance__createdtime")
@@ -65,18 +67,18 @@ def get_latest_license_number(license_instance_id):
         print(f"Failed querying for previous license number tile: {e}")
         raise e
 
-    print("latest_license_number_tile: ", latest_license_number_tile)
     if not latest_license_number_tile:
         return
 
     latest_license_number = (
-        latest_license_number_tile.data.get(EXTERNAL_REF_NUMBER_NODE)
+        latest_license_number_tile.data.get(LICENSE_NUMBER_NODE)
         .get("en")
         .get("value")
     )
+
     print(f"Previous license number: {latest_license_number}")
-    license_number = latest_license_number.split("/")
-    return {"year": license_number[1], "index": int(license_number[2])}
+    license_number_parts = latest_license_number.split("/")
+    return {"year": license_number_parts[1], "index": int(license_number_parts[2])}
 
 
 def generate_license_number(license_instance_id, attempts=0):
@@ -90,24 +92,21 @@ def generate_license_number(license_instance_id, attempts=0):
         attempts += 1
         return generate_license_number(license_instance_id, attempts)
 
-    ext_ref_tile = None
+    license_number_tile = None
     try:
-        ext_ref_number_generated = {
-            f"data__{EXTERNAL_REF_NUMBER_NODE}__en__value__icontains": "AE",
+        license_number_generated = {
+            f"data__{LICENSE_NUMBER_NODE}__en__value__icontains": LICENSE_NUMBER_PREFIX,
         }
-        ext_ref_tile = Tile.objects.filter(
+        license_number_tile = Tile.objects.filter(
             resourceinstance_id=license_instance_id,
-            nodegroup_id=EXTERNAL_REF_NODEGROUP,
-            data__contains={
-                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
-            },
-            **ext_ref_number_generated,
+            nodegroup_id=LICENSE_NUMBER_NODEGROUP,
+            **license_number_generated
         ).first()
     except Exception as e:
         print(f"Failed checking if license number tile already exists: {e}")
         return retry()
 
-    if ext_ref_tile:
+    if license_number_tile:
         print("A license number has already been created for this license")
         return
 
@@ -132,24 +131,22 @@ def generate_license_number(license_instance_id, attempts=0):
         # this is the first ever created
         license_number = license_number_format(year, 1)
 
-    ext_ref_tile = None
+    license_number_tile = None
     try:
         # Runs a query searching for an external reference tile with the new license ID
-        ext_ref_tile = Tile.objects.filter(
-            nodegroup_id=EXTERNAL_REF_NODEGROUP,
+        license_number_tile = Tile.objects.filter(
+            nodegroup_id=LICENSE_NUMBER_NODEGROUP,
             data__contains={
-                EXTERNAL_REF_NUMBER_NODE: {
+                LICENSE_NUMBER_NODE: {
                     "en": {"direction": "ltr", "value": license_number}
-                },
-                # Check external reference source for 'Excavation'
-                EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
+                }
             },
         ).first()
     except Exception as e:
         print(f"Failed validating license number: {e}")
         return retry()
 
-    if ext_ref_tile:
+    if license_number_tile:
         return retry()
 
     print(f"License number is unique, license number: {license_number}")
@@ -193,6 +190,8 @@ class LicenseNumberFunction(BaseFunction):
         if tile_nodegroup_id == STATUS_NODEGROUP:
             if tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
                 return
+            
+        # Good up to here
 
         license_number = generate_license_number(resource_instance_id)
 
@@ -203,15 +202,11 @@ class LicenseNumberFunction(BaseFunction):
             # Configure the license number
             Tile.objects.get_or_create(
                 resourceinstance_id=resource_instance_id,
-                nodegroup_id=EXTERNAL_REF_NODEGROUP,
+                nodegroup_id=LICENSE_NUMBER_NODEGROUP,
                 data={
-                    EXTERNAL_REF_NUMBER_NODE: {
+                    LICENSE_NUMBER_NODE: {
                         "en": {"direction": "ltr", "value": license_number}
                     },
-                    # Set external reference source as 'Excavation'
-                    EXTERNAL_REF_SOURCE_NODE: EXTERNAL_REF_EXCAVATION_VALUE,
-                    # Set empty value for rich text widget
-                    EXTERNAL_REF_NOTE_NODE: {"en": {"value": "", "direction": "ltr"}},
                 },
             )
             # Configure the license name with the license number included
