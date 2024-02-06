@@ -377,7 +377,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -404,7 +404,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -431,7 +431,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -1193,11 +1193,11 @@
                 {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": "c9bc15cc-46fe-4d34-a530-a228854845c8",
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Stage of Application",
+                        "label": "Application Stage Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -1205,11 +1205,11 @@
                     },
                     "id": "305b826c-657b-48e4-b438-40fe24a711d5",
                     "label": {
-                        "en": "Stage of Application"
+                        "en": "Application Stage Metatype"
                     },
                     "node_id": "b407df02-bad5-11ee-900d-0242ac180006",
-                    "sortorder": 4,
-                    "visible": true,
+                    "sortorder": 5,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -1871,7 +1871,7 @@
                         "en": "Funding Available"
                     },
                     "node_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
-                    "sortorder": 5,
+                    "sortorder": 6,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -3638,6 +3638,28 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Stage of Application",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "aea5e1f9-5a35-46b4-8d95-ef20d7a27651",
+                    "label": {
+                        "en": "Stage of Application"
+                    },
+                    "node_id": "a79fedae-bad5-11ee-900d-0242ac180006",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -7874,7 +7896,7 @@
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -7954,7 +7976,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "69b2738e-c4d2-11ee-b171-0242ac180006",
                     "parentnodegroup_id": null
@@ -12903,9 +12925,9 @@
                 {
                     "alias": "application_stage_type",
                     "config": {
-                        "rdmCollection": null
+                        "rdmCollection": "8ca41a78-479a-4d87-831d-08b640910126"
                     },
-                    "datatype": "semantic",
+                    "datatype": "concept",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -13062,7 +13084,7 @@
                 {
                     "alias": "application_stage_metatype",
                     "config": {
-                        "rdmCollection": "8ca41a78-479a-4d87-831d-08b640910126"
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -13072,7 +13094,7 @@
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
-                    "issearchable": true,
+                    "issearchable": false,
                     "istopnode": false,
                     "name": "Application Stage Metatype",
                     "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
@@ -14746,8 +14768,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "78d9fe3c-c4d6-11ee-b171-0242ac180006",
-                "published_time": "2024-02-06T09:59:52.466"
+                "publicationid": "6e82c264-c500-11ee-af34-0242ac180006",
+                "published_time": "2024-02-06T15:00:13.979"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
