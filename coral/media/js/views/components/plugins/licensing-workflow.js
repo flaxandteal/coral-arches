@@ -6,8 +6,8 @@ define([
   'views/components/workflows/default-card-util',
   'views/components/workflows/licensing-workflow/license-initial-step',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/license-cover-letter'
-  // 'views/components/workflows/licensing-workflow/license-final-step',
+  'views/components/workflows/licensing-workflow/license-cover-letter',
+  'views/components/workflows/licensing-workflow/license-final-step',
   // 'views/components/workflows/licensing-workflow/fetch-generated-license-number',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -133,7 +133,7 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['activityLocationTileId']"
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']"
                   }
                 }
               ]
@@ -156,7 +156,7 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['activityLocationTileId']",
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     hiddenNodes: [
                       'a5419221-f121-11eb-a173-a87eeabdefba', // full_address_type,
                       'a5419222-f121-11eb-8b1f-a87eeabdefba', // address_status,
@@ -203,7 +203,7 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['activityLocationTileId']",
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     hiddenNodes: [
                       'a5416b52-f121-11eb-9724-a87eeabdefba', // area_name_metatype,
                       //'a5416b53-f121-11eb-a507-a87eeabdefba', // area_name,
@@ -213,12 +213,12 @@ define([
                       'a541922b-f121-11eb-a081-a87eeabdefba', // area_currency_type,
                       'a541922e-f121-11eb-b2f6-a87eeabdefba' // area_type
                     ],
-                    prefilledNodes: [
-                      [
-                        'a541922e-f121-11eb-b2f6-a87eeabdefba',
-                        '26910978-5742-d0db-8b63-ec8d65ce5198'
-                      ]
-                    ],
+                    // prefilledNodes: [
+                    //   [
+                    //     'a541922e-f121-11eb-b2f6-a87eeabdefba',
+                    //     '26910978-5742-d0db-8b63-ec8d65ce5198'
+                    //   ]
+                    // ],
                     labels: [['Area Name', 'Townland']]
                   }
                 },
@@ -230,7 +230,7 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b40-f121-11eb-9cb6-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['activityLocationTileId']",
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     hiddenNodes: ['a5419231-f121-11eb-911a-a87eeabdefba']
                   }
                 }
@@ -353,7 +353,8 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    tileid: "['app-details-step']['cm-reference'][0]['tileId']"
                   }
                 },
                 {
@@ -430,6 +431,75 @@ define([
                     title: 'Extension of License 2',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        /**
+         * TODO: Excavation Report Step
+         * 
+         * This needs to be dicussed. Adding a many tile with a file upload that also uses
+         * a custom component specifically for it isn't an easy task. It would make more
+         * sense for this to be it's own workflow.
+         */
+        {
+          title: 'Excavation Report',
+          name: 'excavation-report-step',
+          workflowstepclass: 'workflow-form-component',
+          required: false,
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'report-info',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  /**
+                   * Using custom component to handle the creation of Digital
+                   * Objects that will then be automatically named and related
+                   * to the Excavation License model.
+                   */
+                  componentName: 'related-document-upload',
+                  uniqueInstanceName: 'report-documents',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
+                    nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
+                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
+                    fileObjectNamePrefix: 'Site report files for '
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Summary',
+          name: 'license-complete',
+          required: false,
+          informationboxdata: {
+            heading: 'Workflow Complete: Review your work',
+            text: 'Please review the summary information. You can go back to a previous step to make changes or "Quit Workflow" to discard your changes and start over'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'license-final-step',
+                  uniqueInstanceName: 'license-final',
+                  tilesManaged: 'none',
+                  parameters: {
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 }
