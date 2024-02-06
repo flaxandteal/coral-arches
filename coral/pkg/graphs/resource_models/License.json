@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "14470a3a-d6e5-4809-86f8-1a20651a2988",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "License Number"
+                    },
+                    "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "1887f934-c42d-11ee-bc4b-0242ac180006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -240,7 +267,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Names"
                     },
@@ -4918,6 +4945,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "14470a3a-d6e5-4809-86f8-1a20651a2988",
+                    "config": {
+                        "defaultValue": "9a383c95-b795-4d76-957a-39f84bcee49e",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "License Number Source",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "cbaad49c-8492-49a5-95da-0533c2a9736f",
+                    "label": {
+                        "en": "License Number Source"
+                    },
+                    "node_id": "c57348bc-c502-11ee-86cf-0242ac180006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
                     "config": {
                         "defaultValue": "abb5cae5-f2b9-4fbb-bbbc-f64083094014",
@@ -5197,6 +5246,29 @@
                     "node_id": "a99a4236-68e0-11ee-81c3-0242ac130004",
                     "sortorder": 1,
                     "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "14470a3a-d6e5-4809-86f8-1a20651a2988",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": "Generated once status is \"Final\""
+                            }
+                        },
+                        "label": "License Number",
+                        "maxLength": "",
+                        "placeholder": "",
+                        "uneditable": true
+                    },
+                    "id": "e8a07826-31a0-408e-a671-0bf0dab6ad38",
+                    "label": {
+                        "en": "License Number"
+                    },
+                    "node_id": "9a9e198c-c502-11ee-af34-0242ac180006",
+                    "sortorder": 0,
+                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
@@ -6891,6 +6963,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
+                    "edgeid": "919bf3d7-0827-4754-8479-175bca1db11a",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P12_occurred_in_the_presence_of",
+                    "rangenode_id": "6de3741e-c502-11ee-86cf-0242ac180006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "9236156e-bad1-11ee-b3f2-0242ac180006",
                     "edgeid": "92365060-bad1-11ee-b3f2-0242ac180006",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -7782,6 +7863,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "6de3741e-c502-11ee-86cf-0242ac180006",
+                    "edgeid": "db584f42-d8f7-498d-882b-2a594291a978",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
+                    "rangenode_id": "c57348bc-c502-11ee-86cf-0242ac180006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "f060583a-6120-11ee-9fd1-0242ac120003",
                     "edgeid": "def0f2fa-e84a-4099-8e37-cc2f396565a3",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -7854,6 +7944,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "6de3741e-c502-11ee-86cf-0242ac180006",
+                    "edgeid": "f22f3a80-20ac-48bd-b262-24c093a9d891",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "9a9e198c-c502-11ee-af34-0242ac180006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "05f6b846-5d49-11ee-911e-0242ac130003",
                     "edgeid": "f3a4ee95-ac95-41d1-a1bc-e95854e66023",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -7872,6 +7971,16 @@
                 }
             ],
             "functions_x_graphs": [
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "991c3c74-48b6-11ee-85af-0242ac140007"
+                        ]
+                    },
+                    "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "831fea11-0f9c-4f4a-abd7-e86794e242ff"
+                },
                 {
                     "config": {
                         "descriptor_types": {
@@ -7992,6 +8101,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "6d290832-5891-11ee-a624-0242ac120004",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "6de3741e-c502-11ee-86cf-0242ac180006",
                     "parentnodegroup_id": null
                 },
                 {
@@ -8224,17 +8339,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -10189,17 +10304,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -12097,6 +12212,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "license_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "License Number",
+                    "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
+                    "nodeid": "6de3741e-c502-11ee-86cf-0242ac180006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P12_occurred_in_the_presence_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "council_letter_file",
                     "config": {
                         "en": ""
@@ -12883,6 +13021,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "license_number_value",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "LicenseNum",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "License Number Value",
+                    "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
+                    "nodeid": "9a9e198c-c502-11ee-af34-0242ac180006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "grade_e_decision",
                     "config": {
                         "i18n_config": {
@@ -12890,17 +13051,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -14271,6 +14432,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "license_number_source",
+                    "config": {
+                        "rdmCollection": "06bbe5d2-93e8-43df-a4f4-5667648fd2ef"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "LNumSource",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "License Number Source",
+                    "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
+                    "nodeid": "c57348bc-c502-11ee-86cf-0242ac180006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E32_Authority_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "developer_funding_form",
                     "config": {
                         "falseLabel": {
@@ -14769,8 +14953,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "b49b2bc4-c500-11ee-af34-0242ac180006",
-                "published_time": "2024-02-06T15:02:11.580"
+                "publicationid": "cbc20a0a-c507-11ee-a452-0242ac180006",
+                "published_time": "2024-02-06T15:52:56.899"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
