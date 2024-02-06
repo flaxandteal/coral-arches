@@ -5033,6 +5033,7 @@
                             "placeholder"
                         ],
                         "label": "New Licensee",
+                        "limit": 6,
                         "placeholder": {
                             "en": ""
                         }
@@ -5044,7 +5045,7 @@
                     "node_id": "ab2db0ec-c448-11ee-94bf-0242ac180006",
                     "sortorder": 6,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "f3ff0ab8-c626-4bbf-88dd-420ce66c0724"
                 },
                 {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
@@ -8223,17 +8224,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -10188,17 +10189,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -12889,17 +12890,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -14768,8 +14769,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "6e82c264-c500-11ee-af34-0242ac180006",
-                "published_time": "2024-02-06T15:00:13.979"
+                "publicationid": "b49b2bc4-c500-11ee-af34-0242ac180006",
+                "published_time": "2024-02-06T15:02:11.580"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
