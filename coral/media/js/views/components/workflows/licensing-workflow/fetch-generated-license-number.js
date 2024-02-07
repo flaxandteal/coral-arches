@@ -5,17 +5,13 @@ define([
   'uuid',
   'arches',
   'templates/views/components/workflows/licensing-workflow/fetch-generated-license-number.htm',
-  'viewmodels/alert'
-], function (_, ko, koMapping, uuid, arches, componentTemplate, AlertViewModel) {
+  'viewmodels/alert',
+  'js-cookie'
+], function (_, ko, koMapping, uuid, arches, componentTemplate, AlertViewModel, Cookies) {
   function viewModel(params) {
-    this.STATUS_NODE = 'fb18edd0-48b8-11ee-84da-0242ac140007';
+    this.STATUS_NODE = 'a79fedae-bad5-11ee-900d-0242ac180006';
     this.STATUS_FINAL_VALUE = '8c454982-c470-437d-a9c6-87460b07b3d9';
-    this.EXTERNAL_REF_NUMBER_NODE = '280b75bc-4e4d-11ee-a340-0242ac140007';
-    this.EXTERNAL_REF_SOURCE_NODE = '280b7a9e-4e4d-11ee-a340-0242ac140007';
-    this.EXTERNAL_REF_EXCAVATION_VALUE = '9a383c95-b795-4d76-957a-39f84bcee49e';
-
-    this.STEPS_LABEL = 'workflow-steps';
-    this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
+    this.LICENSE_NUMBER_NODE = '9a9e198c-c502-11ee-af34-0242ac180006';
 
     const self = this;
 
@@ -34,43 +30,72 @@ define([
     };
 
     this.fetchLicenseNumberTile = async () => {
-      const tiles = await this.fetchTileData(this.resourceId(), this.EXTERNAL_REF_NUMBER_NODE);
-
-      if (tiles.length > 1) {
-        for (const tile of tiles) {
-          if (tile.data[this.EXTERNAL_REF_SOURCE_NODE] === this.EXTERNAL_REF_EXCAVATION_VALUE) {
-            return tile;
-          }
-        }
-      }
+      const tiles = await this.fetchTileData(this.resourceId(), this.LICENSE_NUMBER_NODE);
 
       if (tiles.length === 1) {
         return tiles[0];
       }
     };
 
-    this.storeLicenseNumberTile = (tile) => {
-      const worflowSteps = JSON.parse(localStorage.getItem(this.STEPS_LABEL));
-      const licenseNoStepId = JSON.parse(worflowSteps['app-details-step'].componentIdLookup)[
-        'license-no'
-      ];
+    this.getWorkflowHistoryData = async function (workflowid) {
+      const response = await fetch(arches.urls.workflow_history + workflowid, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken')
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        self.alert(
+          new AlertViewModel(
+            'ep-alert-red',
+            response.statusText,
+            response.responseText,
+            null,
+            function () {}
+          )
+        );
+      }
+    };
 
-      const workflowComponentAbstracts = JSON.parse(
-        localStorage.getItem(this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL)
-      );
-      workflowComponentAbstracts[licenseNoStepId] = {
-        value: JSON.stringify({
-          tileData: koMapping.toJSON(tile.data),
-          resourceInstanceId: tile.resourceinstance,
-          tileId: tile.tileid,
-          nodegroupId: tile.nodegroup
-        })
+    this.setToWorkflowHistory = async function (componentId, workflowId, key, value) {
+      const workflowHistory = {
+        workflowid: workflowId,
+        completed: false,
+        componentdata: {
+          [componentId]: {
+            [key]: value
+          }
+        }
       };
+      await fetch(arches.urls.workflow_history + workflowId, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken')
+        },
+        body: JSON.stringify(workflowHistory)
+      });
+    };
 
-      localStorage.setItem(
-        this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL,
-        JSON.stringify(workflowComponentAbstracts)
-      );
+    this.storeLicenseNumberTile = async (tile) => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const workflowId = searchParams.get('workflow-id');
+
+      const history = await this.getWorkflowHistoryData(workflowId);
+
+      const componentId =
+        history.stepdata['record-decision-step']['componentIdLookup']['license-number'];
+
+      await this.setToWorkflowHistory(componentId, workflowId, 'value', {
+        tileData: JSON.stringify(tile.data),
+        resourceInstanceId: tile.resourceinstance,
+        tileId: tile.tileid,
+        nodegroupId: tile.nodegroup
+      });
     };
 
     this.processLicenseNumberTile = async () => {
@@ -83,28 +108,20 @@ define([
       const licenseNumberTile = await this.fetchLicenseNumberTile();
       if (!licenseNumberTile) return;
 
-      this.storeLicenseNumberTile(licenseNumberTile);
+      await this.storeLicenseNumberTile(licenseNumberTile);
 
       let licenseNumber =
-        licenseNumberTile.data[this.EXTERNAL_REF_NUMBER_NODE][arches.activeLanguage].value;
+        licenseNumberTile.data[this.LICENSE_NUMBER_NODE][arches.activeLanguage].value;
 
       params.pageVm.alert(
         new AlertViewModel(
           'ep-alert-blue',
           `Application status is "Final". License Number: ${licenseNumber}. Click "Ok" to continue.`,
-          `This application's status has been moved to "Final". With that a license number has been genereated that will now be used to identify this application. Example 'Excavation License ${licenseNumber}', please use this to find the file in the future. The old application ID will still work when on the search page.`,
+          `This application's status has been moved to "Final". With that a license number has been genereated that will now be used to identify this application. Example 'Excavation License ${licenseNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
           null,
           () => {
             params.form.complete(true);
             params.form.saving(false);
-            /**
-             * Hacky... but shouldn't be noticable to user and will show the latest data
-             * stored in local storage. Allowing the user to go back a page and see
-             * the license number.
-             */
-            setTimeout(() => {
-              location.reload();
-            });
           }
         )
       );

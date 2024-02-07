@@ -8,7 +8,7 @@ define([
   'views/components/workflows/related-document-upload',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
-  // 'views/components/workflows/licensing-workflow/fetch-generated-license-number',
+  'views/components/workflows/licensing-workflow/fetch-generated-license-number'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -104,7 +104,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-generated-license-number',
                   uniqueInstanceName: 'application-details',
                   tilesManaged: 'one',
                   parameters: {
@@ -133,7 +133,8 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']"
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']"
                   }
                 }
               ]
@@ -156,7 +157,8 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     hiddenNodes: [
                       'a5419221-f121-11eb-a173-a87eeabdefba', // full_address_type,
                       'a5419222-f121-11eb-8b1f-a87eeabdefba', // address_status,
@@ -203,7 +205,8 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     hiddenNodes: [
                       'a5416b52-f121-11eb-9724-a87eeabdefba', // area_name_metatype,
                       //'a5416b53-f121-11eb-a507-a87eeabdefba', // area_name,
@@ -230,7 +233,8 @@ define([
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     nodegroupid: 'a5416b40-f121-11eb-9cb6-a87eeabdefba',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     hiddenNodes: ['a5419231-f121-11eb-911a-a87eeabdefba']
                   }
                 }
@@ -303,7 +307,7 @@ define([
         },
         {
           title: 'Record Decision',
-          name: 'record-dicision-step',
+          name: 'record-decision-step',
           workflowstepclass: 'workflow-form-component',
           required: false,
           layoutSections: [
@@ -342,10 +346,15 @@ define([
                     parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
                   }
                 },
-                /**
-                 * TODO: Add license number nodegroup with linked tile id
-                 * TODO: Link CM ref to the same tile id
-                 */
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'license-number',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '6de3741e-c502-11ee-86cf-0242ac180006'
+                  }
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'cm-reference',
@@ -440,7 +449,7 @@ define([
         },
         /**
          * TODO: Excavation Report Step
-         * 
+         *
          * This needs to be dicussed. Adding a many tile with a file upload that also uses
          * a custom component specifically for it isn't an easy task. It would make more
          * sense for this to be it's own workflow.
