@@ -269,7 +269,6 @@ define([
                     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
                     resourceModelId:
                       "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    resourceTileId: "['init-step']['app-id'][0]['tileId']",
                     resourceModelDigitalObjectNodeGroupId: '8c5356f4-48ce-11ee-8e4e-0242ac140007',
                     label: 'Please upload the required files below'
                   }
