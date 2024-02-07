@@ -27,9 +27,10 @@ define([
 
       this.getWorkflowHistoryData = async function (key) {
         console.log('arches.urls.open_workflow: ', arches.urls.open_workflow)
+        const workflowId = this.id();
         const searchParams = new URLSearchParams(window.location.search);
         const resourceId = searchParams.get('resource-id');
-        const response = await fetch(`/open-workflow?resource-id=${resourceId}`, {
+        const response = await fetch(`/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
