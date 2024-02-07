@@ -35,9 +35,11 @@ class NotifyEnforcement(BaseFunction):
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
-        existing_notification = models.Notification.objects.filter(context__resource_instance_id=resource_instance_id).first()
+        existing_notification = models.Notification.objects.filter(
+            context__resource_instance_id=resource_instance_id
+        ).first()
         if existing_notification:
-            return;
+            return
 
         reason_description = models.TileModel.objects.filter(
             resourceinstance_id=resource_instance_id, nodegroup_id=REASON_DESC_NODEGROUP
@@ -53,7 +55,9 @@ class NotifyEnforcement(BaseFunction):
             .get("value"),
             context={
                 "resource_instance_id": resource_instance_id,
-                "enforcement_id": system_ref.data.get(SYSTEM_REF_RESOURCE_ID_NODE).get("en").get("value")
+                "enforcement_id": system_ref.data.get(SYSTEM_REF_RESOURCE_ID_NODE)
+                .get("en")
+                .get("value"),
             },
         )
         notification.save()
