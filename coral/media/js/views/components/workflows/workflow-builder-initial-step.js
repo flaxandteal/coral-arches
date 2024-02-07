@@ -23,6 +23,11 @@ define([
     params.form.save = async () => {
       await self.tile().save();
 
+      if (!params.requiredParentTiles) {
+        params.form.complete(true);
+        params.form.saving(false);
+      }
+
       const responses = await Promise.all(params.requiredParentTiles.map(self.saveParentTile));
 
       if (responses.every((response) => response.ok)) {
