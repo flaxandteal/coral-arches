@@ -22,7 +22,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "License Number"
                     },
@@ -267,7 +267,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "License Names"
                     },
@@ -404,7 +404,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -431,7 +431,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -458,7 +458,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Decision"
                     },
@@ -512,7 +512,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "CM References"
                     },
@@ -566,7 +566,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Application Details"
                     },
@@ -696,6 +696,28 @@
                 {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
                     "config": {
+                        "defaultValue": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Excavation Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "044d4da1-1b13-4949-829a-3c50e8ee5e24",
+                    "label": {
+                        "en": "Excavation Metatype"
+                    },
+                    "node_id": "739607be-bad5-11ee-b3f2-0242ac180006",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
+                    "config": {
                         "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
@@ -706,11 +728,11 @@
                             "en": "Select an option"
                         }
                     },
-                    "id": "044d4da1-1b13-4949-829a-3c50e8ee5e24",
+                    "id": "061fc152-8473-4a5e-813e-589d5d5cd65f",
                     "label": {
                         "en": "Excavation Type"
                     },
-                    "node_id": "739607be-bad5-11ee-b3f2-0242ac180006",
+                    "node_id": "67455316-bad5-11ee-b3f2-0242ac180006",
                     "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
@@ -1235,7 +1257,7 @@
                         "en": "Application Stage Metatype"
                     },
                     "node_id": "b407df02-bad5-11ee-900d-0242ac180006",
-                    "sortorder": 5,
+                    "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -1898,7 +1920,7 @@
                         "en": "Funding Available"
                     },
                     "node_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
-                    "sortorder": 6,
+                    "sortorder": 7,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -2771,7 +2793,7 @@
                 {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
                     "config": {
-                        "defaultValue": "49f0655b-55e5-450e-acfa-cb62f0af7d46",
+                        "defaultValue": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -3684,7 +3706,7 @@
                         "en": "Stage of Application"
                     },
                     "node_id": "a79fedae-bad5-11ee-900d-0242ac180006",
-                    "sortorder": 4,
+                    "sortorder": 5,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -5274,7 +5296,7 @@
                 {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": "daa4cddc-8636-4842-b836-eb2e10aabe18",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -8007,7 +8029,7 @@
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -8340,17 +8362,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -10305,17 +10327,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -10693,9 +10715,9 @@
                 {
                     "alias": "excavation_type",
                     "config": {
-                        "rdmCollection": null
+                        "rdmCollection": "b1c3237e-69fc-4cce-a12e-04ef1e053722"
                     },
-                    "datatype": "semantic",
+                    "datatype": "concept",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -12301,7 +12323,7 @@
                 {
                     "alias": "excavation_metatype",
                     "config": {
-                        "rdmCollection": "b1c3237e-69fc-4cce-a12e-04ef1e053722"
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -13069,17 +13091,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -14971,8 +14993,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "fa15541a-c59e-11ee-90c5-0242ac180006",
-                "published_time": "2024-02-07T09:55:08.627"
+                "publicationid": "999a8904-c5a1-11ee-be86-0242ac180006",
+                "published_time": "2024-02-07T10:13:55.251"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
