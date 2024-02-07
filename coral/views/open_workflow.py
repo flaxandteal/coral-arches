@@ -11,8 +11,9 @@ logger = logging.getLogger(__name__)
 class OpenWorkflow(View):
     def get(self, request):
         resource_instance_id = request.GET.get("resource-id")
-        histories = models.WorkflowHistory.objects.all()
-
+        workflow_id = request.GET.get("")
+        histories = models.WorkflowHistory.objects.all().order_by('-created')
+        
         # Find workflow structure
         # FIXME: What if a resource id appears in another workflows history
         # FIXME: Get upstream Arches workflow slug into the database table
@@ -22,12 +23,17 @@ class OpenWorkflow(View):
             for componentdata in history.componentdata.values():
                 if type(componentdata['value']) == list:
                     for manycomponentdata in componentdata['value']:
-                        if manycomponentdata['resourceinstance_id'] == resource_instance_id:
+                        if manycomponentdata.get('resourceinstance_id') == resource_instance_id:
                             found_history = history
                             break
                 elif componentdata['value']['resourceInstanceId'] == resource_instance_id: 
                     found_history = history
                     break
+            else:
+                continue
+            break
+
+
         
         # Refresh tiles with latest data
         for componentdata in found_history.componentdata.values():
@@ -35,7 +41,7 @@ class OpenWorkflow(View):
             componentdata['value']['tileData'] = json.dumps(tile.data)
 
         found_history.completed = False
-        found_history.workflowid = uuid.uuid4()
+        found_history.workflowid = workflow_id
 
         return JSONResponse(found_history)
 
