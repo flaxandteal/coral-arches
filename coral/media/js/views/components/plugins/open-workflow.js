@@ -143,7 +143,7 @@ define([
       this.recentlyOpened(
         JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_OPENED_LABEL)) || {}
       );
-      if (this.workflow().checkForResourceId) {
+      if (this.workflow().checkForResourceId && this.getResourceIdFromUrl()) {
         this.selectedResource(this.getResourceIdFromUrl());
         this.openWorkflow();
         return;
