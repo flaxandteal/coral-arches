@@ -76,6 +76,7 @@ define([
         componentname: 'workflow-builder-loader',
         config: {
           show: this.showWorkflowInSidebar(),
+          graphId: this.graphId(),
           stepData: this.workflowSteps().map((step) => step.getStepData())
         },
         slug: this.workflowSlug(),
@@ -93,16 +94,17 @@ define([
         context: this
       });
       this.workflowPlugin(workflowPlugin);
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.delete('graph-id');
+      currentUrl.searchParams.append('workflow-id', this.workflowPlugin().pluginid);
+      history.replaceState(null, null, currentUrl.href);
     };
 
     this.exportWorkflow = async () => {
       await this.updateWorkflow();
       if (this.workflowId()) {
-        var downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute(
-          'href',
-          arches.urls.root + `workflow-builder/export?id=${this.workflowId()}`
-        );
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute('href', arches.urls.root + `workflow-builder/export?id=${this.workflowId()}`);
         downloadAnchorNode.setAttribute('download', `${this.workflowSlug()}.json`);
         document.body.appendChild(downloadAnchorNode); // Required for firefox
         downloadAnchorNode.click();
@@ -126,8 +128,8 @@ define([
     };
 
     this.workflowId = ko.computed(() => {
-      if (this.workflowPlugin()?.id) {
-        return this.workflowPlugin()?.id;
+      if (this.workflowPlugin()?.pluginid) {
+        return this.workflowPlugin().pluginid;
       }
       const searchParams = new URLSearchParams(window.location.search);
       const workflowId = searchParams.get('workflow-id');
@@ -137,14 +139,11 @@ define([
     }, this);
 
     /**
-     * Temporary solution to grab the graph id.
-     * FIXME: Need to setup a way of storing multiple
-     * graph IDs
+     * TODO: Need to setup a way of storing multiple graph IDs
      */
     this.graphId = ko.computed(() => {
       if (this.workflowPlugin()) {
-        return this.workflowPlugin()?.config?.stepData?.[0]?.layoutSections?.[0]
-          .componentConfigs?.[0]?.parameters.graphid;
+        return this.workflowPlugin().config.graphId;
       }
       const searchParams = new URLSearchParams(window.location.search);
       const graphId = searchParams.get('graph-id');
@@ -179,9 +178,9 @@ define([
       resourceIdPaths.push({
         text: 'None',
         id: resourceIdPaths.length,
-        resourceIdPath: '',
-        tileIdPath: '',
-        basePath: ''
+        resourceIdPath: undefined,
+        tileIdPath: undefined,
+        basePath: undefined
       });
       this.workflowSteps().forEach((step) => {
         step.cards().forEach((card) => {
@@ -203,9 +202,7 @@ define([
 
     this.loadExistingWorkflow = async () => {
       if (this.workflowId()) {
-        const workflow = await $.getJSON(
-          arches.urls.root + `workflow-builder/plugins?id=${this.workflowId()}`
-        );
+        const workflow = await $.getJSON(arches.urls.root + `workflow-builder/plugins?id=${this.workflowId()}`);
         this.workflowPlugin(workflow);
         this.loadSteps(this.workflowPlugin()?.config.stepData);
         this.workflowName(this.workflowPlugin()?.name);

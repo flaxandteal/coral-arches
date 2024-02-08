@@ -18,28 +18,28 @@ define([
       /**
        * Only run in open mode.
        */
-      // const openMode = JSON.parse(localStorage.getItem(this.WORKFLOW_OPEN_MODE_LABEL));
-      // if (!openMode) return;
-      // localStorage.removeItem(this.WORKFLOW_OPEN_MODE_LABEL);
       this.getWorkflowHistoryData = async function (key) {
-        console.log('arches.urls.open_workflow: ', arches.urls.open_workflow);
         const openMode = JSON.parse(localStorage.getItem(this.WORKFLOW_OPEN_MODE_LABEL));
         localStorage.removeItem(this.WORKFLOW_OPEN_MODE_LABEL);
 
         if (openMode) {
+          console.log('RUNNING WITH OPEN MODE')
+          const workflowId = this.id();
           const searchParams = new URLSearchParams(window.location.search);
           const resourceId = searchParams.get('resource-id');
-          const workflowid = this.id();
-          const response = await fetch(`/open-workflow?resource-id=${resourceId}&workflow-id=${workflowid}`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-              'X-CSRFToken': Cookies.get('csrftoken')
+          const response = await fetch(
+            `/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}`,
+            {
+              method: 'GET',
+              credentials: 'include',
+              headers: {
+                'X-CSRFToken': Cookies.get('csrftoken')
+              }
             }
-          });
+          );
           if (response.ok) {
             const data = await response.json();
-            console.log('response ok: ', data);
+            console.log('path 2: ', data);
             return data;
           } else {
             this.alert(
@@ -53,8 +53,8 @@ define([
             );
           }
         } else {
+          console.log('RUNNING WITHOUT OPEN MODE')
           const workflowid = this.id();
-          console.log('I* workflowid: ', workflowid)
           const response = await fetch(arches.urls.workflow_history + workflowid, {
             method: 'GET',
             credentials: 'include',
@@ -64,10 +64,9 @@ define([
           });
           if (response.ok) {
             const data = await response.json();
-            console.log('path 2: ', data)
             return data;
           } else {
-            this.alert(
+            self.alert(
               new AlertViewModel(
                 'ep-alert-red',
                 response.statusText,
