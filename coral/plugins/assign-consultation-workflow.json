@@ -7,7 +7,67 @@
   "config": {
     "show": false,
     "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
-    "stepData": []
+    "stepData": [
+      {
+        "name": "4bc80729-5020-495b-9c42-c6890f565fec",
+        "title": "Initial step",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                  ],
+                  "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "125f2e4c-fa71-4469-908f-cf8e8bd3de15"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "90206211-0b04-4080-a33d-d160eda03919",
+        "title": "Application Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": []
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "d82c7483-1a9b-49df-bc5f-60c5cd47e3ac",
+        "title": "Location Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": []
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "5445000b-0d10-4e0d-af40-d3586054ac6e",
+        "title": "Action",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": []
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
   },
   "slug": "assign-consultation-workflow",
   "sortorder": 0
