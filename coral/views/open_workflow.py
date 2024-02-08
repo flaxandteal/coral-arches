@@ -12,8 +12,8 @@ class OpenWorkflow(View):
     def get(self, request):
         resource_instance_id = request.GET.get("resource-id")
         workflow_id = request.GET.get("")
-        histories = models.WorkflowHistory.objects.all().order_by('-created')
-        
+        histories = models.WorkflowHistory.objects.all().order_by("-created")
+
         # Find workflow structure
         # FIXME: What if a resource id appears in another workflows history
         # FIXME: Get upstream Arches workflow slug into the database table
@@ -25,7 +25,7 @@ class OpenWorkflow(View):
                 if type(componentdata["value"]) == list:
                     for manycomponentdata in componentdata["value"]:
                         if (
-                            manycomponentdata["resourceinstance_id"]
+                            manycomponentdata.get("resourceInstanceId")
                             == resource_instance_id
                         ):
                             found_history = history
@@ -39,14 +39,33 @@ class OpenWorkflow(View):
                 continue
             break
 
-
-        
-        # return JSONResponse(found_history)
         # Refresh tiles with latest data
-        for componentdata in found_history.componentdata.values():
+        for key, componentdata in found_history.componentdata.items():
             if type(componentdata["value"]) == list:
-                for manycomponentdata in componentdata["value"]:
-                    tile = models.TileModel.objects.get(pk=manycomponentdata["tileid"])
+
+                # FIXME: Currently if a many workflow card is editted from outside the workflow
+                # the results won't be updated into the workflow. Something like this might work
+                # but don't have the time at the moment.
+                #
+                # print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX componentdata[value]: ', componentdata['value'])
+                # nodegroup_id = componentdata['value'][0].get('nodegroupId')
+                # print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX nodegroup: ', nodegroup_id)
+                # tiles = models.TileModel.objects.filter(resourceinstance=resource_instance_id, nodegroup=nodegroup_id)
+                # print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX tiles: ', tiles)
+                # componentdata["value"] = list(tiles)
+
+                for i in range(len(componentdata["value"])):
+                    manycomponentdata = componentdata["value"][i]
+                    print("manycomponentdata: ", manycomponentdata)
+                    tile_id = manycomponentdata.get("tileId") or manycomponentdata.get(
+                        "tileid"
+                    )
+                    tile = None
+                    try:
+                        tile = models.TileModel.objects.get(pk=tile_id)
+                    except models.TileModel.DoesNotExist:
+                        del componentdata["value"][i]
+                        continue
                     manycomponentdata["data"] = tile.data
             else:
                 tile = models.TileModel.objects.get(pk=componentdata["value"]["tileId"])
@@ -55,17 +74,7 @@ class OpenWorkflow(View):
         found_history.completed = False
         found_history.workflowid = workflow_id
 
-        new_history = models.WorkflowHistory(
-            workflowid=found_history.workflowid,
-            stepdata=found_history.stepdata,
-            componentdata=found_history.componentdata,
-            completed=found_history.completed,
-            user=request.user
-        )
-
-        new_history.save()
-
-        return JSONResponse(new_history)
+        return JSONResponse(found_history)
 
 
 # {
