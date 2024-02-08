@@ -13,6 +13,7 @@ define([
 
     this.graphid = params.graphid;
     this.graphids = params.graphids ? params.graphids : [this.graphid];
+    this.labels = params.labels || [];
     this.title = ko.observable(params?.title || '')
 
     if (this.form.componentData.parameters.prefilledNodes) {
