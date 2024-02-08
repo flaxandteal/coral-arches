@@ -14,7 +14,6 @@ define([
 
     this.WORKFLOW_OPEN_MODE_LABEL = 'workflow-open-mode';
 
-
     (() => {
       /**
        * Only run in open mode.
@@ -23,23 +22,24 @@ define([
       if (!openMode) return;
       localStorage.removeItem(this.WORKFLOW_OPEN_MODE_LABEL);
 
-
-
       this.getWorkflowHistoryData = async function (key) {
-        console.log('arches.urls.open_workflow: ', arches.urls.open_workflow)
+        console.log('arches.urls.open_workflow: ', arches.urls.open_workflow);
         const workflowId = this.id();
         const searchParams = new URLSearchParams(window.location.search);
         const resourceId = searchParams.get('resource-id');
-        const response = await fetch(`/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'X-CSRFToken': Cookies.get('csrftoken')
+        const response = await fetch(
+          `/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}`,
+          {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'X-CSRFToken': Cookies.get('csrftoken')
+            }
           }
-        });
+        );
         if (response.ok) {
           const data = await response.json();
-          console.log('response ok: ', data)
+          console.log('response ok: ', data);
           return data;
         } else {
           this.alert(
