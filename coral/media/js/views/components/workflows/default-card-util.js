@@ -6,7 +6,7 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/cards/default.htm'
+  'templates/views/components/workflows/default-card-util.htm'
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
