@@ -2,7 +2,7 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 import datetime
-from django.db.models import Q, Max
+from django.db.models import Max
 
 # ResourceInstance - arches/arches/app/models/models.py
 # an example of post_save() - arches/arches/app/models/tile.py
@@ -18,12 +18,6 @@ LICENSE_NUMBER_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
 
 SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
 SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
-
-EXTERNAL_REF_NODEGROUP = "280b6cfc-4e4d-11ee-a340-0242ac140007"
-EXTERNAL_REF_SOURCE_NODE = "280b7a9e-4e4d-11ee-a340-0242ac140007"
-EXTERNAL_REF_NUMBER_NODE = "280b75bc-4e4d-11ee-a340-0242ac140007"
-EXTERNAL_REF_NOTE_NODE = "280b78fa-4e4d-11ee-a340-0242ac140007"
-EXTERNAL_REF_EXCAVATION_VALUE = "9a383c95-b795-4d76-957a-39f84bcee49e"
 
 STATUS_NODEGROUP = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
 STATUS_NODE = "a79fedae-bad5-11ee-900d-0242ac180006"
