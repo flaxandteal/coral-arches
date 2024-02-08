@@ -43,28 +43,22 @@ define([
         },
         context: this,
         success: async function (response) {
-          console.log('response: ', response);
-          console.log('arches.urls: ', arches.urls);
-          console.log(
-            'arches.urls.resource_tiles: ',
-            arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '')
-          );
-
           const enforcements = response.results.hits.hits.map((hit) => {
             return hit._source;
           });
 
           for (const enforcement of enforcements) {
-            enforcement.tiles = (await $.getJSON(
-              arches.urls.resource_tiles.replace(
-                'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-                enforcement.resourceinstanceid
+            enforcement.tiles = (
+              await $.getJSON(
+                arches.urls.resource_tiles.replace(
+                  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+                  enforcement.resourceinstanceid
+                )
               )
-            )).tiles;
+            ).tiles;
           }
 
           this.consultations(enforcements);
-          console.log('this.consultations: ', this.consultations());
         },
         error: function (response, status, error) {},
         complete: function (request, status) {}
@@ -72,14 +66,12 @@ define([
     };
 
     this.getDescription = (consultation) => {
-      console.log('consultation: ', consultation);
       const descriptionTile = consultation.tiles.find((tile) => {
         return tile.nodegroup === '89bf628e-b552-11ee-805b-0242ac120006';
       });
       const statusTile = consultation.tiles.find((tile) => {
         return tile.nodegroup === 'ac823b90-b555-11ee-805b-0242ac120006';
       });
-      console.log('descriptionTile: ', descriptionTile);
       return {
         status: statusTile?.data['c9711ef6-b555-11ee-baf6-0242ac120006'],
         description:
