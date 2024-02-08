@@ -53,10 +53,9 @@ class OpenWorkflow(View):
                 # tiles = models.TileModel.objects.filter(resourceinstance=resource_instance_id, nodegroup=nodegroup_id)
                 # print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX tiles: ', tiles)
                 # componentdata["value"] = list(tiles)
-
+                remove_tile_ids = []
                 for i in range(len(componentdata["value"])):
                     manycomponentdata = componentdata["value"][i]
-                    print("manycomponentdata: ", manycomponentdata)
                     tile_id = manycomponentdata.get("tileId") or manycomponentdata.get(
                         "tileid"
                     )
@@ -64,9 +63,18 @@ class OpenWorkflow(View):
                     try:
                         tile = models.TileModel.objects.get(pk=tile_id)
                     except models.TileModel.DoesNotExist:
-                        del componentdata["value"][i]
+                        remove_tile_ids.append(tile_id)
                         continue
                     manycomponentdata["data"] = tile.data
+
+                componentdata["value"] = list(
+                    filter(
+                        lambda data: data.get("tileId" or data.get("tileid"))
+                        not in remove_tile_ids,
+                        componentdata["value"],
+                    )
+                )
+
             else:
                 tile = models.TileModel.objects.get(pk=componentdata["value"]["tileId"])
                 componentdata["value"]["tileData"] = json.dumps(tile.data)
