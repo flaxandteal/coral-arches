@@ -2,7 +2,7 @@ name: Build Arches project
 run-name: Build Arches project
 on: [push]
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base-7.5-dev:feature-django-casbin--testing
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base-7.5-dev:feature-django-casbin
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
@@ -189,8 +189,8 @@ jobs:
           ESHOST: "elasticsearch"
           ESPORT: "9200"
           CELERY_BROKER_URL: "amqp://rabbitmq"
-          DJANGO_MODE: "DEV"
-          DJANGO_DEBUG: "True"
+          DJANGO_MODE: "PROD"
+          DJANGO_DEBUG: "False"
           DOMAIN_NAMES: "localhost"
           PYTHONUNBUFFERED: "0"
           STATIC_URL: "/static/"
@@ -358,8 +358,8 @@ jobs:
           ESHOST: "elasticsearch"
           ESPORT: "9200"
           CELERY_BROKER_URL: "amqp://rabbitmq"
-          DJANGO_MODE: "DEV"
-          DJANGO_DEBUG: "True"
+          DJANGO_MODE: "PROD"
+          DJANGO_DEBUG: "False"
           DOMAIN_NAMES: "arches"
           PYTHONUNBUFFERED: "0"
           TZ: "PST"

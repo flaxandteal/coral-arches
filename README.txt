@@ -1,7 +1,8 @@
-# Welcome to the Arches Project!
+# Coral Arches
 
-Arches is a new, open-source, web-based, geospatial information system for cultural heritage inventory and management. Arches is purpose-built for the international cultural heritage field, and it is designed to record all types of immovable heritage, including archaeological sites, buildings and other historic structures, landscapes, and heritage ensembles or districts.
+This Arches implementation is designed to be run with Kubernetes and Dockerized.
 
-Please see the [project page](http://archesproject.org/) for more information on the Arches project.
+In addition, it uses Casbin permissions and a patched version of Arches.
 
-The Arches Installation Guide and Arches User Guide are available [here](http://archesproject.org/documentation/).
+This is in-development software: no warranty is made for open source use as regards
+the reliability, consistency, security or stability at this point.
