@@ -49,6 +49,7 @@ class Command(BaseCommand):
         enforcer.model.logger.setLevel(logging.INFO)
         framework.recalculate_table()
         enforcer.model.print_policy()
+        print(enforcer.get_implicit_permissions_for_user("u:310"))
         #group_tree = {}
         #set_tree = {}
         #group_x_set = []

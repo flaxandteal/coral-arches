@@ -26,7 +26,7 @@ from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
-from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group
+from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm
 
 from arches_orm.models import Person, Organization, Set, LogicalSet, Group
 from arches_orm.wrapper import ResourceWrapper
@@ -38,6 +38,14 @@ REMAPPINGS = {
     "70415d03-b11b-48a6-b989-933d788ffc88": ["view_resourceinstance"],
     "45d54859-bf3c-48f2-a387-55a0050ff572": ["execute_resourceinstance"],
 }
+GRAPH_REMAPPINGS = {
+    "809598ac-6dc5-498e-a7af-52b1381942a4": "models.write_nodegroup",
+    "33a0218b-b1cc-42d8-9a79-31a6b2147893": "models.write_nodegroup",
+    "70415d03-b11b-48a6-b989-933d788ffc88": "models.read_nodegroup",
+    "45d54859-bf3c-48f2-a387-55a0050ff572": "models.write_nodegroup",
+}
+REV_GRAPH_REMAPPINGS = {v: k for k, v in GRAPH_REMAPPINGS.items()}
+RESOURCE_TO_GRAPH_REMAPPINGS = {v[0]: GRAPH_REMAPPINGS[k] for k, v in REMAPPINGS.items()}
 
 
 class NoSubjectError(RuntimeError):
@@ -300,28 +308,39 @@ class CasbinPermissionFramework(PermissionFramework):
 
     # This is slow and should be avoided where possible.
     def get_perms(self, user_or_group, obj):
-        return {
-            act for sub, tobj, act in
-            self._get_perms(user_or_group, obj)
-        }
+        perms = set()
+        for sub, tobj, act in self._get_perms(user_or_group, obj):
+            perms |= set(REMAPPINGS.get(act, act))
+        return perms
 
     def get_group_perms(self, user_or_group, obj):
         # FIXME: what should this do if a group is passed?
-        return {
-            act for sub, tobj, act in
-            self._get_perms(user_or_group, obj)
-            if sub != f"u:{user_or_group.pk}"
-        }
+        perms = set()
+        for sub, tobj, act in self._get_perms(user_or_group, obj):
+            if sub != f"u:{user_or_group.pk}":
+                perms |= set(REMAPPINGS.get(act, act))
+        return perms
 
     def get_user_perms(self, user, obj):
-        return {
-            act for sub, tobj, act in
-            self._get_perms(user, obj)
-            if sub == f"u:{user.pk}"
-        }
+        perms = set()
+        for sub, tobj, act in self._get_perms(user, obj):
+            if sub == f"u:{user.pk}":
+                perms |= set(REMAPPINGS.get(act, act))
+        return perms
 
     def _get_perms(self, user_or_group, obj):
         if obj is not None:
+            if isinstance(obj, ResourceInstance):
+                if isinstance(user_or_group, User) and user_or_group.id and obj.principaluser_id and int(user_or_group.id) == int(obj.principaluser_id):
+                    return {
+                        resource_perm for perm, resource_perm in REV_GRAPH_REMAPPINGS.items()
+                        if self.user_has_resource_model_permissions(
+                            user_or_group,
+                            [perm],
+                            obj
+                        )
+                    }
+
             obj = self._obj_to_str(obj)
 
         user_or_group = self._subj_to_str(user_or_group)
@@ -482,8 +501,17 @@ class CasbinPermissionFramework(PermissionFramework):
 
         try:
             resource = Resource(resourceinstanceid=resourceid)
-            result["resource"] = resource
             index = resource.get_index()
+            if (principal_users := index.get("_source", {}).get("permissions", {}).get("principal_user", [])):
+                if len(principal_users) >= 1 and user and user.id in principal_users:
+                    if permission == "view_resourceinstance" and self.user_has_resource_model_permissions(user, ["models.read_nodegroup"], resource):
+                        result["permitted"] = True
+                        return result
+                    elif user.groups.filter(name__in=settings.RESOURCE_EDITOR_GROUPS).exists() or self.user_can_edit_model_nodegroups(
+                        user, resource
+                    ):
+                        result["permitted"] = True
+                        return result
             sets = [
                 st.get("id") for st in index.get("_source", {}).get("sets", {})
             ]
@@ -669,6 +697,7 @@ class CasbinPermissionFramework(PermissionFramework):
         if user.is_superuser:
             return True
         groups = self._enforcer.get_implicit_users_for_resource(f"gp:{resource.graph_id}")
+        print(groups, "GROUPS")
         group_ids = {
             group[3:] for group, _, act in groups
             if group.startswith("dg:") and
@@ -709,6 +738,7 @@ class CasbinPermissionFramework(PermissionFramework):
         allowed = set()
         subj = self._subj_to_str(user)
         graphs = self._enforcer.get_implicit_permissions_for_user(subj)
+        print(graphs, "GRAPHS", subj)
         permissioned_graphs = set()
         for _, graph, act in graphs:
             if not graph.startswith("gp:"):

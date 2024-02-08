@@ -34,7 +34,7 @@ GROUPINGS = {
 }
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=0, minor=0, patch=0)
+APP_VERSION = semantic_version.Version(major=2, minor=1, patch=0)
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 MIN_ARCHES_VERSION = arches.__version__
 MAX_ARCHES_VERSION = arches.__version__
@@ -137,8 +137,7 @@ UPLOADED_FILES_DIR = "uploadedfiles"
 SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DEBUG", os.getenv("DJANGO_DEBUG", False))
-DEBUG = False
+DEBUG = os.getenv("DEBUG", os.getenv("DJANGO_DEBUG", False))
 
 ROOT_URLCONF = 'coral.urls'
 
