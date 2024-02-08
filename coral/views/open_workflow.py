@@ -69,7 +69,7 @@ class OpenWorkflow(View):
 
                 componentdata["value"] = list(
                     filter(
-                        lambda data: data.get("tileId" or data.get("tileid"))
+                        lambda data: (data.get("tileId") or data.get("tileid"))
                         not in remove_tile_ids,
                         componentdata["value"],
                     )
