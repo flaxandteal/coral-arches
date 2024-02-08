@@ -6,7 +6,6 @@
     <div style="margin-bottom: 8px">Pick a resource to start as the base of the workflow:</div>
     <div style="display: flex; flex-wrap: wrap; gap: 8px">
       <!-- ko foreach: { data: resources(), as: 'resource', noChildContext: true } -->
-      <!-- ;  -->
       <div
         data-bind="text: resource.name, click: () => {
           openWorkflowBuilderWithGraph(resource.graphid);
@@ -18,7 +17,6 @@
     <div style="margin-bottom: 8px; margin-top: 8px">Edit an existing workflow:</div>
     <div style="display: flex; flex-wrap: wrap; gap: 8px">
       <!-- ko foreach: { data: workflows(), as: 'workflow', noChildContext: true } -->
-      <!-- ;  -->
       <div
         data-bind="text: workflow.name, click: () => {
           openWorkflowBuilderWithWorkflow(workflow.pluginid);
@@ -27,76 +25,5 @@
       ></div>
       <!-- /ko -->
     </div>
-
-    <!-- <div
-      data-bind="component: {
-          name: 'resource-instance-select-widget',
-          params: {
-            config: {
-              label: 'Workflow Base Resource',
-              placeholder: 'Select a resource',
-            },
-            renderContext: 'workflow',
-            value: selectedResource
-          }
-        }"
-    ></div> -->
-    <!-- <div
-      data-bind="component: {
-            name: 'domain-select-widget',
-            node: {
-            'config': {
-                'options': applicantList,
-                'multiple': true
-            },
-            },
-            params: {
-            node: {
-            'config': {
-                'options': applicantList,
-                'multiple': true
-                },
-                'configKeys': configKeys
-            },
-            config: {
-                'label': 'Recipient Name',
-                'options': applicantList,
-                'multiple': true
-            },
-            value: applicantText,
-            loading: loading,
-            form: $data,
-            pageVm: $root
-            }
-        }"
-    ></div> -->
-  </div>
-  <div class="row widget-wrapper" style="display: flex">
-    <!-- <button
-      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
-      style="min-height: 40.56px"
-      data-bind="click: () => {
-          window.location.href = workflowUrl();
-        }"
-    >
-      <span>Start New</span>
-    </button>
-    <button
-      class="btn btn-shim btn-labeled btn-lg btn-primary"
-      style="min-height: 40.56px"
-      data-bind="click: async () => {
-          await editWorkflow();
-          window.location.href = workflowUrl();
-        }, disable: !selectedResource()"
-    >
-      <span>Edit Selected</span>
-    </button>
-    <button
-      class="btn btn-shim btn-labeled btn-lg btn-danger"
-      style="min-height: 40.56px"
-      data-bind="click: clearRecentlyEdited"
-    >
-      <span>Clear Recents</span>
-    </button> -->
   </div>
 </div>
