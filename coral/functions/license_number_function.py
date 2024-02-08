@@ -185,8 +185,6 @@ class LicenseNumberFunction(BaseFunction):
             if tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
                 return
             
-        # Good up to here
-
         license_number = generate_license_number(resource_instance_id)
 
         if not license_number:
