@@ -23,7 +23,6 @@ define([
         localStorage.removeItem(this.WORKFLOW_OPEN_MODE_LABEL);
 
         if (openMode) {
-          console.log('RUNNING WITH OPEN MODE')
           const workflowId = this.id();
           const searchParams = new URLSearchParams(window.location.search);
           const resourceId = searchParams.get('resource-id');
@@ -53,7 +52,6 @@ define([
             );
           }
         } else {
-          console.log('RUNNING WITHOUT OPEN MODE')
           const workflowid = this.id();
           const response = await fetch(arches.urls.workflow_history + workflowid, {
             method: 'GET',
