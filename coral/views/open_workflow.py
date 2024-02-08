@@ -12,33 +12,72 @@ class OpenWorkflow(View):
     def get(self, request):
         resource_instance_id = request.GET.get("resource-id")
         workflow_id = request.GET.get("")
-        histories = models.WorkflowHistory.objects.all().order_by('-created')
-        
+        histories = models.WorkflowHistory.objects.all().order_by("-created")
+
         # Find workflow structure
         # FIXME: What if a resource id appears in another workflows history
         # FIXME: Get upstream Arches workflow slug into the database table
-        # FIXME: Need to handle many tiles being stored as arrays
         found_history = None
         for history in histories:
             for componentdata in history.componentdata.values():
-                if type(componentdata['value']) == list:
-                    for manycomponentdata in componentdata['value']:
-                        if manycomponentdata.get('resourceinstance_id') == resource_instance_id:
+                if "value" not in componentdata:
+                    continue
+                if type(componentdata["value"]) == list:
+                    for manycomponentdata in componentdata["value"]:
+                        if (
+                            manycomponentdata.get("resourceInstanceId")
+                            == resource_instance_id
+                        ):
                             found_history = history
                             break
-                elif componentdata['value']['resourceInstanceId'] == resource_instance_id: 
+                elif (
+                    componentdata["value"]["resourceInstanceId"] == resource_instance_id
+                ):
                     found_history = history
                     break
             else:
                 continue
             break
 
-
-        
         # Refresh tiles with latest data
-        for componentdata in found_history.componentdata.values():
-            tile = models.TileModel.objects.get(pk=componentdata['value']['tileId'])
-            componentdata['value']['tileData'] = json.dumps(tile.data)
+        for key, componentdata in found_history.componentdata.items():
+            if type(componentdata["value"]) == list:
+
+                # FIXME: Currently if a many workflow card is editted from outside the workflow
+                # the results won't be updated into the workflow. Something like this might work
+                # but don't have the time at the moment.
+                #
+                # print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX componentdata[value]: ', componentdata['value'])
+                # nodegroup_id = componentdata['value'][0].get('nodegroupId')
+                # print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX nodegroup: ', nodegroup_id)
+                # tiles = models.TileModel.objects.filter(resourceinstance=resource_instance_id, nodegroup=nodegroup_id)
+                # print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX tiles: ', tiles)
+                # componentdata["value"] = list(tiles)
+                remove_tile_ids = []
+                for i in range(len(componentdata["value"])):
+                    manycomponentdata = componentdata["value"][i]
+                    tile_id = manycomponentdata.get("tileId") or manycomponentdata.get(
+                        "tileid"
+                    )
+                    tile = None
+                    try:
+                        tile = models.TileModel.objects.get(pk=tile_id)
+                    except models.TileModel.DoesNotExist:
+                        remove_tile_ids.append(tile_id)
+                        continue
+                    manycomponentdata["data"] = tile.data
+
+                componentdata["value"] = list(
+                    filter(
+                        lambda data: (data.get("tileId") or data.get("tileid"))
+                        not in remove_tile_ids,
+                        componentdata["value"],
+                    )
+                )
+
+            else:
+                tile = models.TileModel.objects.get(pk=componentdata["value"]["tileId"])
+                componentdata["value"]["tileData"] = json.dumps(tile.data)
 
         found_history.completed = False
         found_history.workflowid = workflow_id

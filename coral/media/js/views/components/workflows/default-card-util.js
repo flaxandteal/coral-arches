@@ -4,55 +4,37 @@ define([
   'knockout-mapping',
   'uuid',
   'arches',
-  'templates/views/components/workflows/default-card-util.htm'
-], function (_, ko, koMapping, uuid, arches, widgetLabeller) {
+  'viewmodels/card-component',
+  'viewmodels/alert',
+  'templates/views/components/cards/default.htm'
+], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, widgetLabeller) {
   function viewModel(params) {
-    const self = this;
-
-    _.extend(this, params.form);
-    self.tile()?.dirty.subscribe(function (val) {
-      self.dirty(val);
-    });
-    self.tiles([self.tile()]);
+    CardComponentViewModel.apply(this, [params]);
 
     this.graphid = params.graphid;
     this.graphids = params.graphids ? params.graphids : [this.graphid];
-    this.hiddenCard = params?.hiddenCard || false;
 
-    this.hiddenCard = params?.hiddenCard || false;
-
-    if (this.componentData.parameters.prefilledNodes) {
-      this.componentData.parameters.prefilledNodes?.forEach((prefill) => {
-        Object.keys(self.tile().data).forEach((node) => {
+    if (this.form.componentData.parameters.prefilledNodes) {
+      this.form.componentData.parameters.prefilledNodes?.forEach((prefill) => {
+        Object.keys(this.form.tile().data).forEach((node) => {
           if (node == prefill[0]) {
-            self.tile().data[node](prefill[1]);
+            this.form.tile().data[node](prefill[1]);
           }
         });
       });
     }
 
-    this.card()
+    this.form
+      .card()
       ?.widgets()
       .forEach((widget) => {
         widget.graphids = this.graphids ? this.graphids : [this.graphid];
-        params.labels?.forEach(([prevLabel, newLabel]) => {
+        this.labels?.forEach(([prevLabel, newLabel]) => {
           if (widget.label() === prevLabel) {
             widget.label(newLabel);
           }
         });
       });
-
-    params.form.save = async () => {
-      await self.tile().save();
-      params.form.savedData({
-        tileData: koMapping.toJSON(self.tile().data),
-        tileId: self.tile().tileid,
-        resourceInstanceId: self.tile().resourceinstance_id,
-        nodegroupId: self.tile().nodegroup_id
-      });
-      params.form.complete(true);
-      params.form.saving(false);
-    };
 
     /**
      * Overridden function saveMultiTiles from WorkflowComponentAbstract.
@@ -63,10 +45,10 @@ define([
      *     so the tile won't exist when the user
      *     returns to that step
      */
-    params.form.saveMultiTiles = async () => {
-      self.complete(false);
-      self.saving(true);
-      self.previouslyPersistedComponentData = [];
+    this.form.saveMultiTiles = async () => {
+      this.form.complete(false);
+      this.form.saving(true);
+      this.previouslyPersistedComponentData = [];
 
       /**
        * Original version of this method that has been
@@ -74,78 +56,78 @@ define([
        * wasn't any tiles saved. Multi tile steps can
        * now progress if no data was provided.
        */
-      if (self.tiles().length === 0 && self.tilesToRemove().length === 0) {
-        self.complete(true);
-        self.loading(true);
-        self.saving(false);
+      if (this.tiles().length === 0 && this.tilesToRemove().length === 0) {
+        this.form.complete(true);
+        this.form.loading(true);
+        this.form.saving(false);
 
         return;
       }
 
-      let unorderedSavedData = ko.observableArray();
+      const unorderedSavedData = ko.observableArray();
 
-      self.tiles().forEach(function (tile) {
+      this.form.tiles().forEach((tile) => {
         tile.save(
-          function () {
+          () => {
             /* onFail */
           },
-          function (savedTileData) {
+          (savedTileData) => {
             unorderedSavedData.push(savedTileData);
           }
         );
       });
 
-      self.tilesToRemove().forEach(function (tile) {
+      this.form.tilesToRemove().forEach((tile) => {
         tile.deleteTile(
-          function (response) {
-            self.alert(
+          (response) => {
+            this.form.alert(
               new AlertViewModel(
                 'ep-alert-red',
                 response.responseJSON.title,
                 response.responseJSON.message,
                 null,
-                function () {
+                () => {
                   return;
                 }
               )
             );
           },
-          function () {
-            self.tilesToRemove.remove(tile);
+          () => {
+            this.form.tilesToRemove.remove(tile);
             /**
              * This functionality wasn't needed
              */
-            // if (self.tilesToRemove().length === 0) {
-            //   //   self.complete(true);
-            //   //   self.loading(true);
-            //   //   self.saving(false);
+            // if (this.tilesToRemove().length === 0) {
+            //   //   this.complete(true);
+            //   //   this.loading(true);
+            //   //   this.saving(false);
             // }
           }
         );
       });
 
-      if (!self.tiles().length) {
-        self.complete(true);
-        self.loading(true);
-        self.saving(false);
-        self.savedData([]);
+      if (!this.form.tiles().length) {
+        this.form.complete(true);
+        this.form.loading(true);
+        this.form.saving(false);
+        this.form.savedData([]);
       }
 
-      var saveSubscription = unorderedSavedData.subscribe(function (savedData) {
-        if (savedData.length === self.tiles().length) {
-          self.complete(true);
-          self.loading(true);
-          self.saving(false);
+      const saveSubscription = unorderedSavedData.subscribe((savedData) => {
+        if (savedData.length === this.form.tiles().length) {
+          this.form.complete(true);
+          this.form.loading(true);
+          this.form.saving(false);
 
-          var orderedSavedData = self.tiles().map(function (tile) {
-            return savedData.find(function (datum) {
+          const orderedSavedData = this.form.tiles().map((tile) => {
+            return savedData.find((datum) => {
               return datum.tileid === tile.tileid;
             });
           });
+          
+          this.form.savedData(orderedSavedData.reverse());
 
-          self.savedData(orderedSavedData.reverse());
-
-          saveSubscription.dispose(); /* self-disposing subscription only runs once */
+          saveSubscription.dispose(); /* this-disposing subscription only runs once */
         }
       });
     };
