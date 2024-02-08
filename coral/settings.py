@@ -34,7 +34,7 @@ GROUPINGS = {
 }
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=2, minor=2, patch=0)
+APP_VERSION = semantic_version.Version(major=2, minor=1, patch=0)
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 MIN_ARCHES_VERSION = arches.__version__
 MAX_ARCHES_VERSION = arches.__version__
