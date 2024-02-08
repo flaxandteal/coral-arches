@@ -222,6 +222,13 @@
 
 <!-- ko if: state === 'form' -->
 {% block form %}
+<!-- ko if: title() -->
+<h4
+  class="card-component-panel-h4"
+  style="margin-left: 50px; margin-top: 40px"
+  data-bind="text: title()"
+></h4>
+<!-- /ko -->
 <div class="card-component" data-bind="css: card.model.cssclass">
 
     <!-- ko if: reviewer && provisionalTileViewModel.selectedProvisionalEdit() -->
