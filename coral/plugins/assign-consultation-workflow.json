@@ -1,0 +1,14 @@
+{
+  "pluginid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
+  "name": "Assign Consultation",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+    "stepData": []
+  },
+  "slug": "assign-consultation-workflow",
+  "sortorder": 0
+}
