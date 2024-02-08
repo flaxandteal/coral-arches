@@ -6,13 +6,15 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/cards/default.htm'
-], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, widgetLabeller) {
+  'templates/views/components/workflows/default-card-util.htm'
+], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
     this.graphid = params.graphid;
     this.graphids = params.graphids ? params.graphids : [this.graphid];
+    this.labels = params.labels || [];
+    this.title = ko.observable(params?.title || '')
 
     if (this.form.componentData.parameters.prefilledNodes) {
       this.form.componentData.parameters.prefilledNodes?.forEach((prefill) => {
@@ -135,7 +137,7 @@ define([
 
   ko.components.register('default-card-util', {
     viewModel: viewModel,
-    template: widgetLabeller
+    template: template
   });
 
   return viewModel;
