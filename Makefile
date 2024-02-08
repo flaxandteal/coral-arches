@@ -108,6 +108,10 @@ docker-compose: docker
 manage: docker
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; python manage.py $(CMD)'
 
+.PHONY: webpack
+webpack: docker
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd coral; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'
+
 .PHONY: clean
 clean: docker
 	@echo -n "This will remove all database and elasticsearch data, are you sure? [y/N] " && read confirmation && [ $${confirmation:-N} = y ]
