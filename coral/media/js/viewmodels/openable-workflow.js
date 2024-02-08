@@ -23,7 +23,6 @@ define([
       localStorage.removeItem(this.WORKFLOW_OPEN_MODE_LABEL);
 
       this.getWorkflowHistoryData = async function (key) {
-        console.log('arches.urls.open_workflow: ', arches.urls.open_workflow);
         const workflowId = this.id();
         const searchParams = new URLSearchParams(window.location.search);
         const resourceId = searchParams.get('resource-id');
@@ -39,7 +38,6 @@ define([
         );
         if (response.ok) {
           const data = await response.json();
-          console.log('response ok: ', data);
           return data;
         } else {
           this.alert(
