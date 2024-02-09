@@ -30,6 +30,9 @@ class OpenWorkflow(View):
                         ):
                             found_history = history
                             break
+                    else:
+                        continue
+                    break
                 elif (
                     componentdata["value"]["resourceInstanceId"] == resource_instance_id
                 ):
