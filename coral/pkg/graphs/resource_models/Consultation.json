@@ -15024,9 +15024,70 @@
                 {
                     "alias": "development_type",
                     "config": {
-                        "rdmCollection": "d2d61313-085c-4885-a7ad-6d0ac6d20562"
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "22de9311-f2de-448b-927f-4374df42b688",
+                                "selected": false,
+                                "text": {
+                                    "en": "Single Dwelling"
+                                }
+                            },
+                            {
+                                "id": "f96ee495-5713-4506-9932-53483242ddee",
+                                "selected": false,
+                                "text": {
+                                    "en": "Housing"
+                                }
+                            },
+                            {
+                                "id": "e9eed804-3927-4f2c-be17-def71b60a07c",
+                                "selected": false,
+                                "text": {
+                                    "en": "Repairs"
+                                }
+                            },
+                            {
+                                "id": "b18aa04e-0978-4c1f-979a-293046a9ce99",
+                                "selected": false,
+                                "text": {
+                                    "en": "Domestic Extension"
+                                }
+                            },
+                            {
+                                "id": "3c41f684-c70a-4b03-8fd5-69d1175eae24",
+                                "selected": false,
+                                "text": {
+                                    "en": "Change of Use"
+                                }
+                            },
+                            {
+                                "id": "671f5fe4-b44c-48e9-b41f-e9812dd4381e",
+                                "selected": false,
+                                "text": {
+                                    "en": "Wind Turbine"
+                                }
+                            },
+                            {
+                                "id": "1d44a731-8ef1-469f-a7ff-923b49ab0ebc",
+                                "selected": false,
+                                "text": {
+                                    "en": "Public Realm"
+                                }
+                            },
+                            {
+                                "id": "ee68f7c0-4081-4d35-923e-12137180190c",
+                                "selected": false,
+                                "text": {
+                                    "en": "Other"
+                                }
+                            }
+                        ],
+                        "rdmCollection": null
                     },
-                    "datatype": "concept",
+                    "datatype": "domain-value",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Dev_Type",
