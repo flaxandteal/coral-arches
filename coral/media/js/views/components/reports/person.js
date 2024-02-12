@@ -6,7 +6,8 @@ define([
     'utils/resource',
     'utils/report',
     'templates/views/components/reports/person.htm',
-    'views/components/reports/scenes/name'
+    'views/components/reports/scenes/name',
+    'views/components/reports/scenes/user-account'
 ], function($, _, ko, arches, resourceUtils, reportUtils, personReportTemplate) {
     return ko.components.register('person-report', {
         viewModel: function(params) {
@@ -19,6 +20,7 @@ define([
             self.sections = [
                 {id: 'name', title: 'Names and Classifications'},
                 {id: 'person-name', title: 'Person Name and Identifiers'},
+                {id: 'user-account', title: 'User Account'},
                 {id: 'description', title: 'Descriptions and Citations'},
                 {id: 'location', title: 'Location Data'},
                 {id: 'images', title: 'Images'},
@@ -75,6 +77,10 @@ define([
                 geometry: undefined
             };
 
+            self.userAccountDataConfig = {
+                userSignupLink: 'user signup link'
+            };
+
             self.descriptionDataConfig = {
                 citation: 'bibliographic source citation'
             };
@@ -85,6 +91,7 @@ define([
                 actors: undefined
             };
             self.nameCards = {};
+            self.userAccountCards = {};
             self.descriptionCards = {};
             self.locationCards = {};
             self.documentationCards = {};
@@ -109,6 +116,11 @@ define([
                     systemReferenceNumbers: self.cards?.['system reference numbers'],
                 };
 
+                self.userAccountCards = {
+                    userAccount: self.cards?.['user account']
+                };
+                console.log(self.userAccountCards, "CARDS");
+
                 self.descriptionCards = {
                     descriptions: self.cards?.['descriptions'],
                     citation: self.cards?.['bibliographic source citation']
@@ -122,6 +134,7 @@ define([
                     contactPoints: self.cards?.['contact information for person'],
                 };
 
+                console.log(self.cards, "CARDS");
                 self.imagesCards = {
                     images: self.cards?.['images']
                 }
@@ -164,8 +177,26 @@ define([
                     const epithet = self.getNodeValue(node, 'epithets', 'epithet');
                     const tileid = self.getTileId(node);
                     return { name, nameUseType, initials, forename, title, epithet, surname, tileid };
-                }))
+                }));
             }
+
+            self.getUserAccountSignupURL = function(){
+                return $.ajax({
+                    url: arches.urls.root + 'person/signup-link',
+                    context: this,
+                    method: 'GET',
+                    data: { personId: self.reportMetadata()?.resourceinstanceid },
+                    dataType: 'json'
+                })
+                    .done(function(data) {
+                        console.log('User signup link request succeeded');
+                    })
+                    .fail(function(data) {
+                        console.log('User signup link request failed', data);
+                    });
+            };
+            self.userAccountDataConfig.userSignupLink = self.getUserAccountSignupURL;
+
 
             self.lifeData = ko.observable({
                 sections:

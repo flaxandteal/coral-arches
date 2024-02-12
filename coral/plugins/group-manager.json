@@ -1,0 +1,12 @@
+{
+    "pluginid": "d1a49d4c-59ee-4db1-8ac3-fe45833fb45c",
+    "name": "Groups Management",
+    "icon": "fa fa-group",
+    "component": "views/components/plugins/group-manager",
+    "componentname": "group-manager",
+    "slug": "group-manager",
+    "config": {
+        "show": true
+    },
+    "sortorder": 1
+}

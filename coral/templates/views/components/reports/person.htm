@@ -97,6 +97,17 @@
                     </div>
                 </div>
             </div>
+            <!-- User Account Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'user-account'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/user-account',
+                    params: {
+                        data: resource,
+                        cards: userAccountCards,
+                        dataConfig: userAccountDataConfig
+                    }
+                }"></div>
+            </div>
             <!-- Description Tab -->
             <div class="aher-report-page" data-bind="if: activeSection() === 'description'">
                 <div data-bind="component: {

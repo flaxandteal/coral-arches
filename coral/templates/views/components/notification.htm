@@ -1,0 +1,64 @@
+{% load i18n %}
+
+<div class="notifications-container" >
+    {% block listitem %}
+
+    <div>
+        <div class='entry'><i data-bind=""></i>
+            <span class='time-label' data-bind="text: displaytime" ></span>
+        </div>
+        <div class="notification-message">
+            <span data-bind="text: message"></span> 
+
+            <ul>
+                <!-- ko foreach: loadedResources -->
+                <li>
+                    <span data-bind="text: $data"></span>
+                </li>
+                <!-- /ko -->
+            </ul>
+        </div>
+
+        <!-- ko if: link -->
+        <div class='entry'>
+            <button data-bind="click: getExportFile" class='btn btn-notifs-download btn-labeled btn-sm fa fa-download'>
+                <span data-bind="text: $root.translations.downloadZipFile"></span>
+            </button>
+            <div style="padding-left: 10px;" data-bind="text: info"></div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: files -->
+        <!-- ko foreach: { data: files, as: 'file' } -->
+        <div class='entry'>
+            <a data-bind="attr: { href: '/files/' + file.fileid }" target="_blank" style="color: steelblue">
+                <button class='btn btn-notifs-download btn-labeled btn-sm fa fa-download'>
+                    <span data-bind="text: file.name"></span>
+                </button>
+            </a>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: state.fields_cache.notif.context.resource_instance_id -->
+        <div class='entry'>
+            <a data-bind="attr: { href: 'open-workflow?workflow-slug=respond-to-enforcement-workflow&resource-id=' +  state.fields_cache.notif.context.resource_instance_id }" target="_blank" style="color: steelblue">
+                <button class='btn btn-notifs-download btn-labeled btn-sm fa fa-link'>
+                    <span data-bind="text: 'Open ' + state.fields_cache.notif.context.enforcement_id"></span>
+                </button>
+            </a>
+        </div>
+        <!-- /ko -->
+    </div>
+
+    <!-- ko if: !state.fields_cache.notif.context.enforcement_id -->
+    <div class='entry relative'>
+        <a href="javascript:void(0);" data-bind="click: function() { dismiss($parents[1]) }" class="ep-notifs-toggle ep-notifs-close">
+            <div class="" data-placement="bottom" data-toggle="tooltip" data-original-title="$root.translations.dismiss">
+                <i class="fa fa-times-circle fa-sm"></i>
+            </div>
+        </a>
+    </div>
+    <!-- /ko -->
+
+
+    {% endblock %}
+</div>

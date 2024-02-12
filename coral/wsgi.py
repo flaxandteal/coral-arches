@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import threading
 import os
 import sys
 import inspect
@@ -30,7 +31,28 @@ if path not in sys.path:
 os.environ['DJANGO_SETTINGS_MODULE'] = "coral.settings"
 
 from django.core.wsgi import get_wsgi_application
+from django.dispatch import receiver
+
 application = get_wsgi_application()
 
 from arches.app.models.system_settings import settings
 settings.update_from_db()
+
+from arches.app.models.resource import resource_indexed
+
+@receiver(resource_indexed)
+def update_permissions(sender, instance, **kwargs):
+    from coral.utils.casbin import SetApplicator
+    # This may run too quickly
+    # Instead, it should trigger a (debounced) recalc.
+    # This may still require delays _between_ the upserts also.
+    def _exec():
+        set_applicator = SetApplicator(print_statistics=True, wait_for_completion=True)
+        set_applicator.apply_sets(resourceinstanceid=instance.resourceinstanceid)
+    threading.Timer(3.0, _exec).start()
+
+if os.getenv("CASBIN_LISTEN", False):
+    from coral.permissions.casbin import trigger
+    t = threading.Thread(target=trigger.listen)
+    t.setDaemon(True)
+    t.start()

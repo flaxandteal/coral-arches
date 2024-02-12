@@ -1,0 +1,103 @@
+<div class="card-component">
+  <h4 class="card-title">Workflow Config</h4>
+  <div class="row widget-wrapper">
+    <div class="form-group">
+      <label
+        class="control-label widget-input-label"
+        for=""
+        data-bind="text: 'Workflow Name'"
+      ></label>
+      <div class="col-xs-12">
+        <input
+          type="text"
+          data-bind="textInput: $data.workflowName, attr: {placeholder: 'Please provide a name for the workflow'}"
+          class="form-control input-lg widget-input"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row widget-wrapper">
+    <div class="form-group">
+      <div style="display: flex; flex-direction: row">
+        <div>
+          <p class="control-label widget-input-label">
+            Auto generate workflow slug based on the workflow name?
+          </p>
+        </div>
+        <div></div>
+      </div>
+      <div class="col-xs-12">
+        <div style="pad-hor">
+          <label
+            data-bind="css: { 'active': autoGenerateSlug() === true, 'disabled': false }, click: function(e){setAutoGenerateSlug(true)}"
+            class="form-radio form-normal form-text"
+          >
+            <input
+              type="radio"
+              name="stat-w-label"
+              data-bind="checked: autoGenerateSlug() === true"
+            />
+            <span>Yes</span>
+          </label>
+          <label
+            data-bind="css: { 'active': autoGenerateSlug() === false, 'disabled': false }, click: function(e){setAutoGenerateSlug(false)}"
+            class="form-radio form-normal form-text"
+          >
+            <input
+              type="radio"
+              name="stat-w-label"
+              data-bind="checked: autoGenerateSlug() === false"
+            />
+            <span>No</span>
+          </label>
+        </div>
+      </div>
+      <label
+        class="control-label widget-input-label"
+        for=""
+        data-bind="text: 'Workflow Slug'"
+      ></label>
+      <div class="col-xs-12">
+        <input
+          type="text"
+          data-bind="textInput: $data.workflowSlug, attr: {placeholder: 'Please provide a unique workflow slug', disabled: autoGenerateSlug()}"
+          class="form-control input-lg widget-input"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row widget-wrapper">
+    <div class="form-group">
+      <div style="display: flex; flex-direction: row">
+        <div><p class="control-label widget-input-label">Show workflow in sidebar?</p></div>
+        <div></div>
+      </div>
+      <div class="col-xs-12">
+        <div style="pad-hor">
+          <label
+            data-bind="css: { 'active': showWorkflowInSidebar() === true, 'disabled': false }, click: function(e){setShowWorkflowInSidebar(true)}"
+            class="form-radio form-normal form-text"
+          >
+            <input
+              type="radio"
+              name="stat-w-label"
+              data-bind="checked: showWorkflowInSidebar() === true"
+            />
+            <span>Yes</span>
+          </label>
+          <label
+            data-bind="css: { 'active': showWorkflowInSidebar() === false, 'disabled': false }, click: function(e){setShowWorkflowInSidebar(false)}"
+            class="form-radio form-normal form-text"
+          >
+            <input
+              type="radio"
+              name="stat-w-label"
+              data-bind="checked: showWorkflowInSidebar() === false"
+            />
+            <span>No</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

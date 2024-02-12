@@ -1,0 +1,76 @@
+<div style="margin: 15px; white-space: nowrap">
+  <h5>Recently opened</h5>
+  <!-- ko if: !recentlyOpenedResources().length -->
+  <span>None available</span>
+  <!-- /ko -->
+  <!-- ko foreach: { data: recentlyOpenedResources(), as: 'opened', noChildContext: true } -->
+  <div
+    style="
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 4px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-bottom: 8px;
+    "
+    data-bind="click: async () => {
+      await openRecent(opened.resourceId);
+      window.location.href = workflowUrl();
+    }"
+  >
+    <span data-bind="text: opened.name"></span>
+  </div>
+  <!-- /ko -->
+</div>
+<div class="card-component" style="width: 100%">
+  <div class="row widget-wrapper">
+    <h4 data-bind="text: workflow().name"></h4>
+  </div>
+  <div class="row widget-wrapper">
+    <div
+      data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+          graphids: [
+            graphId(),
+          ],
+          config: {
+            label: 'Select License',
+            placeholder: 'Start new or please select below',
+          },
+          renderContext: 'workflow',
+          value: selectedResource
+        }
+      }"
+    ></div>
+  </div>
+  <div class="row widget-wrapper" style="display: flex">
+    <!-- ko if: !workflow().disableStartNew -->
+    <button
+      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
+      style="min-height: 40.56px"
+      data-bind="click: () => {
+        window.location.href = workflowUrl();
+      }"
+    >
+      <span>Start New</span>
+    </button>
+    <!-- /ko -->
+    <button
+      class="btn btn-shim btn-labeled btn-lg btn-primary"
+      style="min-height: 40.56px"
+      data-bind="click: async () => {
+        await openWorkflow();
+      }, disable: !selectedResource()"
+    >
+      <span>Open Selected</span>
+    </button>
+    <button
+      class="btn btn-shim btn-labeled btn-lg btn-danger"
+      style="min-height: 40.56px"
+      data-bind="click: clearRecentlyOpened"
+    >
+      <span>Clear Recents</span>
+    </button>
+  </div>
+</div>

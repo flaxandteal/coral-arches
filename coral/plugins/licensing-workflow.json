@@ -1,0 +1,12 @@
+{
+  "pluginid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
+  "name": "Licensing",
+  "icon": "fa fa-file-text",
+  "component": "views/components/plugins/licensing-workflow",
+  "componentname": "licensing-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "licensing-workflow",
+  "sortorder": 0
+}
