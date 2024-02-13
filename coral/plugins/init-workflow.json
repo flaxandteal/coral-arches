@@ -79,6 +79,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create or edit a License for an Excavation Activity"
+      },
+      {
+        "workflowid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
+        "slug": "open-workflow?workflow-slug=assign-consultation-workflow",
+        "name": "Planning Consultation",
+        "icon": "fa fa-file-text",
+        "bgColor": "#688294",
+        "circleColor": "#7195ad",
+        "desc": "Assign a Consultation to the appropriate team"
       }
     ],
     "show": true
