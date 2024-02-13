@@ -23539,9 +23539,41 @@
                 {
                     "alias": "action_type",
                     "config": {
-                        "rdmCollection": "f60c394e-c99f-4c91-9f68-791465036cde"
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "7d2b266f-f76d-4d25-87f5-b67ff1e1350f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Assign To Both HM & HB"
+                                }
+                            },
+                            {
+                                "id": "12041c21-6f30-4772-b3dc-9a9a745a7a3f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Assign To HB"
+                                }
+                            },
+                            {
+                                "id": "94817212-3888-4b5c-90ad-a35ebd2445d5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Assign To HM"
+                                }
+                            },
+                            {
+                                "id": "4820872f-b74d-4767-984d-2874a076c4b4",
+                                "selected": false,
+                                "text": {
+                                    "en": "Reject"
+                                }
+                            }
+                        ]
                     },
-                    "datatype": "concept",
+                    "datatype": "domain-value",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Mitig_Type",
