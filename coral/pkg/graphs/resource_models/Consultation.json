@@ -22,7 +22,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "DIF Received Date"
                     },
@@ -550,7 +550,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Proposal"
                     },
@@ -604,7 +604,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Classification Type"
                     },
@@ -712,7 +712,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Consultation Dates"
                     },
@@ -826,7 +826,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Contacts"
                     },
@@ -1070,7 +1070,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Consultation Descriptions"
                     },
@@ -1234,7 +1234,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "CM References"
                     },
@@ -1288,7 +1288,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Actions"
                     },
@@ -1369,7 +1369,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Planning References"
                     },
@@ -2234,7 +2234,7 @@
                 {
                     "card_id": "083e043a-ca61-11ee-afca-0242ac180006",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": "58475cb6-53fd-4151-8b88-b26c1df25e3d",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -4700,8 +4700,13 @@
                     "card_id": "a5e3fb4c-51a3-11eb-aafb-f875a44e0e11",
                     "config": {
                         "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Status",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "0c8b93b5-c474-4d6b-9bfc-d234b0520515",
                     "label": {
@@ -4732,7 +4737,7 @@
                     "node_id": "54de6acc-8895-11ea-9067-f875a44e0e11",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "4ea4a18b-184f-11eb-a061-f875a44e0e11",
@@ -9399,7 +9404,7 @@
                     "node_id": "73fdfe62-8895-11ea-a058-f875a44e0e11",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "6a84425e-db20-11e9-a9b7-784f435179ea",
@@ -13612,7 +13617,7 @@
                     },
                     "function_id": "96efa95a-1e2c-4562-ac1f-b415796f9f75",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "0b346063-f968-4c28-a0b7-a9f7c6caee6a"
+                    "id": "02654993-e866-4330-bfe8-6efebea6ec22"
                 },
                 {
                     "config": {
@@ -13634,7 +13639,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "b6912bbc-9e53-4fef-98ba-3f25ffedc2eb"
+                    "id": "84dc9d02-caaf-4c57-9205-c765d195a599"
                 }
             ],
             "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -20241,7 +20246,7 @@
                     "hascustomalias": false,
                     "is_collector": true,
                     "isrequired": false,
-                    "issearchable": true,
+                    "issearchable": false,
                     "istopnode": false,
                     "name": "Application Type",
                     "nodegroup_id": "54de6acc-8895-11ea-9067-f875a44e0e11",
@@ -24046,8 +24051,8 @@
             "publication": {
                 "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
                 "notes": null,
-                "publicationid": "3c0a0998-ca6c-11ee-8342-0242ac180006",
-                "published_time": "2024-02-13T12:34:30.763"
+                "publicationid": "d30c67c6-ca7d-11ee-b3a8-0242ac180006",
+                "published_time": "2024-02-13T14:40:25.559"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
