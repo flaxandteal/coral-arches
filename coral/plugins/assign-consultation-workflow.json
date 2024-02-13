@@ -82,6 +82,7 @@
               },
               {
                 "parameters": {
+                  "tileid": "['4bc80729-5020-495b-9c42-c6890f565fec']['125f2e4c-fa71-4469-908f-cf8e8bd3de15'][0]['tileId']",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['4bc80729-5020-495b-9c42-c6890f565fec']['125f2e4c-fa71-4469-908f-cf8e8bd3de15'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -192,7 +193,7 @@
       },
       {
         "name": "d82c7483-1a9b-49df-bc5f-60c5cd47e3ac",
-        "title": "Location Details",
+        "title": "Map",
         "required": false,
         "layoutSections": [
           {
@@ -216,6 +217,66 @@
       },
       {
         "name": "5445000b-0d10-4e0d-af40-d3586054ac6e",
+        "title": "Location Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "083fa088-ca61-11ee-afca-0242ac180006",
+                    "083ef3fe-ca61-11ee-afca-0242ac180006",
+                    "083f45ac-ca61-11ee-afca-0242ac180006",
+                    "083f935e-ca61-11ee-afca-0242ac180006",
+                    "083e825c-ca61-11ee-afca-0242ac180006",
+                    "083e8c16-ca61-11ee-afca-0242ac180006",
+                    "083f97a0-ca61-11ee-afca-0242ac180006"
+                  ],
+                  "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['4bc80729-5020-495b-9c42-c6890f565fec']['125f2e4c-fa71-4469-908f-cf8e8bd3de15'][0]['resourceid']['locationData']",
+                  "semanticName": "Addresses"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "7a45ebfe-9039-44ce-be3e-185095ab5971"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "083f0650-ca61-11ee-afca-0242ac180006"
+                  ],
+                  "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['4bc80729-5020-495b-9c42-c6890f565fec']['125f2e4c-fa71-4469-908f-cf8e8bd3de15'][0]['resourceid']['locationData']",
+                  "semanticName": "Localities/Administrative Areas"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "39ec9333-794e-404d-981d-f622828b43b7"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "083f146a-ca61-11ee-afca-0242ac180006"
+                  ],
+                  "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['4bc80729-5020-495b-9c42-c6890f565fec']['125f2e4c-fa71-4469-908f-cf8e8bd3de15'][0]['resourceid']['locationData']",
+                  "semanticName": "Location Descriptions"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "ac4ada59-c323-4672-9c9c-46fee38215cd"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "59e1e150-7e7a-4d78-b64c-3e4624ecabce",
         "title": "Action",
         "required": false,
         "layoutSections": [
@@ -224,12 +285,13 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['4bc80729-5020-495b-9c42-c6890f565fec']['125f2e4c-fa71-4469-908f-cf8e8bd3de15'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
                   "semanticName": "Action"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "7a45ebfe-9039-44ce-be3e-185095ab5971"
+                "uniqueInstanceName": "da0df0c5-6573-4ee3-93ac-dc2348a9bbc1"
               }
             ]
           }
