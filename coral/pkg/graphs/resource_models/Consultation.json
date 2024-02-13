@@ -18129,9 +18129,48 @@
                 {
                     "alias": "action_status",
                     "config": {
-                        "rdmCollection": "8ca41a78-479a-4d87-831d-08b640910126"
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "a81eb2e8-81aa-4588-b5ca-cab2118ca8bf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Open"
+                                }
+                            },
+                            {
+                                "id": "56ac81c4-85a9-443f-b25e-a209aabed88e",
+                                "selected": false,
+                                "text": {
+                                    "en": "Closed"
+                                }
+                            },
+                            {
+                                "id": "28112b3f-ef44-40b4-a215-931c0c88bc5e",
+                                "selected": false,
+                                "text": {
+                                    "en": "Extension requested"
+                                }
+                            },
+                            {
+                                "id": "71765587-0286-47de-96b4-4391aa6b99ef",
+                                "selected": false,
+                                "text": {
+                                    "en": "HB done"
+                                }
+                            },
+                            {
+                                "id": "4608b315-0135-49a0-9686-9bc3c36990d8",
+                                "selected": false,
+                                "text": {
+                                    "en": "HM done"
+                                }
+                            }
+                        ]
                     },
-                    "datatype": "concept",
+                    "datatype": "domain-value",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
