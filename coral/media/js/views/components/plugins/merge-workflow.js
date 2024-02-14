@@ -4,6 +4,7 @@ define([
   'viewmodels/openable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/select-resource-id',
+  'views/components/workflows/merge-workflow/submit-merge',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('merge-workflow', {
     viewModel: function (params) {
@@ -53,62 +54,62 @@ define([
             }
           ]
         },
-        {
-          title: 'Map of Locations',
-          name: 'locations-step',
-          required: true,
-          workflowstepclass: 'workflow-form-component',
-          layoutSections: [
-            {
-              componentConfigs: [
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'map-locations',
-                  tilesManaged: 'none',
-                  parameters: {}
-                }
-              ]
-            }
-          ]
-        },
-        {
-          title: 'Map of Locations',
-          name: 'locations-step',
-          required: true,
-          workflowstepclass: 'workflow-form-component',
-          layoutSections: [
-            {
-              componentConfigs: [
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'base-record-legacy-id',
-                  tilesManaged: 'none',
-                  parameters: {}
-                }
-              ]
-            },
-            {
-              componentConfigs: [
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'merge-record-legacy-id',
-                  tilesManaged: 'none',
-                  parameters: {}
-                }
-              ]
-            },
-            {
-              componentConfigs: [
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'notes',
-                  tilesManaged: 'none',
-                  parameters: {}
-                }
-              ]
-            }
-          ]
-        },
+        // {
+        //   title: 'Map of Locations',
+        //   name: 'locations-step',
+        //   required: true,
+        //   workflowstepclass: 'workflow-form-component',
+        //   layoutSections: [
+        //     {
+        //       componentConfigs: [
+        //         {
+        //           componentName: 'default-card',
+        //           uniqueInstanceName: 'map-locations',
+        //           tilesManaged: 'none',
+        //           parameters: {}
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // },
+        // {
+        //   title: 'Map of Locations',
+        //   name: 'locations-step',
+        //   required: true,
+        //   workflowstepclass: 'workflow-form-component',
+        //   layoutSections: [
+        //     {
+        //       componentConfigs: [
+        //         {
+        //           componentName: 'default-card',
+        //           uniqueInstanceName: 'base-record-legacy-id',
+        //           tilesManaged: 'none',
+        //           parameters: {}
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       componentConfigs: [
+        //         {
+        //           componentName: 'default-card',
+        //           uniqueInstanceName: 'merge-record-legacy-id',
+        //           tilesManaged: 'none',
+        //           parameters: {}
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       componentConfigs: [
+        //         {
+        //           componentName: 'default-card',
+        //           uniqueInstanceName: 'notes',
+        //           tilesManaged: 'none',
+        //           parameters: {}
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // },
         {
           title: 'Approval',
           name: 'approval-step',
@@ -118,10 +119,13 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'submit-merge',
                   uniqueInstanceName: 'approval',
                   tilesManaged: 'none',
-                  parameters: {}
+                  parameters: {
+                    baseResourceId: "['search-step']['base-record'][0]['selectedResourceId']",
+                    mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']"
+                  }
                 }
               ]
             }
