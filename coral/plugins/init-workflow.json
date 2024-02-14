@@ -79,6 +79,15 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create or edit a License for an Excavation Activity"
+      },
+      {
+        "workflowid": "2af942cc-54d0-4e8c-9fa8-a76b9ef7632f",
+        "slug": "merge-workflow",
+        "name": "Merge Heritage Asset",
+        "icon": "fa fa-file-text",
+        "bgColor": "#86679c",
+        "circleColor": "#aa86c4",
+        "desc": "Select two Heritage Assets and merge their data"
       }
     ],
     "show": true
