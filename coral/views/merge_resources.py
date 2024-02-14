@@ -73,6 +73,7 @@ class MergeResources(View):
         # Find which tiles are from the same nodegroup
 
         merge_map = {}
+        parent_nodegroups = []
 
         for tile in base_tiles:
             nodegroup_id = str(tile.nodegroup_id)
@@ -82,6 +83,8 @@ class MergeResources(View):
                     if nodegroups[nodegroup_id].parentnodegroup_id
                     else None
                 )
+                if parent_nodegroup_id and parent_nodegroup_id not in parent_nodegroups:
+                    parent_nodegroups.append(parent_nodegroup_id)
                 merge_map[nodegroup_id] = {
                     "base_tiles": [tile],
                     "merge_tiles": [],
@@ -99,6 +102,8 @@ class MergeResources(View):
                     if nodegroups[nodegroup_id].parentnodegroup_id
                     else None
                 )
+                if parent_nodegroup_id and parent_nodegroup_id not in parent_nodegroups:
+                    parent_nodegroups.append(parent_nodegroup_id)
                 merge_map[nodegroup_id] = {
                     "base_tiles": [],
                     "merge_tiles": [tile],
@@ -108,24 +113,82 @@ class MergeResources(View):
                 continue
             merge_map[nodegroup_id]["merge_tiles"].append(tile)
 
+        # Remove parent nodegroup tiles from the merge map
+            
+        existing_parent_tiles = {}
+            
+        for nodegroup_id in parent_nodegroups:
+            merge_data = merge_map[nodegroup_id]
+            for tile in merge_data['base_tiles']:
+                existing_parent_tiles[str(tile.tileid)] = tile
+            for tile in merge_data['merge_tiles']:
+                existing_parent_tiles[str(tile.tileid)] = tile
+            del merge_map[nodegroup_id]
+
         print("merge_map: ", merge_map)
 
         # Create new tiles for the base record from the existing merge tiles
 
+        parent_tiles_map = {}
+
         for nodegroup_id, merge_data in merge_map.items():
-            if merge_data['cardinality'] == 1:
-                # Base will take precidence most likely no code is needed
-                pass
-            if merge_data['cardinality'] == 'n':
-                # Create the additional tiles for the base resource
-                pass
+            if merge_data["cardinality"] == 1:
+                # We should be safe to use index 0 because of the
+                # cardinality validation only allowing 1 tile
+                base_tile = (
+                    merge_data["base_tiles"][0]
+                    if len(merge_data["base_tiles"])
+                    else None
+                )
+                merge_tile = (
+                    merge_data["merge_tiles"][0]
+                    if len(merge_data["merge_tiles"])
+                    else None
+                )
+
+                # No change required
+                if base_tile and not merge_tile:
+                    continue
+
+                # Create new tile
+                if merge_tile and not base_tile:
+                    if merge_tile.parenttile.tileid:
+                        pass
+                    new_tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=base_resource,
+                        parenttile=None,  # FIXME: This needs to be supported
+                        data=merge_tile.data,
+                        nodegroup=merge_tile.nodegroup,
+                    )
+                    new_tile.save()
+                    continue
+
+                # Overwrite data on the base tile
+                if base_tile and merge_tile:
+                    base_tile.data = merge_tile.data
+                    base_tile.save()
+                    continue
+
+            # Create the additional tiles for the base resource
+            if merge_data["cardinality"] == "n":
+                for tile in merge_data["merge_tiles"]:
+                    new_tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=base_resource,
+                        parenttile=None,  # FIXME: This needs to be supported
+                        data=tile.data,
+                        nodegroup=tile.nodegroup,
+                    )
+                    new_tile.save()
 
         return JSONResponse(
-            {
-                base_resource: base_resource,
-                merge_resource: merge_resource,
-                base_tiles: base_tiles,
-                merge_tiles: merge_tiles,
-                merge_map: merge_map,
-            }
+            {"message": "Resources have been merged"}
+            # {
+            #     base_resource: base_resource,
+            #     merge_resource: merge_resource,
+            #     base_tiles: base_tiles,
+            #     merge_tiles: merge_tiles,
+            #     merge_map: merge_map,
+            # }
         )
