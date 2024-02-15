@@ -11,6 +11,112 @@ logger = logging.getLogger(__name__)
 
 
 class MergeResources(View):
+    merge_map = {}
+    nodegroups = {}
+    parent_nodegroups = []
+    graph = None
+    parent_tiles_merge_map = {}
+    parent_tiles_map = {}
+    base_resource = None
+    merge_resource = None
+
+    def populate_merge_map(self, target, tiles):
+        for tile in tiles:
+            nodegroup_id = str(tile.nodegroup_id)
+            if nodegroup_id not in self.merge_map:
+                parent_nodegroup_id = (
+                    str(self.nodegroups[nodegroup_id].parentnodegroup_id)
+                    if self.nodegroups[nodegroup_id].parentnodegroup_id
+                    else None
+                )
+                if (
+                    parent_nodegroup_id
+                    and parent_nodegroup_id not in self.parent_nodegroups
+                ):
+                    self.parent_nodegroups.append(parent_nodegroup_id)
+                self.merge_map[nodegroup_id] = {
+                    "base_tiles": [],
+                    "merge_tiles": [],
+                    "cardinality": self.nodegroups[nodegroup_id].cardinality,
+                    "parent_nodegroup_id": parent_nodegroup_id,
+                }
+            self.merge_map[nodegroup_id][target].append(tile)
+
+    def get_nodegroups(self):
+        nodes = self.graph.node_set.all().select_related("nodegroup")
+        for node in nodes:
+            if node.is_collector:
+                nodegroup_id = str(node.nodegroup.nodegroupid)
+                if nodegroup_id in self.nodegroups:
+                    print("Nodegroup ID is already present in the dict: ", nodegroup_id)
+                self.nodegroups[nodegroup_id] = node.nodegroup
+
+        print("nodegroups: ", self.nodegroups)
+
+    def remove_parent_nodegroup_tiles(self):
+        for nodegroup_id in self.parent_nodegroups:
+            self.parent_tiles_merge_map[nodegroup_id] = self.merge_map[nodegroup_id]
+            del self.merge_map[nodegroup_id]
+
+        print("merge_map: ", self.merge_map)
+        print("parent_tiles_merge_map: ", self.parent_tiles_merge_map)
+
+    def discover_parent_tile(self, tile):
+        parent_tile = None
+        if tile.parenttile:
+            print("tile has parent tile")
+            parent_nodegroup_id = str(tile.parenttile.nodegroup.nodegroupid)
+            parent_merge_data = self.parent_tiles_merge_map[parent_nodegroup_id]
+
+            if parent_merge_data["cardinality"] == "1":
+                print("parent cardinality was 1")
+                base_parent_tile = (
+                    parent_merge_data["base_tiles"][0]
+                    if len(parent_merge_data["base_tiles"])
+                    else None
+                )
+                if base_parent_tile:
+                    print("base had an existing parent tile")
+                    parent_tile = base_parent_tile
+                else:
+                    print("creating a parent tile to be used for the base")
+                    parent_tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=self.base_resource,
+                        data={},
+                        nodegroup=tile.parenttile.nodegroup,
+                    )
+                    parent_tile.save()
+                    parent_merge_data["base_tiles"].append(parent_tile)
+
+            if parent_merge_data["cardinality"] == "n":
+                print("parent cardinality was n")
+
+                merge_parent_tile_id = str(tile.parenttile.tileid)
+                if merge_parent_tile_id not in self.parent_tiles_map:
+                    print("parent tile has not been created on base")
+                    parent_tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=self.base_resource,
+                        data={},
+                        nodegroup=tile.parenttile.nodegroup,
+                    )
+                    parent_tile.save()
+                    self.parent_tiles_map[merge_parent_tile_id] = parent_tile
+                else:
+                    print("parent tile exists on base")
+                    parent_tile = self.parent_tiles_map[merge_parent_tile_id]
+        return parent_tile
+
+    def get_resource(self, resource_id):
+        resource = None
+        try:
+            resource = Resource.objects.filter(pk=resource_id).first()
+        except Resource.DoesNotExist:
+            raise f"Resource ID ({resource_id}) does not exist"
+        print("base_resource: ", self.base_resource)
+        return resource
+
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         base_resource_id = data.get("baseResourceId")
@@ -24,34 +130,26 @@ class MergeResources(View):
 
         # Get resources from their resource IDs
 
-        base_resource = None
-        try:
-            base_resource = Resource.objects.filter(pk=base_resource_id).first()
-        except Resource.DoesNotExist:
-            return JSONResponse({"error": "Base resource ID does not exist"})
-        print("base_resource: ", base_resource)
+        self.base_resource = self.get_resource(base_resource_id)
+        print("base_resource: ", self.base_resource)
 
-        merge_resource = None
-        try:
-            merge_resource = Resource.objects.filter(pk=merge_resource_id).first()
-        except Resource.DoesNotExist:
-            return JSONResponse({"error": "Merge resource ID does not exist"})
-        print("merge_resource: ", merge_resource)
+        self.merge_resource = self.get_resource(merge_resource_id)
+        print("base_resource: ", self.base_resource)
 
-        # Confirm graphs are identical
+        # Confirm graphs are identical then set graph
 
-        if base_resource.graph != merge_resource.graph:
+        if self.base_resource.graph != self.merge_resource.graph:
             raise "Cannot merge resources from different graphs"
 
-        graph = base_resource.graph
+        self.graph = self.base_resource.graph
 
         # Grab all the tiles for both resources
 
         base_tiles = Tile.objects.filter(
-            resourceinstance=base_resource.resourceinstanceid
+            resourceinstance=self.base_resource.resourceinstanceid
         )
         merge_tiles = Tile.objects.filter(
-            resourceinstance=merge_resource.resourceinstanceid
+            resourceinstance=self.merge_resource.resourceinstanceid
         )
 
         print("base_tiles: ", base_tiles)
@@ -59,76 +157,20 @@ class MergeResources(View):
 
         # Get nodegroups
 
-        nodegroups = {}
-        nodes = graph.node_set.all().select_related("nodegroup")
-        for node in nodes:
-            if node.is_collector:
-                nodegroup_id = str(node.nodegroup.nodegroupid)
-                if nodegroup_id in nodegroups:
-                    print("Nodegroup ID is already present in the dict: ", nodegroup_id)
-                nodegroups[nodegroup_id] = node.nodegroup
-
-        print("nodegroups: ", nodegroups)
+        self.get_nodegroups()
 
         # Find which tiles are from the same nodegroup
 
-        merge_map = {}
-        parent_nodegroups = []
-
-        for tile in base_tiles:
-            nodegroup_id = str(tile.nodegroup_id)
-            if nodegroup_id not in merge_map:
-                parent_nodegroup_id = (
-                    str(nodegroups[nodegroup_id].parentnodegroup_id)
-                    if nodegroups[nodegroup_id].parentnodegroup_id
-                    else None
-                )
-                if parent_nodegroup_id and parent_nodegroup_id not in parent_nodegroups:
-                    parent_nodegroups.append(parent_nodegroup_id)
-                merge_map[nodegroup_id] = {
-                    "base_tiles": [tile],
-                    "merge_tiles": [],
-                    "cardinality": nodegroups[nodegroup_id].cardinality,
-                    "parent_nodegroup_id": parent_nodegroup_id,
-                }
-                continue
-            merge_map[nodegroup_id]["base_tiles"].append(tile)
-
-        for tile in merge_tiles:
-            nodegroup_id = str(tile.nodegroup_id)
-            if nodegroup_id not in merge_map:
-                parent_nodegroup_id = (
-                    str(nodegroups[nodegroup_id].parentnodegroup_id)
-                    if nodegroups[nodegroup_id].parentnodegroup_id
-                    else None
-                )
-                if parent_nodegroup_id and parent_nodegroup_id not in parent_nodegroups:
-                    parent_nodegroups.append(parent_nodegroup_id)
-                merge_map[nodegroup_id] = {
-                    "base_tiles": [],
-                    "merge_tiles": [tile],
-                    "cardinality": nodegroups[nodegroup_id].cardinality,
-                    "parent_nodegroup_id": parent_nodegroup_id,
-                }
-                continue
-            merge_map[nodegroup_id]["merge_tiles"].append(tile)
+        self.populate_merge_map("base_tiles", base_tiles)
+        self.populate_merge_map("merge_tiles", merge_tiles)
 
         # Remove parent nodegroup tiles from the merge map we don't want to create additonal ones
 
-        parent_tiles_merge_map = {}
-
-        for nodegroup_id in parent_nodegroups:
-            parent_tiles_merge_map[nodegroup_id] = merge_map[nodegroup_id]
-            del merge_map[nodegroup_id]
-
-        print("merge_map: ", merge_map)
-        print("parent_tiles_merge_map: ", parent_tiles_merge_map)
+        self.remove_parent_nodegroup_tiles()
 
         # Create new tiles for the base record from the existing merge tiles
 
-        parent_tiles_map = {}
-
-        for nodegroup_id, merge_data in merge_map.items():
+        for nodegroup_id, merge_data in self.merge_map.items():
             print("remap nodegroup_id: ", nodegroup_id)
             if merge_data["cardinality"] == "1":
                 print("cadinality 1")
@@ -148,63 +190,14 @@ class MergeResources(View):
                 print("base_tile: ", base_tile)
                 print("merge_tile: ", merge_tile)
 
-                # No change required
-                if base_tile and not merge_tile:
-                    print("no base tile and no merge tile")
-                    continue
-
                 # Create new tile
                 if merge_tile and not base_tile:
                     print("merge tile exists without base tile")
-
-                    parent_tile = None
-                    if merge_tile.parenttile:
-                        print("tile has parent tile")
-                        parent_nodegroup_id = str(merge_tile.parenttile.nodegroup.nodegroupid)
-                        parent_merge_data = parent_tiles_merge_map[parent_nodegroup_id]
-
-                        if parent_merge_data["cardinality"] == "1":
-                            print('parent cardinality was 1')
-                            base_parent_tile = (
-                                parent_merge_data["base_tiles"][0]
-                                if len(parent_merge_data["base_tiles"])
-                                else None
-                            )
-                            if base_parent_tile:
-                                print("base had an existing parent tile")
-                                parent_tile = base_parent_tile
-                            else:
-                                print("creating a parent tile to be used for the base")
-                                parent_tile = Tile(
-                                    tileid=uuid.uuid4(),
-                                    resourceinstance=base_resource,
-                                    data={},
-                                    nodegroup=merge_tile.parenttile.nodegroup,
-                                )
-                                parent_tile.save()
-
-                        if parent_merge_data["cardinality"] == "n":
-                            print('parent cardinality was n')
-                          
-                            merge_parent_tile_id = str(merge_tile.parenttile.tileid)
-                            if merge_parent_tile_id not in parent_tiles_map:
-                                print('parent tile has not been created on base')
-                                parent_tile = Tile(
-                                    tileid=uuid.uuid4(),
-                                    resourceinstance=base_resource,
-                                    data={},
-                                    nodegroup=merge_tile.parenttile.nodegroup,
-                                )
-                                parent_tile.save()
-                                parent_tiles_map[merge_parent_tile_id] = parent_tile
-                            else:
-                                print('parent tile exists on base')
-                                parent_tile = parent_tiles_map[merge_parent_tile_id]
-
+                    parent_tile = self.discover_parent_tile(merge_tile)
                     new_tile = Tile(
                         tileid=uuid.uuid4(),
-                        resourceinstance=base_resource,
-                        parenttile=parent_tile,  # FIXME: This needs to be supported
+                        resourceinstance=self.base_resource,
+                        parenttile=parent_tile,
                         data=merge_tile.data,
                         nodegroup=merge_tile.nodegroup,
                     )
@@ -222,68 +215,14 @@ class MergeResources(View):
             if merge_data["cardinality"] == "n":
                 print("cadinality n")
                 for tile in merge_data["merge_tiles"]:
-
-                    parent_tile = None
-                    if tile.parenttile:
-                        print("tile has parent tile")
-                        parent_nodegroup_id = str(tile.parenttile.nodegroup.nodegroupid)
-                        parent_merge_data = parent_tiles_merge_map[parent_nodegroup_id]
-
-                        if parent_merge_data["cardinality"] == "1":
-                            print('parent cardinality was 1')
-                            base_parent_tile = (
-                                parent_merge_data["base_tiles"][0]
-                                if len(parent_merge_data["base_tiles"])
-                                else None
-                            )
-                            if base_parent_tile:
-                                print("base had an existing parent tile")
-                                parent_tile = base_parent_tile
-                            else:
-                                print("creating a parent tile to be used for the base")
-                                parent_tile = Tile(
-                                    tileid=uuid.uuid4(),
-                                    resourceinstance=base_resource,
-                                    data={},
-                                    nodegroup=tile.parenttile.nodegroup,
-                                )
-                                parent_tile.save()
-                                parent_merge_data["base_tiles"].append(parent_tile)
-
-                        if parent_merge_data["cardinality"] == "n":
-                            print('parent cardinality was n')
-                          
-                            merge_parent_tile_id = str(tile.parenttile.tileid)
-                            if merge_parent_tile_id not in parent_tiles_map:
-                                print('parent tile has not been created on base')
-                                parent_tile = Tile(
-                                    tileid=uuid.uuid4(),
-                                    resourceinstance=base_resource,
-                                    data={},
-                                    nodegroup=tile.parenttile.nodegroup,
-                                )
-                                parent_tile.save()
-                                parent_tiles_map[merge_parent_tile_id] = parent_tile
-                            else:
-                                print('parent tile exists on base')
-                                parent_tile = parent_tiles_map[merge_parent_tile_id]
-
+                    parent_tile = self.discover_parent_tile(tile)
                     new_tile = Tile(
                         tileid=uuid.uuid4(),
-                        resourceinstance=base_resource,
-                        parenttile=parent_tile,  # FIXME: This needs to be supported
+                        resourceinstance=self.base_resource,
+                        parenttile=parent_tile,
                         data=tile.data,
                         nodegroup=tile.nodegroup,
                     )
                     new_tile.save()
 
-        return JSONResponse(
-            {"message": "Resources have been merged"}
-            # {
-            #     base_resource: base_resource,
-            #     merge_resource: merge_resource,
-            #     base_tiles: base_tiles,
-            #     merge_tiles: merge_tiles,
-            #     merge_map: merge_map,
-            # }
-        )
+        return JSONResponse({"message": "Resources have been merged"})
