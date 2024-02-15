@@ -6,6 +6,7 @@ import json
 import uuid
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
+from copy import deepcopy
 
 logger = logging.getLogger(__name__)
 
@@ -116,6 +117,13 @@ class MergeResources(View):
             raise f"Resource ID ({resource_id}) does not exist"
         print("base_resource: ", self.base_resource)
         return resource
+    
+    def merge_tile_data(self, base_tile_data, merge_tile_data):
+        result = deepcopy(merge_tile_data)
+        for key in base_tile_data.keys():
+            if base_tile_data[key] != None:
+                result[key] = base_tile_data[key]
+        return result
 
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
@@ -207,7 +215,8 @@ class MergeResources(View):
                 # Overwrite data on the base tile
                 if base_tile and merge_tile:
                     print("base tile and merge tile exist")
-                    base_tile.data = merge_tile.data
+                    merged_tile_data = self.merge_tile_data(base_tile.data, merge_tile.data)
+                    base_tile.data = merged_tile_data
                     base_tile.save()
                     continue
 
