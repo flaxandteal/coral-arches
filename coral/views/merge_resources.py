@@ -39,7 +39,7 @@ class MergeResources(View):
                     "base_tiles": [],
                     "merge_tiles": [],
                     "cardinality": self.nodegroups[nodegroup_id].cardinality,
-                    "parent_nodegroup_id": parent_nodegroup_id,
+                    "parent_nodegroup_id": parent_nodegroup_id
                 }
             self.merge_map[nodegroup_id][target].append(tile)
 
@@ -117,13 +117,33 @@ class MergeResources(View):
             raise f"Resource ID ({resource_id}) does not exist"
         print("base_resource: ", self.base_resource)
         return resource
-    
-    def merge_tile_data(self, base_tile_data, merge_tile_data):
+
+    def merge_default(self, base_tile_data, merge_tile_data):
         result = deepcopy(merge_tile_data)
         for key in base_tile_data.keys():
             if base_tile_data[key] != None:
                 result[key] = base_tile_data[key]
         return result
+
+    def merge_resource_instance_list(base_tile_data, merge_tile_data):
+        result = deepcopy(merge_tile_data)
+        nodegroup_id = str(base_tile_data.nodegroup.nodegroupid)
+        resource_map = {}
+        for resource in base_tile_data.data.get(nodegroup_id):
+            if resource["resourceId"] not in resource_map:
+                resource_map[resource["resourceId"]] = resource
+        for resource in merge_tile_data.data.get(nodegroup_id):
+            if resource["resourceId"] not in resource_map:
+                resource_map[resource["resourceId"]] = resource
+        result.data[nodegroup_id] = resource_map.values()
+        return result
+
+    def merge_tile_data(self, datatype, base_tile_data, merge_tile_data):
+        match datatype:
+            case 'resource-instance-list':
+                return self.merge_resource_instance_list(base_tile_data, merge_tile_data)
+            case _:
+                return self.merge_default(base_tile_data, merge_tile_data)
 
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
@@ -212,10 +232,13 @@ class MergeResources(View):
                     new_tile.save()
                     continue
 
-                # Overwrite data on the base tile
+                # Merge data from base tile over the merge tile and update
+                # the base tile with the merged data
                 if base_tile and merge_tile:
                     print("base tile and merge tile exist")
-                    merged_tile_data = self.merge_tile_data(base_tile.data, merge_tile.data)
+                    merged_tile_data = self.merge_tile_data(
+                        '', base_tile.data, merge_tile.data
+                    )
                     base_tile.data = merged_tile_data
                     base_tile.save()
                     continue
