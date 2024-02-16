@@ -20,6 +20,7 @@ class MergeResources(View):
     parent_tiles_map = {}
     base_resource = None
     merge_resource = None
+    nodes = {}
 
     def populate_merge_map(self, target, tiles):
         for tile in tiles:
@@ -39,19 +40,19 @@ class MergeResources(View):
                     "base_tiles": [],
                     "merge_tiles": [],
                     "cardinality": self.nodegroups[nodegroup_id].cardinality,
-                    "parent_nodegroup_id": parent_nodegroup_id
+                    "parent_nodegroup_id": parent_nodegroup_id,
                 }
             self.merge_map[nodegroup_id][target].append(tile)
 
-    def get_nodegroups(self):
+    def get_node_configuration(self):
         nodes = self.graph.node_set.all().select_related("nodegroup")
         for node in nodes:
+            self.nodes[str(node.nodeid)] = node
             if node.is_collector:
                 nodegroup_id = str(node.nodegroup.nodegroupid)
-                if nodegroup_id in self.nodegroups:
-                    print("Nodegroup ID is already present in the dict: ", nodegroup_id)
                 self.nodegroups[nodegroup_id] = node.nodegroup
 
+        print("nodes: ", self.nodes)
         print("nodegroups: ", self.nodegroups)
 
     def remove_parent_nodegroup_tiles(self):
@@ -118,32 +119,36 @@ class MergeResources(View):
         print("base_resource: ", self.base_resource)
         return resource
 
-    def merge_default(self, base_tile_data, merge_tile_data):
-        result = deepcopy(merge_tile_data)
-        for key in base_tile_data.keys():
-            if base_tile_data[key] != None:
-                result[key] = base_tile_data[key]
-        return result
+    def merge_default(self, base_node_value, merge_node_value):
+        if base_node_value != None:
+            return base_node_value
+        return merge_node_value
 
-    def merge_resource_instance_list(base_tile_data, merge_tile_data):
-        result = deepcopy(merge_tile_data)
-        nodegroup_id = str(base_tile_data.nodegroup.nodegroupid)
+    def merge_resource_instance_list(self, base_node_value, merge_node_value):
         resource_map = {}
-        for resource in base_tile_data.data.get(nodegroup_id):
+        for resource in base_node_value:
             if resource["resourceId"] not in resource_map:
                 resource_map[resource["resourceId"]] = resource
-        for resource in merge_tile_data.data.get(nodegroup_id):
+        for resource in merge_node_value:
             if resource["resourceId"] not in resource_map:
                 resource_map[resource["resourceId"]] = resource
-        result.data[nodegroup_id] = resource_map.values()
-        return result
+        return list(resource_map.values())
 
-    def merge_tile_data(self, datatype, base_tile_data, merge_tile_data):
-        match datatype:
-            case 'resource-instance-list':
-                return self.merge_resource_instance_list(base_tile_data, merge_tile_data)
-            case _:
-                return self.merge_default(base_tile_data, merge_tile_data)
+    def merge_tile_data(self, base_tile_data, merge_tile_data):
+        result = deepcopy(merge_tile_data)
+        for node_id in base_tile_data.keys():
+            datatype = self.nodes[node_id].datatype
+            match datatype:
+                case "resource-instance-list":
+                    result[node_id] = self.merge_resource_instance_list(
+                        base_tile_data[node_id], merge_tile_data[node_id]
+                    )
+                    break
+                case _:
+                    result[node_id] = self.merge_default(
+                        base_tile_data[node_id], merge_tile_data[node_id]
+                    )
+        return result
 
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
@@ -185,7 +190,7 @@ class MergeResources(View):
 
         # Get nodegroups
 
-        self.get_nodegroups()
+        self.get_node_configuration()
 
         # Find which tiles are from the same nodegroup
 
@@ -237,7 +242,7 @@ class MergeResources(View):
                 if base_tile and merge_tile:
                     print("base tile and merge tile exist")
                     merged_tile_data = self.merge_tile_data(
-                        '', base_tile.data, merge_tile.data
+                        base_tile.data, merge_tile.data
                     )
                     base_tile.data = merged_tile_data
                     base_tile.save()
