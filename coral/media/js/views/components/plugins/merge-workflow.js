@@ -5,6 +5,7 @@ define([
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/select-resource-id',
   'views/components/workflows/merge-workflow/submit-merge',
+  // 'views/components/workflows/merge-workflow/heritage-asset-map'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('merge-workflow', {
     viewModel: function (params) {
@@ -25,6 +26,12 @@ define([
                   parameters: {
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
+                    ],
+                    getTileIdFromNodegroup: [
+                      {
+                        nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
+                        lookupName: 'systemRef'
+                      }
                     ]
                   }
                 }
@@ -47,6 +54,13 @@ define([
                   parameters: {
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
+                    ],
+                    label: 'Hello world',
+                    getTileIdFromNodegroup: [
+                      {
+                        nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
+                        lookupName: 'systemRef'
+                      }
                     ]
                   }
                 }
@@ -57,13 +71,13 @@ define([
         // {
         //   title: 'Map of Locations',
         //   name: 'locations-step',
-        //   required: true,
+        //   required: false,
         //   workflowstepclass: 'workflow-form-component',
         //   layoutSections: [
         //     {
         //       componentConfigs: [
         //         {
-        //           componentName: 'default-card',
+        //           componentName: 'heritage-asset-map',
         //           uniqueInstanceName: 'map-locations',
         //           tilesManaged: 'none',
         //           parameters: {}
@@ -72,44 +86,60 @@ define([
         //     }
         //   ]
         // },
-        // {
-        //   title: 'Map of Locations',
-        //   name: 'locations-step',
-        //   required: true,
-        //   workflowstepclass: 'workflow-form-component',
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'base-record-legacy-id',
-        //           tilesManaged: 'none',
-        //           parameters: {}
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'merge-record-legacy-id',
-        //           tilesManaged: 'none',
-        //           parameters: {}
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'default-card',
-        //           uniqueInstanceName: 'notes',
-        //           tilesManaged: 'none',
-        //           parameters: {}
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
+        {
+          title: 'Information',
+          name: 'information-step',
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'base-record-legacy-id',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['search-step']['base-record'][0]['selectedResourceId']",
+                    nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
+                    tileid: "['search-step']['base-record'][0]['systemRef']",
+                    hiddenNodes: [
+                      '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
+                      '325a430a-efe4-11eb-810b-a87eeabdefba'
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'merge-record-legacy-id',
+                  tilesManaged: 'one',
+                  parameters: {
+                    resourceid: "['merging-step']['merge-record'][0]['selectedResourceId']",
+                    nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
+                    tileid: "['merging-step']['merge-record'][0]['systemRef']",
+                    hiddenNodes: [
+                      '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
+                      '325a430a-efe4-11eb-810b-a87eeabdefba'
+                    ]
+                  }
+                }
+              ]
+            }
+            // {
+            //   componentConfigs: [
+            //     {
+            //       componentName: 'default-card',
+            //       uniqueInstanceName: 'notes',
+            //       tilesManaged: 'none',
+            //       parameters: {}
+            //     }
+            //   ]
+            // }
+          ]
+        },
         {
           title: 'Approval',
           name: 'approval-step',
@@ -130,7 +160,7 @@ define([
               ]
             }
           ]
-        },
+        }
       ];
 
       OpenableWorkflow.apply(this, [params]);
