@@ -4,7 +4,7 @@ define([
   'viewmodels/openable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/select-resource-id',
-  'views/components/workflows/merge-workflow/submit-merge',
+  'views/components/workflows/merge-workflow/submit-merge'
   // 'views/components/workflows/merge-workflow/heritage-asset-map'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('merge-workflow', {
@@ -89,7 +89,7 @@ define([
         {
           title: 'Information',
           name: 'information-step',
-          required: false,
+          required: true,
           workflowstepclass: 'workflow-form-component',
           layoutSections: [
             {
@@ -127,17 +127,20 @@ define([
                   }
                 }
               ]
+            },
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'notes',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
+                    nodegroupid: '5dff7478-ccdf-11ee-af2a-0242ac180006'
+                  }
+                }
+              ]
             }
-            // {
-            //   componentConfigs: [
-            //     {
-            //       componentName: 'default-card',
-            //       uniqueInstanceName: 'notes',
-            //       tilesManaged: 'none',
-            //       parameters: {}
-            //     }
-            //   ]
-            // }
           ]
         },
         {
@@ -149,10 +152,45 @@ define([
             {
               componentConfigs: [
                 {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'report-updated-by',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
+                    nodegroupid: '3ff60eda-cce2-11ee-9264-0242ac180006',
+                    resourceid:
+                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'reference-id',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
+                    nodegroupid: 'd31655e2-ccdf-11ee-9264-0242ac180006',
+                    resourceid:
+                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'date-of-submission',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
+                    nodegroupid: '726951a8-cce0-11ee-af2a-0242ac180006',
+                    resourceid:
+                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
+                  }
+                },
+                {
                   componentName: 'submit-merge',
                   uniqueInstanceName: 'approval',
                   tilesManaged: 'none',
                   parameters: {
+                    mergeTrackerResourceId:
+                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']",
                     baseResourceId: "['search-step']['base-record'][0]['selectedResourceId']",
                     mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']"
                   }
