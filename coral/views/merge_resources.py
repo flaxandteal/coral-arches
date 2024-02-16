@@ -128,6 +128,31 @@ class MergeResources(View):
 
     def merge_tile_data(self, base_tile_data, merge_tile_data):
         result = deepcopy(merge_tile_data)
+        # 
+        # Keep in mind there might be more datatypes that
+        # require a custom merge strategy other than overwrite
+        # the existing node value.
+        #
+        # semantic - Not used
+        # string - Overwrite
+        # number - Overwrite
+        # file-list - Unchecked
+        # concept - Overwrite
+        # concept-list - Unchecked
+        # geojson-feature-collection - Unchecked
+        # date - Overwrite
+        # node-value - Unchecked
+        # edtf - Overwrite
+        # annotation - Unchecked
+        # url - Unchecked
+        # resource-instance
+        # resource-instance-list - Custom needed
+        # boolean - Overwrite
+        # domain-value - Overwrite
+        # domain-value-list - Unchecked
+        # bngcentrepoint - Unchecked
+        # user - Unchecked
+
         for node_id in base_tile_data.keys():
             datatype = self.nodes[node_id].datatype
             match datatype:
