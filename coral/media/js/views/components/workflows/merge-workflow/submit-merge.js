@@ -16,21 +16,42 @@ define([
 
       const data = {
         baseResourceId: params.baseResourceId,
-        mergeResourceId: params.mergeResourceId
+        mergeResourceId: params.mergeResourceId,
+        mergeTrackerResourceId: params.mergeTrackerResourceId
       };
-
-      const response = await $.ajax({
-        type: 'POST',
-        url: '/merge-resources',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        context: this,
-        error: (response, status, error) => {
-          console.log(response, status, error);
-        }
-      });
-
-      console.log('response: ', response);
+      params.pageVm.loading(true);
+      try {
+        const response = await $.ajax({
+          type: 'POST',
+          url: '/merge-resources',
+          dataType: 'json',
+          data: JSON.stringify(data),
+          context: this,
+          error: (response, status, error) => {
+            console.log(response, status, error);
+          }
+        });
+        params.pageVm.alert(
+          new AlertViewModel(
+            'ep-alert-blue',
+            'Resources merged successfully',
+            'You can now safely save and exit the workflow.',
+            null,
+            function () {}
+          )
+        );
+      } catch (e) {
+        params.pageVm.alert(
+          new AlertViewModel(
+            'ep-alert-red',
+            'Resources failed to merge',
+            'Please contact an administrator and report the incident.',
+            null,
+            function () {}
+          )
+        );
+      }
+      params.pageVm.loading(false);
     };
   }
 
