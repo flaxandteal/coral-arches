@@ -110,6 +110,14 @@ class MergeResources(View):
         except Resource.DoesNotExist:
             raise f"Resource ID ({resource_id}) does not exist"
         return resource
+    
+    def get_nodegroup(self, nodegroup_id):
+        nodegroup = None
+        try:
+            nodegroup = models.NodeGroup.objects.filter(pk=nodegroup_id).first()
+        except models.NodeGroup.DoesNotExist:
+            raise f"Nodegroup ID ({nodegroup_id}) does not exist"
+        return nodegroup
 
     def merge_default(self, base_node_value, merge_node_value):
         if base_node_value != None:
@@ -128,7 +136,7 @@ class MergeResources(View):
 
     def merge_tile_data(self, base_tile_data, merge_tile_data):
         result = deepcopy(merge_tile_data)
-        # 
+        #
         # Keep in mind there might be more datatypes that
         # require a custom merge strategy other than overwrite
         # the existing node value.
@@ -171,6 +179,7 @@ class MergeResources(View):
         data = json.loads(request.body.decode("utf-8"))
         base_resource_id = data.get("baseResourceId")
         merge_resource_id = data.get("mergeResourceId")
+        merge_tracker_resource_id = data.get("mergeTrackerResourceId")
 
         if not base_resource_id or not merge_resource_id:
             raise "Missing base or merge resource ID"
@@ -261,5 +270,30 @@ class MergeResources(View):
                         nodegroup=tile.nodegroup,
                     )
                     new_tile.save()
+
+        # Create a new tile for the merge tracker and
+        # relate the two resources used in the merge
+        if merge_tracker_resource_id:
+            merge_tracker_resource = self.get_resource(merge_tracker_resource_id)
+            merge_tracker_associated_resources_nodegroup = self.get_nodegroup("9967e2ea-cce2-11ee-af2a-0242ac180006")
+            associated_resources_tile = Tile(
+                resourceinstance=merge_tracker_resource,
+                data={
+                    "9967e2ea-cce2-11ee-af2a-0242ac180006": [
+                        {
+                            "resourceId": base_resource_id,
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": "",
+                        },
+                        {
+                            "resourceId": merge_resource_id,
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": "",
+                        },
+                    ]
+                },
+                nodegroup=merge_tracker_associated_resources_nodegroup,
+            )
+            associated_resources_tile.save()
 
         return JSONResponse({"message": "Resources have been merged"})
