@@ -25,6 +25,8 @@ define([
     self.actResourceId = params.form.savedData()?.activityResourceId;
     self.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
     self.decisionTileId = params.form.savedData()?.decisionTileId;
+    self.applicationDetailsTileId = params.form.savedData()?.applicationDetailsTileId;
+    self.cmRefTileId = params.form.savedData()?.cmRefTileId;
     // self.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
     self.applicationId = '';
 
@@ -54,7 +56,9 @@ define([
             // getLicenseRefTileId(),
             saveActivityLocation(),
             saveRelationship(),
-            saveDecisionTile()
+            saveDecisionTile(),
+            saveApplicationDetailsTile(),
+            saveCmRefTile()
           ]);
           if (responses.every((response) => response.ok)) {
             params.form.savedData({
@@ -67,6 +71,8 @@ define([
               activityResourceId: self.actResourceId,
               activityLocationTileId: self.activityLocationTileId,
               decisionTileId: self.decisionTileId,
+              applicationDetailsTileId: self.applicationDetailsTileId,
+              cmRefTileId: self.cmRefTileId,
 
               // licenseNumberTileId: self.licenseNumberTileId
             });
@@ -291,6 +297,84 @@ define([
       if (tile?.ok) {
         const tileJson = await tile.json();
         self.decisionTileId = tileJson.tileid;
+        return tile;
+      }
+    };
+
+    const saveApplicationDetailsTile = async () => {
+      const tileTemplate = {
+        tileid: '',
+        data: {
+          '3ff6e2ce-cf35-11ee-a12a-0242ac180006': null,
+          '777596ba-48cf-11ee-8e4e-0242ac140007': 'daa4cddc-8636-4842-b836-eb2e10aabe18',
+          '916b5e7e-48cf-11ee-8e4e-0242ac140007': '6fbe3775-e51d-4f90-af53-5695dd204c9a',
+          'a79fedae-bad5-11ee-900d-0242ac180006': null,
+          'aec103a2-48cf-11ee-8e4e-0242ac140007': null,
+          'b407df02-bad5-11ee-900d-0242ac180006': 'c9bc15cc-46fe-4d34-a530-a228854845c8',
+          'c2f40174-5dd5-11ee-ae2c-0242ac120008': null
+        },
+        nodegroup_id: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+        parenttile_id: null,
+        resourceinstance_id: self.resourceId(),
+        sortorder: 0
+      };
+
+      if (!self.applicationDetailsTileId) {
+        self.applicationDetailsTileId = uuid.generate();
+      } else {
+        tileTemplate.tileid = self.applicationDetailsTileId;
+      }
+
+      const tile = await window.fetch(arches.urls.api_tiles(self.applicationDetailsTileId), {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(tileTemplate),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (tile?.ok) {
+        const tileJson = await tile.json();
+        self.applicationDetailsTileId = tileJson.tileid;
+        return tile;
+      }
+    };
+
+    const saveCmRefTile = async () => {
+      const tileTemplate = {
+        tileid: '',
+        data: {
+          'b84fb006-bad2-11ee-b3f2-0242ac180006': '6fbe3775-e51d-4f90-af53-5695dd204c9a',
+          'b84fb182-bad2-11ee-b3f2-0242ac180006': null,
+          'b84fb2fe-bad2-11ee-b3f2-0242ac180006': null,
+          'b84fb466-bad2-11ee-b3f2-0242ac180006': 'daa4cddc-8636-4842-b836-eb2e10aabe18',
+          'b84fb5e2-bad2-11ee-b3f2-0242ac180006': '19afd557-cc21-44b4-b1df-f32568181b2c'
+        },
+        nodegroup_id: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
+        parenttile_id: null,
+        resourceinstance_id: self.resourceId(),
+        sortorder: 0
+      };
+
+      if (!self.cmRefTileId) {
+        self.cmRefTileId = uuid.generate();
+      } else {
+        tileTemplate.tileid = self.cmRefTileId;
+      }
+
+      const tile = await window.fetch(arches.urls.api_tiles(self.cmRefTileId), {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(tileTemplate),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (tile?.ok) {
+        const tileJson = await tile.json();
+        self.cmRefTileId = tileJson.tileid;
         return tile;
       }
     };
