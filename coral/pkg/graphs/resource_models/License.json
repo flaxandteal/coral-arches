@@ -267,7 +267,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Names"
                     },
@@ -404,7 +404,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -431,7 +431,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -458,7 +458,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Decision"
                     },
@@ -566,7 +566,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Application Details"
                     },
@@ -692,50 +692,6 @@
                     "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
-                },
-                {
-                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
-                    "config": {
-                        "defaultValue": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Excavation Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "044d4da1-1b13-4949-829a-3c50e8ee5e24",
-                    "label": {
-                        "en": "Excavation Metatype"
-                    },
-                    "node_id": "739607be-bad5-11ee-b3f2-0242ac180006",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
-                    "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Excavation Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "061fc152-8473-4a5e-813e-589d5d5cd65f",
-                    "label": {
-                        "en": "Excavation Type"
-                    },
-                    "node_id": "67455316-bad5-11ee-b3f2-0242ac180006",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
@@ -1257,9 +1213,38 @@
                         "en": "Application Stage Metatype"
                     },
                     "node_id": "b407df02-bad5-11ee-900d-0242ac180006",
-                    "sortorder": 6,
+                    "sortorder": 5,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Excavation Type",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "311fa938-f2a9-4dde-917b-35d0ae451e19",
+                    "label": {
+                        "en": "Excavation Type"
+                    },
+                    "node_id": "3ff6e2ce-cf35-11ee-a12a-0242ac180006",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -1920,7 +1905,7 @@
                         "en": "Funding Available"
                     },
                     "node_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
-                    "sortorder": 7,
+                    "sortorder": 6,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -3706,7 +3691,7 @@
                         "en": "Stage of Application"
                     },
                     "node_id": "a79fedae-bad5-11ee-900d-0242ac180006",
-                    "sortorder": 5,
+                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -5279,10 +5264,16 @@
                                 "value": "Generated once status is \"Final\""
                             }
                         },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "License Number",
                         "maxLength": "",
-                        "placeholder": "",
-                        "uneditable": true
+                        "placeholder": {
+                            "en": ""
+                        },
+                        "uneditable": true,
+                        "width": "100%"
                     },
                     "id": "e8a07826-31a0-408e-a671-0bf0dab6ad38",
                     "label": {
@@ -5444,6 +5435,15 @@
                 "en": ""
             },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "edgeid": "019f7635-6fee-410d-a79f-e1a4cf40ece0",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "3ff6e2ce-cf35-11ee-a12a-0242ac180006"
+                },
                 {
                     "description": null,
                     "domainnode_id": "058cc682-c44d-11ee-94bf-0242ac180006",
@@ -5812,15 +5812,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "48742966-c44a-11ee-94bf-0242ac180006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
-                    "edgeid": "2c07befc-2748-4b1c-bacf-314311c1a728",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "67455316-bad5-11ee-b3f2-0242ac180006"
                 },
                 {
                     "description": null,
@@ -6235,15 +6226,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115i_is_finished_by",
                     "rangenode_id": "6840f820-48ce-11ee-8e4e-0242ac140007"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "67455316-bad5-11ee-b3f2-0242ac180006",
-                    "edgeid": "58f46ce9-f444-4b13-a2b3-63db8deccc33",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "739607be-bad5-11ee-b3f2-0242ac180006"
                 },
                 {
                     "description": null,
@@ -8002,7 +7984,7 @@
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "93d46cc7-988f-428e-8fb9-bb9d8943742a"
+                    "id": "cfbc6176-c73d-4b85-bc2e-0dfa1bbc7447"
                 },
                 {
                     "config": {
@@ -8024,12 +8006,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "fbc87fa1-ee71-4353-9116-0ab9b438fb21"
+                    "id": "e9d653d7-0482-405f-83f3-0e06a69ea3a9"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -9326,7 +9308,7 @@
                     "nodeid": "2e7a7d0a-c4d4-11ee-b171-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P115_finishes",
-                    "sortorder": 2,
+                    "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
                 {
@@ -9884,6 +9866,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "excavation_type",
+                    "config": {
+                        "rdmCollection": null
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Excavation Type",
+                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "nodeid": "3ff6e2ce-cf35-11ee-a12a-0242ac180006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "license_valid_timespan_n1",
                     "config": {
                         "en": ""
@@ -10190,7 +10195,7 @@
                     "nodeid": "5096df56-c4d3-11ee-90c5-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P115_finishes",
-                    "sortorder": 1,
+                    "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
                 {
@@ -10707,29 +10712,6 @@
                     "name": "New Licensee Role Metatype",
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "nodeid": "66a2157a-c449-11ee-8be7-0242ac180006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "excavation_type",
-                    "config": {
-                        "rdmCollection": "b1c3237e-69fc-4cce-a12e-04ef1e053722"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Excavation Type",
-                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
-                    "nodeid": "67455316-bad5-11ee-b3f2-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
@@ -12317,29 +12299,6 @@
                     "nodeid": "72e0fc96-53d5-11ee-844f-0242ac130008",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "excavation_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Excavation Metatype",
-                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
-                    "nodeid": "739607be-bad5-11ee-b3f2-0242ac180006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -14993,8 +14952,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "fa51fb14-c69c-11ee-bbb0-0242ac180006",
-                "published_time": "2024-02-08T16:13:21.193"
+                "publicationid": "0cf9c282-cf36-11ee-a2c6-0242ac180006",
+                "published_time": "2024-02-19T14:49:14.794"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -15030,7 +14989,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "ff19fb96f 2024-01-19 09:20:12 +0000",
+        "git hash": "342cfbb09 2024-01-19 09:20:12 +0000",
         "os": "Linux",
         "os version": "5.10.0-23-amd64"
     }
