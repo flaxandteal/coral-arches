@@ -120,24 +120,7 @@ define([
       });
     };
 
-    console.log('fetch-generated-license-number: ', this);
-
     this.processLicenseNumberTile = async () => {
-      // if (self.tile().data[this.STATUS_NODE]() !== this.STATUS_FINAL_VALUE) {
-      //   params.form.complete(true);
-      //   params.form.saving(false);
-      //   return;
-      // }
-
-      // const licenseNumberTile = await this.fetchLicenseNumberTile();
-      // if (!licenseNumberTile) return;
-
-      // await this.storeLicenseNumberTile(licenseNumberTile);
-
-      // let licenseNumber =
-      //   licenseNumberTile.data[this.LICENSE_NUMBER_NODE][arches.activeLanguage].value;
-      console.log('self.tile(): ', self.tile());
-
       let tile = null;
       switch (self.tile().nodegroup_id) {
         case this.STATUS_NODEGROUP:
@@ -147,7 +130,6 @@ define([
             return;
           }
           tile = await this.fetchDecisionTile();
-          console.log('this.fetchDecisionTile(): ', tile)
           if (!tile || tile.data[this.CUR_D_DECISION_NODE] !== this.CUR_D_DECISION_APPROVED_VALUE) {
             params.form.complete(true);
             params.form.saving(false);
@@ -161,7 +143,6 @@ define([
             return;
           }
           tile = await this.fetchStatusTile();
-          console.log('this.fetchStatusTile(): ', tile)
           if (!tile || tile.data[this.STATUS_NODE] !== this.STATUS_FINAL_VALUE) {
             params.form.complete(true);
             params.form.saving(false);
