@@ -88,6 +88,15 @@
         "bgColor": "#86679c",
         "circleColor": "#aa86c4",
         "desc": "Select two Heritage Assets and merge their data"
+      },
+      {
+        "workflowid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
+        "slug": "open-workflow?workflow-slug=assign-consultation-workflow",
+        "name": "Planning Consultation",
+        "icon": "fa fa-file-text",
+        "bgColor": "#688294",
+        "circleColor": "#7195ad",
+        "desc": "Assign a Consultation to the appropriate team"
       }
     ],
     "show": true
