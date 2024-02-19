@@ -156,7 +156,7 @@ class MergeResources(View):
         # semantic - Not used
         # string - Overwrite
         # number - Overwrite
-        # file-list - Unchecked
+        # file-list - Unchecked - Will need custom can't test currently
         # concept - Overwrite
         # concept-list - Custom needed
         # geojson-feature-collection - Unchecked
@@ -170,8 +170,8 @@ class MergeResources(View):
         # boolean - Overwrite
         # domain-value - Overwrite
         # domain-value-list - Custom needed
-        # bngcentrepoint - Unchecked
-        # user - Unchecked
+        # bngcentrepoint - Overwrite
+        # user - Overwrite
 
         # An ideal implementation would be for datatypes objects to require a
         # function that can merge two of the same together. This would mean
