@@ -22,7 +22,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Number"
                     },
@@ -485,7 +485,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dates"
                     },
@@ -512,7 +512,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "CM References"
                     },
@@ -593,7 +593,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Cur Grade D Decision"
                     },
@@ -3693,7 +3693,7 @@
                     "node_id": "a79fedae-bad5-11ee-900d-0242ac180006",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -7979,12 +7979,13 @@
                     "config": {
                         "triggering_nodegroups": [
                             "991c3c74-48b6-11ee-85af-0242ac140007",
-                            "4f0f655c-48cf-11ee-8e4e-0242ac140007"
+                            "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                            "c9f504b4-c42d-11ee-94bf-0242ac180006"
                         ]
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "cfbc6176-c73d-4b85-bc2e-0dfa1bbc7447"
+                    "id": "b79d87ca-4cb2-40bf-8d98-21aaef9a5486"
                 },
                 {
                     "config": {
@@ -8006,7 +8007,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "e9d653d7-0482-405f-83f3-0e06a69ea3a9"
+                    "id": "ed00def4-06b7-4f81-ac6d-72e95ce734d5"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -13086,9 +13087,70 @@
                 {
                     "alias": "application_stage_type",
                     "config": {
-                        "rdmCollection": "8ca41a78-479a-4d87-831d-08b640910126"
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
+                                "selected": false,
+                                "text": {
+                                    "en": "Received"
+                                }
+                            },
+                            {
+                                "id": "0df1843b-28e9-4868-9a9a-d19229fe5c48",
+                                "selected": false,
+                                "text": {
+                                    "en": "Acknowledged"
+                                }
+                            },
+                            {
+                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
+                                }
+                            },
+                            {
+                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Paused"
+                                }
+                            },
+                            {
+                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
+                                "selected": false,
+                                "text": {
+                                    "en": "Granted"
+                                }
+                            },
+                            {
+                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
+                                "selected": false,
+                                "text": {
+                                    "en": "Refused"
+                                }
+                            },
+                            {
+                                "id": "5b119129-7d05-44af-b7f3-d6cc4e7d13de",
+                                "selected": false,
+                                "text": {
+                                    "en": "Withdrawn"
+                                }
+                            },
+                            {
+                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
+                                "selected": false,
+                                "text": {
+                                    "en": "Not Used"
+                                }
+                            }
+                        ],
+                        "rdmCollection": null
                     },
-                    "datatype": "concept",
+                    "datatype": "domain-value",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -14952,8 +15014,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "0cf9c282-cf36-11ee-a2c6-0242ac180006",
-                "published_time": "2024-02-19T14:49:14.794"
+                "publicationid": "9d9375f8-cf46-11ee-a86e-0242ac180006",
+                "published_time": "2024-02-19T16:47:49.341"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
