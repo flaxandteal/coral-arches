@@ -4,9 +4,6 @@ from arches.app.models.tile import Tile
 import datetime
 from django.db.models import Max
 
-# ResourceInstance - arches/arches/app/models/models.py
-# an example of post_save() - arches/arches/app/models/tile.py
-
 
 LICENSE_GRAPH_ID = "cc5da227-24e7-4088-bb83-a564c4331efd"
 
@@ -23,6 +20,10 @@ STATUS_NODEGROUP = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
 STATUS_NODE = "a79fedae-bad5-11ee-900d-0242ac180006"
 STATUS_FINAL_VALUE = "8c454982-c470-437d-a9c6-87460b07b3d9"
 
+CUR_D_DECISION_NODEGROUP = "c9f504b4-c42d-11ee-94bf-0242ac180006"
+CUR_D_DECISION_NODE = "2a5151f0-c42e-11ee-94bf-0242ac180006"
+CUR_D_DECISION_APPROVED_VALUE = "0c888ace-b068-470a-91cb-9e5f57c660b4"
+
 LICENSE_NUMBER_PREFIX = "AE"
 
 details = {
@@ -31,7 +32,7 @@ details = {
     "type": "node",
     "description": "Automatically generates a new license number after checking the database",
     "defaultconfig": {
-        "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, STATUS_NODEGROUP]
+        "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, STATUS_NODEGROUP, CUR_D_DECISION_NODEGROUP]
     },
     "classname": "LicenseNumberFunction",
     "component": "",
@@ -184,7 +185,29 @@ class LicenseNumberFunction(BaseFunction):
         if tile_nodegroup_id == STATUS_NODEGROUP:
             if tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
                 return
+            try:
+                cur_d_tile = Tile.objects.get(
+                    resourceinstance_id=resource_instance_id,
+                    nodegroup_id=CUR_D_DECISION_NODEGROUP,
+                )
+                if cur_d_tile.data.get(CUR_D_DECISION_NODE) != CUR_D_DECISION_APPROVED_VALUE:
+                    return
+            except Tile.DoesNotExist:
+                return
             
+        if tile_nodegroup_id == CUR_D_DECISION_NODEGROUP:
+            if tile.data.get(CUR_D_DECISION_NODE) != CUR_D_DECISION_APPROVED_VALUE:
+                return
+            try:
+                status_tile = Tile.objects.get(
+                    resourceinstance_id=resource_instance_id,
+                    nodegroup_id=STATUS_NODEGROUP,
+                )
+                if status_tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
+                    return
+            except Tile.DoesNotExist:
+                return
+
         license_number = generate_license_number(resource_instance_id)
 
         if not license_number:
