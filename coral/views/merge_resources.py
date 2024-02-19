@@ -159,7 +159,7 @@ class MergeResources(View):
         # file-list - Unchecked - Will need custom can't test currently
         # concept - Overwrite
         # concept-list - Custom needed
-        # geojson-feature-collection - Unchecked
+        # geojson-feature-collection - Custom needed
         # date - Overwrite
         # node-value - Overwrite
         # edtf - Overwrite
