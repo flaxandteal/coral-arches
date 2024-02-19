@@ -80,7 +80,8 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['cmRefTileId']",
                   }
                 },
                 {
@@ -110,7 +111,8 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']"
                   }
                 }
               ]
@@ -324,7 +326,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-generated-license-number',
                   uniqueInstanceName: 'grade-d-decision',
                   tilesManaged: 'one',
                   parameters: {
@@ -346,6 +348,23 @@ define([
                   }
                 },
                 {
+                  componentName: 'fetch-generated-license-number',
+                  uniqueInstanceName: 'application-details',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']",
+                    hiddenNodes: [
+                      "777596ba-48cf-11ee-8e4e-0242ac140007",
+                      "aec103a2-48cf-11ee-8e4e-0242ac140007",
+                      "c2f40174-5dd5-11ee-ae2c-0242ac120008",
+                      "3ff6e2ce-cf35-11ee-a12a-0242ac180006"
+                    ]
+                  }
+                },
+                {
                   componentName: 'default-card',
                   uniqueInstanceName: 'license-number',
                   tilesManaged: 'one',
@@ -362,7 +381,7 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    tileid: "['app-details-step']['cm-reference'][0]['tileId']"
+                    tileid: "['init-step']['app-id'][0]['resourceid']['cmRefTileId']",
                   }
                 },
                 {
