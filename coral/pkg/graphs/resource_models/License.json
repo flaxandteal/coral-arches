@@ -22,7 +22,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "License Number"
                     },
@@ -485,7 +485,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dates"
                     },
@@ -512,7 +512,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "CM References"
                     },
@@ -593,7 +593,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Cur Grade D Decision"
                     },
@@ -3693,7 +3693,7 @@
                     "node_id": "a79fedae-bad5-11ee-900d-0242ac180006",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -7979,12 +7979,13 @@
                     "config": {
                         "triggering_nodegroups": [
                             "991c3c74-48b6-11ee-85af-0242ac140007",
-                            "4f0f655c-48cf-11ee-8e4e-0242ac140007"
+                            "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                            "c9f504b4-c42d-11ee-94bf-0242ac180006"
                         ]
                     },
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "cfbc6176-c73d-4b85-bc2e-0dfa1bbc7447"
+                    "id": "b79d87ca-4cb2-40bf-8d98-21aaef9a5486"
                 },
                 {
                     "config": {
@@ -8006,7 +8007,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "id": "e9d653d7-0482-405f-83f3-0e06a69ea3a9"
+                    "id": "ed00def4-06b7-4f81-ac6d-72e95ce734d5"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -13117,7 +13118,7 @@
                                 "text": {
                                     "en": "Paused"
                                 }
-                            } ,
+                            },
                             {
                                 "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
                                 "selected": false,
@@ -15013,8 +15014,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "0cf9c282-cf36-11ee-a2c6-0242ac180006",
-                "published_time": "2024-02-19T14:49:14.794"
+                "publicationid": "9d9375f8-cf46-11ee-a86e-0242ac180006",
+                "published_time": "2024-02-19T16:47:49.341"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
