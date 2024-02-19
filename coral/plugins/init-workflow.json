@@ -63,6 +63,15 @@
         "desc": "Flag a resource that needs to be enforced"
       },
       {
+        "workflowid": "9b0f5bb0-4346-4957-b966-47cd973eba54",
+        "slug": "flag-for-enforcement-workflow",
+        "name": "Flag for Enforcement",
+        "icon": "fa fa-asterisk",
+        "bgColor": "#518ef0",
+        "circleColor": "#3d79d9",
+        "desc": "Flag a resource that needs to be enforced"
+      },
+      {
         "workflowid": "7bd039e2-299f-4c4d-b088-5c671c7011cf",
         "slug": "open-workflow?workflow-slug=archive-catalogue-workflow",
         "name": "Archive Cataloguing",
@@ -79,15 +88,6 @@
         "bgColor": "#689480",
         "circleColor": "#79b59a",
         "desc": "Create or edit a License for an Excavation Activity"
-      },
-      {
-        "workflowid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
-        "slug": "open-workflow?workflow-slug=assign-consultation-workflow",
-        "name": "Planning Consultation",
-        "icon": "fa fa-file-text",
-        "bgColor": "#688294",
-        "circleColor": "#7195ad",
-        "desc": "Assign a Consultation to the appropriate team"
       }
     ],
     "show": true
