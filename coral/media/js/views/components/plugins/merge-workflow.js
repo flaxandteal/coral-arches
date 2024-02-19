@@ -16,6 +16,10 @@ define([
           name: 'search-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
+          informationboxdata: {
+            heading: 'Base Resource',
+            text: 'The resource selected here will take priority during the merge. This means data groups that can only have one value will be overwritten with data groups kept in this resource.'
+          },
           layoutSections: [
             {
               componentConfigs: [
@@ -27,6 +31,7 @@ define([
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
                     ],
+                    label: 'Name/SMR of the Heritage Asset',
                     getTileIdFromNodegroup: [
                       {
                         nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
@@ -44,6 +49,10 @@ define([
           name: 'merging-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
+          informationboxdata: {
+            heading: 'Merge Resource',
+            text: 'Data from this resource will be merged into the base resource unless the base resource can only have one value for a data group.'
+          },
           layoutSections: [
             {
               componentConfigs: [
@@ -55,7 +64,7 @@ define([
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
                     ],
-                    label: 'Hello world',
+                    label: 'Name/SMR of the Heritage Asset',
                     getTileIdFromNodegroup: [
                       {
                         nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
@@ -91,6 +100,10 @@ define([
           name: 'information-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
+          informationboxdata: {
+            heading: 'Please provide information',
+            text: 'It\'s mandatory that you provide information in the notes text box below detailing exactly why you think these two resources should be merged.'
+          },
           layoutSections: [
             {
               componentConfigs: [
