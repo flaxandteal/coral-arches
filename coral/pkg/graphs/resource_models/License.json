@@ -13086,9 +13086,70 @@
                 {
                     "alias": "application_stage_type",
                     "config": {
-                        "rdmCollection": "8ca41a78-479a-4d87-831d-08b640910126"
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
+                                "selected": false,
+                                "text": {
+                                    "en": "Received"
+                                }
+                            },
+                            {
+                                "id": "0df1843b-28e9-4868-9a9a-d19229fe5c48",
+                                "selected": false,
+                                "text": {
+                                    "en": "Acknowledged"
+                                }
+                            },
+                            {
+                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
+                                }
+                            },
+                            {
+                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Paused"
+                                }
+                            } ,
+                            {
+                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
+                                "selected": false,
+                                "text": {
+                                    "en": "Granted"
+                                }
+                            },
+                            {
+                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
+                                "selected": false,
+                                "text": {
+                                    "en": "Refused"
+                                }
+                            },
+                            {
+                                "id": "5b119129-7d05-44af-b7f3-d6cc4e7d13de",
+                                "selected": false,
+                                "text": {
+                                    "en": "Withdrawn"
+                                }
+                            },
+                            {
+                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
+                                "selected": false,
+                                "text": {
+                                    "en": "Not Used"
+                                }
+                            }
+                        ],
+                        "rdmCollection": null
                     },
-                    "datatype": "concept",
+                    "datatype": "domain-value",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
