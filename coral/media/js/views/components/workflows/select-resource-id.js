@@ -11,7 +11,6 @@ define([
   function viewModel(params) {
     const ResourceInstanceSelectViewModel = require('viewmodels/resource-instance-select');
 
-    params.configKeys = ['placeholder', 'defaultResourceInstance'];
     params.graphids = params.graphIds;
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
@@ -22,9 +21,7 @@ define([
       this.value(this.form.savedData()?.selectedResourceId);
     }
 
-    if (params.label) {
-      this.label(params.label);
-    }
+    this.label = params.label;
 
     this.fetchTileData = async (resourceId, nodeId) => {
       const tilesResponse = await window.fetch(
