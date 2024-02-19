@@ -7,7 +7,9 @@
 <!--ko let: {self: $data} -->
 <!-- ko ifnot: self.displayOntologyTable -->
 <div class="row" style="margin: 0px;" data-bind="class: nodeCssClasses">
-    <div class="col-xs-12 resource-instance-wrapper">
+    <div class="col-xs-12 resource-instance-wrapper" style="display: flex; flex-direction: column">
+        <label class="control-label widget-input-label" data-bind="text:label">
+        </label>
         <input style="width:30%; display:inline-block;"
             data-bind="
                 select2Query: {
