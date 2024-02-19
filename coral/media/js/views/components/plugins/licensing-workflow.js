@@ -347,26 +347,23 @@ define([
                     parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
                   }
                 },
-                // Won't work since it needs to check if the Cur D has approved
-                // - Both fetch generated components won't see the other tile they
-                // looking for.
-                // {
-                //   componentName: 'fetch-generated-license-number',
-                //   uniqueInstanceName: 'application-details',
-                //   tilesManaged: 'one',
-                //   parameters: {
-                //     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                //     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
-                //     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                //     tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']",
-                //     hiddenNodes: [
-                //       "777596ba-48cf-11ee-8e4e-0242ac140007",
-                //       "aec103a2-48cf-11ee-8e4e-0242ac140007",
-                //       "c2f40174-5dd5-11ee-ae2c-0242ac120008",
-                //       "3ff6e2ce-cf35-11ee-a12a-0242ac180006"
-                //     ]
-                //   }
-                // },
+                {
+                  componentName: 'fetch-generated-license-number',
+                  uniqueInstanceName: 'application-details',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']",
+                    hiddenNodes: [
+                      "777596ba-48cf-11ee-8e4e-0242ac140007",
+                      "aec103a2-48cf-11ee-8e4e-0242ac140007",
+                      "c2f40174-5dd5-11ee-ae2c-0242ac120008",
+                      "3ff6e2ce-cf35-11ee-a12a-0242ac180006"
+                    ]
+                  }
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'license-number',
