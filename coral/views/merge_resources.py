@@ -134,8 +134,17 @@ class MergeResources(View):
                 resource_map[resource["resourceId"]] = resource
         return list(resource_map.values())
     
-    def merge_concept_list(self, base_node_value, merge_node_value):
+    def merge_list(self, base_node_value, merge_node_value):
         return list(set(base_node_value + merge_node_value))
+    
+    def merge_geojson_feature_collection(self, base_node_value, merge_node_value):
+        feature_map = {}
+        result = deepcopy(merge_node_value)
+        for feature in base_node_value['features'] + merge_node_value['features']:
+            if feature["id"] not in feature_map:
+                feature_map[feature["id"]] = feature
+        result['features'] = list(feature_map.values())
+        return result
 
     def merge_tile_data(self, base_tile_data, merge_tile_data):
         result = deepcopy(merge_tile_data)
@@ -149,20 +158,25 @@ class MergeResources(View):
         # number - Overwrite
         # file-list - Unchecked
         # concept - Overwrite
-        # concept-list - Unchecked
+        # concept-list - Custom needed
         # geojson-feature-collection - Unchecked
         # date - Overwrite
-        # node-value - Unchecked
+        # node-value - Overwrite
         # edtf - Overwrite
-        # annotation - Unchecked
-        # url - Unchecked
-        # resource-instance
+        # annotation - Overwrite
+        # url - Overwrite
+        # resource-instance - Overwrite
         # resource-instance-list - Custom needed
         # boolean - Overwrite
         # domain-value - Overwrite
-        # domain-value-list - Unchecked
+        # domain-value-list - Custom needed
         # bngcentrepoint - Unchecked
         # user - Unchecked
+
+        # An ideal implementation would be for datatypes objects to require a
+        # function that can merge two of the same together. This would mean
+        # that newly created datatypes will be setup and ready to be merged
+        # by calling their exclusive merge function.
 
         for node_id in base_tile_data.keys():
             datatype = self.nodes[node_id].datatype
@@ -173,7 +187,17 @@ class MergeResources(View):
                     )
                     break
                 case "concept-list":
-                    result[node_id] = self.merge_concept_list(
+                    result[node_id] = self.merge_list(
+                        base_tile_data[node_id], merge_tile_data[node_id]
+                    )
+                    break
+                case "domain-value-list":
+                    result[node_id] = self.merge_list(
+                        base_tile_data[node_id], merge_tile_data[node_id]
+                    )
+                    break
+                case "geojson-feature-collection":
+                    result[node_id] = self.merge_geojson_feature_collection(
                         base_tile_data[node_id], merge_tile_data[node_id]
                     )
                 case _:
