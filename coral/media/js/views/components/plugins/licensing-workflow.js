@@ -324,7 +324,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-generated-license-number',
                   uniqueInstanceName: 'grade-d-decision',
                   tilesManaged: 'one',
                   parameters: {
