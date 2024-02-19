@@ -11,6 +11,7 @@ from arches.app.views.plugin import PluginView
 from coral.views.auth import PersonSignupView, PersonConfirmSignupView
 from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport
 from coral.views.open_workflow import OpenWorkflow
+from coral.views.merge_resources import MergeResources
 
 
 uuid_regex = settings.UUID_REGEX
@@ -40,6 +41,12 @@ urlpatterns = [
     # Open Workflow
     #
     re_path(r"^open-workflow", OpenWorkflow.as_view(), name="open_workflow"),
+
+    #
+    # Merge Resources
+    #
+    re_path(r"^merge-resources", MergeResources.as_view(), name="merge_resources"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.SHOW_LANGUAGE_SWITCH is True:
