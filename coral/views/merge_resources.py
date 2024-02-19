@@ -133,6 +133,9 @@ class MergeResources(View):
             if resource["resourceId"] not in resource_map:
                 resource_map[resource["resourceId"]] = resource
         return list(resource_map.values())
+    
+    def merge_concept_list(self, base_node_value, merge_node_value):
+        return list(set(base_node_value + merge_node_value))
 
     def merge_tile_data(self, base_tile_data, merge_tile_data):
         result = deepcopy(merge_tile_data)
@@ -169,6 +172,10 @@ class MergeResources(View):
                         base_tile_data[node_id], merge_tile_data[node_id]
                     )
                     break
+                case "concept-list":
+                    result[node_id] = self.merge_concept_list(
+                        base_tile_data[node_id], merge_tile_data[node_id]
+                    )
                 case _:
                     result[node_id] = self.merge_default(
                         base_tile_data[node_id], merge_tile_data[node_id]
