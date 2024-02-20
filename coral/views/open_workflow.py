@@ -9,14 +9,10 @@ logger = logging.getLogger(__name__)
 
 
 class OpenWorkflow(View):
-    def get(self, request):
-        resource_instance_id = request.GET.get("resource-id")
-        workflow_id = request.GET.get("")
-        histories = models.WorkflowHistory.objects.all().order_by("-created")
-
-        # Find workflow structure
+    def find_workflow_history(self, resource_instance_id):
         # FIXME: What if a resource id appears in another workflows history
         # FIXME: Get upstream Arches workflow slug into the database table
+        histories = models.WorkflowHistory.objects.all().order_by("-created")
         found_history = None
         for history in histories:
             for componentdata in history.componentdata.values():
@@ -41,11 +37,12 @@ class OpenWorkflow(View):
             else:
                 continue
             break
+        return found_history
 
+    def update_existing_history(self, history):
         # Refresh tiles with latest data
-        for key, componentdata in found_history.componentdata.items():
+        for key, componentdata in history.componentdata.items():
             if type(componentdata["value"]) == list:
-
                 # FIXME: Currently if a many workflow card is editted from outside the workflow
                 # the results won't be updated into the workflow. Something like this might work
                 # but don't have the time at the moment.
@@ -81,11 +78,19 @@ class OpenWorkflow(View):
             else:
                 tile = models.TileModel.objects.get(pk=componentdata["value"]["tileId"])
                 componentdata["value"]["tileData"] = json.dumps(tile.data)
+        return history
 
-        found_history.completed = False
-        found_history.workflowid = workflow_id
+    def get(self, request):
+        resource_instance_id = request.GET.get("resource-id")
+        workflow_id = request.GET.get("workflow-id")
 
-        return JSONResponse(found_history)
+        found_history = self.find_workflow_history(resource_instance_id)
+
+        if found_history:
+            found_history = self.update_existing_history(found_history)
+            found_history.completed = False
+            found_history.workflowid = workflow_id
+            return JSONResponse(found_history)
 
 
 # {
