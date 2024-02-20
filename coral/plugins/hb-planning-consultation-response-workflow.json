@@ -1,0 +1,41 @@
+{
+  "pluginid": "96c266fe-9ea2-48eb-89ca-240679a05173",
+  "name": "HB Planning Consultation Response",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+    "stepData": [
+      {
+        "name": "d8287006-3274-4c6a-afef-dcf158a4948d",
+        "title": "Initial step",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                  ],
+                  "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "79bf9dd9-c242-42ee-988b-db1196941c8b"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "hb-planning-consultation-response-workflow",
+  "sortorder": 0
+}
