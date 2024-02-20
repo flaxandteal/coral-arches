@@ -28,6 +28,18 @@
         "slug": "assign-consultation-workflow",
         "name": "Planning Consultation",
         "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d"
+      },
+      {
+        "slug": "hm-planning-consultation-response-workflow",
+        "name": "HM Planning Consultation Response",
+        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "disableStartNew": true
+      },
+      {
+        "slug": "hb-planning-consultation-response-workflow",
+        "name": "HB Planning Consultation Response",
+        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "disableStartNew": true
       }
     ]
   },
