@@ -9,7 +9,7 @@
     "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
     "stepData": [
       {
-        "name": "94f4baae-63d8-4c9d-b74f-6603b8d590fb",
+        "name": "initial-step",
         "title": "Initial step",
         "required": false,
         "layoutSections": [
@@ -33,7 +33,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
-                "uniqueInstanceName": "73be97e7-dff9-41f6-946c-6431ea692d73"
+                "uniqueInstanceName": "system-reference"
               }
             ]
           }
@@ -41,7 +41,7 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "53c14769-7db4-4542-8065-9d7633d94d4d",
+        "name": "assign-step",
         "title": "Assign",
         "required": false,
         "layoutSections": [
@@ -50,18 +50,18 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
                   "semanticName": "Assignment"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "da8f4466-b4eb-4651-bcb3-877f6c68ce13"
+                "uniqueInstanceName": "assignment"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "ac905d54-ca65-11ee-b83c-0242ac180006",
                     "19eef70c-69b8-11ee-8431-0242ac120002",
@@ -75,18 +75,18 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "ca11c696-acc0-452f-be4d-3a96f8d05024"
+                "uniqueInstanceName": "action"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
                   "semanticName": "CM References"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "dc68fead-eb7c-4955-94db-17f3415a8961"
+                "uniqueInstanceName": "cm-reference"
               }
             ]
           }
@@ -94,7 +94,7 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "70e9d560-a9ed-4bf7-9b90-8274ab1c453e",
+        "name": "application-summary-step",
         "title": "Application Summary",
         "required": false,
         "layoutSections": [
@@ -103,40 +103,40 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "b4974044-c768-11ee-a945-0242ac180006",
                   "semanticName": "Planning References"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "b6c25374-130c-4734-adbb-fe09bd5b9618"
+                "uniqueInstanceName": "planning-reference"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
                   "semanticName": "CM References"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "a5fd2f7f-36ee-47a1-9ae4-ee268430b880"
+                "uniqueInstanceName": "cm-refernce"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
                   "semanticName": "DIF Received Date"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "757d8f2a-98db-43c2-84cf-0431dc7c4aaf"
+                "uniqueInstanceName": "dif-received-date"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "b37552be-9527-11ea-9213-f875a44e0e11",
                     "b37552bf-9527-11ea-9c87-f875a44e0e11"
@@ -146,45 +146,45 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "b73aaf38-2f0b-4e58-badc-659e567eb32b"
+                "uniqueInstanceName": "system-reference"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "54de6acc-8895-11ea-9067-f875a44e0e11",
                   "semanticName": "Application Type"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "d692ee2a-d1dc-46a0-bd26-10f5e2e07a0a"
+                "uniqueInstanceName": "application-type"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "86caf026-c76c-11ee-bf7c-0242ac180006",
                   "semanticName": "Classification Type"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "b8528459-2916-4f00-9d31-803dc0884dc3"
+                "uniqueInstanceName": "classification-type"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "73fdfe62-8895-11ea-a058-f875a44e0e11",
                   "semanticName": "Development Type"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "1e5b52df-6af1-419d-a205-f075bebb74b5"
+                "uniqueInstanceName": "development-type"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
                     "b7304f4c-3ace-11eb-8884-f875a44e0e11",
@@ -196,12 +196,12 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "0c251ab6-3163-4525-97f3-02685fc4ec39"
+                "uniqueInstanceName": "contacts"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11",
                     "7224417b-893a-11ea-b383-f875a44e0e11"
@@ -211,7 +211,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "7d00ae4f-a9aa-4af0-8172-5ba382d44e50"
+                "uniqueInstanceName": "consultation-dates"
               },
               {
                 "parameters": {
@@ -221,21 +221,19 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "f7d94d65-0750-404e-ad28-2145a0dcf619"
+                "uniqueInstanceName": "consultation-descriptions"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "f279c99d-887e-11ea-9dca-f875a44e0e11"
-                  ],
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
                   "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
                   "semanticName": "Proposal"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "a328d246-b8d8-423b-bf3e-2762dcf73e56"
+                "uniqueInstanceName": "proposal"
               }
             ]
           }
@@ -243,7 +241,7 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "9c537d06-c6d6-4505-b606-9344923be960",
+        "name": "map-step",
         "title": "Map",
         "required": false,
         "layoutSections": [
@@ -252,14 +250,14 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['locationData']",
+                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "66e6c007-3464-40dd-b37a-613690aa7fc1"
+                "uniqueInstanceName": "geometry"
               }
             ]
           }
@@ -267,12 +265,24 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "a6ffc386-c721-4464-a8ac-3e59d2ed8057",
-        "title": "New Step",
+        "name": "action-step",
+        "title": "Action",
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
+                  "semanticName": "Response Action"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "response-action"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"
