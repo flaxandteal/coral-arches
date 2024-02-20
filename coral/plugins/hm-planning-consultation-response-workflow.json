@@ -33,6 +33,59 @@
           }
         ],
         "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "53c14769-7db4-4542-8065-9d7633d94d4d",
+        "title": "Assign",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
+                  "semanticName": "Assignment"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "da8f4466-b4eb-4651-bcb3-877f6c68ce13"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "ac905d54-ca65-11ee-b83c-0242ac180006",
+                    "19eef70c-69b8-11ee-8431-0242ac120002",
+                    "bfd39106-51a3-11eb-9104-f875a44e0e11",
+                    "c4413ac8-69b6-11ee-908a-0242ac120002",
+                    "8322f9f6-69b5-11ee-93a1-0242ac120002",
+                    "e2585f8a-51a3-11eb-a7be-f875a44e0e11"
+                  ],
+                  "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
+                  "semanticName": "Action"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "ca11c696-acc0-452f-be4d-3a96f8d05024"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['94f4baae-63d8-4c9d-b74f-6603b8d590fb']['73be97e7-dff9-41f6-946c-6431ea692d73'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
+                  "semanticName": "CM References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "dc68fead-eb7c-4955-94db-17f3415a8961"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
       }
     ]
   },
