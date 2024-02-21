@@ -12,6 +12,7 @@ from coral.views.auth import PersonSignupView, PersonConfirmSignupView
 from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResources
+from coral.views.monument_revision_remap import MonumentRevisionRemap
 
 
 uuid_regex = settings.UUID_REGEX
@@ -46,6 +47,11 @@ urlpatterns = [
     # Merge Resources
     #
     re_path(r"^merge-resources", MergeResources.as_view(), name="merge_resources"),
+
+    #
+    # Monument Revision Remap
+    #
+    re_path(r"^monument-revision-remap", MonumentRevisionRemap.as_view(), name="monument_revision_remap"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
