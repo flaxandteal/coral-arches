@@ -81,7 +81,7 @@ class OpenWorkflow(View):
                 tile = models.TileModel.objects.get(pk=componentdata["value"]["tileId"])
                 componentdata["value"]["tileData"] = json.dumps(tile.data)
         return history
-    
+
     def get_resource(self, resource_id):
         resource = None
         try:
@@ -90,28 +90,147 @@ class OpenWorkflow(View):
             raise f"Resource ID ({resource_id}) does not exist"
         return resource
 
+    # def get(self, request):
+    #     resource_instance_id = request.GET.get("resource-id")
+    #     workflow_id = request.GET.get("workflow-id")
+    #     workflow_slug = request.GET.get("workflow-slug")
+
+    #     found_history = self.find_workflow_history(resource_instance_id)
+    #     print("found_history: ", found_history)
+
+    #     if found_history:
+    #         print("Taking found history path")
+    #         found_history = self.update_existing_history(found_history)
+    #         found_history.completed = False
+    #         found_history.workflowid = workflow_id
+    #         return JSONResponse(found_history)
+
+    #     resource = self.get_resource(pk=resource_instance_id)
+    #     print("resource: ", resource)
+
+    #     resource_tiles = Tile.objects.filter(
+    #         resourceinstance=resource.resourceinstanceid
+    #     )
+    #     print("resource_tiles: ", resource_tiles)
+
+    workflow_step_data = {}
+    workflow_component_data = {}
+    step_mapping = []
+    step_config = []
+    nodegroups = {}
+    nodes = {}
+    grouped_tiles = {}
+
+    def get_node_configuration(self):
+        nodes = self.graph.node_set.all().select_related("nodegroup")
+        for node in nodes:
+            self.nodes[str(node.nodeid)] = node
+            if node.is_collector:
+                nodegroup_id = str(node.nodegroup.nodegroupid)
+                self.nodegroups[nodegroup_id] = node.nodegroup
+
+    def get_plugin(self, plugin_slug):
+        plugin = None
+        try:
+            plugin = models.Plugin.objects.filter(slug=plugin_slug).first()
+        except models.Plugin.DoesNotExist:
+            raise f"Plugin slug ({plugin_slug}) does not exist"
+        return plugin
+
+    def get_resource(self, resource_id):
+        resource = None
+        try:
+            resource = Resource.objects.filter(pk=resource_id).first()
+        except Resource.DoesNotExist:
+            raise f"Resource ID ({resource_id}) does not exist"
+        return resource
+
+    def generate_step_data_structure(self):
+        for step in self.step_config:
+            step_name = step["name"]
+            self.workflow_step_data[step_name] = {"componentIdLookup": {}}
+
+            # Tends to only contain one index but using loop for saftey
+            for layout_section in step["layoutSections"]:
+                for component_config in layout_section["componentConfigs"]:
+                    unique_instance_name = component_config["uniqueInstanceName"]
+                    data_lookup_id = str(uuid.uuid4())
+                    self.workflow_step_data[step_name]["componentIdLookup"][
+                        unique_instance_name
+                    ] = data_lookup_id
+                    self.step_mapping.append(
+                        {
+                            "unique_instance_name": unique_instance_name,
+                            "nodegroup_id": component_config["parameters"][
+                                "nodegroupid"
+                            ],
+                            "tiles_managed": component_config["tilesManaged"],
+                            "data_lookup_id": data_lookup_id,
+                        }
+                    )
+
+    def group_tiles(self, tiles):
+        for tile in tiles:
+            nodegroup_id = str(tile.nodegroup.nodegroupid)
+            if nodegroup_id not in self.grouped_tiles:
+                self.grouped_tiles[nodegroup_id] = []
+            self.grouped_tiles[nodegroup_id].append(tile)
+
     def get(self, request):
-        resource_instance_id = request.GET.get("resource-id")
+        resource_id = request.GET.get("resource-id")
         workflow_id = request.GET.get("workflow-id")
+        workflow_slug = request.GET.get("workflow-slug")
 
-        found_history = self.find_workflow_history(resource_instance_id)
-        print('found_history: ', found_history)
+        # Get step data from plugin
 
-        if found_history:
-            print('Taking found history path')
-            found_history = self.update_existing_history(found_history)
-            found_history.completed = False
-            found_history.workflowid = workflow_id
-            return JSONResponse(found_history)
-        
-        resource = self.get_resource(pk=resource_instance_id)
-        print('resource: ', resource)
+        plugin = self.get_plugin(workflow_slug)
+        self.step_config = plugin.config["stepData"]  # <-- This is confusing
 
-        resource_tiles = Tile.objects.filter(
-            resourceinstance=resource.resourceinstanceid
+        # Generate the structure for step data
+
+        self.generate_step_data_structure()
+
+        # Get all the resources tiles
+
+        self.resource = self.get_resource(resource_id)
+        resource_tiles = Tile.objects.filter(resourceinstance=self.resource)
+
+        # Loop through tiles and add them to the component data lookup
+
+        self.group_tiles(resource_tiles)
+
+        for map_data in self.step_mapping:
+            nodegroup_id = map_data["nodegroup_id"]
+            data_lookup_id = map_data["data_lookup_id"]
+
+            if map_data["tiles_managed"] == "one":
+                tiles = self.grouped_tiles.get(nodegroup_id, [])
+                if not len(tiles):
+                    continue
+                # FIXME: In this case the workflow only wants one tile but
+                # if the cardinality allows for multiple how do we
+                # decide which tile is the one that should be displayed
+                tile = tiles[0]
+                self.workflow_component_data[data_lookup_id] = {
+                    "value": {
+                        "nodegroupId": nodegroup_id,
+                        "resourceInstanceId": resource_id,
+                        "tileId": str(tile.tileid),
+                        "tileData": json.dumps(tile.data),
+                    }
+                }
+                continue
+
+        return JSONResponse(
+            {
+                "message": "Resources have been merged",
+                "groupedTiles": self.grouped_tiles,
+                # "stepData": self.step_config,
+                "workflowStepData": self.workflow_step_data,
+                "workflowComponentData": self.workflow_component_data,
+                "stepMapping": self.step_mapping,
+            }
         )
-        print('resource_tiles: ', resource_tiles)
-
 
 
 # {

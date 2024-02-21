@@ -27,7 +27,7 @@ define([
           const searchParams = new URLSearchParams(window.location.search);
           const resourceId = searchParams.get('resource-id');
           const response = await fetch(
-            `/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}`,
+            `/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}&workflow-slug=${this.componentName}`,
             {
               method: 'GET',
               credentials: 'include',
