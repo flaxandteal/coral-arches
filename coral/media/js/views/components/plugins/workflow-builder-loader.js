@@ -5,6 +5,10 @@ define([
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/default-card-util',
   'views/components/workflows/workflow-builder-initial-step',
+
+  // Not the way I want this implemented but this will allow the use
+  // of this custom component
+  'views/components/workflows/assign-consultation-workflow/show-hierarchy-change'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
