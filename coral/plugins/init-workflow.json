@@ -115,6 +115,15 @@
         "bgColor": "#688294",
         "circleColor": "#7195ad",
         "desc": "Respond to a consultation for HB."
+      },
+      {
+        "workflowid": "681c3218-950b-454b-aef6-409ba4625d17",
+        "slug": "open-workflow?workflow-slug=monument-revision-workflow",
+        "name": "Heritage Asset Revision",
+        "icon": "fa fa-file-text",
+        "bgColor": "#d16a64",
+        "circleColor": "#de736d",
+        "desc": "Create a revision resource for Heritage Asset."
       }
     ],
     "show": true

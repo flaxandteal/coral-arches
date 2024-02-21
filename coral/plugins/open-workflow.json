@@ -40,6 +40,13 @@
         "name": "HB Planning Consultation Response",
         "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
         "disableStartNew": true
+      },
+      {
+        "slug": "monument-revision-workflow",
+        "name": "Heritage Asset Revision",
+        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "setupFunction": "setupMonumentRevision",
+        "disableStartNew": true
       }
     ]
   },
