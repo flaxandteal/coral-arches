@@ -1,0 +1,12 @@
+{
+  "pluginid": "681c3218-950b-454b-aef6-409ba4625d17",
+  "name": "Monument Revision",
+  "icon": "fa fa-file-text",
+  "component": "views/components/plugins/monument-revision-workflow",
+  "componentname": "monument-revision-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "monument-revision-workflow",
+  "sortorder": 0
+}
