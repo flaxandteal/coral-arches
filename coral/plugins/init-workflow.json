@@ -97,6 +97,24 @@
         "bgColor": "#688294",
         "circleColor": "#7195ad",
         "desc": "Assign a Consultation to the appropriate team"
+      },
+      {
+        "workflowid": "ccc37d70-d4f1-4e8f-afa4-f633de6a8121",
+        "slug": "open-workflow?workflow-slug=hm-planning-consultation-response-workflow",
+        "name": "HM Planning Consultation Response",
+        "icon": "fa fa-file-text",
+        "bgColor": "#688294",
+        "circleColor": "#7195ad",
+        "desc": "Respond to a consultation for HM."
+      },
+      {
+        "workflowid": "96c266fe-9ea2-48eb-89ca-240679a05173",
+        "slug": "open-workflow?workflow-slug=hb-planning-consultation-response-workflow",
+        "name": "HB Planning Consultation Response",
+        "icon": "fa fa-file-text",
+        "bgColor": "#688294",
+        "circleColor": "#7195ad",
+        "desc": "Respond to a consultation for HB."
       }
     ],
     "show": true

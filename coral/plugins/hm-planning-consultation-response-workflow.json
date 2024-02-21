@@ -1,6 +1,6 @@
 {
-  "pluginid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
-  "name": "Assign Consultation",
+  "pluginid": "ccc37d70-d4f1-4e8f-afa4-f633de6a8121",
+  "name": "HM Planning Consultation Response",
   "icon": "fa fa-check",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -41,8 +41,61 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "application-details-step",
-        "title": "Application Details",
+        "name": "assign-step",
+        "title": "Assign",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
+                  "semanticName": "Assignment"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "assignment"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "ac905d54-ca65-11ee-b83c-0242ac180006",
+                    "19eef70c-69b8-11ee-8431-0242ac120002",
+                    "bfd39106-51a3-11eb-9104-f875a44e0e11",
+                    "c4413ac8-69b6-11ee-908a-0242ac120002",
+                    "8322f9f6-69b5-11ee-93a1-0242ac120002",
+                    "e2585f8a-51a3-11eb-a7be-f875a44e0e11"
+                  ],
+                  "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
+                  "semanticName": "Action"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "action"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
+                  "semanticName": "CM References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "cm-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "application-summary-step",
+        "title": "Application Summary",
         "required": false,
         "layoutSections": [
           {
@@ -67,7 +120,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "cm-reference"
+                "uniqueInstanceName": "cm-refernce"
               },
               {
                 "parameters": {
@@ -82,12 +135,11 @@
               },
               {
                 "parameters": {
-                  "tileid": "['initial-step']['system-reference'][0]['tileId']",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552be-9527-11ea-9213-f875a44e0e11"
+                    "b37552be-9527-11ea-9213-f875a44e0e11",
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11"
                   ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
                   "semanticName": "System Reference Numbers"
@@ -104,7 +156,7 @@
                   "semanticName": "Application Type"
                 },
                 "tilesManaged": "one",
-                "componentName": "show-hierarchy-change",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "application-type"
               },
               {
@@ -135,9 +187,9 @@
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
-                    "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
+                    "b7304f4c-3ace-11eb-8884-f875a44e0e11",
                     "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
-                    "b7304f4c-3ace-11eb-8884-f875a44e0e11"
+                    "4ea4a192-184f-11eb-a0d6-f875a44e0e11"
                   ],
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
                   "semanticName": "Contacts"
@@ -151,8 +203,8 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "7224417b-893a-11ea-b383-f875a44e0e11",
-                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
+                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11",
+                    "7224417b-893a-11ea-b383-f875a44e0e11"
                   ],
                   "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
                   "semanticName": "Consultation Dates"
@@ -164,22 +216,18 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [],
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
                   "semanticName": "Consultation Descriptions"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "consultation-description"
+                "uniqueInstanceName": "consultation-descriptions"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "f279c99d-887e-11ea-9dca-f875a44e0e11"
-                  ],
+                  "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
                   "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
                   "semanticName": "Proposal"
                 },
@@ -217,68 +265,6 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "location-details-step",
-        "title": "Location Details",
-        "required": false,
-        "layoutSections": [
-          {
-            "componentConfigs": [
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083fa088-ca61-11ee-afca-0242ac180006",
-                    "083ef3fe-ca61-11ee-afca-0242ac180006",
-                    "083f45ac-ca61-11ee-afca-0242ac180006",
-                    "083f935e-ca61-11ee-afca-0242ac180006",
-                    "083e825c-ca61-11ee-afca-0242ac180006",
-                    "083e8c16-ca61-11ee-afca-0242ac180006",
-                    "083f97a0-ca61-11ee-afca-0242ac180006"
-                  ],
-                  "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Addresses"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "addresses"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "hiddenNodes": [
-                    "083f0650-ca61-11ee-afca-0242ac180006"
-                  ],
-                  "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "localities"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083f146a-ca61-11ee-afca-0242ac180006"
-                  ],
-                  "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Location Descriptions"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "location-descriptions"
-              }
-            ]
-          }
-        ],
-        "workflowstepclass": "workflow-form-component"
-      },
-      {
         "name": "action-step",
         "title": "Action",
         "required": false,
@@ -289,12 +275,12 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
-                  "semanticName": "Action"
+                  "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
+                  "semanticName": "Response Action"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "action"
+                "uniqueInstanceName": "response-action"
               }
             ]
           }
@@ -303,6 +289,6 @@
       }
     ]
   },
-  "slug": "assign-consultation-workflow",
+  "slug": "hm-planning-consultation-response-workflow",
   "sortorder": 0
 }
