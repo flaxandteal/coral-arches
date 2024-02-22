@@ -26,20 +26,21 @@ define([
           const workflowId = this.id();
           const searchParams = new URLSearchParams(window.location.search);
           const resourceId = searchParams.get('resource-id');
-          const response = await fetch(
-            `/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}&workflow-slug=${this.componentName}`,
-            {
-              method: 'GET',
-              credentials: 'include',
-              headers: {
-                'X-CSRFToken': Cookies.get('csrftoken')
-              }
+          console.log('this.stepConfig: ', this.stepConfig);
+          const response = await $.ajax({
+            type: 'POST',
+            url: `/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}&workflow-slug=${this.componentName}`,
+            dataType: 'json',
+            data: JSON.stringify({
+              stepConfig: this.stepConfig
+            }),
+            context: this,
+            error: (response, status, error) => {
+              console.log(response, status, error);
             }
-          );
-          if (response.ok) {
-            const data = await response.json();
-            console.log('path 2: ', data);
-            return data;
+          });
+          if (response?.stepdata) {
+            return response
           } else {
             this.alert(
               new AlertViewModel(
