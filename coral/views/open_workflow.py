@@ -154,6 +154,9 @@ class OpenWorkflow(View):
             for layout_section in step["layoutSections"]:
                 for component_config in layout_section["componentConfigs"]:
                     unique_instance_name = component_config["uniqueInstanceName"]
+                    required_parent_tiles = component_config["parameters"].get(
+                        "requiredParentTiles", []
+                    )
                     data_lookup_id = str(uuid.uuid4())
                     self.workflow_step_data[step_name]["componentIdLookup"][
                         unique_instance_name
@@ -166,6 +169,7 @@ class OpenWorkflow(View):
                             ],
                             "tiles_managed": component_config["tilesManaged"],
                             "data_lookup_id": data_lookup_id,
+                            "required_parent_tiles": required_parent_tiles,
                         }
                     )
 
@@ -175,6 +179,17 @@ class OpenWorkflow(View):
             if nodegroup_id not in self.grouped_tiles:
                 self.grouped_tiles[nodegroup_id] = []
             self.grouped_tiles[nodegroup_id].append(tile)
+
+    def get_parent_tile_lookups(self, required_parent_tiles):
+        lookup_tile_ids = {}
+        for lookup in required_parent_tiles:
+            nodegroup_id = lookup["parentNodegroupId"]
+            lookup_name = lookup["lookupName"]
+            tiles = self.grouped_tiles.get(nodegroup_id, [])
+            tile = tiles[0] if len(tiles) else None
+            if tile:
+                lookup_tile_ids[lookup_name] = str(tile.tileid)
+        return lookup_tile_ids
 
     def get(self, request):
         resource_id = request.GET.get("resource-id")
@@ -212,14 +227,18 @@ class OpenWorkflow(View):
                 # if the cardinality allows for multiple how do we
                 # decide which tile is the one that should be displayed
                 tile = tiles[0]
-                self.workflow_component_data[data_lookup_id] = {
-                    "value": {
-                        "nodegroupId": nodegroup_id,
-                        "resourceInstanceId": resource_id,
-                        "tileId": str(tile.tileid),
-                        "tileData": json.dumps(tile.data),
-                    }
+                parent_tile_lookups = self.get_parent_tile_lookups(
+                    map_data["required_parent_tiles"]
+                )
+                component_data = {
+                    "nodegroupId": nodegroup_id,
+                    "resourceInstanceId": resource_id,
+                    "tileId": str(tile.tileid),
+                    "tileData": json.dumps(tile.data),
                 }
+                result = {**component_data, **parent_tile_lookups}
+
+                self.workflow_component_data[data_lookup_id] = {"value": result}
                 continue
 
         workflow_history = {
