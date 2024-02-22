@@ -167,9 +167,7 @@ class OpenWorkflow(View):
                     step_mapping.append(
                         {
                             "unique_instance_name": unique_instance_name,
-                            "nodegroup_id": component_config["parameters"][
-                                "nodegroupid"
-                            ],
+                            "nodegroup_id": component_config["parameters"].get('nodegroupid'),
                             "tiles_managed": component_config["tilesManaged"],
                             "data_lookup_id": data_lookup_id,
                             "required_parent_tiles": required_parent_tiles,
@@ -197,7 +195,7 @@ class OpenWorkflow(View):
                 lookup_tile_ids[lookup_name] = str(tile.tileid)
         return lookup_tile_ids
 
-    def get(self, request):
+    def post(self, request):
         # For some reason I need to reset the class defaults every time
         # a request is sent. It will persist the data and add it onto the
         # next workflow generation?
@@ -214,8 +212,14 @@ class OpenWorkflow(View):
 
         # Get step data from plugin
 
-        plugin = self.get_plugin(workflow_slug)
-        self.step_config = plugin.config["stepData"]  # <-- This is confusing
+        data = json.loads(request.body.decode("utf-8"))
+        step_config = data.get("stepConfig")
+        print('step_config: ', step_config)
+        if step_config:
+            self.step_config = step_config
+        else:
+            plugin = self.get_plugin(workflow_slug)
+            self.step_config = plugin.config["stepData"]  # <-- This is confusing
 
         # Generate the structure for step data
 
