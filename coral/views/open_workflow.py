@@ -180,6 +180,7 @@ class OpenWorkflow(View):
         resource_id = request.GET.get("resource-id")
         workflow_id = request.GET.get("workflow-id")
         workflow_slug = request.GET.get("workflow-slug")
+        user_id = request.user.pk
 
         # Get step data from plugin
 
@@ -221,15 +222,25 @@ class OpenWorkflow(View):
                 }
                 continue
 
+        workflow_history = {
+            "user_id": user_id,
+            "completed": False,
+            "workflow_id": workflow_id,
+            "componentdata": self.workflow_component_data,
+            "stepdata": self.workflow_step_data,
+        }
+
         return JSONResponse(
-            {
-                "message": "Resources have been merged",
-                "groupedTiles": self.grouped_tiles,
-                # "stepData": self.step_config,
-                "workflowStepData": self.workflow_step_data,
-                "workflowComponentData": self.workflow_component_data,
-                "stepMapping": self.step_mapping,
-            }
+            workflow_history
+            # {
+            #     "message": "Generated workflow history from resource ID",
+            #     "workflowHistory": workflow_history
+            #     # "groupedTiles": self.grouped_tiles,
+            #     # # "stepData": self.step_config,
+            #     # "workflowStepData": self.workflow_step_data,
+            #     # "workflowComponentData": self.workflow_component_data,
+            #     # "stepMapping": self.step_mapping,
+            # }
         )
 
 
