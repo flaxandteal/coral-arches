@@ -26,13 +26,15 @@ define([
           const workflowId = this.id();
           const searchParams = new URLSearchParams(window.location.search);
           const resourceId = searchParams.get('resource-id');
-          console.log('this.stepConfig: ', this.stepConfig);
           const response = await $.ajax({
             type: 'POST',
-            url: `/open-workflow?resource-id=${resourceId}&workflow-id=${workflowId}&workflow-slug=${this.componentName}`,
+            url: '/open-workflow',
             dataType: 'json',
             data: JSON.stringify({
-              stepConfig: this.stepConfig
+              stepConfig: this.stepConfig,
+              resourceId: resourceId,
+              workflowId: workflowId,
+              workflowSlug: this.componentName
             }),
             context: this,
             error: (response, status, error) => {
@@ -40,7 +42,7 @@ define([
             }
           });
           if (response?.stepdata) {
-            return response
+            return response;
           } else {
             this.alert(
               new AlertViewModel(
@@ -65,7 +67,7 @@ define([
             const data = await response.json();
             return data;
           } else {
-            self.alert(
+            this.alert(
               new AlertViewModel(
                 'ep-alert-red',
                 response.statusText,
