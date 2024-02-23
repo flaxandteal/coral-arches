@@ -46,7 +46,9 @@ define([
     this.configKeys = ko.observable({ placeholder: 0 });
 
     this.loadGraphComponents = async () => {
-      const data = await $.getJSON(arches.urls.root + `workflow-builder/graph-components?graph-id=${this.graphId()}`);
+      const data = await $.getJSON(
+        arches.urls.root + `workflow-builder/graph-components?graph-id=${this.graphId()}`
+      );
       const nodegroupOptions = [
         { text: 'None', nodegroupId: '', id: 0 },
         ...data.component_configs.map((item, idx) => {
@@ -238,19 +240,35 @@ define([
      */
     this.isInitialStep = ko.computed(() => {
       const index = this.workflowResourceIdPathOptions().findIndex((path) => {
-        return path.resourceIdPath?.includes(this.cardId) && path.resourceIdPath?.includes(this.parentStep.stepId);
+        return (
+          path.resourceIdPath?.includes(this.cardId) &&
+          path.resourceIdPath?.includes(this.parentStep.stepId)
+        );
       });
       return index == 1;
     }, this);
 
     this.componentName = ko.computed(() => {
-      return this.isInitialStep() ? 'workflow-builder-initial-step' : 'default-card-util';
+      const WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT = 'workflow-builder-initial-step';
+      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card-util';
+      const currentComponentName = this.currentComponentData()?.componentName;
+      if (
+        currentComponentName &&
+        (currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT ||
+          currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT)
+      ) {
+        return currentComponentName;
+      }
+      return this.isInitialStep()
+        ? WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT
+        : DEFAULT_CARD_UTIL_COMPONENT;
     });
 
     this.getComponentData = () => {
       const { tilesManaged, uniqueInstanceName, parameters } = this.currentComponentData() || {};
       const { graphid, nodegroupid, semanticName, hiddenNodes } = parameters || {};
-      const { resourceIdPath } = this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()];
+      const { resourceIdPath } =
+        this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()];
 
       const componentData = {
         componentName: this.componentName(),
@@ -279,7 +297,8 @@ define([
       if (this.isInitialStep()) {
         const parentTiles = this.parentStep.parentWorkflow.getRequiredParentTiles();
         if (parentTiles.length) {
-          componentData.parameters.requiredParentTiles = this.parentStep.parentWorkflow.getRequiredParentTiles();
+          componentData.parameters.requiredParentTiles =
+            this.parentStep.parentWorkflow.getRequiredParentTiles();
         }
       }
 
