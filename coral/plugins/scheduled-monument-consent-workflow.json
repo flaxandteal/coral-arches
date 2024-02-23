@@ -183,7 +183,20 @@
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "report-documents",
+                "tilesManaged": "one",
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                  "resourceModelDigitalObjectNodeGroupId": "fc6b6b0b-5118-11eb-b342-f875a44e0e11",
+                  "fileObjectNamePrefix": "Documentation for "
+                }
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"

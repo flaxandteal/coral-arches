@@ -7,8 +7,9 @@ define([
   'views/components/workflows/workflow-builder-initial-step',
 
   // Not the way I want this implemented but this will allow the use
-  // of this custom component
-  'views/components/workflows/assign-consultation-workflow/show-hierarchy-change'
+  // of custom components
+  'views/components/workflows/assign-consultation-workflow/show-hierarchy-change',
+  'views/components/workflows/related-document-upload',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
