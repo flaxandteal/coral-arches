@@ -1,12 +1,11 @@
 from django.views.generic import View
 import logging
 from arches.app.models import models
-from arches.app.utils.response import JSONResponse, HttpResponse
+from arches.app.utils.response import JSONResponse
 import json
 import uuid
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
-from django.forms.models import model_to_dict
 
 logger = logging.getLogger(__name__)
 
@@ -122,7 +121,7 @@ class OpenWorkflow(View):
         activity_tiles = Tile.objects.filter(resourceinstance=activity_resource)
         self.group_tiles(activity_tiles)
 
-        # Grab all the needed tile IDs
+        # Grab all the needed tiles
 
         location_data_tile, success = Tile.objects.get_or_create(
             resourceinstance=activity_resource,
@@ -162,15 +161,15 @@ class OpenWorkflow(View):
         self.grouped_tiles = {}
         self.additional_saved_values = {}
 
-        resource_id = request.GET.get("resource-id")
-        workflow_id = request.GET.get("workflow-id")
-        workflow_slug = request.GET.get("workflow-slug")
+        data = json.loads(request.body.decode("utf-8"))
+        step_config = data.get("stepConfig")
+        resource_id = data.get("resourceId")
+        workflow_id = data.get("workflowId")
+        workflow_slug = data.get("workflowSlug")
         user_id = request.user.pk
 
         # Get step data from plugin
 
-        data = json.loads(request.body.decode("utf-8"))
-        step_config = data.get("stepConfig")
         if step_config:
             self.step_config = step_config
         else:
