@@ -107,7 +107,10 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "hiddenNodes": ["87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"],
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"
+                  ],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
                   "parenttileid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
@@ -141,7 +144,10 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "hiddenNodes": ["346006e6-d23e-11ee-9ae7-0242ac180006"],
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "346006e6-d23e-11ee-9ae7-0242ac180006"
+                  ],
                   "nodegroupid": "345ffce6-d23e-11ee-9ae7-0242ac180006",
                   "semanticName": "Proposal"
                 },
@@ -185,16 +191,16 @@
           {
             "componentConfigs": [
               {
-                "componentName": "related-document-upload",
-                "uniqueInstanceName": "report-documents",
-                "tilesManaged": "one",
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['init-step']['app-id'][0]['resourceid']['actResourceId']",
-                  "resourceModelDigitalObjectNodeGroupId": "fc6b6b0b-5118-11eb-b342-f875a44e0e11",
-                  "fileObjectNamePrefix": "Documentation for "
-                }
+                  "fileObjectNamePrefix": "Documentation for ",
+                  "resourceModelDigitalObjectNodeGroupId": "fc6b6b0b-5118-11eb-b342-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "report-documents"
               }
             ]
           }
