@@ -115,6 +115,15 @@
         "bgColor": "#688294",
         "circleColor": "#7195ad",
         "desc": "Respond to a consultation for HB."
+      },
+      {
+        "workflowid": "aa66f3d7-1bbb-407a-9447-736cb6d5203c",
+        "slug": "open-workflow?workflow-slug=scheduled-monument-consent-workflow",
+        "name": "SMC",
+        "icon": "fa fa-file-text",
+        "bgColor": "#cf992d",
+        "circleColor": "#dea73a",
+        "desc": "Request consent to schedule a Heritage Asset."
       }
     ],
     "show": true
