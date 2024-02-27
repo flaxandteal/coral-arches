@@ -9,6 +9,7 @@ import arches
 import inspect
 import semantic_version
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime, timedelta
 
 try:
     from arches.settings import *
@@ -16,7 +17,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=2, minor=9, patch=5)
+APP_VERSION = semantic_version.Version(major=2, minor=9, patch=6)
 
 GROUPINGS = {
     "groups": {
