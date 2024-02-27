@@ -37,7 +37,7 @@ define([
 
       if (!tiles.length === 1) return;
 
-      this.tileIds()[lookupName] = tiles[0].tileid;
+      this.tileIds()[lookupName] = tiles.length ? tiles[0].tileid : null;
     };
 
     this.form.save = async () => {
@@ -45,7 +45,9 @@ define([
         params.form.saving(false);
         return;
       }
-      await Promise.all(params.getTileIdFromNodegroup.map(this.getTile));
+      if (params.getTileIdFromNodegroup && Array.isArray(params.getTileIdFromNodegroup)) {
+        await Promise.all(params.getTileIdFromNodegroup?.map(this.getTile));
+      }
 
       // TODO: Catch errors
 
