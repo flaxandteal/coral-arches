@@ -49,7 +49,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "License Valid Timespan"
                     },
@@ -130,7 +130,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Extension of License"
                     },
@@ -184,7 +184,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Files Checklist"
                     },
@@ -211,7 +211,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Decision Note"
                     },
@@ -267,7 +267,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "License Names"
                     },
@@ -294,7 +294,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Communications"
                     },
@@ -321,7 +321,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Cur Grade E Decision"
                     },
@@ -350,7 +350,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Contacts"
                     },
@@ -377,7 +377,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Planning References"
                     },
@@ -404,7 +404,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -431,7 +431,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Associated Activities"
                     },
@@ -458,7 +458,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Decision"
                     },
@@ -485,7 +485,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Dates"
                     },
@@ -512,7 +512,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "CM References"
                     },
@@ -566,7 +566,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Application Details"
                     },
@@ -593,7 +593,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Cur Grade D Decision"
                     },
@@ -647,7 +647,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Transfer of License"
                     },
@@ -2410,28 +2410,6 @@
                 {
                     "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
                     "config": {
-                        "defaultValue": "17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Comapny Role Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d294c5c-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Comapny Role Type"
-                    },
-                    "node_id": "6d2919b2-5891-11ee-a624-0242ac120004",
-                    "sortorder": 7,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
                         "defaultResourceInstance": [],
                         "i18n_properties": [
                             "placeholder"
@@ -2453,27 +2431,6 @@
                 {
                     "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
                     "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Excavation Directors",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d294f86-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Excavation Directors"
-                    },
-                    "node_id": "6d292a2e-5891-11ee-a624-0242ac120004",
-                    "sortorder": 9,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
                         "defaultValue": "b2489138-dcc5-4151-999e-977809179bb3",
                         "i18n_properties": [
                             "placeholder"
@@ -2490,93 +2447,6 @@
                     },
                     "node_id": "6d292cf4-5891-11ee-a624-0242ac120004",
                     "sortorder": 1,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Excavation Director Role Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d29527e-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Excavation Director Role Metatype"
-                    },
-                    "node_id": "6d29323a-5891-11ee-a624-0242ac120004",
-                    "sortorder": 11,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "5f676939-94cc-4c9e-b26b-d89967ce6b75",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Excavation Director Role Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d2953f0-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Excavation Director Role Type"
-                    },
-                    "node_id": "6d2921fa-5891-11ee-a624-0242ac120004",
-                    "sortorder": 10,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Company",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "6d295576-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Company"
-                    },
-                    "node_id": "6d292f88-5891-11ee-a624-0242ac120004",
-                    "sortorder": 6,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
-                    "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Company Role Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "6d2956e8-5891-11ee-a624-0242ac120004",
-                    "label": {
-                        "en": "Company Role Metatype"
-                    },
-                    "node_id": "6d2916d8-5891-11ee-a624-0242ac120004",
-                    "sortorder": 8,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -6697,42 +6567,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29d668-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d291192-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29d884-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d291c78-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291c78-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29da96-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d292a2e-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d2919b2-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29dc9e-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2916d8-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "6d293d34-5891-11ee-a624-0242ac120004",
                     "edgeid": "6d29deb0-5891-11ee-a624-0242ac120004",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -6748,33 +6582,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "6d292cf4-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291192-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e1da-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "rangenode_id": "6d292f88-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291192-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e37e-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2919b2-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d291c78-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29e69e-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d2921fa-5891-11ee-a624-0242ac120004"
                 },
                 {
                     "description": null,
@@ -6820,15 +6627,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
                     "rangenode_id": "6d291f3e-5891-11ee-a624-0242ac120004"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "6d2921fa-5891-11ee-a624-0242ac120004",
-                    "edgeid": "6d29ef4a-5891-11ee-a624-0242ac120004",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "6d29323a-5891-11ee-a624-0242ac120004"
                 },
                 {
                     "description": null,
@@ -8012,7 +7810,7 @@
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
             "iconclass": "fa fa-lock",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -8345,17 +8143,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -10333,17 +10131,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -11737,29 +11535,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "companies",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Companies",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d291192-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "planning_officer_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -11783,75 +11558,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "company_role_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Company Role Metatype",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2916d8-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "company_role_type",
-                    "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Company Role Type",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2919b2-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "excavation_directors",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Excavation Directors",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d291c78-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "licensees",
                     "config": {
                         "en": ""
@@ -11871,29 +11577,6 @@
                     "nodeid": "6d291f3e-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "excavation_director_role_type",
-                    "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Excavation Director Role Type",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d2921fa-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -11951,37 +11634,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "excavation_director",
-                    "config": {
-                        "graphid": null,
-                        "graphs": [
-                            {
-                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                                "name": "Person"
-                            }
-                        ],
-                        "searchDsl": "",
-                        "searchString": ""
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "Agent",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Excavation Director",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d292a2e-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "applicant_role_type",
                     "config": {
                         "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
@@ -11999,59 +11651,6 @@
                     "name": "Applicant Role Type",
                     "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
                     "nodeid": "6d292cf4-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "company",
-                    "config": {
-                        "graphs": [
-                            {
-                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                                "name": "Organization"
-                            }
-                        ],
-                        "searchDsl": "",
-                        "searchString": ""
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "Owner",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Company",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d292f88-5891-11ee-a624-0242ac120004",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "excavation_director_role_metatype",
-                    "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Excavation Director Role Metatype",
-                    "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
-                    "nodeid": "6d29323a-5891-11ee-a624-0242ac120004",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
@@ -13051,17 +12650,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -13092,45 +12691,10 @@
                         },
                         "options": [
                             {
-                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
+                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
                                 "selected": false,
                                 "text": {
-                                    "en": "Received"
-                                }
-                            },
-                            {
-                                "id": "0df1843b-28e9-4868-9a9a-d19229fe5c48",
-                                "selected": false,
-                                "text": {
-                                    "en": "Acknowledged"
-                                }
-                            },
-                            {
-                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
-                                "selected": false,
-                                "text": {
-                                    "en": "In progress"
-                                }
-                            },
-                            {
-                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
-                                "selected": false,
-                                "text": {
-                                    "en": "Paused"
-                                }
-                            },
-                            {
-                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
-                                "selected": false,
-                                "text": {
-                                    "en": "Granted"
-                                }
-                            },
-                            {
-                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refused"
+                                    "en": "Not Used"
                                 }
                             },
                             {
@@ -13141,10 +12705,45 @@
                                 }
                             },
                             {
-                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
+                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
                                 "selected": false,
                                 "text": {
-                                    "en": "Not Used"
+                                    "en": "Refused"
+                                }
+                            },
+                            {
+                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
+                                "selected": false,
+                                "text": {
+                                    "en": "Granted"
+                                }
+                            },
+                            {
+                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Paused"
+                                }
+                            },
+                            {
+                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
+                                }
+                            },
+                            {
+                                "id": "0df1843b-28e9-4868-9a9a-d19229fe5c48",
+                                "selected": false,
+                                "text": {
+                                    "en": "Acknowledged"
+                                }
+                            },
+                            {
+                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
+                                "selected": false,
+                                "text": {
+                                    "en": "Received"
                                 }
                             }
                         ],
@@ -15014,8 +14613,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "8a9b48d2-d585-11ee-86ef-0242ac180006",
-                "published_time": "2024-02-27T15:33:22.788"
+                "publicationid": "f8002a0a-d585-11ee-86ef-0242ac180006",
+                "published_time": "2024-02-27T15:36:26.319"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
