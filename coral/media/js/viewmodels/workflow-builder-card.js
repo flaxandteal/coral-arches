@@ -129,7 +129,9 @@ define([
       );
       this.selectedResourceIdPath(resourceIdPathIdx !== -1 ? resourceIdPathIdx : 0);
       this.configureParentTile(this.currentComponentData().parameters.nodegroupid);
-      this.loadAbstractComponent(this.currentComponentData());
+      if (this.currentComponentData().parameters.nodegroupid) {
+        this.loadAbstractComponent(this.currentComponentData());
+      }
     };
 
     this.title = ko.computed(() => {
@@ -179,7 +181,7 @@ define([
         return nodegroup.nodegroupid == nodegroupId;
       });
       const parentTile = this.graphCards().tiles.find((tile) => {
-        return tile.nodegroup_id === cardNodegroup.parentnodegroup_id;
+        return tile.nodegroup_id === cardNodegroup?.parentnodegroup_id;
       });
       this.parentTile(null);
       if (parentTile) {
