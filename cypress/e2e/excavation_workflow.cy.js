@@ -131,7 +131,7 @@ describe('Working With The Excavation Workflow', function () {
 
         cy.contains('Save and Continue').click();
     })
-    it.only('Test Page 5: Additional Files', function () {
+    it('Test Page 5: Additional Files', function () {
         cy.login();
         cy.visit("http://localhost:8000/plugins/init-workflow");
         cy.contains("Workflows");
@@ -181,7 +181,7 @@ describe('Working With The Excavation Workflow', function () {
         
         cy.contains("Save and Continue").click();
     })
-    it('Test Page 6: Something', function () {
+    it.only('Test Page 6: Communications', function () {
         cy.login();
         cy.visit("http://localhost:8000/plugins/init-workflow");
         cy.contains("Workflows");
@@ -216,6 +216,17 @@ describe('Working With The Excavation Workflow', function () {
         // Additional Files
         cy.wait(5000);
         cy.contains('Next Step').click();
+
+        // Page 6/11
+        // Communications
+
+        cy.wait(5000);
+        cy.get('[aria-label="Subject"]').click().type("Subject 123")
+        cy.get('#main-content > div > div > div > div > div.tabbed-workflow-step-container > div > div.workflow-component-based-step > div > div > div.workflow-component > div:nth-child(2) > button.btn.btn-workflow-tile.btn-success').click()
+
+        // Check if the email template appeared
+        cy.wait(1000);
+        cy.contains('Subject 123')
     })
     it('Goes through the Entire Excavation Workflow', function () {
         cy.login();
