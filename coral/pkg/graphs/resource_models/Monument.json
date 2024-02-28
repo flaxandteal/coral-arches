@@ -8678,6 +8678,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "42484e1c-5624-497c-aeec-3577258d6024",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Damage Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "96411e3a-0673-4a1e-9316-2125b55c56db",
+                    "label": {
+                        "en": "Damage Type"
+                    },
+                    "node_id": "a0cb43ee-d62c-11ee-9454-0242ac180006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "9682621f-0262-11eb-aa90-f875a44e0e11",
                     "config": {
                         "defaultValue": "",
@@ -8941,6 +8963,28 @@
                     "node_id": "5e8cc866-049d-11eb-afab-f875a44e0e11",
                     "sortorder": 2,
                     "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "c6b8ab6c-804b-4706-8b8b-5adb6da6635b",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Material/Fabric Damage Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "9f3c1219-c2c7-402b-9c44-a33669b0ae28",
+                    "label": {
+                        "en": "Material/Fabric Damage Type"
+                    },
+                    "node_id": "2596ab22-d62d-11ee-8f7b-0242ac180006",
+                    "sortorder": 0,
+                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -10097,6 +10141,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "6b8a809f-4f2e-4190-986e-a04e4cfa4d7a",
+                    "config": {
+                        "defaultValue": "ffcdfdf2-0222-473a-934d-58dc6a703cbf",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Component Damage Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "c19a34ba-1085-4fc4-90e1-b543672681c4",
+                    "label": {
+                        "en": "Component Damage Metatype"
+                    },
+                    "node_id": "98a851e2-d62d-11ee-9454-0242ac180006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "0f8de9cf-9e23-406c-99d6-f87d9b6348ab",
                     "config": {
                         "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
@@ -10110,6 +10176,28 @@
                     },
                     "node_id": "5b469cc4-d631-11ee-a5a3-0242ac180006",
                     "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "42484e1c-5624-497c-aeec-3577258d6024",
+                    "config": {
+                        "defaultValue": "ffcdfdf2-0222-473a-934d-58dc6a703cbf",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Damage Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "cb5e3e39-26a3-49a3-9fbc-2de7007fb43f",
+                    "label": {
+                        "en": "Damage Metatype"
+                    },
+                    "node_id": "e7ca82dc-d62c-11ee-8f7b-0242ac180006",
+                    "sortorder": null,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10154,7 +10242,7 @@
                     },
                     "node_id": "d259341a-d62d-11ee-9454-0242ac180006",
                     "sortorder": 3,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -10182,7 +10270,7 @@
                 {
                     "card_id": "d25928b2-d62d-11ee-9454-0242ac180006",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": "daa4cddc-8636-4842-b836-eb2e10aabe18",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -10198,7 +10286,7 @@
                     },
                     "node_id": "d259306e-d62d-11ee-9454-0242ac180006",
                     "sortorder": 1,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -10213,7 +10301,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Description",
+                        "label": "Notes",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -10223,7 +10311,7 @@
                     },
                     "id": "d25939a6-d62d-11ee-9454-0242ac180006",
                     "label": {
-                        "en": "Description"
+                        "en": "Notes"
                     },
                     "node_id": "d2592e8e-d62d-11ee-9454-0242ac180006",
                     "sortorder": 0,
@@ -10244,6 +10332,28 @@
                     },
                     "node_id": "07aef484-d632-11ee-a5a3-0242ac180006",
                     "sortorder": 7,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "c6b8ab6c-804b-4706-8b8b-5adb6da6635b",
+                    "config": {
+                        "defaultValue": "ffcdfdf2-0222-473a-934d-58dc6a703cbf",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Material/Fabric Damage Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "e046bb43-cba5-4da4-9955-8df84733c9c8",
+                    "label": {
+                        "en": "Material/Fabric Damage Metatype"
+                    },
+                    "node_id": "4920bbd2-d62d-11ee-9454-0242ac180006",
+                    "sortorder": 1,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10559,6 +10669,28 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "6b8a809f-4f2e-4190-986e-a04e4cfa4d7a",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Component Damage Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "ff900d00-54e4-434c-a857-59bfcf14174b",
+                    "label": {
+                        "en": "Component Damage Type"
+                    },
+                    "node_id": "723aaf3c-d62d-11ee-8f7b-0242ac180006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 }
             ],
             "color": "rgba(59,84,33,1)",
@@ -24748,7 +24880,7 @@
                 {
                     "alias": "component_damage_metatype",
                     "config": {
-                        "rdmCollection": "1a161d2b-5887-4ad2-800e-ffa073f3b2bd"
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -26972,8 +27104,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "5ade1f2a-d634-11ee-a5a3-0242ac180006",
-                "published_time": "2024-02-28T12:24:44.621"
+                "publicationid": "559916e2-d63d-11ee-a5a3-0242ac180006",
+                "published_time": "2024-02-28T13:29:01.251"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
