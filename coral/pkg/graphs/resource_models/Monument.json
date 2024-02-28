@@ -747,33 +747,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "7ac8a7bc-d64b-11ee-8b04-0242ac180006",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "{\"en\": \"\"}",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "Intended Dates"
-                    },
-                    "nodegroup_id": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "87d38727-f44f-11eb-83ca-a87eeabdefba",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -1412,33 +1385,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "e8d50f7e-d64c-11ee-8b04-0242ac180006",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "{\"en\": \"\"}",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "Proposal Date"
-                    },
-                    "nodegroup_id": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "eeec9c7e-d23c-11ee-9373-0242ac180006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -1686,6 +1632,26 @@
                     "sortorder": 8,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Intended End Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "21784da7-be5b-4565-af57-cdb4717b9af1",
+                    "label": {
+                        "en": "Intended End Date"
+                    },
+                    "node_id": "7ac8ab18-d64b-11ee-8b04-0242ac180006",
+                    "sortorder": 5,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "325a2f31-efe4-11eb-a444-a87eeabdefba",
@@ -2179,6 +2145,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Intended Date Qualifier Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "3d23f917-d9b6-4216-ac97-a2064d054ee2",
+                    "label": {
+                        "en": "Intended Date Qualifier Metatype"
+                    },
+                    "node_id": "7ac8af50-d64b-11ee-8b04-0242ac180006",
+                    "sortorder": 7,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "3d418ada-d23b-11ee-9373-0242ac180006",
                     "config": {
                         "defaultValue": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
@@ -2554,6 +2542,26 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Intended Start Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "478e926a-f2a6-4561-9eeb-a530f8997cca",
+                    "label": {
+                        "en": "Intended Start Date"
+                    },
+                    "node_id": "7ac8a992-d64b-11ee-8b04-0242ac180006",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
                     "card_id": "0f8de9cf-9e23-406c-99d6-f87d9b6348ab",
                     "config": {
                         "defaultValue": "3ccb1f26-64a0-4a77-a61b-42b5a98678c0",
@@ -2659,6 +2667,22 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "en": "",
+                        "label": "Action Type",
+                        "placeholder": "Select an option"
+                    },
+                    "id": "4dc5897b-7105-438d-8269-8154b1424b5d",
+                    "label": {
+                        "en": "Action Type"
+                    },
+                    "node_id": "dff3a4d2-d648-11ee-8b04-0242ac180006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000016"
+                },
+                {
                     "card_id": "e8bbef96-4db7-4c11-a91a-3459490e61af",
                     "config": {
                         "defaultValue": "c9bc15cc-46fe-4d34-a530-a228854845c8",
@@ -2679,6 +2703,22 @@
                     "sortorder": null,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "en": "",
+                        "label": "Approved By"
+                    },
+                    "id": "58388945-37cc-4d66-b9da-fd4012df153f",
+                    "label": {
+                        "en": "Approved By"
+                    },
+                    "node_id": "a1a755d0-d64c-11ee-8b04-0242ac180006",
+                    "sortorder": 10,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "58f1a4a0-d640-11ee-8b04-0242ac180006",
@@ -5344,88 +5384,20 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "7ac8a7bc-d64b-11ee-8b04-0242ac180006",
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
                     "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Date Qualifier",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
+                        "en": "",
+                        "label": "Work Carried Out By",
+                        "placeholder": "Enter text"
                     },
-                    "id": "7ac8b130-d64b-11ee-8b04-0242ac180006",
+                    "id": "7b96e6d9-d09d-4487-b14c-dce9384fc148",
                     "label": {
-                        "en": "Date Qualifier"
+                        "en": "Work Carried Out By"
                     },
-                    "node_id": "7ac8ac8a-d64b-11ee-8b04-0242ac180006",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "7ac8a7bc-d64b-11ee-8b04-0242ac180006",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Start Date",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "7ac8b1f8-d64b-11ee-8b04-0242ac180006",
-                    "label": {
-                        "en": "Start Date"
-                    },
-                    "node_id": "7ac8a992-d64b-11ee-8b04-0242ac180006",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "7ac8a7bc-d64b-11ee-8b04-0242ac180006",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "End Date",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "7ac8b2ca-d64b-11ee-8b04-0242ac180006",
-                    "label": {
-                        "en": "End Date"
-                    },
-                    "node_id": "7ac8ab18-d64b-11ee-8b04-0242ac180006",
+                    "node_id": "447c7fa0-d649-11ee-9a11-0242ac180006",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "7ac8a7bc-d64b-11ee-8b04-0242ac180006",
-                    "config": {
-                        "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Date Qualifier Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "7ac8b392-d64b-11ee-8b04-0242ac180006",
-                    "label": {
-                        "en": "Date Qualifier Metatype"
-                    },
-                    "node_id": "7ac8af50-d64b-11ee-8b04-0242ac180006",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "87d39b2d-f44f-11eb-9660-a87eeabdefba",
@@ -5441,6 +5413,21 @@
                     "sortorder": null,
                     "visible": true,
                     "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
+                },
+                {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "en": "",
+                        "label": "Contact Details"
+                    },
+                    "id": "81eb3f2d-f1fc-4999-bbf9-6deab1d1ff88",
+                    "label": {
+                        "en": "Contact Details"
+                    },
+                    "node_id": "30d5defa-d64a-11ee-8b04-0242ac180006",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "87d3872a-f44f-11eb-a2c9-a87eeabdefba",
@@ -9878,7 +9865,7 @@
                         "en": "Proposal Description Metatype"
                     },
                     "node_id": "a1f10602-d648-11ee-9a11-0242ac180006",
-                    "sortorder": 2,
+                    "sortorder": 13,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -9894,7 +9881,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Proposal Description",
+                        "label": "Notes",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -9904,10 +9891,10 @@
                     },
                     "id": "a1f10c92-d648-11ee-9a11-0242ac180006",
                     "label": {
-                        "en": "Proposal Description"
+                        "en": "Notes"
                     },
                     "node_id": "a1f10936-d648-11ee-9a11-0242ac180006",
-                    "sortorder": 0,
+                    "sortorder": 8,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
@@ -9929,7 +9916,7 @@
                         "en": "Proposal Description Type"
                     },
                     "node_id": "a1f10a9e-d648-11ee-9a11-0242ac180006",
-                    "sortorder": 1,
+                    "sortorder": 9,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10724,6 +10711,39 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "en": "",
+                        "label": "Approver Metatype",
+                        "placeholder": "Select an option"
+                    },
+                    "id": "c907dca7-818f-4e18-88b0-673d446b2030",
+                    "label": {
+                        "en": "Approver Metatype"
+                    },
+                    "node_id": "7e3f910c-d64c-11ee-8b04-0242ac180006",
+                    "sortorder": 12,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "c9bc15cc-46fe-4d34-a530-a228854845c8",
+                        "en": "",
+                        "label": "Action Metatype"
+                    },
+                    "id": "cb3991d7-c457-495d-8885-6ede0507711a",
+                    "label": {
+                        "en": "Action Metatype"
+                    },
+                    "node_id": "17cdafa6-d649-11ee-8b04-0242ac180006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "42484e1c-5624-497c-aeec-3577258d6024",
                     "config": {
                         "defaultValue": "ffcdfdf2-0222-473a-934d-58dc6a703cbf",
@@ -11025,6 +11045,23 @@
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+                        "en": "",
+                        "label": "Approver Role Type",
+                        "placeholder": "Select an option"
+                    },
+                    "id": "e71bd957-5bff-4fb5-9f32-96f772f2d5a9",
+                    "label": {
+                        "en": "Approver Role Type"
+                    },
+                    "node_id": "2a8f11a4-d64c-11ee-8b04-0242ac180006",
+                    "sortorder": 11,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "55d8a0f4-049c-11eb-8965-f875a44e0e11",
                     "config": {
                         "displayOnlySelectedNode": false,
@@ -11065,90 +11102,6 @@
                     "sortorder": 6,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "e8d50f7e-d64c-11ee-8b04-0242ac180006",
-                    "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Date Qualifier",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "e8d51bae-d64c-11ee-8b04-0242ac180006",
-                    "label": {
-                        "en": "Date Qualifier"
-                    },
-                    "node_id": "e8d515a0-d64c-11ee-8b04-0242ac180006",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "e8d50f7e-d64c-11ee-8b04-0242ac180006",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Start Date",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "e8d51cb2-d64c-11ee-8b04-0242ac180006",
-                    "label": {
-                        "en": "Start Date"
-                    },
-                    "node_id": "e8d511cc-d64c-11ee-8b04-0242ac180006",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "e8d50f7e-d64c-11ee-8b04-0242ac180006",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "End Date",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "e8d51db6-d64c-11ee-8b04-0242ac180006",
-                    "label": {
-                        "en": "End Date"
-                    },
-                    "node_id": "e8d513d4-d64c-11ee-8b04-0242ac180006",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "e8d50f7e-d64c-11ee-8b04-0242ac180006",
-                    "config": {
-                        "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Date Qualifier Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "e8d51ec4-d64c-11ee-8b04-0242ac180006",
-                    "label": {
-                        "en": "Date Qualifier Metatype"
-                    },
-                    "node_id": "e8d51938-d64c-11ee-8b04-0242ac180006",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "eeec9c7e-d23c-11ee-9373-0242ac180006",
@@ -11360,6 +11313,28 @@
                     },
                     "node_id": "f17f6588-efc7-11eb-8c12-a87eeabdefba",
                     "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Intended Date Qualifier",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "fa3a8af8-4ba3-4d2d-bb5e-b77db55bc9ae",
+                    "label": {
+                        "en": "Intended Date Qualifier"
+                    },
+                    "node_id": "7ac8ac8a-d64b-11ee-8b04-0242ac180006",
+                    "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -16426,12 +16401,6 @@
                     "parentnodegroup_id": "d3ff3fe6-d62b-11ee-9454-0242ac180006"
                 },
                 {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
-                    "parentnodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006"
-                },
-                {
                     "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
@@ -16622,12 +16591,6 @@
                     "legacygroupid": null,
                     "nodegroupid": "e0991c1b-51b4-11eb-b7ef-f875a44e0e11",
                     "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
-                    "parentnodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006"
                 },
                 {
                     "cardinality": "1",
@@ -21639,17 +21602,10 @@
                         },
                         "options": [
                             {
-                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
                                 "selected": false,
                                 "text": {
-                                    "en": "In progress"
-                                }
-                            },
-                            {
-                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
-                                "selected": false,
-                                "text": {
-                                    "en": "Finished"
+                                    "en": "Enforcement actioned"
                                 }
                             },
                             {
@@ -21660,10 +21616,17 @@
                                 }
                             },
                             {
-                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
                                 "selected": false,
                                 "text": {
-                                    "en": "Enforcement actioned"
+                                    "en": "Finished"
+                                }
+                            },
+                            {
+                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
                                 }
                             }
                         ],
@@ -21698,12 +21661,12 @@
                     "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "hascustomalias": false,
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Intended Dates",
-                    "nodegroup_id": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
@@ -21726,7 +21689,7 @@
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Intended Start Date",
-                    "nodegroup_id": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "7ac8a992-d64b-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
@@ -21749,7 +21712,7 @@
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Intended End Date",
-                    "nodegroup_id": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "7ac8ab18-d64b-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
@@ -21772,7 +21735,7 @@
                     "issearchable": false,
                     "istopnode": false,
                     "name": "Intended Date Qualifier",
-                    "nodegroup_id": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "7ac8ac8a-d64b-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
@@ -21795,7 +21758,7 @@
                     "issearchable": false,
                     "istopnode": false,
                     "name": "Intended Date Qualifier Metatype",
-                    "nodegroup_id": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "7ac8af50-d64b-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
@@ -22740,10 +22703,10 @@
                         },
                         "options": [
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             },
                             {
@@ -22754,10 +22717,10 @@
                                 }
                             },
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             }
                         ]
@@ -22949,10 +22912,10 @@
                         },
                         "options": [
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             },
                             {
@@ -22963,10 +22926,10 @@
                                 }
                             },
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             }
                         ]
@@ -28645,17 +28608,10 @@
                         },
                         "options": [
                             {
-                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
                                 "selected": false,
                                 "text": {
-                                    "en": "Contact PSNI"
-                                }
-                            },
-                            {
-                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refer to Enforcement"
+                                    "en": "Resolve with Owner"
                                 }
                             },
                             {
@@ -28666,10 +28622,17 @@
                                 }
                             },
                             {
-                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
                                 "selected": false,
                                 "text": {
-                                    "en": "Resolve with Owner"
+                                    "en": "Refer to Enforcement"
+                                }
+                            },
+                            {
+                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Contact PSNI"
                                 }
                             }
                         ]
@@ -28756,12 +28719,12 @@
                     "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "hascustomalias": false,
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Proposal Date",
-                    "nodegroup_id": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
@@ -28784,7 +28747,7 @@
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Proposal Date Value",
-                    "nodegroup_id": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "e8d511cc-d64c-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
@@ -28807,7 +28770,7 @@
                     "issearchable": true,
                     "istopnode": false,
                     "name": "End Date",
-                    "nodegroup_id": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "e8d513d4-d64c-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
@@ -28830,7 +28793,7 @@
                     "issearchable": false,
                     "istopnode": false,
                     "name": "Proposal Date Qualifier",
-                    "nodegroup_id": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "e8d515a0-d64c-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
@@ -28853,7 +28816,7 @@
                     "issearchable": false,
                     "istopnode": false,
                     "name": "Proposal Date Qualifier Metatype",
-                    "nodegroup_id": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "e8d51938-d64c-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
@@ -29207,8 +29170,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "6f42fa12-d64d-11ee-8b04-0242ac180006",
-                "published_time": "2024-02-28T15:24:16.255"
+                "publicationid": "c0882d82-d64f-11ee-8b04-0242ac180006",
+                "published_time": "2024-02-28T15:40:51.597"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
