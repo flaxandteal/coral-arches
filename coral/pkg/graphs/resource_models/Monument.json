@@ -5400,6 +5400,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Proposal Date Qualifier Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "7cc57ffd-754b-40ea-a725-ca667dfae8d5",
+                    "label": {
+                        "en": "Proposal Date Qualifier Metatype"
+                    },
+                    "node_id": "e8d51938-d64c-11ee-8b04-0242ac180006",
+                    "sortorder": 16,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "87d39b2d-f44f-11eb-9660-a87eeabdefba",
                     "config": {
                         "label": "National Grid Reference",
@@ -8861,6 +8883,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Proposal Date Qualifier",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "8b62973a-a483-4017-a81e-d4d971b12d96",
+                    "label": {
+                        "en": "Proposal Date Qualifier"
+                    },
+                    "node_id": "e8d515a0-d64c-11ee-8b04-0242ac180006",
+                    "sortorder": 15,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "95a43757-5cf4-11ec-b728-a87eeabdefba",
                     "config": {
                         "defaultResourceInstance": [],
@@ -11102,6 +11146,26 @@
                     "sortorder": 6,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "Date of Data Entry",
+                        "label": "Proposal Date Value",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "e8ae3356-3537-4792-9ca8-b6102a39a023",
+                    "label": {
+                        "en": "Proposal Date Value"
+                    },
+                    "node_id": "e8d511cc-d64c-11ee-8b04-0242ac180006",
+                    "sortorder": 14,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "eeec9c7e-d23c-11ee-9373-0242ac180006",
@@ -16059,15 +16123,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
                     "rangenode_id": "e8d511cc-d64c-11ee-8b04-0242ac180006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "e8d50bfa-d64c-11ee-8b04-0242ac180006",
-                    "edgeid": "e8d55178-d64c-11ee-8b04-0242ac180006",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "rangenode_id": "e8d513d4-d64c-11ee-8b04-0242ac180006"
                 },
                 {
                     "description": null,
@@ -21602,17 +21657,10 @@
                         },
                         "options": [
                             {
-                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
                                 "selected": false,
                                 "text": {
-                                    "en": "Enforcement actioned"
-                                }
-                            },
-                            {
-                                "id": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
-                                "selected": false,
-                                "text": {
-                                    "en": "Not completed"
+                                    "en": "In progress"
                                 }
                             },
                             {
@@ -21623,10 +21671,17 @@
                                 }
                             },
                             {
-                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "id": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
                                 "selected": false,
                                 "text": {
-                                    "en": "In progress"
+                                    "en": "Not completed"
+                                }
+                            },
+                            {
+                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "selected": false,
+                                "text": {
+                                    "en": "Enforcement actioned"
                                 }
                             }
                         ],
@@ -22703,10 +22758,10 @@
                         },
                         "options": [
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             },
                             {
@@ -22717,10 +22772,10 @@
                                 }
                             },
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             }
                         ]
@@ -22912,10 +22967,10 @@
                         },
                         "options": [
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             },
                             {
@@ -22926,10 +22981,10 @@
                                 }
                             },
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             }
                         ]
@@ -28608,17 +28663,10 @@
                         },
                         "options": [
                             {
-                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
                                 "selected": false,
                                 "text": {
-                                    "en": "Resolve with Owner"
-                                }
-                            },
-                            {
-                                "id": "c240cec6-982f-401b-80d6-eaac04a18d88",
-                                "selected": false,
-                                "text": {
-                                    "en": "Resolve with Occupier"
+                                    "en": "Contact PSNI"
                                 }
                             },
                             {
@@ -28629,10 +28677,17 @@
                                 }
                             },
                             {
-                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "id": "c240cec6-982f-401b-80d6-eaac04a18d88",
                                 "selected": false,
                                 "text": {
-                                    "en": "Contact PSNI"
+                                    "en": "Resolve with Occupier"
+                                }
+                            },
+                            {
+                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "selected": false,
+                                "text": {
+                                    "en": "Resolve with Owner"
                                 }
                             }
                         ]
@@ -28751,29 +28806,6 @@
                     "nodeid": "e8d511cc-d64c-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "end_date",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD"
-                    },
-                    "datatype": "date",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "End Date",
-                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
-                    "nodeid": "e8d513d4-d64c-11ee-8b04-0242ac180006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -29170,8 +29202,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "c0882d82-d64f-11ee-8b04-0242ac180006",
-                "published_time": "2024-02-28T15:40:51.597"
+                "publicationid": "ce2dad4e-d650-11ee-9bab-0242ac180006",
+                "published_time": "2024-02-28T15:48:23.989"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
