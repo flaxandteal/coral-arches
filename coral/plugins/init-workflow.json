@@ -83,7 +83,7 @@
       {
         "workflowid": "2af942cc-54d0-4e8c-9fa8-a76b9ef7632f",
         "slug": "merge-workflow",
-        "name": "Merge Heritage Asset",
+        "name": "Merge Heritage Assets",
         "icon": "fa fa-file-text",
         "bgColor": "#86679c",
         "circleColor": "#aa86c4",
@@ -96,7 +96,25 @@
         "icon": "fa fa-file-text",
         "bgColor": "#86679c",
         "circleColor": "#aa86c4",
-        "desc": "Relate a Heritage Asset to another."
+        "desc": "Relate a Heritage Asset to another"
+      },
+      {
+        "workflowid": "aa66f3d7-1bbb-407a-9447-736cb6d5203c",
+        "slug": "open-workflow?workflow-slug=scheduled-monument-consent-workflow",
+        "name": "SMC",
+        "icon": "fa fa-file-text",
+        "bgColor": "#86679c",
+        "circleColor": "#aa86c4",
+        "desc": "Request consent to schedule a Heritage Asset"
+      },
+      {
+        "workflowid": "813eb058-b7aa-4407-a24f-ba19f0e41c92",
+        "slug": "open-workflow?workflow-slug=incident-report-workflow",
+        "name": "Incident Report",
+        "icon": "fa fa-file-text",
+        "bgColor": "#86679c",
+        "circleColor": "#aa86c4",
+        "desc": "Manage incident reports for a Heritage Asset"
       },
       {
         "workflowid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
@@ -114,7 +132,7 @@
         "icon": "fa fa-file-text",
         "bgColor": "#688294",
         "circleColor": "#7195ad",
-        "desc": "Respond to a consultation for HM."
+        "desc": "Respond to a consultation for HM"
       },
       {
         "workflowid": "96c266fe-9ea2-48eb-89ca-240679a05173",
@@ -123,16 +141,7 @@
         "icon": "fa fa-file-text",
         "bgColor": "#688294",
         "circleColor": "#7195ad",
-        "desc": "Respond to a consultation for HB."
-      },
-      {
-        "workflowid": "aa66f3d7-1bbb-407a-9447-736cb6d5203c",
-        "slug": "open-workflow?workflow-slug=scheduled-monument-consent-workflow",
-        "name": "SMC",
-        "icon": "fa fa-file-text",
-        "bgColor": "#cf992d",
-        "circleColor": "#dea73a",
-        "desc": "Request consent to schedule a Heritage Asset."
+        "desc": "Respond to a consultation for HB"
       }
     ],
     "show": true
