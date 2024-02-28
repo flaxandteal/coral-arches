@@ -249,6 +249,17 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
+        "name": "fce73127-9ba6-4c9b-9a9c-ee64ca6de045",
+        "title": "New Step",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": []
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
         "name": "02981d6b-ccf4-4317-b0e1-fe612b7f6a2f",
         "title": "Documentation",
         "required": false,
