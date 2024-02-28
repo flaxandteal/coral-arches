@@ -92,7 +92,7 @@ describe('Working With The Excavation Workflow', function () {
         cy.contains('Next Step').click();
 
     })
-    it.only('Test Page 4: Locations Details', function () {
+    it('Test Page 4: Locations Details', function () {
         cy.login();
         cy.visit("http://localhost:8000/plugins/init-workflow");
         cy.contains("Workflows");
@@ -161,7 +161,57 @@ describe('Working With The Excavation Workflow', function () {
         // Location Details
         cy.wait(5000);
         cy.contains('Next Step').click();
+
+        // Page 5/11
+        // Additional Files
+        cy.wait(5000);
+
+        // Uploaded Application form
+        cy.get('[aria-label="Have you uploaded an Application Form?"]').contains('No').click();
+        cy.get('[aria-label="Have you uploaded an Application Form?"]').contains('Yes').click();
+        // Uploaded POW file
+        cy.get('[aria-label="Have you uploaded a POW file?"]').contains('No').click();
+        cy.get('[aria-label="Have you uploaded a POW file?"]').contains('Yes').click();
+        // Uploaded Council Letter
+        cy.get('[aria-label="Have you uploaded a Council Letter?"]').contains('No').click();
+        cy.get('[aria-label="Have you uploaded a Council Letter?"]').contains('Yes').click();
+        // Uploaded Developer Funding Form
+        cy.get('[aria-label="Have you uploaded a Developer Funding Form?"]').contains('No').click();
+        cy.get('[aria-label="Have you uploaded a Developer Funding Form?"]').contains('Yes').click();
         
+        cy.contains("Save and Continue").click();
+    })
+    it('Test Page 6: Something', function () {
+        cy.login();
+        cy.visit("http://localhost:8000/plugins/init-workflow");
+        cy.contains("Workflows");
+        cy.contains("Excavation Licensing").click();
+        // Starting the workflow
+
+        // Create a new excavation license
+        cy.contains("Start New").click();
+
+        // Page 1/11 
+        // Initialize excavation license
+        cy.wait(5000);
+        cy.contains("Save and Continue").click();
+
+        // Page 2/12
+        // Filling the Application Details
+        cy.wait(5000);
+        cy.get('[aria-label="Site Name"]').click().type('Site Name test 1');
+        cy.contains("Save and Continue").click();
+
+        // Page 3/11
+        // Geospatial Details
+        cy.wait(5000);
+        cy.contains('Next Step').click();
+
+        // Page 4/11
+        // Location Details
+        cy.wait(5000);
+        cy.contains('Next Step').click();
+
         // Page 5/11
         // Additional Files
         cy.wait(5000);
