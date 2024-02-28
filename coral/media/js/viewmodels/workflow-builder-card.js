@@ -252,12 +252,12 @@ define([
 
     this.componentName = ko.computed(() => {
       const WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT = 'workflow-builder-initial-step';
-      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card-util';
+      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card';
       const currentComponentName = this.currentComponentData()?.componentName;
       if (
         currentComponentName &&
-        (currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT ||
-          currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT)
+        currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT &&
+        currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT
       ) {
         return currentComponentName;
       }
