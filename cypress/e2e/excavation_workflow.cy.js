@@ -131,6 +131,42 @@ describe('Working With The Excavation Workflow', function () {
 
         cy.contains('Save and Continue').click();
     })
+    it.only('Test Page 5: Additional Files', function () {
+        cy.login();
+        cy.visit("http://localhost:8000/plugins/init-workflow");
+        cy.contains("Workflows");
+        cy.contains("Excavation Licensing").click();
+        // Starting the workflow
+
+        // Create a new excavation license
+        cy.contains("Start New").click();
+
+        // Page 1/11 
+        // Initialize excavation license
+        cy.wait(5000);
+        cy.contains("Save and Continue").click();
+
+        // Page 2/12
+        // Filling the Application Details
+        cy.wait(5000);
+        cy.get('[aria-label="Site Name"]').click().type('Site Name test 1');
+        cy.contains("Save and Continue").click();
+
+        // Page 3/11
+        // Geospatial Details
+        cy.wait(5000);
+        cy.contains('Next Step').click();
+
+        // Page 4/11
+        // Location Details
+        cy.wait(5000);
+        cy.contains('Next Step').click();
+        
+        // Page 5/11
+        // Additional Files
+        cy.wait(5000);
+        cy.contains('Next Step').click();
+    })
     it('Goes through the Entire Excavation Workflow', function () {
         cy.login();
         cy.visit("http://localhost:8000/plugins/init-workflow");
