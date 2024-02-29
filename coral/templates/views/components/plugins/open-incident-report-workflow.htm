@@ -71,9 +71,10 @@
     <button
       class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
       style="min-height: 40.56px"
-      data-bind="click: () => {
-        window.location.href = workflowUrl();
-      }"
+      data-bind="click: async () => {
+        {% comment %} window.location.href = workflowUrl(); {% endcomment %}
+        await openWorkflow();
+      }, disable: !selectedResource()"
     >
       <span>Start New</span>
     </button>
@@ -83,7 +84,7 @@
       style="min-height: 40.56px"
       data-bind="click: async () => {
         await openWorkflow();
-      }, disable: !selectedResource()"
+      }, disable: !selectedIncidentReport()"
     >
       <span>Open Selected</span>
     </button>

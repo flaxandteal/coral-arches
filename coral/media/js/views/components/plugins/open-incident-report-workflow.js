@@ -13,6 +13,7 @@ define([
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
     this.WORKFLOW_RECENTLY_OPENED_LABEL = 'workflow-recently-opened';
     this.RESOURCE_ID_LABEL = 'resource-id';
+    this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
 
     this.openableWorkflows = params.openableWorkflows;
     this.selectedResource = ko.observable();
@@ -29,6 +30,10 @@ define([
     this.configKeys = ko.observable({ placeholder: 0 });
 
     this.selectedIncidentReport = ko.observable();
+
+    this.addtionalConfigData = ko.observable({
+      parentTileIds: {}
+    });
 
     this.recentlyOpenedResources = ko.computed(() => {
       const items = this.recentlyOpened()?.[this.workflowSlug()];
@@ -68,12 +73,22 @@ define([
       this.parentTileOptions(
         tiles.map((tile, idx) => {
           return {
-            text: tile.data['b7c8c0a4-d6ee-11ee-8240-0242ac180006'].en.value,
+            // text: tile.data['2001a33a-d711-11ee-9dd0-0242ac120006'].en.value,
+            text: idx,
             tile: tile,
-            id: idx
+            id: tile.tileid
           };
         })
       );
+    };
+
+    this.selectedIncidentReport.subscribe((tileId) => {
+      this.addtionalConfigData()['parentTileIds']['d3ff3fe6-d62b-11ee-9454-0242ac180006'] = tileId;
+      this.setAdditionalOpenConfigData();
+    });
+
+    this.setAdditionalOpenConfigData = () => {
+      localStorage.setItem(this.OPEN_WORKFLOW_CONFIG, JSON.stringify(this.addtionalConfigData()));
     };
 
     this.getWorkflowSlug = () => {
@@ -212,6 +227,7 @@ define([
 
     this.init = async () => {
       this.loading(true);
+      this.setAdditionalOpenConfigData();
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
