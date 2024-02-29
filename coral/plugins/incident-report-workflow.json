@@ -11,7 +11,7 @@
       {
         "name": "239ba9b7-2fac-4a81-9913-872cd022fac6",
         "title": "Initial step",
-        "required": false,
+        "required": true,
         "layoutSections": [
           {
             "componentConfigs": [
@@ -38,6 +38,16 @@
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
                 "uniqueInstanceName": "fd241793-e0af-4417-967a-47fb797c917e"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "nodegroupid": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
+                  "semanticName": "Incident Report"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "d96cc87e-6de5-4b33-90db-ea324af7a66d"
               }
             ]
           }
