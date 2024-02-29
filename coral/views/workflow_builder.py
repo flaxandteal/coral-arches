@@ -78,9 +78,11 @@ class WorkflowBuilderGraphComponents(View):
                         "resourceid": "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                         "graphid": graph_id,
                         "nodegroupid": nodegroup_id,
-                        "semanticName": alias_nodes["semantic_name"]
-                        if alias_nodes.get("semantic_name")
-                        else "No semantic name",
+                        "semanticName": (
+                            alias_nodes["semantic_name"]
+                            if alias_nodes.get("semantic_name")
+                            else "No semantic name"
+                        ),
                         # "hiddenNodes": [
                         #     f"{node_id2}"
                         #     for alias2, node_id2 in alias_nodes.items()
@@ -217,9 +219,17 @@ class WorkflowBuilderCardOverride(api.Card):
 
         my_tiles = []
         for nodegroup in nodegroups:
-            print('nodegroup: ', nodegroup)
+            print("nodegroup: ", nodegroup)
             if nodegroup.parentnodegroup_id:
-                if len(list(filter(lambda tile: tile['nodegroup_id'] == nodegroup.parentnodegroup_id, my_tiles))):
+                if len(
+                    list(
+                        filter(
+                            lambda tile: tile["nodegroup_id"]
+                            == nodegroup.parentnodegroup_id,
+                            my_tiles,
+                        )
+                    )
+                ):
                     continue
                 my_tiles.append(
                     {
@@ -228,7 +238,7 @@ class WorkflowBuilderCardOverride(api.Card):
                         "parenttile_id": None,
                         "provisionaledits": None,
                         "resourceinstance_id": uuid.uuid4(),
-                        "sortorder": 0, 
+                        "sortorder": 0,
                         "tileid": f"{nodegroup.nodegroupid}-{nodegroup.parentnodegroup_id}",
                     }
                 )
@@ -344,3 +354,14 @@ class WorkflowBuilderPluginExport(View):
         response = HttpResponse(json_data, content_type="application/json")
         response["Content-Disposition"] = f"attachment; filename={filename}"
         return response
+
+
+class WorkflowBuilderInitWorkflowAdd(View):
+    def get(self, request):
+        id = request.GET.get("id")
+        plugin = models.Plugin.objects.get(pluginid=id)
+        init_workflow_plugin = models.Plugin.objects.get(slug="init-workflow")
+
+        workflows = init_workflow_plugin.config["workflows"]
+
+        return JSONResponse({"success": True})
