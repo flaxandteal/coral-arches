@@ -37,6 +37,8 @@ define([
 
     this.configKeys = ko.observable({ placeholder: 0 });
 
+    this.cardIdx = this.parentStep.cardIdx(this.cardId);
+
     this.loadAbstractComponent = (componentData) => {
       this.isStepActive(false);
       let workflowCA = new WorkflowComponentAbstract({
@@ -123,7 +125,10 @@ define([
     };
 
     this.title = ko.computed(() => {
-      return this.nodegroupOptions()[this.selectedNodegroup()]?.text || 'New Card';
+      return (
+        `${this.cardIdx()}: ${this.nodegroupOptions()[this.selectedNodegroup()]?.text}` ||
+        'New Card'
+      );
     }, this);
 
     this.loadComponentNodes = async () => {
@@ -214,6 +219,11 @@ define([
 
     this.removeCard = () => {
       this.parentStep.removeCardFromStep(this.cardId);
+    };
+
+    this.shiftCard = (direction) => {
+      console.log('shift card: ', direction);
+      this.parentStep.shiftCard(this.cardId, direction);
     };
 
     this.workflowResourceIdPathOptions = ko.computed(() => {

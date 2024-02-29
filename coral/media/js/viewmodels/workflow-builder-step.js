@@ -39,6 +39,31 @@ define([
       });
     };
 
+    this.shiftCard = (cardId, direction) => {
+      const targetIndex = this.cards().findIndex((card) => card.cardId === cardId);
+      if (targetIndex === -1) return;
+
+      if (direction === 'up' && targetIndex > 0) {
+        const temp = this.cards()[targetIndex];
+        this.cards()[targetIndex] = this.cards()[targetIndex - 1];
+        this.cards()[targetIndex - 1] = temp;
+      } else if (direction === 'down' && targetIndex < this.cards().length - 1) {
+        const temp = this.cards()[targetIndex];
+        this.cards()[targetIndex] = this.cards()[targetIndex + 1];
+        this.cards()[targetIndex + 1] = temp;
+      } else {
+        return;
+      }
+
+      this.cards.valueHasMutated();
+    };
+
+    this.cardIdx = (cardId) => {
+      return ko.computed(() => {
+        return this.cards().findIndex((card) => card.cardId === cardId) + 1;
+      }, this);
+    };
+
     this.titleAsId = ko.computed(() => {
       return this.title().toLowerCase().split(' ').join('-');
     }, this);
