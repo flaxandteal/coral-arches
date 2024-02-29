@@ -12,9 +12,9 @@ define([
     _.extend(this, params);
 
     this.title = ko.observable(params?.title || '');
-    this.required = ko.observable(params?.required || false); // TODO: Implement frontend toggle
     this.cards = ko.observableArray();
     this.graphId = params?.graphId;
+    this.required = ko.observable(params?.required || false);
 
     this.addCard = (cardData) => {
       const card = new WorkflowBuilderCard({
@@ -42,10 +42,6 @@ define([
     this.titleAsId = ko.computed(() => {
       return this.title().toLowerCase().split(' ').join('-');
     }, this);
-
-    this.setRequired = (require) => {
-      this.required(require);
-    };
 
     this.getStepData = () => {
       return {

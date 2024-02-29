@@ -38,6 +38,22 @@
           </div>
         </div>
       </div>
+      <radio-boolean-widget
+        params="
+          node: {
+            config: {
+              trueLabel: 'Yes',
+              falseLabel: 'No',
+            },
+          },
+          config: {
+            label: 'Required step?',
+          },
+          value: required,
+          loading: false,
+          pageVm: $root
+        "
+      ></radio-boolean-widget>
     </div>
   </div>
   <div>
