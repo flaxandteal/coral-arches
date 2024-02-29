@@ -323,7 +323,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Contacts"
                     },
@@ -4199,7 +4199,7 @@
                         "defaultValue": {
                             "en": {
                                 "direction": "ltr",
-                                "value": "Generated once status is \"Final\""
+                                "value": "Generated once status is \"Granted\""
                             }
                         },
                         "i18n_properties": [
@@ -6738,17 +6738,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -8580,17 +8580,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -11099,17 +11099,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -11140,45 +11140,10 @@
                         },
                         "options": [
                             {
-                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
+                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
                                 "selected": false,
                                 "text": {
-                                    "en": "Not Used"
-                                }
-                            },
-                            {
-                                "id": "5b119129-7d05-44af-b7f3-d6cc4e7d13de",
-                                "selected": false,
-                                "text": {
-                                    "en": "Withdrawn"
-                                }
-                            },
-                            {
-                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refused"
-                                }
-                            },
-                            {
-                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
-                                "selected": false,
-                                "text": {
-                                    "en": "Granted"
-                                }
-                            },
-                            {
-                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
-                                "selected": false,
-                                "text": {
-                                    "en": "Paused"
-                                }
-                            },
-                            {
-                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
-                                "selected": false,
-                                "text": {
-                                    "en": "In progress"
+                                    "en": "Received"
                                 }
                             },
                             {
@@ -11189,10 +11154,45 @@
                                 }
                             },
                             {
-                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
+                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
                                 "selected": false,
                                 "text": {
-                                    "en": "Received"
+                                    "en": "In progress"
+                                }
+                            },
+                            {
+                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Paused"
+                                }
+                            },
+                            {
+                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
+                                "selected": false,
+                                "text": {
+                                    "en": "Granted"
+                                }
+                            },
+                            {
+                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
+                                "selected": false,
+                                "text": {
+                                    "en": "Refused"
+                                }
+                            },
+                            {
+                                "id": "5b119129-7d05-44af-b7f3-d6cc4e7d13de",
+                                "selected": false,
+                                "text": {
+                                    "en": "Withdrawn"
+                                }
+                            },
+                            {
+                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
+                                "selected": false,
+                                "text": {
+                                    "en": "Not Used"
                                 }
                             }
                         ],
@@ -12136,8 +12136,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "22307100-d71f-11ee-ae04-0242ac120006",
-                "published_time": "2024-02-29T16:25:21.262"
+                "publicationid": "a9e146ee-d727-11ee-b781-0242ac120006",
+                "published_time": "2024-02-29T17:26:24.887"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
