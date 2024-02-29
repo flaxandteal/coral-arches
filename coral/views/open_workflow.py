@@ -16,6 +16,8 @@ class OpenWorkflow(View):
     step_mapping = []
     step_config = []
     grouped_tiles = {}
+    nodes = {}
+    nodegroups = {}
     setup_workflows = {"licensing-workflow": "setup_licensing_workflow"}
 
     def get_plugin(self, plugin_slug):
@@ -68,6 +70,20 @@ class OpenWorkflow(View):
     def group_tiles(self, tiles):
         for tile in tiles:
             nodegroup_id = str(tile.nodegroup.nodegroupid)
+
+
+            parent_tile_ids = self.open_config.get('parentTileIds')
+            print('1 parent_tile_ids: ', parent_tile_ids)
+            parent_nodegroup_id = str(tile.parenttile.nodegroup.nodegroupid) if tile.parenttile else None
+            print('parent_nodegroup_id: ', parent_nodegroup_id)
+            if parent_nodegroup_id and parent_nodegroup_id in parent_tile_ids:
+                print('parent nodegroup is in parent tile ids')
+                parent_tile_id = str(tile.parenttile.tileid)
+                if parent_tile_id != parent_tile_ids[parent_nodegroup_id]:
+                    print('tile id was not requested: ', parent_tile_id)
+                    continue
+                print('tile id was requested: ', parent_tile_id)
+
             if nodegroup_id not in self.grouped_tiles:
                 self.grouped_tiles[nodegroup_id] = []
             self.grouped_tiles[nodegroup_id].append(tile)
@@ -78,10 +94,56 @@ class OpenWorkflow(View):
             nodegroup_id = lookup["parentNodegroupId"]
             lookup_name = lookup["lookupName"]
             tiles = grouped_tiles.get(nodegroup_id, [])
-            tile = tiles[0] if len(tiles) else None
+            
+            tile = None
+            print('nodegroup_id: ', nodegroup_id)
+            parent_tile_ids = self.open_config.get('parentTileIds')
+            print('parent_tile_ids: ', parent_tile_ids)
+            if parent_tile_ids and nodegroup_id in parent_tile_ids:
+                print('has parent tile ids')
+
+                tile_id = parent_tile_ids.get(nodegroup_id)
+                print('parent tile id is: ', tile_id)
+
+                if tile_id:
+                    print('has tile id')
+
+                    for t in tiles:
+                        if str(t.tileid) == tile_id:
+                            tile = t
+                            break
+                    print('found tile: ', tile)
+                    
+                else:
+                    print('has no tile id sp creating new')
+                    tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=self.resource,
+                        # parenttile=parent_tile,
+                        data={},
+                        nodegroup=self.nodegroups[nodegroup_id],
+                        sortorder=None
+                    )
+                    tile.save()
+                    tile.sortorder = 0
+                    tile.save()
+                    self.group_tiles([tile])
+                    print('new tile: ', tile.data)
+            else:
+                tile = tiles[0] if len(tiles) else None
+                print('selecting first parent tile: ', tile)
+
             if tile:
                 lookup_tile_ids[lookup_name] = str(tile.tileid)
         return lookup_tile_ids
+    
+    def get_node_configuration(self, graph):
+        nodes = graph.node_set.all().select_related("nodegroup")
+        for node in nodes:
+            self.nodes[str(node.nodeid)] = node
+            if node.is_collector:
+                nodegroup_id = str(node.nodegroup.nodegroupid)
+                self.nodegroups[nodegroup_id] = node.nodegroup
 
     def setup_licensing_workflow(self):
         LICENSE_SYSTEM_REFERENCE_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
@@ -160,12 +222,16 @@ class OpenWorkflow(View):
         self.step_config = []
         self.grouped_tiles = {}
         self.additional_saved_values = {}
+        self.open_config = {}
+        self.nodes = {}
+        self.nodegroups = {}
 
         data = json.loads(request.body.decode("utf-8"))
         step_config = data.get("stepConfig")
         resource_id = data.get("resourceId")
         workflow_id = data.get("workflowId")
         workflow_slug = data.get("workflowSlug")
+        self.open_config = data.get("openConfig")
         user_id = request.user.pk
 
         # Get step data from plugin
@@ -180,6 +246,10 @@ class OpenWorkflow(View):
 
         self.resource = self.get_resource(resource_id)
         resource_tiles = Tile.objects.filter(resourceinstance=self.resource)
+
+        # Get node configs
+
+        self.get_node_configuration(self.resource.graph)
 
         # If setup required
 
