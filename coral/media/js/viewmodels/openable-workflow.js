@@ -13,6 +13,7 @@ define([
     WorkflowViewModel.apply(this, [config]);
 
     this.WORKFLOW_OPEN_MODE_LABEL = 'workflow-open-mode';
+    this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
 
     (() => {
       /**
@@ -21,6 +22,12 @@ define([
       this.getWorkflowHistoryData = async function (key) {
         const openMode = JSON.parse(localStorage.getItem(this.WORKFLOW_OPEN_MODE_LABEL));
         localStorage.removeItem(this.WORKFLOW_OPEN_MODE_LABEL);
+
+        const rawConfigData = localStorage.getItem(this.OPEN_WORKFLOW_CONFIG);
+        let configData = {};
+        if (configData) {
+          configData = JSON.parse(rawConfigData);
+        }
 
         if (openMode) {
           const workflowId = this.id();
@@ -34,7 +41,8 @@ define([
               stepConfig: this.stepConfig,
               resourceId: resourceId,
               workflowId: workflowId,
-              workflowSlug: this.componentName
+              workflowSlug: this.componentName,
+              openConfig: configData
             }),
             context: this,
             error: (response, status, error) => {
