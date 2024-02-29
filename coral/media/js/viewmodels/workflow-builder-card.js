@@ -104,7 +104,15 @@ define([
     }, this);
 
     this.graphCards = ko.computed(() => {
-      return this.parentStep?.parentWorkflow?.graphCards()?.[this.graphId()] || [];
+      return (
+        this.parentStep?.parentWorkflow?.graphCards()?.[this.graphId()] || {
+          nodes: [],
+          cardwidgets: [],
+          cards: [],
+          nodegroups: [],
+          tiles: []
+        }
+      );
     }, this);
 
     this.loadComponent = () => {
