@@ -9,21 +9,11 @@ define([
   const WorkflowBuilderConfig = function (params) {
     _.extend(this, params);
 
-    this.workflowName = params?.workflowName || '';
+    this.workflowName = params?.workflowName || ko.observable('');
     this.showWorkflowInSidebar = params?.showWorkflowInSidebar || false;
     this.workflowSlug = params?.workflowSlug || '';
     this.autoGenerateSlug = ko.observable(true);
-
-    this.setShowWorkflowInSidebar = (show) => {
-      this.showWorkflowInSidebar(show);
-    };
-
-    this.setAutoGenerateSlug = (show) => {
-      this.autoGenerateSlug(show);
-      if (show) {
-        this.workflowSlug(this.createSlug());
-      }
-    };
+    this.showWorkflowOnInitWorkflow = ko.observable(false);
 
     this.workflowName.subscribe((value) => {
       if (this.autoGenerateSlug()) {
