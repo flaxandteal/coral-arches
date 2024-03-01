@@ -121,8 +121,8 @@
                     "component_id": "3c103484-22d1-4ca9-a9f3-eb3902d567ac",
                     "config": {
                         "basemap": "streets",
-                        "centerX": 0.18224666709716075,
-                        "centerY": 51.44959532426864,
+                        "centerX": "-5.930030753467499",
+                        "centerY": "54.59679143756598",
                         "overlayConfigs": [],
                         "selectSource": "",
                         "selectSourceLayer": "",
@@ -1151,7 +1151,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Consultation Descriptions"
                     },
@@ -1450,7 +1450,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Planning References"
                     },
@@ -2898,8 +2898,8 @@
                     "config": {
                         "basemap": "streets",
                         "bearing": null,
-                        "centerX": 0.18224666709716075,
-                        "centerY": 51.44959532426864,
+                        "centerX": "-5.930030753467499",
+                        "centerY": "54.59679143756598",
                         "defaultValue": null,
                         "defaultValueType": null,
                         "featureColor": "#FF0000",
@@ -5192,6 +5192,7 @@
                     "card_id": "3a79a0df-4535-11eb-bc9a-f875a44e0e11",
                     "config": {
                         "acceptedFiles": null,
+                        "defaultValue": [],
                         "label": "Photographs",
                         "maxFilesize": "200",
                         "rerender": true
@@ -14496,16 +14497,6 @@
             "functions_x_graphs": [
                 {
                     "config": {
-                        "triggering_nodegroups": [
-                            "54de6acc-8895-11ea-9067-f875a44e0e11"
-                        ]
-                    },
-                    "function_id": "3461bdcc-c5cd-4e5f-8a79-5f621fbbd6ba",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "346c0397-6c8f-4293-bd3f-8b01e48f05e4"
-                },
-                {
-                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "82f8a163-951a-11ea-b58e-f875a44e0e11",
@@ -14524,7 +14515,17 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "adb76097-8a15-4ef1-a3c0-7f427cb3d5f5"
+                    "id": "179f47c3-15a8-42fc-894c-dd48b9d48f26"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "54de6acc-8895-11ea-9067-f875a44e0e11"
+                        ]
+                    },
+                    "function_id": "3461bdcc-c5cd-4e5f-8a79-5f621fbbd6ba",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "2a339acc-0d9b-441e-b7ce-36e0e7ac4780"
                 },
                 {
                     "config": {
@@ -14538,7 +14539,7 @@
                     },
                     "function_id": "96efa95a-1e2c-4562-ac1f-b415796f9f75",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "fa104d40-0caa-4f27-8f94-9ef33b970369"
+                    "id": "7fc5207c-8723-4752-b296-89df44be9f3e"
                 }
             ],
             "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -19729,6 +19730,7 @@
                     "alias": "photographs",
                     "config": {
                         "activateMax": false,
+                        "imagesOnly": false,
                         "maxFileSize": null,
                         "maxFiles": 1
                     },
@@ -25854,8 +25856,8 @@
             "publication": {
                 "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
                 "notes": null,
-                "publicationid": "d56832b6-cfff-11ee-8a4e-0242ac180006",
-                "published_time": "2024-02-20T14:53:39.905"
+                "publicationid": "1d1deeb8-d7b0-11ee-bfe5-0242ac120006",
+                "published_time": "2024-03-01T09:43:09.778"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -25889,7 +25891,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "342cfbb09 2024-01-19 09:20:12 +0000",
+        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
         "os version": "5.10.0-23-amd64"
     }
