@@ -10,10 +10,10 @@ define([
     _.extend(this, params);
 
     this.workflowName = params?.workflowName || ko.observable('');
-    this.showWorkflowInSidebar = params?.showWorkflowInSidebar || false;
+    this.showWorkflowOnSidebar = params?.showWorkflowOnSidebar || ko.observable(false);
+    this.showWorkflowOnInitWorkflow = params?.showWorkflowOnInitWorkflow || ko.observable(false);
     this.workflowSlug = params?.workflowSlug || '';
     this.autoGenerateSlug = ko.observable(true);
-    this.showWorkflowOnInitWorkflow = ko.observable(false);
 
     this.workflowName.subscribe((value) => {
       if (this.autoGenerateSlug()) {
