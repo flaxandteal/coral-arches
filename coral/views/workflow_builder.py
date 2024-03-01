@@ -356,12 +356,49 @@ class WorkflowBuilderPluginExport(View):
         return response
 
 
-class WorkflowBuilderInitWorkflowAdd(View):
-    def get(self, request):
-        id = request.GET.get("id")
-        plugin = models.Plugin.objects.get(pluginid=id)
+class WorkflowBuilderUpdateInitWorkflow(View):
+    def put(self, request):
+        data = json.loads(request.body.decode("utf-8"))
+        show = data.get("show")
+        workflow_id = data.get("workflowId")
+
+        plugin = models.Plugin.objects.get(pluginid=workflow_id)
         init_workflow_plugin = models.Plugin.objects.get(slug="init-workflow")
 
         workflows = init_workflow_plugin.config["workflows"]
 
-        return JSONResponse({"success": True})
+        init_workflow = None
+        workflow_idx = None
+        for idx, workflow in enumerate(workflows):
+            if workflow["workflowid"] == str(plugin.pluginid):
+                workflow_idx = idx
+
+        if not show and not workflow_idx:
+            return JSONResponse({"message": "No change needed"})
+
+        if not show and workflow_idx:
+            del workflows[workflow_idx]
+            init_workflow_plugin.config["workflows"] = workflows
+            init_workflow_plugin.save()
+            return JSONResponse({"message": "Removed workflow from init workflow"})
+
+        init_workflow = {
+            "workflowid": str(plugin.pluginid),
+            "slug": plugin.slug,
+            "name": plugin.name,
+            "icon": "fa fa-file-text",
+            "bgColor": "#6243b0",
+            "circleColor": "#7158ad",
+            "desc": "Created with the Workflow builder",
+        }
+
+        if workflow_idx:
+            workflows[workflow_idx] = init_workflow
+            init_workflow_plugin.config["workflows"] = workflows
+            init_workflow_plugin.save()
+            return JSONResponse({"message": "Updated init workflow with latest data"})
+
+        workflows.append(init_workflow)
+        init_workflow_plugin.config["workflows"] = workflows
+        init_workflow_plugin.save()
+        return JSONResponse({"message": "Workflow added to init workflow"})
