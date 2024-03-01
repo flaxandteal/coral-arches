@@ -247,11 +247,23 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "69500360-d7c5-11ee-a011-0242ac120006",
+                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "semanticName": "Council"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "e0a60085-eeeb-44e0-83de-2dcb5ad38d95"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "083f0650-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
                 },
