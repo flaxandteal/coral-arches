@@ -14,7 +14,8 @@ define([
 
     this.graphId = ko.observable();
     this.workflowName = ko.observable('Basic');
-    this.showWorkflowInSidebar = ko.observable(false);
+    this.showWorkflowOnSidebar = ko.observable(false);
+    this.showWorkflowOnInitWorkflow = ko.observable(false);
     this.workflowSlug = ko.observable('basic-workflow');
 
     this.workflowSteps = ko.observableArray();
@@ -80,7 +81,8 @@ define([
         component: 'views/components/plugins/workflow-builder-loader',
         componentname: 'workflow-builder-loader',
         config: {
-          show: this.showWorkflowInSidebar(),
+          show: this.showWorkflowOnSidebar(),
+          showWorkflowOnInitWorkflow: this.showWorkflowOnInitWorkflow(),
           graphId: this.graphId(),
           stepData: this.workflowSteps().map((step) => step.getStepData())
         },
@@ -90,6 +92,7 @@ define([
     };
 
     this.registerWorkflow = async () => {
+      this.loading(true);
       const data = this.getWorkflowData();
       const workflowPlugin = await $.ajax({
         type: 'POST',
@@ -103,9 +106,11 @@ define([
       currentUrl.searchParams.delete('graph-id');
       currentUrl.searchParams.append('workflow-id', this.workflowPlugin().pluginid);
       history.replaceState(null, null, currentUrl.href);
+      this.loading(false);
     };
 
     this.exportWorkflow = async () => {
+      this.loading(true);
       await this.updateWorkflow();
       if (this.workflowId()) {
         const downloadAnchorNode = document.createElement('a');
@@ -118,9 +123,11 @@ define([
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
       }
+      this.loading(false);
     };
 
     this.updateWorkflow = async () => {
+      this.loading(true);
       const data = this.getWorkflowData();
       const workflowPlugin = await $.ajax({
         type: 'PUT',
@@ -133,6 +140,24 @@ define([
         }
       });
       this.workflowPlugin(workflowPlugin);
+      await this.updateInitWorkflow();
+      this.loading(false);
+    };
+
+    this.updateInitWorkflow = async () => {
+      await $.ajax({
+        type: 'PUT',
+        url: '/workflow-builder/init-workflow',
+        dataType: 'json',
+        data: JSON.stringify({
+          workflowId: this.workflowId(),
+          show: this.showWorkflowOnInitWorkflow()
+        }),
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
     };
 
     this.workflowId = ko.computed(() => {
@@ -218,7 +243,10 @@ define([
         await Promise.all([this.loadGraphComponents(), this.loadGraphCards()]);
         this.loadSteps(this.workflowPlugin()?.config.stepData);
         this.workflowName(this.workflowPlugin()?.name);
-        this.showWorkflowInSidebar(this.workflowPlugin()?.config.show);
+        this.showWorkflowOnSidebar(this.workflowPlugin()?.config.show || false);
+        this.showWorkflowOnInitWorkflow(
+          this.workflowPlugin()?.config.showWorkflowOnInitWorkflow || false
+        );
         this.workflowSlug(this.workflowPlugin().slug);
         this.loading(false);
       }
