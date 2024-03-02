@@ -5,7 +5,8 @@ define([
   'knockout-mapping',
   'arches',
   'templates/views/viewmodels/workflow-builder-config.htm',
-  'bindings/color-picker'
+  'bindings/color-picker',
+  'views/components/icon-selector'
 ], function ($, _, ko, koMapping, arches, template) {
   const WorkflowBuilderConfig = function (params) {
     _.extend(this, params);
@@ -19,8 +20,25 @@ define([
     this.initWorkflowName = params?.initWorkflowName || ko.observable('');
     this.initDescription = params?.initDescription || ko.observable('');
 
-    this.backgroundColour = ko.observable('#289c87');
-    this.circleColour = ko.observable('#32a893');
+    this.backgroundColour = params?.backgroundColour || ko.observable('#289c87');
+    this.circleColour = params?.circleColour || ko.observable('#32a893');
+
+    this.initIcon = params?.initIcon || ko.observable('');
+    this.iconData = ko.observableArray();
+    this.iconFilter = ko.observable('');
+
+    this.iconList = ko.computed(() => {
+      return _.filter(this.iconData(), (icon) => {
+        return icon.name.indexOf(this.iconFilter()) >= 0;
+      });
+    });
+
+    this.getIconData = async () => {
+      const data = await $.getJSON(arches.urls.icons);
+      console.log('data: ', data);
+      this.iconData(data.icons);
+      return data;
+    };
 
     this.workflowName.subscribe((value) => {
       if (this.autoGenerateSlug()) {
@@ -42,6 +60,7 @@ define([
 
     this.init = () => {
       this.autoGenerateSlug(this.isAutoGenerateSlugActive());
+      this.getIconData();
     };
 
     this.init();

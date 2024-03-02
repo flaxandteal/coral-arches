@@ -158,4 +158,19 @@
       </div>
     </div>
   </div>
+  <div class="row widget-wrapper">
+    <div class="form-group">
+      <div
+        data-bind="component: {
+            name: 'views/components/icon-selector',
+            params: {
+                selectedIconObservable: initIcon,
+                iconFilter: iconFilter,
+                iconList: iconList,
+                label: 'Selected icon: '
+            }
+        }"
+      ></div>
+    </div>
+  </div>
 </div>

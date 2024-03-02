@@ -20,6 +20,7 @@ define([
 
     this.initWorkflowName = ko.observable('');
     this.initDescription = ko.observable('');
+    this.initIcon = ko.observable('');
     this.backgroundColour = ko.observable('#289c87');
     this.circleColour = ko.observable('#32a893');
 
@@ -92,7 +93,8 @@ define([
             name: this.initWorkflowName(),
             desc: this.initDescription(),
             bgColor: this.backgroundColour(),
-            circleColor: this.circleColour()
+            circleColor: this.circleColour(),
+            icon: this.initIcon()
           },
           graphId: this.graphId(),
           stepData: this.workflowSteps().map((step) => step.getStepData())
@@ -258,6 +260,7 @@ define([
         this.showWorkflowOnInitWorkflow(this.workflowPlugin()?.config?.initWorkflow?.show || false);
         this.initWorkflowName(this.workflowPlugin()?.config?.initWorkflow?.name || '');
         this.initDescription(this.workflowPlugin()?.config?.initWorkflow?.desc || '');
+        this.initIcon(this.workflowPlugin()?.config?.initWorkflow?.icon || 'fa fa-file-text');
         this.backgroundColour(this.workflowPlugin()?.config?.initWorkflow?.bgColor || '#289c87');
         this.circleColour(this.workflowPlugin()?.config?.initWorkflow?.circleColor || '#32a893');
         this.workflowSlug(this.workflowPlugin().slug || '');

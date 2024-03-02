@@ -387,7 +387,7 @@ class WorkflowBuilderUpdateInitWorkflow(View):
             "workflowid": str(plugin.pluginid),
             "slug": plugin.slug,
             "name": init_data["name"],
-            "icon": "fa fa-file-text",
+            "icon": init_data["icon"],
             "bgColor": init_data["bgColor"],
             "circleColor": init_data["circleColor"],
             "desc": init_data["desc"],
