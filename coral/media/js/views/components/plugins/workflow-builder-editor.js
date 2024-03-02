@@ -20,6 +20,8 @@ define([
 
     this.initWorkflowName = ko.observable('');
     this.initDescription = ko.observable('');
+    this.backgroundColour = ko.observable('#289c87');
+    this.circleColour = ko.observable('#32a893');
 
     this.workflowSteps = ko.observableArray();
     this.activeStep = ko.observable();
@@ -88,7 +90,9 @@ define([
           initWorkflow: {
             show: this.showWorkflowOnInitWorkflow(),
             name: this.initWorkflowName(),
-            desc: this.initDescription()
+            desc: this.initDescription(),
+            bgColor: this.backgroundColour(),
+            circleColor: this.circleColour()
           },
           graphId: this.graphId(),
           stepData: this.workflowSteps().map((step) => step.getStepData())
@@ -251,11 +255,11 @@ define([
         this.loadSteps(this.workflowPlugin()?.config.stepData);
         this.workflowName(this.workflowPlugin()?.name || '');
         this.showWorkflowOnSidebar(this.workflowPlugin()?.config.show || false);
-        this.showWorkflowOnInitWorkflow(
-          this.workflowPlugin()?.config.showWorkflowOnInitWorkflow || false
-        );
+        this.showWorkflowOnInitWorkflow(this.workflowPlugin()?.config?.initWorkflow?.show || false);
         this.initWorkflowName(this.workflowPlugin()?.config?.initWorkflow?.name || '');
         this.initDescription(this.workflowPlugin()?.config?.initWorkflow?.desc || '');
+        this.backgroundColour(this.workflowPlugin()?.config?.initWorkflow?.bgColor || '#289c87');
+        this.circleColour(this.workflowPlugin()?.config?.initWorkflow?.circleColor || '#32a893');
         this.workflowSlug(this.workflowPlugin().slug || '');
         this.loading(false);
       }

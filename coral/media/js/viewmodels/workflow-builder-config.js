@@ -4,7 +4,8 @@ define([
   'knockout',
   'knockout-mapping',
   'arches',
-  'templates/views/viewmodels/workflow-builder-config.htm'
+  'templates/views/viewmodels/workflow-builder-config.htm',
+  'bindings/color-picker'
 ], function ($, _, ko, koMapping, arches, template) {
   const WorkflowBuilderConfig = function (params) {
     _.extend(this, params);
@@ -17,6 +18,9 @@ define([
     this.showWorkflowOnInitWorkflow = params?.showWorkflowOnInitWorkflow || ko.observable(false);
     this.initWorkflowName = params?.initWorkflowName || ko.observable('');
     this.initDescription = params?.initDescription || ko.observable('');
+
+    this.backgroundColour = ko.observable('#289c87');
+    this.circleColour = ko.observable('#32a893');
 
     this.workflowName.subscribe((value) => {
       if (this.autoGenerateSlug()) {

@@ -113,4 +113,49 @@
       pageVm: $root
     "
   ></text-widget>
+  <div class="row widget-wrapper">
+    <div class="form-group" style="display: flex; gap: 32px">
+      <div>
+        <div class="relative">
+          <label class="col-xs-12 control-label widget-input-label" style="height: 22px">
+            Background Colour
+          </label>
+        </div>
+
+        <div class="colorpicker-component input-group" id="cp1">
+          <input
+            placeholder="Background Color"
+            class="form-control input-md widget-input"
+            data-bind="colorPicker: {color: backgroundColour,  container: '#cp1'}"
+            style="height: 40px"
+          />
+          <div class="input-group-addon" style="width: min-content">
+            <i
+              class="ion-stop resource-color-swatch"
+              data-bind="style: {color: backgroundColour}"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="relative">
+          <label class="col-xs-12 control-label widget-input-label" style="height: 22px">
+            Circle Colour
+          </label>
+        </div>
+
+        <div class="colorpicker-component input-group" id="cp2">
+          <input
+            placeholder="Circle Color"
+            class="form-control input-md widget-input"
+            data-bind="colorPicker: {color: circleColour,  container: '#cp2'}"
+            style="height: 40px"
+          />
+          <div class="input-group-addon" style="width: min-content">
+            <i class="ion-stop resource-color-swatch" data-bind="style: {color: circleColour}"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
