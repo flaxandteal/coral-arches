@@ -64,6 +64,9 @@
       pageVm: $root
     "
   ></radio-boolean-widget>
+</div>
+<div class="card-component" style="display: flex; flex-direction: column">
+  <h4 class="card-title">Init Workflow Config</h4>
   <radio-boolean-widget
     params="
       node: {
@@ -73,11 +76,41 @@
         },
       },
       config: {
-        label: 'Show on workflows page? (WIP)',
+        label: 'Show on workflows page?',
       },
       value: showWorkflowOnInitWorkflow,
       loading: false,
       pageVm: $root
     "
   ></radio-boolean-widget>
+  <text-widget
+    params="
+      config: {
+        label: 'Workflow Name',
+        placeholder: 'Please provide a workflow name',
+      },
+      value: {
+        en: {
+          value: initWorkflowName
+        }
+      },
+      loading: false,
+      pageVm: $root
+    "
+  ></text-widget>
+  <text-widget
+    params="
+      config: {
+        label: 'Description',
+        placeholder: 'Please provide a description',
+      },
+      value: {
+        en: {
+          value: initDescription
+        }
+      },
+      loading: false,
+      pageVm: $root
+    "
+  ></text-widget>
 </div>

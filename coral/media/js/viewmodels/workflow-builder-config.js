@@ -11,9 +11,12 @@ define([
 
     this.workflowName = params?.workflowName || ko.observable('');
     this.showWorkflowOnSidebar = params?.showWorkflowOnSidebar || ko.observable(false);
-    this.showWorkflowOnInitWorkflow = params?.showWorkflowOnInitWorkflow || ko.observable(false);
     this.workflowSlug = params?.workflowSlug || '';
     this.autoGenerateSlug = ko.observable(true);
+
+    this.showWorkflowOnInitWorkflow = params?.showWorkflowOnInitWorkflow || ko.observable(false);
+    this.initWorkflowName = params?.initWorkflowName || ko.observable('');
+    this.initDescription = params?.initDescription || ko.observable('');
 
     this.workflowName.subscribe((value) => {
       if (this.autoGenerateSlug()) {
