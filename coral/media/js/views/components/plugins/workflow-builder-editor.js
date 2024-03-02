@@ -18,6 +18,9 @@ define([
     this.showWorkflowOnInitWorkflow = ko.observable(false);
     this.workflowSlug = ko.observable('basic-workflow');
 
+    this.initWorkflowName = ko.observable('');
+    this.initDescription = ko.observable('');
+
     this.workflowSteps = ko.observableArray();
     this.activeStep = ko.observable();
 
@@ -82,7 +85,11 @@ define([
         componentname: 'workflow-builder-loader',
         config: {
           show: this.showWorkflowOnSidebar(),
-          showWorkflowOnInitWorkflow: this.showWorkflowOnInitWorkflow(),
+          initWorkflow: {
+            show: this.showWorkflowOnInitWorkflow(),
+            name: this.initWorkflowName(),
+            desc: this.initDescription()
+          },
           graphId: this.graphId(),
           stepData: this.workflowSteps().map((step) => step.getStepData())
         },
@@ -151,7 +158,7 @@ define([
         dataType: 'json',
         data: JSON.stringify({
           workflowId: this.workflowId(),
-          show: this.showWorkflowOnInitWorkflow()
+          initWorkflow: this.workflowPlugin().config.initWorkflow
         }),
         context: this,
         error: (response, status, error) => {
@@ -242,12 +249,14 @@ define([
         this.workflowPlugin(workflow);
         await Promise.all([this.loadGraphComponents(), this.loadGraphCards()]);
         this.loadSteps(this.workflowPlugin()?.config.stepData);
-        this.workflowName(this.workflowPlugin()?.name);
+        this.workflowName(this.workflowPlugin()?.name || '');
         this.showWorkflowOnSidebar(this.workflowPlugin()?.config.show || false);
         this.showWorkflowOnInitWorkflow(
           this.workflowPlugin()?.config.showWorkflowOnInitWorkflow || false
         );
-        this.workflowSlug(this.workflowPlugin().slug);
+        this.initWorkflowName(this.workflowPlugin()?.config?.initWorkflow?.name || '');
+        this.initDescription(this.workflowPlugin()?.config?.initWorkflow?.desc || '');
+        this.workflowSlug(this.workflowPlugin().slug || '');
         this.loading(false);
       }
     };
