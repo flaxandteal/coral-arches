@@ -11,20 +11,20 @@ define([
   const WorkflowBuilderConfig = function (params) {
     _.extend(this, params);
 
-    this.workflowName = params?.workflowName || ko.observable('');
-    this.showWorkflowOnSidebar = params?.showWorkflowOnSidebar || ko.observable(false);
-    this.workflowSlug = params?.workflowSlug || '';
+    this.workflowName = ko.observable(params?.workflowName || 'Basic');
+    this.showOnSidebar = ko.observable(params?.showOnSidebar || false);
+
+    this.workflowSlug = ko.observable(params?.workflowSlug || 'basic-workflow');
     this.autoGenerateSlug = ko.observable(true);
 
-    this.showWorkflowOnInitWorkflow = params?.showWorkflowOnInitWorkflow || ko.observable(false);
-    this.initWorkflowName = params?.initWorkflowName || ko.observable('');
-    this.initDescription = params?.initDescription || ko.observable('');
+    this.showOnInitWorkflow = ko.observable(params?.initWorkflow?.show || false);
+    this.initWorkflowName = ko.observable(params?.initWorkflow?.name || this.workflowName());
+    this.initDescription = ko.observable(params?.initWorkflow?.desc || '');
+    this.initIcon = ko.observable(params?.initWorkflow?.icon || 'fa fa-file-text');
+    this.initBackgroundColour = ko.observable(params?.initWorkflow?.bgColor || '#617099');
+    this.initCircleColour = ko.observable(params?.initWorkflow?.circleColor || '#4a5e94');
 
-    this.backgroundColour = params?.backgroundColour || ko.observable('#289c87');
-    this.circleColour = params?.circleColour || ko.observable('#32a893');
-
-    this.initIcon = params?.initIcon || ko.observable('');
-    this.iconData = ko.observableArray();
+    this.iconData = ko.observableArray(params?.iconData || []);
     this.iconFilter = ko.observable('');
 
     this.iconList = ko.computed(() => {
@@ -33,14 +33,7 @@ define([
       });
     });
 
-    this.getIconData = async () => {
-      const data = await $.getJSON(arches.urls.icons);
-      console.log('data: ', data);
-      this.iconData(data.icons);
-      return data;
-    };
-
-    this.workflowName.subscribe((value) => {
+    this.workflowName.subscribe(() => {
       if (this.autoGenerateSlug()) {
         this.workflowSlug(this.createSlug());
       }
@@ -58,17 +51,26 @@ define([
       return this.workflowName().toLowerCase().split(' ').join('-') + '-workflow';
     };
 
+    this.getInitWorkflowConfig = () => {
+      return {
+        show: this.showOnInitWorkflow(),
+        name: this.initWorkflowName(),
+        desc: this.initDescription(),
+        icon: this.initIcon(),
+        bgColor: this.initBackgroundColour(),
+        circleColor: this.initCircleColour()
+      };
+    };
+
     this.init = () => {
       this.autoGenerateSlug(this.isAutoGenerateSlugActive());
-      this.getIconData();
     };
 
     this.init();
   };
 
   ko.components.register('workflow-builder-config', {
-    template: template,
-    viewModel: WorkflowBuilderConfig
+    template: template
   });
 
   return WorkflowBuilderConfig;

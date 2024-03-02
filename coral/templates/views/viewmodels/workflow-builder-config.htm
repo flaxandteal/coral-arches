@@ -1,3 +1,4 @@
+<!-- ko with: builderConfig -->
 <div class="card-component" style="display: flex; flex-direction: column">
   <h4 class="card-title">Workflow Config</h4>
   <text-widget
@@ -8,7 +9,8 @@
       },
       value: {
         en: {
-          value: workflowName
+          value: workflowName,
+          direction: ko.observable('ltr')
         }
       },
       loading: false,
@@ -17,7 +19,6 @@
   ></text-widget>
   <radio-boolean-widget
     params="
-      style: ,
       node: {
         config: {
           trueLabel: 'Yes',
@@ -40,7 +41,8 @@
       },
       value: {
         en: {
-          value: workflowSlug
+          value: workflowSlug,
+          direction: ko.observable('ltr')
         }
       },
       disabled: autoGenerateSlug,
@@ -59,7 +61,7 @@
       config: {
         label: 'Show workflow in sidebar?',
       },
-      value: showWorkflowOnSidebar,
+      value: showOnSidebar,
       loading: false,
       pageVm: $root
     "
@@ -78,7 +80,7 @@
       config: {
         label: 'Show on workflows page?',
       },
-      value: showWorkflowOnInitWorkflow,
+      value: showOnInitWorkflow,
       loading: false,
       pageVm: $root
     "
@@ -91,7 +93,8 @@
       },
       value: {
         en: {
-          value: initWorkflowName
+          value: initWorkflowName,
+          direction: ko.observable('ltr')
         }
       },
       loading: false,
@@ -106,7 +109,8 @@
       },
       value: {
         en: {
-          value: initDescription
+          value: initDescription,
+          direction: ko.observable('ltr')
         }
       },
       loading: false,
@@ -126,13 +130,13 @@
           <input
             placeholder="Background Color"
             class="form-control input-md widget-input"
-            data-bind="colorPicker: {color: backgroundColour,  container: '#cp1'}"
+            data-bind="colorPicker: {color: initBackgroundColour,  container: '#cp1'}"
             style="height: 40px"
           />
           <div class="input-group-addon" style="width: min-content">
             <i
               class="ion-stop resource-color-swatch"
-              data-bind="style: {color: backgroundColour}"
+              data-bind="style: {color: initBackgroundColour}"
             ></i>
           </div>
         </div>
@@ -148,11 +152,14 @@
           <input
             placeholder="Circle Color"
             class="form-control input-md widget-input"
-            data-bind="colorPicker: {color: circleColour,  container: '#cp2'}"
+            data-bind="colorPicker: {color: initCircleColour,  container: '#cp2'}"
             style="height: 40px"
           />
           <div class="input-group-addon" style="width: min-content">
-            <i class="ion-stop resource-color-swatch" data-bind="style: {color: circleColour}"></i>
+            <i
+              class="ion-stop resource-color-swatch"
+              data-bind="style: {color: initCircleColour}"
+            ></i>
           </div>
         </div>
       </div>
@@ -174,3 +181,4 @@
     </div>
   </div>
 </div>
+<!-- /ko -->

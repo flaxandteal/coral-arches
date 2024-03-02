@@ -30,7 +30,6 @@ define([
     ]);
     this.selectedTileManaged = ko.observable('tile_one');
 
-    this.hiddenNodeOptions = ko.observableArray();
     this.selectedHiddenNodes = ko.observableArray();
 
     this.selectedResourceIdPath = ko.observable(0);
@@ -139,8 +138,8 @@ define([
       );
     }, this);
 
-    this.loadComponentNodes = async () => {
-      if (!this.currentComponentData()) return;
+    this.hiddenNodeOptions = ko.computed(() => {
+      if (!this.currentComponentData()) return [];
       const cardWidgets = this.graphCards().cardwidgets.map((widget) => {
         return {
           node_id: widget.node_id,
@@ -158,15 +157,13 @@ define([
           node.nodeid !== node.nodegroup_id
         );
       });
-      this.hiddenNodeOptions(
-        nodes.map((node) => {
-          return {
-            text: node.name,
-            id: node.nodeid
-          };
-        })
-      );
-    };
+      return nodes.map((node) => {
+        return {
+          text: node.name,
+          id: node.nodeid
+        };
+      });
+    }, this);
 
     this.configureParentTile = (nodegroupId) => {
       /**
@@ -201,7 +198,6 @@ define([
       this.selectedTileManaged.subscribe((value) => {
         this.currentComponentData().tilesManaged = value?.replace('tile_', '');
         this.loadAbstractComponent(this.currentComponentData());
-        this.loadComponentNodes();
       });
 
       this.selectedNodegroup.subscribe((value) => {
@@ -216,7 +212,6 @@ define([
         this.currentComponentData(data);
         this.configureParentTile(data.parameters.nodegroupid);
         this.loadAbstractComponent(this.currentComponentData());
-        this.loadComponentNodes();
       });
 
       this.selectedHiddenNodes.subscribe((value) => {
@@ -230,7 +225,6 @@ define([
     };
 
     this.shiftCard = (direction) => {
-      console.log('shift card: ', direction);
       this.parentStep.shiftCard(this.cardId, direction);
     };
 
@@ -253,12 +247,12 @@ define([
 
     this.componentName = ko.computed(() => {
       const WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT = 'workflow-builder-initial-step';
-      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card-util';
+      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card';
       const currentComponentName = this.currentComponentData()?.componentName;
       if (
         currentComponentName &&
-        (currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT ||
-          currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT)
+        currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT &&
+        currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT
       ) {
         return currentComponentName;
       }
@@ -313,7 +307,6 @@ define([
         this.currentComponentData(JSON.parse(JSON.stringify(this.componentData)));
       }
       this.loadComponent();
-      this.loadComponentNodes();
       this.setupSubscriptions();
       this.cardHasLoaded(true);
     };

@@ -8,19 +8,19 @@
 
       <div style="display: inline-flex">
         <button
-          data-bind="click: () => registerWorkflow(), disable: workflowPluginId()"
+          data-bind="click: () => registerWorkflow(), disable: workflowId()"
           class="btn btn-success"
         >
           <span>Publish</span>
         </button>
         <button
-          data-bind="click: () => exportWorkflow(), disable: !workflowPluginId()"
+          data-bind="click: () => exportWorkflow(), disable: !workflowId()"
           class="btn btn-primary"
         >
           <span>Export</span>
         </button>
         <button
-          data-bind="click: () => updateWorkflow(), disable: !workflowPluginId()"
+          data-bind="click: () => updateWorkflow(), disable: !workflowId()"
           class="btn btn-primary"
         >
           <span>Update</span>
@@ -93,19 +93,7 @@
 
     <div class="tabbed-workflow-step-container">
       <!-- ko if: configActive() -->
-      <workflow-builder-config
-        params="
-          workflowName: workflowName, 
-          showWorkflowOnSidebar: showWorkflowOnSidebar,
-          showWorkflowOnInitWorkflow: showWorkflowOnInitWorkflow,
-          workflowSlug: workflowSlug,
-          initWorkflowName: initWorkflowName,
-          initDescription: initDescription,
-          backgroundColour: backgroundColour,
-          circleColour: circleColour,
-          initIcon: initIcon
-        "
-      ></workflow-builder-config>
+      <workflow-builder-config params="builderConfig: builderConfig"></workflow-builder-config>
       <!-- /ko -->
       <!-- ko ifnot: configActive() -->
       <workflow-builder-step params="step: activeStep()"></workflow-builder-step>
