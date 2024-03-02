@@ -359,7 +359,8 @@ class WorkflowBuilderPluginExport(View):
 class WorkflowBuilderUpdateInitWorkflow(View):
     def put(self, request):
         data = json.loads(request.body.decode("utf-8"))
-        show = data.get("show")
+        init_data = data.get("initWorkflow")
+        show = init_data["show"]
         workflow_id = data.get("workflowId")
 
         plugin = models.Plugin.objects.get(pluginid=workflow_id)
@@ -385,11 +386,11 @@ class WorkflowBuilderUpdateInitWorkflow(View):
         init_workflow = {
             "workflowid": str(plugin.pluginid),
             "slug": plugin.slug,
-            "name": plugin.name,
+            "name": init_data["name"],
             "icon": "fa fa-file-text",
             "bgColor": "#6243b0",
             "circleColor": "#7158ad",
-            "desc": "Created with the Workflow builder",
+            "desc": init_data["desc"],
         }
 
         if workflow_idx:
