@@ -6,16 +6,15 @@ define([
   'arches',
   'templates/views/viewmodels/workflow-builder-config.htm',
   'bindings/color-picker',
-  'views/components/icon-selector'
+  'views/components/icon-selector',
+  'viewmodels/generate-slug'
 ], function ($, _, ko, koMapping, arches, template) {
   const WorkflowBuilderConfig = function (params) {
     _.extend(this, params);
 
     this.workflowName = ko.observable(params?.workflowName || 'Basic');
+    this.workflowSlug = ko.observable(params?.workflowSlug);
     this.showOnSidebar = ko.observable(params?.showOnSidebar || false);
-
-    this.workflowSlug = ko.observable(params?.workflowSlug || 'basic-workflow');
-    this.autoGenerateSlug = ko.observable(true);
 
     this.showOnInitWorkflow = ko.observable(params?.initWorkflow?.show || false);
     this.initWorkflowName = ko.observable(params?.initWorkflow?.name || this.workflowName());
@@ -33,24 +32,6 @@ define([
       });
     });
 
-    this.workflowName.subscribe(() => {
-      if (this.autoGenerateSlug()) {
-        this.workflowSlug(this.createSlug());
-      }
-    });
-
-    this.workflowSlug.subscribe(() => {
-      this.autoGenerateSlug(this.isAutoGenerateSlugActive());
-    });
-
-    this.isAutoGenerateSlugActive = () => {
-      return this.workflowSlug() === this.createSlug();
-    };
-
-    this.createSlug = () => {
-      return this.workflowName().toLowerCase().split(' ').join('-') + '-workflow';
-    };
-
     this.getInitWorkflowConfig = () => {
       return {
         show: this.showOnInitWorkflow(),
@@ -61,12 +42,6 @@ define([
         circleColor: this.initCircleColour()
       };
     };
-
-    this.init = () => {
-      this.autoGenerateSlug(this.isAutoGenerateSlugActive());
-    };
-
-    this.init();
   };
 
   ko.components.register('workflow-builder-config', {

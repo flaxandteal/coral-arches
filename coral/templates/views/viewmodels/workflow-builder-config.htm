@@ -17,39 +17,15 @@
       pageVm: $root
     "
   ></text-widget>
-  <radio-boolean-widget
+  <generate-slug
     params="
-      node: {
-        config: {
-          trueLabel: 'Yes',
-          falseLabel: 'No',
-        },
-      },
-      config: {
-        label: 'Auto generate workflow slug based on the workflow name?',
-      },
-      value: autoGenerateSlug,
-      loading: false,
-      pageVm: $root
+      rawText: workflowName,
+      slug: workflowSlug,
+      radioLabel: 'Auto generate workflow slug based on the workflow name?',
+      textLabel: 'Workflow Slug',
+      suffix: 'workflow'
     "
-  ></radio-boolean-widget>
-  <text-widget
-    params="
-      config: {
-        label: 'Workflow Slug',
-        placeholder: 'Please provide a unique workflow slug',
-      },
-      value: {
-        en: {
-          value: workflowSlug,
-          direction: ko.observable('ltr')
-        }
-      },
-      disabled: autoGenerateSlug,
-      loading: false,
-      pageVm: $root
-    "
-  ></text-widget>
+  ></generate-slug>
   <radio-boolean-widget
     params="
       node: {
