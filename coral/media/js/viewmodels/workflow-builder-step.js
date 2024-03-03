@@ -6,12 +6,17 @@ define([
   'arches',
   'uuid',
   'templates/views/viewmodels/workflow-builder-step.htm',
-  'viewmodels/workflow-builder-card'
+  'viewmodels/workflow-builder-card',
+  'viewmodels/generate-slug'
 ], function ($, _, ko, koMapping, arches, uuid, template, WorkflowBuilderCard) {
   const WorkflowBuilderStep = function (params) {
     _.extend(this, params);
 
-    this.title = ko.observable(params?.title || '');
+    this.stepId = uuid.generate();
+
+    this.title = ko.observable(params?.title || 'New Step');
+    this.stepName = ko.observable(params?.stepName || 'new-step');
+
     this.cards = ko.observableArray();
     this.graphId = params?.graphId;
     this.required = ko.observable(params?.required || false);
@@ -71,7 +76,7 @@ define([
     this.getStepData = () => {
       return {
         title: this.title(),
-        name: this.stepId,
+        name: this.stepName(),
         required: false,
         workflowstepclass: 'workflow-form-component',
         required: this.required(),

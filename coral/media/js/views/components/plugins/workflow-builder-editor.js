@@ -35,13 +35,12 @@ define([
     this.graphCards = ko.observable({});
 
     this.addStep = (stepData) => {
-      const title = stepData?.title || 'New Step';
       const step = new WorkflowBuilderStep({
-        title: title,
+        title: stepData?.title,
         cards: stepData?.layoutSections[0].componentConfigs,
         graphId: this.graphId(),
-        required: stepData?.required || false,
-        stepId: stepData?.name || uuid.generate(),
+        required: stepData?.required,
+        stepName: stepData?.name,
         parentWorkflow: this
       });
       this.workflowSteps().push(step);

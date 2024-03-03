@@ -12,32 +12,26 @@
         params="
           config: {
             label: 'Step Title',
+            placeholder: 'Please provide a step title',
           },
           value: {
             en: {
               value: title,
-              direction: 'ltr'
+              direction: ko.observable('ltr')
             }
           },
           loading: false,
           pageVm: $root
         "
       ></text-widget>
-      <div class="row widget-wrapper">
-        <div class="form-group">
-          <label
-            class="control-label widget-input-label"
-            data-bind="text: 'Unique step identifier'"
-          ></label>
-          <div class="col-xs-12">
-            <input
-              type="text"
-              data-bind="textInput: stepId, attr: {placeholder: 'Please provide a name for the workflow', disabled: true}"
-              class="form-control input-lg widget-input"
-            />
-          </div>
-        </div>
-      </div>
+      <generate-slug
+        params="
+          rawText: title,
+          slug: stepName,
+          radioLabel: 'Auto generate workflow slug based on the workflow name?',
+          textLabel: 'Unique Step Name'
+        "
+      ></generate-slug>
       <radio-boolean-widget
         params="
           node: {
