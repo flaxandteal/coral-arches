@@ -10,6 +10,8 @@ define([
   'plugins/knockout-select2'
 ], function ($, ko, koMapping, arches, uuid, pageTemplate, WorkflowBuilderStep) {
   const pageViewModel = function (params) {
+    this.loading = params.loading;
+
     this.graphId = ko.observable();
     this.workflowName = ko.observable('Basic');
     this.showWorkflowInSidebar = ko.observable(false);
@@ -21,6 +23,9 @@ define([
     this.workflowPlugin = ko.observable();
 
     this.configActive = ko.observable(false);
+
+    this.graphNodegroupOptions = ko.observable({});
+    this.graphCards = ko.observable({});
 
     this.addStep = (stepData) => {
       const title = stepData?.title || 'New Step';
@@ -104,7 +109,10 @@ define([
       await this.updateWorkflow();
       if (this.workflowId()) {
         const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute('href', arches.urls.root + `workflow-builder/export?id=${this.workflowId()}`);
+        downloadAnchorNode.setAttribute(
+          'href',
+          arches.urls.root + `workflow-builder/export?id=${this.workflowId()}`
+        );
         downloadAnchorNode.setAttribute('download', `${this.workflowSlug()}.json`);
         document.body.appendChild(downloadAnchorNode); // Required for firefox
         downloadAnchorNode.click();
@@ -202,13 +210,41 @@ define([
 
     this.loadExistingWorkflow = async () => {
       if (this.workflowId()) {
-        const workflow = await $.getJSON(arches.urls.root + `workflow-builder/plugins?id=${this.workflowId()}`);
+        this.loading(true);
+        const workflow = await $.getJSON(
+          arches.urls.root + `workflow-builder/plugins?id=${this.workflowId()}`
+        );
         this.workflowPlugin(workflow);
+        await Promise.all([this.loadGraphComponents(), this.loadGraphCards()]);
         this.loadSteps(this.workflowPlugin()?.config.stepData);
         this.workflowName(this.workflowPlugin()?.name);
         this.showWorkflowInSidebar(this.workflowPlugin()?.config.show);
         this.workflowSlug(this.workflowPlugin().slug);
+        this.loading(false);
       }
+    };
+
+    this.loadGraphComponents = async () => {
+      const data = await $.getJSON(
+        arches.urls.root + `workflow-builder/graph-components?graph-id=${this.graphId()}`
+      );
+      const nodegroupOptions = [
+        { text: 'None', nodegroupId: '', id: 0 },
+        ...data.component_configs.map((item, idx) => {
+          return {
+            text: item.parameters.semanticName,
+            nodegroupId: item.parameters.nodegroupid,
+            component: item,
+            id: idx + 1 // Offset for none
+          };
+        })
+      ];
+      this.graphNodegroupOptions()[this.graphId()] = nodegroupOptions;
+    };
+
+    this.loadGraphCards = async () => {
+      const cards = await $.getJSON(arches.urls.api_card + this.graphId() + '/override');
+      this.graphCards()[this.graphId()] = cards;
     };
 
     this.init = async () => {

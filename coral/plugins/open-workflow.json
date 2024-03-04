@@ -23,6 +23,29 @@
         "slug": "licensing-workflow",
         "name": "Excavation Licensing",
         "graphId": "cc5da227-24e7-4088-bb83-a564c4331efd"
+      },
+      {
+        "slug": "assign-consultation-workflow",
+        "name": "Planning Consultation",
+        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d"
+      },
+      {
+        "slug": "hm-planning-consultation-response-workflow",
+        "name": "HM Planning Consultation Response",
+        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "disableStartNew": true
+      },
+      {
+        "slug": "hb-planning-consultation-response-workflow",
+        "name": "HB Planning Consultation Response",
+        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "disableStartNew": true
+      },
+      {
+        "slug": "scheduled-monument-consent-workflow",
+        "name": "Scheduled Monument Consent",
+        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "disableStartNew": true
       }
     ]
   },

@@ -9,9 +9,15 @@ define([
   'js-cookie'
 ], function (_, ko, koMapping, uuid, arches, componentTemplate, AlertViewModel, Cookies) {
   function viewModel(params) {
+    this.LICENSE_NUMBER_NODE = '9a9e198c-c502-11ee-af34-0242ac180006';
+
+    this.STATUS_NODEGROUP = '4f0f655c-48cf-11ee-8e4e-0242ac140007';
     this.STATUS_NODE = 'a79fedae-bad5-11ee-900d-0242ac180006';
     this.STATUS_FINAL_VALUE = '8c454982-c470-437d-a9c6-87460b07b3d9';
-    this.LICENSE_NUMBER_NODE = '9a9e198c-c502-11ee-af34-0242ac180006';
+
+    this.CUR_D_DECISION_NODEGROUP = 'c9f504b4-c42d-11ee-94bf-0242ac180006';
+    this.CUR_D_DECISION_NODE = '2a5151f0-c42e-11ee-94bf-0242ac180006';
+    this.CUR_D_DECISION_APPROVED_VALUE = '0c888ace-b068-470a-91cb-9e5f57c660b4';
 
     const self = this;
 
@@ -31,6 +37,22 @@ define([
 
     this.fetchLicenseNumberTile = async () => {
       const tiles = await this.fetchTileData(this.resourceId(), this.LICENSE_NUMBER_NODE);
+
+      if (tiles.length === 1) {
+        return tiles[0];
+      }
+    };
+
+    this.fetchStatusTile = async () => {
+      const tiles = await this.fetchTileData(this.resourceId(), this.STATUS_NODE);
+
+      if (tiles.length === 1) {
+        return tiles[0];
+      }
+    };
+
+    this.fetchDecisionTile = async () => {
+      const tiles = await this.fetchTileData(this.resourceId(), this.CUR_D_DECISION_NODE);
 
       if (tiles.length === 1) {
         return tiles[0];
@@ -99,25 +121,51 @@ define([
     };
 
     this.processLicenseNumberTile = async () => {
-      if (self.tile().data[this.STATUS_NODE]() !== this.STATUS_FINAL_VALUE) {
+      let tile = null;
+      switch (self.tile().nodegroup_id) {
+        case this.STATUS_NODEGROUP:
+          if (self.tile().data[this.STATUS_NODE]() !== this.STATUS_FINAL_VALUE) {
+            params.form.complete(true);
+            params.form.saving(false);
+            return;
+          }
+          tile = await this.fetchDecisionTile();
+          if (!tile || tile.data[this.CUR_D_DECISION_NODE] !== this.CUR_D_DECISION_APPROVED_VALUE) {
+            params.form.complete(true);
+            params.form.saving(false);
+            return;
+          }
+          break;
+        case this.CUR_D_DECISION_NODEGROUP:
+          if (self.tile().data[this.CUR_D_DECISION_NODE]() !== this.CUR_D_DECISION_APPROVED_VALUE) {
+            params.form.complete(true);
+            params.form.saving(false);
+            return;
+          }
+          tile = await this.fetchStatusTile();
+          if (!tile || tile.data[this.STATUS_NODE] !== this.STATUS_FINAL_VALUE) {
+            params.form.complete(true);
+            params.form.saving(false);
+            return;
+          }
+          break;
+      }
+
+      const licenseNumberTile = await this.fetchLicenseNumberTile();
+      if (!licenseNumberTile) {
         params.form.complete(true);
         params.form.saving(false);
         return;
       }
-
-      const licenseNumberTile = await this.fetchLicenseNumberTile();
-      if (!licenseNumberTile) return;
-
       await this.storeLicenseNumberTile(licenseNumberTile);
-
-      let licenseNumber =
+      const licenseNumber =
         licenseNumberTile.data[this.LICENSE_NUMBER_NODE][arches.activeLanguage].value;
 
       params.pageVm.alert(
         new AlertViewModel(
           'ep-alert-blue',
-          `Application status is "Final". License Number: ${licenseNumber}. Click "Ok" to continue.`,
-          `This application's status has been moved to "Final". With that a license number has been genereated that will now be used to identify this application. Example 'Excavation License ${licenseNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
+          `Application status is "Granted". License Number: ${licenseNumber}. Click "Ok" to continue.`,
+          `This application's status has been moved to "Granted". With that a license number has been genereated that will now be used to identify this application. Example 'Excavation License ${licenseNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
           null,
           () => {
             params.form.complete(true);

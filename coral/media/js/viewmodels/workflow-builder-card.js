@@ -17,16 +17,8 @@ define([
     this.isStepActive = ko.observable(false);
     this.currentComponentData = ko.observable();
 
-    this.nodegroupOptions = ko.observableArray([
-      {
-        text: 'None',
-        nodegroupId: '',
-        id: 0
-      }
-    ]);
     this.selectedNodegroup = ko.observable(0);
 
-    this.graphCards = ko.observable();
     this.parentTile = ko.observable();
 
     // Annoyingly 'one' as the ID will be selected when
@@ -44,22 +36,6 @@ define([
     this.selectedResourceIdPath = ko.observable(0);
 
     this.configKeys = ko.observable({ placeholder: 0 });
-
-    this.loadGraphComponents = async () => {
-      const data = await $.getJSON(arches.urls.root + `workflow-builder/graph-components?graph-id=${this.graphId()}`);
-      const nodegroupOptions = [
-        { text: 'None', nodegroupId: '', id: 0 },
-        ...data.component_configs.map((item, idx) => {
-          return {
-            text: item.parameters.semanticName,
-            nodegroupId: item.parameters.nodegroupid,
-            component: item,
-            id: idx + 1 // Offset for none
-          };
-        })
-      ];
-      this.nodegroupOptions(nodegroupOptions);
-    };
 
     this.loadAbstractComponent = (componentData) => {
       this.isStepActive(false);
@@ -113,6 +89,22 @@ define([
       return params.graphId;
     }, this);
 
+    this.nodegroupOptions = ko.computed(() => {
+      return (
+        this.parentStep?.parentWorkflow?.graphNodegroupOptions()?.[this.graphId()] || [
+          {
+            text: 'None',
+            nodegroupId: '',
+            id: 0
+          }
+        ]
+      );
+    }, this);
+
+    this.graphCards = ko.computed(() => {
+      return this.parentStep?.parentWorkflow?.graphCards()?.[this.graphId()] || [];
+    }, this);
+
     this.loadComponent = () => {
       if (!this.currentComponentData()) return;
       this.selectedNodegroup(
@@ -161,11 +153,6 @@ define([
           };
         })
       );
-    };
-
-    this.loadGraphCards = async () => {
-      const cards = await $.getJSON(arches.urls.api_card + this.graphId() + '/override');
-      this.graphCards(cards);
     };
 
     this.configureParentTile = (nodegroupId) => {
@@ -238,19 +225,35 @@ define([
      */
     this.isInitialStep = ko.computed(() => {
       const index = this.workflowResourceIdPathOptions().findIndex((path) => {
-        return path.resourceIdPath?.includes(this.cardId) && path.resourceIdPath?.includes(this.parentStep.stepId);
+        return (
+          path.resourceIdPath?.includes(this.cardId) &&
+          path.resourceIdPath?.includes(this.parentStep.stepId)
+        );
       });
       return index == 1;
     }, this);
 
     this.componentName = ko.computed(() => {
-      return this.isInitialStep() ? 'workflow-builder-initial-step' : 'default-card-util';
+      const WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT = 'workflow-builder-initial-step';
+      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card-util';
+      const currentComponentName = this.currentComponentData()?.componentName;
+      if (
+        currentComponentName &&
+        (currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT ||
+          currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT)
+      ) {
+        return currentComponentName;
+      }
+      return this.isInitialStep()
+        ? WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT
+        : DEFAULT_CARD_UTIL_COMPONENT;
     });
 
     this.getComponentData = () => {
       const { tilesManaged, uniqueInstanceName, parameters } = this.currentComponentData() || {};
       const { graphid, nodegroupid, semanticName, hiddenNodes } = parameters || {};
-      const { resourceIdPath } = this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()];
+      const { resourceIdPath } =
+        this.workflowResourceIdPathOptions()[this.selectedResourceIdPath()];
 
       const componentData = {
         componentName: this.componentName(),
@@ -279,7 +282,8 @@ define([
       if (this.isInitialStep()) {
         const parentTiles = this.parentStep.parentWorkflow.getRequiredParentTiles();
         if (parentTiles.length) {
-          componentData.parameters.requiredParentTiles = this.parentStep.parentWorkflow.getRequiredParentTiles();
+          componentData.parameters.requiredParentTiles =
+            this.parentStep.parentWorkflow.getRequiredParentTiles();
         }
       }
 
@@ -290,7 +294,6 @@ define([
       if (this.componentData) {
         this.currentComponentData(JSON.parse(JSON.stringify(this.componentData)));
       }
-      await Promise.all([this.loadGraphComponents(), this.loadGraphCards()]);
       this.loadComponent();
       this.loadComponentNodes();
       this.setupSubscriptions();

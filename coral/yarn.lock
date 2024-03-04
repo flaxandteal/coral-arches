@@ -3075,6 +3075,11 @@ ajv@^8.0.0, ajv@^8.0.1, ajv@^8.9.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
+almond@~0.3.1:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/almond/-/almond-0.3.3.tgz#a0e7c95ac7624d6417b4494b1e68bff693168a20"
+  integrity sha512-Eh5QhyxrKnTI0OuGpwTRvzRrnu1NF3F2kbQJRwpXj/uMy0uycwqw2/RhdDrD1cBTD1JFFHFrxGIU8HQztowR0g==
+
 ansi-html-community@^0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/ansi-html-community/-/ansi-html-community-0.0.8.tgz#69fbc4d6ccbe383f9736934ae34c3f8290f1bf41"
@@ -3683,12 +3688,7 @@ ci-info@^3.2.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.9.0.tgz#4279a62028a7b1f262f3473fc9605f5e218c59b4"
   integrity sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==
 
-ckeditor4@^4.23.0:
-  version "4.23.0"
-  resolved "https://registry.yarnpkg.com/ckeditor4/-/ckeditor4-4.23.0.tgz#c0c3bc4e2a66ada6010b89466a41b09202f7bb7a"
-  integrity sha512-K9DUzTa7roj8JffKLm6nOxDF02aPURDK8m7oFibvvkyAaomj24qOgpVdt7yvszmIubeJLbAB6q4k7Euk8jzD1A==
-
-ckeditor4@ckeditor/ckeditor4-releases#full/4.20.x:
+ckeditor4@4.20.2, ckeditor4@ckeditor/ckeditor4-releases#full/4.20.x:
   version "4.20.2"
   resolved "https://codeload.github.com/ckeditor/ckeditor4-releases/tar.gz/90f4dc9a6071efcee9deeae103e1189a8d5d12a9"
 
@@ -6270,6 +6270,11 @@ jquery-migrate@~3.4.1:
   resolved "https://registry.yarnpkg.com/jquery-migrate/-/jquery-migrate-3.4.1.tgz#6a7114626b80e0d9e1cb77f170623efd85c5fc9c"
   integrity sha512-6RaV23lLAYccu8MtLfy2sIxOvx+bulnWHm/pvffAi7KOzPk1sN9IYglpkl1ZNCj1FSgSNDPS2fSZ1hWsXc200Q==
 
+jquery-mousewheel@~3.1.13:
+  version "3.1.13"
+  resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
+  integrity sha512-GXhSjfOPyDemM005YCEHvzrEALhKDIswtxSHSR2e4K/suHVJKJxxRCGz3skPjNxjJjQa9AVSGGlYjv1M3VLIPg==
+
 jquery-validation@1.19.5:
   version "1.19.5"
   resolved "https://registry.yarnpkg.com/jquery-validation/-/jquery-validation-1.19.5.tgz#557495b7cad79716897057c4447ad3cd76fda811"
@@ -8372,6 +8377,14 @@ select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha512-mEugaLK+YfkijB4fx0e6kImuJdCIt2LxCRcbEYPqRGCs4F2ogyfZU5IAZRdjCP8JPq2AtdNoC/Dux63d9Kiryg==
+
+select-woo@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/select-woo/-/select-woo-1.0.1.tgz#8221fc50860cb64c0e1adb6bafe90a90e8bb3f8d"
+  integrity sha512-9Q/P3spksx/HSNG9OCKQbHgBnUkMLNvyZF5wC4Ww2VT0G/FuUNzZ5En1VWbmMdWVCt/HL999kRdzySe5wfmb5w==
+  dependencies:
+    almond "~0.3.1"
+    jquery-mousewheel "~3.1.13"
 
 select2@3.5.1:
   version "3.5.1"

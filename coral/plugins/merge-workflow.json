@@ -1,0 +1,12 @@
+{
+  "pluginid": "2af942cc-54d0-4e8c-9fa8-a76b9ef7632f",
+  "name": "Merge Workflow",
+  "icon": "fa fa-file-text",
+  "component": "views/components/plugins/merge-workflow",
+  "componentname": "merge-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "merge-workflow",
+  "sortorder": 0
+}

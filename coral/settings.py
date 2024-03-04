@@ -9,11 +9,15 @@ import arches
 import inspect
 import semantic_version
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime, timedelta
 
 try:
     from arches.settings import *
 except ImportError:
     pass
+
+APP_NAME = 'coral'
+APP_VERSION = semantic_version.Version(major=2, minor=19, patch=21)
 
 GROUPINGS = {
     "groups": {
@@ -33,8 +37,6 @@ GROUPINGS = {
     }
 }
 
-APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=2, minor=4, patch=0)
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 MIN_ARCHES_VERSION = arches.__version__
 MAX_ARCHES_VERSION = arches.__version__
@@ -45,6 +47,11 @@ WEBPACK_LOADER = {
         "STATS_FILE": os.path.join(APP_ROOT, 'webpack/webpack-stats.json'),
     },
 }
+
+DATATYPE_LOCATIONS.append('coral.datatypes')
+FUNCTION_LOCATIONS.append('coral.functions')
+ETL_MODULE_LOCATIONS.append('coral.etl_modules')
+SEARCH_COMPONENT_LOCATIONS.append('coral.search_components')
 
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
 CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
@@ -146,7 +153,6 @@ SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
 # DEBUG = os.getenv("DEBUG", (os.getenv("DJANGO_DEBUG", False) == 'True'))
 DEBUG = False
 
-
 ROOT_URLCONF = 'coral.urls'
 
 # Modify this line as needed for your project to connect to elasticsearch with a password that you generate
@@ -210,6 +216,8 @@ DATABASES = {
         "USER": "postgres"
     }
 }
+
+SEARCH_THUMBNAILS = False
 
 INSTALLED_APPS = (
     "webpack_loader",
@@ -359,6 +367,10 @@ LOGGING = {
     }
 }
 
+# Rate limit for authentication views
+# See options (including None or python callables):
+# https://django-ratelimit.readthedocs.io/en/stable/rates.html#rates-chapter
+RATE_LIMIT = "5/m"
 
 # Sets default max upload size to 15MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
@@ -369,7 +381,8 @@ SESSION_COOKIE_NAME = 'coral'
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake"
     },
     'user_permission': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
@@ -390,7 +403,11 @@ DATE_IMPORT_EXPORT_FORMAT = "%Y-%m-%d" # Custom date format for dates imported f
 EXPORT_DATA_FIELDS_IN_CARD_ORDER = False
 
 #Identify the usernames and duration (seconds) for which you want to cache the time wheel
-CACHE_BY_USER = {'anonymous': 3600 * 24}
+CACHE_BY_USER = {
+    "default": 3600 * 24, #24hrs
+    "anonymous": 3600 * 24 #24hrs
+    }
+
 TILE_CACHE_TIMEOUT = 600 #seconds
 CLUSTER_DISTANCE_MAX = 5000 #meters
 GRAPH_MODEL_CACHE_TIMEOUT = None
@@ -452,6 +469,31 @@ CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
 
 ACCESSIBILITY_MODE = False
 
+RENDERERS = [
+    {
+        "name": "imagereader",
+        "title": "Image Reader",
+        "description": "Displays most image file types",
+        "id": "5e05aa2e-5db0-4922-8938-b4d2b7919733",
+        "iconclass": "fa fa-camera",
+        "component": "views/components/cards/file-renderers/imagereader",
+        "ext": "",
+        "type": "image/*",
+        "exclude": "tif,tiff,psd",
+    },
+    {
+        "name": "pdfreader",
+        "title": "PDF Reader",
+        "description": "Displays pdf files",
+        "id": "09dec059-1ee8-4fbd-85dd-c0ab0428aa94",
+        "iconclass": "fa fa-file",
+        "component": "views/components/cards/file-renderers/pdfreader",
+        "ext": "pdf",
+        "type": "application/pdf",
+        "exclude": "tif,tiff,psd",
+    },
+]
+
 # By setting RESTRICT_MEDIA_ACCESS to True, media file requests outside of Arches will checked against nodegroup permissions.
 RESTRICT_MEDIA_ACCESS = False
 
@@ -459,6 +501,12 @@ RESTRICT_MEDIA_ACCESS = False
 # to export search results above the SEARCH_EXPORT_IMMEDIATE_DOWNLOAD_THRESHOLD
 # value and is not signed in with a user account then the request will not be allowed.
 RESTRICT_CELERY_EXPORT_FOR_ANONYMOUS_USER = False
+
+# Dictionary containing any additional context items for customising email templates
+EXTRA_EMAIL_CONTEXT = {
+    "salutation": _("Hi"),
+    "expiration":(datetime.now() + timedelta(seconds=CELERY_SEARCH_EXPORT_EXPIRES)).strftime("%A, %d %B %Y")
+}
 
 # see https://docs.djangoproject.com/en/1.9/topics/i18n/translation/#how-django-discovers-language-preference
 # to see how LocaleMiddleware tries to determine the user's language preference

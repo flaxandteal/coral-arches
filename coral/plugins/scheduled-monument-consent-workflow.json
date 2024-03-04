@@ -1,0 +1,213 @@
+{
+  "pluginid": "aa66f3d7-1bbb-407a-9447-736cb6d5203c",
+  "name": "Scheduled Monument Consent",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+    "stepData": [
+      {
+        "name": "0b6a1f66-2064-48ba-8737-f845fb3ae6bd",
+        "title": "Heritage Asset",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "hiddenNodes": [
+                    "325a2f33-efe4-11eb-b0bb-a87eeabdefba",
+                    "325a441c-efe4-11eb-9283-a87eeabdefba"
+                  ],
+                  "nodegroupid": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
+                  "semanticName": "System Reference Numbers",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba"
+                    }
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "438ed643-4d7d-446b-91a8-e1d966d2504d"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "1331a53e-7eb2-4e19-aaab-27ab15954e8e",
+        "title": "Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "676d47fd-9c1c-11ea-9d73-f875a44e0e11",
+                    "676d47fc-9c1c-11ea-b5b0-f875a44e0e11"
+                  ],
+                  "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+                  "semanticName": "Monument Names",
+                  "labels": [["Name", "Site Name"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "8a8ca544-0e13-40c6-96b5-d21e9dc5ba90"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "77e8f291-efdc-11eb-9441-a87eeabdefba",
+                    "77e8f295-efdc-11eb-a593-a87eeabdefba",
+                    "77e8f29d-efdc-11eb-b890-a87eeabdefba",
+                    "77e8f29c-efdc-11eb-a0ba-a87eeabdefba",
+                    "77e8f29b-efdc-11eb-b248-a87eeabdefba",
+                    "77e9065e-efdc-11eb-baa2-a87eeabdefba",
+                    "77e8f29f-efdc-11eb-a58e-a87eeabdefba",
+                    "77e8f298-efdc-11eb-9465-a87eeabdefba",
+                    "77e8f292-efdc-11eb-acfd-a87eeabdefba",
+                    "77e8f293-efdc-11eb-ac31-a87eeabdefba",
+                    "77e8f294-efdc-11eb-a9a2-a87eeabdefba",
+                    "77e8f28e-efdc-11eb-b9f5-a87eeabdefba",
+                    "77e8f28d-efdc-11eb-afe4-a87eeabdefba",
+                    "77e8f28a-efdc-11eb-9600-a87eeabdefba"
+                  ],
+                  "nodegroupid": "77e8f287-efdc-11eb-a790-a87eeabdefba",
+                  "semanticName": "Construction Phases",
+                  "labels": [["Monument Type", "Site Type"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "06ca63f8-85ef-4528-a080-4bce7681b185"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba",
+                    "87d3d7c5-f44f-11eb-8459-a87eeabdefba"
+                  ],
+                  "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
+                  "parenttileid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['locationData']",
+                  "semanticName": "Localities/Administrative Areas",
+                  "labels": [["Area Name", "Townland"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "0f079fa3-d878-401c-9d45-be856b9a026d"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "3d415e98-d23b-11ee-9373-0242ac180006",
+                  "semanticName": "CM References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "b5c6ab25-e8f4-4b06-8102-e7b9113350f8"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "eeec9986-d23c-11ee-9373-0242ac180006",
+                  "semanticName": "Received Date"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "9a98ac24-a286-463f-a0b1-113fc4b756f9"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["346006e6-d23e-11ee-9ae7-0242ac180006"],
+                  "nodegroupid": "345ffce6-d23e-11ee-9ae7-0242ac180006",
+                  "semanticName": "Proposal",
+                  "labels": [["Proposal Description", "Proposal Summary"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "872adebf-789f-4b94-bf50-2805e8cec8f3"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "bdbe4290-b596-4b0d-99cd-109619a8e3d8",
+        "title": "Relevant Parties",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "aa629840-d23e-11ee-9ae7-0242ac180006",
+                  "semanticName": "Contacts"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "4139d790-ee9d-42b9-a6f5-19d7fe5d09a4"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "13a2c73c-46c3-4c6d-940a-4e843d637bb1",
+        "title": "Documentation",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "fileObjectNamePrefix": "Documentation for ",
+                  "resourceModelDigitalObjectNodeGroupId": "fc6b6b0b-5118-11eb-b342-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "documentation"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
+        "title": "Letter",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": []
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "scheduled-monument-consent-workflow",
+  "sortorder": 0
+}
