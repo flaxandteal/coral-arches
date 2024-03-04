@@ -7790,35 +7790,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "64b2f187-bd1f-4324-b7bd-aefa3e561271",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Response Summary Value",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%%"
-                    },
-                    "id": "77328cae-bf6b-4f2e-913a-5be06130e7de",
-                    "label": {
-                        "en": "Response Summary Value"
-                    },
-                    "node_id": "dd179870-cfe7-11ee-8a4e-0242ac180006",
-                    "sortorder": 9,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "caf5bff3-a3d7-11e9-b521-00224800b26d",
                     "config": {
                         "displayOnlySelectedNode": false,
