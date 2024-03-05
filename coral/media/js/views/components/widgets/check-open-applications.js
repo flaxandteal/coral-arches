@@ -5,7 +5,8 @@ define([
   'uuid',
   'underscore',
   'viewmodels/alert',
-  'templates/views/components/widgets/check-open-applications.htm'
+  'templates/views/components/widgets/check-open-applications.htm',
+  // 'templates/views/components/widgets/resource-instance-select.htm'
 ], function (
   $,
   ko,
@@ -21,7 +22,9 @@ define([
 
     params.multiple = false;
     params.datatype = 'resource-instance';
-    params.configKeys = ['placeholder', 'defaultResourceInstance'];
+    // params.configKeys = ['placeholder', 'defaultResourceInstance'];
+
+    console.log('params: ', params);
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
 
@@ -125,79 +128,72 @@ define([
                 op: '',
                 val: personResourceId // Resource ID
               },
-              '6d292a2e-5891-11ee-a624-0242ac120004': { op: '', val: '' },
-              '6d292f88-5891-11ee-a624-0242ac120004': { op: '', val: '' },
+              // '6d292a2e-5891-11ee-a624-0242ac120004': { op: '', val: '' },
+              // '6d292f88-5891-11ee-a624-0242ac120004': { op: '', val: '' },
               '6d293532-5891-11ee-a624-0242ac120004': { op: '', val: '' },
               '6d294784-5891-11ee-a624-0242ac120004': { op: '', val: '' }
             },
-            // {
-            //   op: 'or',
-            //   'a79fedae-bad5-11ee-900d-0242ac180006': {
-            //     op: '',
-            //     val: 'dc157bc7-e470-41b6-88fa-f69fa75f4fc4' // Not issued
-            //   }
-            // },
             {
               op: 'or',
               'a79fedae-bad5-11ee-900d-0242ac180006': {
                 op: '',
-                val: '241584bc-a03c-4d8b-926b-5d66754b2373' // Preliminary
+                val: '3e437a57-954f-49de-baae-536c7e0bcb74' // Not Used
               }
             },
             {
               op: 'or',
               'a79fedae-bad5-11ee-900d-0242ac180006': {
                 op: '',
-                val: '14650fec-d4ae-4e9d-9096-95d60f35caa8' // Received
-              }
-            },
-            {
-              op: 'or',
-              'a79fedae-bad5-11ee-900d-0242ac180006': {
-                op: '',
-                val: '03dc689e-4911-4a04-95c0-4b4a4b83dc7a' // Deferred
+                val: '5b119129-7d05-44af-b7f3-d6cc4e7d13de' // Withdrawn
               }
             },
             // {
             //   op: 'or',
             //   'a79fedae-bad5-11ee-900d-0242ac180006': {
             //     op: '',
-            //     val: '8c454982-c470-437d-a9c6-87460b07b3d9' // Final
+            //     val: '40557c74-cb18-4111-a349-a91eb926e163' // Refused
             //   }
             // },
             // {
             //   op: 'or',
             //   'a79fedae-bad5-11ee-900d-0242ac180006': {
             //     op: '',
-            //     val: 'a7f3b4ae-6b41-423c-bc10-059358f6f2ec' // Not Used
+            //     val: '8c454982-c470-437d-a9c6-87460b07b3d9' // Granted
             //   }
             // },
             {
               op: 'or',
               'a79fedae-bad5-11ee-900d-0242ac180006': {
                 op: '',
-                val: 'a54a29a0-b82e-4123-95d9-0e28f05323b3' // Refused
+                val: '48e031eb-9be3-4ba2-9cb7-798184a9d2bf' // Paused
               }
             },
             {
               op: 'or',
               'a79fedae-bad5-11ee-900d-0242ac180006': {
                 op: '',
-                val: '49f0655b-55e5-450e-acfa-cb62f0af7d46' // Summary
+                val: 'af08ac99-205f-4d97-8829-55a8e7da1c9d' // In progress
               }
             },
             {
               op: 'or',
               'a79fedae-bad5-11ee-900d-0242ac180006': {
                 op: '',
-                val: '4840c102-dcea-4a9a-b74c-d405301f8db5' // Not Received
+                val: '0df1843b-28e9-4868-9a9a-d19229fe5c48' // Acknowledged
               }
-            }
+            },
+            {
+              op: 'or',
+              'a79fedae-bad5-11ee-900d-0242ac180006': {
+                op: '',
+                val: '2e2703e4-4f19-47ca-842d-a45c8502a547' // Received
+              }
+            },
           ])
         },
         context: this,
         success: function (response) {
-          // console.log('search response: ', response);
+          console.log('search response: ', response);
           this.totalOpenApplications(response.results.hits.total.value);
 
           switch (true) {
