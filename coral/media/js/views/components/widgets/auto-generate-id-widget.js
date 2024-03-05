@@ -96,19 +96,6 @@ define([
       };
 
       (async () => {
-        if (ko.isObservable(self.value) && !self.value()?.[arches.activeLanguage]?.value) {
-          self.value({
-            [arches.activeLanguage]: {
-              value: ko.observable('')
-            }
-          })
-        } else if (!self.value?.[arches.activeLanguage]?.value) {
-          self.value ={
-            [arches.activeLanguage]: {
-              value: ko.observable('')
-            }
-          }
-        }
         if (ko.isObservable(self.value)) {
           self.idValue(
             ko.isObservable(self.value()[arches.activeLanguage]?.value)
