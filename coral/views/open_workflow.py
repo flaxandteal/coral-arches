@@ -97,16 +97,13 @@ class OpenWorkflow(View):
             tile = None
             parent_tile_ids = self.open_config.get("parentTileIds")
             if parent_tile_ids and nodegroup_id in parent_tile_ids:
-
                 tile_id = parent_tile_ids.get(nodegroup_id)
-
                 if tile_id:
-
                     for t in tiles:
                         if str(t.tileid) == tile_id:
                             tile = t
+                            # Found the correct tile
                             break
-
                 else:
                     # No tile id exists so creating new
                     tile = Tile(
@@ -116,8 +113,6 @@ class OpenWorkflow(View):
                         nodegroup=self.nodegroups[nodegroup_id],
                         sortorder=None,
                     )
-                    tile.save()
-                    tile.sortorder = 0
                     tile.save()
                     self.group_tiles([tile])
             else:
