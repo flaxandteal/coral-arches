@@ -37,17 +37,34 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
-                "uniqueInstanceName": "fd241793-e0af-4417-967a-47fb797c917e"
-              },
+                "uniqueInstanceName": "d96cc87e-6de5-4b33-90db-ea324af7a66d"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "incident-reference-step",
+        "title": "Incident Reference",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "nodegroupid": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
-                  "semanticName": "Incident Report"
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "2001a6f0-d711-11ee-9dd0-0242ac120006"
+                  ],
+                  "nodegroupid": "20017860-d711-11ee-9dd0-0242ac120006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Incident Reference"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
-                "uniqueInstanceName": "d96cc87e-6de5-4b33-90db-ea324af7a66d"
+                "uniqueInstanceName": "incident-reference"
               }
             ]
           }
@@ -64,7 +81,7 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "676d47fd-9c1c-11ea-9d73-f875a44e0e11",
                     "676d47fc-9c1c-11ea-b5b0-f875a44e0e11"
@@ -79,9 +96,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a0cb43ee-d62c-11ee-9454-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Damage Type"
                 },
                 "tilesManaged": "one",
@@ -91,9 +108,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "2596ab22-d62d-11ee-8f7b-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Material/Fabric Damage Type"
                 },
                 "tilesManaged": "one",
@@ -103,9 +120,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "723aaf3c-d62d-11ee-8f7b-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Component Damage Type"
                 },
                 "tilesManaged": "one",
@@ -115,7 +132,7 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "3d415e98-d23b-11ee-9373-0242ac180006",
                   "semanticName": "CM References"
                 },
@@ -126,9 +143,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d2592394-d62d-11ee-9454-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Incident Notes"
                 },
                 "tilesManaged": "one",
@@ -138,9 +155,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "cacc9d20-d62f-11ee-9454-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Contacts"
                 },
                 "tilesManaged": "one",
@@ -150,7 +167,7 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "aa62aa06-d23e-11ee-9ae7-0242ac180006",
                     "aa62a736-d23e-11ee-9ae7-0242ac180006"
@@ -177,7 +194,7 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "87d3ff2b-f44f-11eb-aad3-a87eeabdefba",
                     "87d3d7ba-f44f-11eb-a2dd-a87eeabdefba",
@@ -188,7 +205,7 @@
                     "87d3ff27-f44f-11eb-a92b-a87eeabdefba"
                   ],
                   "nodegroupid": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['locationData']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
                   "semanticName": "Addresses"
                 },
                 "tilesManaged": "one",
@@ -198,12 +215,12 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"
                   ],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['locationData']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
                 },
                 "tilesManaged": "one",
@@ -213,12 +230,12 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "87d3d7c8-f44f-11eb-938d-a87eeabdefba"
                   ],
                   "nodegroupid": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['locationData']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
                 },
                 "tilesManaged": "one",
@@ -240,9 +257,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['locationData']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
@@ -264,9 +281,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a1f0e104-d648-11ee-9a11-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Incident Proposal"
                 },
                 "tilesManaged": "one",
@@ -288,7 +305,7 @@
               {
                 "parameters": {
                   "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
                   "fileObjectNamePrefix": "Documentation for ",
@@ -313,9 +330,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "788bf15a-d643-11ee-8b04-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Status Type"
                 },
                 "tilesManaged": "one",
@@ -325,9 +342,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d9bd0504-d643-11ee-8b04-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Work Finish Date"
                 },
                 "tilesManaged": "one",
@@ -337,9 +354,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d0f45bbe-d645-11ee-8b04-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Signed Off"
                 },
                 "tilesManaged": "one",
@@ -349,9 +366,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9665660e-d646-11ee-8b04-0242ac180006",
-                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Sign Off Date"
                 },
                 "tilesManaged": "one",
