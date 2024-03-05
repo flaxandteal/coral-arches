@@ -40,19 +40,9 @@ define([
       return items ? Object.values(items) : [];
     }, this);
 
-    this.noResourceSelected = ko.computed(() => {
-      return false;
-      return !this.selectedResource();
-    }, this);
-
-    this.noResourceSelected.subscribe((value) => {
-      console.log('no res: ', value);
-    });
-
     this.parentTileOptions = ko.observableArray();
 
     this.fetchTileData = async (resourceId, nodeId) => {
-      console.log('resourceId, nodeId: ', resourceId, nodeId);
       const tilesResponse = await window.fetch(
         arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
           (nodeId ? `?nodeid=${nodeId}` : '')
@@ -62,21 +52,22 @@ define([
     };
 
     this.selectedResource.subscribe(async (resourceId) => {
-      console.log('value: ', resourceId);
-      // const tiles = await this.fetchTileData(value, 'd3ff3fe6-d62b-11ee-9454-0242ac180006');
+      if (!resourceId) {
+        this.parentTileOptions([]);
+        this.selectedIncidentReport(null);
+        return;
+      }
       this.getParentTileOptions(resourceId);
     });
 
     this.getParentTileOptions = async (resourceId) => {
-      const tiles = await this.fetchTileData(resourceId, 'd3ff3fe6-d62b-11ee-9454-0242ac180006');
-      console.log('incident report tiles: ', tiles);
+      const tiles = await this.fetchTileData(resourceId, '20017860-d711-11ee-9dd0-0242ac120006');
       this.parentTileOptions(
         tiles.map((tile, idx) => {
           return {
-            // text: tile.data['2001a33a-d711-11ee-9dd0-0242ac120006'].en.value,
-            text: idx,
+            text: tile?.data['2001a33a-d711-11ee-9dd0-0242ac120006']?.en?.value,
             tile: tile,
-            id: tile.tileid
+            id: tile.parenttile
           };
         })
       );
