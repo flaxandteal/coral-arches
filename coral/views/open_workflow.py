@@ -18,7 +18,9 @@ class OpenWorkflow(View):
     grouped_tiles = {}
     nodes = {}
     nodegroups = {}
-    setup_workflows = {"licensing-workflow": "setup_licensing_workflow"}
+    setup_workflows = {
+        "licensing-workflow": "setup_licensing_workflow",
+    }
 
     def get_plugin(self, plugin_slug):
         plugin = None
@@ -71,18 +73,15 @@ class OpenWorkflow(View):
         for tile in tiles:
             nodegroup_id = str(tile.nodegroup.nodegroupid)
 
+            parent_tile_ids = self.open_config.get("parentTileIds")
+            parent_nodegroup_id = (
+                str(tile.parenttile.nodegroup.nodegroupid) if tile.parenttile else None
+            )
 
-            parent_tile_ids = self.open_config.get('parentTileIds')
-            print('1 parent_tile_ids: ', parent_tile_ids)
-            parent_nodegroup_id = str(tile.parenttile.nodegroup.nodegroupid) if tile.parenttile else None
-            print('parent_nodegroup_id: ', parent_nodegroup_id)
             if parent_nodegroup_id and parent_nodegroup_id in parent_tile_ids:
-                print('parent nodegroup is in parent tile ids')
                 parent_tile_id = str(tile.parenttile.tileid)
                 if parent_tile_id != parent_tile_ids[parent_nodegroup_id]:
-                    print('tile id was not requested: ', parent_tile_id)
                     continue
-                print('tile id was requested: ', parent_tile_id)
 
             if nodegroup_id not in self.grouped_tiles:
                 self.grouped_tiles[nodegroup_id] = []
@@ -94,49 +93,51 @@ class OpenWorkflow(View):
             nodegroup_id = lookup["parentNodegroupId"]
             lookup_name = lookup["lookupName"]
             tiles = grouped_tiles.get(nodegroup_id, [])
-            
+
             tile = None
-            print('nodegroup_id: ', nodegroup_id)
-            parent_tile_ids = self.open_config.get('parentTileIds')
-            print('parent_tile_ids: ', parent_tile_ids)
+            parent_tile_ids = self.open_config.get("parentTileIds")
             if parent_tile_ids and nodegroup_id in parent_tile_ids:
-                print('has parent tile ids')
 
                 tile_id = parent_tile_ids.get(nodegroup_id)
-                print('parent tile id is: ', tile_id)
 
                 if tile_id:
-                    print('has tile id')
 
                     for t in tiles:
                         if str(t.tileid) == tile_id:
                             tile = t
                             break
-                    print('found tile: ', tile)
-                    
+
                 else:
-                    print('has no tile id sp creating new')
+                    # No tile id exists so creating new
                     tile = Tile(
                         tileid=uuid.uuid4(),
                         resourceinstance=self.resource,
-                        # parenttile=parent_tile,
                         data={},
                         nodegroup=self.nodegroups[nodegroup_id],
-                        sortorder=None
+                        sortorder=None,
                     )
                     tile.save()
                     tile.sortorder = 0
                     tile.save()
                     self.group_tiles([tile])
-                    print('new tile: ', tile.data)
             else:
-                tile = tiles[0] if len(tiles) else None
-                print('selecting first parent tile: ', tile)
+                if len(tiles):
+                    tile = tiles[0]
+                else:
+                    tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=self.resource,
+                        data={},
+                        nodegroup=self.nodegroups[nodegroup_id],
+                        sortorder=None,
+                    )
+                    tile.save()
 
             if tile:
                 lookup_tile_ids[lookup_name] = str(tile.tileid)
+
         return lookup_tile_ids
-    
+
     def get_node_configuration(self, graph):
         nodes = graph.node_set.all().select_related("nodegroup")
         for node in nodes:
