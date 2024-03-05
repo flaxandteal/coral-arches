@@ -119,7 +119,9 @@ define([
       );
       this.selectedResourceIdPath(resourceIdPathIdx !== -1 ? resourceIdPathIdx : 0);
       this.configureParentTile(this.currentComponentData().parameters.nodegroupid);
-      this.loadAbstractComponent(this.currentComponentData());
+      if (this.currentComponentData().parameters.nodegroupid) {
+        this.loadAbstractComponent(this.currentComponentData());
+      }
     };
 
     this.title = ko.computed(() => {
@@ -164,7 +166,7 @@ define([
         return nodegroup.nodegroupid == nodegroupId;
       });
       const parentTile = this.graphCards().tiles.find((tile) => {
-        return tile.nodegroup_id === cardNodegroup.parentnodegroup_id;
+        return tile.nodegroup_id === cardNodegroup?.parentnodegroup_id;
       });
       this.parentTile(null);
       if (parentTile) {
@@ -235,12 +237,12 @@ define([
 
     this.componentName = ko.computed(() => {
       const WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT = 'workflow-builder-initial-step';
-      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card-util';
+      const DEFAULT_CARD_UTIL_COMPONENT = 'default-card';
       const currentComponentName = this.currentComponentData()?.componentName;
       if (
         currentComponentName &&
-        (currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT ||
-          currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT)
+        currentComponentName !== WORKFLOW_BUILDER_INITIAL_STEP_COMPONENT &&
+        currentComponentName !== DEFAULT_CARD_UTIL_COMPONENT
       ) {
         return currentComponentName;
       }
