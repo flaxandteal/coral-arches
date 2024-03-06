@@ -1,0 +1,13 @@
+
+{
+  "pluginid": "681c3218-950b-454b-aef6-409ba4625d17",
+  "name": "Heritage Asset Update",
+  "icon": "fa fa-file-text",
+  "component": "views/components/plugins/monument-update-workflow",
+  "componentname": "monument-update-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "monument-update-workflow",
+  "sortorder": 0
+}

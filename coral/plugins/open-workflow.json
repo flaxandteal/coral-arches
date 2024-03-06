@@ -51,6 +51,13 @@
         "slug": "incident-report-workflow",
         "name": "Incident Report",
         "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9"
+      },
+      {
+        "slug": "monument-update-workflow",
+        "name": "Heritage Asset Update",
+        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "setupFunction": "setupMonumentRevision",
+        "disableStartNew": true
       }
     ]
   },

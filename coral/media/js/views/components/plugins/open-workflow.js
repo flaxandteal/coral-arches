@@ -6,6 +6,8 @@ define([
   'templates/views/components/plugins/open-workflow.htm'
 ], function ($, ko, koMapping, arches, pageTemplate) {
   const openWorkflowViewModel = function (params) {
+    this.loading = params.loading;
+
     this.WORKFLOW_LABEL = 'workflow-slug';
     this.WORKFLOW_OPEN_MODE_LABEL = 'workflow-open-mode';
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
@@ -67,14 +69,42 @@ define([
       await this.loadResourceData(resourceId);
     };
 
+    this.setupWorkflow = async () => {
+      let result = null;
+      if (this.workflow().setupFunction) {
+        result = await this[this.workflow().setupFunction]();
+      }
+      return result;
+    };
+
+    this.setupMonumentRevision = async () => {
+      const monumentResourceId = this.selectedResource();
+      const response = await $.ajax({
+        type: 'POST',
+        url: '/monument-revision-remap',
+        dataType: 'json',
+        data: JSON.stringify({
+          monumentResourceId: monumentResourceId
+        }),
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
+      this.selectedResource(response.revisionResourceId);
+    };
+
     this.openWorkflow = async () => {
       if (!this.selectedResource()) return;
+      this.loading(true);
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
       this.updateRecentlyOpened(this.selectedResource());
+      await this.setupWorkflow();
       this.workflowUrl(
         arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.selectedResource()}`
       );
       window.window.location = this.workflowUrl();
+      this.loading(false);
     };
 
     this.updateRecentlyOpened = (resourceId) => {
