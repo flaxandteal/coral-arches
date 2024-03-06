@@ -14,7 +14,7 @@ define([
 
     this.stepId = uuid.generate();
 
-    this.title = ko.observable(params?.title || 'New Step');
+    this.title = ko.observable(params?.title || '');
     this.stepName = ko.observable(params?.stepName || 'new-step');
 
     this.cards = ko.observableArray();
@@ -73,6 +73,8 @@ define([
       return this.title().toLowerCase().split(' ').join('-');
     }, this);
 
+    this.stepIdx = this.parentWorkflow.stepIdx(this.stepId);
+
     this.getStepData = () => {
       return {
         title: this.title(),
@@ -96,7 +98,16 @@ define([
       this.parentWorkflow.removeStepFromWorkflow(this.stepId);
     };
 
+    this.setDefaultTitle = () => {
+      if (!this.title()) {
+        setTimeout(() => {
+          this.title(`Tab ${this.stepIdx() + 1}`);
+        });
+      }
+    };
+
     this.init = () => {
+      this.setDefaultTitle();
       this.loadCards(params?.cards);
     };
 

@@ -246,6 +246,12 @@ define([
       return resourceIdPaths;
     });
 
+    this.stepIdx = (stepId) => {
+      return ko.computed(() => {
+        return this.workflowSteps().findIndex((step) => step.stepId === stepId);
+      }, this);
+    };
+
     this.loadExistingWorkflow = async () => {
       if (this.workflowId()) {
         const workflow = await $.getJSON(
