@@ -20,7 +20,6 @@ define([
     this.workflowSlug = ko.observable();
     this.workflow = ko.observable();
     this.graphIds = ko.observable();
-    this.loading = ko.observable(false);
 
     this.resourceName = ko.observable();
     this.recentlyOpened = ko.observable();
