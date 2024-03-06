@@ -129,6 +129,22 @@ class MonumentRevisionRemap(View):
         monument_graph = self.get_graph(self.MONUMENT_GRAPH_ID)
         revision_graph = self.get_graph(self.MONUMENT_REVISION_GRAPH_ID)
 
+        if (
+            self.monument_resource.graph != monument_graph
+            and self.monument_resource.graph != revision_graph
+        ):
+            raise "The resource ID provided does not belong to Monument or Monument Revision"
+
+        if self.monument_resource.graph == revision_graph:
+            return JSONResponse(
+                {
+                    "message": "This is a remapped Monument",
+                    "revisionResourceId": str(
+                        self.monument_resource.resourceinstanceid
+                    ),
+                }
+            )
+
         self.get_node_configuration("monument", monument_graph)
         self.get_node_configuration("revision", revision_graph)
 
