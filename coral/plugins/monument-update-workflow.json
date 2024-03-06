@@ -78,7 +78,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Area Name", "Townland"]],
+                  "labels": [
+                    [
+                      "Area Name",
+                      "Townland"
+                    ]
+                  ],
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -262,7 +267,20 @@
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "fileObjectNamePrefix": "Documentation for ",
+                  "resourceModelDigitalObjectNodeGroupId": "1dcfe920-332f-4163-be56-ebfada8752fa"
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "documentation"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"
@@ -273,7 +291,60 @@
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "482d0935-2330-491a-aa41-d0cc3293b568",
+                    "15b164d5-9509-4d4c-a0b7-e4b430ba5d31",
+                    "2f1563f3-92a6-4985-8eb1-53b88e34f538",
+                    "d11ecd97-0a37-4e2b-90d3-35ec5bfcc8dc",
+                    "b803fb83-2d39-4bd7-8668-8c931c9082e6"
+                  ],
+                  "nodegroupid": "2af35abc-9dee-4438-a127-c0fb69e63124",
+                  "semanticName": "Designation and Protection Assignment"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "7d8350e2-9935-4c91-979d-5e54c7d1717b"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "94c6fd66-19fa-4261-8728-35a67a88b96b",
+                  "semanticName": "CM References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "84486643-2f11-404a-839b-b67146f93cf6"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "6f235821-c1b8-4a04-bdfd-cf123b4a5237",
+        "title": "Complete",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                  "semanticName": "Complete Revision"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "80350615-53bc-4911-bf19-8dafaabf0058"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"
