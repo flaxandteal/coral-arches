@@ -1,12 +1,120 @@
-
 {
   "pluginid": "681c3218-950b-454b-aef6-409ba4625d17",
   "name": "Heritage Asset Update",
-  "icon": "fa fa-file-text",
-  "component": "views/components/plugins/monument-update-workflow",
-  "componentname": "monument-update-workflow",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
   "config": {
-    "show": false
+    "show": false,
+    "graphId": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+    "stepData": [
+      {
+        "name": "initial-step",
+        "title": "Initial step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "hiddenNodes": [
+                    "147187c1-3319-4f6c-9cec-0c295164df14",
+                    "469af519-d78e-46e2-b0bb-281bcab211d0"
+                  ],
+                  "nodegroupid": "cbf55769-eaf1-4074-84d9-8a47310dfbc2",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "503d450c-9004-41e7-a715-63e0f8cd36fd"
+                    }
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "system-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "0306cbfd-e25f-48ce-9ca1-fa3e23c9f204",
+        "title": "Heritage Asset Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "b5178ec7-f9b8-4c51-b402-448ad624ac6b",
+                    "744875b3-27f8-4735-869f-1e246176572b"
+                  ],
+                  "nodegroupid": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
+                  "semanticName": "Monument Names"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "f0236f59-609c-4fde-890d-47d1be129a56"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "147187c1-3319-4f6c-9cec-0c295164df14",
+                    "469af519-d78e-46e2-b0bb-281bcab211d0"
+                  ],
+                  "nodegroupid": "cbf55769-eaf1-4074-84d9-8a47310dfbc2",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "e38f8ea7-f3cb-42cf-800d-b00a1c5861d1"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "1bdbf596-4f86-4494-9ba9-f82f5de54180",
+                    "425b6c5f-7b32-4cd6-8597-0f605cc8992b"
+                  ],
+                  "nodegroupid": "cc176b79-d9d3-4aab-bbd5-f604a73cae34",
+                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "semanticName": "Localities/Administrative Areas",
+                  "labels": [["Area Name", "Townland"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "c914f4fd-a3b5-4b0f-ae0d-584c9e38b6cb"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "e290279d-9857-441e-a511-50d9d4dc4210",
+                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "semanticName": "National Grid References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "e6ce6b39-8452-4ba6-bf3f-c7e3224c7391"
+              },
+              {
+                "parameters": {},
+                "componentName": "default-card"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
   },
   "slug": "monument-update-workflow",
   "sortorder": 0
