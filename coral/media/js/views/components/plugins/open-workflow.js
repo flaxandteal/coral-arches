@@ -19,7 +19,7 @@ define([
     this.workflowUrl = ko.observable();
     this.workflowSlug = ko.observable();
     this.workflow = ko.observable();
-    this.graphId = ko.observable();
+    this.graphIds = ko.observable();
     this.loading = ko.observable(false);
 
     this.resourceName = ko.observable();
@@ -169,7 +169,7 @@ define([
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
-      this.graphId(this.workflow().graphId);
+      this.graphIds(this.workflow().graphIds);
       this.recentlyOpened(
         JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_OPENED_LABEL)) || {}
       );

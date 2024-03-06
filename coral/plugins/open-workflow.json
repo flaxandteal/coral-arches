@@ -10,52 +10,52 @@
       {
         "slug": "respond-to-enforcement-workflow",
         "name": "Respond to Enforcement",
-        "graphId": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+        "graphIds": ["8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84"],
         "disableStartNew": true,
         "checkForResourceId": true
       },
       {
         "slug": "archive-catalogue-workflow",
         "name": "Archive Cataloguing",
-        "graphId": "b07cfa6f-894d-11ea-82aa-f875a44e0e11"
+        "graphIds": ["b07cfa6f-894d-11ea-82aa-f875a44e0e11"]
       },
       {
         "slug": "licensing-workflow",
         "name": "Excavation Licensing",
-        "graphId": "cc5da227-24e7-4088-bb83-a564c4331efd"
+        "graphIds": ["cc5da227-24e7-4088-bb83-a564c4331efd"]
       },
       {
         "slug": "assign-consultation-workflow",
         "name": "Planning Consultation",
-        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d"
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"]
       },
       {
         "slug": "hm-planning-consultation-response-workflow",
         "name": "HM Planning Consultation Response",
-        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
         "disableStartNew": true
       },
       {
         "slug": "hb-planning-consultation-response-workflow",
         "name": "HB Planning Consultation Response",
-        "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
         "disableStartNew": true
       },
       {
         "slug": "scheduled-monument-consent-workflow",
         "name": "Scheduled Monument Consent",
-        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"],
         "disableStartNew": true
       },
       {
         "slug": "incident-report-workflow",
         "name": "Incident Report",
-        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9"
+        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"]
       },
       {
         "slug": "monument-update-workflow",
         "name": "Heritage Asset Update",
-        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9", "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"],
         "setupFunction": "setupMonumentRevision",
         "disableStartNew": true
       }
