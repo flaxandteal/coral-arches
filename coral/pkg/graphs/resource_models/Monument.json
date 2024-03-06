@@ -86,6 +86,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "126bfd36-dbc3-11ee-8835-0242ac120006",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "{\"en\": \"\"}",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Date of Visit"
+                    },
+                    "nodegroup_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "2399eb9e-31e0-11ec-a3b1-a87eeabdefba",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -1702,6 +1729,70 @@
                     "sortorder": null,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "126bfd36-dbc3-11ee-8835-0242ac120006",
+                    "config": {
+                        "defaultValue": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Date of Visit Qualifier",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "126c07b8-dbc3-11ee-8835-0242ac120006",
+                    "label": {
+                        "en": "Date of Visit Qualifier"
+                    },
+                    "node_id": "126c0330-dbc3-11ee-8835-0242ac120006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "126bfd36-dbc3-11ee-8835-0242ac120006",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Date of Visit",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "126c0880-dbc3-11ee-8835-0242ac120006",
+                    "label": {
+                        "en": "Date of Visit"
+                    },
+                    "node_id": "126c0042-dbc3-11ee-8835-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "126bfd36-dbc3-11ee-8835-0242ac120006",
+                    "config": {
+                        "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Date of Visit Qualifier Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "126c0a10-dbc3-11ee-8835-0242ac120006",
+                    "label": {
+                        "en": "Date of Visit Qualifier Metatype"
+                    },
+                    "node_id": "126c05e2-dbc3-11ee-8835-0242ac120006",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "0e9d31f9-0b8f-47d9-867a-e128b60951cc",
@@ -12057,6 +12148,33 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "edgeid": "126c344a-dbc3-11ee-8835-0242ac120006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "rangenode_id": "126c0042-dbc3-11ee-8835-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "edgeid": "126c379c-dbc3-11ee-8835-0242ac120006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "126c0330-dbc3-11ee-8835-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "126c0330-dbc3-11ee-8835-0242ac120006",
+                    "edgeid": "126c3a4e-dbc3-11ee-8835-0242ac120006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "126c05e2-dbc3-11ee-8835-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "096de7b2-d240-11ee-9ae7-0242ac180006",
                     "edgeid": "17cb5fe3-2818-474e-a3de-2e175ee4a5da",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -12639,6 +12757,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                     "rangenode_id": "eeec9986-d23c-11ee-9373-0242ac180006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "55c3b805-c23d-4fd9-a70c-b730a4a17120",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P160_has_temporal_projection",
+                    "rangenode_id": "126bf91c-dbc3-11ee-8835-0242ac120006"
                 },
                 {
                     "description": null,
@@ -16967,6 +17094,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "20017860-d711-11ee-9dd0-0242ac120006",
                     "parentnodegroup_id": "d3ff3fe6-d62b-11ee-9454-0242ac180006"
                 },
@@ -17548,6 +17681,98 @@
                     "name": "Construction Technique Metatype",
                     "nodegroup_id": "55d6a53e-049c-11eb-8618-f875a44e0e11",
                     "nodeid": "0efa33e8-049e-11eb-bc30-f875a44e0e11",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "date_of_visit",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": "{\"en\": \"\"}",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Date of Visit",
+                    "nodegroup_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "nodeid": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P160_has_temporal_projection",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "date_of_visit_value",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Date of Visit Value",
+                    "nodegroup_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "nodeid": "126c0042-dbc3-11ee-8835-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "date_of_visit_qualifier",
+                    "config": {
+                        "rdmCollection": "366686d6-deb0-4245-81a3-f94d791a388c"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Date of Visit Qualifier",
+                    "nodegroup_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "nodeid": "126c0330-dbc3-11ee-8835-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "date_of_visit_qualifier_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Date of Visit Qualifier Metatype",
+                    "nodegroup_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+                    "nodeid": "126c05e2-dbc3-11ee-8835-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
@@ -18612,66 +18837,10 @@
                         },
                         "options": [
                             {
-                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
                                 "selected": false,
                                 "text": {
-                                    "en": "27: Antrim and Newtownabbey"
-                                }
-                            },
-                            {
-                                "id": "3c928df6-dbec-49b0-926d-da947391948e",
-                                "selected": false,
-                                "text": {
-                                    "en": "28: Armagh City Banbridge and Craigavon"
-                                }
-                            },
-                            {
-                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "29: Belfast"
-                                }
-                            },
-                            {
-                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
-                                "selected": false,
-                                "text": {
-                                    "en": "30: Causeway Coast and Glens"
-                                }
-                            },
-                            {
-                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
-                                "selected": false,
-                                "text": {
-                                    "en": "31: Derry City and Strabane"
-                                }
-                            },
-                            {
-                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
-                                "selected": false,
-                                "text": {
-                                    "en": "32: Fermanagh and Omagh"
-                                }
-                            },
-                            {
-                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
-                                "selected": false,
-                                "text": {
-                                    "en": "33: Lisburn and Castlereagh"
-                                }
-                            },
-                            {
-                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "34: Mid and East Antrim"
-                                }
-                            },
-                            {
-                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
-                                "selected": false,
-                                "text": {
-                                    "en": "35: Mid Ulster"
+                                    "en": "37: Ards and North Down"
                                 }
                             },
                             {
@@ -18682,10 +18851,66 @@
                                 }
                             },
                             {
-                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
                                 "selected": false,
                                 "text": {
-                                    "en": "37: Ards and North Down"
+                                    "en": "35: Mid Ulster"
+                                }
+                            },
+                            {
+                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "34: Mid and East Antrim"
+                                }
+                            },
+                            {
+                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
+                                "selected": false,
+                                "text": {
+                                    "en": "33: Lisburn and Castlereagh"
+                                }
+                            },
+                            {
+                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
+                                "selected": false,
+                                "text": {
+                                    "en": "32: Fermanagh and Omagh"
+                                }
+                            },
+                            {
+                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
+                                "selected": false,
+                                "text": {
+                                    "en": "31: Derry City and Strabane"
+                                }
+                            },
+                            {
+                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
+                                "selected": false,
+                                "text": {
+                                    "en": "30: Causeway Coast and Glens"
+                                }
+                            },
+                            {
+                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
+                                "selected": false,
+                                "text": {
+                                    "en": "29: Belfast"
+                                }
+                            },
+                            {
+                                "id": "3c928df6-dbec-49b0-926d-da947391948e",
+                                "selected": false,
+                                "text": {
+                                    "en": "28: Armagh City Banbridge and Craigavon"
+                                }
+                            },
+                            {
+                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "selected": false,
+                                "text": {
+                                    "en": "27: Antrim and Newtownabbey"
                                 }
                             }
                         ]
@@ -22605,17 +22830,10 @@
                         },
                         "options": [
                             {
-                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
                                 "selected": false,
                                 "text": {
-                                    "en": "In progress"
-                                }
-                            },
-                            {
-                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
-                                "selected": false,
-                                "text": {
-                                    "en": "Finished"
+                                    "en": "Enforcement actioned"
                                 }
                             },
                             {
@@ -22626,10 +22844,17 @@
                                 }
                             },
                             {
-                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
                                 "selected": false,
                                 "text": {
-                                    "en": "Enforcement actioned"
+                                    "en": "Finished"
+                                }
+                            },
+                            {
+                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
                                 }
                             }
                         ],
@@ -23706,10 +23931,10 @@
                         },
                         "options": [
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             },
                             {
@@ -23720,10 +23945,10 @@
                                 }
                             },
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             }
                         ]
@@ -23915,10 +24140,10 @@
                         },
                         "options": [
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             },
                             {
@@ -23929,10 +24154,10 @@
                                 }
                             },
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             }
                         ]
@@ -29659,17 +29884,10 @@
                         },
                         "options": [
                             {
-                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
                                 "selected": false,
                                 "text": {
-                                    "en": "Contact PSNI"
-                                }
-                            },
-                            {
-                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refer to Enforcement"
+                                    "en": "Resolve with Owner"
                                 }
                             },
                             {
@@ -29680,10 +29898,17 @@
                                 }
                             },
                             {
-                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
                                 "selected": false,
                                 "text": {
-                                    "en": "Resolve with Owner"
+                                    "en": "Refer to Enforcement"
+                                }
+                            },
+                            {
+                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Contact PSNI"
                                 }
                             }
                         ]
@@ -30228,8 +30453,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "3415e09c-dbc2-11ee-b0db-0242ac120006",
-                "published_time": "2024-03-06T14:02:43.905"
+                "publicationid": "f229e690-dbc3-11ee-8835-0242ac120006",
+                "published_time": "2024-03-06T14:15:12.300"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
