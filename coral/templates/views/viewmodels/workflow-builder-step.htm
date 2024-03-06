@@ -49,6 +49,38 @@
           pageVm: $root
         "
       ></radio-boolean-widget>
+      <text-widget
+        params="
+          config: {
+            label: 'Information Box Heading',
+            placeholder: 'Enter text',
+          },
+          value: {
+            en: {
+              value: informationBoxHeading,
+              direction: ko.observable('ltr')
+            }
+          },
+          loading: false,
+          pageVm: $root
+        "
+      ></text-widget>
+      <text-widget
+        params="
+          config: {
+            label: 'Information Box Text',
+            placeholder: 'Enter text',
+          },
+          value: {
+            en: {
+              value: informationBoxText,
+              direction: ko.observable('ltr')
+            }
+          },
+          loading: false,
+          pageVm: $root
+        "
+      ></text-widget>
     </div>
   </div>
   <div>

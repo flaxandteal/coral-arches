@@ -41,7 +41,11 @@ define([
         graphId: this.graphId(),
         required: stepData?.required,
         stepName: stepData?.name,
-        parentWorkflow: this
+        parentWorkflow: this,
+        informationBox: {
+          heading: stepData?.informationboxdata?.heading,
+          text: stepData?.informationboxdata?.text
+        }
       });
       this.workflowSteps().push(step);
       this.workflowSteps.valueHasMutated();

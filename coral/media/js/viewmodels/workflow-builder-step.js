@@ -15,11 +15,14 @@ define([
     this.stepId = uuid.generate();
 
     this.title = ko.observable(params?.title || '');
-    this.stepName = ko.observable(params?.stepName || 'new-step');
+    this.stepName = ko.observable(params?.stepName || '');
 
     this.cards = ko.observableArray();
     this.graphId = params?.graphId;
     this.required = ko.observable(params?.required || false);
+
+    this.informationBoxHeading = ko.observable(params?.informationBox?.heading || '');
+    this.informationBoxText = ko.observable(params?.informationBox?.text || '');
 
     this.addCard = (cardData) => {
       const card = new WorkflowBuilderCard({
@@ -79,13 +82,12 @@ define([
       return {
         title: this.title(),
         name: this.stepName(),
-        required: false,
         workflowstepclass: 'workflow-form-component',
         required: this.required(),
-        // informationboxdata: {
-        //   heading: '',
-        //   text: ''
-        // },
+        informationboxdata: {
+          heading: this.informationBoxHeading(),
+          text: this.informationBoxText()
+        },
         layoutSections: [
           {
             componentConfigs: this.cards().map((card) => card.getComponentData())
