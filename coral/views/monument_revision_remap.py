@@ -90,6 +90,14 @@ class MonumentRevisionRemap(View):
             ):
                 self.parent_nodegroup_ids.append(parent_nodegroup_id)
 
+    def get_nodegroup(self, nodegroup_id):
+        nodegroup = None
+        try:
+            nodegroup = models.NodeGroup.objects.filter(pk=nodegroup_id).first()
+        except models.NodeGroup.DoesNotExist:
+            raise f"Nodegroup ID ({nodegroup_id}) does not exist"
+        return nodegroup
+
     def get_parent_tile(self, tile):
         parent_tile = None
 
@@ -191,6 +199,23 @@ class MonumentRevisionRemap(View):
             except Exception as e:
                 print("Failed while remapping the monument tile data: ", e)
                 continue
+
+        # merge_tracker_resource = self.get_resource(merge_tracker_resource_id)
+        parent_monument_nodegroup = self.get_nodegroup("6375be6e-dc64-11ee-924e-0242ac120006")
+        parent_monument_tile = Tile(
+            resourceinstance=self.revision_resource,
+            data={
+                "6375be6e-dc64-11ee-924e-0242ac120006": [
+                    {
+                        "resourceId": monument_resource_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": "",
+                    }
+                ]
+            },
+            nodegroup=parent_monument_nodegroup,
+        )
+        parent_monument_tile.save()
 
         return JSONResponse(
             {
