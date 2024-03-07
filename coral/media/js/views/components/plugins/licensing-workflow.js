@@ -494,9 +494,9 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util', // Has fix for many tiles
                   uniqueInstanceName: 'report-info',
-                  tilesManaged: 'one',
+                  tilesManaged: 'many',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',

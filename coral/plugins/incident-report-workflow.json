@@ -1,0 +1,387 @@
+{
+  "pluginid": "813eb058-b7aa-4407-a24f-ba19f0e41c92",
+  "name": "Incident Report",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+    "stepData": [
+      {
+        "name": "239ba9b7-2fac-4a81-9913-872cd022fac6",
+        "title": "Initial step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "hiddenNodes": [
+                    "325a441c-efe4-11eb-9283-a87eeabdefba",
+                    "325a2f33-efe4-11eb-b0bb-a87eeabdefba"
+                  ],
+                  "nodegroupid": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
+                  "semanticName": "System Reference Numbers",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "incidentReport",
+                      "parentNodegroupId": "d3ff3fe6-d62b-11ee-9454-0242ac180006"
+                    },
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba"
+                    }
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "d96cc87e-6de5-4b33-90db-ea324af7a66d"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "incident-reference-step",
+        "title": "Incident Reference",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "2001a6f0-d711-11ee-9dd0-0242ac120006"
+                  ],
+                  "nodegroupid": "20017860-d711-11ee-9dd0-0242ac120006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Incident Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "incident-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "c7fbd0c2-5796-49e1-9256-9d63a2682e2f",
+        "title": "Record of the incident",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "676d47fd-9c1c-11ea-9d73-f875a44e0e11",
+                    "676d47fc-9c1c-11ea-b5b0-f875a44e0e11"
+                  ],
+                  "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+                  "semanticName": "Monument Names"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "fb4e4b98-ee4f-45f5-98d4-c616d57550da"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "a0cb43ee-d62c-11ee-9454-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Damage Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "283330c6-7099-42e9-b1dd-399669119ca6"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "2596ab22-d62d-11ee-8f7b-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Material/Fabric Damage Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "3c478381-03f1-4c77-b0e3-ca099333b324"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "723aaf3c-d62d-11ee-8f7b-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Component Damage Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "ada67158-0016-4c27-8719-69051f3d8cd1"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "3d415e98-d23b-11ee-9373-0242ac180006",
+                  "semanticName": "CM References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "188b23c1-2295-4d00-815e-292abfb06095"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "d2592394-d62d-11ee-9454-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Incident Notes"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "80a7bdcc-8c4d-41a3-a4c9-bdf70fc1835b"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "cacc9d20-d62f-11ee-9454-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Contacts"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "2d61568e-1d58-4504-bac0-ae0b4e76b8c1"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "aa62aa06-d23e-11ee-9ae7-0242ac180006",
+                    "aa62a736-d23e-11ee-9ae7-0242ac180006"
+                  ],
+                  "nodegroupid": "aa629840-d23e-11ee-9ae7-0242ac180006",
+                  "semanticName": "Contacts"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "c3dabb4f-4b6b-4cc5-b794-93f548e13b98"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "3a429985-a2b1-4bc3-a362-d8ac987cc1a8",
+        "title": "Location details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3ff2b-f44f-11eb-aad3-a87eeabdefba",
+                    "87d3d7ba-f44f-11eb-a2dd-a87eeabdefba",
+                    "87d39b49-f44f-11eb-a564-a87eeabdefba",
+                    "87d3d7e0-f44f-11eb-9594-a87eeabdefba",
+                    "87d3ff25-f44f-11eb-a4eb-a87eeabdefba",
+                    "87d39b43-f44f-11eb-8b0b-a87eeabdefba",
+                    "87d3ff27-f44f-11eb-a92b-a87eeabdefba"
+                  ],
+                  "nodegroupid": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
+                  "semanticName": "Addresses"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "5cb60409-1bbf-4f2b-a90d-697db312f3cd"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"
+                  ],
+                  "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
+                  "semanticName": "Localities/Administrative Areas"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "166c1d50-7276-4a77-b6de-62f591ef2a1d"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3d7c8-f44f-11eb-938d-a87eeabdefba"
+                  ],
+                  "nodegroupid": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
+                  "semanticName": "Location Descriptions"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "3caaa12f-9dca-4d92-a555-5552ea5e71f2"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "13817e0a-4240-48d6-8e26-03b03b40fbac",
+        "title": "Map",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
+                  "semanticName": "Geometry"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "1ef3df22-4ad9-4203-93e0-4445fd339acd"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "fce73127-9ba6-4c9b-9a9c-ee64ca6de045",
+        "title": "Work Proposed",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "a1f0e104-d648-11ee-9a11-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Incident Proposal"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "04e66186-2996-473d-9ce8-fb0beea314dd"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "02981d6b-ccf4-4317-b0e1-fe612b7f6a2f",
+        "title": "Documentation",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['fd241793-e0af-4417-967a-47fb797c917e'][0]['resourceid']['resourceInstanceId']",
+                  "fileObjectNamePrefix": "Documentation for ",
+                  "resourceModelDigitalObjectNodeGroupId": "58f177c8-d640-11ee-8b04-0242ac180006"
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "documentation"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "c167db3b-5bf4-438a-bbc3-de458c312473",
+        "title": "Sign Off",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "788bf15a-d643-11ee-8b04-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Status Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "a417468a-c678-44be-8063-91560b432e33"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "d9bd0504-d643-11ee-8b04-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Work Finish Date"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "156a97a9-b1c0-4128-81bb-f0cf678e8ec5"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "d0f45bbe-d645-11ee-8b04-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Signed Off"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "100cea5c-e234-40ff-98ad-44087717ced8"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "9665660e-d646-11ee-8b04-0242ac180006",
+                  "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "semanticName": "Sign Off Date"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "e100a1bb-0bca-4db2-bb9a-47a2f1c57b79"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "incident-report-workflow",
+  "sortorder": 0
+}
