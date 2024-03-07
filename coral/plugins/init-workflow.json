@@ -117,6 +117,15 @@
         "desc": "Manage incident reports for a Heritage Asset"
       },
       {
+        "workflowid": "681c3218-950b-454b-aef6-409ba4625d17",
+        "slug": "open-workflow?workflow-slug=monument-update-workflow",
+        "name": "Heritage Asset Update",
+        "icon": "fa fa-file-text",
+        "bgColor": "#86679c",
+        "circleColor": "#aa86c4",
+        "desc": "Update a Heritage Asset copy that needs to be a approved"
+      },
+      {
         "workflowid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
         "slug": "open-workflow?workflow-slug=assign-consultation-workflow",
         "name": "Planning Consultation",
