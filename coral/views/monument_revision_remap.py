@@ -200,7 +200,6 @@ class MonumentRevisionRemap(View):
                 print("Failed while remapping the monument tile data: ", e)
                 continue
 
-        # merge_tracker_resource = self.get_resource(merge_tracker_resource_id)
         parent_monument_nodegroup = self.get_nodegroup("6375be6e-dc64-11ee-924e-0242ac120006")
         parent_monument_tile = Tile(
             resourceinstance=self.revision_resource,
