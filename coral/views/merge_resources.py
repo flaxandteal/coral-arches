@@ -205,13 +205,8 @@ class MergeResources(View):
                         base_tile_data[node_id], merge_tile_data[node_id]
                     )
         return result
-
-    def post(self, request):
-        data = json.loads(request.body.decode("utf-8"))
-        base_resource_id = data.get("baseResourceId")
-        merge_resource_id = data.get("mergeResourceId")
-        merge_tracker_resource_id = data.get("mergeTrackerResourceId")
-
+    
+    def merge_resources(self, base_resource_id, merge_resource_id, merge_tracker_resource_id):
         if not base_resource_id or not merge_resource_id:
             raise "Missing base or merge resource ID"
 
@@ -326,5 +321,13 @@ class MergeResources(View):
                 nodegroup=merge_tracker_associated_resources_nodegroup,
             )
             associated_resources_tile.save()
+
+    def post(self, request):
+        data = json.loads(request.body.decode("utf-8"))
+        base_resource_id = data.get("baseResourceId")
+        merge_resource_id = data.get("mergeResourceId")
+        merge_tracker_resource_id = data.get("mergeTrackerResourceId")
+
+        self.merge_resources(base_resource_id, merge_resource_id, merge_tracker_resource_id)
 
         return JSONResponse({"message": "Resources have been merged"})
