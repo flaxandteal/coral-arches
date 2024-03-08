@@ -25,7 +25,7 @@ define([
 
         const rawConfigData = localStorage.getItem(this.OPEN_WORKFLOW_CONFIG);
         let configData = {};
-        if (configData) {
+        if (rawConfigData) {
           configData = JSON.parse(rawConfigData);
         }
 

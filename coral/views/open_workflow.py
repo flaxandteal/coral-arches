@@ -227,7 +227,7 @@ class OpenWorkflow(View):
         resource_id = data.get("resourceId")
         workflow_id = data.get("workflowId")
         workflow_slug = data.get("workflowSlug")
-        self.open_config = data.get("openConfig")
+        self.open_config = data.get("openConfig", {})
         user_id = request.user.pk
 
         # Get step data from plugin
