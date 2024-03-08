@@ -78,12 +78,7 @@
               },
               {
                 "parameters": {
-                  "labels": [
-                    [
-                      "Area Name",
-                      "Townland"
-                    ]
-                  ],
+                  "labels": [["Area Name", "Townland"]],
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -330,6 +325,10 @@
         "name": "6f235821-c1b8-4a04-bdfd-cf123b4a5237",
         "title": "Complete",
         "required": false,
+        "informationboxdata": {
+          "heading": "How to apply the Revision",
+          "text": "Once all these fields have been filled with values the Revision changes will be merged into the Original Monument resource. A Merge Resource Tracker will be created to maintain a history of this change."
+        },
         "layoutSections": [
           {
             "componentConfigs": [
