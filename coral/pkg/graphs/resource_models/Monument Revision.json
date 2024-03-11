@@ -17958,6 +17958,16 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "3c51740c-dbd0-11ee-8835-0242ac120006"
+                        ]
+                    },
+                    "function_id": "abde9ed3-1f84-4df4-9a32-e32527ba2aba",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "id": "6b14738e-2e9d-44af-aed8-d73c90ea9abc"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
