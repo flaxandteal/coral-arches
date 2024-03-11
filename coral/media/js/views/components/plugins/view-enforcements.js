@@ -202,7 +202,6 @@ define([
       },
       this
     );
-    console.log('SearchComponents: ', SearchComponents);
     Object.values(SearchComponents).forEach(function (component) {
       this.filters[component.componentname] = ko.observable(null);
     }, this);
@@ -213,7 +212,6 @@ define([
       },
       this
     );
-    console.log('firstEnabledFilter: ', firstEnabledFilter);
     this.selectedTab = ko.observable(firstEnabledFilter.componentname);
     this.selectedPopup = ko.observable('');
     this.resultsExpanded = ko.observable(true);
