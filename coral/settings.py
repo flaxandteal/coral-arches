@@ -4,8 +4,10 @@ Django settings for coral project.
 
 try:
     import tomllib
+    toml_mode = "rb"
 except ImportError:
     from pip._vendor import tomli as tomllib
+    toml_mode = "r"
 
 import json
 import os
@@ -88,7 +90,7 @@ TEMPLATES[0]['DIRS'].insert(0, os.path.join(APP_ROOT, 'templates'))
 
 ANONYMOUS_SETS = []
 
-with (Path(__file__).parent / "wkrm.toml").open("rb") as wkrm_f:
+with (Path(__file__).parent / "wkrm.toml").open(toml_mode) as wkrm_f:
     WELL_KNOWN_RESOURCE_MODELS = [model for _, model in tomllib.load(wkrm_f).items()]
 print(WELL_KNOWN_RESOURCE_MODELS)
 
