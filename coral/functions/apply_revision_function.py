@@ -9,6 +9,7 @@ from arches.app.models.graph import Graph
 from arches.app.models.tile import Tile
 from copy import deepcopy
 from coral.views.merge_resources import MergeResources
+from django.db import transaction
 
 
 REVISION_COMPLETE_NODEGROUP = "3c51740c-dbd0-11ee-8835-0242ac120006"
@@ -191,149 +192,188 @@ class ApplyRevisionFunction(BaseFunction):
         return id_format
 
     def post_save(self, tile, request, context):
-        self.revision_resource = tile.resourceinstance
+        with transaction.atomic():
+            self.revision_resource = tile.resourceinstance
+            data = tile.data
 
-        data = tile.data
+            APPROVED_ON_NODE = "0cd0998c-dbd6-11ee-b0db-0242ac120006"
+            APPROVED_BY_NODE = "ad22dad6-dbd0-11ee-b0db-0242ac120006"
+            COMPLETED_ON_NODE = "3b267ffe-dbd1-11ee-b0db-0242ac120006"
+            COMPLETED_ON_NODE = "af5fd406-dbd1-11ee-b0db-0242ac120006"
 
-        # Approved On 0cd0998c-dbd6-11ee-b0db-0242ac120006
-        # Approved By ad22dad6-dbd0-11ee-b0db-0242ac120006
-        # Completed By 3b267ffe-dbd1-11ee-b0db-0242ac120006
-        # Completed On af5fd406-dbd1-11ee-b0db-0242ac120006
+            if (
+                not data[APPROVED_ON_NODE]
+                or not data[APPROVED_BY_NODE]
+                or not data[COMPLETED_ON_NODE]
+                or not data[COMPLETED_ON_NODE]
+            ):
+                return
 
-        if (
-            not data["0cd0998c-dbd6-11ee-b0db-0242ac120006"]
-            or not data["ad22dad6-dbd0-11ee-b0db-0242ac120006"]
-            or not data["3b267ffe-dbd1-11ee-b0db-0242ac120006"]
-            or not data["af5fd406-dbd1-11ee-b0db-0242ac120006"]
-        ):
-            return
+            parent_monumnet_tile = Tile.objects.filter(
+                resourceinstance_id=self.revision_resource,
+                nodegroup_id=PARENT_MONUMENT_NODEGROUP,
+            ).first()
 
-        parent_monumnet_tile = Tile.objects.filter(
-            resourceinstance_id=self.revision_resource,
-            nodegroup_id=PARENT_MONUMENT_NODEGROUP,
-        ).first()
+            monument_node = parent_monumnet_tile.data[PARENT_MONUMENT_NODE]
+            monument_resource_id = monument_node[0].get("resourceId")
 
-        monument_node = parent_monumnet_tile.data[PARENT_MONUMENT_NODE]
-        monument_resource_id = monument_node[0].get("resourceId")
+            self.monument_resource = self.get_resource(monument_resource_id)
 
-        self.monument_resource = self.get_resource(monument_resource_id)
+            # Get graph data and node configurations
 
-        # Get graph data and node configurations
+            monument_graph = self.get_graph(self.MONUMENT_GRAPH_ID)
+            revision_graph = self.get_graph(self.MONUMENT_REVISION_GRAPH_ID)
 
-        monument_graph = self.get_graph(self.MONUMENT_GRAPH_ID)
-        revision_graph = self.get_graph(self.MONUMENT_REVISION_GRAPH_ID)
+            self.get_node_configuration("monument", monument_graph)
+            self.get_node_configuration("revision", revision_graph)
 
-        self.get_node_configuration("monument", monument_graph)
-        self.get_node_configuration("revision", revision_graph)
+            # Map aliases with node ids
 
-        # Map aliases with node ids
+            self.node_mapping = self.id_alias_map_with_node_id()
 
-        self.node_mapping = self.id_alias_map_with_node_id()
+            # Get tiles for both resources
 
-        # Get tiles for both resources
+            revision_tiles = Tile.objects.filter(
+                resourceinstance=self.revision_resource
+            )
 
-        revision_tiles = Tile.objects.filter(resourceinstance=self.revision_resource)
-        # monument_tiles = Tile.objects.filter(resourceinstance=self.monument_resource)
+            self.new_monument_resource = Resource.objects.create(graph=monument_graph)
+            new_monument_resource_id = str(
+                self.new_monument_resource.resourceinstanceid
+            )
 
-        self.new_monument_resource = Resource.objects.create(graph=monument_graph)
-        new_monument_resource_id = str(self.new_monument_resource.resourceinstanceid)
+            for tile in revision_tiles:
+                tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
+                if tile_nodegroup_id in self.parent_nodegroup_ids:
+                    continue
 
-        for tile in revision_tiles:
-            tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
-            if tile_nodegroup_id in self.parent_nodegroup_ids:
-                continue
+                node_map = self.node_mapping.get(tile_nodegroup_id, None)
+                if node_map:
+                    monument_nodegroup = self.node_mapping[tile_nodegroup_id][
+                        "monument"
+                    ]["node"].nodegroup
+                else:
+                    continue
 
-            node_map = self.node_mapping.get(tile_nodegroup_id, None)
-            if node_map:
-                monument_nodegroup = self.node_mapping[tile_nodegroup_id]["monument"][
-                    "node"
-                ].nodegroup
-            else:
-                continue
+                data = deepcopy(tile.data)
 
-            data = deepcopy(tile.data)
+                failed_node_data = {}
+                parent_tile = self.get_parent_tile(tile, self.new_monument_resource)
+                try:
+                    for data_node_id in tile.data.keys():
+                        monument_node_id = self.node_mapping[data_node_id]["monument"][
+                            "node_id"
+                        ]
+                        if not monument_node_id:
+                            failed_node_data[data_node_id] = self.node_mapping[
+                                data_node_id
+                            ]
+                            raise Exception("Monument node ID does not exist")
+                        data[monument_node_id] = data[data_node_id]
+                        del data[data_node_id]
 
-            failed_node_data = {}
-            parent_tile = self.get_parent_tile(tile, self.new_monument_resource)
-            try:
-                for data_node_id in tile.data.keys():
-                    monument_node_id = self.node_mapping[data_node_id]["monument"][
-                        "node_id"
+                    new_tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=self.new_monument_resource,
+                        parenttile=parent_tile,
+                        data=data,
+                        nodegroup=monument_nodegroup,
+                    )
+                    new_tile.save()
+                except Exception as e:
+                    print("Failed while remapping the monument tile data: ", e)
+                    continue
+
+            TRACKER_GRAPH_ID = "d9318eb6-f28d-427c-b061-6fe3021ce8aa"
+            TRACKER_ASSOCIATED_RESOURCES_NODEGROUP = (
+                "9967e2ea-cce2-11ee-af2a-0242ac180006"
+            )
+            merge_resource_tracker_graph = self.get_graph(TRACKER_GRAPH_ID)
+            merge_tracker_resource = Resource.objects.create(
+                graph=merge_resource_tracker_graph
+            )
+            merge_tracker_associated_resources_nodegroup = self.get_nodegroup(
+                TRACKER_ASSOCIATED_RESOURCES_NODEGROUP
+            )
+            merge_tracker_associated_resources_nodegroup = self.get_nodegroup(
+                TRACKER_ASSOCIATED_RESOURCES_NODEGROUP
+            )
+            associated_resources_tile = Tile(
+                resourceinstance=merge_tracker_resource,
+                data={
+                    TRACKER_ASSOCIATED_RESOURCES_NODEGROUP: [
+                        {
+                            "resourceId": str(
+                                self.revision_resource.resourceinstanceid
+                            ),
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": "",
+                        },
+                        {
+                            "resourceId": str(
+                                self.monument_resource.resourceinstanceid
+                            ),
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": "",
+                        },
                     ]
-                    if not monument_node_id:
-                        failed_node_data[data_node_id] = self.node_mapping[data_node_id]
-                        raise Exception("Monument node ID does not exist")
-                    data[monument_node_id] = data[data_node_id]
-                    del data[data_node_id]
+                },
+                nodegroup=merge_tracker_associated_resources_nodegroup,
+            )
+            associated_resources_tile.save()
 
-                new_tile = Tile(
-                    tileid=uuid.uuid4(),
-                    resourceinstance=self.new_monument_resource,
-                    parenttile=parent_tile,
-                    data=data,
-                    nodegroup=monument_nodegroup,
-                )
-                new_tile.save()
-            except Exception as e:
-                print("Failed while remapping the monument tile data: ", e)
-                continue
+            # FIXME: Need to configure a system reference number for the tracker resource
 
-        MERGE_RESOURCE_TRACKER_GRAPH_ID = "d9318eb6-f28d-427c-b061-6fe3021ce8aa"
-        merge_resource_tracker_graph = self.get_graph(MERGE_RESOURCE_TRACKER_GRAPH_ID)
-        merge_tracker_resource = Resource.objects.create(
-            graph=merge_resource_tracker_graph
-        )
-        merge_tracker_associated_resources_nodegroup = self.get_nodegroup(
-            "9967e2ea-cce2-11ee-af2a-0242ac180006"
-        )
-        merge_tracker_associated_resources_nodegroup = self.get_nodegroup(
-            "9967e2ea-cce2-11ee-af2a-0242ac180006"
-        )
-        associated_resources_tile = Tile(
-            resourceinstance=merge_tracker_resource,
-            data={
-                "9967e2ea-cce2-11ee-af2a-0242ac180006": [
-                    {
-                        "resourceId": str(self.revision_resource.resourceinstanceid),
-                        "ontologyProperty": "",
-                        "inverseOntologyProperty": "",
+            TRACKER_SYSTEM_REF_NODEGROUP = "d31655e2-ccdf-11ee-9264-0242ac180006"
+            TRACKER_SYSTEM_REF_NODE_VALUE = "d3168288-ccdf-11ee-9264-0242ac180006"
+            merge_tracker_sys_ref = Tile(
+                resourceinstance=merge_tracker_resource,
+                data={
+                    TRACKER_SYSTEM_REF_NODE_VALUE: {
+                        "en": {
+                            "value": self.generate_random_id(
+                                "MR",
+                                TRACKER_SYSTEM_REF_NODEGROUP,
+                                TRACKER_SYSTEM_REF_NODE_VALUE,
+                                str(merge_tracker_resource.resourceinstanceid),
+                            ),
+                            "direction": "ltr",
+                        },
+                    }
+                },
+                nodegroup=self.get_nodegroup(TRACKER_SYSTEM_REF_NODEGROUP),
+                sortorder=None,
+            )
+            merge_tracker_sys_ref.sortorder = 0
+            merge_tracker_sys_ref.save()
+
+            TRACKER_DESCRIPTION_NODEGROUP = "5dff7478-ccdf-11ee-af2a-0242ac180006"
+            TRACKER_DESCRIPTION_NODE = "5dff7e8c-ccdf-11ee-af2a-0242ac180006"
+            TRACKER_DESCRIPTION_TYPE_NODE = "5dff80e4-ccdf-11ee-af2a-0242ac180006"
+            TRACKER_DESCRIPTION_TYPE_DEFAULT = "daa4cddc-8636-4842-b836-eb2e10aabe18"
+            TRACKER_DESCRIPTION_METATYPE_NODE = "5dff8332-ccdf-11ee-af2a-0242ac180006"
+            TRACKER_DESCRIPTION_METATYPE_DEFAULT = (
+                "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            )
+            merge_tracker_sys_ref = Tile(
+                resourceinstance=merge_tracker_resource,
+                data={
+                    TRACKER_DESCRIPTION_NODE: {
+                        "en": {
+                            "value": "Monument Revision changes have been merged into the original Monument.",
+                            "direction": "ltr",
+                        }
                     },
-                    {
-                        "resourceId": str(self.monument_resource.resourceinstanceid),
-                        "ontologyProperty": "",
-                        "inverseOntologyProperty": "",
-                    },
-                ]
-            },
-            nodegroup=merge_tracker_associated_resources_nodegroup,
-        )
-        associated_resources_tile.save()
+                    TRACKER_DESCRIPTION_TYPE_NODE: TRACKER_DESCRIPTION_TYPE_DEFAULT,
+                    TRACKER_DESCRIPTION_METATYPE_NODE: TRACKER_DESCRIPTION_METATYPE_DEFAULT,
+                },
+                nodegroup=self.get_nodegroup(TRACKER_DESCRIPTION_NODEGROUP),
+                sortorder=0,
+            )
+            merge_tracker_sys_ref.save()
 
-        # FIXME: Need to configure a system reference number for the tracker resource
+            MergeResources().merge_resources(
+                monument_resource_id, new_monument_resource_id, None
+            )
 
-        # TRACKER_SYSTEM_REF_NODEGROUP = "d31655e2-ccdf-11ee-9264-0242ac180006"
-        # TRACKER_SYSTEM_REF_NODE_VALUE = "d3168288-ccdf-11ee-9264-0242ac180006"
-        # merge_tracker_sys_ref = Tile(
-        #     resourceinstance=merge_tracker_resource,
-        #     data={},
-        #     nodegroup=self.get_nodegroup(TRACKER_SYSTEM_REF_NODEGROUP),
-        #     sortorder=None,
-        # )
-        # merge_tracker_sys_ref.sortorder = 0
-        # print('merge_tracker_sys_ref.data: ', merge_tracker_sys_ref.data)
-        # merge_tracker_sys_ref.data[TRACKER_SYSTEM_REF_NODE_VALUE] = {
-        #     "en": self.generate_random_id(
-        #         "MR",
-        #         TRACKER_SYSTEM_REF_NODEGROUP,
-        #         TRACKER_SYSTEM_REF_NODE_VALUE,
-        #         str(merge_tracker_resource.resourceinstanceid),
-        #     ),
-        #     "direction": "ltr",
-        # }
-        # merge_tracker_sys_ref.save()
-
-        MergeResources().merge_resources(
-            monument_resource_id, new_monument_resource_id, None
-        )
-
-        self.new_monument_resource.delete(user=request.user)
+            self.new_monument_resource.delete(user=request.user)
