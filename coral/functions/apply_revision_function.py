@@ -332,7 +332,7 @@ class ApplyRevisionFunction(BaseFunction):
                     TRACKER_SYSTEM_REF_NODE_VALUE: {
                         "en": {
                             "value": self.generate_random_id(
-                                "MR",
+                                "MRT",
                                 TRACKER_SYSTEM_REF_NODEGROUP,
                                 TRACKER_SYSTEM_REF_NODE_VALUE,
                                 str(merge_tracker_resource.resourceinstanceid),
