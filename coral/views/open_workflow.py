@@ -73,7 +73,7 @@ class OpenWorkflow(View):
         for tile in tiles:
             nodegroup_id = str(tile.nodegroup.nodegroupid)
 
-            parent_tile_ids = self.open_config.get("parentTileIds", [])
+            parent_tile_ids = self.open_config.get("parentTileIds", {})
             parent_nodegroup_id = (
                 str(tile.parenttile.nodegroup.nodegroupid) if tile.parenttile else None
             )
@@ -95,7 +95,7 @@ class OpenWorkflow(View):
             tiles = grouped_tiles.get(nodegroup_id, [])
 
             tile = None
-            parent_tile_ids = self.open_config.get("parentTileIds", [])
+            parent_tile_ids = self.open_config.get("parentTileIds", {})
             if parent_tile_ids and nodegroup_id in parent_tile_ids:
                 tile_id = parent_tile_ids.get(nodegroup_id)
                 if tile_id:
