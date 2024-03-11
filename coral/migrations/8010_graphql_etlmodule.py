@@ -36,6 +36,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("models", "8009_etlmodule"),
+        ("models", "10165_etlmodule_reversible"),
     ]
 
     operations = [
