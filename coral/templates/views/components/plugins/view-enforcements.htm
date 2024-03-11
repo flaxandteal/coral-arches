@@ -1,4 +1,8 @@
-<div style="margin: 15px; display: flex-wrap: wrap;">
+<div style="margin: 15px; display: flex-wrap: wrap; width: 100%">
+  <div data-bind="component: {
+    name: 'paging-filter',
+    params: commonSearchModel
+  }"></div>
   <!-- ko foreach: { data: consultations, as: 'consultation', noChildContext: true } -->
   <div class="card-grid-item">
     <div class="panel mar-no">

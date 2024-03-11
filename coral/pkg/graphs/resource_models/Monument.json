@@ -49,7 +49,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Condition Description"
                     },
@@ -211,7 +211,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Threats Description"
                     },
@@ -265,7 +265,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -373,7 +373,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "CM References"
                     },
@@ -809,7 +809,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Monument Names"
                     },
@@ -872,7 +872,7 @@
                     "instructions": {
                         "en": "Use to record any designation or protection regimes directly associated with the application area."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Designation and Protection Assignment"
                     },
@@ -926,7 +926,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Construction Phases"
                     },
@@ -953,7 +953,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Scheduling Reason Description"
                     },
@@ -982,7 +982,7 @@
                     "instructions": {
                         "en": "Administrative, geopolitical areas, localities, and other areas (e.g.: Research or zoning areas)  "
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Localities/Administrative Areas"
                     },
@@ -1011,7 +1011,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Land Use Classification Assignment"
                     },
@@ -1128,7 +1128,7 @@
                     "instructions": {
                         "en": "Used to record the postal address of a resource."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Addresses"
                     },
@@ -1211,7 +1211,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Data"
                     },
@@ -17481,12 +17481,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "id": "e15f7ebb-cda9-4faa-ae94-fb9f8fab4326"
+                    "id": "e09844bd-dbdd-4638-ac3e-f8468a4e2bac"
                 }
             ],
             "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
             "iconclass": "fa fa-bank",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -19447,66 +19447,10 @@
                         },
                         "options": [
                             {
-                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
                                 "selected": false,
                                 "text": {
-                                    "en": "27: Antrim and Newtownabbey"
-                                }
-                            },
-                            {
-                                "id": "3c928df6-dbec-49b0-926d-da947391948e",
-                                "selected": false,
-                                "text": {
-                                    "en": "28: Armagh City Banbridge and Craigavon"
-                                }
-                            },
-                            {
-                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "29: Belfast"
-                                }
-                            },
-                            {
-                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
-                                "selected": false,
-                                "text": {
-                                    "en": "30: Causeway Coast and Glens"
-                                }
-                            },
-                            {
-                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
-                                "selected": false,
-                                "text": {
-                                    "en": "31: Derry City and Strabane"
-                                }
-                            },
-                            {
-                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
-                                "selected": false,
-                                "text": {
-                                    "en": "32: Fermanagh and Omagh"
-                                }
-                            },
-                            {
-                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
-                                "selected": false,
-                                "text": {
-                                    "en": "33: Lisburn and Castlereagh"
-                                }
-                            },
-                            {
-                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "34: Mid and East Antrim"
-                                }
-                            },
-                            {
-                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
-                                "selected": false,
-                                "text": {
-                                    "en": "35: Mid Ulster"
+                                    "en": "37: Ards and North Down"
                                 }
                             },
                             {
@@ -19517,10 +19461,66 @@
                                 }
                             },
                             {
-                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
                                 "selected": false,
                                 "text": {
-                                    "en": "37: Ards and North Down"
+                                    "en": "35: Mid Ulster"
+                                }
+                            },
+                            {
+                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "34: Mid and East Antrim"
+                                }
+                            },
+                            {
+                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
+                                "selected": false,
+                                "text": {
+                                    "en": "33: Lisburn and Castlereagh"
+                                }
+                            },
+                            {
+                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
+                                "selected": false,
+                                "text": {
+                                    "en": "32: Fermanagh and Omagh"
+                                }
+                            },
+                            {
+                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
+                                "selected": false,
+                                "text": {
+                                    "en": "31: Derry City and Strabane"
+                                }
+                            },
+                            {
+                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
+                                "selected": false,
+                                "text": {
+                                    "en": "30: Causeway Coast and Glens"
+                                }
+                            },
+                            {
+                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
+                                "selected": false,
+                                "text": {
+                                    "en": "29: Belfast"
+                                }
+                            },
+                            {
+                                "id": "3c928df6-dbec-49b0-926d-da947391948e",
+                                "selected": false,
+                                "text": {
+                                    "en": "28: Armagh City Banbridge and Craigavon"
+                                }
+                            },
+                            {
+                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "selected": false,
+                                "text": {
+                                    "en": "27: Antrim and Newtownabbey"
                                 }
                             }
                         ]
@@ -23440,17 +23440,10 @@
                         },
                         "options": [
                             {
-                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
                                 "selected": false,
                                 "text": {
-                                    "en": "In progress"
-                                }
-                            },
-                            {
-                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
-                                "selected": false,
-                                "text": {
-                                    "en": "Finished"
+                                    "en": "Enforcement actioned"
                                 }
                             },
                             {
@@ -23461,10 +23454,17 @@
                                 }
                             },
                             {
-                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
                                 "selected": false,
                                 "text": {
-                                    "en": "Enforcement actioned"
+                                    "en": "Finished"
+                                }
+                            },
+                            {
+                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
                                 }
                             }
                         ],
@@ -24633,10 +24633,10 @@
                         },
                         "options": [
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             },
                             {
@@ -24647,10 +24647,10 @@
                                 }
                             },
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             }
                         ]
@@ -24842,10 +24842,10 @@
                         },
                         "options": [
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             },
                             {
@@ -24856,10 +24856,10 @@
                                 }
                             },
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             }
                         ]
@@ -28538,9 +28538,9 @@
                 {
                     "alias": "damage_type",
                     "config": {
-                        "rdmCollection": "b82ee4cf-2f90-4dab-bed7-bda3feaf6d64"
+                        "rdmCollection": "9881e48c-95f1-42da-bc55-76a6b6f34f22"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -30586,17 +30586,10 @@
                         },
                         "options": [
                             {
-                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
                                 "selected": false,
                                 "text": {
-                                    "en": "Contact PSNI"
-                                }
-                            },
-                            {
-                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refer to Enforcement"
+                                    "en": "Resolve with Owner"
                                 }
                             },
                             {
@@ -30607,10 +30600,17 @@
                                 }
                             },
                             {
-                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
                                 "selected": false,
                                 "text": {
-                                    "en": "Resolve with Owner"
+                                    "en": "Refer to Enforcement"
+                                }
+                            },
+                            {
+                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Contact PSNI"
                                 }
                             }
                         ]
@@ -31155,8 +31155,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "c237a206-dbcd-11ee-b0db-0242ac120006",
-                "published_time": "2024-03-06T15:25:26.826"
+                "publicationid": "2e6fb476-dfad-11ee-ba5a-0242ac130006",
+                "published_time": "2024-03-11T13:42:19.647"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -31190,7 +31190,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "24af3710a 2024-02-24 18:16:00 +0000",
+        "git hash": "efac0f4ac 2024-03-06 15:33:23 +0000",
         "os": "Linux",
         "os version": "5.10.0-23-amd64"
     }

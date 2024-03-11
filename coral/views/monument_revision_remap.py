@@ -23,7 +23,32 @@ class MonumentRevisionRemap(View):
     exlucded_aliases = [
         "monument",
         "monument_revision",
-        # "associated_monument_revisions", # Will be used to track revision history
+        "incident_report",
+        "status_type",
+        "status_metatype",
+        "incident_proposal",
+        "action_type",
+        "action_metatype",
+        "approver",
+        "approved_by",
+        "approver_role_type",
+        "approver_metatype",
+        "contact_details",
+        "contact_details_value",
+        "proposal_description_type_n1",
+        "proposal_description_metatype_n1",
+        "proposal_text_n1",
+        "proposal_date",
+        "proposal_date_qualifier",
+        "proposal_date_qualifier_metatype",
+        "proposal_date_value",
+        "intended_dates",
+        "intended_date_qualifier",
+        "intended_date_qualifier_metatype",
+        "intended_end_date",
+        "intended_start_date",
+        "work_carried_out_by",
+        "work_carried_out_by_value",
     ]
     parent_nodegroup_ids = []
     created_parent_tiles = {}
