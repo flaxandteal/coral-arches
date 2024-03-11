@@ -49,7 +49,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Descriptions"
                     },
@@ -103,7 +103,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Resources"
                     },
@@ -130,7 +130,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -991,10 +991,33 @@
                     "rangenode_id": "d3167cf2-ccdf-11ee-9264-0242ac180006"
                 }
             ],
-            "functions_x_graphs": [],
+            "functions_x_graphs": [
+                {
+                    "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "",
+                                "string_template": ""
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "",
+                                "string_template": ""
+                            },
+                            "name": {
+                                "nodegroup_id": "d31655e2-ccdf-11ee-9264-0242ac180006",
+                                "string_template": "<ResourceID>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                    "id": "db9d7ae3-612e-4917-8f53-5defe5d8fbbb"
+                }
+            ],
             "graphid": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
             "iconclass": "fa fa-copy",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -1763,7 +1786,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "342cfbb09 2024-01-19 09:20:12 +0000",
+        "git hash": "efac0f4ac 2024-03-06 15:33:23 +0000",
         "os": "Linux",
         "os version": "5.10.0-23-amd64"
     }
