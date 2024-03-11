@@ -49,7 +49,6 @@ class MonumentRevisionRemap(View):
         "intended_start_date",
         "work_carried_out_by",
         "work_carried_out_by_value",
-        # "associated_monument_revisions", # Will be used to track revision history
     ]
     parent_nodegroup_ids = []
     created_parent_tiles = {}
