@@ -280,6 +280,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
+      - name: run Coral-Arches server
+        id: run_Coral-Arches_server
+        run: make run
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
