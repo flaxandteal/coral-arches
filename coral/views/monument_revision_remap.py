@@ -186,7 +186,9 @@ class MonumentRevisionRemap(View):
 
         monument_tiles = Tile.objects.filter(resourceinstance=self.monument_resource)
 
-        self.revision_resource = Resource.objects.create(graph=revision_graph)
+        self.revision_resource = Resource.objects.create(
+            graph=revision_graph, principaluser=request.user
+        )
         revision_resource_id = str(self.revision_resource.resourceinstanceid)
 
         failed_node_data = {}
@@ -225,7 +227,9 @@ class MonumentRevisionRemap(View):
                 print("Failed while remapping the monument tile data: ", e)
                 continue
 
-        parent_monument_nodegroup = self.get_nodegroup("6375be6e-dc64-11ee-924e-0242ac120006")
+        parent_monument_nodegroup = self.get_nodegroup(
+            "6375be6e-dc64-11ee-924e-0242ac120006"
+        )
         parent_monument_tile = Tile(
             resourceinstance=self.revision_resource,
             data={
