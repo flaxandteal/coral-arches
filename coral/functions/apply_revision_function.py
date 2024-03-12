@@ -237,7 +237,9 @@ class ApplyRevisionFunction(BaseFunction):
                 resourceinstance=self.revision_resource
             )
 
-            self.new_monument_resource = Resource.objects.create(graph=monument_graph)
+            self.new_monument_resource = Resource.objects.create(
+                graph=monument_graph, principaluser=request.user
+            )
             new_monument_resource_id = str(
                 self.new_monument_resource.resourceinstanceid
             )
@@ -290,7 +292,7 @@ class ApplyRevisionFunction(BaseFunction):
             )
             merge_resource_tracker_graph = self.get_graph(TRACKER_GRAPH_ID)
             merge_tracker_resource = Resource.objects.create(
-                graph=merge_resource_tracker_graph
+                graph=merge_resource_tracker_graph, principaluser=request.user
             )
             merge_tracker_associated_resources_nodegroup = self.get_nodegroup(
                 TRACKER_ASSOCIATED_RESOURCES_NODEGROUP
