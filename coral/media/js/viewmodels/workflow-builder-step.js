@@ -78,16 +78,22 @@ define([
 
     this.stepIdx = this.parentWorkflow.stepIdx(this.stepId);
 
+    this.informationBoxData = ko.computed(() => {
+      return this.informationBoxHeading() || this.informationBoxText()
+        ? {
+            heading: this.informationBoxHeading() ? this.informationBoxHeading() : undefined,
+            text: this.informationBoxText() ? this.informationBoxText() : undefined
+          }
+        : undefined;
+    }, this);
+
     this.getStepData = () => {
       return {
         title: this.title(),
         name: this.stepName(),
         workflowstepclass: 'workflow-form-component',
         required: this.required(),
-        informationboxdata: {
-          heading: this.informationBoxHeading(),
-          text: this.informationBoxText()
-        },
+        informationboxdata: this.informationBoxData(),
         layoutSections: [
           {
             componentConfigs: this.cards().map((card) => card.getComponentData())
