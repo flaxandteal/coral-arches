@@ -86,12 +86,12 @@ define([
       return {
         pluginid: this.workflowId(),
         name: this.workflowName(),
-        icon: 'fa fa-check',
+        icon: this.initWorkflowConfig().icon,
         component: 'views/components/plugins/workflow-builder-loader',
         componentname: 'workflow-builder-loader',
         config: {
           show: this.showOnSidebar(),
-          initWorkflow: this.builderConfig().getInitWorkflowConfig(),
+          initWorkflow: this.initWorkflowConfig(),
           graphId: this.graphId(),
           stepData: this.workflowSteps().map((step) => step.getStepData())
         },
@@ -160,7 +160,7 @@ define([
         dataType: 'json',
         data: JSON.stringify({
           workflowId: this.workflowId(),
-          initWorkflow: this.builderConfig().getInitWorkflowConfig()
+          initWorkflow: this.initWorkflowConfig()
         }),
         context: this,
         error: (response, status, error) => {
@@ -190,6 +190,10 @@ define([
 
     this.showOnSidebar = ko.computed(() => {
       return this.builderConfig() ? this.builderConfig().showOnSidebar() : false;
+    }, this);
+
+    this.initWorkflowConfig = ko.computed(() => {
+      return this.builderConfig() ? this.builderConfig().getInitWorkflowConfig() : {};
     }, this);
 
     /**
@@ -240,9 +244,9 @@ define([
               id: resourceIdPaths.length
             };
             pathData.text += ` > ${card.title()}`;
-            pathData.resourceIdPath = `['${step.stepId}']['${card.cardId}'][0]['resourceid']['resourceInstanceId']`;
-            pathData.tileIdPath = `['${step.stepId}']['${card.cardId}'][0]['tileId']`;
-            pathData.basePath = `['${step.stepId}']['${card.cardId}'][0]['resourceid']`;
+            pathData.resourceIdPath = `['${step.stepName()}']['${card.cardId}'][0]['resourceid']['resourceInstanceId']`;
+            pathData.tileIdPath = `['${step.stepName()}']['${card.cardId}'][0]['tileId']`;
+            pathData.basePath = `['${step.stepName()}']['${card.cardId}'][0]['resourceid']`;
             resourceIdPaths.push(pathData);
           }
         });
