@@ -15,7 +15,7 @@ define([
     viewModel: function (params) {
       this.componentName = params.plugin.slug;
 
-      this.stepConfig = params.stepData;
+      this.stepConfig = params.stepConfig;
 
       OpenableWorkflow.apply(this, [params]);
       this.quitUrl = arches.urls.plugin('init-workflow');

@@ -301,7 +301,7 @@ class WorkflowBuilderWorkflowPlugins(View):
 
         workflow_builder_plugins = []
         for instance in instances:
-            if "stepData" in instance.config:
+            if "stepConfig" in instance.config:
                 workflow_builder_plugins.append(instance)
 
         return JSONResponse({"workflows": workflow_builder_plugins})

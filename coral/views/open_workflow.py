@@ -236,7 +236,7 @@ class OpenWorkflow(View):
             self.step_config = step_config
         else:
             plugin = self.get_plugin(workflow_slug)
-            self.step_config = plugin.config["stepData"]  # <-- This is confusing
+            self.step_config = plugin.config["stepConfig"]
 
         # Get all the resources tiles
 

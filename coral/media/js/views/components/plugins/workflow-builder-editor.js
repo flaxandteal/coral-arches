@@ -34,17 +34,17 @@ define([
     this.graphNodegroupOptions = ko.observable({});
     this.graphCards = ko.observable({});
 
-    this.addStep = (stepData) => {
+    this.addStep = (stepConfig) => {
       const step = new WorkflowBuilderStep({
-        title: stepData?.title,
-        cards: stepData?.layoutSections[0].componentConfigs,
+        title: stepConfig?.title,
+        cards: stepConfig?.layoutSections[0].componentConfigs,
         graphId: this.graphId(),
-        required: stepData?.required,
-        stepName: stepData?.name,
+        required: stepConfig?.required,
+        stepName: stepConfig?.name,
         parentWorkflow: this,
         informationBox: {
-          heading: stepData?.informationboxdata?.heading,
-          text: stepData?.informationboxdata?.text
+          heading: stepConfig?.informationboxdata?.heading,
+          text: stepConfig?.informationboxdata?.text
         }
       });
       this.workflowSteps().push(step);
@@ -55,8 +55,8 @@ define([
     };
 
     this.loadSteps = (steps) => {
-      steps?.forEach((stepData) => {
-        this.addStep(stepData);
+      steps?.forEach((stepConfig) => {
+        this.addStep(stepConfig);
       });
     };
 
@@ -93,7 +93,7 @@ define([
           show: this.showOnSidebar(),
           initWorkflow: this.initWorkflowConfig(),
           graphId: this.graphId(),
-          stepData: this.workflowSteps().map((step) => step.getStepData())
+          stepConfig: this.workflowSteps().map((step) => step.getStepConfig())
         },
         slug: this.workflowSlug(),
         sortorder: 0
@@ -271,7 +271,7 @@ define([
 
     this.loadExistingSteps = () => {
       if (this.workflowId()) {
-        this.loadSteps(this.workflowPlugin()?.config.stepData);
+        this.loadSteps(this.workflowPlugin()?.config.stepConfig);
       }
     };
 

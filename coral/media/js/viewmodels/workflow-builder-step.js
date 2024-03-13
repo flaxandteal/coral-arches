@@ -87,7 +87,7 @@ define([
         : undefined;
     }, this);
 
-    this.getStepData = () => {
+    this.getStepConfig = () => {
       return {
         title: this.title(),
         name: this.stepName(),
