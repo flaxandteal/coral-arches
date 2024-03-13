@@ -185,7 +185,6 @@ class CasbinPermissionFramework(PermissionFramework):
             #             obj_key = self._obj_to_str(nodegroup)
             #             self._enforcer.add_policy(group_key, obj_key, str(act))
             for permission in group.permissions:
-                print(permission.action, [self._obj_to_str(obj) for obj in permission.object])
                 for act in permission.action:
                     for obj in permission.object:
                         obj_key = self._obj_to_str(obj)
@@ -682,7 +681,7 @@ class CasbinPermissionFramework(PermissionFramework):
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         return restricted_ids
 
-    def user_has_resource_model_permissions(self, user, perms, resource):
+    def user_has_resource_model_permissions(self, user, perms, resource=None, graph_id=None):
         """
         Checks if a user has any explicit permissions to a model's nodegroups
 
@@ -690,14 +689,18 @@ class CasbinPermissionFramework(PermissionFramework):
         user -- the user to check
         perms -- the permssion string eg: "read_nodegroup" or list of strings
         resource -- a resource instance to check if a user has permissions to that resource's type specifically
+        graph_id -- a graph id to check if a user has permissions to that graph's type specifically
 
         """
 
         # Only considers groups a user is assigned to.
         if user.is_superuser:
             return True
-        groups = self._enforcer.get_implicit_users_for_resource(f"gp:{resource.graph_id}")
-        print(groups, "GROUPS")
+
+        if resource:
+            graph_id = resource.graph_id
+
+        groups = self._enforcer.get_implicit_users_for_resource(f"gp:{graph_id}")
         group_ids = {
             group[3:] for group, _, act in groups
             if group.startswith("dg:") and
@@ -738,7 +741,6 @@ class CasbinPermissionFramework(PermissionFramework):
         allowed = set()
         subj = self._subj_to_str(user)
         graphs = self._enforcer.get_implicit_permissions_for_user(subj)
-        print(graphs, "GRAPHS", subj)
         permissioned_graphs = set()
         for _, graph, act in graphs:
             if not graph.startswith("gp:"):
