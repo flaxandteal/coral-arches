@@ -241,7 +241,7 @@ define([
       const index = this.workflowResourceIdPathOptions().findIndex((path) => {
         return (
           path.resourceIdPath?.includes(this.cardId) &&
-          path.resourceIdPath?.includes(this.parentStep.stepId)
+          path.resourceIdPath?.includes(this.parentStep.stepName())
         );
       });
       return index == 1;
