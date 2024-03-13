@@ -385,7 +385,7 @@ class WorkflowBuilderUpdateInitWorkflow(View):
 
         init_workflow = {
             "workflowid": str(plugin.pluginid),
-            "slug": plugin.slug,
+            "slug": init_data["slugPrefix"] + plugin.slug,
             "name": init_data["name"],
             "icon": init_data["icon"],
             "bgColor": init_data["bgColor"],

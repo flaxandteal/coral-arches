@@ -22,6 +22,7 @@ define([
     this.initIcon = ko.observable(params?.initWorkflow?.icon || 'fa fa-file-text');
     this.initBackgroundColour = ko.observable(params?.initWorkflow?.bgColor || '#617099');
     this.initCircleColour = ko.observable(params?.initWorkflow?.circleColor || '#4a5e94');
+    this.initSlugPrefix = ko.observable(params?.initWorkflow?.slugPrefix || '');
 
     this.iconData = ko.observableArray(params?.iconData || []);
     this.iconFilter = ko.observable('');
@@ -39,7 +40,8 @@ define([
         desc: this.initDescription(),
         icon: this.initIcon(),
         bgColor: this.initBackgroundColour(),
-        circleColor: this.initCircleColour()
+        circleColor: this.initCircleColour(),
+        slugPrefix: this.initSlugPrefix()
       };
     };
   };
