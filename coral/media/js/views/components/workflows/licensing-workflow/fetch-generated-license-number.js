@@ -164,8 +164,8 @@ define([
       params.pageVm.alert(
         new AlertViewModel(
           'ep-alert-blue',
-          `Application status is "Final". License Number: ${licenseNumber}. Click "Ok" to continue.`,
-          `This application's status has been moved to "Final". With that a license number has been genereated that will now be used to identify this application. Example 'Excavation License ${licenseNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
+          `Application status is "Granted". License Number: ${licenseNumber}. Click "Ok" to continue.`,
+          `This application's status has been moved to "Granted". With that a license number has been genereated that will now be used to identify this application. Example 'Excavation License ${licenseNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
           null,
           () => {
             params.form.complete(true);

@@ -81,7 +81,7 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    tileid: "['init-step']['app-id'][0]['resourceid']['cmRefTileId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['cmRefTileId']"
                   }
                 },
                 {
@@ -198,6 +198,19 @@ define([
                       'a541e035-f121-11eb-a3d9-a87eeabdefba' // street_metatype
                     ]
                   }
+                },
+                {
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
+                    nodegroupid: '5f81a8d4-d7de-11ee-b2c1-0242ac120006',
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
+                    semanticName: 'Council'
+                  },
+                  tilesManaged: 'one',
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'e0a60085-eeeb-44e0-83de-2dcb5ad38d95'
                 },
                 {
                   componentName: 'default-card-util',
@@ -357,10 +370,10 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']",
                     hiddenNodes: [
-                      "777596ba-48cf-11ee-8e4e-0242ac140007",
-                      "aec103a2-48cf-11ee-8e4e-0242ac140007",
-                      "c2f40174-5dd5-11ee-ae2c-0242ac120008",
-                      "3ff6e2ce-cf35-11ee-a12a-0242ac180006"
+                      '777596ba-48cf-11ee-8e4e-0242ac140007',
+                      'aec103a2-48cf-11ee-8e4e-0242ac140007',
+                      'c2f40174-5dd5-11ee-ae2c-0242ac120008',
+                      '3ff6e2ce-cf35-11ee-a12a-0242ac180006'
                     ]
                   }
                 },
@@ -381,7 +394,7 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    tileid: "['init-step']['app-id'][0]['resourceid']['cmRefTileId']",
+                    tileid: "['init-step']['app-id'][0]['resourceid']['cmRefTileId']"
                   }
                 },
                 {
@@ -481,9 +494,9 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util', // Has fix for many tiles
                   uniqueInstanceName: 'report-info',
-                  tilesManaged: 'one',
+                  tilesManaged: 'many',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',

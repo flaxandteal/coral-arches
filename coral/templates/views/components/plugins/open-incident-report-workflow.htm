@@ -31,7 +31,9 @@
       data-bind="component: {
         name: 'resource-instance-select-widget',
         params: {
-          graphids: graphIds(),
+          graphids: [
+            graphId(),
+          ],
           config: {
             label: 'Select License',
             placeholder: 'Start new or please select below',
@@ -41,15 +43,37 @@
         }
       }"
     ></div>
+    <div  style="max-width: 620px !important">
+    <domain-select-widget
+      params="
+        node: {
+          config: {
+            options: parentTileOptions,
+            multiple: false
+          },
+          configKeys: configKeys
+        },
+        config: {
+          placeholder: 'Start new or please select below',
+          
+          label: 'Selected Incident Report',
+        },
+        value: selectedIncidentReport,
+        loading: false,
+        pageVm: $root
+      "
+    ></domain-select-widget>
+      </div>
   </div>
   <div class="row widget-wrapper" style="display: flex">
     <!-- ko if: !workflow().disableStartNew -->
     <button
       class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
       style="min-height: 40.56px"
-      data-bind="click: () => {
-        window.location.href = workflowUrl();
-      }"
+      data-bind="click: async () => {
+        {% comment %} window.location.href = workflowUrl(); {% endcomment %}
+        await openWorkflow();
+      }, disable: !selectedResource()"
     >
       <span>Start New</span>
     </button>
@@ -59,7 +83,7 @@
       style="min-height: 40.56px"
       data-bind="click: async () => {
         await openWorkflow();
-      }, disable: !selectedResource()"
+      }, disable: !selectedIncidentReport()"
     >
       <span>Open Selected</span>
     </button>

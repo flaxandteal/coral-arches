@@ -3,7 +3,7 @@ define([
   'knockout',
   'knockout-mapping',
   'arches',
-  'templates/views/components/plugins/open-workflow.htm'
+  'templates/views/components/plugins/open-incident-report-workflow.htm'
 ], function ($, ko, koMapping, arches, pageTemplate) {
   const openWorkflowViewModel = function (params) {
     this.loading = params.loading;
@@ -13,21 +13,74 @@ define([
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
     this.WORKFLOW_RECENTLY_OPENED_LABEL = 'workflow-recently-opened';
     this.RESOURCE_ID_LABEL = 'resource-id';
+    this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
 
     this.openableWorkflows = params.openableWorkflows;
     this.selectedResource = ko.observable();
     this.workflowUrl = ko.observable();
     this.workflowSlug = ko.observable();
     this.workflow = ko.observable();
-    this.graphIds = ko.observable();
+    this.graphId = ko.observable();
 
     this.resourceName = ko.observable();
     this.recentlyOpened = ko.observable();
+
+    this.incidentTiles = ko.observableArray();
+
+    this.configKeys = ko.observable({ placeholder: 0 });
+
+    this.selectedIncidentReport = ko.observable();
+
+    this.addtionalConfigData = ko.observable({
+      parentTileIds: {}
+    });
 
     this.recentlyOpenedResources = ko.computed(() => {
       const items = this.recentlyOpened()?.[this.workflowSlug()];
       return items ? Object.values(items) : [];
     }, this);
+
+    this.parentTileOptions = ko.observableArray();
+
+    this.fetchTileData = async (resourceId, nodeId) => {
+      const tilesResponse = await window.fetch(
+        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+          (nodeId ? `?nodeid=${nodeId}` : '')
+      );
+      const data = await tilesResponse.json();
+      return data.tiles;
+    };
+
+    this.selectedResource.subscribe(async (resourceId) => {
+      if (!resourceId) {
+        this.parentTileOptions([]);
+        this.selectedIncidentReport(null);
+        return;
+      }
+      this.getParentTileOptions(resourceId);
+    });
+
+    this.getParentTileOptions = async (resourceId) => {
+      const tiles = await this.fetchTileData(resourceId, '20017860-d711-11ee-9dd0-0242ac120006');
+      this.parentTileOptions(
+        tiles.map((tile, idx) => {
+          return {
+            text: tile?.data['2001a33a-d711-11ee-9dd0-0242ac120006']?.en?.value,
+            tile: tile,
+            id: tile.parenttile
+          };
+        })
+      );
+    };
+
+    this.selectedIncidentReport.subscribe((tileId) => {
+      this.addtionalConfigData()['parentTileIds']['d3ff3fe6-d62b-11ee-9454-0242ac180006'] = tileId;
+      this.setAdditionalOpenConfigData();
+    });
+
+    this.setAdditionalOpenConfigData = () => {
+      localStorage.setItem(this.OPEN_WORKFLOW_CONFIG, JSON.stringify(this.addtionalConfigData()));
+    };
 
     this.getWorkflowSlug = () => {
       let searchParams = new URLSearchParams(window.location.search);
@@ -43,13 +96,13 @@ define([
       return this.openableWorkflows.find((workflow) => workflow.slug === this.workflowSlug());
     };
 
-    this.fetchTileData = async (resourceId) => {
-      const tilesResponse = await window.fetch(
-        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
-      );
-      const data = await tilesResponse.json();
-      return data.tiles;
-    };
+    // this.fetchTileData = async (resourceId) => {
+    //   const tilesResponse = await window.fetch(
+    //     arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
+    //   );
+    //   const data = await tilesResponse.json();
+    //   return data.tiles;
+    // };
 
     this.getNameFromNodeId = (tiles, nodeId) => {
       const tile = tiles.find((tile) => nodeId in tile.data);
@@ -165,10 +218,11 @@ define([
 
     this.init = async () => {
       this.loading(true);
+      this.setAdditionalOpenConfigData();
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
-      this.graphIds(this.workflow().graphIds);
+      this.graphId(this.workflow().graphId);
       this.recentlyOpened(
         JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_OPENED_LABEL)) || {}
       );
@@ -184,7 +238,7 @@ define([
     this.init();
   };
 
-  return ko.components.register('open-workflow', {
+  return ko.components.register('open-incident-report-workflow', {
     viewModel: openWorkflowViewModel,
     template: pageTemplate
   });
