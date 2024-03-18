@@ -268,7 +268,7 @@ jobs:
     runs-on: [self-hosted]
     needs: [Build-Arches-Final]
     container:
-      image: cypress/included:4.0
+      image: cypress/included:4.0.0
     env:
       HOME: ""
       DEBUG: "cypress:*"
