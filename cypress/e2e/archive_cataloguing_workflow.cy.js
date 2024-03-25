@@ -60,7 +60,7 @@ describe('Working With The Archive Source Workflow', function () {
         cy.contains('11').click();
         cy.contains("Save and Continue").click();
     })
-    it.only('Test Page 4: Repository Storage Location', function () {
+    it('Test Page 4: Repository Storage Location', function () {
         cy.login();
         cy.visit("http://localhost:8000/plugins/init-workflow");
         cy.contains("Workflows");
@@ -85,5 +85,36 @@ describe('Working With The Archive Source Workflow', function () {
         cy.get('[aria-label="Storage Box Name"]').should('be.visible').click().type('Storage Box Name');
         cy.contains("Save and Continue").click();
 
+    })
+    it.only('Test Page 5: Repository Storage Location', function () {
+        cy.login();
+        cy.visit("http://localhost:8000/plugins/init-workflow");
+        cy.contains("Workflows");
+        cy.contains("A workflow for Archive Sources and Cataloguing").click();
+        cy.contains("Start New").click();
+        // Starting the workflow
+        // Initial Step
+        cy.wait(10000);
+        cy.contains("Save and Continue").click();
+
+        // Page 2
+        cy.wait(10000);
+        cy.contains('Next Step').should('be.visible').click();
+
+        // Page 3
+        cy.wait(10000);
+        cy.contains('Next Step').should('be.visible').click();
+
+        // Page 4
+        cy.wait(10000);
+        cy.contains('Next Step').should('be.visible').click();
+
+        // Page 5
+        cy.get('[aria-label="Start Date"]').should('be.visible').click();
+        cy.contains('11').click();
+        cy.get('[aria-label="End Date"]').should('be.visible').click();
+        cy.contains('11').click();
+        cy.get('[class="btn btn-workflow-tile btn-success"]').click();
+        cy.contains("Save and Continue").click();
     })
 })
