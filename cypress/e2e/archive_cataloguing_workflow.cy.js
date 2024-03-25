@@ -36,7 +36,7 @@ describe('Working With The Archive Source Workflow', function () {
         cy.contains("Save and Continue").click();
 
     })
-    it('Test Page 3: Archive Source Details', function () {
+    it('Test Page 3: Archive Source Creation', function () {
         cy.login();
         cy.visit("http://localhost:8000/plugins/init-workflow");
         cy.contains("Workflows");
@@ -60,7 +60,7 @@ describe('Working With The Archive Source Workflow', function () {
         cy.contains('11').click();
         cy.contains("Save and Continue").click();
     })
-    it.only('Test Page 4: Archive Source Details', function () {
+    it.only('Test Page 4: Repository Storage Location', function () {
         cy.login();
         cy.visit("http://localhost:8000/plugins/init-workflow");
         cy.contains("Workflows");
