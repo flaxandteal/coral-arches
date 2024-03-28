@@ -143,6 +143,25 @@
           }
         ],
         "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "summary-step",
+        "title": "Enforcement Summary",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "enforcement-summary-step"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
       }
     ]
   },
