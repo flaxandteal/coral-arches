@@ -50,6 +50,36 @@ define([
       associatedResources: {
         label: 'Resources',
         nodegroupId: 'a78e548a-b554-11ee-805b-0242ac120006'
+      },
+      name: {
+        label: 'Name',
+        nodegroupId: '2a6b7040-b555-11ee-baf6-0242ac120006',
+        renderNodeIds: ['2a6b9840-b555-11ee-baf6-0242ac120006']
+      },
+      status: {
+        label: 'Status',
+        nodegroupId: 'ac823b90-b555-11ee-805b-0242ac120006',
+        renderNodeIds: ['c9711ef6-b555-11ee-baf6-0242ac120006']
+      },
+      crimeRef: {
+        label: 'Crime References',
+        nodegroupId: '0674ff12-b5e6-11ee-a372-0242ac120006',
+        renderNodeIds: ['06750cf0-b5e6-11ee-a372-0242ac120006']
+      },
+      agreedAction: {
+        label: 'Agreed Action Description',
+        nodegroupId: '7b7c6466-b556-11ee-baf6-0242ac120006',
+        renderNodeIds: ['7b7c6b00-b556-11ee-baf6-0242ac120006']
+      },
+      currentPosition: {
+        label: 'Current Position Description',
+        nodegroupId: 'b6cef4d4-b556-11ee-805b-0242ac120006',
+        renderNodeIds: ['b6cefcb8-b556-11ee-805b-0242ac120006']
+      },
+      result: {
+        label: 'Result Description',
+        nodegroupId: 'f3fbe146-b556-11ee-805b-0242ac120006',
+        renderNodeIds: ['f3fbe7b8-b556-11ee-805b-0242ac120006']
       }
     };
 
