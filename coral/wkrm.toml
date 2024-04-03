@@ -2,6 +2,9 @@
 model_name = "Person"
 graphid = "22477f01-1a44-11e9-b0a9-000d3ab1e588"
 
+[Person.remapping]
+title = "name.full_name"
+
 [Group]
 model_name = "Group"
 graphid = "07883c9e-b25c-11e9-975a-a4d18cec433a"
