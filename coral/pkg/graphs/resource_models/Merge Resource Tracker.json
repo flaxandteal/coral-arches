@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "084c99eb-a5a0-44bd-b27a-6bb2c1be4a8e",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Merged Resource Data"
+                    },
+                    "nodegroup_id": "3d1a1858-f197-11ee-9b0c-0242ac170006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "3ff611aa-cce2-11ee-9264-0242ac180006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -137,6 +164,33 @@
                     "nodegroup_id": "d31655e2-ccdf-11ee-9264-0242ac180006",
                     "sortorder": 11,
                     "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "fd434a5a-fd9e-42ff-a4fe-2956662ae21e",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Base Resource Data"
+                    },
+                    "nodegroup_id": "07cf7760-f197-11ee-9b0c-0242ac170006",
+                    "sortorder": null,
+                    "visible": true
                 }
             ],
             "cards_x_nodes_x_widgets": [
@@ -248,6 +302,35 @@
                     "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "fd434a5a-fd9e-42ff-a4fe-2956662ae21e",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Base Resource Data",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": true,
+                        "width": "100%%"
+                    },
+                    "id": "563d10d1-59eb-450b-bab6-7b80b87c967f",
+                    "label": {
+                        "en": "Base Resource Data"
+                    },
+                    "node_id": "07cf7760-f197-11ee-9b0c-0242ac170006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "5dff7900-ccdf-11ee-af2a-0242ac180006",
@@ -385,6 +468,35 @@
                     "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "084c99eb-a5a0-44bd-b27a-6bb2c1be4a8e",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Merged Resource Data",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "System data storage"
+                        },
+                        "uneditable": true,
+                        "width": "100%"
+                    },
+                    "id": "76ec2936-8959-4cc9-a209-3c44dfd102db",
+                    "label": {
+                        "en": "Merged Resource Data"
+                    },
+                    "node_id": "3d1a1858-f197-11ee-9b0c-0242ac170006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "9967e5e2-cce2-11ee-af2a-0242ac180006",
@@ -876,11 +988,29 @@
                 {
                     "description": null,
                     "domainnode_id": "33f78634-ccdf-11ee-af2a-0242ac180006",
+                    "edgeid": "88dc51c6-386e-48b3-9447-87e5387e2905",
+                    "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                    "rangenode_id": "07cf7760-f197-11ee-9b0c-0242ac170006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "33f78634-ccdf-11ee-af2a-0242ac180006",
                     "edgeid": "8acd3d5a-a1fc-485b-9a98-8d96d6598e4f",
                     "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P10i_contains",
                     "rangenode_id": "9967e2ea-cce2-11ee-af2a-0242ac180006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "33f78634-ccdf-11ee-af2a-0242ac180006",
+                    "edgeid": "ac7c4af0-5ad5-4656-b001-262001148943",
+                    "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                    "rangenode_id": "3d1a1858-f197-11ee-9b0c-0242ac170006"
                 },
                 {
                     "description": null,
@@ -1012,7 +1142,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
-                    "id": "db9d7ae3-612e-4917-8f53-5defe5d8fbbb"
+                    "id": "18284fa7-01c6-4e32-b771-3edae06bb054"
                 }
             ],
             "graphid": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
@@ -1024,6 +1154,18 @@
                 "en": "Merge Resource Tracker"
             },
             "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "07cf7760-f197-11ee-9b0c-0242ac170006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "3d1a1858-f197-11ee-9b0c-0242ac170006",
+                    "parentnodegroup_id": null
+                },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
@@ -1057,6 +1199,29 @@
             ],
             "nodes": [
                 {
+                    "alias": "base_resource_data",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Base Resource Data",
+                    "nodegroup_id": "07cf7760-f197-11ee-9b0c-0242ac170006",
+                    "nodeid": "07cf7760-f197-11ee-9b0c-0242ac170006",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D9_Data_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": null,
                     "config": {
                         "en": ""
@@ -1076,6 +1241,29 @@
                     "nodeid": "33f78634-ccdf-11ee-af2a-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E24_Physical_Human-Made_Thing",
                     "parentproperty": "",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "merged_resource_data",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Merged Resource Data",
+                    "nodegroup_id": "3d1a1858-f197-11ee-9b0c-0242ac170006",
+                    "nodeid": "3d1a1858-f197-11ee-9b0c-0242ac170006",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D9_Data_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -1749,8 +1937,8 @@
             "publication": {
                 "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
                 "notes": null,
-                "publicationid": "486516e4-df9b-11ee-a08e-0242ac130006",
-                "published_time": "2024-03-11T11:34:12.257"
+                "publicationid": "b310c69c-f1c9-11ee-ad6c-0242ac170006",
+                "published_time": "2024-04-03T14:51:49.000"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -1786,7 +1974,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "efac0f4ac 2024-03-06 15:33:23 +0000",
+        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
         "os version": "5.10.0-23-amd64"
     }
