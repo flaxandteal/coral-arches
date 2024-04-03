@@ -7,6 +7,7 @@ import uuid
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from copy import deepcopy
+from arches.app.utils.data_management.resources.exporter import ResourceExporter
 
 logger = logging.getLogger(__name__)
 
@@ -110,7 +111,7 @@ class MergeResources(View):
         except Resource.DoesNotExist:
             raise f"Resource ID ({resource_id}) does not exist"
         return resource
-    
+
     def get_nodegroup(self, nodegroup_id):
         nodegroup = None
         try:
@@ -133,17 +134,17 @@ class MergeResources(View):
             if resource["resourceId"] not in resource_map:
                 resource_map[resource["resourceId"]] = resource
         return list(resource_map.values())
-    
+
     def merge_list(self, base_node_value, merge_node_value):
         return list(set(base_node_value + merge_node_value))
-    
+
     def merge_geojson_feature_collection(self, base_node_value, merge_node_value):
         feature_map = {}
         result = deepcopy(merge_node_value)
-        for feature in base_node_value['features'] + merge_node_value['features']:
+        for feature in base_node_value["features"] + merge_node_value["features"]:
             if feature["id"] not in feature_map:
                 feature_map[feature["id"]] = feature
-        result['features'] = list(feature_map.values())
+        result["features"] = list(feature_map.values())
         return result
 
     def merge_tile_data(self, base_tile_data, merge_tile_data):
@@ -205,8 +206,90 @@ class MergeResources(View):
                         base_tile_data[node_id], merge_tile_data[node_id]
                     )
         return result
-    
-    def merge_resources(self, base_resource_id, merge_resource_id, merge_tracker_resource_id):
+
+    def jsonify_original_resources(
+        self, base_resource_id, merge_resource_id, merge_tracker_resource_id
+    ):
+        resource_exporter = ResourceExporter("json", configs=None, single_file=False)
+        base_json_file = resource_exporter.export(
+            graph_id=self.graph.graphid,
+            resourceinstanceids=[base_resource_id],
+            languages=None,
+        )
+        merge_json_file = resource_exporter.export(
+            graph_id=self.graph.graphid,
+            resourceinstanceids=[merge_resource_id],
+            languages=None,
+        )
+
+        base_json =  base_json_file[0]['outputfile'].getvalue()
+        merge_json =  merge_json_file[0]['outputfile'].getvalue()
+
+        base_resource_nodegroup = self.get_nodegroup(
+            "07cf7760-f197-11ee-9b0c-0242ac170006"
+        )
+        merge_resource_nodegroup = self.get_nodegroup(
+            "3d1a1858-f197-11ee-9b0c-0242ac170006"
+        )
+
+        merge_tracker_resource = self.get_resource(merge_tracker_resource_id)
+
+        base_resource_tile = Tile(
+            resourceinstance=merge_tracker_resource,
+            data={
+                "07cf7760-f197-11ee-9b0c-0242ac170006": {
+                    "en": {
+                        "value": base_json
+                    }
+                }
+            },
+            nodegroup=base_resource_nodegroup,
+        )
+        base_resource_tile.save()
+
+        merge_resource_tile = Tile(
+            resourceinstance=merge_tracker_resource,
+            data={
+                "3d1a1858-f197-11ee-9b0c-0242ac170006": {
+                    "en": {
+                        "value": merge_json
+                    }
+                }
+            },
+            nodegroup=merge_resource_nodegroup,
+        )
+        merge_resource_tile.save()
+
+    def configure_tracker_relationship(
+        self, base_resource_id, merge_resource_id, merge_tracker_resource_id
+    ):
+        merge_tracker_resource = self.get_resource(merge_tracker_resource_id)
+        merge_tracker_associated_resources_nodegroup = self.get_nodegroup(
+            "9967e2ea-cce2-11ee-af2a-0242ac180006"
+        )
+        associated_resources_tile = Tile(
+            resourceinstance=merge_tracker_resource,
+            data={
+                "9967e2ea-cce2-11ee-af2a-0242ac180006": [
+                    {
+                        "resourceId": base_resource_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": "",
+                    },
+                    {
+                        "resourceId": merge_resource_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": "",
+                    },
+                ]
+            },
+            nodegroup=merge_tracker_associated_resources_nodegroup,
+        )
+        associated_resources_tile.save()
+
+    def merge_resources(
+        self, base_resource_id, merge_resource_id, merge_tracker_resource_id
+    ):
         if not base_resource_id or not merge_resource_id:
             raise "Missing base or merge resource ID"
 
@@ -221,6 +304,13 @@ class MergeResources(View):
             raise "Cannot merge resources from different graphs"
 
         self.graph = self.base_resource.graph
+
+        # Store an original copy of the the 2 resources
+
+        if merge_tracker_resource_id:
+            self.jsonify_original_resources(
+                base_resource_id, merge_resource_id, merge_tracker_resource_id
+            )
 
         # Grab all the tiles for both resources
 
@@ -300,27 +390,9 @@ class MergeResources(View):
         # Create a new tile for the merge tracker and
         # relate the two resources used in the merge
         if merge_tracker_resource_id:
-            merge_tracker_resource = self.get_resource(merge_tracker_resource_id)
-            merge_tracker_associated_resources_nodegroup = self.get_nodegroup("9967e2ea-cce2-11ee-af2a-0242ac180006")
-            associated_resources_tile = Tile(
-                resourceinstance=merge_tracker_resource,
-                data={
-                    "9967e2ea-cce2-11ee-af2a-0242ac180006": [
-                        {
-                            "resourceId": base_resource_id,
-                            "ontologyProperty": "",
-                            "inverseOntologyProperty": "",
-                        },
-                        {
-                            "resourceId": merge_resource_id,
-                            "ontologyProperty": "",
-                            "inverseOntologyProperty": "",
-                        },
-                    ]
-                },
-                nodegroup=merge_tracker_associated_resources_nodegroup,
+            self.configure_tracker_relationship(
+                base_resource_id, merge_resource_id, merge_tracker_resource_id
             )
-            associated_resources_tile.save()
 
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
@@ -328,6 +400,10 @@ class MergeResources(View):
         merge_resource_id = data.get("mergeResourceId")
         merge_tracker_resource_id = data.get("mergeTrackerResourceId")
 
-        self.merge_resources(base_resource_id, merge_resource_id, merge_tracker_resource_id)
+        self.merge_resources(
+            base_resource_id, merge_resource_id, merge_tracker_resource_id
+        )
+
+        self.merge_resource.delete(user=request.user)
 
         return JSONResponse({"message": "Resources have been merged"})

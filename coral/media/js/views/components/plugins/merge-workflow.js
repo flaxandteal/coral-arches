@@ -102,7 +102,7 @@ define([
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Please provide information',
-            text: 'It\'s mandatory that you provide information in the notes text box below detailing exactly why you think these two resources should be merged.'
+            text: "It's mandatory that you provide information in the notes text box below detailing exactly why you think these two resources should be merged."
           },
           layoutSections: [
             {
@@ -117,15 +117,11 @@ define([
                     tileid: "['search-step']['base-record'][0]['systemRef']",
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
-                      '325a441c-efe4-11eb-9283-a87eeabdefba',
+                      '325a441c-efe4-11eb-9283-a87eeabdefba'
                       // '325a430a-efe4-11eb-810b-a87eeabdefba'
                     ]
                   }
-                }
-              ]
-            },
-            {
-              componentConfigs: [
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'merge-record-legacy-id',
@@ -136,15 +132,11 @@ define([
                     tileid: "['merging-step']['merge-record'][0]['systemRef']",
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
-                      '325a441c-efe4-11eb-9283-a87eeabdefba',
+                      '325a441c-efe4-11eb-9283-a87eeabdefba'
                       // '325a430a-efe4-11eb-810b-a87eeabdefba'
                     ]
                   }
-                }
-              ]
-            },
-            {
-              componentConfigs: [
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'notes',
