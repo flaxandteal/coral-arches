@@ -76,6 +76,12 @@ define([
       return result;
     };
 
+    this.selectResourcePlaceholder = ko.computed(() => {
+      return !this.workflow()?.disableStartNew
+        ? 'Start new or please select from below'
+        : 'Please select from below';
+    }, this);
+
     this.setupMonumentRevision = async () => {
       const monumentResourceId = this.selectedResource();
       const response = await $.ajax({
