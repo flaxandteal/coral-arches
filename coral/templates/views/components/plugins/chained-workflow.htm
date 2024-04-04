@@ -2,7 +2,7 @@
 {% load i18n %}
 
 <div class="workflow-plugin">
-    <!-- ko if: ko.unwrap(activeStep) -->
+    <!-- ko if: ko.unwrap(activeStep) && ko.unwrap(activeWorkflow) -->
     <div class="tabbed-workflow">
 
         <div class="tabbed-workflow-title-bar">
@@ -47,40 +47,40 @@
             <div class="workflow-tab-controls right" data-bind="click: function(){ updateChainPan('left') }"><i class="fa fa-angle-left"></i></div>
                 <div class="workflow-nav-tabs">
                     <ul class="nav nav-tabs workflow-nav-tab-list">
-                        <!--ko foreach: {data: $data.steps(), as: 'step'} -->
+                        <!--ko foreach: {data: $data.chainedWorkflows(), as: 'workflowLink'} -->
                             <li 
                                 class="workflow-nav-tab-list-item" 
                                 data-bind="
-                                    css: { active: step.active() },
+                                    css: { active: workflowLink.active() },
                                     container: '.workflow-nav-tab-container',
                                     scrollDirection: 'horizontal',
-                                    scrollTo: step.active(),
+                                    scrollTo: workflowLink.active(),
                                 "
                             >
                                 <div
                                     class='workflow-nav-tab'
                                     data-bind="{
                                         css: { 
-                                            active: step.active(), 
+                                            active: workflowLink.active(), 
                                             inactive: (
-                                                !step.active() 
+                                                !workflowLink.active() 
                                                 && (
-                                                    step.complete()
-                                                    || ( step._index <= $parent.furthestValidStepIndex() )
+                                                    workflowLink.complete()
+                                                    || ( workflowLink._index <= $parent.furthestValidStepIndex() )
                                                 )
 
                                             ),
                                             disabled: (
-                                                !step.active() 
-                                                && step._index > $parent.furthestValidStepIndex()
+                                                !workflowLink.active() 
+                                                && workflowLink._index > $parent.furthestValidStepIndex()
                                             ),
                                         },
                                         click: function() { 
                                             if (
-                                                !step.active() 
-                                                && step._index <= $parent.furthestValidStepIndex()
+                                                !workflowLink.active() 
+                                                && workflowLink._index <= $parent.furthestValidStepIndex()
                                             ) { 
-                                                $parent.activeStep(step) 
+                                                $parent.activeWorkflow(workflowLink) 
                                             }
                                         },
                                     }" 
@@ -91,15 +91,15 @@
                                             class="workflow-nav-tab-arrow"
                                             data-bind="{
                                                 css: {
-                                                    disabled: $parent.activeStep()._index === 0,
+                                                    disabled: $parent.activeWorkflow()._index === 0,
                                                 },
-                                                visible: step.active() && step._index !== 0,
+                                                visible: workflowLink.active() && workflowLink._index !== 0,
                                             }"
                                         >
                                             <i class="fa fa-caret-left"></i>
                                         </span>
 
-                                        <span style="font-size: 14px;" data-bind="text: ko.unwrap(step.title)"></span>
+                                        <span style="font-size: 14px;" data-bind="text: ko.unwrap(workflowLink.title)"></span>
 
                                         <span
                                             style="margin-left: 4px;"
@@ -107,10 +107,10 @@
                                             data-bind="{
                                                 css: {
                                                     disabled: (
-                                                        ( $parent.activeStep() && $parent.activeStep().required() && !$parent.activeStep().complete() )
+                                                        ( $parent.activeWorkflow() && $parent.activeWorkflow().required() && !$parent.activeWorkflow().complete() )
                                                     ),
                                                 },
-                                                visible: step.active() && step._index !== $parent.steps().length - 1,
+                                                visible: workflowLink.active() && workflowLink._index !== $parent.chainedWorkflows().length - 1,
                                             }"
                                         >
                                             <i class="fa fa-caret-right"></i>

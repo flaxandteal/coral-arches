@@ -31,6 +31,27 @@ define([
               ]
             }
           ]
+        },
+        {
+          title: 'Second step',
+          name: 'second-step',
+          required: true,
+          workflowstepclass: 'workflow-form-component',
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'default-card',
+                  uniqueInstanceName: 'app-id',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+                    nodegroupid: '991c3c74-48b6-11ee-85af-0242ac140007'
+                  }
+                }
+              ]
+            }
+          ]
         }
       ];
 
@@ -101,16 +122,19 @@ define([
 
       this.chainedConfig = [
         {
-          name: 'Workflow 1',
-          config: this.workflow1
+          title: 'Workflow 1',
+          config: this.workflow1,
+          required: true
         },
         {
-          name: 'Workflow 2',
-          config: this.workflow2
+          title: 'Workflow 2',
+          config: this.workflow2,
+          required: false
         },
         {
-          name: 'Workflow 3',
-          config: this.workflow3
+          title: 'Workflow 3',
+          config: this.workflow3,
+          required: false
         }
       ];
 
