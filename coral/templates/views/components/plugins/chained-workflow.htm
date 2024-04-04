@@ -66,19 +66,19 @@
                                                 !workflowLink.active() 
                                                 && (
                                                     workflowLink.complete()
-                                                    || ( workflowLink._index <= $parent.furthestValidStepIndex() )
+                                                    || ( workflowLink._index <= $parent.furthestValidWorkflowIndex() )
                                                 )
 
                                             ),
                                             disabled: (
                                                 !workflowLink.active() 
-                                                && workflowLink._index > $parent.furthestValidStepIndex()
+                                                && workflowLink._index > $parent.furthestValidWorkflowIndex()
                                             ),
                                         },
                                         click: function() { 
                                             if (
                                                 !workflowLink.active() 
-                                                && workflowLink._index <= $parent.furthestValidStepIndex()
+                                                && workflowLink._index <= $parent.furthestValidWorkflowIndex()
                                             ) { 
                                                 $parent.activeWorkflow(workflowLink) 
                                             }

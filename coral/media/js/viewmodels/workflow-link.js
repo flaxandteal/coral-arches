@@ -74,7 +74,6 @@ define([
         // });
 
         this.active = ko.computed(() => {
-            console.log('config.workflow: ', config.workflow)
             return config.workflow.activeWorkflow() === this;
         }, this);
 
