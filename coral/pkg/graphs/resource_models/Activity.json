@@ -607,7 +607,7 @@
                     "constraints": [],
                     "cssclass": null,
                     "description": {
-                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
+                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
                     },
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                     "helpenabled": false,
@@ -4252,7 +4252,7 @@
                                         "conceptid": "f15236e8-c8c9-420c-a8e3-fa68a1901ee8",
                                         "id": "a87aec59-b59d-4c29-9def-9c69396609ac",
                                         "sortorder": "",
-                                        "text": "Other 8 (Dedicated to the display of a monument)"
+                                        "text": "Other 8 (Dedicated to the display of a heritage asset)"
                                     },
                                     {
                                         "children": [],
@@ -7289,7 +7289,7 @@
             "deploymentdate": null,
             "deploymentfile": null,
             "description": {
-                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of monuments or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
             },
             "edges": [
                 {
@@ -18061,7 +18061,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of monuments or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
             },
             "template_id": "eeb7054c-df37-45d1-8f09-39abb582077e",
             "version": ""
