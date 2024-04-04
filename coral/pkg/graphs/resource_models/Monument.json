@@ -24,7 +24,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "055b3e3f-04c7-11eb-8d64-f875a44e0e11",
                     "sortorder": 15,
@@ -782,7 +782,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Parent Monuments"
+                        "en": "Parent Heritage Assets"
                     },
                     "nodegroup_id": "6556b6b1-7bcb-11e9-b638-80000b44d1d9",
                     "sortorder": 2,
@@ -811,7 +811,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Monument Names"
+                        "en": "Heritage Asset Names"
                     },
                     "nodegroup_id": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
                     "sortorder": 0,
@@ -1711,14 +1711,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument, Area or Artefact",
+                        "label": "Associated Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "055b3e45-04c7-11eb-80ec-f875a44e0e11",
                     "label": {
-                        "en": "Associated Monument, Area or Artefact"
+                        "en": "Associated Heritage Asset, Area or Artefact"
                     },
                     "node_id": "055b3e44-04c7-11eb-b131-f875a44e0e11",
                     "sortorder": 0,
@@ -2456,14 +2456,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Parent Monument",
+                        "label": "Parent Heritage Asset",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "32f3f901-7bce-11e9-9e8f-80000b44d1d9",
                     "label": {
-                        "en": "Parent Monument"
+                        "en": "Parent Heritage Asset"
                     },
                     "node_id": "6556b6b1-7bcb-11e9-b638-80000b44d1d9",
                     "sortorder": 0,
@@ -5451,7 +5451,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument Type",
+                        "label": "Heritage Asset Type",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -5459,7 +5459,7 @@
                     },
                     "id": "77e9083f-efdc-11eb-af44-a87eeabdefba",
                     "label": {
-                        "en": "Monument Type"
+                        "en": "Heritage Asset Type"
                     },
                     "node_id": "77e90834-efdc-11eb-b2b9-a87eeabdefba",
                     "sortorder": 0,
@@ -5804,7 +5804,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument Metatype",
+                        "label": "Heritage Asset Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -5812,7 +5812,7 @@
                     },
                     "id": "77e9084d-efdc-11eb-9654-a87eeabdefba",
                     "label": {
-                        "en": "Monument Metatype"
+                        "en": "Heritage Asset Metatype"
                     },
                     "node_id": "77e90837-efdc-11eb-a451-a87eeabdefba",
                     "sortorder": 1,
@@ -6774,7 +6774,7 @@
                             }
                         ],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Monument."
+                            "en": "Use to record a particular status associated with the Heritage Asset."
                         }
                     },
                     "id": "87d3ff3e-f44f-11eb-9967-a87eeabdefba",
@@ -11997,14 +11997,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument Construction Phase",
+                        "label": "Associated Heritage Asset Construction Phase",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "e81e4bd3-3a17-11eb-920d-f875a44e0e11",
                     "label": {
-                        "en": "Associated Monument Construction Phase"
+                        "en": "Associated Heritage Asset Construction Phase"
                     },
                     "node_id": "a0c7f934-04a4-11eb-9d78-f875a44e0e11",
                     "sortorder": 0,
@@ -17470,7 +17470,7 @@
                             },
                             "map_popup": {
                                 "nodegroup_id": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
-                                "string_template": " <Monument Name>"
+                                "string_template": " <Heritage Asset Name>"
                             },
                             "name": {
                                 "nodegroup_id": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
@@ -17490,7 +17490,7 @@
             "isresource": true,
             "jsonldcontext": null,
             "name": {
-                "en": "Monument"
+                "en": "Heritage Asset"
             },
             "nodegroups": [
                 {
@@ -31182,7 +31182,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Monument or Area will be a question of granularity. "
+                "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Heritage Asset or Area will be a question of granularity. "
             },
             "template_id": "523a5a7f-006b-4caf-a801-a1621967a88b",
             "version": ""

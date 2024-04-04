@@ -878,7 +878,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "b9e07043-5463-11e9-bb70-000d3ab1e588",
                     "sortorder": 14,
@@ -4360,7 +4360,7 @@
                             }
                         ],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Monument."
+                            "en": "Use to record a particular status associated with the Heritage Asset."
                         }
                     },
                     "id": "a541e051-f121-11eb-a199-a87eeabdefba",
@@ -7236,14 +7236,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument, Area or Artefact",
+                        "label": "Associated Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "f7728fc7-6481-11ea-b4dc-001fb5264ca8",
                     "label": {
-                        "en": "Associated Monument, Area or Artefact"
+                        "en": "Associated Heritage Asset, Area or Artefact"
                     },
                     "node_id": "b9e07043-5463-11e9-bb70-000d3ab1e588",
                     "sortorder": 0,
@@ -7289,7 +7289,7 @@
             "deploymentdate": null,
             "deploymentfile": null,
             "description": {
-                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Heritage Asset or Area has been managed through time (management activities)."
             },
             "edges": [
                 {
@@ -18061,7 +18061,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Heritage Asset or Area has been managed through time (management activities)."
             },
             "template_id": "eeb7054c-df37-45d1-8f09-39abb582077e",
             "version": ""

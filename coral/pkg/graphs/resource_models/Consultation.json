@@ -943,7 +943,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments and Areas"
+                        "en": "Associated Heritage Assets and Areas"
                     },
                     "nodegroup_id": "58a2b98f-a255-11e9-9a30-00224800b26d",
                     "sortorder": 21,
@@ -2204,7 +2204,7 @@
                         "label": "Land Use Classification",
                         "options": [],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Area/Artefact/Aircraft/Monument/Vessel."
+                            "en": "Use to record a particular status associated with the Area/Artefact/Aircraft/Heritage Asset/Vessel."
                         }
                     },
                     "id": "083fcfcc-ca61-11ee-afca-0242ac180006",
@@ -8135,14 +8135,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument or Area",
+                        "label": "Heritage Asset or Area",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "8aaeeb71-a255-11e9-b025-00224800b26d",
                     "label": {
-                        "en": "Monument or Area"
+                        "en": "Heritage Asset or Area"
                     },
                     "node_id": "58a2b98f-a255-11e9-9a30-00224800b26d",
                     "sortorder": 0,

@@ -429,7 +429,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments and Areas"
+                        "en": "Associated Heritage Assets and Areas"
                     },
                     "nodegroup_id": "fa486e16-ec07-11ed-b9ad-72d420f37f11",
                     "sortorder": 21,
@@ -3057,14 +3057,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument or Area",
+                        "label": "Heritage Asset or Area",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "fa4b84d4-ec07-11ed-b9ad-72d420f37f11",
                     "label": {
-                        "en": "Monument or Area"
+                        "en": "Heritage Asset or Area"
                     },
                     "node_id": "fa486e16-ec07-11ed-b9ad-72d420f37f11",
                     "sortorder": 0,

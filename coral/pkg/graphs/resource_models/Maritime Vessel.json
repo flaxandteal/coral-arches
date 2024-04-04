@@ -996,7 +996,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "b8a60efb-29a4-11eb-bffe-f875a44e0e11",
                     "sortorder": 19,
@@ -8774,14 +8774,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument, Area or Artefact",
+                        "label": "Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "b8a60f01-29a4-11eb-b068-f875a44e0e11",
                     "label": {
-                        "en": "Monument, Area or Artefact"
+                        "en": "Heritage Asset, Area or Artefact"
                     },
                     "node_id": "b8a60f00-29a4-11eb-be8c-f875a44e0e11",
                     "sortorder": 0,
@@ -26909,7 +26909,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record the details of historic vessels which are either retained as heritage assets (eg. Museum Ships or Memorials) or have been identified through the discovery of associated wreck sites. A Monument record should be created for the wreck site where known."
+                "en": "Used to record the details of historic vessels which are either retained as heritage assets (eg. Museum Ships or Memorials) or have been identified through the discovery of associated wreck sites. A Heritage Asset record should be created for the wreck site where known."
             },
             "template_id": "03871d64-7076-46e8-b0ed-4b8813b0afd4",
             "version": ""

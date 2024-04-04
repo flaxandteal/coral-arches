@@ -65,7 +65,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "12e7c583-1864-11eb-a071-f875a44e0e11",
                     "sortorder": 15,
@@ -1346,14 +1346,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument, Area or Artefact",
+                        "label": "Associated Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": "Add new Relationship"
                         }
                     },
                     "id": "12e7c589-1864-11eb-8bbc-f875a44e0e11",
                     "label": {
-                        "en": "Associated Monument, Area or Artefact"
+                        "en": "Associated Heritage Asset, Area or Artefact"
                     },
                     "node_id": "12e7c588-1864-11eb-ad10-f875a44e0e11",
                     "sortorder": 0,
@@ -9015,7 +9015,7 @@
             "deploymentdate": null,
             "deploymentfile": null,
             "description": {
-                "en": "Used to record complex human-made, or human conceived, sites, areas or landscapes. Areas can be anything from a simple prehistoric settlement site (evidenced by a few flint-working fragments) to large-scale, urban conservation areas incorporating multiple assets within a city. The use of Area or Monument will be a question of granularity.\n\nFor building complexes such as castles, prisons and airfields, Area may be used to record the footprint of the site, eg. the curtain wall and outer defences of a castle. This Area can then be used as the parent for multiple Monument records."
+                "en": "Used to record complex human-made, or human conceived, sites, areas or landscapes. Areas can be anything from a simple prehistoric settlement site (evidenced by a few flint-working fragments) to large-scale, urban conservation areas incorporating multiple assets within a city. The use of Area or Heritage Asset will be a question of granularity.\n\nFor building complexes such as castles, prisons and airfields, Area may be used to record the footprint of the site, eg. the curtain wall and outer defences of a castle. This Area can then be used as the parent for multiple Heritage Asset records."
             },
             "edges": [
                 {
@@ -22539,7 +22539,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record complex human-made, or human conceived, sites, areas or landscapes. Areas can be anything from a simple prehistoric settlement site (evidenced by a few flint-working fragments) to large-scale, urban conservation areas incorporating multiple assets within a city. The use of Area or Monument will be a question of granularity."
+                "en": "Used to record complex human-made, or human conceived, sites, areas or landscapes. Areas can be anything from a simple prehistoric settlement site (evidenced by a few flint-working fragments) to large-scale, urban conservation areas incorporating multiple assets within a city. The use of Area or Heritage Asset will be a question of granularity."
             },
             "template_id": "c6f163ca-3ca5-4c50-b398-bee406fe059d",
             "version": ""
