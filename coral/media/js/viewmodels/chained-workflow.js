@@ -43,44 +43,48 @@ define([
 
     this.initChainedWorkflow = () => {
       const rawChainedWorkflowIds = localStorage.getItem(this.CHAINED_WORKFLOW_IDS);
-      const chainedWorkflowIds = rawChainedWorkflowIds ? JSON.parse(rawChainedWorkflowIds) : {};
+      let chainedWorkflowIds = rawChainedWorkflowIds ? JSON.parse(rawChainedWorkflowIds) : {};
 
-      console.log('chainedWorkflowIds: ', chainedWorkflowIds);
-      console.log('this.chainGetWorkflowIdFromUrl(): ', this.chainGetWorkflowIdFromUrl());
-      let currentWorkflowId = null;
-      if (Object.values(chainedWorkflowIds).includes(this.chainGetWorkflowIdFromUrl())) {
-        currentWorkflowId = this.chainGetWorkflowIdFromUrl();
+      const workflowUrlId = this.chainGetWorkflowIdFromUrl();
+
+      let currentWorkflowTitle = null;
+      if (workflowUrlId in chainedWorkflowIds) {
+        currentWorkflowTitle = chainedWorkflowIds[workflowUrlId];
+      } else {
+        localStorage.setItem(this.CHAINED_WORKFLOW_IDS, JSON.stringify({}));
+        chainedWorkflowIds = {};
       }
-      console.log('workflowId: ', currentWorkflowId);
 
       this.chainedConfig.forEach((config, idx) => {
         config.workflow = this;
         config._index = idx;
 
-        if (config.name in chainedWorkflowIds) {
-          config.workflowId = chainedWorkflowIds[config.name];
+        if (currentWorkflowTitle) {
+          if (config.name === currentWorkflowTitle) {
+            config.workflowId = workflowUrlId;
+          } else {
+            Object.entries(chainedWorkflowIds).forEach(([id, name]) => {
+              if (name === config.name) {
+                config.workflowId = id;
+              }
+            });
+          }
         } else {
           const id = uuid.generate();
           config.workflowId = id;
-          chainedWorkflowIds[config.name] = id;
+          chainedWorkflowIds[id] = config.name;
         }
 
-        // console.log('self.getWorkflowIdFromUrl();: ', this.getWorkflowIdFromUrl())
         this.chainedWorkflows.push(new WorkflowLink(config));
       });
 
       localStorage.setItem(this.CHAINED_WORKFLOW_IDS, JSON.stringify(chainedWorkflowIds));
 
-      console.log('this.chainedWorkflows(): ', this.chainedWorkflows());
-      console.log(
-        'this.chainedWorkflows().find((workflow) => workflow.workflowId === currentWorkflowId)',
-        this.chainedWorkflows().find((workflow) => workflow.workflowId === currentWorkflowId)
-      );
       this.activeWorkflow(
-        this.chainedWorkflows().find((workflow) => workflow.workflowId === currentWorkflowId) ||
+        this.chainedWorkflows().find((workflow) => workflow.name === currentWorkflowTitle) ||
           this.chainedWorkflows()[0]
       );
-      console.log('this.activeWorkflow: ', this.activeWorkflow());
+      this.stepConfig = this.activeWorkflow().config;
 
       this.chainSetWorkflowIdToUrl(this.activeWorkflow().workflowId);
     };

@@ -13,7 +13,7 @@ define([
       this.workflow1 = [
         {
           title: 'Initial step',
-          name: 'initial-step',
+          name: 'workflow-1-step-1',
           required: true,
           workflowstepclass: 'workflow-form-component',
           layoutSections: [
@@ -21,7 +21,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'app-id',
+                  uniqueInstanceName: 'workflow-1-comp-1',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -34,7 +34,7 @@ define([
         },
         {
           title: 'Second step',
-          name: 'second-step',
+          name: 'workflow-1-step-2',
           required: true,
           workflowstepclass: 'workflow-form-component',
           layoutSections: [
@@ -42,7 +42,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'app-id',
+                  uniqueInstanceName: 'workflow-1-comp-1',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -58,7 +58,7 @@ define([
       this.workflow2 = [
         {
           title: 'Initial step',
-          name: 'initial-step',
+          name: 'workflow-2-step-1',
           required: true,
           workflowstepclass: 'workflow-form-component',
           layoutSections: [
@@ -66,7 +66,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'app-id',
+                  uniqueInstanceName: 'workflow-2-comp-1',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -82,7 +82,7 @@ define([
       this.workflow3 = [
         {
           title: 'Initial step',
-          name: 'initial-step',
+          name: 'workflow-3-step-1',
           required: true,
           workflowstepclass: 'workflow-form-component',
           layoutSections: [
@@ -90,7 +90,7 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'app-id',
+                  uniqueInstanceName: 'workflow-3-comp-1',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -102,23 +102,6 @@ define([
           ]
         }
       ];
-
-      // this.chainedConfig = {
-      //   'workflow-1': {
-      //     name: 'Workflow 1',
-      //     config: this.workflow1
-      //   },
-      //   'workflow-2': {
-      //     name: 'Workflow 2',
-      //     config: this.workflow2
-      //   },
-      //   'workflow-3': {
-      //     name: 'Workflow 3',
-      //     config: this.workflow3
-      //   }
-      // };
-      // this.currentWorkflow = 'workflow-1';
-      // this.stepConfig = this.chainedConfig[this.currentWorkflow].config;
 
       this.chainedConfig = [
         {
@@ -140,8 +123,6 @@ define([
           required: false
         }
       ];
-
-      this.stepConfig = this.chainedConfig[0].config;
 
       ChainedWorkflow.apply(this, [params]);
 
