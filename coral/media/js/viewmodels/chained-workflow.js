@@ -22,19 +22,14 @@ define([
   WorkflowLink
 ) {
   const ChainedWorkflow = function (config) {
-    OpenWorkflowViewModel.apply(this, [config]);
-
+    this.WORKFLOW_ID_LABEL = 'workflow-id';
+    this.CHAINED_WORKFLOW_IDS = 'chained-workflow-ids';
     this.chainPan = ko.observable();
 
     this.chainedConfig;
     this.chainedWorkflows = ko.observableArray();
 
     this.activeWorkflow = ko.observable();
-    this.activeWorkflow.subscribe((activeWorkflow) => {
-      // activeStep.loading(true); // THIS WAS ALREADY COMMENTED IN WORKFLOW.JS
-      // self.setWorkflowIdToUrl(activeWorkflow); // NEEDS IMPLEMENTED SO REFRESHING THE PAGE WORKS
-      // self.hiddenWorkflowButtons(activeWorkflow.hiddenWorkflowButtons()); // NO CLUE?
-    });
 
     this.updateChainPan = (val) => {
       if (this.chainPan() !== val) {
@@ -47,15 +42,61 @@ define([
     this.isWorkflowChainFinished = ko.observable(false);
 
     this.initChainedWorkflow = () => {
+      const rawChainedWorkflowIds = localStorage.getItem(this.CHAINED_WORKFLOW_IDS);
+      const chainedWorkflowIds = rawChainedWorkflowIds ? JSON.parse(rawChainedWorkflowIds) : {};
+
+      console.log('chainedWorkflowIds: ', chainedWorkflowIds);
+      console.log('this.chainGetWorkflowIdFromUrl(): ', this.chainGetWorkflowIdFromUrl());
+      let currentWorkflowId = null;
+      if (Object.values(chainedWorkflowIds).includes(this.chainGetWorkflowIdFromUrl())) {
+        currentWorkflowId = this.chainGetWorkflowIdFromUrl();
+      }
+      console.log('workflowId: ', currentWorkflowId);
+
       this.chainedConfig.forEach((config, idx) => {
         config.workflow = this;
         config._index = idx;
+
+        if (config.name in chainedWorkflowIds) {
+          config.workflowId = chainedWorkflowIds[config.name];
+        } else {
+          const id = uuid.generate();
+          config.workflowId = id;
+          chainedWorkflowIds[config.name] = id;
+        }
+
+        // console.log('self.getWorkflowIdFromUrl();: ', this.getWorkflowIdFromUrl())
         this.chainedWorkflows.push(new WorkflowLink(config));
       });
-      this.activeWorkflow(this.chainedWorkflows()[0]);
+
+      localStorage.setItem(this.CHAINED_WORKFLOW_IDS, JSON.stringify(chainedWorkflowIds));
+
+      console.log('this.chainedWorkflows(): ', this.chainedWorkflows());
+      console.log(
+        'this.chainedWorkflows().find((workflow) => workflow.workflowId === currentWorkflowId)',
+        this.chainedWorkflows().find((workflow) => workflow.workflowId === currentWorkflowId)
+      );
+      this.activeWorkflow(
+        this.chainedWorkflows().find((workflow) => workflow.workflowId === currentWorkflowId) ||
+          this.chainedWorkflows()[0]
+      );
+      console.log('this.activeWorkflow: ', this.activeWorkflow());
+
+      this.chainSetWorkflowIdToUrl(this.activeWorkflow().workflowId);
     };
 
-    this.initChainedWorkflow();
+    this.chainSetWorkflowIdToUrl = (uuid) => {
+      var searchParams = new URLSearchParams(window.location.search);
+      searchParams.set(this.WORKFLOW_ID_LABEL, uuid);
+
+      var newRelativePathQuery = `${window.location.pathname}?${searchParams.toString()}`;
+      history.replaceState(null, '', newRelativePathQuery);
+    };
+
+    this.chainGetWorkflowIdFromUrl = () => {
+      var searchParams = new URLSearchParams(window.location.search);
+      return searchParams.get(this.WORKFLOW_ID_LABEL);
+    };
 
     this.furthestValidWorkflowIndex = ko.observable();
     this.furthestValidWorkflowIndex.subscribe((index) => {
@@ -104,6 +145,22 @@ define([
         this.furthestValidWorkflowIndex(furthestValidWorkflowIndex);
       }
     }, this);
+
+    this.setupSubscriptions = () => {
+      this.activeWorkflow.subscribe((activeWorkflow) => {
+        // activeStep.loading(true); // THIS WAS ALREADY COMMENTED IN WORKFLOW.JS
+        // self.setWorkflowIdToUrl(activeWorkflow); // NEEDS IMPLEMENTED SO REFRESHING THE PAGE WORKS
+        // self.hiddenWorkflowButtons(activeWorkflow.hiddenWorkflowButtons()); // NO CLUE?
+
+        this.stepConfig = activeWorkflow.config;
+        this.chainSetWorkflowIdToUrl(activeWorkflow.workflowId);
+        this.initialize();
+      });
+    };
+
+    this.initChainedWorkflow();
+    OpenWorkflowViewModel.apply(this, [config]);
+    this.setupSubscriptions();
   };
 
   return ChainedWorkflow;

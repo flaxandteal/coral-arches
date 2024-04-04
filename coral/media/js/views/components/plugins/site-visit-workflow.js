@@ -122,16 +122,19 @@ define([
 
       this.chainedConfig = [
         {
+          name: 'workflow-1',
           title: 'Workflow 1',
           config: this.workflow1,
-          required: true
+          required: false
         },
         {
+          name: 'workflow-2',
           title: 'Workflow 2',
           config: this.workflow2,
           required: false
         },
         {
+          name: 'workflow-3',
           title: 'Workflow 3',
           config: this.workflow3,
           required: false
