@@ -30,6 +30,7 @@ define([
     this.chainedWorkflows = ko.observableArray();
 
     this.activeWorkflow = ko.observable();
+    this.chainedWorkflowIds = ko.observable();
 
     this.updateChainPan = (val) => {
       if (this.chainPan() !== val) {
@@ -42,17 +43,16 @@ define([
     this.isWorkflowChainFinished = ko.observable(false);
 
     this.initChainedWorkflow = () => {
-      const rawChainedWorkflowIds = localStorage.getItem(this.CHAINED_WORKFLOW_IDS);
-      let chainedWorkflowIds = rawChainedWorkflowIds ? JSON.parse(rawChainedWorkflowIds) : {};
+      this.chainedWorkflowIds(this.getChainedWorkflowIds());
 
       const workflowUrlId = this.chainGetWorkflowIdFromUrl();
 
       let currentWorkflowTitle = null;
-      if (workflowUrlId in chainedWorkflowIds) {
-        currentWorkflowTitle = chainedWorkflowIds[workflowUrlId];
+      if (workflowUrlId in this.chainedWorkflowIds()) {
+        currentWorkflowTitle = this.chainedWorkflowIds()[workflowUrlId].name;
       } else {
-        localStorage.setItem(this.CHAINED_WORKFLOW_IDS, JSON.stringify({}));
-        chainedWorkflowIds = {};
+        this.chainedWorkflowIds({});
+        this.setChainedWorkflowIds();
       }
 
       this.chainedConfig.forEach((config, idx) => {
@@ -62,23 +62,30 @@ define([
         if (currentWorkflowTitle) {
           if (config.name === currentWorkflowTitle) {
             config.workflowId = workflowUrlId;
+            config.complete = this.chainedWorkflowIds()[workflowUrlId].complete;
+            console.log('config.complete: ', config.complete);
           } else {
-            Object.entries(chainedWorkflowIds).forEach(([id, name]) => {
+            Object.entries(this.chainedWorkflowIds()).forEach(([id, { name, complete }]) => {
               if (name === config.name) {
                 config.workflowId = id;
+                config.complete = complete;
+                console.log('config.complete: ', config.complete);
               }
             });
           }
         } else {
           const id = uuid.generate();
           config.workflowId = id;
-          chainedWorkflowIds[id] = config.name;
+          this.chainedWorkflowIds()[id] = {
+            name: config.name,
+            complete: false
+          };
         }
 
         this.chainedWorkflows.push(new WorkflowLink(config));
       });
 
-      localStorage.setItem(this.CHAINED_WORKFLOW_IDS, JSON.stringify(chainedWorkflowIds));
+      localStorage.setItem(this.CHAINED_WORKFLOW_IDS, JSON.stringify(this.chainedWorkflowIds()));
 
       this.activeWorkflow(
         this.chainedWorkflows().find((workflow) => workflow.name === currentWorkflowTitle) ||
@@ -87,6 +94,15 @@ define([
       this.stepConfig = this.activeWorkflow().config;
 
       this.chainSetWorkflowIdToUrl(this.activeWorkflow().workflowId);
+    };
+
+    this.getChainedWorkflowIds = () => {
+      const rawChainedWorkflowIds = localStorage.getItem(this.CHAINED_WORKFLOW_IDS);
+      return rawChainedWorkflowIds ? JSON.parse(rawChainedWorkflowIds) : {};
+    };
+
+    this.setChainedWorkflowIds = () => {
+      localStorage.setItem(this.CHAINED_WORKFLOW_IDS, JSON.stringify(this.chainedWorkflowIds()));
     };
 
     this.chainSetWorkflowIdToUrl = (uuid) => {
@@ -162,7 +178,6 @@ define([
       });
     };
 
-
     /**
      * Initialise Chained Workflow
      * then Arches Workflow
@@ -196,6 +211,8 @@ define([
         activeWorkflow._index < this.chainedWorkflows().length - 1
       ) {
         this.activeWorkflow().complete(true);
+        this.chainedWorkflowIds()[this.activeWorkflow().workflowId].complete = true;
+        this.setChainedWorkflowIds();
         this.activeWorkflow(this.chainedWorkflows()[activeWorkflow._index + 1]);
       }
     };

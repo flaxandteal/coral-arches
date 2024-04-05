@@ -50,7 +50,7 @@ define([
 
         // this.lockableExternalSteps = config.lockableExternalSteps || [];
 
-        this.complete = ko.observable(false);
+        this.complete = ko.observable(config?.complete || false);
 
         // /* 
         //     checks if all `workflowComponentAbstract`s have saved data if a single `workflowComponentAbstract` 
