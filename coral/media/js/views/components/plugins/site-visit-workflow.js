@@ -108,7 +108,7 @@ define([
           name: 'workflow-1',
           title: 'Workflow 1',
           config: this.workflow1,
-          required: false
+          required: true
         },
         {
           name: 'workflow-2',

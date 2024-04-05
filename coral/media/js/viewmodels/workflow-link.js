@@ -50,15 +50,7 @@ define([
 
         // this.lockableExternalSteps = config.lockableExternalSteps || [];
 
-        this.complete = ko.computed(function() {
-            // const components = Object.values(self.workflowComponentAbstractLookup());
-            // if (!components.length) {
-            //     // New workflow being initialized.
-            //     return false;
-            // }
-            // return components.every(component => component.complete());
-            return false;
-        });
+        this.complete = ko.observable(false);
 
         // /* 
         //     checks if all `workflowComponentAbstract`s have saved data if a single `workflowComponentAbstract` 

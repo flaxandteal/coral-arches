@@ -153,8 +153,8 @@ define([
     this.setupSubscriptions = () => {
       this.activeWorkflow.subscribe((activeWorkflow) => {
         // activeStep.loading(true); // THIS WAS ALREADY COMMENTED IN WORKFLOW.JS
-        // self.setWorkflowIdToUrl(activeWorkflow); // NEEDS IMPLEMENTED SO REFRESHING THE PAGE WORKS
-        // self.hiddenWorkflowButtons(activeWorkflow.hiddenWorkflowButtons()); // NO CLUE?
+        // this.setWorkflowIdToUrl(activeWorkflow); // NEEDS IMPLEMENTED SO REFRESHING THE PAGE WORKS
+        // this.hiddenWorkflowButtons(activeWorkflow.hiddenWorkflowButtons()); // NO CLUE?
 
         this.stepConfig = activeWorkflow.config;
         this.chainSetWorkflowIdToUrl(activeWorkflow.workflowId);
@@ -162,9 +162,43 @@ define([
       });
     };
 
+
+    /**
+     * Initialise Chained Workflow
+     * then Arches Workflow
+     * then apply subscriptions and overrides
+     */
     this.initChainedWorkflow();
     OpenWorkflowViewModel.apply(this, [config]);
     this.setupSubscriptions();
+
+    this.next = async () => {
+      let activeStep = this.activeStep();
+      let activeWorkflow = this.activeWorkflow();
+
+      if (activeStep.stepInjectionConfig) {
+        await this.updateStepPath();
+      }
+
+      if (
+        (!activeStep.required() || activeStep.complete()) &&
+        activeStep._index < this.steps().length - 1
+      ) {
+        this.activeStep(this.steps()[activeStep._index + 1]);
+      }
+
+      /**
+       * Logic to change to the next workflow after saving on the final step
+       */
+      if (
+        (!activeStep.required() || activeStep.complete()) &&
+        activeStep._index === this.steps().length - 1 &&
+        activeWorkflow._index < this.chainedWorkflows().length - 1
+      ) {
+        this.activeWorkflow().complete(true);
+        this.activeWorkflow(this.chainedWorkflows()[activeWorkflow._index + 1]);
+      }
+    };
   };
 
   return ChainedWorkflow;
