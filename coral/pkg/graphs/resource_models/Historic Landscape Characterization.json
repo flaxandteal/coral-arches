@@ -10728,7 +10728,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monuments, Areas and Artefacts",
+                    "name": "Associated Heritage Assets, Areas and Artefacts",
                     "nodegroup_id": "86ce8acb-4eaa-11eb-8468-f875a44e0e11",
                     "nodeid": "86ce8acb-4eaa-11eb-8468-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -10797,7 +10797,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -10819,7 +10819,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument, Area or Artefact",
+                    "name": "Heritage Asset, Area or Artefact",
                     "nodegroup_id": "86ce8acb-4eaa-11eb-8468-f875a44e0e11",
                     "nodeid": "86ceb202-4eaa-11eb-8dc6-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",

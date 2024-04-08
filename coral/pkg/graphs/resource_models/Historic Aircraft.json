@@ -17196,7 +17196,7 @@
                         "graphs": [
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -23165,7 +23165,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monuments, Areas and Artefacts",
+                    "name": "Associated Heritage Assets, Areas and Artefacts",
                     "nodegroup_id": "dd2c635a-28e7-11eb-a7b8-f875a44e0e11",
                     "nodeid": "dd2c635a-28e7-11eb-a7b8-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -23234,7 +23234,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -23256,7 +23256,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monument, Area or Artefact",
+                    "name": "Associated Heritage Asset, Area or Artefact",
                     "nodegroup_id": "dd2c635a-28e7-11eb-a7b8-f875a44e0e11",
                     "nodeid": "dd2c635f-28e7-11eb-b656-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",

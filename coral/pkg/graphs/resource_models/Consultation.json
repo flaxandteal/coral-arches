@@ -21166,11 +21166,11 @@
                         "graphs": [
                             {
                                 "graphid": "4262df46-eabf-11ed-9e22-72d420f37f11",
-                                "name": "Monument Revision"
+                                "name": "Heritage Asset Revision"
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -21190,7 +21190,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Related Monuments and Areas",
+                    "name": "Related Heritage Assets and Areas",
                     "nodegroup_id": "58a2b98f-a255-11e9-9a30-00224800b26d",
                     "nodeid": "58a2b98f-a255-11e9-9a30-00224800b26d",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
