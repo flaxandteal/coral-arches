@@ -78,8 +78,10 @@ class FileTemplateView(View):
         self.resource = Resource.objects.get(resourceinstanceid=resourceinstance_id)
         self.resource.load_tiles()
 
-        template_name = self.get_template_path(template_id)
-        template_path = os.path.join(settings.APP_ROOT, "docx", template_name)
+        template_dict = self.get_template_path(template_id)
+        template_path = os.path.join(
+            settings.APP_ROOT, "docx", template_dict["filename"]
+        )
 
         if (
             os.path.exists(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx"))
@@ -92,13 +94,13 @@ class FileTemplateView(View):
         except:
             return HttpResponseNotFound("No Template Found")
 
-        self.edit_letter(self.resource, datatype_factory)
+        self._edit_letter(self.resource, template_dict["provider"], datatype_factory)
 
         date = datetime.today()
         date = (
             date.strftime("%Y") + "-" + date.strftime("%m") + "-" + date.strftime("%d")
         )
-        new_file_name = date + "_" + template_name
+        new_file_name = date + "_" + template_dict["filename"]
         new_file_path = os.path.join(
             settings.APP_ROOT, "uploadedfiles/docx", new_file_name
         )
@@ -154,15 +156,24 @@ class FileTemplateView(View):
         new_tile.action = "update_tile"
 
         response = TileData.post(new_tile, new_req)
+        print("XXXXXX here 2: ", response)
         if response.status_code == 200:
             tile = json.loads(response.content)
             return JSONResponse({"tile": tile, "status": "success"})
 
+        print("XXXXXXXXXXXXXXXXX here 1")
         return HttpResponseNotFound(response.status_code)
 
     def get_template_path(self, template_id):
         template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
-            "01dec356-e72e-40e6-b1b1-b847b9799d2f": "No progression letter.docx",  # Letter A
+            "test-letter": {
+                "filename": "Test Letter.docx",
+                "provider": ExcavationLicense,
+            },
+            "01dec356-e72e-40e6-b1b1-b847b9799d2f": {
+                "filename": "No progression letter.docx",
+                "provider": ExcavationLicense,
+            },  # Letter A
             "320abc26-db82-44a6-be11-8d44aaa23365": "No Need to Consult letter.docx",  # Letter A2
             "fd15c6c7-e94d-4914-8d51-a98bda6f4a7b": "Pre-app Predetermination letter.docx",  # Letter B1
             "8cc91474-11ce-47d9-b886-f0e3fc49d277": "Predetermination Letter.docx",  # Letter B2
@@ -187,6 +198,38 @@ class FileTemplateView(View):
                 return value
 
         return None
+
+    def _edit_letter(self, resource, provider, datatype_factory):
+
+        print("resource: ", resource)
+        print("provider: ", provider)
+        print("datatype_factory: ", datatype_factory)
+
+        mapping_dict = provider(resource).get_mapping()
+        print("mapping_dict: ", mapping_dict)
+        # mapping_dict = {
+        #     "Licensee": "Christina O Regan",
+        #     "Townland": "Brackagh Owenreagh, Tullybrick",
+        #     "County": "Londonderry",
+        #     "Site Name": "Brackagh Sand and Gravel Quarry",
+        #     "Duration": "six months",
+        #     "Duration Dates": "11 October 2021 and ceasing on 10 April 2022",
+        #     "License Number": "AE/19/146"
+        # }
+
+        # self.replace_in_letter(consultation.tiles, template_dict, datatype_factory)
+
+        self.apply_mapping(mapping_dict)
+
+        pass
+
+    def apply_mapping(self, mapping):
+        htmlTags = re.compile(r"<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
+        for key in mapping:
+            html = False
+            if htmlTags.search(mapping[key] if mapping[key] is not None else ""):
+                html = True
+            self.replace_string(self.doc, key, mapping[key], html)
 
     def edit_letter(self, consultation, datatype_factory):
         template_dict = {
@@ -554,6 +597,110 @@ class FileTemplateView(View):
         # perhaps replaces {{custom_object}} with pre-determined text structure with custom style/format
 
         return True
+
+
+class ExcavationLicense:
+    LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+    LICENSE_NUMBER_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
+
+    LICENSE_SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
+    LICENSE_SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
+
+    LICENSE_DATES_NODEGROUP = '05f6b846-5d49-11ee-911e-0242ac130003'
+    LICENSE_DURATION_NODE = 'c688af34-d589-11ee-89d9-0242ac180006'
+
+    TOWNLAND_NODEGROUP = "a5416b46-f121-11eb-8f2d-a87eeabdefba"
+
+    ACTIVITY_SYSTEM_REF_NODEGROUP = "e7d695ff-9939-11ea-8fff-f875a44e0e11"
+    ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE = "e7d69603-9939-11ea-9e7f-f875a44e0e11"
+
+    ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP = 'a5416b46-f121-11eb-8f2d-a87eeabdefba'
+    ACTIVITY_AREA_NAME_NODE = 'a5416b53-f121-11eb-a507-a87eeabdefba'
+
+    ACTIVITY_ADDRESSES_NODEGROUP = 'a5416b3d-f121-11eb-85b4-a87eeabdefba'
+    ACTIVITY_COUNTY_NODE = 'a541e034-f121-11eb-8803-a87eeabdefba'
+
+    ACTIVITY_NAME_NODEGROUP = '4a7bba1d-9938-11ea-86aa-f875a44e0e11'
+    ACTIVITY_NAME_NODE = '4a7be135-9938-11ea-b0e2-f875a44e0e11'
+
+    def __init__(self, resource_instance):
+        self.resource_instance = resource_instance
+        self.datatype_factory = DataTypeFactory()
+        self.tiles = resource_instance.tiles
+        self.mapping = {
+            "Licensee": "",
+            "Townland": "",
+            "County": "",
+            "Site Name": "",
+            "Duration": "",
+            "Duration Dates": "",
+            "License Number": "",
+        }
+        self.node_ids = {}
+        self.activity_resource = None
+        self.activity_tiles = None
+
+    def get_value_from_tile(self, tile, node_id):
+        current_node = models.Node.objects.get(nodeid=node_id)
+        datatype = self.datatype_factory.get_instance(current_node.datatype)
+        returnvalue = datatype.get_display_value(tile, current_node)
+        return "" if returnvalue is None else returnvalue
+
+    def get_activity_resource(self):
+        license_system_ref_tile = Tile.objects.filter(
+            resourceinstance_id=self.resource_instance.resourceinstanceid,
+            nodegroup_id=self.LICENSE_SYSTEM_REF_NODEGROUP
+        ).first()
+        ref_num = (
+            license_system_ref_tile.data
+            .get(self.LICENSE_SYSTEM_REF_RESOURCE_ID_NODE)
+            .get("en")
+            .get("value")
+        )
+        activity_system_ref_query = {
+            f"data__{self.ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE}__en__value__icontains": ref_num,
+        }
+        activity_system_ref_tile = Tile.objects.filter(**activity_system_ref_query).exclude(
+            nodegroup_id=self.ACTIVITY_SYSTEM_REF_NODEGROUP,
+            resourceinstance_id=self.resource_instance.resourceinstanceid,
+        ).first()
+        activity_resource = Resource.objects.filter(
+            pk=activity_system_ref_tile.resourceinstance.resourceinstanceid
+        ).first()
+        return activity_resource
+
+    def get_mapping(self):
+        self.activity_resource = self.get_activity_resource()
+        self.activity_resource.load_tiles()
+        self.activity_tiles = self.activity_resource.tiles
+
+        for tile in self.tiles:
+            nodegroup_id = str(tile.nodegroup_id)
+            if nodegroup_id == self.LICENSE_NUMBER_NODEGROUP:
+                self.mapping["License Number"] = self.get_value_from_tile(
+                    tile, self.LICENSE_NUMBER_NODE
+                )
+            if nodegroup_id == self.LICENSE_DATES_NODEGROUP:
+                self.mapping["Duration"] = self.get_value_from_tile(
+                    tile, self.LICENSE_DURATION_NODE
+                )
+
+        for tile in self.activity_tiles:
+            nodegroup_id = str(tile.nodegroup_id)
+            if nodegroup_id == self.ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP:
+                self.mapping["Townland"] = self.get_value_from_tile(
+                    tile, self.ACTIVITY_AREA_NAME_NODE
+                )
+            if nodegroup_id == self.ACTIVITY_ADDRESSES_NODEGROUP:
+                self.mapping["County"] = self.get_value_from_tile(
+                    tile, self.ACTIVITY_COUNTY_NODE
+                )
+            if nodegroup_id == self.ACTIVITY_NAME_NODEGROUP:
+                self.mapping["Site Name"] = self.get_value_from_tile(
+                    tile, self.ACTIVITY_NAME_NODE
+                )
+
+        return self.mapping
 
 
 class DocumentHTMLParser(HTMLParser):
