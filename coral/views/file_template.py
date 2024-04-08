@@ -166,22 +166,23 @@ class FileTemplateView(View):
 
     def get_template_path(self, template_id):
         template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
-            "test-letter": {
-                "filename": "Test Letter.docx",
-                "provider": ExcavationLicense,
-            },
-            "smc-addendum-template": {
+            "025eba24-b853-441e-90f4-534a31678119": {
                 "filename": "smc-addendum-template.docx",
                 "provider": MonumentTemplateProvider
             },
-            "smc-provisional-template": {
+            "b9469f82-2a7c-4fc4-8895-2a38b42729f5": {
                 "filename": "smc-provisional-template.docx",
                 "provider": MonumentTemplateProvider
             },
-            "smc-refusal-template": {
+            "9f83a934-d2e1-4c42-a77c-c41db041abe1": {
                 "filename": "smc-refusal-template.docx",
                 "provider": MonumentTemplateProvider
+            },
+            "test-letter": {
+                "filename": "Test Letter.docx",
+                "provider": ExcavationLicense,
             }
+
         }
         for key, value in list(template_dict.items()):
             if key == template_id:
