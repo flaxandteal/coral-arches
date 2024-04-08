@@ -170,28 +170,18 @@ class FileTemplateView(View):
                 "filename": "Test Letter.docx",
                 "provider": ExcavationLicense,
             },
-            "01dec356-e72e-40e6-b1b1-b847b9799d2f": {
-                "filename": "No progression letter.docx",
-                "provider": ExcavationLicense,
-            },  # Letter A
-            "320abc26-db82-44a6-be11-8d44aaa23365": "No Need to Consult letter.docx",  # Letter A2
-            "fd15c6c7-e94d-4914-8d51-a98bda6f4a7b": "Pre-app Predetermination letter.docx",  # Letter B1
-            "8cc91474-11ce-47d9-b886-f0e3fc49d277": "Predetermination Letter.docx",  # Letter B2
-            "08bb630d-a27b-45bc-a13f-567b428018c5": "Condition Two-Stage Letter.docx",  # Letter C
-            "e14bd058-e9f2-48f8-8ef5-337310c3420f": "Pre-App Recommend Condition Letter.docx",  # Letter D1
-            "92e745c3-7157-4831-bce9-73792d32abec": "Condition Investigation Letter.docx",  # Letter D2
-            "41f3d0bb-a94d-469f-80c8-85ab03283972": "Condition Historic Building Recording Letter.docx",  # Letter D3
-            "7f1e7061-8bb0-4338-9342-118f1e9214aa": "WSI Approval Letter.docx",  # Letter F1
-            "eaa8a075-50e6-4c3d-ac08-fbe84865f577": "WSI Amend Letter.docx",  # Letter F2
-            "8d605e5c-d0da-4b72-9ce3-2f7dac3381d1": "Post Excavation Assessment Approval Letter.docx",  # Letter G - PXA Approval
-            "a31061ea-9b80-435f-82c8-94dc10afcbae": "Condition Satisfied Letter.docx",  # Letter H
-            "eed24dd2-85a0-4402-a6ba-bda426b5da89": "Blank Adviser Letter.docx",  # Letter I - Bespoke Letter
-            # No template available yet
-            "a26c77ff-1d04-4b76-a45f-417f7ed24333": "",  # Additional Condition Text
-            "8c12a812-8000-4ec9-913d-c6fd516117f2": "",  # Archaeological Recommendation Text
-            # No concept selection available
-            "missing 0": "Conditions Scope Notes.docx",
-            "missing 1": "Mitigation Scope Notes.docx",
+            "smc-addendum-template": {
+                "filename": "smc-addendum-template.docx",
+                "provider": MonumentTemplateProvider
+            },
+            "smc-provisional-template": {
+                "filename": "smc-provisional-template.docx",
+                "provider": MonumentTemplateProvider
+            },
+            "smc-refusal-template": {
+                "filename": "smc-refusal-template.docx",
+                "provider": MonumentTemplateProvider
+            }
         }
         for key, value in list(template_dict.items()):
             if key == template_id:
@@ -565,7 +555,7 @@ class FileTemplateView(View):
                     for cell in row.cells:
                         replace_in_runs(cell.paragraphs, k, v)
 
-        if v is not None and key is not None:
+        if v and key is not None:
             k = "<" + key + ">"
             doc = document
             # some of these are probably unnecessary
@@ -597,6 +587,16 @@ class FileTemplateView(View):
         # perhaps replaces {{custom_object}} with pre-determined text structure with custom style/format
 
         return True
+
+
+
+# class TemplateProvider:
+#     mapping = {}
+
+#     def __init__(self, resource_instance):
+#         self.resource_instance = resource_instance
+#         self.datatype_factory = DataTypeFactory()
+#         self.tiles = resource_instance.tiles
 
 
 class ExcavationLicense:
@@ -636,7 +636,6 @@ class ExcavationLicense:
             "Duration Dates": "",
             "License Number": "",
         }
-        self.node_ids = {}
         self.activity_resource = None
         self.activity_tiles = None
 
@@ -701,6 +700,175 @@ class ExcavationLicense:
                 )
 
         return self.mapping
+    
+class MonumentTemplateProvider:
+    MONUMENT_NAME_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11'
+    MONUMENT_NAME_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11'
+
+    MONUMENT_SYSTEM_REF_RESOURCE_ID_NODEGROUP = '325a2f2f-efe4-11eb-9b0c-a87eeabdefba'
+    MONUMENT_SYSTEM_REF_RESOURCE_ID_NODE = '325a430a-efe4-11eb-810b-a87eeabdefba'
+
+    MONUMENT_CONTACTS_NODEGROUP = 'aa629840-d23e-11ee-9ae7-0242ac180006'
+    MONUMENT_CONTACTS_APPLICANT_NODE = 'aa62a736-d23e-11ee-9ae7-0242ac180006'
+
+    MONUMENT_LOCALITIES_ADMIN_AREA_NODEGROUP = '87d38725-f44f-11eb-8d4b-a87eeabdefba'
+    MONUMENT_AREA_NAME_NODE = '87d3c3ea-f44f-11eb-b532-a87eeabdefba'
+
+    MONUMENT_ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
+    MONUMENT_COUNTY_NODE = '87d3ff32-f44f-11eb-aa82-a87eeabdefba'
+
+    MONUMENT_CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006'
+    MONUMENT_CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006'
+
+    SMC_RECEIVED_DATE_NODEGROUP = 'eeec9986-d23c-11ee-9373-0242ac180006'
+    SMC_RECEIVED_DATE_NODE = 'eeec9e68-d23c-11ee-9373-0242ac180006'
+
+    APPLICANT_TITLE_NODEGROUP = '4110f741-1a44-11e9-885e-000d3ab1e588'
+    APPLICANT_TITLE_NODE = '6da2f03b-7e55-11ea-8fe5-f875a44e0e11'
+
+    APPLICANT_CONTACT_POINT_NODEGROUP = '2547c12f-9505-11ea-a507-f875a44e0e11'
+    APPLICANT_CONTACT_POINT_NODE = '2547c133-9505-11ea-8e49-f875a44e0e11'
+
+    APPLICANT_ADDRESSES_NODEGROUP = '5f93048e-80a9-11ea-b0da-f875a44e0e11'
+    APPLICANT_COUNTY_NODE = 'b3a28c1d-effb-11eb-95a1-a87eeabdefba'
+    APPLICANT_POSTCODE_NODE = 'b3a27619-effb-11eb-a66d-a87eeabdefba'
+    APPLICANT_FULL_ADDRESS_NODE = 'b3a27611-effb-11eb-a79c-a87eeabdefba'
+
+    def __init__(self, resource_instance):
+        self.resource_instance = resource_instance
+        self.datatype_factory = DataTypeFactory()
+        self.tiles = resource_instance.tiles
+        self.mapping = {
+            "Courtesy Title": "", 
+            "Address": "", 
+            "County": "", 
+            "Postcode": "", 
+            "Monument Townland": "", 
+            "Monument County": "",
+            "Monument Name": "", 
+            "SMC": "", # NOT PROVIDED
+            "SMR": "", 
+            "CM Reference": "", 
+            "Recipient Email": "", 
+            "Recipient Name": "", 
+            "Received Date": "",
+            "Send Date": "", # NOT PROVIDED
+            "Granted Date": "", # NOT PROVIDED
+            "Addendum Condition": "", # NOT PROVIDED
+            "Additional Conditions Pretext": "", # NOT PROVIDED
+            "Archaeological Inspector": "", # NOT PROVIDED
+            "Field Monument Warden": "", # NOT PROVIDED
+            "Letter Send Date": "" # NOT PROVIDED
+        }
+
+    def get_value_from_tile(self, tile, node_id):
+        current_node = models.Node.objects.get(nodeid=node_id)
+        datatype = self.datatype_factory.get_instance(current_node.datatype)
+        returnvalue = datatype.get_display_value(tile, current_node)
+        return "" if returnvalue is None else returnvalue
+    
+    def get_resource(self, resource_id):
+        resource = None
+        try:
+            resource = Resource.objects.filter(pk=resource_id).first()
+        except Resource.DoesNotExist:
+            raise f"Resource ID ({resource_id}) does not exist"
+        return resource
+
+    def get_mapping(self):
+        for tile in self.tiles:
+            nodegroup_id = str(tile.nodegroup_id)
+
+            if nodegroup_id == self.MONUMENT_NAME_NODEGROUP:
+                self.mapping["Monument Name"] = self.get_value_from_tile(
+                    tile, self.MONUMENT_NAME_NODE
+                )
+
+            if nodegroup_id == self.MONUMENT_SYSTEM_REF_RESOURCE_ID_NODEGROUP:
+                self.mapping["SMR"] = self.get_value_from_tile(
+                    tile, self.MONUMENT_SYSTEM_REF_RESOURCE_ID_NODE
+                )
+
+            if nodegroup_id == self.MONUMENT_LOCALITIES_ADMIN_AREA_NODEGROUP:
+                self.mapping["Monument Townland"] = self.get_value_from_tile(
+                    tile, self.MONUMENT_AREA_NAME_NODE
+                )
+            
+            if nodegroup_id == self.MONUMENT_ADDRESSES_NODEGROUP:
+                self.mapping["Monument County"] = self.get_value_from_tile(
+                    tile, self.MONUMENT_COUNTY_NODE
+                )
+
+            if nodegroup_id == self.MONUMENT_CM_REFERENCE_NODEGROUP:
+                self.mapping["CM Reference"] = self.get_value_from_tile(
+                    tile, self.MONUMENT_CM_REFERENCE_NODE
+                )
+
+            if nodegroup_id == self.SMC_RECEIVED_DATE_NODEGROUP:
+                self.mapping["Received Date"] = self.get_value_from_tile(
+                    tile, self.SMC_RECEIVED_DATE_NODE
+                )
+            
+            if nodegroup_id == self.MONUMENT_CONTACTS_NODEGROUP:
+                self.mapping["Recipient Name"] = self.get_value_from_tile(
+                    tile, self.MONUMENT_CONTACTS_APPLICANT_NODE
+                )
+                applicant_resource_id = tile.data.get(self.MONUMENT_CONTACTS_APPLICANT_NODE)[0].get('resourceId')
+                applicant_resource = self.get_resource(applicant_resource_id)
+                applicant_resource.load_tiles()
+                applicant_tiles = applicant_resource.tiles
+
+                for applicant_tile in applicant_tiles:
+                    applicant_nodegroup_id = str(applicant_tile.nodegroup_id)
+                    if applicant_nodegroup_id == self.APPLICANT_TITLE_NODEGROUP:
+                        self.mapping["Courtesy Title"] = self.get_value_from_tile(
+                            applicant_tile, self.APPLICANT_TITLE_NODE
+                        )
+                    if applicant_nodegroup_id == self.APPLICANT_CONTACT_POINT_NODEGROUP:
+                        self.mapping["Recipient Email"] = self.get_value_from_tile(
+                            applicant_tile, self.APPLICANT_CONTACT_POINT_NODE
+                        )
+                    if applicant_nodegroup_id == self.APPLICANT_ADDRESSES_NODEGROUP:
+                        self.mapping["County"] = self.get_value_from_tile(
+                            applicant_tile, self.APPLICANT_COUNTY_NODE
+                        )
+                        self.mapping["Postcode"] = self.get_value_from_tile(
+                            applicant_tile, self.APPLICANT_POSTCODE_NODE
+                        )
+                        self.mapping["Address"] = self.get_value_from_tile(
+                            applicant_tile, self.APPLICANT_FULL_ADDRESS_NODE
+                        )
+
+        return self.mapping
+    
+
+# class ExampleTemplateProvider:
+
+#     def __init__(self, resource_instance):
+#         self.resource_instance = resource_instance
+#         self.datatype_factory = DataTypeFactory()
+#         self.tiles = resource_instance.tiles
+#         self.mapping = {
+#             "Example Title": "",
+#         }
+#         self.node_ids = {}
+
+#     def get_value_from_tile(self, tile, node_id):
+#         current_node = models.Node.objects.get(nodeid=node_id)
+#         datatype = self.datatype_factory.get_instance(current_node.datatype)
+#         returnvalue = datatype.get_display_value(tile, current_node)
+#         return "" if returnvalue is None else returnvalue
+
+#     def get_mapping(self):
+#         for tile in self.tiles:
+#             nodegroup_id = str(tile.nodegroup_id)
+#             # if nodegroup_id == self.LICENSE_NUMBER_NODEGROUP:
+#             #     self.mapping["License Number"] = self.get_value_from_tile(
+#             #         tile, self.LICENSE_NUMBER_NODE
+#             #     )
+
+#         return self.mapping
+
 
 
 class DocumentHTMLParser(HTMLParser):
