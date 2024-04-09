@@ -166,15 +166,15 @@ class FileTemplateView(View):
 
     def get_template_path(self, template_id):
         template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
-            "025eba24-b853-441e-90f4-534a31678119": {
+            "7f1e7061-8bb0-4338-9342-118f1e9214aa": {
                 "filename": "smc-addendum-template.docx",
                 "provider": MonumentTemplateProvider
             },
-            "b9469f82-2a7c-4fc4-8895-2a38b42729f5": {
+            "e14bd058-e9f2-48f8-8ef5-337310c3420f": {
                 "filename": "smc-provisional-template.docx",
                 "provider": MonumentTemplateProvider
             },
-            "9f83a934-d2e1-4c42-a77c-c41db041abe1": {
+            "8d605e5c-d0da-4b72-9ce3-2f7dac3381d1": {
                 "filename": "smc-refusal-template.docx",
                 "provider": MonumentTemplateProvider
             },
