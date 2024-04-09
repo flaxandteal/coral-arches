@@ -41,6 +41,7 @@ from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
+import pytz
 
 
 class FileTemplateView(View):
@@ -96,11 +97,12 @@ class FileTemplateView(View):
 
         self._edit_letter(self.resource, template_dict["provider"], datatype_factory)
 
-        date = datetime.today()
-        date = (
-            date.strftime("%Y") + "-" + date.strftime("%m") + "-" + date.strftime("%d")
-        )
-        new_file_name = date + "_" + template_dict["filename"]
+        timezone = pytz.timezone("Europe/London") 
+        current_datetime = datetime.now(timezone)
+        # Date and time as "DD-MM-YYYY-HH-MM"
+        formatted_datetime = current_datetime.strftime("%d-%m-%Y-%H-%M")
+
+        new_file_name = formatted_datetime + "_" + template_dict["filename"]
         new_file_path = os.path.join(
             settings.APP_ROOT, "uploadedfiles/docx", new_file_name
         )
