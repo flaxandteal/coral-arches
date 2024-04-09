@@ -229,6 +229,7 @@ define([
         }
       ];
       this.tile.tileid = uuid.generate();
+      console.log('this.tile.tileid = uuid.generate();: ', (this.tile.tileid = uuid.generate()));
       const fileTileTemplate = {
         tileid: '',
         data: {
@@ -270,7 +271,9 @@ define([
       });
 
       if (fileTile?.ok) {
-        await this.form.saveMultiTiles();
+        const fileTileResult = await fileTile.json();
+        console.log(fileTileResult.tileid);
+        await this.form.saveMultiTiles(fileTileResult.tileid);
         // const fileTileResult = await fileTile.json();
         // this.form.tiles.append()
         // // this.digitalFileNodeTileId = fileTileResult.tileid;
@@ -310,7 +313,7 @@ define([
             type: 'GET',
             url:
               arches.urls.root +
-              `resource/${digitalObjectResourceId}/tiles?nodeid=96f8830a-8490-11ea-9aba-f875a44e0e11`,
+              `resource/${digitalObjectResourceId}/tiles?nodeid=7db68c6c-8490-11ea-a543-f875a44e0e11`,
             context: this,
             success: async (responseText, status, response) => {
               console.log(response.responseJSON);
@@ -353,7 +356,7 @@ define([
       link.click();
     };
 
-    this.form.saveMultiTiles = async () => {
+    this.form.saveMultiTiles = async (newTileId) => {
       /**
        * TAKEN FROM DEFAULT-CARD-UTIL AND MODIFIED
        */
@@ -394,7 +397,7 @@ define([
        * Never actually run the save.
        */
       this.form.tiles().forEach((tile) => {
-        console.log('tile: ', tile);
+        if (!tile.tileid) tile.tileid = newTileId;
         console.log('tile: ', ko.toJS(tile.data));
         unorderedSavedData.push({
           data: ko.toJS(tile.data),

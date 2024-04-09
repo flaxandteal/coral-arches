@@ -457,14 +457,14 @@
                 <span>Generate</span>
             </button>
         </div>
-        <!--ko foreach: {data: uploadedFiles(), as: 'file', noChildContext: true} -->
-        <div style="display: flex; flex-direction: column">
-            <div style="background-color: #eceef0; padding: 10px 15px; margin-bottom: 6px; border-radius: 6px; display:flex; justify-content: space-between">
-                <span data-bind="text: file.name"></span>
-                <a data-bind="click: () => downloadFile(file.url, file.name)" style="text-decoration: underline; color: blue; cursor: pointer;">Download</a>
-            </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; padding-right: 8px; overflow-y: scroll; max-height: 200px">
+            <!--ko foreach: {data: uploadedFiles(), as: 'file', noChildContext: true} -->
+                <div style="background-color: #eceef0; padding: 10px 15px; border-radius: 6px; display:flex; justify-content: space-between">
+                    <span data-bind="text: file.name"></span>
+                    <a data-bind="click: () => downloadFile(file.url, file.name)" style="text-decoration: underline; color: blue; cursor: pointer;">Download</a>
+                </div>
+            <!-- /ko -->
         </div>
-        <!-- /ko -->
     </div>
 </div>
 {% endblock form %} 
