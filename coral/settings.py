@@ -88,8 +88,12 @@ TEMPLATES[0]['DIRS'].insert(0, os.path.join(APP_ROOT, 'templates'))
 
 ANONYMOUS_SETS = []
 
-with (Path(__file__).parent / "wkrm.toml").open("rb") as wkrm_f:
-    WELL_KNOWN_RESOURCE_MODELS = [model for _, model in tomllib.load(wkrm_f).items()]
+try:
+    with (Path(__file__).parent / "wkrm.toml").open("rb") as wkrm_f:
+        WELL_KNOWN_RESOURCE_MODELS = [model for _, model in tomllib.load(wkrm_f).items()]
+except:
+    with (Path(__file__).parent / "wkrm.toml").open("r") as wkrm_f:
+        WELL_KNOWN_RESOURCE_MODELS = [model for _, model in tomllib.load(wkrm_f).items()]
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 
