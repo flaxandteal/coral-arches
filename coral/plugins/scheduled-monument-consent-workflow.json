@@ -201,7 +201,23 @@
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "49c65316-f5af-11ee-9f07-0242ac170006",
+                  "semanticName": "Correspondence",
+                  "hiddenNodes": [
+                    "49c65ece-f5af-11ee-9f07-0242ac170006"
+                  ]
+                },
+                "tilesManaged": "many",
+                "noTileSidebar": true,
+                "componentName": "file-template",
+                "uniqueInstanceName": "letter-template"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"

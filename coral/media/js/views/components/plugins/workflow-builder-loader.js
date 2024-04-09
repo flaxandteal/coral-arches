@@ -11,6 +11,7 @@ define([
   'views/components/workflows/assign-consultation-workflow/show-hierarchy-change',
   'views/components/workflows/enforcement-workflow/enforcement-summary-step',
   'views/components/workflows/related-document-upload',
+  'views/components/workflows/file-template',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
