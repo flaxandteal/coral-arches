@@ -1,4 +1,4 @@
-name: Conventional Commits Lint
+name: Conventional Commits
 
 on:
   pull_request:
@@ -8,8 +8,8 @@ on:
       - synchronize
 
 jobs:
-  build:
-    name: Conventional Commits
+  lint:
+    name: Lint Conventional Commits
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +20,7 @@ jobs:
   versioning:
     runs-on: ubuntu-latest
     steps:
-      - name: calculate version
+      - name: Calculate Version
         id: calculate-version
         uses: bitshifted/git-auto-semver@v1
         with:
