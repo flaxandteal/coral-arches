@@ -157,12 +157,10 @@ class FileTemplateView(View):
         new_tile.action = "update_tile"
 
         response = TileData.post(new_tile, new_req)
-        print("XXXXXX here 2: ", response)
         if response.status_code == 200:
             tile = json.loads(response.content)
             return JSONResponse({"tile": tile, "status": "success"})
 
-        print("XXXXXXXXXXXXXXXXX here 1")
         return HttpResponseNotFound(response.status_code)
 
     def get_template_path(self, template_id):
