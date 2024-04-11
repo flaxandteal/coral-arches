@@ -6,7 +6,7 @@
 >
   <skos:Concept rdf:about="http://localhost:8000/3a549779-bf62-4ee5-aae1-f64199d8b754">
     <dcterms:identifier xml:lang="en">{"id": "c723f9ab-f7fb-47a4-851a-3668d874340f", "value": "http://localhost:8000/3a549779-bf62-4ee5-aae1-f64199d8b754"}</dcterms:identifier>
-    <skos:prefLabel xml:lang="en-us">{"id": "08bb630d-a27b-45bc-a13f-567b428018c5", "value": "Letter C - Condition two stage"}</skos:prefLabel>
+    <!-- <skos:prefLabel xml:lang="en-us">{"id": "08bb630d-a27b-45bc-a13f-567b428018c5", "value": "Letter C - Condition two stage"}</skos:prefLabel> -->
     <skos:inScheme>
       <skos:ConceptScheme rdf:about="http://localhost:8000/15c95776-1eda-43de-bdb7-54c32e984379">
         <!-- <skos:hasTopConcept rdf:resource="http://localhost:8000/47be4549-8416-4c7b-95fb-e112bb3c2a3d"/> -->

@@ -12,13 +12,17 @@ define([
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
-    this.LETTER_TYPE_NODE = '49c6587a-f5af-11ee-9f07-0242ac170006';
-    this.LETTER_RESOURCE_NODE = '49c65ece-f5af-11ee-9f07-0242ac170006';
-    this.LETTER_METATYPE = '49c65b86-f5af-11ee-9f07-0242ac170006';
+    /**
+     * Matches structure of the Correspondence branch
+     */
+    this.LETTER_TYPE_NODE = params.letterTypeNode;
+    this.LETTER_RESOURCE_NODE = params.letterResourceNode;
+    this.LETTER_METATYPE = params.letterMetatype;
 
     this.DIGITAL_OBJECT_NAME_NODEGROUP = 'c61ab163-9513-11ea-9bb6-f875a44e0e11';
     this.DIGITAL_OBJECT_NAME_NODE = 'c61ab16c-9513-11ea-89a4-f875a44e0e11';
     this.DIGITAL_OBJECT_FILE_NODE = '96f8830a-8490-11ea-9aba-f875a44e0e11';
+    this.DIGITAL_OBJECT_FILE_CONTENT_NODE = '7db68c6c-8490-11ea-a543-f875a44e0e11';
 
     this.selectedLetterType = ko.observable();
     this.uploadedFiles = ko.observableArray();
@@ -127,7 +131,7 @@ define([
             }
           ]
         },
-        nodegroup_id: '49c65316-f5af-11ee-9f07-0242ac170006',
+        nodegroup_id: params.nodegroupid,
         parenttile_id: null,
         resourceinstance_id: params.resourceid,
         sortorder: 0
@@ -166,7 +170,7 @@ define([
             type: 'GET',
             url:
               arches.urls.root +
-              `resource/${digitalObjectResourceId}/tiles?nodeid=7db68c6c-8490-11ea-a543-f875a44e0e11`,
+              `resource/${digitalObjectResourceId}/tiles?nodeid=${this.DIGITAL_OBJECT_FILE_CONTENT_NODE}`,
             context: this,
             success: async (responseText, status, response) => {
               console.log(response.responseJSON);
