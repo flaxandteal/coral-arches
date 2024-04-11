@@ -1,0 +1,29 @@
+
+name: Conventional Commits Lint
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  build:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: webiny/action-conventional-commits@v1.3.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  versioning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: calculate version
+        id: calculate-version
+        uses: bitshifted/git-auto-semver@v1
+      - name: Use version
+        run: echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
+
