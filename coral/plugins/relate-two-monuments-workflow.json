@@ -1,0 +1,12 @@
+{
+  "pluginid": "8bcd8d60-260a-406a-8101-42f6ca6310fe",
+  "name": "Relate Heritage Assets",
+  "icon": "fa fa-file-text",
+  "component": "views/components/plugins/relate-two-monuments-workflow",
+  "componentname": "relate-two-monuments-workflow",
+  "config": {
+    "show": false
+  },
+  "slug": "relate-two-monuments-workflow",
+  "sortorder": 0
+}

@@ -1,0 +1,102 @@
+{% extends "views/components/widgets/base.htm" %}
+{% load template_tags %}
+{% load i18n %}
+
+{% block form %}
+<div class="row widget-wrapper" data-bind="let: {uid: Math.random().toString()}">
+    <div class="form-group" style="position: relative;">
+        <div style="max-width: 600px; position: relative">
+            <div class="col-xs-12" style="display:flex;flex-wrap: wrap;flex-direction: column;">
+                <input type="text" style="flex:1" class="form-control input-lg widget-input"
+                    data-bind="textInput: currentText, 
+                        attr: {placeholder: placeholder, maxlength: maxLength, disabled: disable, 'aria-label': label}
+                ">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock form %}
+
+{% block config_form %}
+<div class="control-label">
+    <span class="control-label widget-input-label" data-bind="text: $root.translations.placeholder"></span>
+</div>
+<div class="col-xs-12 pad-no crud-widget-container">
+    <input
+        id="input-placeholder"
+        class="form-control input-md widget-input"
+        data-bind="
+            attr: {placeholder: $root.translations.placeholder, 'aria-label': $root.translations.placeholder},
+            textInput: placeholder
+        "
+    >
+</div>
+<div class="control-label">
+    <span data-bind="text: $root.translations.maxLength"></span>
+</div>
+<div class="col-xs-12 pad-no crud-widget-container">
+    <input
+        id="input-max-length"
+        class="form-control input-md widget-input"
+        data-bind="
+            attr: {placeholder: $root.translations.maxLength, 'aria-label': $root.translations.maxLength},
+            textInput: maxLength
+        "
+    >
+</div>
+<div class="form-group" style="position: relative;" data-bind="let: {uid: Math.random().toString()}">
+    <div style="max-width: 600px; position: relative">
+    <div class="widget-inline-tools-collapser" tabindex="0" role="button"
+        data-bind="onEnterkeyClick, onSpaceClick, 
+            click: function() { showi18nOptions(!showi18nOptions()); },
+            attr: {
+                'aria-expanded': showi18nOptions().toString(), 
+                'aria-label': $root.translations.defaultValue,
+                'aria-controls': uid,
+            },
+        "
+    >
+        <span class="control-label widget-input-label" data-bind="text: $root.translations.defaultValue"></span>
+    </div>
+    <div class="col-xs-12" style="display:flex;flex-wrap: wrap;flex-direction: column;">
+        <input type="text" style="flex:1" id="input-default-value" class="form-control input-lg widget-input" 
+            data-bind="textInput: currentDefaultText, 
+                attr: {placeholder: placeholder, maxlength: maxLength, disabled: disable, 'aria-label': $root.translations.defaultValue}
+        ">
+    </div>
+    </div>
+</div>
+<div class="node-config-item">
+    <div class="control-label">
+        <span class="widget-input-label" data-bind="text: $root.translations.disabled"></span>
+    </div>
+    <div class="pad-no">
+        <div
+            data-bind="
+                component: {
+                    name: 'views/components/simple-switch',
+                    params: {
+                        value: uneditable,
+                        config:{label: $root.translations.disableEditing, subtitle: $root.translations.preventUsersFromEditingValue}
+                    }
+                }
+            "
+        ></div>
+    </div>
+</div>
+{% endblock config_form %}
+
+<!-- ko if: !configForm  && state === 'display_value' -->
+{% block display_value %}
+<span data-bind="text: displayValue && displayValue() ? displayValue() : '' || $root.translations.none"></span>
+{% endblock display_value %}
+<!-- /ko -->
+
+<!-- ko if: !configForm  && state === 'report' -->
+{% block report %}
+<!-- ko if: !ko.unwrap(hideEmptyNodes) || (ko.unwrap(hideEmptyNodes) === true && !!ko.unwrap(currentText) ) -->
+<dt data-bind="text: label"></dt>
+<dd data-bind="text: displayValue() ? displayValue() : $root.translations.none"></dd>
+<!-- /ko -->
+{% endblock report %}
+<!-- /ko -->

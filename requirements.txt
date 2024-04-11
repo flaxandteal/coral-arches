@@ -10,7 +10,7 @@ tabulate<0.9
 asciitree
 
 starlette<=0.20.0
-typing_extensions<4.0
+typing_extensions
 starlette-graphene3
 starlette-context
 uvicorn<=0.15.0
@@ -22,3 +22,6 @@ semantic_version
 PyJWT
 requests_oauthlib
 python-docx
+
+git+https://github.com/flaxandteal/arches-orm@master
+pika

@@ -1,0 +1,73 @@
+{
+   "business_data" : {
+      "resources" : [
+         {
+            "resourceinstance" : {
+               "descriptors" : {
+                  "en" : {
+                     "description" : "Global root of group hierarchy.",
+                     "map_popup" : "Undefined",
+                     "name" : "Global Set"
+                  }
+               },
+               "graph_id" : "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+               "graph_publication_id" : "5ce8cde2-705e-11ee-977f-0242ac140008",
+               "legacyid" : null,
+               "name" : "Global Set",
+               "publication_id" : "5ce8cde2-705e-11ee-977f-0242ac140008",
+               "resourceinstanceid" : "74e496c7-ec7e-43b8-a7b3-05bacf496794"
+            },
+            "tiles" : [
+               {
+                  "data" : {
+                     "a829879a-6f43-11ee-9ebf-0242ac140008" : {
+                        "de" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        },
+                        "el" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        },
+                        "en" : {
+                           "direction" : "ltr",
+                           "value" : "Global Set"
+                        },
+                        "en-US" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        },
+                        "en-us" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        },
+                        "fr" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        },
+                        "pt" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        },
+                        "ru" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        },
+                        "zh" : {
+                           "direction" : "ltr",
+                           "value" : ""
+                        }
+                     }
+                  },
+                  "nodegroup_id" : "2cd7a956-6f42-11ee-9192-0242ac140008",
+                  "parenttile_id" : null,
+                  "provisionaledits" : null,
+                  "resourceinstance_id" : "74e496c7-ec7e-43b8-a7b3-05bacf496794",
+                  "sortorder" : 0,
+                  "tileid" : "9aa3ad91-a049-4aa7-905b-e7269a707107"
+               }
+            ]
+         }
+      ]
+   }
+}

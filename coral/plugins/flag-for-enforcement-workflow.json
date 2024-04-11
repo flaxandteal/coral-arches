@@ -1,0 +1,123 @@
+{
+  "pluginid": "9b0f5bb0-4346-4957-b966-47cd973eba54",
+  "name": "Flag for Enforcement",
+  "icon": "fa fa-asterisk",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "stepData": [
+      {
+        "name": "initial-step",
+        "title": "Initial step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "",
+                  "nodegroupid": "ba39c036-b551-11ee-94ee-0242ac120006",
+                  "semanticName": "System Reference Numbers"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "system-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "enforcement-details",
+        "title": "Enforcement Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "074effd0-b5e8-11ee-8e91-0242ac120006",
+                  "semanticName": "Case References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "case-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "89bf628e-b552-11ee-805b-0242ac120006",
+                  "semanticName": "Reason Description"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "reason-description"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "f0b99550-b551-11ee-805b-0242ac120006",
+                  "semanticName": "Associated Actors"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "flagged-by"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "229501c2-b552-11ee-805b-0242ac120006",
+                  "semanticName": "Flagged Date"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "flagged-date"
+              },
+              {
+                "parameters": {
+                  "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
+                  "semanticName": "Associated Resources"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "associated-resources"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "summary-step",
+        "title": "Enforcement Summary",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "enforcement-summary-step"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "flag-for-enforcement-workflow",
+  "sortorder": 0
+}

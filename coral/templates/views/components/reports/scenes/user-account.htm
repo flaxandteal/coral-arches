@@ -1,0 +1,37 @@
+{% extends "views/report-templates/default.htm" %}
+{% load i18n %}
+{% block report %}
+
+{% block body %}
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.userAccount)}, css: {'fa-angle-double-right': visible.userAccount(), 'fa-angle-double-up': !visible.userAccount()}" class="fa toggle"></i> {% trans "User Account Details" %}</h2>
+    <span data-bind="if: cards.userAccount && (!userAccount().length || cards.userAccount.cardinality == 'n')">
+        <a class="aher-report-a" data-bind="click: function(){add(cards.userAccount)}"><i class="fa fa-mail-reply"></i> {% trans "Add User Accout Details" %}</a>
+    </span>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.userAccount" class="aher-report-collapsible-container pad-lft">
+
+        <!-- ko ifnot: userAccount() -->
+        <div class="aher-nodata-note">No user account details for this resource</div>
+        <!-- ko if: userSignupLink() -->
+        <div class="aher-nodata-note">
+            [<a href="#" data-bind="click: (data, event) => { navigator.clipboard.writeText(userSignupLink()); event.target.textContent = 'Copied signup link'; }" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }">Copy signup link for this Person</a>]
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+
+        <!-- ko if: userAccount() -->
+        <div class="aher-report-subsection" >
+            <div class="firstchild-container">
+                <div class="pad-top">
+                    <span data-bind="text: userAccount().displayValue"></span>
+                    (ID: <span data-bind="text: userAccount().userId"></span>)
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+{% endblock body %}
+{% endblock report %}
