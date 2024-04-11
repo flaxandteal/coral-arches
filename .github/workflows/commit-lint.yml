@@ -34,4 +34,4 @@ jobs:
 
       - name: Use version
         run: |
-          echo "Calculated version: ${{ steps.calculate-version.outputs }}"
+          echo "Calculated version: ${{ toJson(steps.calculate-version.outputs) }}"
