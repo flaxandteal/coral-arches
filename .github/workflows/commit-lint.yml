@@ -24,6 +24,9 @@ jobs:
       - name: calculate version
         id: calculate-version
         uses: bitshifted/git-auto-semver@v1
+        with:
+          create_tag: true
+          initial_version: "2.42.39"
       - name: Use version
         run: echo "Calculated version: ${{ steps.calculate-version.outputs.version-string }}"
 
