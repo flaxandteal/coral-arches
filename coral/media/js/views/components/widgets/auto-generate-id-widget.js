@@ -22,6 +22,11 @@ define([
 
       const self = this;
 
+      self.prefixStatic = params.config().prefix;
+      if (self.form?.componentData?.parameters?.prefix) {
+        self.prefixStatic = self.form?.componentData?.parameters?.prefix
+      }
+
       self.currentLanguage = ko.observable({ code: arches.activeLanguage });
 
       self.idValue = ko.observable();
@@ -33,7 +38,7 @@ define([
         for (let i = 0; i < length; i++) {
           id += base62chars[Math.floor(Math.random() * 62)];
         }
-        return `${params.config().prefix}/${year}/${id}`;
+        return `${self.prefixStatic}/${year}/${id}`;
       };
 
       self.prefix.subscribe((value) => {
