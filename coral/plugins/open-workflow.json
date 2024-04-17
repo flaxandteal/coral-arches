@@ -11,6 +11,7 @@
         "slug": "respond-to-enforcement-workflow",
         "name": "Respond to Enforcement",
         "graphIds": ["8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84"],
+        "description": "",
         "disableStartNew": true,
         "checkForResourceId": true
       },
@@ -27,6 +28,7 @@
       {
         "slug": "assign-consultation-workflow",
         "name": "Planning Consultation",
+        "description": "From this page you can begin a new planning consultation. The planning consultation created here can then be picked and completed in the HM or HB Planning Response workflows.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"]
       },
       {
