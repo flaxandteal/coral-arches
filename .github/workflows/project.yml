@@ -362,6 +362,9 @@ jobs:
           DJANGO_DEBUG: "False"
           DOMAIN_NAMES: "arches"
           PYTHONUNBUFFERED: "0"
+          STATIC_URL: "/static/"
+          STATIC_ROOT: "/static_root"
+          WEB_ROOT: "/web_root"
           TZ: "PST"
         ports:
           - '8000:8000'
