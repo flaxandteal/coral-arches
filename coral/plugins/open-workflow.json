@@ -34,12 +34,14 @@
       {
         "slug": "hm-planning-consultation-response-workflow",
         "name": "HM Planning Consultation Response",
+        "description": "You will see a list of consultations in the dropdown below. If nothing appears there it nothing to respond to. A consultation must be started from the Planning Consultation workflow before appearing here.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
         "disableStartNew": true
       },
       {
         "slug": "hb-planning-consultation-response-workflow",
         "name": "HB Planning Consultation Response",
+        "description": "You will see a list of consultations in the dropdown below. If nothing appears there it nothing to respond to. A consultation must be started from the Planning Consultation workflow before appearing here.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
         "disableStartNew": true
       },
