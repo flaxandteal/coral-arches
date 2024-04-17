@@ -26,6 +26,11 @@
   <div class="row widget-wrapper">
     <h4 data-bind="text: workflow().name"></h4>
   </div>
+  <!-- ko if: workflow().description -->
+  <div class="row widget-wrapper">
+    <p data-bind="text: workflow().description" style="max-width: 720px"></p>
+  </div>
+  <!-- /ko -->
   <div class="row widget-wrapper">
     <div
       data-bind="component: {
