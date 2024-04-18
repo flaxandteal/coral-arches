@@ -42,6 +42,7 @@ from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
 import pytz
+from django.core.files.storage import  default_storage
 
 
 class FileTemplateView(View):
@@ -78,19 +79,27 @@ class FileTemplateView(View):
         self.resource = Resource.objects.get(resourceinstanceid=resourceinstance_id)
         self.resource.load_tiles()
 
-        template_dict = self.get_template_path(template_id)
-        template_path = os.path.join(
-            settings.APP_ROOT, "docx", template_dict["filename"]
-        )
-
         if (
             os.path.exists(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx"))
             is False
         ):
             os.mkdir(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx"))
 
+        fs = default_storage
+        template_dict = self.get_template_path(template_id)
+        template_path = None
+        filesystem_class = default_storage.__class__.__name__
+        if filesystem_class == 'S3Boto3Storage':
+            template_path = os.path.join(
+                "docx", template_dict["filename"]
+            )
+        elif filesystem_class == 'FileSystemStorage':
+            template_path = os.path.join(
+                settings.APP_ROOT, "docx", template_dict["filename"]
+            )
+
         try:
-            self.doc = Document(template_path)
+            self.doc = Document(fs.open(template_path))
         except:
             return HttpResponseNotFound("No Template Found")
 
