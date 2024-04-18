@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=2, minor=46, patch=39)
+APP_VERSION = semantic_version.Version(major=2, minor=47, patch=39)
 
 GROUPINGS = {
     "groups": {
@@ -271,6 +271,20 @@ if DEBUG:
     hostname, __, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
 
+
+AWS_STORAGE_BUCKET_NAME=os.environ.get("AWS_STORAGE_BUCKET_NAME", None)
+AWS_S3_ENDPOINT_URL=os.environ.get("AWS_S3_ENDPOINT_URL", None)
+AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+AWS_ACCESS_KEY_ID=os.environ.get("AWS_ACCESS_KEY_ID", None)
+
+if AWS_STORAGE_BUCKET_NAME and AWS_S3_ENDPOINT_URL and AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID:
+    INSTALLED_APPS = (*INSTALLED_APPS, "storages",)
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {},
+        },
+    }
 
 STATICFILES_DIRS = build_staticfiles_dirs(
     root_dir=ROOT_DIR,
