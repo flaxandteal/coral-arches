@@ -1,4 +1,4 @@
-<div style="margin: 15px; white-space: nowrap">
+<div style="margin: 15px; white-space: nowrap; max-width: 200px; width: 100%">
   <h5>Recently opened</h5>
   <!-- ko if: !recentlyOpenedResources().length -->
   <span>None available</span>
@@ -18,7 +18,7 @@
       window.location.href = workflowUrl();
     }"
   >
-    <span data-bind="text: opened.name"></span>
+    <span data-bind="text: opened.name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"></span>
   </div>
   <!-- /ko -->
 </div>
