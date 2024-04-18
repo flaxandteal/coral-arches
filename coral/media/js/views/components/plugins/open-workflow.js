@@ -21,7 +21,6 @@ define([
     this.workflow = ko.observable();
     this.graphIds = ko.observable();
 
-    this.resourceName = ko.observable();
     this.recentlyOpened = ko.observable();
 
     this.recentlyOpenedResources = ko.computed(() => {
@@ -51,21 +50,10 @@ define([
       return data.tiles;
     };
 
-    this.getNameFromNodeId = (tiles, nodeId) => {
-      const tile = tiles.find((tile) => nodeId in tile.data);
-      return tile?.display_values.find((dv) => dv.nodeid === nodeId)?.value || '';
-    };
-
-    this.loadResourceData = async (resourceId) => {
-      this.loading(true);
-      const componentData = await this[this.workflow().setupFunction](resourceId);
-      localStorage.setItem(this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL, JSON.stringify(componentData));
-      this.loading(false);
-    };
-
     this.openRecent = async (resourceId) => {
-      localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
-      await this.loadResourceData(resourceId);
+      if (!resourceId) return;
+      this.selectedResource(resourceId);
+      this.openWorkflow();
     };
 
     this.setupWorkflow = async () => {
@@ -103,19 +91,27 @@ define([
       if (!this.selectedResource()) return;
       this.loading(true);
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
-      this.updateRecentlyOpened(this.selectedResource());
+      await this.updateRecentlyOpened(this.selectedResource());
       await this.setupWorkflow();
       this.workflowUrl(
         arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.selectedResource()}`
       );
       window.window.location = this.workflowUrl();
-      this.loading(false);
     };
 
-    this.updateRecentlyOpened = (resourceId) => {
+    this.updateRecentlyOpened = async (resourceId) => {
       const slug = this.workflowSlug();
+      const response = await $.ajax({
+        type: 'GET',
+        url: arches.urls.resource_descriptors + resourceId,
+        dataType: 'json',
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
       const newOpen = {
-        name: this.resourceName(),
+        name: response.displayname,
         resourceId: resourceId
       };
       if (!(slug in this.recentlyOpened())) {
@@ -125,10 +121,7 @@ define([
       } else {
         this.recentlyOpened()[slug][resourceId] = newOpen;
       }
-      localStorage.setItem(
-        this.WORKFLOW_RECENTLY_OPENED_LABEL,
-        JSON.stringify(this.recentlyOpened())
-      );
+      this.saveRecentlyOpened();
     };
 
     this.saveRecentlyOpened = () => {
