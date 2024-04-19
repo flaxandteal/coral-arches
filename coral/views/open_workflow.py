@@ -66,6 +66,11 @@ class OpenWorkflow(View):
                                 "tiles_managed": component_config["tilesManaged"],
                                 "data_lookup_id": data_lookup_id,
                                 "required_parent_tiles": required_parent_tiles,
+                                "related_document_upload_id": component_config[
+                                    "parameters"
+                                ].get(
+                                    "resourceModelDigitalObjectNodeGroupId", None
+                                ),  # Special case for the related-document-upload component
                             }
                         )
         return workflow_step_data, step_mapping
@@ -268,6 +273,39 @@ class OpenWorkflow(View):
             nodegroup_id = map_data["nodegroup_id"]
             data_lookup_id = map_data["data_lookup_id"]
             tiles = self.grouped_tiles.get(nodegroup_id, [])
+
+            if map_data["related_document_upload_id"]:
+                nodegroup_id = map_data["related_document_upload_id"]
+                tiles = self.grouped_tiles.get(nodegroup_id, [])
+
+                if not len(tiles):
+                    continue
+
+                if not len(tiles[0].data.get(nodegroup_id)):
+                    continue
+
+                # This expects that you are using a digital object nodegroup with a single
+                # level nodegroup. It must not be nested within a nodegroup so that the nodegroup
+                # ids are identical.
+                digital_object_resource_id = (
+                    tiles[0].data.get(nodegroup_id)[0].get("resourceId")
+                )
+
+                DIGITAL_OBJECT_NODEGROUP_ID = "7db68c6c-8490-11ea-a543-f875a44e0e11"
+                digital_object_file_tile = Tile.objects.filter(
+                    resourceinstance_id=digital_object_resource_id,
+                    nodegroup_id=DIGITAL_OBJECT_NODEGROUP_ID,
+                ).first()
+
+                component_data = {
+                    "nodegroupId": nodegroup_id,
+                    "resourceInstanceId": digital_object_resource_id,
+                    "tileId": str(digital_object_file_tile.tileid),
+                    "tileData": json.dumps(digital_object_file_tile.data),
+                }
+                self.workflow_component_data[data_lookup_id] = {"value": component_data}
+                continue
+
             if not len(tiles):
                 continue
 
@@ -275,7 +313,7 @@ class OpenWorkflow(View):
                 map_data["required_parent_tiles"], self.grouped_tiles
             )
 
-            addtional_data = self.additional_saved_values.get(nodegroup_id, {})
+            additional_data = self.additional_saved_values.get(nodegroup_id, {})
 
             if map_data["tiles_managed"] == "one":
                 # FIXME: In this case the workflow only wants one tile but
@@ -288,7 +326,7 @@ class OpenWorkflow(View):
                     "tileId": str(tile.tileid),
                     "tileData": json.dumps(tile.data),
                 }
-                result = {**component_data, **parent_tile_lookups, **addtional_data}
+                result = {**component_data, **parent_tile_lookups, **additional_data}
                 self.workflow_component_data[data_lookup_id] = {"value": result}
                 continue
 
