@@ -11,6 +11,7 @@
         "slug": "respond-to-enforcement-workflow",
         "name": "Respond to Enforcement",
         "graphIds": ["8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84"],
+        "description": "",
         "disableStartNew": true,
         "checkForResourceId": true
       },
@@ -27,17 +28,20 @@
       {
         "slug": "assign-consultation-workflow",
         "name": "Planning Consultation",
+        "description": "From this page you can begin a new planning consultation. The planning consultation created here can then be picked and completed in the HM or HB Planning Response workflows.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"]
       },
       {
         "slug": "hm-planning-consultation-response-workflow",
         "name": "HM Planning Consultation Response",
+        "description": "You will see a list of consultations in the dropdown below. If nothing appears there it nothing to respond to. A consultation must be started from the Planning Consultation workflow before appearing here.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
         "disableStartNew": true
       },
       {
         "slug": "hb-planning-consultation-response-workflow",
         "name": "HB Planning Consultation Response",
+        "description": "You will see a list of consultations in the dropdown below. If nothing appears there it nothing to respond to. A consultation must be started from the Planning Consultation workflow before appearing here.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
         "disableStartNew": true
       },
@@ -58,6 +62,11 @@
         "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9", "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"],
         "setupFunction": "setupMonumentRevision",
         "disableStartNew": true
+      },
+      {
+        "slug": "fmw-workflow",
+        "name": "FMW Inspection",
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"]
       }
     ]
   },

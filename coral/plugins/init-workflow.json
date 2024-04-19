@@ -151,6 +151,15 @@
         "bgColor": "#688294",
         "circleColor": "#7195ad",
         "desc": "Respond to a consultation for HB"
+      },
+      {
+        "workflowid": "2d785399-83a7-4887-b73b-776f8006e7e6",
+        "slug": "open-workflow?workflow-slug=fmw-workflow",
+        "name": "FMW Inspection",
+        "icon": "fa fa-file-text",
+        "bgColor": "#dba64b",
+        "circleColor": "#f2bb5c",
+        "desc": "Complete a FMW inspection"
       }
     ],
     "show": true
