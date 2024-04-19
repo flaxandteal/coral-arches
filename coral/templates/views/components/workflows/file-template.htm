@@ -222,7 +222,7 @@
 
 <!-- ko if: state === 'form' -->
 {% block form %}
-<div class="card-component" data-bind="css: card.model.cssclass">
+<div class="card-component" data-bind="css: card.model.cssclass" style="display: flex; justify-content: space-between">
 
     <!-- ko if: reviewer && provisionalTileViewModel.selectedProvisionalEdit() -->
     <div class="edit-message-container provisional-editor">
@@ -249,7 +249,7 @@
 
 
 
-    <div class="new-provisional-edit-card-container">
+    <div class="new-provisional-edit-card-container" style="width: 100%; max-width: 600px; flex-direction: column">
         <!-- ko if: reviewer && provisionalTileViewModel.provisionaledits().length > 0 -->
         <!-- ko if: !provisionalTileViewModel.tileIsFullyProvisional() -->
         <div class='new-provisional-edits-list'>
@@ -445,26 +445,42 @@
                 </div>
             </aside>
         </div>
+
+
+        <div style="padding: 10px 5px 25px 5px; margin-right: 10px">
+            <div style="margin-bottom: 8px">
+                <button class="btn btn-shim btn-success btn-lg" data-bind="click: () => {
+                    retrieveFile();
+                }">
+                    <span>Generate</span>
+                </button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; padding-right: 8px; overflow-y: scroll; max-height: 200px">
+                <!--ko foreach: {data: uploadedFiles(), as: 'file', noChildContext: true} -->
+                    <div style="background-color: #eceef0; padding: 10px 15px; border-radius: 6px; display:flex; justify-content: space-between">
+                        <span data-bind="text: file.name"></span>
+                        <div style="display: flex; gap: 8px">
+                            <a data-bind="click: () => previewDoc(file.url, file.name)" style="text-decoration: underline; color: blue; cursor: pointer;">Preview</a>
+                            <a data-bind="click: () => downloadFile(file.url, file.name)" style="text-decoration: underline; color: blue; cursor: pointer;">Download</a>
+                        </div>
+                    </div>
+                <!-- /ko -->
+            </div>
+        </div>
+
     </div>
+    <div style="width: 850px">
+        <div style="padding-bottom: 4px; color: red">PREVIEW IS NOT GUARANTEED TO MATCH</div>
+        <div id="docx-preview-element" class="docx-preview--overrides" style="border-radius: 10px; overflow: hidden"></div>
+    </div>
+    
+
 </div>
 
 <div class="card-component">
     <div class="row widget-wrapper">
-        <div style="margin-bottom: 8px">
-            <button class="btn btn-shim btn-success btn-lg" data-bind="click: () => {
-                retrieveFile();
-            }">
-                <span>Generate</span>
-            </button>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px; padding-right: 8px; overflow-y: scroll; max-height: 200px">
-            <!--ko foreach: {data: uploadedFiles(), as: 'file', noChildContext: true} -->
-                <div style="background-color: #eceef0; padding: 10px 15px; border-radius: 6px; display:flex; justify-content: space-between">
-                    <span data-bind="text: file.name"></span>
-                    <a data-bind="click: () => downloadFile(file.url, file.name)" style="text-decoration: underline; color: blue; cursor: pointer;">Download</a>
-                </div>
-            <!-- /ko -->
-        </div>
+
+        
     </div>
 </div>
 {% endblock form %} 

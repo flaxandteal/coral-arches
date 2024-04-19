@@ -7,10 +7,24 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/workflows/file-template.htm'
-], function (_, $, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
+  'templates/views/components/workflows/file-template.htm',
+  'docx-preview'
+], function (
+  _,
+  $,
+  ko,
+  koMapping,
+  uuid,
+  arches,
+  CardComponentViewModel,
+  AlertViewModel,
+  template,
+  docxPreview
+) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
+
+    console.log('docxPreview: ', docxPreview);
 
     /**
      * Matches structure of the Correspondence branch
@@ -263,6 +277,49 @@ define([
         this.form.savedData(orderedSavedData.reverse());
       }
     };
+
+    this.previewDoc = (fileUrl, fileName) => {
+      console.log('fileName: ', fileName);
+      fetch(fileUrl)
+        .then(async (response) => {
+          // Check if the response is successful
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          console.log(response);
+          const blob = await response.blob();
+          console.log('blob: ', blob);
+          // Convert the response to a Blob
+
+          console.log('starting render');
+          const element = document.getElementById('docx-preview-element');
+          console.log('element: ', element);
+          console.log('docxPreview.defaultOptions: ', docxPreview.defaultOptions)
+          await docxPreview
+            .renderAsync(blob, element, null, {
+              ...docxPreview.defaultOptions,
+              breakPages: true,
+              debug: true,
+              experimental: true
+            })
+            .then(() => console.log('complete'));
+          console.log('finished render');
+
+          return blob;
+        })
+        .then((blob) => {
+          // Use the blob as needed, for example, you can create a URL for it
+          const blobURL = URL.createObjectURL(blob);
+
+          // Now you can use the blobURL, for example, set it as the source of an <img> or <video> element
+          console.log('Blob URL:', blobURL);
+        })
+        .catch((error) => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    };
+
+    // docx-preview-element
   }
 
   ko.components.register('file-template', {
