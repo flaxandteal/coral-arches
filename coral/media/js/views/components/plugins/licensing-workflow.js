@@ -43,7 +43,7 @@ define([
         {
           title: 'Application Details',
           name: 'app-details-step',
-          required: true,
+          required: false,
           workflowstepclass: 'workflow-form-component',
           layoutSections: [
             {
@@ -515,7 +515,7 @@ define([
                   parameters: {
                     graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
                     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
-                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['actResourceId']",
+                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
                     resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
                     fileObjectNamePrefix: 'Site report files for '
                   }
