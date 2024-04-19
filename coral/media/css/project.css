@@ -999,3 +999,7 @@ span.rp-tile-title {
 .workflow-form-component {
     height: min-content;
 }
+
+.docx-preview--overrides .docx-wrapper {
+    background: #eceef0 !important;
+}
