@@ -491,6 +491,10 @@ class MonumentTemplateProvider:
                 self.mapping["Recipient Name"] = self.get_value_from_tile(
                     tile, self.MONUMENT_CONTACTS_APPLICANT_NODE
                 )
+
+                if not tile.data.get(self.MONUMENT_CONTACTS_APPLICANT_NODE) or not len(tile.data.get(self.MONUMENT_CONTACTS_APPLICANT_NODE)):
+                    continue
+
                 applicant_resource_id = tile.data.get(self.MONUMENT_CONTACTS_APPLICANT_NODE)[0].get('resourceId')
                 applicant_resource = self.get_resource(applicant_resource_id)
                 applicant_resource.load_tiles()
