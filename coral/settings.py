@@ -303,16 +303,6 @@ TEMPLATES = build_templates_config(
 
 ALLOWED_HOSTS = []
 
-MOBILE_OAUTH_CLIENT_ID = 'Kbx0BW92GvsqhZP4S6sXaFhzeDams768coC91aT3'
-
-
-CORS_ALLOWED_ORIGINS = ['http://localhost:8000','http://localhost:8100', 'http://localhost:8101', 'http://localhost' ]
-CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = [
-    '*', 'http://localhost:8100', 'http://localhost:8101'
-]
-
-
 SYSTEM_SETTINGS_LOCAL_PATH = os.path.join(APP_ROOT, 'system_settings', 'System_Settings.json')
 WSGI_APPLICATION = 'coral.wsgi.application'
 
