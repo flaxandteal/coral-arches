@@ -7,8 +7,20 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/workflows/file-template.htm'
-], function (_, $, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
+  'templates/views/components/workflows/file-template.htm',
+  'docx-preview'
+], function (
+  _,
+  $,
+  ko,
+  koMapping,
+  uuid,
+  arches,
+  CardComponentViewModel,
+  AlertViewModel,
+  template,
+  docxPreview
+) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
@@ -262,6 +274,31 @@ define([
 
         this.form.savedData(orderedSavedData.reverse());
       }
+    };
+
+    this.previewDoc = (fileUrl, fileName) => {
+      fetch(fileUrl)
+        .then(async (response) => {
+          // Check if the response is successful
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const blob = await response.blob();
+          // Convert the response to a Blob
+
+          const element = document.getElementById('docx-preview-element');
+          await docxPreview.renderAsync(blob, element, null, {
+            ...docxPreview.defaultOptions,
+            breakPages: true,
+            debug: true,
+            experimental: true
+          });
+
+          return blob;
+        })
+        .catch((error) => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
     };
   }
 

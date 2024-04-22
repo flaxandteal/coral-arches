@@ -23,6 +23,8 @@ define([
 
     this.recentlyOpened = ko.observable();
 
+    this.searchString = ko.observable();
+
     this.recentlyOpenedResources = ko.computed(() => {
       const items = this.recentlyOpened()?.[this.workflowSlug()];
       return items ? Object.values(items) : [];
@@ -167,6 +169,7 @@ define([
       this.workflowSlug(this.getWorkflowSlug());
       this.workflowUrl(arches.urls.plugin(this.workflowSlug()));
       this.workflow(this.getWorkflowData());
+      this.searchString(this.workflow().searchString);
       this.graphIds(this.workflow().graphIds);
       this.recentlyOpened(
         JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_OPENED_LABEL)) || {}
