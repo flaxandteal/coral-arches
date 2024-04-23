@@ -607,7 +607,7 @@
                     "constraints": [],
                     "cssclass": null,
                     "description": {
-                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
+                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
                     },
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                     "helpenabled": false,
@@ -878,7 +878,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "b9e07043-5463-11e9-bb70-000d3ab1e588",
                     "sortorder": 14,
@@ -4252,7 +4252,7 @@
                                         "conceptid": "f15236e8-c8c9-420c-a8e3-fa68a1901ee8",
                                         "id": "a87aec59-b59d-4c29-9def-9c69396609ac",
                                         "sortorder": "",
-                                        "text": "Other 8 (Dedicated to the display of a monument)"
+                                        "text": "Other 8 (Dedicated to the display of a heritage asset)"
                                     },
                                     {
                                         "children": [],
@@ -4360,7 +4360,7 @@
                             }
                         ],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Monument."
+                            "en": "Use to record a particular status associated with the Heritage Asset."
                         }
                     },
                     "id": "a541e051-f121-11eb-a199-a87eeabdefba",
@@ -7236,14 +7236,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument, Area or Artefact",
+                        "label": "Associated Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "f7728fc7-6481-11ea-b4dc-001fb5264ca8",
                     "label": {
-                        "en": "Associated Monument, Area or Artefact"
+                        "en": "Associated Heritage Asset, Area or Artefact"
                     },
                     "node_id": "b9e07043-5463-11e9-bb70-000d3ab1e588",
                     "sortorder": 0,
@@ -7289,7 +7289,7 @@
             "deploymentdate": null,
             "deploymentfile": null,
             "description": {
-                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of monuments or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Heritage Asset or Area has been managed through time (management activities)."
             },
             "edges": [
                 {
@@ -17209,7 +17209,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -17229,7 +17229,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monuments and Areas",
+                    "name": "Associated Heritage Assets and Areas",
                     "nodegroup_id": "b9e07043-5463-11e9-bb70-000d3ab1e588",
                     "nodeid": "b9e07043-5463-11e9-bb70-000d3ab1e588",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -18061,7 +18061,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of monuments or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Heritage Asset or Area has been managed through time (management activities)."
             },
             "template_id": "eeb7054c-df37-45d1-8f09-39abb582077e",
             "version": ""

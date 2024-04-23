@@ -681,7 +681,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Parent Monument"
+                        "en": "Parent Heritage Asset"
                     },
                     "nodegroup_id": "6375be6e-dc64-11ee-924e-0242ac120006",
                     "sortorder": null,
@@ -708,7 +708,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Parent Monuments"
+                        "en": "Parent Heritage Assets"
                     },
                     "nodegroup_id": "407bfee5-8704-41a4-8dd7-5dd4533a4617",
                     "sortorder": 2,
@@ -1427,7 +1427,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "721315d3-6be0-4d43-9988-a43851cda6b6",
                     "sortorder": 15,
@@ -1456,7 +1456,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Monument Names"
+                        "en": "Heritage Asset Names"
                     },
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "sortorder": 0,
@@ -1686,7 +1686,7 @@
                     "constraints": [],
                     "cssclass": null,
                     "description": {
-                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
+                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
                     },
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "helpenabled": false,
@@ -1809,7 +1809,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument Type",
+                        "label": "Heritage Asset Type",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -1817,7 +1817,7 @@
                     },
                     "id": "01b08fc3-e7e2-47d6-9f88-8adb9d06982f",
                     "label": {
-                        "en": "Monument Type"
+                        "en": "Heritage Asset Type"
                     },
                     "node_id": "abf06e3f-1044-4e28-86de-724726adce4c",
                     "sortorder": 0,
@@ -3307,7 +3307,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument Metatype",
+                        "label": "Heritage Asset Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -3315,7 +3315,7 @@
                     },
                     "id": "22f4ea32-46bb-4a24-8c68-580e117ac839",
                     "label": {
-                        "en": "Monument Metatype"
+                        "en": "Heritage Asset Metatype"
                     },
                     "node_id": "7dacf620-ac72-4e35-b0af-122624df733e",
                     "sortorder": 1,
@@ -3648,14 +3648,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Parent Monument",
+                        "label": "Parent Heritage Asset",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "2b2fc063-fe9e-43d9-b8ab-c27b561f0127",
                     "label": {
-                        "en": "Parent Monument"
+                        "en": "Parent Heritage Asset"
                     },
                     "node_id": "407bfee5-8704-41a4-8dd7-5dd4533a4617",
                     "sortorder": 0,
@@ -6140,14 +6140,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument, Area or Artefact",
+                        "label": "Associated Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "71a1b597-2149-4e74-a9fc-de85a42f0abb",
                     "label": {
-                        "en": "Associated Monument, Area or Artefact"
+                        "en": "Associated Heritage Asset, Area or Artefact"
                     },
                     "node_id": "2170d566-de53-43d2-b42d-314253140334",
                     "sortorder": 0,
@@ -9939,7 +9939,7 @@
                                         "conceptid": "f15236e8-c8c9-420c-a8e3-fa68a1901ee8",
                                         "id": "79b5d54a-1a3b-417a-9e6d-bc811233d3af",
                                         "sortorder": "",
-                                        "text": "Other 8 (Dedicated to the display of a monument)"
+                                        "text": "Other 8 (Dedicated to the display of a heritage asset)"
                                     },
                                     {
                                         "children": [],
@@ -10047,7 +10047,7 @@
                             }
                         ],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Monument."
+                            "en": "Use to record a particular status associated with the Heritage Asset."
                         }
                     },
                     "id": "c0d730b9-aeb3-4524-99e8-a604b7c6cd2a",
@@ -11574,14 +11574,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument Construction Phase",
+                        "label": "Associated Heritage Asset Construction Phase",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "e6cad635-5a69-4b5c-be80-fe0a599e0501",
                     "label": {
-                        "en": "Associated Monument Construction Phase"
+                        "en": "Associated Heritage Asset Construction Phase"
                     },
                     "node_id": "db785f3b-0bd3-46df-94e5-c2a781f6dd3d",
                     "sortorder": 0,
@@ -12605,14 +12605,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Parent Monument",
+                        "label": "Parent Heritage Asset",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "fe206067-ce2e-490b-8495-a23306e81172",
                     "label": {
-                        "en": "Parent Monument"
+                        "en": "Parent Heritage Asset"
                     },
                     "node_id": "6375be6e-dc64-11ee-924e-0242ac120006",
                     "sortorder": 0,
@@ -17965,7 +17965,7 @@
                             },
                             "map_popup": {
                                 "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
-                                "string_template": " <Monument Name>"
+                                "string_template": " <Heritage Asset Name>"
                             },
                             "name": {
                                 "nodegroup_id": "cbf55769-eaf1-4074-84d9-8a47310dfbc2",
@@ -17995,7 +17995,7 @@
             "isresource": true,
             "jsonldcontext": null,
             "name": {
-                "en": "Monument Revision"
+                "en": "Heritage Asset Revision"
             },
             "nodegroups": [
                 {
@@ -20303,7 +20303,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -20325,7 +20325,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monument, Area or Artefact",
+                    "name": "Associated Heritage Asset, Area or Artefact",
                     "nodegroup_id": "721315d3-6be0-4d43-9988-a43851cda6b6",
                     "nodeid": "2170d566-de53-43d2-b42d-314253140334",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -20482,7 +20482,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Monument Name Use Metatype",
+                    "name": "Heritage Asset Name Use Metatype",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "265b4f87-dbd1-4b8b-bfd8-328fef5aa0ae",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -21943,7 +21943,7 @@
                         "graphs": [
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -21963,7 +21963,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Parent Monument or Area",
+                    "name": "Parent Heritage Asset or Area",
                     "nodegroup_id": "407bfee5-8704-41a4-8dd7-5dd4533a4617",
                     "nodeid": "407bfee5-8704-41a4-8dd7-5dd4533a4617",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -23989,7 +23989,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Monument Name Currency Metatype",
+                    "name": "Heritage Asset Name Currency Metatype",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "602e67c6-94ba-431b-87a4-2fa990ccc67d",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -24152,7 +24152,7 @@
                         "graphs": [
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             }
                         ],
                         "searchDsl": "",
@@ -24168,7 +24168,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Parent Monument",
+                    "name": "Parent Heritage Asset",
                     "nodegroup_id": "6375be6e-dc64-11ee-924e-0242ac120006",
                     "nodeid": "6375be6e-dc64-11ee-924e-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E81_Transformation",
@@ -24773,7 +24773,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monuments, Areas and Artefacts",
+                    "name": "Associated Heritage Assets, Areas and Artefacts",
                     "nodegroup_id": "721315d3-6be0-4d43-9988-a43851cda6b6",
                     "nodeid": "721315d3-6be0-4d43-9988-a43851cda6b6",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -24884,7 +24884,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument Name Use Type",
+                    "name": "Heritage Asset Name Use Type",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "744875b3-27f8-4735-869f-1e246176572b",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -25303,7 +25303,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Monument Metatype",
+                    "name": "Heritage Asset Metatype",
                     "nodegroup_id": "aca05d09-b52d-4ee7-ab17-f31134131a1c",
                     "nodeid": "7dacf620-ac72-4e35-b0af-122624df733e",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -26680,7 +26680,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument Name",
+                    "name": "Heritage Asset Name",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "987c6b22-42a3-4d76-a683-d3588f5cf7e2",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
@@ -27361,7 +27361,7 @@
                     "alias": "land_use_classification_assignment",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
+                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -27571,7 +27571,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
-                    "name": "Monument Revision",
+                    "name": "Heritage Asset Revision",
                     "nodegroup_id": null,
                     "nodeid": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -27684,7 +27684,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument Type",
+                    "name": "Heritage Asset Type",
                     "nodegroup_id": "aca05d09-b52d-4ee7-ab17-f31134131a1c",
                     "nodeid": "abf06e3f-1044-4e28-86de-724726adce4c",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -27932,7 +27932,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument Names",
+                    "name": "Heritage Asset Names",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
@@ -28266,7 +28266,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument Name Currency",
+                    "name": "Heritage Asset Name Currency",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "b5178ec7-f9b8-4c51-b402-448ad624ac6b",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -29854,7 +29854,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Monument Name Metatype",
+                    "name": "Heritage Asset Name Metatype",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "d0758aac-e3c2-4dc6-a6cd-ebb60f2056b0",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -30446,7 +30446,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monument Construction Phase",
+                    "name": "Associated Heritage Asset Construction Phase",
                     "nodegroup_id": "b54f26b3-4698-4e58-8828-5b32a78b8b83",
                     "nodeid": "db785f3b-0bd3-46df-94e5-c2a781f6dd3d",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E12_Production",
@@ -31127,7 +31127,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Monument Name Type",
+                    "name": "Heritage Asset Name Type",
                     "nodegroup_id": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
                     "nodeid": "e792f3f0-1c86-4a86-9158-a9caa7e4cc72",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -32125,7 +32125,7 @@
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
-                "name": "Monument Revision",
+                "name": "Heritage Asset Revision",
                 "nodegroup_id": null,
                 "nodeid": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -32134,7 +32134,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Monument or Area will be a question of granularity. "
+                "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Heritage Asset or Area will be a question of granularity. "
             },
             "template_id": "523a5a7f-006b-4caf-a801-a1621967a88b",
             "version": ""

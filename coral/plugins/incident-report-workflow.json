@@ -55,9 +55,7 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "2001a6f0-d711-11ee-9dd0-0242ac120006"
-                  ],
+                  "hiddenNodes": ["2001a6f0-d711-11ee-9dd0-0242ac120006"],
                   "nodegroupid": "20017860-d711-11ee-9dd0-0242ac120006",
                   "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
                   "semanticName": "Incident Reference"
@@ -87,7 +85,7 @@
                     "676d47fc-9c1c-11ea-b5b0-f875a44e0e11"
                   ],
                   "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
-                  "semanticName": "Monument Names"
+                  "semanticName": "Heritage Asset Names"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -216,9 +214,7 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"
-                  ],
+                  "hiddenNodes": ["87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
                   "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
@@ -231,9 +227,7 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "87d3d7c8-f44f-11eb-938d-a87eeabdefba"
-                  ],
+                  "hiddenNodes": ["87d3d7c8-f44f-11eb-938d-a87eeabdefba"],
                   "nodegroupid": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
                   "parenttileid": "['239ba9b7-2fac-4a81-9913-872cd022fac6']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"

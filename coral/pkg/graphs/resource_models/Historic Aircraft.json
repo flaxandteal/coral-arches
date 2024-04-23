@@ -1018,7 +1018,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "dd2c635a-28e7-11eb-a7b8-f875a44e0e11",
                     "sortorder": 11,
@@ -4345,7 +4345,7 @@
                                         "conceptid": "f15236e8-c8c9-420c-a8e3-fa68a1901ee8",
                                         "id": "a87aec59-b59d-4c29-9def-9c69396609ac",
                                         "sortorder": "",
-                                        "text": "Other 8 (Dedicated to the display of a monument)"
+                                        "text": "Other 8 (Dedicated to the display of a heritage asset)"
                                     },
                                     {
                                         "children": [],
@@ -8811,14 +8811,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument, Area or Artefact",
+                        "label": "Associated Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "dd2c6360-28e7-11eb-b82c-f875a44e0e11",
                     "label": {
-                        "en": "Associated Monument, Area or Artefact"
+                        "en": "Associated Heritage Asset, Area or Artefact"
                     },
                     "node_id": "dd2c635f-28e7-11eb-b656-f875a44e0e11",
                     "sortorder": 0,
@@ -17196,7 +17196,7 @@
                         "graphs": [
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -23165,7 +23165,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monuments, Areas and Artefacts",
+                    "name": "Associated Heritage Assets, Areas and Artefacts",
                     "nodegroup_id": "dd2c635a-28e7-11eb-a7b8-f875a44e0e11",
                     "nodeid": "dd2c635a-28e7-11eb-a7b8-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -23234,7 +23234,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -23256,7 +23256,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monument, Area or Artefact",
+                    "name": "Associated Heritage Asset, Area or Artefact",
                     "nodegroup_id": "dd2c635a-28e7-11eb-a7b8-f875a44e0e11",
                     "nodeid": "dd2c635f-28e7-11eb-b656-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -25290,7 +25290,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record the details of historic aircraft which are either retained as monuments (eg. Museum exhibits or Gate Guardians) or have been identified through the discovery of associated crash sites. A monument record should be created for the crash site where known. "
+                "en": "Used to record the details of historic aircraft which are either retained as heritage assets (eg. Museum exhibits or Gate Guardians) or have been identified through the discovery of associated crash sites. A heritage asset record should be created for the crash site where known. "
             },
             "template_id": "655f86f0-643a-4df4-be8b-9e9030d2ff94",
             "version": ""
