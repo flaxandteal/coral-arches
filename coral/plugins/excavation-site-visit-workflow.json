@@ -59,7 +59,8 @@
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "879fc326-02f6-11ef-927a-0242ac150006"
+                  "nodegroupid": "879fc326-02f6-11ef-927a-0242ac150006",
+                  "labels": [["Associated Licenses", "License Number"]]
                 },
                 "tilesManaged": "one",
                 "componentName": "get-selected-license-details",
@@ -97,9 +98,7 @@
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "a4724977-9937-11ea-a11e-f875a44e0e11"
-                  ],
+                  "hiddenNodes": ["a4724977-9937-11ea-a11e-f875a44e0e11"],
                   "nodegroupid": "a472226f-9937-11ea-966a-f875a44e0e11"
                 },
                 "tilesManaged": "one",
