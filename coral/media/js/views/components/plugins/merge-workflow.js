@@ -4,8 +4,8 @@ define([
   'viewmodels/openable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/select-resource-id',
-  'views/components/workflows/merge-workflow/submit-merge'
-  // 'views/components/workflows/merge-workflow/heritage-asset-map'
+  'views/components/workflows/merge-workflow/submit-merge',
+  'views/components/workflows/merge-workflow/heritage-asset-map'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('merge-workflow', {
     viewModel: function (params) {
@@ -77,24 +77,32 @@ define([
             }
           ]
         },
-        // {
-        //   title: 'Map of Locations',
-        //   name: 'locations-step',
-        //   required: false,
-        //   workflowstepclass: 'workflow-form-component',
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'heritage-asset-map',
-        //           uniqueInstanceName: 'map-locations',
-        //           tilesManaged: 'none',
-        //           parameters: {}
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
+        {
+          title: 'Map of Locations',
+          name: 'locations-step',
+          required: false,
+          workflowstepclass: 'full-height-map',
+          informationboxdata: {
+            displayed: true,
+            heading: 'Geometry Locations',
+            text: "Red represents the base resource. Blue represents the merge resource."
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'heritage-asset-map',
+                  uniqueInstanceName: 'map-locations',
+                  tilesManaged: 'none',
+                  parameters: {
+                    baseResourceId: "['search-step']['base-record'][0]['selectedResourceId']",
+                    mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']",
+                  }
+                }
+              ]
+            }
+          ]
+        },
         {
           title: 'Information',
           name: 'information-step',
