@@ -1003,3 +1003,16 @@ span.rp-tile-title {
 .docx-preview--overrides .docx-wrapper {
     background: #eceef0 !important;
 }
+
+
+.full-height-map {
+    height: 100%;
+}
+
+.full-height-map .workflow-component-based-step {
+    height: 100%;
+}
+
+.full-height-map .workbench-card-sidebar {
+    visibility: hidden;
+}
