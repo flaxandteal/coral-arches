@@ -13,6 +13,7 @@ define([
   'views/components/workflows/related-document-upload',
   'views/components/workflows/file-template',
   'views/components/workflows/fmw-workflow/get-selected-monument-details',
+  'views/components/workflows/excavation-site-visit-workflow/get-selected-license-details'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
