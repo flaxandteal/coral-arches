@@ -81,6 +81,15 @@
         "desc": "Create or edit a License for an Excavation Activity"
       },
       {
+        "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
+        "slug": "open-workflow?workflow-slug=excavation-site-visit-workflow",
+        "name": "Excavation Site Visit",
+        "icon": "fa fa-file-text",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "Start a new site visit workflow for an Activity"
+      },
+      {
         "workflowid": "2af942cc-54d0-4e8c-9fa8-a76b9ef7632f",
         "slug": "merge-workflow",
         "name": "Merge Heritage Assets",

@@ -1,0 +1,188 @@
+{
+  "pluginid": "1494a795-b77f-4881-ab03-f4e13c1582f6",
+  "name": "Excavation Site Visit",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+    "stepData": [
+      {
+        "name": "initial-step",
+        "title": "Initial step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "prefix": "ESV",
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "hiddenNodes": [
+                    "e7d69602-9939-11ea-b514-f875a44e0e11",
+                    "e7d69604-9939-11ea-baef-f875a44e0e11"
+                  ],
+                  "nodegroupid": "e7d695ff-9939-11ea-8fff-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "system-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "site-visit-step",
+        "title": "Site Visit",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "4f5eeb2a-993e-11ea-a2db-f875a44e0e11",
+                    "4f5eeb27-993e-11ea-b9f7-f875a44e0e11"
+                  ],
+                  "nodegroupid": "4f5ec415-993e-11ea-bab0-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "dates"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "879fc326-02f6-11ef-927a-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "license-resource"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "2a5bc0a8-fe48-11ea-b191-f875a44e0e11",
+                    "2a5bc0a6-fe48-11ea-b5a3-f875a44e0e11",
+                    "2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11",
+                    "2a5bc0a4-fe48-11ea-b3d7-f875a44e0e11",
+                    "2a5b99ae-fe48-11ea-aa8a-f875a44e0e11",
+                    "2a5bc0a2-fe48-11ea-ae9c-f875a44e0e11"
+                  ],
+                  "nodegroupid": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "associated-actors"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "4dfe8c68-02f3-11ef-a4eb-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "license-holder-present"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "a4724977-9937-11ea-a11e-f875a44e0e11"
+                  ],
+                  "nodegroupid": "a472226f-9937-11ea-966a-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "description"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "1d4ef3f4-02f4-11ef-927a-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "potential-date"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "3e311966-02f5-11ef-927a-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "finds"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "3c16ce1c-02f7-11ef-a4eb-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "stored-at"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "6c21d504-02f5-11ef-927a-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "archive"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "b119e156-02f5-11ef-927a-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "standards-met"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "cb473574-02f5-11ef-a4eb-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "survey-methods"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "f655eefe-02f5-11ef-927a-0242ac150006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "are-they-adequate"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "excavation-site-visit-workflow",
+  "sortorder": 0
+}
