@@ -1,0 +1,264 @@
+{
+  "pluginid": "e916d5ec-171a-43d3-b691-9e3d220f04ee",
+  "name": "Meeting Evaluation",
+  "icon": "fa fa-check",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+    "stepData": [
+      {
+        "name": "ed52a55f-9085-4287-ac82-b94132d649a8",
+        "title": "Start Meeting",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "labels": [["Consultation ID", "Meeting ID"]],
+                  "prefix": "EM",
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                  ],
+                  "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
+                  "semanticName": "System Reference Numbers",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
+                    }
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "5869a138-b293-49bb-9e96-fa2e309ce891"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "9185bf0e-9ba7-48d0-a333-d697777b3eee",
+        "title": "Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "labels": [["Listing Query", "LQ"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "4254be30-03b3-11ef-b0e2-0242ac150003",
+                  "semanticName": "Listing Query"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
+              },
+              {
+                "parameters": {
+                  "labels": [["Monument or Area", "HB"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "semanticName": "Related Monuments and Areas"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "7eb29fb6-031b-11ef-8ec2-0242ac150006",
+                  "semanticName": "Existing Grade Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "c6cb8c66-0318-11ef-8ec2-0242ac150006",
+                  "semanticName": "Evaluation Meeting Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "9123b445-2383-4658-a2a5-753b1c65f4cf"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "2ca5f42c-0319-11ef-8a7d-0242ac150006",
+                  "semanticName": "Full Survey Requirement Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "338952b6-66a8-4742-a163-bd1a90f389d9"
+              },
+              {
+                "parameters": {
+                  "labels": [["Date Consulted", "Meeting Date"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "7224417b-893a-11ea-b383-f875a44e0e11",
+                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
+                  ],
+                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
+                  "semanticName": "Consultation Dates"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "c693440b-33aa-4e5e-88d7-c5a4401e6ae3"
+              },
+              {
+                "parameters": {
+                  "labels": [
+                    ["Architect", "Architect Present"],
+                    ["Historian", "Historian Present"]
+                  ],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "b7304f4c-3ace-11eb-8884-f875a44e0e11",
+                    "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
+                    "4ea4c884-184f-11eb-b64d-f875a44e0e11",
+                    "ecbda08c-fb2d-11ee-838d-0242ac190006",
+                    "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
+                    "4ea4a19a-184f-11eb-aef8-f875a44e0e11",
+                    "4c00b292-fb2d-11ee-838d-0242ac190006",
+                    "4ea4a197-184f-11eb-9152-f875a44e0e11",
+                    "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba"
+                  ],
+                  "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
+                  "semanticName": "Contacts"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "2cce85b1-bf44-4e56-b8cd-1618f2c74566"
+              },
+              {
+                "parameters": {
+                  "labels": [["Application Reason", "Reason"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
+                  "semanticName": "Consultation Descriptions"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "82752525-9141-4dbb-a278-735eb09c9a83"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "1663b9a5-39c3-4518-b85d-12bc24076610",
+        "title": "Location Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "083ef3fe-ca61-11ee-afca-0242ac180006",
+                    "083fa088-ca61-11ee-afca-0242ac180006"
+                  ],
+                  "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "semanticName": "Addresses"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "9fac9435-2113-4ba6-a69c-3e1f714c82f2"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "083f0650-ca61-11ee-afca-0242ac180006",
+                    "083f0db2-ca61-11ee-afca-0242ac180006"
+                  ],
+                  "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "semanticName": "Localities/Administrative Areas"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "9a5205f8-8f63-4d9a-bb6e-f23e01aeb319"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "semanticName": "National Grid References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "73b99d04-e53f-43e1-aebc-769a470afecc"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
+                  "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "semanticName": "Location Descriptions"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "3eba5624-3607-4e76-a1fa-6c5a6596410a"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "a6b88088-53f9-4f01-8e68-e5081a669250",
+        "title": "Evaluation",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "34959a52-03aa-11ef-948f-0242ac150003",
+                  "semanticName": "Evaluation"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "fe86de7f-8ed6-4b54-8a9c-3563dff1fef0"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ]
+  },
+  "slug": "meeting-evaluation-workflow",
+  "sortorder": 0
+}

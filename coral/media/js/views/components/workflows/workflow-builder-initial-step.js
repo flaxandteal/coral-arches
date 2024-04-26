@@ -20,6 +20,18 @@ define([
       self.dirty(val);
     });
 
+    this.labels = params.labels || [];
+    params.form
+      .card()
+      ?.widgets()
+      .forEach((widget) => {
+        this.labels?.forEach(([prevLabel, newLabel]) => {
+          if (widget.label() === prevLabel) {
+            widget.label(newLabel);
+          }
+        });
+      });
+
     params.form.save = async () => {
       await self.tile().save();
 
