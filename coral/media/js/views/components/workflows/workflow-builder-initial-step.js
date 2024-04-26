@@ -20,7 +20,6 @@ define([
       self.dirty(val);
     });
 
-    console.log('params: ', params)
     this.labels = params.labels || [];
     params.form
       .card()
