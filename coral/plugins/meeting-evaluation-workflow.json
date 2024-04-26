@@ -17,6 +17,7 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "labels": [["Consultation ID", "Meeting ID"]],
                   "prefix": "EM",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
@@ -30,8 +31,7 @@
                       "lookupName": "locationData",
                       "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
                     }
-                  ],
-                  "labels": [["Consultation ID", "Meeting ID"]]
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
@@ -49,6 +49,30 @@
         "layoutSections": [
           {
             "componentConfigs": [
+              {
+                "parameters": {
+                  "labels": [["Listing Query", "LQ"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "4254be30-03b3-11ef-b0e2-0242ac150003",
+                  "semanticName": "Listing Query"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
+              },
+              {
+                "parameters": {
+                  "labels": [["Monument or Area", "HB"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "semanticName": "Related Monuments and Areas"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
+              },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -84,6 +108,7 @@
               },
               {
                 "parameters": {
+                  "labels": [["Date Consulted", "Meeting Date"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -91,8 +116,7 @@
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
                   ],
                   "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
-                  "semanticName": "Consultation Dates",
-                  "labels": [["Date Consulted", "Meeting Date"]]
+                  "semanticName": "Consultation Dates"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -100,6 +124,10 @@
               },
               {
                 "parameters": {
+                  "labels": [
+                    ["Architect", "Architect Present"],
+                    ["Historian", "Historian Present"]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -114,11 +142,7 @@
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba"
                   ],
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
-                  "semanticName": "Contacts",
-                  "labels": [
-                    ["Architect", "Architect Present"],
-                    ["Historian", "Historian Present"]
-                  ]
+                  "semanticName": "Contacts"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -126,11 +150,11 @@
               },
               {
                 "parameters": {
+                  "labels": [["Application Reason", "Reason"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
-                  "semanticName": "Consultation Descriptions",
-                  "labels": [["Application Reason", "Reason"]]
+                  "semanticName": "Consultation Descriptions"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
