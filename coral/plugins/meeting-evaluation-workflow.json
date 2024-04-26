@@ -17,6 +17,7 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "prefix": "EM",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
@@ -29,7 +30,8 @@
                       "lookupName": "locationData",
                       "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
                     }
-                  ]
+                  ],
+                  "labels": [["Consultation ID", "Meeting ID"]]
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
@@ -89,10 +91,11 @@
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
                   ],
                   "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
-                  "semanticName": "Consultation Dates"
+                  "semanticName": "Consultation Dates",
+                  "labels": [["Date Consulted", "Meeting Date"]]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "c693440b-33aa-4e5e-88d7-c5a4401e6ae3"
               },
               {
@@ -111,10 +114,14 @@
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba"
                   ],
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
-                  "semanticName": "Contacts"
+                  "semanticName": "Contacts",
+                  "labels": [
+                    ["Architect", "Architect Present"],
+                    ["Historian", "Historian Present"]
+                  ]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "2cce85b1-bf44-4e56-b8cd-1618f2c74566"
               },
               {
@@ -122,10 +129,11 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
-                  "semanticName": "Consultation Descriptions"
+                  "semanticName": "Consultation Descriptions",
+                  "labels": [["Application Reason", "Reason"]]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "82752525-9141-4dbb-a278-735eb09c9a83"
               }
             ]
@@ -188,9 +196,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083f146a-ca61-11ee-afca-0242ac180006"
-                  ],
+                  "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
@@ -210,7 +216,19 @@
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "34959a52-03aa-11ef-948f-0242ac150003",
+                  "semanticName": "Evaluation"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "fe86de7f-8ed6-4b54-8a9c-3563dff1fef0"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"
