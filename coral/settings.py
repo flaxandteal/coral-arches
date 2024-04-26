@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=3, minor=3, patch=1)
+APP_VERSION = semantic_version.Version(major=3, minor=3, patch=2)
 
 GROUPINGS = {
     "groups": {
