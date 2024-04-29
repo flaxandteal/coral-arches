@@ -22,16 +22,20 @@ define([
 
     params.multiple = false;
     params.datatype = 'resource-instance';
-    // params.configKeys = ['placeholder', 'defaultResourceInstance'];
-
-    console.log('params: ', params);
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
 
     this.totalOpenApplications = ko.observable();
     this.currentState = ko.observable();
 
-    this.limit = ko.observable(6);
+    this.limit = ko.observable(params.config().limit)
+
+    this.limit.subscribe((value) => {
+      this.config({
+        ...this.config(),
+        limit: value
+      });
+    }, this);
 
     this.OK = 'OK';
     this.WARNING = 'WARNING';
@@ -193,20 +197,20 @@ define([
         },
         context: this,
         success: function (response) {
-          console.log('search response: ', response);
           this.totalOpenApplications(response.results.hits.total.value);
+          let limit = parseInt(this.limit());
 
           switch (true) {
-            case this.totalOpenApplications() <= this.limit() - 2:
+            case this.totalOpenApplications() <= limit - 2:
               this.currentState(this.OK);
               break;
-            case this.totalOpenApplications() === this.limit() - 1:
+            case this.totalOpenApplications() === limit - 1:
               this.currentState(this.WARNING);
               break;
-            case this.totalOpenApplications() === this.limit():
+            case this.totalOpenApplications() === limit:
               this.currentState(this.MAX);
               break;
-            case this.totalOpenApplications() >= this.limit() + 1:
+            case this.totalOpenApplications() >= limit + 1:
               this.currentState(this.EXCEEDED);
               break;
           }
