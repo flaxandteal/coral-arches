@@ -25,7 +25,9 @@ details = {
     "name": "Notify Enforcement",
     "type": "node",
     "description": "Will send a notification on creation of an enforcement to a specified user",
-    "defaultconfig": {"triggering_nodegroups": [REASON_DESC_NODEGROUP]},
+    "defaultconfig": {
+        "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, REASON_DESC_NODEGROUP]
+    },
     "classname": "NotifyEnforcement",
     "component": "",
 }
@@ -38,16 +40,24 @@ class NotifyEnforcement(BaseFunction):
         existing_notification = models.Notification.objects.filter(
             context__resource_instance_id=resource_instance_id
         ).first()
-        if existing_notification:
-            return
 
         reason_description = models.TileModel.objects.filter(
             resourceinstance_id=resource_instance_id, nodegroup_id=REASON_DESC_NODEGROUP
         ).first()
 
+        if existing_notification:
+            existing_notification.message = (
+                reason_description.data.get(REASON_DESC_NODE).get("en").get("value")
+            )
+            existing_notification.save()
+            return
+
         system_ref = models.TileModel.objects.filter(
             resourceinstance_id=resource_instance_id, nodegroup_id=SYSTEM_REF_NODEGROUP
         ).first()
+
+        if not reason_description or not system_ref:
+            return
 
         notification = models.Notification(
             message=reason_description.data.get(REASON_DESC_NODE)

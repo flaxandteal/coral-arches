@@ -81,6 +81,15 @@
         "desc": "Create or edit a License for an Excavation Activity"
       },
       {
+        "workflowid": "d1c8bdf2-11e0-4cf7-b412-c329346f4c48",
+        "slug": "open-workflow?workflow-slug=excavation-site-visit-workflow",
+        "name": "Excavation Site Visit",
+        "icon": "fa fa-file-text",
+        "bgColor": "#689480",
+        "circleColor": "#79b59a",
+        "desc": "Start a new site visit workflow for an Activity"
+      },
+      {
         "workflowid": "2af942cc-54d0-4e8c-9fa8-a76b9ef7632f",
         "slug": "merge-workflow",
         "name": "Merge Heritage Assets",
@@ -105,7 +114,7 @@
         "icon": "fa fa-file-text",
         "bgColor": "#86679c",
         "circleColor": "#aa86c4",
-        "desc": "Request work or repairs to a scheduled Monument"
+        "desc": "Request work or repairs to a scheduled Heritage Asset"
       },
       {
         "workflowid": "813eb058-b7aa-4407-a24f-ba19f0e41c92",
@@ -124,6 +133,24 @@
         "bgColor": "#86679c",
         "circleColor": "#aa86c4",
         "desc": "Complete the scheduling process for a Heritage Asset"
+      },
+      {
+        "workflowid": "2d785399-83a7-4887-b73b-776f8006e7e6",
+        "slug": "open-workflow?workflow-slug=meeting-evaluation-workflow",
+        "name": "Meeting Evaluation",
+        "icon": "fa fa-file-text",
+        "bgColor": "#86679c",
+        "circleColor": "#aa86c4",
+        "desc": "Start or modify a Meeting Evaluation"
+      },
+      {
+        "workflowid": "2d785399-83a7-4887-b73b-776f8006e7e6",
+        "slug": "open-workflow?workflow-slug=fmw-workflow",
+        "name": "FMW Inspection",
+        "icon": "fa fa-file-text",
+        "bgColor": "#86679c",
+        "circleColor": "#aa86c4",
+        "desc": "Complete a FMW inspection"
       },
       {
         "workflowid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",

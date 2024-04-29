@@ -55,7 +55,7 @@
                     "744875b3-27f8-4735-869f-1e246176572b"
                   ],
                   "nodegroupid": "ae8896cd-e16f-44db-97c7-ea412534e3e3",
-                  "semanticName": "Monument Names"
+                  "semanticName": "Heritage Asset Names"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -327,7 +327,7 @@
         "required": false,
         "informationboxdata": {
           "heading": "How to apply the Revision",
-          "text": "Once all these fields have been filled with values the Revision changes will be merged into the Original Monument resource. A Merge Resource Tracker will be created to maintain a history of this change."
+          "text": "Once all these fields have been filled with values the Revision changes will be merged into the Original Heritage Asset resource. A Merge Resource Tracker will be created to maintain a history of this change."
         },
         "layoutSections": [
           {

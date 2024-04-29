@@ -999,3 +999,20 @@ span.rp-tile-title {
 .workflow-form-component {
     height: min-content;
 }
+
+.docx-preview--overrides .docx-wrapper {
+    background: #eceef0 !important;
+}
+
+
+.full-height-map {
+    height: 100%;
+}
+
+.full-height-map .workflow-component-based-step {
+    height: 100%;
+}
+
+.full-height-map .workbench-card-sidebar {
+    visibility: hidden;
+}

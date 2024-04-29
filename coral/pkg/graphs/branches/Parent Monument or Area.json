@@ -33,7 +33,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Parent Monument or Area"
+                        "en": "Parent Heritage Asset or Area"
                     },
                     "nodegroup_id": "e5550181-59ef-11e9-af33-18cf5eb368c4",
                     "sortorder": 1,
@@ -48,14 +48,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Parent Monument or Area",
+                        "label": "Parent Heritage Asset or Area",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "75efa403-734d-11ea-8704-287fcf6a5e72",
                     "label": {
-                        "en": "Parent Monument or Area"
+                        "en": "Parent Heritage Asset or Area"
                     },
                     "node_id": "e5550181-59ef-11e9-af33-18cf5eb368c4",
                     "sortorder": null,
@@ -112,7 +112,7 @@
             "isresource": false,
             "jsonldcontext": null,
             "name": {
-                "en": "Parent Monument or Area"
+                "en": "Parent Heritage Asset or Area"
             },
             "nodegroups": [
                 {
@@ -136,7 +136,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             }
                         ],
                         "searchDsl": "",
@@ -152,7 +152,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
-                    "name": "Parent Monument or Area",
+                    "name": "Parent Heritage Asset or Area",
                     "nodegroup_id": "e5550181-59ef-11e9-af33-18cf5eb368c4",
                     "nodeid": "e5550181-59ef-11e9-af33-18cf5eb368c4",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -183,7 +183,7 @@
                         },
                         {
                             "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                            "name": "Monument"
+                            "name": "Heritage Asset"
                         }
                     ],
                     "searchDsl": "",
@@ -199,7 +199,7 @@
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
-                "name": "Parent Monument or Area",
+                "name": "Parent Heritage Asset or Area",
                 "nodegroup_id": "e5550181-59ef-11e9-af33-18cf5eb368c4",
                 "nodeid": "e5550181-59ef-11e9-af33-18cf5eb368c4",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",

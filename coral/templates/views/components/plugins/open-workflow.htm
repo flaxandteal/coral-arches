@@ -1,4 +1,4 @@
-<div style="margin: 15px; white-space: nowrap">
+<div style="margin: 15px; white-space: nowrap; max-width: 200px; width: 100%">
   <h5>Recently opened</h5>
   <!-- ko if: !recentlyOpenedResources().length -->
   <span>None available</span>
@@ -18,7 +18,7 @@
       window.location.href = workflowUrl();
     }"
   >
-    <span data-bind="text: opened.name"></span>
+    <span data-bind="text: opened.name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"></span>
   </div>
   <!-- /ko -->
 </div>
@@ -26,6 +26,11 @@
   <div class="row widget-wrapper">
     <h4 data-bind="text: workflow().name"></h4>
   </div>
+  <!-- ko if: workflow().description -->
+  <div class="row widget-wrapper">
+    <p data-bind="text: workflow().description" style="max-width: 720px"></p>
+  </div>
+  <!-- /ko -->
   <div class="row widget-wrapper">
     <div
       data-bind="component: {
@@ -34,8 +39,9 @@
           graphids: graphIds(),
           config: {
             label: 'Select License',
-            placeholder: 'Start new or please select below',
+            placeholder: selectResourcePlaceholder,
           },
+          searchString: searchString(),
           renderContext: 'workflow',
           value: selectedResource
         }

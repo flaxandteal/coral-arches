@@ -11,6 +11,7 @@
         "slug": "respond-to-enforcement-workflow",
         "name": "Respond to Enforcement",
         "graphIds": ["8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84"],
+        "description": "",
         "disableStartNew": true,
         "checkForResourceId": true
       },
@@ -27,19 +28,25 @@
       {
         "slug": "assign-consultation-workflow",
         "name": "Planning Consultation",
-        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"]
+        "description": "From this page you can begin a new planning consultation. The planning consultation created here can then be picked and completed in the HM or HB Planning Response workflows.",
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"CON\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
       },
       {
         "slug": "hm-planning-consultation-response-workflow",
         "name": "HM Planning Consultation Response",
+        "description": "You will see a list of consultations in the dropdown below. If nothing appears there it nothing to respond to. Only consultations assigned to either HM, or HB & HM will appear in the dropdown. This is configured from the Planning Consultation workflow.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
-        "disableStartNew": true
+        "disableStartNew": true,
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"CON\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}%2C{\"op\":\"and\",\"e2585f8a-51a3-11eb-a7be-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"7d2b266f-f76d-4d25-87f5-b67ff1e1350f\"},\"8322f9f6-69b5-11ee-93a1-0242ac120002\":{\"op\":\"\",\"val\":\"\"},\"c4413ac8-69b6-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"06adec44-69b7-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"19eef70c-69b8-11ee-8431-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"bfd39106-51a3-11eb-9104-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"}}%2C{\"op\":\"or\",\"e2585f8a-51a3-11eb-a7be-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"94817212-3888-4b5c-90ad-a35ebd2445d5\"},\"8322f9f6-69b5-11ee-93a1-0242ac120002\":{\"op\":\"\",\"val\":\"\"},\"c4413ac8-69b6-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"06adec44-69b7-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"19eef70c-69b8-11ee-8431-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"bfd39106-51a3-11eb-9104-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"}}]"
       },
       {
         "slug": "hb-planning-consultation-response-workflow",
         "name": "HB Planning Consultation Response",
+        "description": "You will see a list of consultations in the dropdown below. If nothing appears there it nothing to respond to. Only consultations assigned to either HB, or HM & HB will appear in the dropdown. This is configured from the Planning Consultation workflow.",
         "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
-        "disableStartNew": true
+        "disableStartNew": true,
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"CON\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}%2C{\"op\":\"and\",\"e2585f8a-51a3-11eb-a7be-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"7d2b266f-f76d-4d25-87f5-b67ff1e1350f\"},\"8322f9f6-69b5-11ee-93a1-0242ac120002\":{\"op\":\"\",\"val\":\"\"},\"c4413ac8-69b6-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"06adec44-69b7-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"19eef70c-69b8-11ee-8431-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"bfd39106-51a3-11eb-9104-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"}}%2C{\"op\":\"or\",\"e2585f8a-51a3-11eb-a7be-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"12041c21-6f30-4772-b3dc-9a9a745a7a3f\"},\"8322f9f6-69b5-11ee-93a1-0242ac120002\":{\"op\":\"\",\"val\":\"\"},\"c4413ac8-69b6-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"06adec44-69b7-11ee-908a-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"19eef70c-69b8-11ee-8431-0242ac120002\":{\"op\":\"eq\",\"val\":\"\"},\"bfd39106-51a3-11eb-9104-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"}}]"
       },
       {
         "slug": "scheduled-monument-consent-workflow",
@@ -55,9 +62,29 @@
       {
         "slug": "monument-update-workflow",
         "name": "Heritage Asset Update",
-        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9", "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"],
+        "graphIds": [
+          "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+          "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
+        ],
         "setupFunction": "setupMonumentRevision",
         "disableStartNew": true
+      },
+      {
+        "slug": "fmw-workflow",
+        "name": "FMW Inspection",
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"FMW\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
+      },
+      {
+        "slug": "meeting-evaluation-workflow",
+        "name": "Meeting Evaluation",
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"MEV\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
+      },
+      {
+        "slug": "excavation-site-visit-workflow",
+        "name": "Excavation Site Visit",
+        "graphIds": ["b9e0701e-5463-11e9-b5f5-000d3ab1e588"]
       }
     ]
   },

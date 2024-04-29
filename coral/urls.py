@@ -13,6 +13,7 @@ from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphCo
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResources
 from coral.views.monument_revision_remap import MonumentRevisionRemap
+from coral.views.file_template import FileTemplateView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -26,6 +27,7 @@ urlpatterns = [
     re_path(r'^groupmanager/(?P<grouping>[a-zA-Z_-]+)/(?P<resourceid>%s|())$' % uuid_regex, GroupManagerView.as_view(), name='groupmanager'),
     re_path(r'^person-signup', PersonSignupView.as_view(), name="person-signup"),
     re_path(r'^person-confirm-signup', PersonConfirmSignupView.as_view(), name="person-confirm-signup"),
+    re_path(r'^filetemplate', FileTemplateView.as_view(), name='filetemplate'),
 
     #
     # Workflow Builder URLs 

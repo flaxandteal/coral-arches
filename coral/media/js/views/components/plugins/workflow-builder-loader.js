@@ -9,7 +9,11 @@ define([
   // Not the way I want this implemented but this will allow the use
   // of custom components
   'views/components/workflows/assign-consultation-workflow/show-hierarchy-change',
+  'views/components/workflows/enforcement-workflow/enforcement-summary-step',
   'views/components/workflows/related-document-upload',
+  'views/components/workflows/file-template',
+  'views/components/workflows/fmw-workflow/get-selected-monument-details',
+  'views/components/workflows/excavation-site-visit-workflow/get-selected-license-details'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {

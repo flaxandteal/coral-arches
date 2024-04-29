@@ -4,8 +4,8 @@ define([
   'viewmodels/openable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/select-resource-id',
-  'views/components/workflows/merge-workflow/submit-merge'
-  // 'views/components/workflows/merge-workflow/heritage-asset-map'
+  'views/components/workflows/merge-workflow/submit-merge',
+  'views/components/workflows/merge-workflow/heritage-asset-map'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('merge-workflow', {
     viewModel: function (params) {
@@ -77,24 +77,32 @@ define([
             }
           ]
         },
-        // {
-        //   title: 'Map of Locations',
-        //   name: 'locations-step',
-        //   required: false,
-        //   workflowstepclass: 'workflow-form-component',
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'heritage-asset-map',
-        //           uniqueInstanceName: 'map-locations',
-        //           tilesManaged: 'none',
-        //           parameters: {}
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
+        {
+          title: 'Map of Locations',
+          name: 'locations-step',
+          required: false,
+          workflowstepclass: 'full-height-map',
+          informationboxdata: {
+            displayed: true,
+            heading: 'Geometry Locations',
+            text: "Red represents the base resource. Blue represents the merge resource."
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'heritage-asset-map',
+                  uniqueInstanceName: 'map-locations',
+                  tilesManaged: 'none',
+                  parameters: {
+                    baseResourceId: "['search-step']['base-record'][0]['selectedResourceId']",
+                    mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']",
+                  }
+                }
+              ]
+            }
+          ]
+        },
         {
           title: 'Information',
           name: 'information-step',
@@ -102,7 +110,7 @@ define([
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Please provide information',
-            text: 'It\'s mandatory that you provide information in the notes text box below detailing exactly why you think these two resources should be merged.'
+            text: "It's mandatory that you provide information in the notes text box below detailing exactly why you think these two resources should be merged."
           },
           layoutSections: [
             {
@@ -117,15 +125,11 @@ define([
                     tileid: "['search-step']['base-record'][0]['systemRef']",
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
-                      '325a441c-efe4-11eb-9283-a87eeabdefba',
+                      '325a441c-efe4-11eb-9283-a87eeabdefba'
                       // '325a430a-efe4-11eb-810b-a87eeabdefba'
                     ]
                   }
-                }
-              ]
-            },
-            {
-              componentConfigs: [
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'merge-record-legacy-id',
@@ -136,15 +140,11 @@ define([
                     tileid: "['merging-step']['merge-record'][0]['systemRef']",
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
-                      '325a441c-efe4-11eb-9283-a87eeabdefba',
+                      '325a441c-efe4-11eb-9283-a87eeabdefba'
                       // '325a430a-efe4-11eb-810b-a87eeabdefba'
                     ]
                   }
-                }
-              ]
-            },
-            {
-              componentConfigs: [
+                },
                 {
                   componentName: 'default-card',
                   uniqueInstanceName: 'notes',
