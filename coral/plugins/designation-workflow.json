@@ -1,6 +1,6 @@
 {
   "pluginid": "681c3218-950b-454b-aef6-409ba4625d17",
-  "name": "Heritage Asset Update",
+  "name": "Heritage Asset Designation",
   "icon": "fa fa-check",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -350,6 +350,6 @@
       }
     ]
   },
-  "slug": "monument-update-workflow",
+  "slug": "designation-workflow",
   "sortorder": 0
 }
