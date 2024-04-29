@@ -31,6 +31,7 @@ define([
     this.selectedTileManaged = ko.observable('tile_one');
 
     this.selectedHiddenNodes = ko.observableArray();
+    this.pushBackTimeout = ko.observable();
 
     this.selectedResourceIdPath = ko.observable(0);
 
@@ -218,7 +219,14 @@ define([
 
       this.selectedHiddenNodes.subscribe((value) => {
         this.currentComponentData().parameters.hiddenNodes = value;
-        this.loadAbstractComponent(this.currentComponentData());
+        this.cardHasLoaded(false);
+        if (this.pushBackTimeout) {
+          clearTimeout(this.pushBackTimeout());
+        }
+        this.pushBackTimeout(setTimeout(() => {
+          this.loadAbstractComponent(this.currentComponentData());
+          this.cardHasLoaded(true);
+        }, 2000));
       });
     };
 
