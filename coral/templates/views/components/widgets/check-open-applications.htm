@@ -250,6 +250,20 @@
         >
     </div>
     <div class="control-label">
+        <span>Application Limit</span>
+    </div>
+    <div class="col-xs-12 pad-no crud-widget-container">
+        <input
+            class="form-control input-md widget-input"
+            type="number"
+            data-bind="
+                attr: {placeholder: 'Enter a number', 'aria-label': 'Enter a number'},
+                value: limit, 
+                valueUpdate: 'keyup'
+            "
+        >
+    </div>
+    <div class="control-label">
         <span data-bind="text: $root.translations.defaultValue"></span>
     </div>
     <!--ko let: {self: $data} -->
