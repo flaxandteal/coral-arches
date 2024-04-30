@@ -20,35 +20,9 @@ class MonumentRevisionRemap(View):
     nodes = {"monument": {}, "revision": {}}
     alias_mapping = {}
     node_mapping = {}
-    exlucded_aliases = [
+    excluded_aliases = [
         "monument",
         "monument_revision",
-        "incident_report",
-        "status_type",
-        "status_metatype",
-        "incident_proposal",
-        "action_type",
-        "action_metatype",
-        "approver",
-        "approved_by",
-        "approver_role_type",
-        "approver_metatype",
-        "contact_details",
-        "contact_details_value",
-        "proposal_description_type_n1",
-        "proposal_description_metatype_n1",
-        "proposal_text_n1",
-        "proposal_date",
-        "proposal_date_qualifier",
-        "proposal_date_qualifier_metatype",
-        "proposal_date_value",
-        "intended_dates",
-        "intended_date_qualifier",
-        "intended_date_qualifier_metatype",
-        "intended_end_date",
-        "intended_start_date",
-        "work_carried_out_by",
-        "work_carried_out_by_value",
     ]
     parent_nodegroup_ids = []
     created_parent_tiles = {}
@@ -95,7 +69,7 @@ class MonumentRevisionRemap(View):
         nodes = graph.node_set.all().select_related("nodegroup")
         for node in nodes:
             alias = node.alias
-            if alias in self.exlucded_aliases:
+            if alias in self.excluded_aliases:
                 continue
             node_id = str(node.nodeid)
             nodegroup_id = str(node.nodegroup.nodegroupid) if node.nodegroup else None
@@ -123,14 +97,17 @@ class MonumentRevisionRemap(View):
             raise f"Nodegroup ID ({nodegroup_id}) does not exist"
         return nodegroup
 
-    def get_parent_tile(self, tile):
-        parent_tile = None
-
-        parent_nodegroup_id = (
+    def get_parent_nodegroup_from_tile(self, tile):
+        return (
             str(tile.nodegroup.parentnodegroup_id)
             if tile.nodegroup.parentnodegroup_id
             else None
         )
+
+    def get_parent_tile(self, tile):
+        parent_tile = None
+        parent_nodegroup_id = self.get_parent_nodegroup_from_tile(tile)
+
         if not parent_nodegroup_id:
             return parent_tile
 
@@ -194,15 +171,25 @@ class MonumentRevisionRemap(View):
         failed_node_data = {}
         for tile in monument_tiles:
             tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
+            parent_nodegroup_id = self.get_parent_nodegroup_from_tile(tile)
+
             if tile_nodegroup_id in self.parent_nodegroup_ids:
                 continue
 
-            revision_nodegroup = self.node_mapping[tile_nodegroup_id]["revision"][
-                "node"
-            ].nodegroup
+            node_map = self.node_mapping[tile_nodegroup_id]
+
+            if not node_map["revision"]:
+                continue
+
+            if (
+                parent_nodegroup_id is not None
+                and parent_nodegroup_id not in self.node_mapping
+            ):
+                continue
+
+            revision_nodegroup = node_map["revision"]["node"].nodegroup
 
             data = deepcopy(tile.data)
-
             parent_tile = self.get_parent_tile(tile)
             try:
                 for data_node_id in tile.data.keys():
