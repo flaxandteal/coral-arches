@@ -78,7 +78,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Area Name", "Townland"]],
+                  "labels": [
+                    [
+                      "Area Name",
+                      "Townland"
+                    ]
+                  ],
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -183,6 +188,9 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
+                    "7d999f9b-9ff3-45d2-b462-0cdd2ab0c648",
+                    "e0ae0d03-a7fa-440d-943a-b4d1504ae6b5",
+                    "2fa946b5-5127-4bd2-b571-33515ef17788",
                     "f6d2d1c3-77aa-472e-8f3d-225e2ed8641c",
                     "64cafd35-77a6-4c49-af74-d8221964f0c9"
                   ],
@@ -292,10 +300,6 @@
         "name": "6f235821-c1b8-4a04-bdfd-cf123b4a5237",
         "title": "Complete",
         "required": false,
-        "informationboxdata": {
-          "heading": "How to apply the Revision",
-          "text": "Once all these fields have been filled with values the Revision changes will be merged into the Original Heritage Asset resource. A Merge Resource Tracker will be created to maintain a history of this change."
-        },
         "layoutSections": [
           {
             "componentConfigs": [
