@@ -1,6 +1,4 @@
-<h1>What Good?</h1>
-<h2>What Really Good?</h2>
-<!-- {% extends "views/components/widgets/base.htm" %} {% load i18n %} {% block form %}
+{% extends "views/components/widgets/base.htm" %} {% load i18n %} {% block form %}
 <div class="row widget-wrapper">
   <div class="form-group">
     <p class="control-label widget-input-label" data-bind="text: label"></p>
@@ -21,22 +19,22 @@
       <span>
         Enter the central coordinate of the record in either of the following formats:
         <ul>
-          <li>Alphanumeric BNG: SU1025169962</li>
-          <li>Absolute BNG: 410251,169962</li>
-          <li>Long/Lat: -1.853942,51.428572</li>
+          <li>Alphanumeric: J1025169962</li>
+          <li>Absolute: 310251,369962</li>
+          <li>Long/Lat: -6.2960237,54.566080</li>
         </ul>
       </span>
       <input
         type="text"
-        data-bind="textInput: espg1992Val, hasFocus: isSelected, attr: {placeholder: placeholder}"
+        data-bind="textInput: espg19972Val, hasFocus: isSelected, attr: {placeholder: placeholder}"
         class="form-control input-lg widget-input"
         style="margin-top: 5px; margin-bottom: 5px"
         id="coordinatePoint"
       />
-    </div> -->
+    </div>
 
-<!--<div style="margin-top:5px;" data-bind="visible:messageVisible">-->
-<!-- <div class="col-xs-12" style="margin-top: 5px">
+    <!--<div style="margin-top:5px;" data-bind="visible:messageVisible">-->
+    <div class="col-xs-12" style="margin-top: 5px">
       <span data-bind="text: errorMessage" style="font-weight: bold; color: red"></span>
     </div>
 
@@ -63,4 +61,4 @@
 <dd>
   <div style="margin-bottom: 2px" data-bind="text: value"></div>
 </dd>
-{% endblock report %} -->
+{% endblock report %}
