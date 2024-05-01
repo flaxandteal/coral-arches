@@ -4,7 +4,7 @@ define([
   'underscore',
   'viewmodels/widget',
   'templates/views/components/widgets/tm65point.htm'
-], function (ko, proj4, _, WidgetViewModel, tm65pointpointTemplate) {
+], function (ko, proj4, _, WidgetViewModel, tm65pointTemplate) {
   /**
    * registers a text-widget component for use in forms
    * @function external:"ko.components".text-widget
@@ -14,7 +14,7 @@ define([
    * @param {string} params.config().label - label to use alongside the text input
    * @param {string} params.config().placeholder - default text to show in the text input
    */
-  return ko.components.register('tm65pointpoint', {
+  return ko.components.register('tm65point', {
     viewModel: function (params) {
       // CS - The following instantiate the variables and do not execute again after loading
       params.configKeys = ['placeholder'];
@@ -27,10 +27,9 @@ define([
       this.errorMessage = ko.observable();
       this.messageVisible = ko.observable(false);
       if (this.value()) {
-        this.tm65pointVal = ko.observable(this.value());
-        //console.log("This Value",this.coordFormat());
+        this.tm65Val = ko.observable(this.value());
       } else {
-        this.tm65pointVal = ko.observable();
+        this.tm65Val = ko.observable();
       }
 
       this.finalGridNumber = function (numberIn) {
@@ -51,7 +50,6 @@ define([
           gridSquareLetters = gridSquareLetters.toUpperCase();
           var gridSquareNumbers = alphaTM65.substring(2);
           var gridSquareNumbersSplit = gridSquareNumbers.length / 2;
-          console.log('Keys', TM65Keys);
 
           if (TM65Keys.includes(gridSquareLetters)) {
             var gridSquareEasting = gridSquareNumbers.substring(0, gridSquareNumbersSplit);
@@ -81,7 +79,6 @@ define([
       this.absoluteTM65Transform = function (absoluteTM65, gridSquareArray) {
         // CS - Takes an absolute grid reference, checks it only contains numbers, works out the 100km grid quare
         // value and then pads the numerical value to create an Alphanumeric Grid Reference.
-        console.log('absolute', absoluteTM65);
         try {
           var absoluteTM65 = absoluteTM65.replace(',', '');
           var absoluteTM65AsNumber = Number(absoluteTM65);
@@ -247,7 +244,7 @@ define([
           Z: [4, 0]
         };
 
-        pre = this.tm65pointVal();
+        pre = this.tm65Val();
         var gridLettersValueArray = Object.keys(gridSquare);
         if (this.isSelected() === true) {
           this.errorMessage('');
@@ -300,6 +297,6 @@ define([
         }
       }, this);
     },
-    template: tm65pointpointTemplate
+    template: tm65pointTemplate
   });
 });
