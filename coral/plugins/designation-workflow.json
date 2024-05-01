@@ -1,6 +1,6 @@
 {
   "pluginid": "681c3218-950b-454b-aef6-409ba4625d17",
-  "name": "Heritage Asset Update",
+  "name": "Heritage Asset Designation",
   "icon": "fa fa-check",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -78,7 +78,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Area Name", "Townland"]],
+                  "labels": [
+                    [
+                      "Area Name",
+                      "Townland"
+                    ]
+                  ],
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -165,39 +170,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "ac212b09-d827-40bd-85de-349ee48aee99"
-              },
-              {
-                "parameters": {
-                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "bef0c23a-dbc8-11ee-b0db-0242ac120006",
-                  "semanticName": "Condition Description"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "6e05d614-9ef4-428b-aa2b-7114d84a4c3f"
-              },
-              {
-                "parameters": {
-                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "f3b76392-dbc9-11ee-8835-0242ac120006",
-                  "semanticName": "Threats Description"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "3ae57a7f-4e4c-406c-8f29-f1f939cc1498"
-              },
-              {
-                "parameters": {
-                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "4c0017f0-dbcb-11ee-b0db-0242ac120006",
-                  "semanticName": "Scheduling Reason Description"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "ef9f624e-e0bc-4f60-8990-f920e36b50d4"
               }
             ]
           }
@@ -216,6 +188,9 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
+                    "7d999f9b-9ff3-45d2-b462-0cdd2ab0c648",
+                    "e0ae0d03-a7fa-440d-943a-b4d1504ae6b5",
+                    "2fa946b5-5127-4bd2-b571-33515ef17788",
                     "f6d2d1c3-77aa-472e-8f3d-225e2ed8641c",
                     "64cafd35-77a6-4c49-af74-d8221964f0c9"
                   ],
@@ -325,10 +300,6 @@
         "name": "6f235821-c1b8-4a04-bdfd-cf123b4a5237",
         "title": "Complete",
         "required": false,
-        "informationboxdata": {
-          "heading": "How to apply the Revision",
-          "text": "Once all these fields have been filled with values the Revision changes will be merged into the Original Heritage Asset resource. A Merge Resource Tracker will be created to maintain a history of this change."
-        },
         "layoutSections": [
           {
             "componentConfigs": [
@@ -350,6 +321,6 @@
       }
     ]
   },
-  "slug": "monument-update-workflow",
+  "slug": "designation-workflow",
   "sortorder": 0
 }
