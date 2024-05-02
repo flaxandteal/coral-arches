@@ -2,7 +2,7 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from arches.app.models import models
-
+from arches_orm.models import Person, Group
 
 SYSTEM_REF_NODEGROUP = "ba39c036-b551-11ee-94ee-0242ac120006"
 SYSTEM_REF_RESOURCE_ID_NODE = "ba3a083e-b551-11ee-94ee-0242ac120006"
@@ -18,6 +18,8 @@ ASSOCIATED_ACTOR_NODE = "f0b9edd4-b551-11ee-805b-0242ac120006"
 
 FLAGGED_DATE_NODEGROUP = "229501c2-b552-11ee-805b-0242ac120006"
 FLAGGED_DATE_NODE = "2295085c-b552-11ee-805b-0242ac120006"
+
+ENFORCEMENT_GROUP = "998f07f0-8602-4222-b9c2-c732703f7937"
 
 
 details = {
@@ -72,7 +74,14 @@ class NotifyEnforcement(BaseFunction):
         )
         notification.save()
 
-        user_x_notification = models.UserXNotification(
-            notif=notification, recipient=request.user
-        )
-        user_x_notification.save()
+        enforcement_group = Group.find(ENFORCEMENT_GROUP)
+
+        persons = [Person.find(member.id) for member in enforcement_group.members]
+
+        for person in persons:
+            user = person.user_account
+
+            user_x_notification = models.UserXNotification(
+                notif=notification, recipient=user
+            )
+            user_x_notification.save()
