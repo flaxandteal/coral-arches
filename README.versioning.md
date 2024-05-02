@@ -2,7 +2,8 @@
 
 ## Prerequisites 
 
-Only version up and tag your branch once it is ready to merge. This will prevent version and tag conflicts when attempting to push up the version bump.
+- Recommended to read `README.git.md` before progressing onto this document.
+- Only version up and tag your branch once it is ready to merge. This will prevent version and tag conflicts when attempting to push up the version bump.
 
 ## Correct branch and up to date
 
@@ -20,11 +21,27 @@ Navigate to `coral/settings.py`. Towards the top of the file you will see:
 APP_VERSION = semantic_version.Version(major=3, minor=5, patch=2)
 ```
 
-Depending on the level of your change you should increment the correct level of semantic versioning. For example:
+Depending on the level of your change you should increment the correct level of semantic versioning. By this point will have already determined your change objective and put that into your branch name. For example:
 
+### Most common scenarios
+
+- If you have implemented a breaking change that isn't backwards compatible. You should promote `major` to 4 and reset `minor` and `patch` to 0. Resulting in `4.0.0`.
 - If you are working on a feature, `minor` should be bumped to 6.
 - If you are working on a fix, `patch` should be bumped to 3.
-- If you have implemented a breaking change that isn't backwards compatible. You should promote `major` to 4 and reset `minor` and `patch` to 0. Resulting in `4.0.0`.
+
+### Other conventional commit spec
+
+You can use the other descriptions provided by conventional commits. Just make sure to correctly identify your change within semantic versioning.
+
+- **chore:** can be `major`, `minor` or `patch` depends entirely on your change
+- **docs:** can be `minor`
+- **build:** can be `major`, `minor` or `patch` depends entirely on your change
+- **ci:** can be `major`, `minor` or `patch` depends entirely on your change
+- **perf:** can be `major`, `minor` or `patch` depends entirely on your change
+- **refactor:** can be `major` or `minor` since theres a possibility functionality was broken
+- **style:** can be `patch`
+- **revert:** can be `patch`
+- **test:** can be `patch`
 
 ## Committing a new version
 
