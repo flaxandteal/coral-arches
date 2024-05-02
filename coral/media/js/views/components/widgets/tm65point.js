@@ -3,7 +3,7 @@ define([
   'proj4',
   'underscore',
   'viewmodels/widget',
-  'templates/views/components/widgets/tm65point.htm'
+  'templates/views/components/widgets/bngpoint.htm'
 ], function (ko, proj4, _, WidgetViewModel, tm65pointTemplate) {
   /**
    * registers a text-widget component for use in forms
@@ -283,6 +283,7 @@ define([
               this.value(pre);
               this.errorMessage('');
               this.messageVisible(false);
+              console.log(pre);
               return pre;
             } else {
               this.value('');
