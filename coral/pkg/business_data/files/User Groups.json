@@ -1,0 +1,119 @@
+{
+  "business_data": {
+    "resources": [
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "Enforcement"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "869d8670-96a4-11ee-b1c3-0242ac140006",
+          "legacyid": null,
+          "name": "Enforcement",
+          "principaluser_id": 1,
+          "resourceinstanceid": "998f07f0-8602-4222-b9c2-c732703f7937",
+          "publication_id": "869d8670-96a4-11ee-b1c3-0242ac140006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Enforcement" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+                  "resourceXresourceId": "e222948b-2aa6-43a8-9aa1-62a0e63bc261"
+                }
+              ]
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "998f07f0-8602-4222-b9c2-c732703f7937",
+            "sortorder": 0,
+            "tileid": "6c44b711-0731-4c91-80a5-4a3f45d749e9"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "8d2e8d7f-cf99-4f0f-bce7-721b0846d65c",
+                  "resourceXresourceId": "50c53b5b-69f8-4288-90cd-267f209a78b2"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "998f07f0-8602-4222-b9c2-c732703f7937",
+            "sortorder": 0,
+            "tileid": "473124dd-cb9e-4d8d-be86-da3b71910a50"
+          },
+          {
+            "data": {
+              "32dba023-c05e-11e9-aa88-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": {
+                  "direction": "ltr",
+                  "value": "This group is limited to the management of Enforcements."
+                },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "32db94f8-c05e-11e9-a2c1-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "998f07f0-8602-4222-b9c2-c732703f7937",
+            "sortorder": 0,
+            "tileid": "0ec69bd6-b371-407a-9084-a65a984eebc3"
+          },
+          {
+            "data": {
+              "28020d8c-c05e-11e9-8753-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "ENF" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "280201ae-c05e-11e9-b285-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "998f07f0-8602-4222-b9c2-c732703f7937",
+            "sortorder": 0,
+            "tileid": "be1fb115-c17a-470c-ad30-27b92165f1bd"
+          }
+        ]
+      }
+    ]
+  }
+}
