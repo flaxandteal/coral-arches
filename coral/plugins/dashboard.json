@@ -1,0 +1,12 @@
+{
+    "pluginid": "719ddeff-269d-4689-b25d-b9aa25d5d7fc",
+    "name": "Dashboard",
+    "icon": "fa fa-tachometer",
+    "component": "views/components/plugins/dashboard",
+    "componentname": "dashboard",
+    "config": {
+        "show": true
+    },
+    "slug": "dashboard",
+    "sortorder": 0
+}
