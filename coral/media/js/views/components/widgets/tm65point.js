@@ -3,7 +3,7 @@ define([
   'proj4',
   'underscore',
   'viewmodels/widget',
-  'templates/views/components/widgets/bngpoint.htm'
+  'templates/views/components/widgets/irishGrid.htm'
 ], function (ko, proj4, _, WidgetViewModel, tm65pointTemplate) {
   /**
    * registers a text-widget component for use in forms
@@ -20,7 +20,7 @@ define([
       params.configKeys = ['placeholder'];
       WidgetViewModel.apply(this, [params]);
       var self = this;
-
+      console.log('YESYOU ARE ACTUALLY HERE!');
       this.coordOptions = ['Alphanumeric TM65', 'Absolute TM65', 'Long/Lat'];
       this.coordFormat = ko.observable('Alphanumeric TM65');
       this.isSelected = ko.observable(false);
