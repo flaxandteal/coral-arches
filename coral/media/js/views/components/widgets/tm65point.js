@@ -20,7 +20,6 @@ define([
       params.configKeys = ['placeholder'];
       WidgetViewModel.apply(this, [params]);
       var self = this;
-      console.log('YESYOU ARE ACTUALLY HERE!');
       this.coordOptions = ['Alphanumeric TM65', 'Absolute TM65', 'Long/Lat'];
       this.coordFormat = ko.observable('Alphanumeric TM65');
       this.isSelected = ko.observable(false);
