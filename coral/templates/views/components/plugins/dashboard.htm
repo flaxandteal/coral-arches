@@ -14,12 +14,12 @@
           <div class="panel mar-no">
             <div class="panel-heading">
               <h3 id="f1-name" class="panel-title library-card-panel-title">
-                <span data-bind="text: $data.displayName"></span>
+                <span data-bind="text: $data.displayname"></span>
               </h3>
             </div>
             <div
               class="panel-body library-card-body"
-              data-bind="html: $data.description"
+              data-bind="html: $data.displaydescription"
             ></div>
             <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between">
               <div>
@@ -32,7 +32,7 @@
                   id="f1"
                   class="add-function-button btn btn-primary btn-labeled fa fa-link"
                   data-bind="click: () => {
-                    openFlagged($data.resourceId)
+                    $parent.openFlagged($data.resourceId)
                   } "
                 >
                   <span>Open</span>
@@ -43,4 +43,8 @@
         </div>
         <!-- /ko -->
   </div>
+  <div data-bind="component: {
+    name: 'paging-filter',
+    params: commonSearchModel
+  }"></div>
 </div>
