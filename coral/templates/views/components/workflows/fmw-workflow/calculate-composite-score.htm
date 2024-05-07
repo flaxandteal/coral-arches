@@ -336,26 +336,17 @@
             }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
                 <div  style="max-width: 620px !important">
-                  {% comment %} <domain-select-widget
-                 
+                  <number-widget
                   params="
-                    node: {
-                      config: {
-                        options: hierarchyOptions,
-                        multiple: false,
-                      },
-                      configKeys: configKeys
-                    },
                     config: {
-                      label: 'Hierarchy',
-                    
+                      label: 'Score'
                     },
-                    value: selectedHierarchy,
+                    value: totalCompositeScore,
                     disabled: disabled,
                     loading: false,
                     pageVm: $root
                   "
-                ></domain-select-widget> {% endcomment %}
+                ></number-widget>
                 </div>
                  
              

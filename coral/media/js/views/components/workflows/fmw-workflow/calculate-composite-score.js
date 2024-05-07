@@ -11,37 +11,31 @@ define([
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
-    // this.APPLICATION_TYPE_NODEGROUP = '54de6acc-8895-11ea-9067-f875a44e0e11';
+    this.totalCompositeScore = ko.observable(0);
+    this.disabled = ko.observable(true);
 
-    // this.hierarchyOptions = ko.observableArray([
-    //   { text: 'Statutory', id: 'd06d5de0-2881-4d71-89b1-522ebad3088d' },
-    //   { text: 'Non-statutory', id: 'be6eef20-8bd4-4c64-abb2-418e9024ac14' }
-    // ]);
-    // this.selectedHierarchy = ko.observable();
+    this.CONDITION_SCORE_NODEGROUP = '73679068-0c52-11ef-a9bf-0242ac140006';
+    this.RISK_SCORE_NODEGROUP = '094eb7ce-0c52-11ef-8f48-0242ac140006';
 
-    // this.configKeys = ko.observable({ placeholder: 0 });
+    this.scoreLookup = {
+      'd81fa421-35f3-4f30-95fa-c042f424c83a': 1,
+      '56342ba4-538c-4650-8285-23af0a3cc523': 2,
+      '7b758df3-5722-4c76-8785-ea9a715e420e': 3,
+      'd2db1732-5b6e-4a7d-b84f-8bff6e541cff': 4,
+      'ef491947-178e-4f62-92ac-192fa6424592': 5
+    };
 
-    // this.disabled = ko.observable(true);
+    this.tile.data[this.CONDITION_SCORE_NODEGROUP].subscribe((value) => {
+      const conditionScoreValue = this.scoreLookup[value] || 0;
+      const riskScoreValue = this.scoreLookup[this.tile.data[this.RISK_SCORE_NODEGROUP]()] || 0;
+      this.totalCompositeScore(conditionScoreValue + riskScoreValue);
+    }, this);
 
-    // this.STATUTORY_VALUES = [
-    //   '7b87dd7a-7573-4417-9691-0875a783e8c2', // F - Full
-    //   '32d2e13f-31fb-4031-9bbb-cd159c76a28e', // O - Outline
-    //   '83fe6c2e-bfbb-4a75-8a46-df8baf05e999' // RM - Reserved Matter
-    // ];
-
-    // this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11'].subscribe((value) => {
-    //   if (this.STATUTORY_VALUES.includes(value)) {
-    //     this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
-    //   } else {
-    //     this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
-    //   }
-    // }, this);
-
-    // if (this.STATUTORY_VALUES.includes(this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']())) {
-    //   this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
-    // } else {
-    //   this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
-    // }
+    this.tile.data[this.RISK_SCORE_NODEGROUP].subscribe((value) => {
+      const riskScoreValue = this.scoreLookup[value] || 0;
+      const conditionScoreValue = this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODEGROUP]()] || 0;
+      this.totalCompositeScore(conditionScoreValue + riskScoreValue);
+    }, this);
   }
 
   ko.components.register('calculate-composite-score', {
