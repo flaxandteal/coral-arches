@@ -14,8 +14,8 @@ define([
     this.totalCompositeScore = ko.observable(0);
     this.disabled = ko.observable(true);
 
-    this.CONDITION_SCORE_NODEGROUP = '73679068-0c52-11ef-a9bf-0242ac140006';
-    this.RISK_SCORE_NODEGROUP = '094eb7ce-0c52-11ef-8f48-0242ac140006';
+    this.CONDITION_SCORE_NODE_ID = '73679068-0c52-11ef-a9bf-0242ac140006';
+    this.RISK_SCORE_NODE_ID = '094eb7ce-0c52-11ef-8f48-0242ac140006';
 
     this.scoreLookup = {
       'd81fa421-35f3-4f30-95fa-c042f424c83a': 1,
@@ -25,15 +25,16 @@ define([
       'ef491947-178e-4f62-92ac-192fa6424592': 5
     };
 
-    this.tile.data[this.CONDITION_SCORE_NODEGROUP].subscribe((value) => {
+    this.tile.data[this.CONDITION_SCORE_NODE_ID].subscribe((value) => {
       const conditionScoreValue = this.scoreLookup[value] || 0;
-      const riskScoreValue = this.scoreLookup[this.tile.data[this.RISK_SCORE_NODEGROUP]()] || 0;
+      const riskScoreValue = this.scoreLookup[this.tile.data[this.RISK_SCORE_NODE_ID]()] || 0;
       this.totalCompositeScore(conditionScoreValue + riskScoreValue);
     }, this);
 
-    this.tile.data[this.RISK_SCORE_NODEGROUP].subscribe((value) => {
+    this.tile.data[this.RISK_SCORE_NODE_ID].subscribe((value) => {
       const riskScoreValue = this.scoreLookup[value] || 0;
-      const conditionScoreValue = this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODEGROUP]()] || 0;
+      const conditionScoreValue =
+        this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODE_ID]()] || 0;
       this.totalCompositeScore(conditionScoreValue + riskScoreValue);
     }, this);
   }
