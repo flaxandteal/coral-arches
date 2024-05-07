@@ -34,5 +34,6 @@ class CalculateCompositeScoreFunction(BaseFunction):
 
         total_score = condition_score + risk_score
 
-        tile.data[TOTAL_SCORE_NODE_ID] = total_score
-        tile.save()
+        if total_score != tile.data[TOTAL_SCORE_NODE_ID]:
+            tile.data[TOTAL_SCORE_NODE_ID] = total_score
+            tile.save()
