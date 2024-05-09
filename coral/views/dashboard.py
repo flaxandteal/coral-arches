@@ -1,7 +1,7 @@
 import uuid
 from django.views.generic import View
 from django.http import JsonResponse
-from arches_orm.models import Person, Group, Consultation
+from arches_orm.models import Person, Group
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
@@ -31,10 +31,14 @@ class Dashboard(View):
 
         members = Tile.objects.filter(nodegroup_id = MEMBERS_NODEGROUP)
 
-        #this searches tiles for members group and returns the groupId
+        #this searches tiles for groups that include the user
         userGroupIds = []
         for tile in members:
             object_data = tile.data.get(MEMBERS_NODEGROUP, {})
+
+            if object_data is None:
+                continue
+
             for object in object_data:
                 if 'resourceId' in object and object['resourceId'] == personId:
                     userGroupIds.append(str(tile.resourceinstance_id))
@@ -46,7 +50,7 @@ class Dashboard(View):
                 planningTasks = self.get_planning_consultations(userGroupIds)
                 taskResources.extend(planningTasks)
                 break
-
+        print('111111', taskResources)
         return JsonResponse(taskResources, safe=False)
 
     def get_planning_consultations(self, userGroupIds):
@@ -63,7 +67,7 @@ class Dashboard(View):
 
         ActionTiles = Tile.objects.filter(nodegroup_id = ACTION_NODEGROUP) 
 
-        resourceIds = []
+        resources = []
 
         #get resource id for all consultations status not closed
         for tile in ActionTiles:
@@ -79,24 +83,14 @@ class Dashboard(View):
             is_action_type_none = action_type is None
 
             if is_hm_group and status_node == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]:
-                resourceIds.append(tile.resourceinstance_id)
+                task = self.build_resource_data(tile.resourceinstance_id, status_node)
+                resources.append(task)
             elif is_hb_group and status_node == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]:
-                resourceIds.append(tile.resourceinstance_id)
+                task = self.build_resource_data(tile.resourceinstance_id, status_node)
+                resources.append(task)
             elif not is_hm_group and not is_hb_group and (is_status_done_or_requested or is_action_type_none):
-                resourceIds.append(tile.resourceinstance_id)
-
-            resources = []
-
-            for resourceId in resourceIds:
-                resource = Resource.objects.get(resourceinstanceid = resourceId)
-                resource_data = {
-                    'id': str(resourceId),
-                    'displayname': resource.displayname(),
-                    'displaydescription': resource.displaydescription(),
-                    'status': self.get_status_string(status_node),
-                    'responseslug': 'assign-consultation-workflow'
-                }
-                resources.append(resource_data)
+                task = self.build_resource_data(tile.resourceinstance_id, status_node)
+                resources.append(task)
 
         return resources
     
@@ -109,3 +103,19 @@ class Dashboard(View):
             return 'HB done'
         elif status_node == STATUS_HM_DONE:
             return 'HM done'
+        elif status_node == STATUS_EXTENSION_REQUESTED:
+            return 'Extension requested'
+        elif status_node == None:
+            return 'None'
+    
+    def build_resource_data(self, resourceId, status):
+        resource = Resource.objects.get(resourceinstanceid = resourceId)
+        resource_data = {
+            'id': str(resourceId),
+            'displayname': resource.displayname(),
+            'displaydescription': resource.displaydescription(),
+            'status': self.get_status_string(status),
+            'responseslug': 'assign-consultation-workflow'
+        }
+        return resource_data
+        
