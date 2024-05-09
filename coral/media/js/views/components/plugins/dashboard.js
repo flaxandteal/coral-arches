@@ -18,15 +18,37 @@ define([
             total: '0',
             'advanced-search': JSON.stringify([
                 {
-                "op":"and","d0b3cce8-093f-11ef-8617-0242ac140006": // Related User
-                    { 
-                    "op":"not_null","val":[""] // Search Param
-                    }
+                    "op":"and","01ac858c-b9d2-11ee-b981-0242ac180006":
+                    {"op":"eq","val":"1c52a1d3-e2d2-4eac-aa70-b568c8159531"}
+                },
+                {
+                    "op":"or","6a773228-db20-11e9-b6dd-784f435179ea":{"val":"t"}
+                },
+                {
+                    "op":"or","c9711ef6-b555-11ee-baf6-0242ac120006":
+                    {"op":"eq","val":"58f1046b-2d43-4cd3-9636-436893e0ac6d"}
+                },
+                {
+                    "op":"or","fa488a9a-ec07-11ed-b9ad-72d420f37f11":
+                    {"val":"t"}
+                },
+                {
+                    "op":"and","788bf15a-d643-11ee-8b04-0242ac180006":
+                    {"op":"eq","val":"5b306feb-22dc-45d1-9acc-77691f73b1a5"},
+                    "8e7ca022-d643-11ee-8a7c-0242ac180006":
+                    {"op":"not_null","val":""}
+                },
+                {
+                    "op":"and","01e1012f-68ba-4c71-8346-72270f7f764a":
+                    {"op":"not_null","val":""},
+                    "bd1916f3-3cd8-4fff-af12-7cd15a98eba9":
+                    {"op":"eq","val":"5b306feb-22dc-45d1-9acc-77691f73b1a5"}
                 }
             ])
           };
         };
     
+        
         const SearchComponents = {
           '7aff5819-651c-4390-9b9a-a61221ba52c6': {
             classname: 'PagingFilter',
@@ -269,7 +291,18 @@ define([
         this.hits = ko.observable();
         this.commonSearchModel.total = this.total;
         this.commonSearchModel.loading = params.loading;
-        console.log("RESOURCES", this.resources())
+
+        this.getTasks = async () => {
+          try {
+            const response = await window.fetch(arches.urls.root + `dashboard/resources`)
+            const data = await response.json()
+            this.resources(data)
+            this.total(data.length)
+          } catch (error) {
+            console.error(error)
+          }
+        } 
+
         this.queryString = ko.computed(() => {
             return this.commonSearchModel.query();
         })
@@ -284,84 +317,27 @@ define([
             { label: 'In Progress', count: ko.observable(0)},
         ]);
 
-        this.updateCounters = function() {
+        this.updateCounters = ko.computed (() => {
             this.counters().forEach(element => {
                 switch(element.label) {
                     case 'Total':
-                        element.count(this.resources().length);
-                        break;
-                    case 'New':
-                        element.count(this.resources().filter(resource => resource.status === 'New').length);
-                        break;
-                    case 'In Progress':
-                        element.count = (this.resources().filter(resource => resource.status === 'In Progress').length);
+                        element.count(this.total());
                         break;
                 }
             });
-        }
+        })
 
-        this.getTasks = () => {
-            return $.ajax({
-                type: 'GET',
-                url: arches.urls.search_results,
-                data: this.queryString(),
-                success: async (response) => {
-                    const tasks = response.results.hits.hits.map((hit) => {
-                      return hit._source;
-                    });
-          
-                    _.each(
-                      this.commonSearchModel.searchResults,
-                      function (value, key, results) {
-                        if (key !== 'timestamp') {
-                          delete this.commonSearchModel.searchResults[key];
-                        }
-                      },
-                      this
-                    );
-                    _.each(
-                      response,
-                      function (value, key, response) {
-                        if (key !== 'timestamp') {
-                          this.commonSearchModel.searchResults[key] = value;
-                        }
-                      },
-                      this
-                    );
-                    this.commonSearchModel.searchResults.timestamp(response.timestamp);
-                    this.total(response.total_results);
-                    this.hits(response.results.hits.hits.length);
-          
-                    for (const task of tasks) {
-                      task.tiles = (
-                        await $.getJSON(
-                          arches.urls.resource_tiles.replace(
-                            'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-                            task.resourceinstanceid
-                          )
-                        )
-                      ).tiles;
-                    }
-                    console.log("tasks",tasks)
-                    this.resources(tasks);
-                    console.log("resources",this.resources())
-                  },
-                error: function(response, status, error) {
-                    console.log(response, status, error);
-                }
-            })
-        }
-
-        this.openFlagged = (resourceId) => {
+        this.openFlagged = (resourceId, responseSlug) => {
             let url = arches.urls.plugin(
-              `open-workflow?resource-id=${resourceId}`
+              `${responseSlug}?resource-id=${resourceId}`
             );
             window.location.href = url;
         };
 
         this.onLoad = async () => {
             await this.getTasks();
-            this.updateCounters();     
+
+            this.updateCounters();  
         }
 
         this.onLoad();
