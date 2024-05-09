@@ -13,6 +13,7 @@ from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphCo
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResources
 from coral.views.monument_revision_remap import MonumentRevisionRemap
+from coral.views.dashboard import Dashboard
 from coral.views.file_template import FileTemplateView
 
 
@@ -39,6 +40,11 @@ urlpatterns = [
     re_path(r"^workflow-builder/plugins", WorkflowBuilderWorkflowPlugins.as_view(), name="wb_plugins"),
     re_path(r"^workflow-builder/export", WorkflowBuilderPluginExport.as_view(), name="wb_export_plugin"),
     re_path(r"^workflow-builder/update", WorkflowBuilderWorkflowPlugins.as_view(), name="wb_update"),
+
+    #
+    # Dashboard
+    #
+    re_path(r"^dashboard/resources", Dashboard.as_view(), name="dashboard"),
 
     #
     # Open Workflow
