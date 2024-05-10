@@ -296,6 +296,7 @@ define([
           try {
             const response = await window.fetch(arches.urls.root + `dashboard/resources`)
             const data = await response.json()
+            console.log("The new data", data)
             this.resources(data)
             this.total(data.length)
           } catch (error) {
@@ -329,8 +330,9 @@ define([
 
         this.openFlagged = (resourceId, responseSlug) => {
             let url = arches.urls.plugin(
-              `${responseSlug}?resource-id=${resourceId}`
+              `${responseSlug}?resource-id=${resourceId}&workflow-id=6aaa72fa-ad6c-4350-bb90-ee32d034797a&workflow-step-id=7f259b0e-6ed6-484d-9d13-1381976cee9a`
             );
+            console.log('Constructed url', url)
             window.location.href = url;
         };
 
