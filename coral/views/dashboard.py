@@ -24,7 +24,7 @@ class Dashboard(View):
 
     def get(self, request):
         
-        user_id = 72 #request.user.id
+        user_id = request.user.id
         person_resource = Person.where(user_account = user_id)
         
         if not person_resource:
@@ -92,11 +92,13 @@ class Dashboard(View):
                 resources.append(task)
 
         #get consultations with missing action tile
-        consultations= Consultation.all()
-        for consultation in consultations:
-            if not consultation.action:
-                task = self.build_planning_resource_data(consultation.id, 'None')
-                resources.append(task)
+        if not is_hm_group and not is_hb_group:
+            consultations= Consultation.all()
+            for consultation in consultations:
+                if consultation is not None and not consultation.action:
+                    task = self.build_planning_resource_data(consultation.id, 'None')
+                    if task:
+                        resources.append(task)
 
         return resources
     
