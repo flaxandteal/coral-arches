@@ -96,21 +96,13 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "86594742-fb14-11ee-838d-0242ac190006"
+                  "hiddenNodes": ["a1daff8e-0c52-11ef-a9bf-0242ac140006"],
+                  "nodegroupid": "eabbfd96-0c4f-11ef-a9bf-0242ac140006",
+                  "semanticName": "Composite Score"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "calculate-composite-score",
                 "uniqueInstanceName": "condition"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "18e0aace-fb15-11ee-bc24-0242ac190006"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "risk"
               },
               {
                 "parameters": {
