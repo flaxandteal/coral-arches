@@ -5,7 +5,7 @@ from arches_orm.models import Person, Group, Consultation
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
-from django.forms.models import model_to_dict
+from django.core.paginator import Paginator
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -23,14 +23,12 @@ NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
 class Dashboard(View):
 
     def get(self, request):
-        
+    
         user_id = request.user.id
         person_resource = Person.where(user_account = user_id)
         
         if not person_resource:
             return JsonResponse({"error": "User not found"}, status=404)
-        
-        personId = str(person_resource[0].id)
         
         groups = Group.all()
 
@@ -48,7 +46,26 @@ class Dashboard(View):
                 planningTasks = self.get_planning_consultations(userGroupIds)
                 taskResources.extend(planningTasks)
                 break
-        return JsonResponse(taskResources, safe=False)
+
+        paginator = Paginator(taskResources, request.GET.get('itemsPerPage', 10))
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+
+        return JsonResponse({
+            'paginator': {
+                'current_page': page_obj.number,
+                'end_index': page_obj.end_index(),
+                'has_next': page_obj.has_next(),
+                'has_other_pages': page_obj.has_other_pages(),
+                'has_previous': page_obj.has_previous(),
+                'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
+                'pages': list(paginator.page_range),
+                'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
+                'start_index': page_obj.start_index(),
+                'total': paginator.count,
+                'response': list(page_obj.object_list)
+            }
+        })
 
     def get_planning_consultations(self, userGroupIds):
 
