@@ -9,13 +9,12 @@ define([
 
     const pageViewModel = function (params) {
 
-        this.resources = ko.observable([]);
-        this.counters = ko.observableArray();
-
+        this.resources = ko.observable();
+        this.counters = ko.observable();
         this.total = ko.observable();
-        this.hits = ko.observable();
         this.itemsPerPage = ko.observable(10);
         this.currentPage = ko.observable(1);
+
         this.paginator = koMapping.fromJS({
             current_page: 1,
             end_index: 1,
@@ -40,8 +39,29 @@ define([
           };
         };
 
+        const getTasks = async () => {
+          try {
+            const response = await window.fetch(`${arches.urls.root}dashboard/resources?page=${this.currentPage()}&itemsPerPage=${this.itemsPerPage()}`)
+            const data = await response.json()
+            koMapping.fromJS(data.paginator, this.paginator)
+            this.resources(data.paginator.response)
+            this.total(data.paginator.total)
+            this.counters(data.paginator.status_counts)
+          } catch (error) {
+            console.error(error)
+          }
+        } 
+
+        this.openFlagged = (resourceId, responseSlug) => {
+            let url = arches.urls.plugin(
+              `${responseSlug}?resource-id=${resourceId}&workflow-id=6aaa72fa-ad6c-4350-bb90-ee32d034797a&workflow-step-id=7f259b0e-6ed6-484d-9d13-1381976cee9a`
+            );
+            window.location.href = url;
+        };
+
+        //reduces the number of items per page based on the window width
         const updateItemsPerPage = () => {
-          if (window.innerWidth < 768){
+          if (window.innerWidth < 1000){
               this.itemsPerPage(2);
           }
           else if (window.innerWidth < 1500){
@@ -68,45 +88,9 @@ define([
             await getTasks();
         };
 
-        const getTasks = async () => {
-          try {
-            const response = await window.fetch(`${arches.urls.root}dashboard/resources?page=${this.currentPage()}&itemsPerPage=${this.itemsPerPage()}`)
-            const data = await response.json()
-            koMapping.fromJS(data.paginator, this.paginator)
-            this.resources(data.paginator.response)
-            this.total(data.paginator.total)
-          } catch (error) {
-            console.error(error)
-          }
-        } 
-
-        const getCounters = (resources) => {
-          const statusCounts = resources.reduce((acc, resource) => {
-              const status = resource.status;
-              const index = acc.findIndex(item => item.label === status);
-              if (index !== -1) {
-                  acc[index].count++;
-              } else {
-                  acc.push({ label: status, count: 1 });
-              }
-              return acc;
-          }, [{ label: 'Total', count: this.total() }]);
-          console.log(statusCounts)
-          this.counters(statusCounts);
-        }
-
-        this.openFlagged = (resourceId, responseSlug) => {
-            let url = arches.urls.plugin(
-              `${responseSlug}?resource-id=${resourceId}&workflow-id=6aaa72fa-ad6c-4350-bb90-ee32d034797a&workflow-step-id=7f259b0e-6ed6-484d-9d13-1381976cee9a`
-            );
-            console.log('Constructed url', url)
-            window.location.href = url;
-        };
-
         this.init = async () => {
             updateItemsPerPage();
-            await getTasks();
-            getCounters(this.resources());  
+            await getTasks();  
         }
 
         this.init();

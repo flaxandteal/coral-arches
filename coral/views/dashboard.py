@@ -6,6 +6,8 @@ from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from django.core.paginator import Paginator
+from datetime import datetime, timedelta
+from collections import defaultdict 
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -63,6 +65,7 @@ class Dashboard(View):
                 'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
                 'start_index': page_obj.start_index(),
                 'total': paginator.count,
+                'status_counts': self.get_status_count(taskResources),
                 'response': list(page_obj.object_list)
             }
         })
@@ -85,6 +88,8 @@ class Dashboard(View):
 
         #filter out consultations that are not planning consultations
         planning_consultations=[c for c in consultations if c._name().startswith('CON/')]
+
+        #checks against type & status and assigns to user if in correct group
         for consultation in planning_consultations:
                 action_status = consultation.action[0].action_status if consultation.action else None
                 action_type = consultation.action[0].action_type if consultation.action else None
@@ -98,6 +103,10 @@ class Dashboard(View):
                     task = self.build_planning_resource_data(consultation)
                     if task:
                         resources.append(task)
+
+        #sort by deadline date, nulls first
+        resources.sort(key=lambda x: (x['deadline'] is not None, x['deadline']), reverse=False)
+
         return resources
     
     def convert_id_to_string(self, id):
@@ -117,16 +126,33 @@ class Dashboard(View):
             return 'Non-statutory'
         elif id == None:
             return 'None'
+        
+    def get_status_count(self, resources):
+        status_counts = defaultdict(int)
+        for resource in resources:
+            status_counts[resource['status']] += 1
+        return [{'status': key, 'count': value} for key, value in status_counts.items()]
     
     def build_planning_resource_data(self, consultation):
         action_status = consultation.action[0].action_status if consultation.action else None
+        date_entered = consultation.action[0].date_entered if consultation.action else None
         hierarchy_type = consultation.hierarchy_type
+
+        deadline = None
+        days_until_deadline = 15
+        if date_entered:
+            deadline = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z") + timedelta(days=days_until_deadline)
+            date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+            deadline = deadline.strftime("%d-%m-%Y")
+
         resource_data = {
             'id': consultation.id,
             'displayname': consultation._name(),
             'displaydescription': consultation._description(),
             'status': self.convert_id_to_string(action_status),
             'hierarchy_type': self.convert_id_to_string(hierarchy_type),
+            'date': date_entered,
+            'deadline': deadline,
             'responseslug': 'assign-consultation-workflow'
         }
         return resource_data

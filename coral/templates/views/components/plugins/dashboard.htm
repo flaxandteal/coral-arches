@@ -3,13 +3,13 @@
   <div style="display: flex; justify-content:space-around;">
     <!--ko foreach: counters-->
       <div style="text-align: center; margin: 2rem;">
-        <h2 data-bind="text: $data.label"></h2>
+        <h2 data-bind="text: $data.status"></h2>
         <span style="font-size: 2.5rem; font-weight: bold;" data-bind="text: $data.count"></span>
       </div>
     <!--/ko-->
   </div>
   <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
-      <div style="display: flex; flex-wrap: wrap; justify-content: center">  
+      <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; padding: 2rem 5rem">  
         <!-- ko foreach: resources -->
           <div class="card-grid-item" style="margin: 2rem">
             <div class="panel mar-no">
@@ -19,15 +19,17 @@
                 </h3>
               </div>
               <div class="panel-body library-card-body" style="display: flex; flex-direction: column; justify-content: space-between; padding: 5px 20px">
-              <span data-bind="html: $data.displaydescription"></span>
-              <div style="color:initial">
-                <p>
-                  Status: <span data-bind="text: $data.status"></span>
-                </p>
-                <p>
-                  Hierarchy: <span data-bind="text: $data.hierarchy_type"></span>
-                </p>
-              </div>
+                <div style="color:initial">
+                  <p>
+                    Status: <span data-bind="text: $data.status"></span>
+                  </p>
+                  <p>
+                    Hierarchy: <span data-bind="text: $data.hierarchy_type"></span>
+                  </p>
+                  <p>
+                    Deadline: <span data-bind="text: $data.deadline ?? 'Not Set'"></span>
+                  </p>
+                </div>
               </div>
               <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between">
                 <div>
