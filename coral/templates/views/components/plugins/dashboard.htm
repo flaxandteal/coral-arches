@@ -1,9 +1,12 @@
 <div style="margin: 15px; display: flex; flex-direction: column; flex-wrap: wrap; width: 100%">
   <h1>Dashboard</h1>
-  <!--ko ifnot: counters.length || resources.length -->
+  <!--ko if: loading() -->
+    <div class='loading-mask'></div>
+  <!--/ko-->
+  <!--ko ifnot: resources().length -->
     <h2>No tasks available</h2>
   <!--/ko -->
-  <!--ko if: counters.length || resources.length -->
+  <!--ko if: resources().length -->
     <div style="display: flex; justify-content:space-around;">
       <!--ko foreach: counters-->
         <div style="text-align: center; margin: 2rem;">
@@ -54,7 +57,7 @@
         </div>
     </div>
   <!--/ko-->
-  <!--ko ifnot: resources.length -->
+  <!--ko if: resources().length -->
     <div id="paginator" data-bind="with: paginator">
       <nav class="text-center" aria-label="paginator">
           <ul class="pagination" role="menubar">

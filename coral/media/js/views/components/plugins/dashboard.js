@@ -9,11 +9,12 @@ define([
 
     const pageViewModel = function (params) {
 
-        this.resources = ko.observableArray();
-        this.counters = ko.observableArray();
+        this.resources = ko.observableArray([]);
+        this.counters = ko.observableArray([]);
         this.total = ko.observable();
         this.itemsPerPage = ko.observable(10);
         this.currentPage = ko.observable(1);
+        this.loading = ko.observable(true);
 
         this.paginator = koMapping.fromJS({
             current_page: 1,
@@ -47,11 +48,12 @@ define([
             if(!response.ok) {
               throw new Error(`HTTP error! status: ${data.error}`)
             }
-            
+
             koMapping.fromJS(data.paginator, this.paginator)
             this.resources(data.paginator.response)
             this.total(data.paginator.total)
             this.counters(data.paginator.status_counts)
+            this.loading(false)
           } catch (error) {
             console.error(error)
             return
