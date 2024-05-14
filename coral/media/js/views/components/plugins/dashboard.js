@@ -9,8 +9,8 @@ define([
 
     const pageViewModel = function (params) {
 
-        this.resources = ko.observable();
-        this.counters = ko.observable();
+        this.resources = ko.observableArray();
+        this.counters = ko.observableArray();
         this.total = ko.observable();
         this.itemsPerPage = ko.observable(10);
         this.currentPage = ko.observable(1);
@@ -43,12 +43,18 @@ define([
           try {
             const response = await window.fetch(`${arches.urls.root}dashboard/resources?page=${this.currentPage()}&itemsPerPage=${this.itemsPerPage()}`)
             const data = await response.json()
+
+            if(!response.ok) {
+              throw new Error(`HTTP error! status: ${data.error}`)
+            }
+            
             koMapping.fromJS(data.paginator, this.paginator)
             this.resources(data.paginator.response)
             this.total(data.paginator.total)
             this.counters(data.paginator.status_counts)
           } catch (error) {
             console.error(error)
+            return
           }
         } 
 
