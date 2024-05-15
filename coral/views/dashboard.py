@@ -105,7 +105,13 @@ class Dashboard(View):
                         resources.append(task)
 
         #sort by deadline date, nulls first
-        resources.sort(key=lambda x: (x['deadline'] is not None, x['deadline']), reverse=False)
+        from datetime import datetime
+
+        # Convert the 'deadline' field to a date and sort
+        resources.sort(key=lambda x: (
+            x['deadline'] is not None, datetime.strptime(x['deadline'], '%d-%m-%Y') 
+            if x['deadline'] else None
+        ), reverse=False)
 
         return resources
     
