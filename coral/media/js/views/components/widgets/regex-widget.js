@@ -100,14 +100,6 @@ define([
       return regex.test(currentText);
     }, self);
 
-    setInterval(() => {
-      console.log('self interval: ', self);
-    }, 5000);
-
-    self.config.subscribe((config) => {
-      console.log('config: ', config);
-    }, this);
-
     self.disable = ko.computed(() => {
       return ko.unwrap(self.disabled) || ko.unwrap(self.uneditable);
     }, self);
