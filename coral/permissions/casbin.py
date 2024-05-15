@@ -26,10 +26,11 @@ from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
-from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm
+from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm, ArchesStandardPermissionFramework
 
 from arches_orm.models import Person, Organization, Set, LogicalSet, Group
 from arches_orm.wrapper import ResourceWrapper
+from arches_orm.adapter import context_free
 
 logger = logging.getLogger(__name__)
 REMAPPINGS = {
@@ -51,12 +52,13 @@ RESOURCE_TO_GRAPH_REMAPPINGS = {v[0]: GRAPH_REMAPPINGS[k] for k, v in REMAPPINGS
 class NoSubjectError(RuntimeError):
     pass
 
-class CasbinPermissionFramework(PermissionFramework):
+class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @property
     def _enforcer(self):
         from dauthz.core import enforcer
         return enforcer
 
+    @context_free
     def get_perms_for_model(self, cls):
         # Credit: django-guardian
         # https://github.com/zulip/django-guardian/blob/master/guardian/shortcuts.py
@@ -116,6 +118,7 @@ class CasbinPermissionFramework(PermissionFramework):
             obj = f"o:{obj.pk}"
         return obj
 
+    @context_free
     def recalculate_table(self):
         with transaction.atomic():
             self._recalculate_table_real()
@@ -154,25 +157,19 @@ class CasbinPermissionFramework(PermissionFramework):
                 map_layer_key = self._obj_to_str(map_layer)
                 for perm in perms:
                     self._enforcer.add_policy(group_key, map_layer_key, str(perm))
-        for user in User.objects.all():
-            user_key = self._subj_to_str(user)
-            for group in user.groups.all():
-                group_key = self._subj_to_str(group)
-                self._enforcer.add_named_grouping_policy("g", user_key, group_key)
-                self._enforcer.add_named_grouping_policy("g", user_key, f"dgn:{group.name}")
-
-        sets = []
 
         def _fill_group(group):
             group_key = self._subj_to_str(group)
+            users = []
             for member in group.members:
                 if isinstance(member, Group):
                     member_key = self._subj_to_str(member)
                     self._enforcer.add_named_grouping_policy("g", member_key, group_key)
-                    _fill_group(member)
+                    users += _fill_group(member)
                 elif member.user_account:
                     member_key = self._subj_to_str(member)
                     self._enforcer.add_role_for_user(member_key, group_key)
+                    users.append(member.user_account)
                 else:
                     logger.warn("A membership rule was not added as no User was attached %s", member.id)
             # This is a workaround for now, to avoid losing nodegroup restriction entirely.
@@ -191,8 +188,24 @@ class CasbinPermissionFramework(PermissionFramework):
                         if obj_key.startswith("g2"):
                             sets.append(obj_key)
                         self._enforcer.add_policy(group_key, obj_key, str(act.conceptid))
+            if len(group.django_group) == 0:
+                self._ri_to_django_groups(group)
+            for group in group.django_group:
+                if list(group.user_set.all()) != users:
+                    group.user_set = users
+                    group.save()
+            return users
 
         _fill_group(root_group)
+
+        for user in User.objects.all():
+            user_key = self._subj_to_str(user)
+            for group in user.groups.all():
+                group_key = self._subj_to_str(group)
+                self._enforcer.add_named_grouping_policy("g", user_key, group_key)
+                self._enforcer.add_named_grouping_policy("g", user_key, f"dgn:{group.name}")
+
+        sets = []
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
@@ -223,6 +236,7 @@ class CasbinPermissionFramework(PermissionFramework):
         if os.getenv("CASBIN_LISTEN", False):
             trigger.request_reload()
 
+    @context_free
     def update_permissions_for_user(self, user):
         perms = {(self._obj_to_str(permission), permission.codename) for permission in user.user_permissions.all()}
         user = self._subj_to_str(user)
@@ -233,6 +247,7 @@ class CasbinPermissionFramework(PermissionFramework):
             self._enforcer.remove_policy(user, obj, act)
         self._enforcer.save_policy()
 
+    @context_free
     def update_permissions_for_group(self, group):
         perms = {(self._obj_to_str(permission), permission.codename) for permission in group.permissions.all()}
         group = self._subj_to_str(group)
@@ -244,10 +259,15 @@ class CasbinPermissionFramework(PermissionFramework):
         self._enforcer.save_policy()
 
     @staticmethod
+    @context_free
     def _ri_to_django_groups(group: Group):
-        return DjangoGroup.objects.filter(name__in=[basic_info.name for basic_info in group.basic_info]).all()
+        if not group.django_group:
+            group.django_group = [DjangoGroup.objects.create(name=str(group))]
+            group.save()
+        return group.django_group
 
     @staticmethod
+    @context_free
     def _django_group_to_ri(django_group: DjangoGroup):
         # TODO: a more robust mapping
         group = Group.where(name={"en": {"value": django_group.name, "direction": "ltr"}})
@@ -260,6 +280,7 @@ class CasbinPermissionFramework(PermissionFramework):
             group = group[0]
         return group
 
+    @context_free
     def update_groups_for_user(self, user):
         groups = {self._subj_to_str(group) for group in user.groups.all()}
         user = self._subj_to_str(user)
@@ -270,6 +291,7 @@ class CasbinPermissionFramework(PermissionFramework):
             self._enforcer.delete_role_for_user(user, group)
         self._enforcer.save_policy()
 
+    @context_free
     def assign_perm(self, perm, user_or_group, obj=None):
         try:
             next(obj)
@@ -295,9 +317,11 @@ class CasbinPermissionFramework(PermissionFramework):
         return assign_perm(perm, user_or_group, obj=obj)
 
     @staticmethod
+    @context_free
     def get_permission_backend():
         return CasbinBackend()
 
+    @context_free
     def remove_perm(self, perm, user_or_group=None, obj=None):
         obj = self._obj_to_str(obj)
         subj = self._subj_to_str(user_or_group)
@@ -306,12 +330,14 @@ class CasbinPermissionFramework(PermissionFramework):
         self._enforcer.save_policy()
 
     # This is slow and should be avoided where possible.
+    @context_free
     def get_perms(self, user_or_group, obj):
         perms = set()
         for sub, tobj, act in self._get_perms(user_or_group, obj):
             perms |= set(REMAPPINGS.get(act, act))
         return perms
 
+    @context_free
     def get_group_perms(self, user_or_group, obj):
         # FIXME: what should this do if a group is passed?
         perms = set()
@@ -320,6 +346,7 @@ class CasbinPermissionFramework(PermissionFramework):
                 perms |= set(REMAPPINGS.get(act, act))
         return perms
 
+    @context_free
     def get_user_perms(self, user, obj):
         perms = set()
         for sub, tobj, act in self._get_perms(user, obj):
@@ -354,6 +381,7 @@ class CasbinPermissionFramework(PermissionFramework):
 
         return perms
 
+    @context_free
     def process_new_user(self, instance, created):
         ct = ContentType.objects.get(app_label="models", model="resourceinstance")
         resourceInstanceIds = list(GroupObjectPermission.objects.filter(content_type=ct).values_list("object_pk", flat=True).distinct())
@@ -367,6 +395,7 @@ class CasbinPermissionFramework(PermissionFramework):
             resource.createdtime = resource_instance.createdtime
             resource.index()
 
+    @context_free
     def get_map_layers_by_perm(self, user, perms, any_perm=True, not_perms=None):
         """
         returns a list of node groups that a user has the given permission on
@@ -421,17 +450,20 @@ class CasbinPermissionFramework(PermissionFramework):
 
             return permitted_map_layers
 
+    @context_free
     def user_can_read_map_layers(self, user):
         map_layers_with_read_permission = self.get_map_layers_by_perm(user, ['models.read_maplayer'], not_perms={'no_access_to_maplayer'})
 
         return map_layers_with_read_permission
 
 
+    @context_free
     def user_can_write_map_layers(self, user):
         map_layers_with_write_permission = self.get_map_layers_by_perm(user, ['models.write_maplayer'], not_perms={'no_access_to_maplayer'})
 
         return map_layers_with_write_permission
 
+    @context_free
     def get_nodegroups_by_perm(self, user, perms, any_perm=True):
         """
         returns a list of node groups that a user has the given permission on
@@ -484,6 +516,7 @@ class CasbinPermissionFramework(PermissionFramework):
 
         return list(permitted_nodegroups)
 
+    @context_free
     def check_resource_instance_permissions(self, user, resourceid, permission):
         """
         Checks if a user has permission to access a resource instance
@@ -563,6 +596,7 @@ class CasbinPermissionFramework(PermissionFramework):
 
         return result
 
+    @context_free
     def get_users_with_perms(self, obj, attach_perms=False, with_superusers=False, with_group_users=True, only_with_perms_in=None):
         if with_superusers or (not with_group_users) or only_with_perms_in:
             raise NotImplementedError()
@@ -593,11 +627,13 @@ class CasbinPermissionFramework(PermissionFramework):
         else:
             return users
 
+    @context_free
     def get_groups_with_perms(self, obj, attach_perms=False):
         # FIXME: this may not work - it might need roles
         groups = self._get_with_perms("g", obj, attach_perms)
         return DjangoGroup.objects.filter(pk__in=groups)
 
+    @context_free
     def get_restricted_users(self, resource):
         """
         Takes a resource instance and identifies which users are explicitly restricted from
@@ -631,6 +667,7 @@ class CasbinPermissionFramework(PermissionFramework):
 
         return result
 
+    @context_free
     def get_sets_for_user(self, user, perm):
         # TODO: add possibility of a default anonymous set(s) from settings
         if not user:
@@ -654,14 +691,17 @@ class CasbinPermissionFramework(PermissionFramework):
             ":".join(("l" if st[0] == "g2l" else "s", st[1])) for st in sets
         }
 
+    @context_free
     def get_groups_for_object(self, perm, obj):
         raise NotImplementedError()
 
 
+    @context_free
     def get_users_for_object(self, perm, obj):
         raise NotImplementedError()
 
 
+    @context_free
     def get_restricted_instances(self, user, search_engine=None, allresources=False):
         logger.debug(f"Getting restricted instances: {user}")
 
@@ -681,6 +721,7 @@ class CasbinPermissionFramework(PermissionFramework):
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         return restricted_ids
 
+    @context_free
     def user_has_resource_model_permissions(self, user, perms, resource=None, graph_id=None):
         """
         Checks if a user has any explicit permissions to a model's nodegroups
@@ -709,6 +750,7 @@ class CasbinPermissionFramework(PermissionFramework):
         return bool(group_ids & {str(group.pk) for group in user.groups.all()})
 
 
+    @context_free
     def user_can_read_resource(self, user, resourceid=None):
         """
         Requires that a user be able to read an instance and read a single nodegroup of a resource
@@ -730,6 +772,7 @@ class CasbinPermissionFramework(PermissionFramework):
             return len(self.get_resource_types_by_perm(user, ["models.read_nodegroup"])) > 0
         return False
 
+    @context_free
     def get_resource_types_by_perm(self, user, perms):
         all_graphs = [
             str(graph_id) for graph_id in
@@ -751,6 +794,7 @@ class CasbinPermissionFramework(PermissionFramework):
         allowed |= set(all_graphs) - set(permissioned_graphs)
         return list(allowed)
 
+    @context_free
     def user_can_edit_resource(self, user, resourceid=None):
         """
         Requires that a user be able to edit an instance and delete a single nodegroup of a resource
@@ -775,6 +819,7 @@ class CasbinPermissionFramework(PermissionFramework):
         return False
 
 
+    @context_free
     def user_can_delete_resource(self, user, resourceid=None):
         """
         Requires that a user be permitted to delete an instance
@@ -802,6 +847,7 @@ class CasbinPermissionFramework(PermissionFramework):
         return False
 
 
+    @context_free
     def user_can_read_concepts(self, user):
         """
         Requires that a user is a part of the RDM Administrator group
@@ -813,14 +859,17 @@ class CasbinPermissionFramework(PermissionFramework):
         return False
 
 
+    @context_free
     def user_is_resource_editor(self, user):
         """
         Single test for whether a user is in the Resource Editor group
         """
 
-        return self.user_in_group_by_name(user, ["Resource Editor"])
+        is_resource_editor = self.user_in_group_by_name(user, ["Resource Editor"])
+        return is_resource_editor
 
 
+    @context_free
     def user_is_resource_reviewer(self, user):
         """
         Single test for whether a user is in the Resource Reviewer group
@@ -829,6 +878,7 @@ class CasbinPermissionFramework(PermissionFramework):
         return self.user_in_group_by_name(user, ["Resource Reviewer"])
 
 
+    @context_free
     def user_is_resource_exporter(self, user):
         """
         Single test for whether a user is in the Resource Exporter group
@@ -836,6 +886,7 @@ class CasbinPermissionFramework(PermissionFramework):
 
         return self.user_in_group_by_name(user, ["Resource Exporter"])
 
+    @context_free
     def user_in_group_by_name(self, user, names):
         subj = self._subj_to_str(user)
         roles = self._enforcer.get_roles_for_user(subj)
@@ -855,6 +906,7 @@ class CasbinTrigger:
 
     @staticmethod
     @contextmanager
+    @context_free
     def connect():
         credentials = pika.PlainCredentials(
             settings.RABBITMQ_USER,
@@ -875,6 +927,7 @@ class CasbinTrigger:
         finally:
             connection.close()
 
+    @context_free
     def listen(self):
         from arches.app.utils.permission_backend import _get_permission_framework
         casbin_framework = _get_permission_framework()
@@ -921,6 +974,7 @@ class CasbinTrigger:
             channel.start_consuming()
             print("Exiting Casbin listener")
 
+    @context_free
     def request_reload(self):
         timestamp = time.time()
         with self.connect() as channel:

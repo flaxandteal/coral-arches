@@ -37,6 +37,7 @@ from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 from arches.app.views.auth import *
+from arches_orm.adapter import admin
 import logging
 
 logger = logging.getLogger(__name__)
@@ -95,7 +96,8 @@ class PersonSignupView(View):
         form = CoralUserCreationForm(postdata, enable_captcha=settings.ENABLE_CAPTCHA)
 
         person = postdata.get("person_enc", "")
-        _person_decrypt(person)
+        with admin():
+            _person_decrypt(person)
 
         if not settings.ENABLE_PERSON_USER_SIGNUP:
             raise (Exception(("User signup has been disabled. Please contact your administrator.")))
@@ -164,35 +166,36 @@ class PersonConfirmSignupView(View):
         userinfo = JSONDeserializer().deserialize(AES.decrypt(link))
 
         person = userinfo["person_enc"]
-        person = _person_decrypt(person)
-        del userinfo["person_enc"]
+        with admin():
+            person = _person_decrypt(person)
+            del userinfo["person_enc"]
 
-        form = CoralUserCreationForm(userinfo)
+            form = CoralUserCreationForm(userinfo)
 
-        if person.user_account:
-            form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
-        else:
-            if datetime.fromtimestamp(userinfo["ts"]) + timedelta(days=1) >= datetime.fromtimestamp(int(time.time())):
-                if form.is_valid():
-                    user = form.save()
-                    person.user_account = user.pk
-                    try:
-                        person.save()
-                    except django.db.utils.ProgrammingError:
-                        form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
-                    else:
-                        crowdsource_editor_group = Group.objects.get(name=settings.USER_SIGNUP_GROUP)
-                        user.groups.add(crowdsource_editor_group)
-                        return redirect(reverse("auth") + "?registration_success=true")
-                else:
-                    try:
-                        for error in form.errors.as_data()["username"]:
-                            if error.code == "unique":
-                                return redirect("auth")
-                    except:
-                        pass
+            if person.user_account:
+                form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
             else:
-                form.errors["ts"] = [("The signup link has expired, please try signing up again.  Thanks!")]
+                if datetime.fromtimestamp(userinfo["ts"]) + timedelta(days=1) >= datetime.fromtimestamp(int(time.time())):
+                    if form.is_valid():
+                        user = form.save()
+                        person.user_account = user.pk
+                        try:
+                            person.save()
+                        except django.db.utils.ProgrammingError:
+                            form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
+                        else:
+                            crowdsource_editor_group = Group.objects.get(name=settings.USER_SIGNUP_GROUP)
+                            user.groups.add(crowdsource_editor_group)
+                            return redirect(reverse("auth") + "?registration_success=true")
+                    else:
+                        try:
+                            for error in form.errors.as_data()["username"]:
+                                if error.code == "unique":
+                                    return redirect("auth")
+                        except:
+                            pass
+                else:
+                    form.errors["ts"] = [("The signup link has expired, please try signing up again.  Thanks!")]
 
         return render(
             request,

@@ -2,9 +2,6 @@
 model_name = "Person"
 graphid = "22477f01-1a44-11e9-b0a9-000d3ab1e588"
 
-[Person.remapping]
-title = "name.full_name"
-
 [Group]
 model_name = "Group"
 graphid = "07883c9e-b25c-11e9-975a-a4d18cec433a"
@@ -107,9 +104,3 @@ graphid = "f9045867-8861-11ea-b06f-f875a44e0e11"
 [Place]
 model_name = "Place"
 graphid = "78b32d8c-b6f2-11ea-af42-f875a44e0e11"
-
-[Person.user_account]
-type = "user"
-lang = "en"
-nodegroupid = "b1f5c336-6a0e-11ee-b748-0242ac140009"
-nodeid = "b1f5c336-6a0e-11ee-b748-0242ac140009"

@@ -6,6 +6,7 @@ from arches.app.search.search_engine_factory import SearchEngineFactory
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.models.resource import Resource
 from arches_orm.models import Set, LogicalSet
+from arches_orm.adapter import context_free
 import time
 
 class SetApplicator:
@@ -49,6 +50,7 @@ class SetApplicator:
             results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=False))
         return results
 
+    @context_free
     def apply_sets(self, resourceinstanceid=None):
         """Apply set mappings to resources.
 

@@ -4,7 +4,7 @@ define([
   'knockout-mapping',
   'arches',
   'templates/views/components/plugins/workflow-builder.htm',
-  'plugins/knockout-select2'
+  // 'plugins/knockout-select2'
 ], function ($, ko, koMapping, arches, pageTemplate) {
   const pageViewModel = function (params) {
     this.selectedResource = ko.observable();

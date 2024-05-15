@@ -98,7 +98,7 @@ web: docker
 
 .PHONY: yarn-development
 yarn-development: docker
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_yarn_build_development
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
 
 .PHONY: docker-compose
 docker-compose: docker
