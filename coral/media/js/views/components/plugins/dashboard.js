@@ -46,13 +46,16 @@ define([
             const data = await response.json()
 
             if(!response.ok) {
+              this.loading(false);
               throw new Error(`HTTP error! status: ${data.error}`)
             }
 
             koMapping.fromJS(data.paginator, this.paginator)
             this.resources(data.paginator.response)
             this.total(data.paginator.total)
-            this.counters(data.paginator.status_counts)
+            const statusCounts = [{'status': 'Total', 'count': this.total}, ...data.paginator.status_counts]
+            this.counters(statusCounts)
+            console.log(this.counters())
             this.loading(false)
           } catch (error) {
             console.error(error)

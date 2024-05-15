@@ -97,7 +97,7 @@ class Dashboard(View):
                 conditions_for_task = (
                     (is_hm_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
                     (is_hb_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                    (not is_hm_group and not is_hb_group)
+                    (not is_hm_group and not is_hb_group and not action_status == STATUS_CLOSED)
                 )
                 if conditions_for_task:                 
                     task = self.build_planning_resource_data(consultation)
