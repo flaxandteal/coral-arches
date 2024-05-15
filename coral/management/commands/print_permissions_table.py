@@ -23,7 +23,7 @@ from django.contrib.auth.models import User, Group as DjangoGroup
 from arches.app.utils.permission_backend import assign_perm
 from arches.app.models.system_settings import settings
 from arches.app.models.resource import Resource
-from arches_orm.utils import attempt_well_known_resource_model
+from arches_orm.wkrm import attempt_well_known_resource_model
 from arches_orm.models import Group, Set
 from coral.permissions.casbin import CasbinPermissionFramework
 
