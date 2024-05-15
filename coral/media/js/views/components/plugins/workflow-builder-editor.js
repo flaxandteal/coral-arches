@@ -7,17 +7,8 @@ define([
   'templates/views/components/plugins/workflow-builder-editor.htm',
   'viewmodels/workflow-builder-step',
   'viewmodels/workflow-builder-config',
-  'plugins/knockout-select2'
-], function (
-  $,
-  ko,
-  koMapping,
-  arches,
-  uuid,
-  pageTemplate,
-  WorkflowBuilderStep,
-  WorkflowBuilderConfig
-) {
+  // 'plugins/knockout-select2'
+], function ($, ko, koMapping, arches, uuid, pageTemplate, WorkflowBuilderStep) {
   const pageViewModel = function (params) {
     this.loading = params.loading;
 
