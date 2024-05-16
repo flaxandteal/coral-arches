@@ -1,0 +1,59 @@
+<div>
+    <p>Hello World</p>
+    <div class="row widget-container">
+        <div class="form-group">
+            <div class="relative">
+                <label class="col-xs-12 control-label widget-input-label">
+                    <span data-bind="text: $root.translations.cardName"></span>
+                </label>
+            </div>
+            <domain-select-widget
+                params="
+                node: {
+                    config: {
+                    options: cards,
+                    multiple: false
+                    },
+                    configKeys: configKeys
+                },
+                config: {
+                    label: 'Select Nodegroup',
+                    placeholder: 'Select Nodegroup'
+                },
+                value: selectedNodeGroup,
+                loading: false,
+                pageVm: $root
+                "
+            ></domain-select-widget>
+            <domain-select-widget
+                params="
+                node: {
+                    config: {
+                    options: nodes,
+                    multiple: false
+                    },
+                    configKeys: configKeys
+                },
+                config: {
+                    label: 'Select Node',
+                    placeholder: 'Select Node'
+                },
+                value: selectedNode(),
+                loading: false,
+                pageVm: $root
+                "
+            ></domain-select-widget>
+            <resource-instance-multiselect-widget
+                params="
+                graphids: ['22477f01-1a44-11e9-b0a9-000d3ab1e588'],
+                config: {
+                    label: 'Select Group',
+                    placeholder: 'Select Group/Person to Notify'
+                },
+                renderContext: 'workflow',
+                value: groups
+                "
+            ></resource-instance-multiselect-widget>
+        </div>
+    </div>
+</div>
