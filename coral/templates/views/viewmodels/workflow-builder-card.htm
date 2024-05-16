@@ -100,6 +100,11 @@
           pageVm: $root
         "
       ></domain-checkbox-widget>
+      <!-- ko if: !cardHasLoaded() -->
+      <div style="text-align: center">
+        <span style="padding: 4px 8px; background: #eeeeee; border-radius: 4px">Loading...</span>
+      </div>
+      <!-- /ko -->
       <workflow-component-abstract
         params="visible: cardHasLoaded, component: workflowComponentAbstract()"
       ></workflow-component-abstract>
