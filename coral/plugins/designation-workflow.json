@@ -290,6 +290,28 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "84486643-2f11-404a-839b-b67146f93cf6"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "010db21a-0eda-11ef-aa66-0242ac140006",
+                  "semanticName": "HMC Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "0ff9c00c-3b27-4550-a61f-9f8f2dd65abd"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "c9de6058-0edb-11ef-aa66-0242ac140006",
+                  "semanticName": "Name of Meeting"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "05783132-8004-4f83-994c-a5fbe111e28c"
               }
             ]
           }

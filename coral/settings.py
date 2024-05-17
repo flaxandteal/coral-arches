@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=3, minor=5, patch=2)
+APP_VERSION = semantic_version.Version(major=3, minor=8, patch=4)
 
 GROUPINGS = {
     "groups": {
@@ -134,7 +134,7 @@ WELL_KNOWN_RESOURCE_MODELS = [
     dict(
         model_name="Enforcement",
         graphid="8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-    ),
+    )
 ]
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
