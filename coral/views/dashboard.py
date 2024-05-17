@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.http import JsonResponse
 from arches_orm.models import Person, Group, Consultation
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
+from arches_orm.adapter import admin
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from django.core.paginator import Paginator
@@ -25,95 +26,97 @@ NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
 class Dashboard(View):
 
     def get(self, request):
-    
-        user_id = request.user.id
-        person_resource = Person.where(user_account = user_id)
-        
-        if not person_resource:
-            return JsonResponse({"error": "User not found"}, status=404)
-        
-        groups = Group.all()
+        with admin():
+            user_id = request.user.id
+                        
+            person_resource = Person.where(user_account = user_id)
+            
+            if not person_resource:
+                return JsonResponse({"error": "User not found"}, status=404)
+            
+            groups = Group.all()
 
-        userGroupIds = []
+            userGroupIds = []
 
-        for group in groups:
-            for member in group.members:
-                if member.id == person_resource[0].id:
-                    userGroupIds.append(str(group.id)) #needs to be a string and not uuid
-        
-        taskResources = []
+            for group in groups:
+                for member in group.members:
+                    if member.id == person_resource[0].id:
+                        userGroupIds.append(str(group.id)) #needs to be a string and not uuid
+            
+            taskResources = []
 
-        for group in userGroupIds:
-            if group == PLANNING_GROUP:
-                planningTasks = self.get_planning_consultations(userGroupIds)
-                taskResources.extend(planningTasks)
-                break
+            for group in userGroupIds:
+                if group == PLANNING_GROUP:
+                    planningTasks = self.get_planning_consultations(userGroupIds)
+                    taskResources.extend(planningTasks)
+                    break
 
-        paginator = Paginator(taskResources, request.GET.get('itemsPerPage', 10))
-        page_number = request.GET.get('page', 1)
-        page_obj = paginator.get_page(page_number)
+            paginator = Paginator(taskResources, request.GET.get('itemsPerPage', 10))
+            page_number = request.GET.get('page', 1)
+            page_obj = paginator.get_page(page_number)
 
-        return JsonResponse({
-            'paginator': {
-                'current_page': page_obj.number,
-                'end_index': page_obj.end_index(),
-                'has_next': page_obj.has_next(),
-                'has_other_pages': page_obj.has_other_pages(),
-                'has_previous': page_obj.has_previous(),
-                'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
-                'pages': list(paginator.page_range),
-                'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
-                'start_index': page_obj.start_index(),
-                'total': paginator.count,
-                'status_counts': self.get_status_count(taskResources),
-                'response': list(page_obj.object_list)
-            }
-        })
+            return JsonResponse({
+                'paginator': {
+                    'current_page': page_obj.number,
+                    'end_index': page_obj.end_index(),
+                    'has_next': page_obj.has_next(),
+                    'has_other_pages': page_obj.has_other_pages(),
+                    'has_previous': page_obj.has_previous(),
+                    'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
+                    'pages': list(paginator.page_range),
+                    'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
+                    'start_index': page_obj.start_index(),
+                    'total': paginator.count,
+                    'status_counts': self.get_status_count(taskResources),
+                    'response': list(page_obj.object_list)
+                }
+            })
 
     def get_planning_consultations(self, userGroupIds):
+        
+        
+            TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
+            TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
+            TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
 
-        TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
-        TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
-        TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
+            HM_GROUP = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
+            HB_GROUP = '9a88b67b-cb12-4137-a100-01a977335298'
 
-        HM_GROUP = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
-        HB_GROUP = '9a88b67b-cb12-4137-a100-01a977335298'
+            is_hm_group = HM_GROUP in userGroupIds
+            is_hb_group = HB_GROUP in userGroupIds
 
-        is_hm_group = HM_GROUP in userGroupIds
-        is_hb_group = HB_GROUP in userGroupIds
+            resources = [] 
 
-        resources = [] 
+            consultations = Consultation.all()
 
-        consultations = Consultation.all()
+            #filter out consultations that are not planning consultations
+            planning_consultations=[c for c in consultations if c._._name.startswith('CON/')]
 
-        #filter out consultations that are not planning consultations
-        planning_consultations=[c for c in consultations if c._name().startswith('CON/')]
+            #checks against type & status and assigns to user if in correct group
+            for consultation in planning_consultations:
+                    action_status = consultation.action[0].action_status if consultation.action else None
+                    action_type = consultation.action[0].action_type if consultation.action else None
 
-        #checks against type & status and assigns to user if in correct group
-        for consultation in planning_consultations:
-                action_status = consultation.action[0].action_status if consultation.action else None
-                action_type = consultation.action[0].action_type if consultation.action else None
+                    conditions_for_task = (
+                        (is_hm_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                        (is_hb_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                        (not is_hm_group and not is_hb_group and not action_status == STATUS_CLOSED)
+                    )
+                    if conditions_for_task:                 
+                        task = self.build_planning_resource_data(consultation)
+                        if task:
+                            resources.append(task)
 
-                conditions_for_task = (
-                    (is_hm_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                    (is_hb_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                    (not is_hm_group and not is_hb_group and not action_status == STATUS_CLOSED)
-                )
-                if conditions_for_task:                 
-                    task = self.build_planning_resource_data(consultation)
-                    if task:
-                        resources.append(task)
+            #sort by deadline date, nulls first
+            from datetime import datetime
 
-        #sort by deadline date, nulls first
-        from datetime import datetime
+            # Convert the 'deadline' field to a date and sort
+            resources.sort(key=lambda x: (
+                x['deadline'] is not None, datetime.strptime(x['deadline'], '%d-%m-%Y') 
+                if x['deadline'] else None
+            ), reverse=False)
 
-        # Convert the 'deadline' field to a date and sort
-        resources.sort(key=lambda x: (
-            x['deadline'] is not None, datetime.strptime(x['deadline'], '%d-%m-%Y') 
-            if x['deadline'] else None
-        ), reverse=False)
-
-        return resources
+            return resources
     
     def convert_id_to_string(self, id):
         if id == STATUS_OPEN:
@@ -153,8 +156,8 @@ class Dashboard(View):
 
         resource_data = {
             'id': consultation.id,
-            'displayname': consultation._name(),
-            'displaydescription': consultation._description(),
+            'displayname': consultation._._name,
+            'displaydescription': consultation._._description,
             'status': self.convert_id_to_string(action_status),
             'hierarchy_type': self.convert_id_to_string(hierarchy_type),
             'date': date_entered,
