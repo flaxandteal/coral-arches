@@ -482,6 +482,21 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "b1d2cd1e-f446-11eb-abee-a87eeabdefba",
+                    "config": {
+                        "label": "Irish Grid Reference (TM65)",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "068156b7-8458-494f-b915-16a7298d5413",
+                    "label": {
+                        "en": "Irish Grid Reference (TM65)"
+                    },
+                    "node_id": "8272435a-1689-11ef-b341-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
+                },
+                {
                     "card_id": "b1d2cd1b-f446-11eb-b158-a87eeabdefba",
                     "config": {
                         "defaultValue": "",
@@ -3579,7 +3594,7 @@
                     },
                     "node_id": "b1d30c03-f446-11eb-bbcc-a87eeabdefba",
                     "sortorder": null,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
                 }
             ],
