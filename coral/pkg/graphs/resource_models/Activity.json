@@ -373,7 +373,7 @@
                     "instructions": {
                         "en": null
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "National Grid References"
                     },
@@ -845,7 +845,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Geometry"
                     },
@@ -1009,7 +1009,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Data"
                     },
@@ -10763,22 +10763,6 @@
                     "config": {
                         "geojson_input_node": "a5419248-f121-11eb-86a9-a87eeabdefba",
                         "geojson_input_nodegroup": "a541560c-f121-11eb-aa92-a87eeabdefba",
-                        "triggering_nodegroups": [
-                            "a541560c-f121-11eb-aa92-a87eeabdefba",
-                            "a541560c-f121-11eb-aa92-a87eeabdefba"
-                        ],
-                        "utm_list_nodegroup": "",
-                        "utm_output_node": "a7d98d68-5eb2-11ee-aa2d-0242ac120008",
-                        "utm_output_nodegroup": "a5416b43-f121-11eb-b691-a87eeabdefba"
-                    },
-                    "function_id": "317a318b-792b-4de3-bea9-e4212850431f",
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "891198a7-3a8b-4296-bd2c-319212d96f95"
-                },
-                {
-                    "config": {
-                        "geojson_input_node": "a5419248-f121-11eb-86a9-a87eeabdefba",
-                        "geojson_input_nodegroup": "a541560c-f121-11eb-aa92-a87eeabdefba",
                         "tm65_output_node": "4bd349a4-16be-11ef-af79-0242ac180006",
                         "tm65_output_nodegroup": "33b4430a-16be-11ef-8633-0242ac180006",
                         "triggering_nodegroups": [
@@ -10792,7 +10776,7 @@
             ],
             "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
             "iconclass": "fa fa-cogs",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
