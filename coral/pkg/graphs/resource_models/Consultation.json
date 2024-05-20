@@ -5124,21 +5124,6 @@
                     "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
                 },
                 {
-                    "card_id": "083e26fe-ca61-11ee-afca-0242ac180006",
-                    "config": {
-                        "label": "Irish Grid (TM65)",
-                        "placeholder": "Enter the centre point map reference of the resource."
-                    },
-                    "id": "08a43f3c-6344-4dbd-be48-bffe532d8b74",
-                    "label": {
-                        "en": "Irish Grid (TM65)"
-                    },
-                    "node_id": "1dcf0f50-1684-11ef-82a5-0242ac120006",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
-                },
-                {
                     "card_id": "a5e3fb4c-51a3-11eb-aafb-f875a44e0e11",
                     "config": {
                         "defaultValue": null,
@@ -9930,6 +9915,21 @@
                     "sortorder": 1,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "083e26fe-ca61-11ee-afca-0242ac180006",
+                    "config": {
+                        "label": "Irish Grid Reference(TM65)",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "a3134ced-efd2-4527-8da4-5e570508ae2e",
+                    "label": {
+                        "en": "Irish Grid Reference(TM65)"
+                    },
+                    "node_id": "ac3eb490-1682-11ef-b68e-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
                 },
                 {
                     "card_id": "a5e3fb4c-51a3-11eb-aafb-f875a44e0e11",
@@ -16232,15 +16232,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "083e226c-ca61-11ee-afca-0242ac180006",
-                    "edgeid": "e15edbcf-d519-4708-8435-8f613c87f0f1",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "1dcf0f50-1684-11ef-82a5-0242ac120006"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "0dd6ccb8-cffe-11ee-8a4e-0242ac180006",
                     "edgeid": "e1ad1d0d-0d4f-402a-a0c0-e1bb3ba65e4a",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -16544,56 +16535,31 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "fc5cc1de-fb15-11ee-b5d2-0242ac190006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "083e226c-ca61-11ee-afca-0242ac180006",
+                    "edgeid": "fde8ce5b-b0b7-4dfe-a841-638fe6e969a6",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "ac3eb490-1682-11ef-b68e-0242ac120006"
                 }
             ],
             "functions_x_graphs": [
                 {
                     "config": {
+                        "geojson_node": "083f3c7e-ca61-11ee-afca-0242ac180006",
+                        "geojson_nodegroup": "083e003e-ca61-11ee-afca-0242ac180006",
+                        "tm65_node": "ac3eb490-1682-11ef-b68e-0242ac120006",
+                        "tm65_nodegroup": "083e226c-ca61-11ee-afca-0242ac180006",
                         "triggering_nodegroups": [
-                            "54de6acc-8895-11ea-9067-f875a44e0e11"
+                            "083e226c-ca61-11ee-afca-0242ac180006"
                         ]
                     },
-                    "function_id": "3461bdcc-c5cd-4e5f-8a79-5f621fbbd6ba",
+                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "07ce2105-2fbf-482c-b8cf-d85f67cdbde1"
-                },
-                {
-                    "config": {
-                        "geojson_input_node": "083f3c7e-ca61-11ee-afca-0242ac180006",
-                        "geojson_input_nodegroup": "083e003e-ca61-11ee-afca-0242ac180006",
-                        "tm65_output_node": "1dcf0f50-1684-11ef-82a5-0242ac120006",
-                        "tm65_output_nodegroup": "083e226c-ca61-11ee-afca-0242ac180006",
-                        "triggering_nodegroups": [
-                            "083e003e-ca61-11ee-afca-0242ac180006"
-                        ]
-                    },
-                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "34de4787-0e48-419b-8d74-62ae17da5e4c"
-                },
-                {
-                    "config": {
-                        "triggering_nodegroups": [
-                            "eabbfd96-0c4f-11ef-a9bf-0242ac140006"
-                        ]
-                    },
-                    "function_id": "3b10dd80-bad0-4cf2-9d50-7c8200f3f13d",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "4512a91e-214e-47d7-9a10-50428f940262"
-                },
-                {
-                    "config": {
-                        "cons_status_list_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
-                        "cons_status_list_nodeid": "8d41e4d3-a250-11e9-8977-00224800b26d",
-                        "cons_status_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
-                        "cons_status_nodeid": "8d41e4d3-a250-11e9-8977-00224800b26d",
-                        "triggering_nodegroups": [
-                            "8d41e4c0-a250-11e9-a7e3-00224800b26d"
-                        ]
-                    },
-                    "function_id": "96efa95a-1e2c-4562-ac1f-b415796f9f75",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "6d404a87-9834-41a2-9e6e-c86dfd858ac5"
+                    "id": "0416a612-daa5-49fa-8413-4d911e652496"
                 },
                 {
                     "config": {
@@ -16615,21 +16581,55 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "d33b7312-3a9f-4e63-8280-e323aa681d63"
+                    "id": "4000e22a-6aff-43ac-8d28-0038989886b0"
                 },
                 {
                     "config": {
-                        "geojson_node": "083f3c7e-ca61-11ee-afca-0242ac180006",
-                        "geojson_nodegroup": "083e003e-ca61-11ee-afca-0242ac180006",
-                        "tm65_node": "1dcf0f50-1684-11ef-82a5-0242ac120006",
-                        "tm65_nodegroup": "083e226c-ca61-11ee-afca-0242ac180006",
                         "triggering_nodegroups": [
-                            "083e226c-ca61-11ee-afca-0242ac180006"
+                            "54de6acc-8895-11ea-9067-f875a44e0e11"
                         ]
                     },
-                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
+                    "function_id": "3461bdcc-c5cd-4e5f-8a79-5f621fbbd6ba",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "id": "d7086d54-0abf-4f61-b7cd-0bffc56fc134"
+                    "id": "7470e88a-1e39-4ca3-95ca-993773eb032c"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "eabbfd96-0c4f-11ef-a9bf-0242ac140006"
+                        ]
+                    },
+                    "function_id": "3b10dd80-bad0-4cf2-9d50-7c8200f3f13d",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "ac147bd1-d1ad-4300-bd31-dd53a0b5ed21"
+                },
+                {
+                    "config": {
+                        "cons_status_list_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
+                        "cons_status_list_nodeid": "8d41e4d3-a250-11e9-8977-00224800b26d",
+                        "cons_status_nodegroupid": "8d41e4c0-a250-11e9-a7e3-00224800b26d",
+                        "cons_status_nodeid": "8d41e4d3-a250-11e9-8977-00224800b26d",
+                        "triggering_nodegroups": [
+                            "8d41e4c0-a250-11e9-a7e3-00224800b26d"
+                        ]
+                    },
+                    "function_id": "96efa95a-1e2c-4562-ac1f-b415796f9f75",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "d5857fe0-ff3a-4d25-8996-5b5f1cd86f10"
+                },
+                {
+                    "config": {
+                        "geojson_input_node": "083f3c7e-ca61-11ee-afca-0242ac180006",
+                        "geojson_input_nodegroup": "083e003e-ca61-11ee-afca-0242ac180006",
+                        "tm65_output_node": "ac3eb490-1682-11ef-b68e-0242ac120006",
+                        "tm65_output_nodegroup": "083e226c-ca61-11ee-afca-0242ac180006",
+                        "triggering_nodegroups": [
+                            "083e003e-ca61-11ee-afca-0242ac180006"
+                        ]
+                    },
+                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "ecdc4d72-4707-4204-bcf2-9b45c58053f5"
                 }
             ],
             "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -17070,10 +17070,10 @@
                         },
                         "options": [
                             {
-                                "id": "f57c93bb-53f4-486c-a859-d7c106f7ec9e",
+                                "id": "b4701257-884b-40b5-9cc2-d68f548ad515",
                                 "selected": false,
                                 "text": {
-                                    "en": "New Listing"
+                                    "en": "N/A"
                                 }
                             },
                             {
@@ -17084,10 +17084,10 @@
                                 }
                             },
                             {
-                                "id": "b4701257-884b-40b5-9cc2-d68f548ad515",
+                                "id": "f57c93bb-53f4-486c-a859-d7c106f7ec9e",
                                 "selected": false,
                                 "text": {
-                                    "en": "N/A"
+                                    "en": "New Listing"
                                 }
                             }
                         ],
@@ -18337,10 +18337,10 @@
                         },
                         "options": [
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             },
                             {
@@ -18351,10 +18351,10 @@
                                 }
                             },
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             }
                         ]
@@ -18546,10 +18546,10 @@
                         },
                         "options": [
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             },
                             {
@@ -18560,10 +18560,10 @@
                                 }
                             },
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             }
                         ]
@@ -21262,24 +21262,10 @@
                         },
                         "options": [
                             {
-                                "id": "ef491947-178e-4f62-92ac-192fa6424592",
+                                "id": "d81fa421-35f3-4f30-95fa-c042f424c83a",
                                 "selected": false,
                                 "text": {
-                                    "en": "5"
-                                }
-                            },
-                            {
-                                "id": "d2db1732-5b6e-4a7d-b84f-8bff6e541cff",
-                                "selected": false,
-                                "text": {
-                                    "en": "4"
-                                }
-                            },
-                            {
-                                "id": "7b758df3-5722-4c76-8785-ea9a715e420e",
-                                "selected": false,
-                                "text": {
-                                    "en": "3"
+                                    "en": "1"
                                 }
                             },
                             {
@@ -21290,10 +21276,24 @@
                                 }
                             },
                             {
-                                "id": "d81fa421-35f3-4f30-95fa-c042f424c83a",
+                                "id": "7b758df3-5722-4c76-8785-ea9a715e420e",
                                 "selected": false,
                                 "text": {
-                                    "en": "1"
+                                    "en": "3"
+                                }
+                            },
+                            {
+                                "id": "d2db1732-5b6e-4a7d-b84f-8bff6e541cff",
+                                "selected": false,
+                                "text": {
+                                    "en": "4"
+                                }
+                            },
+                            {
+                                "id": "ef491947-178e-4f62-92ac-192fa6424592",
+                                "selected": false,
+                                "text": {
+                                    "en": "5"
                                 }
                             }
                         ]
@@ -21375,17 +21375,17 @@
                         },
                         "options": [
                             {
-                                "id": "be6eef20-8bd4-4c64-abb2-418e9024ac14",
-                                "selected": false,
-                                "text": {
-                                    "en": "Non-statutory"
-                                }
-                            },
-                            {
                                 "id": "d06d5de0-2881-4d71-89b1-522ebad3088d",
                                 "selected": false,
                                 "text": {
                                     "en": "Statutory"
+                                }
+                            },
+                            {
+                                "id": "be6eef20-8bd4-4c64-abb2-418e9024ac14",
+                                "selected": false,
+                                "text": {
+                                    "en": "Non-statutory"
                                 }
                             }
                         ],
@@ -21543,24 +21543,10 @@
                         },
                         "options": [
                             {
-                                "id": "a81eb2e8-81aa-4588-b5ca-cab2118ca8bf",
+                                "id": "4608b315-0135-49a0-9686-9bc3c36990d8",
                                 "selected": false,
                                 "text": {
-                                    "en": "Open"
-                                }
-                            },
-                            {
-                                "id": "56ac81c4-85a9-443f-b25e-a209aabed88e",
-                                "selected": false,
-                                "text": {
-                                    "en": "Closed"
-                                }
-                            },
-                            {
-                                "id": "28112b3f-ef44-40b4-a215-931c0c88bc5e",
-                                "selected": false,
-                                "text": {
-                                    "en": "Extension requested"
+                                    "en": "HM done"
                                 }
                             },
                             {
@@ -21571,10 +21557,24 @@
                                 }
                             },
                             {
-                                "id": "4608b315-0135-49a0-9686-9bc3c36990d8",
+                                "id": "28112b3f-ef44-40b4-a215-931c0c88bc5e",
                                 "selected": false,
                                 "text": {
-                                    "en": "HM done"
+                                    "en": "Extension requested"
+                                }
+                            },
+                            {
+                                "id": "56ac81c4-85a9-443f-b25e-a209aabed88e",
+                                "selected": false,
+                                "text": {
+                                    "en": "Closed"
+                                }
+                            },
+                            {
+                                "id": "a81eb2e8-81aa-4588-b5ca-cab2118ca8bf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Open"
                                 }
                             }
                         ]
@@ -21816,29 +21816,6 @@
                     "nodeid": "1cf746f6-1853-11eb-a9df-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "irish_grid_tm65_",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "tm65centrepoint",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Irish Grid (TM65)",
-                    "nodegroup_id": "083e226c-ca61-11ee-afca-0242ac180006",
-                    "nodeid": "1dcf0f50-1684-11ef-82a5-0242ac120006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -22211,17 +22188,17 @@
                         },
                         "options": [
                             {
-                                "id": "4d4b7c53-c81a-40c9-af83-bc5bddd6c9e2",
-                                "selected": false,
-                                "text": {
-                                    "en": "Not Needed"
-                                }
-                            },
-                            {
                                 "id": "855ca1a2-5c09-44ab-a84f-bb93ca213661",
                                 "selected": false,
                                 "text": {
                                     "en": "Needed"
+                                }
+                            },
+                            {
+                                "id": "4d4b7c53-c81a-40c9-af83-bc5bddd6c9e2",
+                                "selected": false,
+                                "text": {
+                                    "en": "Not Needed"
                                 }
                             }
                         ]
@@ -22321,10 +22298,10 @@
                         },
                         "options": [
                             {
-                                "id": "d90db015-730c-46ca-8fe0-8188ff326457",
+                                "id": "157b7c3c-a6c8-4cd7-ab3a-cbc8a9c67363",
                                 "selected": false,
                                 "text": {
-                                    "en": "Delist"
+                                    "en": "Minor"
                                 }
                             },
                             {
@@ -22335,10 +22312,10 @@
                                 }
                             },
                             {
-                                "id": "157b7c3c-a6c8-4cd7-ab3a-cbc8a9c67363",
+                                "id": "d90db015-730c-46ca-8fe0-8188ff326457",
                                 "selected": false,
                                 "text": {
-                                    "en": "Minor"
+                                    "en": "Delist"
                                 }
                             }
                         ],
@@ -23234,31 +23211,10 @@
                         },
                         "options": [
                             {
-                                "id": "29333b58-932e-4ba6-bbae-1e8d724d054e",
+                                "id": "c0c754c4-0d92-4a98-af27-f26c510d09a8",
                                 "selected": false,
                                 "text": {
-                                    "en": "Content"
-                                }
-                            },
-                            {
-                                "id": "1cdbcc52-4496-41d7-9a7c-7027997dfc88",
-                                "selected": false,
-                                "text": {
-                                    "en": "Content with conditions"
-                                }
-                            },
-                            {
-                                "id": "cdd29e91-9190-4667-adec-b5a34ea7d4f5",
-                                "selected": false,
-                                "text": {
-                                    "en": "Advice - Does not comply"
-                                }
-                            },
-                            {
-                                "id": "95fe606c-ff2e-4945-8c4f-698e717ca830",
-                                "selected": false,
-                                "text": {
-                                    "en": "Advice - More info required"
+                                    "en": "Consultation Error"
                                 }
                             },
                             {
@@ -23269,10 +23225,31 @@
                                 }
                             },
                             {
-                                "id": "c0c754c4-0d92-4a98-af27-f26c510d09a8",
+                                "id": "95fe606c-ff2e-4945-8c4f-698e717ca830",
                                 "selected": false,
                                 "text": {
-                                    "en": "Consultation Error"
+                                    "en": "Advice - More info required"
+                                }
+                            },
+                            {
+                                "id": "cdd29e91-9190-4667-adec-b5a34ea7d4f5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Advice - Does not comply"
+                                }
+                            },
+                            {
+                                "id": "1cdbcc52-4496-41d7-9a7c-7027997dfc88",
+                                "selected": false,
+                                "text": {
+                                    "en": "Content with conditions"
+                                }
+                            },
+                            {
+                                "id": "29333b58-932e-4ba6-bbae-1e8d724d054e",
+                                "selected": false,
+                                "text": {
+                                    "en": "Content"
                                 }
                             }
                         ]
@@ -24145,80 +24122,10 @@
                         },
                         "options": [
                             {
-                                "id": "49c0ec02-b2bf-4041-a93e-22f0b763783e",
+                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
                                 "selected": false,
                                 "text": {
-                                    "en": "TBA - Transboundary Application"
-                                }
-                            },
-                            {
-                                "id": "067f84bd-14f0-412b-b461-bccca79bfd2e",
-                                "selected": false,
-                                "text": {
-                                    "en": "S54 - Change to Wording of Condition"
-                                }
-                            },
-                            {
-                                "id": "83fe6c2e-bfbb-4a75-8a46-df8baf05e999",
-                                "selected": false,
-                                "text": {
-                                    "en": "RM - Reserved Matter"
-                                }
-                            },
-                            {
-                                "id": "575953ca-4d53-4ecf-b76e-c32524710b50",
-                                "selected": false,
-                                "text": {
-                                    "en": "PAN - Proposal of Application Notice"
-                                }
-                            },
-                            {
-                                "id": "1ffef4e1-952f-46d6-893a-9b7d94a9c68d",
-                                "selected": false,
-                                "text": {
-                                    "en": "PAD - Pre-Application Discussion"
-                                }
-                            },
-                            {
-                                "id": "32d2e13f-31fb-4031-9bbb-cd159c76a28e",
-                                "selected": false,
-                                "text": {
-                                    "en": "O - Outline"
-                                }
-                            },
-                            {
-                                "id": "e9918bea-0b2a-4d8f-9536-f6785083b6e7",
-                                "selected": false,
-                                "text": {
-                                    "en": "NMC - Non Material Change"
-                                }
-                            },
-                            {
-                                "id": "f74145a5-e183-4376-9e07-60d204a1a92e",
-                                "selected": false,
-                                "text": {
-                                    "en": "LBC - Listed Building Consent"
-                                }
-                            },
-                            {
-                                "id": "7b87dd7a-7573-4417-9691-0875a783e8c2",
-                                "selected": false,
-                                "text": {
-                                    "en": "F - Full"
-                                }
-                            },
-                            {
-                                "id": "1ed4833f-4893-4df9-923d-6e191d218071",
-                                "selected": false,
-                                "text": {
-                                    "en": "DETEIA - Determination of Environmental Impact Assessment"
-                                }
-                            },
-                            {
-                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
-                                "selected": false,
-                                "text": {
-                                    "en": "DCA - Demolition in Conservation Area"
+                                    "en": "A - Advertisement"
                                 }
                             },
                             {
@@ -24229,10 +24136,80 @@
                                 }
                             },
                             {
-                                "id": "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b",
+                                "id": "185bbad6-eb0f-424d-8802-fb4d93a64625",
                                 "selected": false,
                                 "text": {
-                                    "en": "A - Advertisement"
+                                    "en": "DCA - Demolition in Conservation Area"
+                                }
+                            },
+                            {
+                                "id": "1ed4833f-4893-4df9-923d-6e191d218071",
+                                "selected": false,
+                                "text": {
+                                    "en": "DETEIA - Determination of Environmental Impact Assessment"
+                                }
+                            },
+                            {
+                                "id": "7b87dd7a-7573-4417-9691-0875a783e8c2",
+                                "selected": false,
+                                "text": {
+                                    "en": "F - Full"
+                                }
+                            },
+                            {
+                                "id": "f74145a5-e183-4376-9e07-60d204a1a92e",
+                                "selected": false,
+                                "text": {
+                                    "en": "LBC - Listed Building Consent"
+                                }
+                            },
+                            {
+                                "id": "e9918bea-0b2a-4d8f-9536-f6785083b6e7",
+                                "selected": false,
+                                "text": {
+                                    "en": "NMC - Non Material Change"
+                                }
+                            },
+                            {
+                                "id": "32d2e13f-31fb-4031-9bbb-cd159c76a28e",
+                                "selected": false,
+                                "text": {
+                                    "en": "O - Outline"
+                                }
+                            },
+                            {
+                                "id": "1ffef4e1-952f-46d6-893a-9b7d94a9c68d",
+                                "selected": false,
+                                "text": {
+                                    "en": "PAD - Pre-Application Discussion"
+                                }
+                            },
+                            {
+                                "id": "575953ca-4d53-4ecf-b76e-c32524710b50",
+                                "selected": false,
+                                "text": {
+                                    "en": "PAN - Proposal of Application Notice"
+                                }
+                            },
+                            {
+                                "id": "83fe6c2e-bfbb-4a75-8a46-df8baf05e999",
+                                "selected": false,
+                                "text": {
+                                    "en": "RM - Reserved Matter"
+                                }
+                            },
+                            {
+                                "id": "067f84bd-14f0-412b-b461-bccca79bfd2e",
+                                "selected": false,
+                                "text": {
+                                    "en": "S54 - Change to Wording of Condition"
+                                }
+                            },
+                            {
+                                "id": "49c0ec02-b2bf-4041-a93e-22f0b763783e",
+                                "selected": false,
+                                "text": {
+                                    "en": "TBA - Transboundary Application"
                                 }
                             }
                         ],
@@ -24352,31 +24329,10 @@
                         },
                         "options": [
                             {
-                                "id": "89fdb87c-7cc1-4c2b-95ec-85e12fcdeb15",
+                                "id": "f91c0991-0f1a-4b33-ab0a-1a75248d8946",
                                 "selected": false,
                                 "text": {
-                                    "en": "D1 - Awaiting Renaming"
-                                }
-                            },
-                            {
-                                "id": "91e9ea50-92e1-4597-9e65-d980c1eefa93",
-                                "selected": false,
-                                "text": {
-                                    "en": "Record Only - Not Listed"
-                                }
-                            },
-                            {
-                                "id": "f14439f0-0647-441a-9e9f-feb7464c6611",
-                                "selected": false,
-                                "text": {
-                                    "en": "B2"
-                                }
-                            },
-                            {
-                                "id": "cf9619ea-cc35-4395-a878-8c806a472918",
-                                "selected": false,
-                                "text": {
-                                    "en": "B1"
+                                    "en": "A"
                                 }
                             },
                             {
@@ -24387,10 +24343,31 @@
                                 }
                             },
                             {
-                                "id": "f91c0991-0f1a-4b33-ab0a-1a75248d8946",
+                                "id": "cf9619ea-cc35-4395-a878-8c806a472918",
                                 "selected": false,
                                 "text": {
-                                    "en": "A"
+                                    "en": "B1"
+                                }
+                            },
+                            {
+                                "id": "f14439f0-0647-441a-9e9f-feb7464c6611",
+                                "selected": false,
+                                "text": {
+                                    "en": "B2"
+                                }
+                            },
+                            {
+                                "id": "91e9ea50-92e1-4597-9e65-d980c1eefa93",
+                                "selected": false,
+                                "text": {
+                                    "en": "Record Only - Not Listed"
+                                }
+                            },
+                            {
+                                "id": "89fdb87c-7cc1-4c2b-95ec-85e12fcdeb15",
+                                "selected": false,
+                                "text": {
+                                    "en": "D1 - Awaiting Renaming"
                                 }
                             }
                         ],
@@ -24466,17 +24443,17 @@
                         },
                         "options": [
                             {
-                                "id": "9d1ad6ea-cb16-4015-a6c0-c312e83973f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "Yes"
-                                }
-                            },
-                            {
                                 "id": "4877dda1-af20-46e1-9782-6844575f9ab6",
                                 "selected": false,
                                 "text": {
                                     "en": "No"
+                                }
+                            },
+                            {
+                                "id": "9d1ad6ea-cb16-4015-a6c0-c312e83973f6",
+                                "selected": false,
+                                "text": {
+                                    "en": "Yes"
                                 }
                             }
                         ]
@@ -25547,66 +25524,10 @@
                         },
                         "options": [
                             {
-                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
                                 "selected": false,
                                 "text": {
-                                    "en": "37: Ards and North Down"
-                                }
-                            },
-                            {
-                                "id": "c3fb7b10-9117-46ac-b1ef-65bca03e9896",
-                                "selected": false,
-                                "text": {
-                                    "en": "36: Newry Mourne and Down"
-                                }
-                            },
-                            {
-                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
-                                "selected": false,
-                                "text": {
-                                    "en": "35: Mid Ulster"
-                                }
-                            },
-                            {
-                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "34: Mid and East Antrim"
-                                }
-                            },
-                            {
-                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
-                                "selected": false,
-                                "text": {
-                                    "en": "33: Lisburn and Castlereagh"
-                                }
-                            },
-                            {
-                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
-                                "selected": false,
-                                "text": {
-                                    "en": "32: Fermanagh and Omagh"
-                                }
-                            },
-                            {
-                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
-                                "selected": false,
-                                "text": {
-                                    "en": "31: Derry City and Strabane"
-                                }
-                            },
-                            {
-                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
-                                "selected": false,
-                                "text": {
-                                    "en": "30: Causeway Coast and Glens"
-                                }
-                            },
-                            {
-                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "29: Belfast"
+                                    "en": "27: Antrim and Newtownabbey"
                                 }
                             },
                             {
@@ -25617,10 +25538,66 @@
                                 }
                             },
                             {
-                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
                                 "selected": false,
                                 "text": {
-                                    "en": "27: Antrim and Newtownabbey"
+                                    "en": "29: Belfast"
+                                }
+                            },
+                            {
+                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
+                                "selected": false,
+                                "text": {
+                                    "en": "30: Causeway Coast and Glens"
+                                }
+                            },
+                            {
+                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
+                                "selected": false,
+                                "text": {
+                                    "en": "31: Derry City and Strabane"
+                                }
+                            },
+                            {
+                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
+                                "selected": false,
+                                "text": {
+                                    "en": "32: Fermanagh and Omagh"
+                                }
+                            },
+                            {
+                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
+                                "selected": false,
+                                "text": {
+                                    "en": "33: Lisburn and Castlereagh"
+                                }
+                            },
+                            {
+                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "34: Mid and East Antrim"
+                                }
+                            },
+                            {
+                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
+                                "selected": false,
+                                "text": {
+                                    "en": "35: Mid Ulster"
+                                }
+                            },
+                            {
+                                "id": "c3fb7b10-9117-46ac-b1ef-65bca03e9896",
+                                "selected": false,
+                                "text": {
+                                    "en": "36: Newry Mourne and Down"
+                                }
+                            },
+                            {
+                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "selected": false,
+                                "text": {
+                                    "en": "37: Ards and North Down"
                                 }
                             }
                         ]
@@ -25773,24 +25750,10 @@
                         },
                         "options": [
                             {
-                                "id": "ef491947-178e-4f62-92ac-192fa6424592",
+                                "id": "d81fa421-35f3-4f30-95fa-c042f424c83a",
                                 "selected": false,
                                 "text": {
-                                    "en": "5"
-                                }
-                            },
-                            {
-                                "id": "d2db1732-5b6e-4a7d-b84f-8bff6e541cff",
-                                "selected": false,
-                                "text": {
-                                    "en": "4"
-                                }
-                            },
-                            {
-                                "id": "7b758df3-5722-4c76-8785-ea9a715e420e",
-                                "selected": false,
-                                "text": {
-                                    "en": "3"
+                                    "en": "1"
                                 }
                             },
                             {
@@ -25801,10 +25764,24 @@
                                 }
                             },
                             {
-                                "id": "d81fa421-35f3-4f30-95fa-c042f424c83a",
+                                "id": "7b758df3-5722-4c76-8785-ea9a715e420e",
                                 "selected": false,
                                 "text": {
-                                    "en": "1"
+                                    "en": "3"
+                                }
+                            },
+                            {
+                                "id": "d2db1732-5b6e-4a7d-b84f-8bff6e541cff",
+                                "selected": false,
+                                "text": {
+                                    "en": "4"
+                                }
+                            },
+                            {
+                                "id": "ef491947-178e-4f62-92ac-192fa6424592",
+                                "selected": false,
+                                "text": {
+                                    "en": "5"
                                 }
                             }
                         ]
@@ -25858,45 +25835,10 @@
                         },
                         "options": [
                             {
-                                "id": "ee68f7c0-4081-4d35-923e-12137180190c",
+                                "id": "22de9311-f2de-448b-927f-4374df42b688",
                                 "selected": false,
                                 "text": {
-                                    "en": "Other"
-                                }
-                            },
-                            {
-                                "id": "1d44a731-8ef1-469f-a7ff-923b49ab0ebc",
-                                "selected": false,
-                                "text": {
-                                    "en": "Public Realm"
-                                }
-                            },
-                            {
-                                "id": "671f5fe4-b44c-48e9-b41f-e9812dd4381e",
-                                "selected": false,
-                                "text": {
-                                    "en": "Wind Turbine"
-                                }
-                            },
-                            {
-                                "id": "3c41f684-c70a-4b03-8fd5-69d1175eae24",
-                                "selected": false,
-                                "text": {
-                                    "en": "Change of Use"
-                                }
-                            },
-                            {
-                                "id": "b18aa04e-0978-4c1f-979a-293046a9ce99",
-                                "selected": false,
-                                "text": {
-                                    "en": "Domestic Extension"
-                                }
-                            },
-                            {
-                                "id": "e9eed804-3927-4f2c-be17-def71b60a07c",
-                                "selected": false,
-                                "text": {
-                                    "en": "Repairs"
+                                    "en": "Single Dwelling"
                                 }
                             },
                             {
@@ -25907,10 +25849,45 @@
                                 }
                             },
                             {
-                                "id": "22de9311-f2de-448b-927f-4374df42b688",
+                                "id": "e9eed804-3927-4f2c-be17-def71b60a07c",
                                 "selected": false,
                                 "text": {
-                                    "en": "Single Dwelling"
+                                    "en": "Repairs"
+                                }
+                            },
+                            {
+                                "id": "b18aa04e-0978-4c1f-979a-293046a9ce99",
+                                "selected": false,
+                                "text": {
+                                    "en": "Domestic Extension"
+                                }
+                            },
+                            {
+                                "id": "3c41f684-c70a-4b03-8fd5-69d1175eae24",
+                                "selected": false,
+                                "text": {
+                                    "en": "Change of Use"
+                                }
+                            },
+                            {
+                                "id": "671f5fe4-b44c-48e9-b41f-e9812dd4381e",
+                                "selected": false,
+                                "text": {
+                                    "en": "Wind Turbine"
+                                }
+                            },
+                            {
+                                "id": "1d44a731-8ef1-469f-a7ff-923b49ab0ebc",
+                                "selected": false,
+                                "text": {
+                                    "en": "Public Realm"
+                                }
+                            },
+                            {
+                                "id": "ee68f7c0-4081-4d35-923e-12137180190c",
+                                "selected": false,
+                                "text": {
+                                    "en": "Other"
                                 }
                             }
                         ],
@@ -26011,38 +25988,10 @@
                         },
                         "options": [
                             {
-                                "id": "5f33353a-7b29-459e-bb23-710913be6d7d",
+                                "id": "2859ac05-1b52-42f7-ab98-9397d6f9cb6d",
                                 "selected": false,
                                 "text": {
-                                    "en": "A"
-                                }
-                            },
-                            {
-                                "id": "a1683514-27b5-4e0e-ba05-3b1bdae84e31",
-                                "selected": false,
-                                "text": {
-                                    "en": "B+"
-                                }
-                            },
-                            {
-                                "id": "3e1343d4-831d-4752-8498-11e8fd9235c8",
-                                "selected": false,
-                                "text": {
-                                    "en": "B"
-                                }
-                            },
-                            {
-                                "id": "3d615e09-95e5-43c3-b0b3-ae24b931908d",
-                                "selected": false,
-                                "text": {
-                                    "en": "B1"
-                                }
-                            },
-                            {
-                                "id": "b86756d5-5863-45e5-a941-5fff2124063f",
-                                "selected": false,
-                                "text": {
-                                    "en": "B2"
+                                    "en": "D1 - Awaiting Renaming"
                                 }
                             },
                             {
@@ -26053,10 +26002,38 @@
                                 }
                             },
                             {
-                                "id": "2859ac05-1b52-42f7-ab98-9397d6f9cb6d",
+                                "id": "b86756d5-5863-45e5-a941-5fff2124063f",
                                 "selected": false,
                                 "text": {
-                                    "en": "D1 - Awaiting Renaming"
+                                    "en": "B2"
+                                }
+                            },
+                            {
+                                "id": "3d615e09-95e5-43c3-b0b3-ae24b931908d",
+                                "selected": false,
+                                "text": {
+                                    "en": "B1"
+                                }
+                            },
+                            {
+                                "id": "3e1343d4-831d-4752-8498-11e8fd9235c8",
+                                "selected": false,
+                                "text": {
+                                    "en": "B"
+                                }
+                            },
+                            {
+                                "id": "a1683514-27b5-4e0e-ba05-3b1bdae84e31",
+                                "selected": false,
+                                "text": {
+                                    "en": "B+"
+                                }
+                            },
+                            {
+                                "id": "5f33353a-7b29-459e-bb23-710913be6d7d",
+                                "selected": false,
+                                "text": {
+                                    "en": "A"
                                 }
                             }
                         ]
@@ -26362,17 +26339,17 @@
                         ],
                         "options": [
                             {
-                                "id": "eefa254e-a382-476a-98fc-501dbc1357f2",
-                                "selected": false,
-                                "text": {
-                                    "en": "Local"
-                                }
-                            },
-                            {
                                 "id": "ee19888c-1243-44a2-add1-090839c03a8d",
                                 "selected": false,
                                 "text": {
                                     "en": "Major"
+                                }
+                            },
+                            {
+                                "id": "eefa254e-a382-476a-98fc-501dbc1357f2",
+                                "selected": false,
+                                "text": {
+                                    "en": "Local"
                                 }
                             }
                         ],
@@ -27456,6 +27433,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "irish_grid_tm65_",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "tm65centrepoint",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Irish Grid Reference (TM65)",
+                    "nodegroup_id": "083e226c-ca61-11ee-afca-0242ac180006",
+                    "nodeid": "ac3eb490-1682-11ef-b68e-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "date_uploaded",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
@@ -28056,10 +28056,10 @@
                         },
                         "options": [
                             {
-                                "id": "5cc97bfd-d76f-40fc-be60-fbb9dfb28fc4",
+                                "id": "dcaf8850-9cfc-44ea-9fd4-0ca419806e2b",
                                 "selected": false,
                                 "text": {
-                                    "en": "Planning Officer"
+                                    "en": "Agent"
                                 }
                             },
                             {
@@ -28070,10 +28070,10 @@
                                 }
                             },
                             {
-                                "id": "dcaf8850-9cfc-44ea-9fd4-0ca419806e2b",
+                                "id": "5cc97bfd-d76f-40fc-be60-fbb9dfb28fc4",
                                 "selected": false,
                                 "text": {
-                                    "en": "Agent"
+                                    "en": "Planning Officer"
                                 }
                             }
                         ]
@@ -28421,10 +28421,10 @@
                         },
                         "options": [
                             {
-                                "id": "f286fd93-2d86-4360-a70d-813106c9f1d8",
+                                "id": "c59740e5-1424-42a0-a7ba-fe09dfe2da65",
                                 "selected": false,
                                 "text": {
-                                    "en": "Incomplete"
+                                    "en": "Scoping Evaluation"
                                 }
                             },
                             {
@@ -28435,10 +28435,10 @@
                                 }
                             },
                             {
-                                "id": "c59740e5-1424-42a0-a7ba-fe09dfe2da65",
+                                "id": "f286fd93-2d86-4360-a70d-813106c9f1d8",
                                 "selected": false,
                                 "text": {
-                                    "en": "Scoping Evaluation"
+                                    "en": "Incomplete"
                                 }
                             }
                         ]
@@ -29064,17 +29064,10 @@
                         },
                         "options": [
                             {
-                                "id": "7d2b266f-f76d-4d25-87f5-b67ff1e1350f",
+                                "id": "4820872f-b74d-4767-984d-2874a076c4b4",
                                 "selected": false,
                                 "text": {
-                                    "en": "Assign To Both HM & HB"
-                                }
-                            },
-                            {
-                                "id": "12041c21-6f30-4772-b3dc-9a9a745a7a3f",
-                                "selected": false,
-                                "text": {
-                                    "en": "Assign To HB"
+                                    "en": "Reject"
                                 }
                             },
                             {
@@ -29085,10 +29078,17 @@
                                 }
                             },
                             {
-                                "id": "4820872f-b74d-4767-984d-2874a076c4b4",
+                                "id": "12041c21-6f30-4772-b3dc-9a9a745a7a3f",
                                 "selected": false,
                                 "text": {
-                                    "en": "Reject"
+                                    "en": "Assign To HB"
+                                }
+                            },
+                            {
+                                "id": "7d2b266f-f76d-4d25-87f5-b67ff1e1350f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Assign To Both HM & HB"
                                 }
                             }
                         ]
@@ -29838,12 +29838,7 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": {
-                "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                "notes": null,
-                "publicationid": "442d70ba-1684-11ef-b341-0242ac120006",
-                "published_time": "2024-05-20T08:38:00.709"
-            },
+            "publication": null,
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
