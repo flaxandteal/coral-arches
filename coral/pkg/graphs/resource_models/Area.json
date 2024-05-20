@@ -349,7 +349,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Geometry"
                     },
@@ -765,7 +765,7 @@
                     "instructions": {
                         "en": "National Grid references, map names, and other common location identifiers for the resource"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "National Grid References"
                     },
@@ -12746,6 +12746,34 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "geojson_node": "64be56e3-3ee5-11eb-b1f0-f875a44e0e11",
+                        "geojson_nodegroup": "64be2fdb-3ee5-11eb-9565-f875a44e0e11",
+                        "tm65_node": "4eb0578a-0c4a-11ef-8fae-0242ac170006",
+                        "tm65_nodegroup": "d17a5386-28cd-11eb-972b-f875a44e0e11",
+                        "triggering_nodegroups": [
+                            "d17a5386-28cd-11eb-972b-f875a44e0e11"
+                        ]
+                    },
+                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
+                    "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+                    "id": "17692498-c40c-42ec-bd1a-1fb992123158"
+                },
+                {
+                    "config": {
+                        "geojson_input_node": "64be56e3-3ee5-11eb-b1f0-f875a44e0e11",
+                        "geojson_input_nodegroup": "64be2fdb-3ee5-11eb-9565-f875a44e0e11",
+                        "tm65_output_node": "4eb0578a-0c4a-11ef-8fae-0242ac170006",
+                        "tm65_output_nodegroup": "d17a5386-28cd-11eb-972b-f875a44e0e11",
+                        "triggering_nodegroups": [
+                            "64be2fdb-3ee5-11eb-9565-f875a44e0e11"
+                        ]
+                    },
+                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
+                    "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+                    "id": "be35a1c5-cc94-4732-a265-6aa343ff4cae"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "f3cc1681-185b-11eb-927e-f875a44e0e11",
@@ -12764,7 +12792,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
-                    "id": "4f58253d-2bea-4360-9579-56cdcb4fcccf"
+                    "id": "efb58c51-7823-4b10-9868-e58683404a70"
                 }
             ],
             "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -20697,10 +20725,10 @@
                         },
                         "options": [
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             },
                             {
@@ -20711,10 +20739,10 @@
                                 }
                             },
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             }
                         ]
@@ -21097,10 +21125,10 @@
                         },
                         "options": [
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             },
                             {
@@ -21111,10 +21139,10 @@
                                 }
                             },
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             }
                         ]
