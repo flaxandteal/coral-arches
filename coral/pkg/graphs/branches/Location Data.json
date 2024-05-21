@@ -3611,6 +3611,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
+                    "edgeid": "668bcc26-8111-4a15-853b-230922e58b1c",
+                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "4306acc0-174b-11ef-b2a4-0242ac180002"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "b1d32058-f446-11eb-905c-a87eeabdefba",
                     "edgeid": "b1dd9c34-f446-11eb-ba7e-a87eeabdefba",
                     "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
@@ -5263,6 +5272,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "irish_grid_reference_tm65_",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "tm65centrepoint",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Irish Grid Reference (TM65)",
+                    "nodegroup_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
+                    "nodeid": "4306acc0-174b-11ef-b2a4-0242ac180002",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "localities_administrative_areas",
                     "config": {},
