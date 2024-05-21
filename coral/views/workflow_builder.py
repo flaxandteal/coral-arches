@@ -217,7 +217,6 @@ class WorkflowBuilderCardOverride(api.Card):
 
         my_tiles = []
         for nodegroup in nodegroups:
-            print('nodegroup: ', nodegroup)
             if nodegroup.parentnodegroup_id:
                 if len(list(filter(lambda tile: tile['nodegroup_id'] == nodegroup.parentnodegroup_id, my_tiles))):
                     continue
