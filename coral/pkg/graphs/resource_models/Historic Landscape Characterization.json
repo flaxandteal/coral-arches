@@ -684,21 +684,6 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
-                    "card_id": "959b6e7b-1acb-11eb-9c47-f875a44e0e11",
-                    "config": {
-                        "label": "National Grid Reference",
-                        "placeholder": "Enter the centre point map reference of the resource."
-                    },
-                    "id": "1fb9388b-2dc3-11ec-8e3f-a87eeabdefba",
-                    "label": {
-                        "en": "National Grid Reference"
-                    },
-                    "node_id": "959b6e7c-1acb-11eb-86a0-f875a44e0e11",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
-                },
-                {
                     "card_id": "02f084de-482c-11ea-822f-c4d9877d154e",
                     "config": {
                         "defaultValue": null,
