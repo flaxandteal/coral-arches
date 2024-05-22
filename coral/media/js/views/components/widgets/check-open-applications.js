@@ -334,7 +334,6 @@ define([
         },
         context: this,
         success: function (response) {
-          console.log('response: ', response);
           this.totalLicenses(response.results.hits.total.value);
         },
         error: function (response, status, error) {
