@@ -275,7 +275,7 @@ define([
     };
 
     this.init = async () => {
-      if (this.value) {
+      if (this.value()) {
         await this.checkTotalApplications(this.value());
         await this.checkOpenApplications(this.value());
       }
