@@ -1,15 +1,15 @@
 {
   "pluginid": "aa66f3d7-1bbb-407a-9447-736cb6d5203c",
   "name": "Scheduled Monument Consent",
-  "icon": "fa fa-check",
+  "icon": "fa fa-certificate",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
     "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-    "stepData": [
+    "stepConfig": [
       {
-        "name": "0b6a1f66-2064-48ba-8737-f845fb3ae6bd",
+        "name": "heritage-asset-step",
         "title": "Heritage Asset",
         "required": false,
         "layoutSections": [
@@ -49,15 +49,15 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "labels": [["Name", "Site Name"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "676d47fd-9c1c-11ea-9d73-f875a44e0e11",
                     "676d47fc-9c1c-11ea-b5b0-f875a44e0e11"
                   ],
                   "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
-                  "semanticName": "Monument Names",
-                  "labels": [["Name", "Site Name"]]
+                  "semanticName": "Monument Names"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -65,8 +65,9 @@
               },
               {
                 "parameters": {
+                  "labels": [["Heritage Asset Type", "Site Type"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "77e8f291-efdc-11eb-9441-a87eeabdefba",
                     "77e8f295-efdc-11eb-a593-a87eeabdefba",
@@ -84,8 +85,7 @@
                     "77e8f28a-efdc-11eb-9600-a87eeabdefba"
                   ],
                   "nodegroupid": "77e8f287-efdc-11eb-a790-a87eeabdefba",
-                  "semanticName": "Construction Phases",
-                  "labels": [["Heritage Asset Type", "Site Type"]]
+                  "semanticName": "Construction Phases"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -93,16 +93,16 @@
               },
               {
                 "parameters": {
+                  "labels": [["Area Name", "Townland"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba",
                     "87d3d7c5-f44f-11eb-8459-a87eeabdefba"
                   ],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
-                  "parenttileid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas",
-                  "labels": [["Area Name", "Townland"]]
+                  "parenttileid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['locationData']",
+                  "semanticName": "Localities/Administrative Areas"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -111,7 +111,7 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "3d415e98-d23b-11ee-9373-0242ac180006",
                   "semanticName": "CM References"
                 },
@@ -122,7 +122,7 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "eeec9986-d23c-11ee-9373-0242ac180006",
                   "semanticName": "Received Date"
                 },
@@ -132,12 +132,12 @@
               },
               {
                 "parameters": {
+                  "labels": [["Proposal Description", "Proposal Summary"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["346006e6-d23e-11ee-9ae7-0242ac180006"],
                   "nodegroupid": "345ffce6-d23e-11ee-9ae7-0242ac180006",
-                  "semanticName": "Proposal",
-                  "labels": [["Proposal Description", "Proposal Summary"]]
+                  "semanticName": "Proposal"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -158,7 +158,7 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "aa629840-d23e-11ee-9ae7-0242ac180006",
                   "semanticName": "Contacts"
                 },
@@ -205,18 +205,15 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['0b6a1f66-2064-48ba-8737-f845fb3ae6bd']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["49c65ece-f5af-11ee-9f07-0242ac170006"],
                   "nodegroupid": "49c65316-f5af-11ee-9f07-0242ac170006",
                   "semanticName": "Correspondence",
-                  "hiddenNodes": [
-                    "49c65ece-f5af-11ee-9f07-0242ac170006"
-                  ],
+                  "letterMetatype": "49c65b86-f5af-11ee-9f07-0242ac170006",
                   "letterTypeNode": "49c6587a-f5af-11ee-9f07-0242ac170006",
-                  "letterResourceNode": "49c65ece-f5af-11ee-9f07-0242ac170006",
-                  "letterMetatype": "49c65b86-f5af-11ee-9f07-0242ac170006"
+                  "letterResourceNode": "49c65ece-f5af-11ee-9f07-0242ac170006"
                 },
                 "tilesManaged": "many",
-                "noTileSidebar": true,
                 "componentName": "file-template",
                 "uniqueInstanceName": "letter-template"
               }
@@ -225,7 +222,16 @@
         ],
         "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "Request work or repairs to a scheduled Heritage Asset",
+      "icon": "fa fa-certificate",
+      "name": "SMC",
+      "show": true,
+      "bgColor": "#86679c",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#aa86c4"
+    }
   },
   "slug": "scheduled-monument-consent-workflow",
   "sortorder": 0
