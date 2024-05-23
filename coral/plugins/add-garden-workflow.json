@@ -1,7 +1,7 @@
 {
   "pluginid": "df0f8920-aef3-4b3e-ab3d-41b78dad7e05",
   "name": "Add Garden",
-  "icon": "fa fa-file",
+  "icon": "fa fa-tree",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
@@ -11,12 +11,13 @@
       {
         "name": "start-step",
         "title": "Start",
-        "required": false,
+        "required": true,
         "layoutSections": [
           {
             "componentConfigs": [
               {
                 "parameters": {
+                  "labels": [["SMR Number", "Historic Parks & Gardens Number"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "hiddenNodes": [
                     "325a441c-efe4-11eb-9283-a87eeabdefba",
@@ -56,10 +57,11 @@
                     "676d47fd-9c1c-11ea-9d73-f875a44e0e11"
                   ],
                   "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
-                  "semanticName": "Heritage Asset Names"
+                  "semanticName": "Heritage Asset Names",
+                  "labels": [["Name", "Site Name"]]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "4e9bd639-96b9-4add-ad74-145a4f8a8e93"
               },
               {
@@ -83,7 +85,8 @@
                     "77e8f28a-efdc-11eb-9600-a87eeabdefba"
                   ],
                   "nodegroupid": "77e8f287-efdc-11eb-a790-a87eeabdefba",
-                  "semanticName": "Construction Phases"
+                  "semanticName": "Construction Phases",
+                  "labels": [["Heritage Asset Type", "Gen Type"]]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -225,12 +228,11 @@
                   "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
-                  "fileObjectNamePrefix": "Garden files for ",
-                  "resourceModelDigitalObjectNodeGroupId": "fc6b6b0b-5118-11eb-b342-f875a44e0e11"
+                  "resourceModelDigitalObjectNodeGroupId": "b3addca4-8882-11ea-acc1-f875a44e0e11"
                 },
                 "tilesManaged": "one",
                 "componentName": "related-document-upload",
-                "uniqueInstanceName": "documentation"
+                "uniqueInstanceName": "932b065c-d631-42e5-8e41-7a155a4c4fe3"
               }
             ]
           }
@@ -263,12 +265,12 @@
     ],
     "initWorkflow": {
       "desc": "Create a new Garden",
-      "icon": "fa fa-file",
+      "icon": "fa fa-tree",
       "name": "Add Garden",
       "show": true,
-      "bgColor": "#618499",
-      "slugPrefix": "",
-      "circleColor": "#4a7994"
+      "bgColor": "#619974",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#4a946d"
     }
   },
   "slug": "add-garden-workflow",
