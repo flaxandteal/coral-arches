@@ -651,7 +651,7 @@ class CasbinPermissionFramework(PermissionFramework):
         # specific to Casbin, but at least make the mapping less ad-hoc.
         sets = [st.split(":") for st in sets]
         return {
-            ":".join(("l" if st[0] == "g2l" else "s", st[1])) for st in sets
+            ":".join(("l" if st[0] == "g2l" else "r", st[1])) for st in sets
         }
 
     def get_groups_for_object(self, perm, obj):

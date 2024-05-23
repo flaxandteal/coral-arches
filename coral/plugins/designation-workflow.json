@@ -1,12 +1,7 @@
 {
   "pluginid": "681c3218-950b-454b-aef6-409ba4625d17",
-<<<<<<< HEAD:coral/plugins/heritage-asset-update-workflow.json
-  "name": "Heritage Asset Update",
-  "icon": "fa fa-exchange",
-=======
   "name": "Heritage Asset Designation",
-  "icon": "fa fa-check",
->>>>>>> origin/dev:coral/plugins/designation-workflow.json
+  "icon": "fa fa-exchange",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
@@ -175,42 +170,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "ac212b09-d827-40bd-85de-349ee48aee99"
-<<<<<<< HEAD:coral/plugins/heritage-asset-update-workflow.json
-              },
-              {
-                "parameters": {
-                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "bef0c23a-dbc8-11ee-b0db-0242ac120006",
-                  "semanticName": "Condition Description"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "6e05d614-9ef4-428b-aa2b-7114d84a4c3f"
-              },
-              {
-                "parameters": {
-                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "f3b76392-dbc9-11ee-8835-0242ac120006",
-                  "semanticName": "Threats Description"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "3ae57a7f-4e4c-406c-8f29-f1f939cc1498"
-              },
-              {
-                "parameters": {
-                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "4c0017f0-dbcb-11ee-b0db-0242ac120006",
-                  "semanticName": "Scheduling Reason Description"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "ef9f624e-e0bc-4f60-8990-f920e36b50d4"
-=======
->>>>>>> origin/dev:coral/plugins/designation-workflow.json
               }
             ]
           }
@@ -397,10 +356,6 @@
       "circleColor": "#aa86c4"
     }
   },
-<<<<<<< HEAD:coral/plugins/heritage-asset-update-workflow.json
-  "slug": "heritage-asset-update-workflow",
-=======
   "slug": "designation-workflow",
->>>>>>> origin/dev:coral/plugins/designation-workflow.json
   "sortorder": 0
 }

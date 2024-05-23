@@ -219,7 +219,6 @@ class WorkflowBuilderCardOverride(api.Card):
 
         my_tiles = []
         for nodegroup in nodegroups:
-            print("nodegroup: ", nodegroup)
             if nodegroup.parentnodegroup_id:
                 if len(
                     list(

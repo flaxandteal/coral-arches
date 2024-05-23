@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=3, minor=3, patch=2)
+APP_VERSION = semantic_version.Version(major=3, minor=10, patch=5)
 
 GROUPINGS = {
     "groups": {
@@ -131,6 +131,10 @@ WELL_KNOWN_RESOURCE_MODELS = [
         model_name="Archive Source",
         graphid="b07cfa6f-894d-11ea-82aa-f875a44e0e11",
     ),
+    dict(
+        model_name="Enforcement",
+        graphid="8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+    )
 ]
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
@@ -284,6 +288,7 @@ if AWS_STORAGE_BUCKET_NAME and AWS_S3_ENDPOINT_URL and AWS_SECRET_ACCESS_KEY and
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {},
         },
+        'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'}
     }
 
 STATICFILES_DIRS = build_staticfiles_dirs(
