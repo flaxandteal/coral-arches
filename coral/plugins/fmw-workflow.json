@@ -1,13 +1,13 @@
 {
   "pluginid": "2d785399-83a7-4887-b73b-776f8006e7e6",
   "name": "FMW Inspection",
-  "icon": "fa fa-check",
+  "icon": "fa fa-building",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
     "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
-    "stepData": [
+    "stepConfig": [
       {
         "name": "start-step",
         "title": "Start",
@@ -237,8 +237,17 @@
         ],
         "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "Complete a FMW inspection",
+      "icon": "fa fa-building",
+      "name": "FMW Inspection",
+      "show": true,
+      "bgColor": "#86679c",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#aa86c4"
+    }
   },
-  "slug": "fmw-workflow",
+  "slug": "fmw-inspection-workflow",
   "sortorder": 0
 }
