@@ -6,9 +6,10 @@
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
-    "stepData": [
+    "graphId": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+    "stepConfig": [
       {
-        "name": "initial-step",
+        "name": "initial-step-step",
         "title": "Initial step",
         "required": true,
         "layoutSections": [
@@ -17,7 +18,6 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "",
                   "nodegroupid": "ba39c036-b551-11ee-94ee-0242ac120006",
                   "semanticName": "System Reference Numbers"
                 },
@@ -40,7 +40,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "074effd0-b5e8-11ee-8e91-0242ac120006",
                   "semanticName": "Case References"
                 },
@@ -51,7 +51,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "89bf628e-b552-11ee-805b-0242ac120006",
                   "semanticName": "Reason Description"
                 },
@@ -62,7 +62,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "f0b99550-b551-11ee-805b-0242ac120006",
                   "semanticName": "Associated Actors"
                 },
@@ -73,7 +73,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "229501c2-b552-11ee-805b-0242ac120006",
                   "semanticName": "Flagged Date"
                 },
@@ -84,7 +84,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
                   "semanticName": "Associated Resources"
                 },
@@ -106,7 +106,7 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
                 "tilesManaged": "none",
                 "componentName": "enforcement-summary-step"
@@ -116,7 +116,16 @@
         ],
         "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "Flag a resource that needs to be enforced",
+      "icon": "fa fa-asterisk",
+      "name": "Flag for Enforcement",
+      "show": true,
+      "bgColor": "#518ef0",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#3d79d9"
+    }
   },
   "slug": "flag-for-enforcement-workflow",
   "sortorder": 0

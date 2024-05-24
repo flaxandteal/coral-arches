@@ -23,14 +23,14 @@ define([
     };
 
     this.init = async () => {
-      const resources = await (
-        await window.fetch(arches.urls.root + `workflow-builder/resources`)
-      ).json();
       const workflows = await (
         await window.fetch(arches.urls.root + `workflow-builder/plugins`)
       ).json();
-      this.resources(resources.resources);
       this.workflows(workflows.workflows);
+      const resources = await (
+        await window.fetch(arches.urls.root + `workflow-builder/resources`)
+      ).json();
+      this.resources(resources.resources);
     };
 
     this.init();

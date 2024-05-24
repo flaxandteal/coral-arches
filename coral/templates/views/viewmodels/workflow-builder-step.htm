@@ -4,7 +4,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center">
       <h4 class="card-title">Step Config</h4>
       <button class="btn btn-danger" data-bind="click: () => removeStep()">
-        <span>Remove</span>
+        <span>Remove Step</span>
       </button>
     </div>
     <div>
@@ -12,32 +12,75 @@
         params="
           config: {
             label: 'Step Title',
+            placeholder: 'Please provide a step title',
           },
           value: {
             en: {
               value: title,
-              direction: 'ltr'
+              direction: ko.observable('ltr')
             }
           },
           loading: false,
           pageVm: $root
         "
       ></text-widget>
-      <div class="row widget-wrapper">
-        <div class="form-group">
-          <label
-            class="control-label widget-input-label"
-            data-bind="text: 'Unique step identifier'"
-          ></label>
-          <div class="col-xs-12">
-            <input
-              type="text"
-              data-bind="textInput: stepId, attr: {placeholder: 'Please provide a name for the workflow', disabled: true}"
-              class="form-control input-lg widget-input"
-            />
-          </div>
-        </div>
-      </div>
+      <generate-slug
+        params="
+          rawText: title,
+          slug: stepName,
+          radioLabel: 'Auto generate step slug based on the name?',
+          textLabel: 'Unique Step Slug',
+          suffix: 'step'
+        "
+      ></generate-slug>
+      <radio-boolean-widget
+        params="
+          node: {
+            config: {
+              trueLabel: 'Yes',
+              falseLabel: 'No',
+            },
+          },
+          config: {
+            label: 'Required step?',
+          },
+          value: required,
+          loading: false,
+          pageVm: $root
+        "
+      ></radio-boolean-widget>
+      <text-widget
+        params="
+          config: {
+            label: 'Information Box Heading',
+            placeholder: 'Enter text',
+          },
+          value: {
+            en: {
+              value: informationBoxHeading,
+              direction: ko.observable('ltr')
+            }
+          },
+          loading: false,
+          pageVm: $root
+        "
+      ></text-widget>
+      <text-widget
+        params="
+          config: {
+            label: 'Information Box Text',
+            placeholder: 'Enter text',
+          },
+          value: {
+            en: {
+              value: informationBoxText,
+              direction: ko.observable('ltr')
+            }
+          },
+          loading: false,
+          pageVm: $root
+        "
+      ></text-widget>
     </div>
   </div>
   <div>
