@@ -33,7 +33,7 @@
                     "instructions": {
                         "en": "(Can select multiple for languages by adding)"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Group"
                     },
@@ -100,7 +100,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Description about Group"
                     },
@@ -168,6 +168,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "59059dba-b69f-44d2-ae6c-1cbee1f222ec",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Django Group"
+                    },
+                    "nodegroup_id": "5acdfb22-1135-11ef-a3bd-0242ac170006",
+                    "sortorder": null,
+                    "visible": false
+                },
+                {
+                    "active": true,
                     "cardid": "5ea9e3d1-15c6-465c-8e66-e43dca3e3daf",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -185,7 +212,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Members"
                     },
@@ -334,6 +361,7 @@
                     "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
                     "config": {
                         "acceptedFiles": ".jpg, .png.",
+                        "defaultValue": [],
                         "label": "Image (Max 3 files)",
                         "maxFilesize": "200",
                         "rerender": true
@@ -367,6 +395,20 @@
                     "sortorder": 3,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "59059dba-b69f-44d2-ae6c-1cbee1f222ec",
+                    "config": {
+                        "label": "Django Group"
+                    },
+                    "id": "b9e9022e-48c2-4912-82c9-d1f27023d2a2",
+                    "label": {
+                        "en": "Django Group"
+                    },
+                    "node_id": "5acdfb22-1135-11ef-a3bd-0242ac170006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "96a53447-95b9-4885-9855-a82bc4b8bf04"
                 },
                 {
                     "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
@@ -666,6 +708,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+                    "edgeid": "56a90ad4-d894-4e1a-b476-747336dd752c",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMsci/O12_has_dimension",
+                    "rangenode_id": "5acdfb22-1135-11ef-a3bd-0242ac170006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "12707705-c05e-11e9-8177-a4d18cec433a",
                     "edgeid": "6b7fca08-0279-11ed-b140-0242ac180008",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -731,12 +782,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "id": "e0c6c904-5aad-44f7-a2b3-11da9a82d689"
+                    "id": "360c1edf-979b-4a1b-87b8-63b244c5ab98"
                 }
             ],
             "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
             "iconclass": "fa fa-users",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -771,6 +822,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "3b5f674f-c05e-11e9-88f2-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "5acdfb22-1135-11ef-a3bd-0242ac170006",
                     "parentnodegroup_id": null
                 },
                 {
@@ -1158,9 +1215,33 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "django_group",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "django_group",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Django Group",
+                    "nodegroup_id": "5acdfb22-1135-11ef-a3bd-0242ac170006",
+                    "nodeid": "5acdfb22-1135-11ef-a3bd-0242ac170006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E54_Dimension",
+                    "parentproperty": "http://www.ics.forth.gr/isl/CRMsci/O12_has_dimension",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "image",
                     "config": {
                         "activateMax": false,
+                        "imagesOnly": false,
                         "maxFileSize": null,
                         "maxFiles": 3
                     },
@@ -1350,8 +1431,8 @@
             "publication": {
                 "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                 "notes": null,
-                "publicationid": "869d8670-96a4-11ee-b1c3-0242ac140006",
-                "published_time": "2023-12-09T15:06:27.233"
+                "publicationid": "bcaac244-1158-11ef-a6e2-0242ac170006",
+                "published_time": "2024-05-13T18:43:49.187"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -1385,8 +1466,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "/bin/sh: 1: git: not found",
+        "git hash": "62bd9f152 2024-05-15 15:32:24 +0100",
         "os": "Linux",
-        "os version": "6.5.0-14-generic"
+        "os version": "6.5.0-28-generic"
     }
 }

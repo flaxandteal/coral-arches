@@ -2,6 +2,11 @@
 Django settings for coral project.
 """
 
+try:
+    import tomllib
+except ImportError:
+    from pip._vendor import tomli as tomllib
+
 import json
 import os
 import sys
@@ -17,7 +22,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=3, minor=10, patch=5)
+APP_VERSION = semantic_version.Version(major=4, minor=0, patch=0)
 
 GROUPINGS = {
     "groups": {
@@ -48,11 +53,6 @@ WEBPACK_LOADER = {
     },
 }
 
-DATATYPE_LOCATIONS.append('coral.datatypes')
-FUNCTION_LOCATIONS.append('coral.functions')
-ETL_MODULE_LOCATIONS.append('coral.etl_modules')
-SEARCH_COMPONENT_LOCATIONS.append('coral.search_components')
-
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
 CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
 
@@ -81,61 +81,19 @@ DATATYPE_LOCATIONS.append('coral.datatypes')
 FUNCTION_LOCATIONS.append('coral.functions')
 ETL_MODULE_LOCATIONS.append('coral.etl_modules')
 SEARCH_COMPONENT_LOCATIONS.append('coral.search_components')
-PERMISSION_FRAMEWORK_LOCATIONS.append('coral.permissions')
+PERMISSION_LOCATIONS.append('coral.permissions')
 TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'functions', 'templates'))
 TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'widgets', 'templates'))
 TEMPLATES[0]['DIRS'].insert(0, os.path.join(APP_ROOT, 'templates'))
 
 ANONYMOUS_SETS = []
 
-WELL_KNOWN_RESOURCE_MODELS = [
-    dict(
-        model_name="Person",
-        graphid="22477f01-1a44-11e9-b0a9-000d3ab1e588",
-        user_account={
-            "type": "user",
-            "lang": "en",
-            "nodegroupid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
-            "nodeid": "b1f5c336-6a0e-11ee-b748-0242ac140009",
-        },
-    ),
-    {
-        "model_name": "Group",
-        "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-        "permissions/object": {
-            "type": "@Set",
-            "lang": "en",
-            "nodegroupid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
-            "nodeid": "448bcdb8-7071-11ee-8b8c-0242ac140008",
-        },
-        "permissions/action": {
-            "type": "concept-list",
-            "lang": "en",
-            "nodegroupid": "ae2039a4-7070-11ee-bb7a-0242ac140008",
-            "nodeid": "7cb692b2-7072-11ee-bb7a-0242ac140008",
-        }
-    },
-    dict(
-        model_name="Set",
-        graphid="b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
-    ),
-    dict(
-        model_name="Logical Set",
-        graphid="5b8b4084-9687-11ee-8782-0242ac140006",
-    ),
-    dict(
-        model_name="Organization",
-        graphid="d4a88461-5463-11e9-90d9-000d3ab1e588",
-    ),
-    dict(
-        model_name="Archive Source",
-        graphid="b07cfa6f-894d-11ea-82aa-f875a44e0e11",
-    ),
-    dict(
-        model_name="Enforcement",
-        graphid="8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-    )
-]
+try:
+    with (Path(__file__).parent / "wkrm.toml").open("rb") as wkrm_f:
+        WELL_KNOWN_RESOURCE_MODELS = [model for _, model in tomllib.load(wkrm_f).items()]
+except:
+    with (Path(__file__).parent / "wkrm.toml").open("r") as wkrm_f:
+        WELL_KNOWN_RESOURCE_MODELS = [model for _, model in tomllib.load(wkrm_f).items()]
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 
@@ -267,6 +225,7 @@ MIDDLEWARE = [
     # "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
     # "silk.middleware.SilkyMiddleware",
+    "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
 ]
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")

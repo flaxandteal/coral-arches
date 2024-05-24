@@ -1,15 +1,15 @@
 {
   "pluginid": "1494a795-b77f-4881-ab03-f4e13c1582f6",
   "name": "Excavation Site Visit",
-  "icon": "fa fa-check",
+  "icon": "fa fa-arrows",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
     "graphId": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-    "stepData": [
+    "stepConfig": [
       {
-        "name": "initial-step",
+        "name": "initial-step-step",
         "title": "Initial step",
         "required": true,
         "layoutSections": [
@@ -44,7 +44,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "4f5eeb2a-993e-11ea-a2db-f875a44e0e11",
                     "4f5eeb27-993e-11ea-b9f7-f875a44e0e11"
@@ -57,10 +57,10 @@
               },
               {
                 "parameters": {
+                  "labels": [["Associated Licenses", "License Number"]],
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "879fc326-02f6-11ef-927a-0242ac150006",
-                  "labels": [["Associated Licenses", "License Number"]]
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "879fc326-02f6-11ef-927a-0242ac150006"
                 },
                 "tilesManaged": "one",
                 "componentName": "get-selected-license-details",
@@ -69,7 +69,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "2a5bc0a8-fe48-11ea-b191-f875a44e0e11",
                     "2a5bc0a6-fe48-11ea-b5a3-f875a44e0e11",
@@ -87,7 +87,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4dfe8c68-02f3-11ef-a4eb-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -97,7 +97,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["a4724977-9937-11ea-a11e-f875a44e0e11"],
                   "nodegroupid": "a472226f-9937-11ea-966a-f875a44e0e11"
                 },
@@ -108,7 +108,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "1d4ef3f4-02f4-11ef-927a-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -118,7 +118,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "3e311966-02f5-11ef-927a-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -128,7 +128,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "3c16ce1c-02f7-11ef-a4eb-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -138,7 +138,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "6c21d504-02f5-11ef-927a-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -148,7 +148,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "b119e156-02f5-11ef-927a-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -158,7 +158,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "cb473574-02f5-11ef-a4eb-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -168,7 +168,7 @@
               {
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "f655eefe-02f5-11ef-927a-0242ac150006"
                 },
                 "tilesManaged": "one",
@@ -180,7 +180,16 @@
         ],
         "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "Start a new site visit workflow for an Activity",
+      "icon": "fa fa-arrows",
+      "name": "Excavation Site Visit",
+      "show": true,
+      "bgColor": "#689480",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#79b59a"
+    }
   },
   "slug": "excavation-site-visit-workflow",
   "sortorder": 0

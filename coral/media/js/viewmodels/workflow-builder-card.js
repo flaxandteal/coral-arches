@@ -40,12 +40,14 @@ define([
     ]);
     this.selectedTileManaged = ko.observable('tile_one');
 
-    this.hiddenNodeOptions = ko.observableArray();
     this.selectedHiddenNodes = ko.observableArray();
+    this.pushBackTimeout = ko.observable();
 
     this.selectedResourceIdPath = ko.observable(0);
 
     this.configKeys = ko.observable({ placeholder: 0 });
+
+    this.cardIdx = this.parentStep.cardIdx(this.cardId);
 
     this.loadAbstractComponent = (componentData) => {
       this.isStepActive(false);
@@ -112,7 +114,15 @@ define([
     }, this);
 
     this.graphCards = ko.computed(() => {
-      return this.parentStep?.parentWorkflow?.graphCards()?.[this.graphId()] || [];
+      return (
+        this.parentStep?.parentWorkflow?.graphCards()?.[this.graphId()] || {
+          nodes: [],
+          cardwidgets: [],
+          cards: [],
+          nodegroups: [],
+          tiles: []
+        }
+      );
     }, this);
 
     this.loadComponent = () => {
@@ -135,11 +145,14 @@ define([
     };
 
     this.title = ko.computed(() => {
-      return this.nodegroupOptions()[this.selectedNodegroup()]?.text || 'New Card';
+      return (
+        `${this.cardIdx()}: ${this.nodegroupOptions()[this.selectedNodegroup()]?.text}` ||
+        'New Card'
+      );
     }, this);
 
-    this.loadComponentNodes = async () => {
-      if (!this.currentComponentData()) return;
+    this.hiddenNodeOptions = ko.computed(() => {
+      if (!this.currentComponentData()) return [];
       const cardWidgets = this.graphCards().cardwidgets.map((widget) => {
         return {
           node_id: widget.node_id,
@@ -157,15 +170,13 @@ define([
           node.nodeid !== node.nodegroup_id
         );
       });
-      this.hiddenNodeOptions(
-        nodes.map((node) => {
-          return {
-            text: node.name,
-            id: node.nodeid
-          };
-        })
-      );
-    };
+      return nodes.map((node) => {
+        return {
+          text: node.name,
+          id: node.nodeid
+        };
+      });
+    }, this);
 
     this.configureParentTile = (nodegroupId) => {
       /**
@@ -200,7 +211,6 @@ define([
       this.selectedTileManaged.subscribe((value) => {
         this.currentComponentData().tilesManaged = value?.replace('tile_', '');
         this.loadAbstractComponent(this.currentComponentData());
-        this.loadComponentNodes();
       });
 
       this.selectedNodegroup.subscribe((value) => {
@@ -215,17 +225,27 @@ define([
         this.currentComponentData(data);
         this.configureParentTile(data.parameters.nodegroupid);
         this.loadAbstractComponent(this.currentComponentData());
-        this.loadComponentNodes();
       });
 
       this.selectedHiddenNodes.subscribe((value) => {
         this.currentComponentData().parameters.hiddenNodes = value;
-        this.loadAbstractComponent(this.currentComponentData());
+        this.cardHasLoaded(false);
+        if (this.pushBackTimeout) {
+          clearTimeout(this.pushBackTimeout());
+        }
+        this.pushBackTimeout(setTimeout(() => {
+          this.loadAbstractComponent(this.currentComponentData());
+          this.cardHasLoaded(true);
+        }, 2000));
       });
     };
 
     this.removeCard = () => {
       this.parentStep.removeCardFromStep(this.cardId);
+    };
+
+    this.shiftCard = (direction) => {
+      this.parentStep.shiftCard(this.cardId, direction);
     };
 
     this.workflowResourceIdPathOptions = ko.computed(() => {
@@ -239,7 +259,7 @@ define([
       const index = this.workflowResourceIdPathOptions().findIndex((path) => {
         return (
           path.resourceIdPath?.includes(this.cardId) &&
-          path.resourceIdPath?.includes(this.parentStep.stepId)
+          path.resourceIdPath?.includes(this.parentStep.stepName())
         );
       });
       return index == 1;
@@ -307,7 +327,6 @@ define([
         this.currentComponentData(JSON.parse(JSON.stringify(this.componentData)));
       }
       this.loadComponent();
-      this.loadComponentNodes();
       this.setupSubscriptions();
       this.cardHasLoaded(true);
     };
