@@ -1,8 +1,5 @@
-from arches.app.models import models
 from django.core.management.base import BaseCommand
-from minio import Minio
 from django.conf import settings
-from django.core.files.storage import default_storage
 import boto3
 import os
 from datetime import datetime
