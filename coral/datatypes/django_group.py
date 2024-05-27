@@ -11,10 +11,10 @@ from arches.app.models.models import Widget, Node
 from arches.app.models.tile import Tile
 from django.contrib.auth.models import Group
 
-text: Widget = Widget.objects.get(name="django_group")
+text: Widget = Widget.objects.get(name="django-group")
 
 details: dict[str, str | Widget | bool | None] = {
-    "datatype": "django_group",
+    "datatype": "django-group",
     "iconclass": "fa fa-location-arrow",
     "modulename": "django_group.py",
     "classname": "DjangoGroupDataType",
