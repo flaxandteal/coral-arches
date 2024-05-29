@@ -31851,9 +31851,41 @@
                 {
                     "alias": "description_type",
                     "config": {
-                        "rdmCollection": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Threats"
+                                }
+                            },
+                            {
+                                "id": "87c40306-43a1-4522-a496-d0d773029f2f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Site Description"
+                                }
+                            },
+                            {
+                                "id": "d013a32b-e4ad-4d54-99af-bf6d716b8226",
+                                "selected": false,
+                                "text": {
+                                    "en": "Photos Description"
+                                }
+                            },
+                            {
+                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
+                                "selected": false,
+                                "text": {
+                                    "en": "Drawings Description"
+                                }
+                            }
+                        ]
                     },
-                    "datatype": "concept",
+                    "datatype": "domain-value",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
