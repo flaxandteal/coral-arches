@@ -115,7 +115,25 @@
                   "resourceinstance_id" : "d2368123-9628-49a2-b3dd-78ac6ee3e911",
                   "sortorder" : 0,
                   "tileid" : "98e7a90d-b1dc-49f6-8919-9434785e86ff"
-               }
+               },
+               {
+                  "data": {
+                    "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                      {
+                        "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                        "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                        "resourceId": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+                        "resourceXresourceId": "a2f4e55b-76a2-4855-9394-fbe1afc9b3af"
+                      }
+                    ]
+                  },
+                  "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+                  "parenttile_id": null,
+                  "provisionaledits": null,
+                  "resourceinstance_id": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+                  "sortorder": 0,
+                  "tileid": "741ded99-941c-4b6e-a44c-5380ae061233"
+                }
             ]
          }
       ]

@@ -5,6 +5,7 @@ from arches.app.utils.arches_crypto import AESCipher
 from arches.app.views.base import BaseManagerView
 from arches.app.utils.response import JSONResponse
 from arches.app.models.system_settings import settings
+from arches_orm.adapter import admin
 
 logger = logging.getLogger(__name__)
 

@@ -36,18 +36,15 @@ define([
             const userAccountNode = self.getRawNodeValue(params.data(), self.dataConfig.userAccount);
 
             if(userAccountNode){
-                console.log("USER ACCOUNT", userAccountNode);
                 self.userAccount({
                     userId: userAccountNode['userId'],
                     displayValue: userAccountNode['@display_value'],
                     tileid: self.getTileId(userAccountNode)
                 });
-                console.log(self.userAccount());
             }
 
             if(params.dataConfig.userSignupLink){
                 params.dataConfig.userSignupLink().done((link) => {
-                    console.log("Link", link);
                     self.userSignupLink(link.userSignupLink);
                 });
             }

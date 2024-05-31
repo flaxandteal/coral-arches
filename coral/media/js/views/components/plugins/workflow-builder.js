@@ -4,7 +4,7 @@ define([
   'knockout-mapping',
   'arches',
   'templates/views/components/plugins/workflow-builder.htm',
-  'plugins/knockout-select2'
+  // 'plugins/knockout-select2'
 ], function ($, ko, koMapping, arches, pageTemplate) {
   const pageViewModel = function (params) {
     this.selectedResource = ko.observable();
@@ -23,14 +23,14 @@ define([
     };
 
     this.init = async () => {
-      const resources = await (
-        await window.fetch(arches.urls.root + `workflow-builder/resources`)
-      ).json();
       const workflows = await (
         await window.fetch(arches.urls.root + `workflow-builder/plugins`)
       ).json();
-      this.resources(resources.resources);
       this.workflows(workflows.workflows);
+      const resources = await (
+        await window.fetch(arches.urls.root + `workflow-builder/resources`)
+      ).json();
+      this.resources(resources.resources);
     };
 
     this.init();

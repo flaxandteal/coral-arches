@@ -4,7 +4,7 @@ define([
   'underscore',
   'arches',
   'templates/views/components/workflows/licensing-workflow/license-cover-letter.htm',
-  'plugins/knockout-select2'
+  // 'plugins/knockout-select2'
 ], function (ko, koMapping, _, arches, licenseCoverTemplate) {
   function viewModel(params) {
     const self = this;

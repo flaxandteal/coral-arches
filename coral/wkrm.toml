@@ -2,9 +2,6 @@
 model_name = "Person"
 graphid = "22477f01-1a44-11e9-b0a9-000d3ab1e588"
 
-[Person.remapping]
-title = "name.full_name"
-
 [Group]
 model_name = "Group"
 graphid = "07883c9e-b25c-11e9-975a-a4d18cec433a"
@@ -47,10 +44,6 @@ graphid = "343cc20c-2c5a-11e8-90fa-0242ac120005"
 ["Bibliographic Source"]
 model_name = "Bibliographic Source"
 graphid = "24d7b54f-5464-11e9-a86b-000d3ab1e588"
-
-["Consultation Clone"]
-model_name = "Consultation Clone"
-graphid = "8effdca4-ffb6-482b-94b8-4d35fb5c88c5"
 
 [Consultation]
 model_name = "Consultation"
@@ -98,7 +91,7 @@ graphid = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
 
 ["Monument Revision"]
 model_name = "Monument Revision"
-graphid = "4262df46-eabf-11ed-9e22-72d420f37f11"
+graphid = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
 
 [Period]
 model_name = "Period"
@@ -107,9 +100,3 @@ graphid = "f9045867-8861-11ea-b06f-f875a44e0e11"
 [Place]
 model_name = "Place"
 graphid = "78b32d8c-b6f2-11ea-af42-f875a44e0e11"
-
-[Person.user_account]
-type = "user"
-lang = "en"
-nodegroupid = "b1f5c336-6a0e-11ee-b748-0242ac140009"
-nodeid = "b1f5c336-6a0e-11ee-b748-0242ac140009"
