@@ -143,16 +143,20 @@ class Dashboard(View):
         return [{'status': key, 'count': value} for key, value in status_counts.items()]
     
     def build_planning_resource_data(self, consultation):
-        action_status = consultation.action[0].action_status if consultation.action else None
-        date_entered = consultation.action[0].date_entered if consultation.action else None
-        hierarchy_type = consultation.hierarchy_type
 
-        deadline = None
-        days_until_deadline = 15
+        action_status = consultation.action[0].action_status if consultation.action else None
+        date_entered = consultation.consultation_dates.log_date if consultation.consultation_dates else None
+        deadline = consultation.action[0].target_date_n1 if consultation.action else None
+        hierarchy_type = consultation.hierarchy_type
+        address = consultation.location_data.addresses
+
+        address_parts = [address.street.street_value, address.town_or_city.town_or_city_value, address.postcode.postcode_value]
+        address = [part for part in address_parts if part is not None and part != 'None']
+
         if date_entered:
-            deadline = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z") + timedelta(days=days_until_deadline)
             date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
-            deadline = deadline.strftime("%d-%m-%Y")
+        if deadline:
+            deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")           
 
         resource_data = {
             'id': consultation.id,
@@ -162,6 +166,7 @@ class Dashboard(View):
             'hierarchy_type': self.convert_id_to_string(hierarchy_type),
             'date': date_entered,
             'deadline': deadline,
+            'address': address,
             'responseslug': 'assign-consultation-workflow'
         }
         return resource_data

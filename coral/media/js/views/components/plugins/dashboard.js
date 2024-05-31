@@ -75,13 +75,13 @@ define([
           if (window.innerWidth < 1000){
               this.itemsPerPage(2);
           }
-          else if (window.innerWidth < 1500){
-              this.itemsPerPage(6);
+          else if (window.innerWidth < 1400){
+              this.itemsPerPage(4);
           }
           else if (window.innerWidth < 1800){
-              this.itemsPerPage(8);
+              this.itemsPerPage(6);
           } else {
-              this.itemsPerPage(10);
+              this.itemsPerPage(8);
           }
         }
 

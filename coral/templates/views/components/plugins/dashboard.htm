@@ -18,27 +18,43 @@
     <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
         <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; padding: 2rem 5rem">  
           <!-- ko foreach: resources -->
-            <div class="card-grid-item" style="margin: 2rem">
-              <div class="panel mar-no">
+            <div class="card-grid-item" style="margin: 2rem; width:450px">
+              <div class="panel mar-no dashboard-card-panel">
                 <div class="panel-heading">
-                  <h3 id="f1-name" class="panel-title library-card-panel-title">
+                  <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold;">
                     <span data-bind="text: $data.displayname"></span>
                   </h3>
                 </div>
-                <div class="panel-body library-card-body" style="display: flex; flex-direction: column; justify-content: space-between; padding: 5px 20px">
-                  <div style="color:initial">
-                    <p>
-                      Status: <span data-bind="text: $data.status"></span>
-                    </p>
-                    <p>
-                      Hierarchy: <span data-bind="text: $data.hierarchy_type"></span>
-                    </p>
-                    <p>
-                      Deadline: <span data-bind="text: $data.deadline ?? 'Not Set'"></span>
-                    </p>
+                <div class="dashboard-card-columns">
+                  <div>
+                    <h4>Consultaiton Date</h4>
+                    <p data-bind="text: $data.date ?? 'Not Set'"></p>
+                  </div>
+                  <div>
+                    <h4>Deadline</h4>
+                    <p data-bind="text: $data.deadline ?? 'Not Set'"></p>
+                  </div>
+                  <div>
+                    <h4>Hierarchy</h4>
+                    <p data-bind="text: $data.hierarchy_type"></p>
                   </div>
                 </div>
-                <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between">
+                <div class="dashboard-card-columns-alt">
+                  <div>
+                    <h4>Description</h4> 
+                    <p data-bind="text: $data.description"></p>
+                  </div>
+                  <div>
+                    <h4>Address</h4> 
+                    <!-- ko foreach: $data.address -->
+                    <p data-bind="text: $data"></p>
+                    <!-- /ko -->
+                  </div>
+                </div>
+                <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between; margin-top:auto">
+                  <div style="height:100%; display:flex; align-items:center">
+                    <h4>Status: <span style="font-weight: initial" data-bind="text: $data.status"></span></h4>
+                  </div>
                   <div>
                     <button
                       id="f1"
