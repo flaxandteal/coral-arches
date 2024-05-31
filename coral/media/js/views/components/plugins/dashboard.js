@@ -14,6 +14,9 @@ define([
         this.total = ko.observable();
         this.itemsPerPage = ko.observable(10);
         this.currentPage = ko.observable(1);
+        this.sortBy = ko.observable('deadline');
+        this.sortOrder = ko.observable('asc');
+        this.sortOptions = ko.observableArray([]);
         this.loading = ko.observable(true);
 
         this.paginator = koMapping.fromJS({
@@ -57,7 +60,15 @@ define([
 
         const getTasks = async () => {
           try {
-            const response = await window.fetch(`${arches.urls.root}dashboard/resources?page=${this.currentPage()}&itemsPerPage=${this.itemsPerPage()}`)
+            const baseUrl = `${arches.urls.root}dashboard/resources`;
+            const params = new URLSearchParams({
+                page: this.currentPage(),
+                itemsPerPage: this.itemsPerPage(),
+                sortBy: this.sortBy(),
+                sortOrder: this.sortOrder()
+            });
+    
+            const response = await window.fetch(`${baseUrl}?${params}`);
             const data = await response.json()
 
             if(!response.ok) {
@@ -69,6 +80,7 @@ define([
             this.resources(data.paginator.response)
             this.total(data.paginator.total)
             this.counters(convertToObservableArray(data.paginator.counters))
+            this.sortOptions(data.paginator.sort_options)
             this.loading(false)
           } catch (error) {
             console.error(error)
@@ -97,6 +109,18 @@ define([
               this.itemsPerPage(8);
           }
         }
+
+        this.sortBy.subscribe(async () => {
+          if (this.sortBy()) {
+            getTasks();
+          }
+        });
+
+        this.sortOrder.subscribe(async () => {
+          if (this.sortOrder()) {
+            getTasks();
+          }
+        });
 
         window.addEventListener('resize', debounce(async () => {
             const prevItemsPerPage = this.itemsPerPage();

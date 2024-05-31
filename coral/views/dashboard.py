@@ -14,6 +14,10 @@ MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
 HIERARCHY_NODE_GROUP = '0dd6ccb8-cffe-11ee-8a4e-0242ac180006'
 PLANNING_GROUP = '74afc49c-3c68-4f6c-839a-9bc5af76596b'
+HM_GROUP = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
+HB_GROUP = '9a88b67b-cb12-4137-a100-01a977335298'
+HM_MANAGER = 'f1b1b1b1-1b1b-1b1b-1b1b-1b1b1b1b1b1b'
+HB_MANAGER = 'f2b2b2b2-2b2b-2b2b-2b2b-2b2b2b2b2b2b'
 
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
@@ -45,12 +49,17 @@ class Dashboard(View):
             
             taskResources = []
             counters = {}
+            sort_by = request.GET.get('sortBy', 'deadline')
+            sort_order = request.GET.get('sortOrder', 'asc')
+            sort_options = []
 
+            #defines the data structure dependent upon the group
             for group in userGroupIds:
-                if group == PLANNING_GROUP:
-                    planningTasks = self.get_planning_consultations(userGroupIds)
+                if group in [PLANNING_GROUP, HM_GROUP, HB_GROUP]:
+                    planningTasks = self.get_planning_consultations(userGroupIds , person_resource[0].id, sort_by, sort_order)
                     taskResources.extend(planningTasks)
                     counters = self.get_count_groups(planningTasks, ['status', 'hierarchy_type'])
+                    sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
                     break
 
             paginator = Paginator(taskResources, request.GET.get('itemsPerPage', 10))
@@ -70,22 +79,21 @@ class Dashboard(View):
                     'start_index': page_obj.start_index(),
                     'total': paginator.count,
                     'counters': counters,
+                    'sort_options': sort_options,
                     'response': list(page_obj.object_list)
                 }
             })
 
-    def get_planning_consultations(self, userGroupIds):
+    def get_planning_consultations(self, userGroupIds, userResouceId, sort_by='deadline', sort_order='asc'):
         
         
             TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
             TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
             TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
 
-            HM_GROUP = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
-            HB_GROUP = '9a88b67b-cb12-4137-a100-01a977335298'
-
             is_hm_group = HM_GROUP in userGroupIds
             is_hb_group = HB_GROUP in userGroupIds
+            is_manager = [HM_MANAGER, HB_MANAGER] in userGroupIds
 
             resources = [] 
 
@@ -98,11 +106,16 @@ class Dashboard(View):
             for consultation in planning_consultations:
                     action_status = consultation.action[0].action_status if consultation.action else None
                     action_type = consultation.action[0].action_type if consultation.action else None
+                    action_by = consultation.action[0].action_by[0].id if consultation.action and consultation.action[0].action_by else None
+
+                    is_assigned_to_user = action_by == userResouceId
 
                     conditions_for_task = (
-                        (is_hm_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                        (is_hb_group and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                        (not is_hm_group and not is_hb_group and not action_status == STATUS_CLOSED)
+                        (is_hm_group and is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                        (is_hb_group and is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                        (is_hm_group and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                        (is_hb_group and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                        (not is_hm_group and not is_hb_group)
                     )
                     if conditions_for_task:                 
                         task = self.build_planning_resource_data(consultation)
@@ -111,12 +124,12 @@ class Dashboard(View):
 
             #sort by deadline date, nulls first
             from datetime import datetime
-
-            # Convert the 'deadline' field to a date and sort
+            print('111111111', sort_order)
+            # Convert the 'deadline', 'date' field to a date and sort
             resources.sort(key=lambda x: (
-                x['deadline'] is not None, datetime.strptime(x['deadline'], '%d-%m-%Y') 
-                if x['deadline'] else None
-            ), reverse=False)
+                x[sort_by] is not None, datetime.strptime(x[sort_by], '%d-%m-%Y') 
+                if x[sort_by] else None
+            ), reverse=(sort_order == 'desc'))
 
             return resources
     

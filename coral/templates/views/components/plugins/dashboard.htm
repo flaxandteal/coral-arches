@@ -24,6 +24,29 @@
       </div>
       <!--/ko-->
     </div>
+    <div style="display:flex; margin: 1rem 5rem;">
+      Sort By:
+      <select 
+          style="text-align-last:unset; margin-left: 1rem" 
+          data-bind="
+            options: sortOptions,
+            optionsText: 'name',
+            optionsValue: 'id',
+            value: sortBy,
+          "
+      >
+      </select>
+      <select 
+          style="text-align-last:unset; margin-left: 1rem" 
+          data-bind="
+            options: [ {id: 'asc', name: 'Asc'}, {id: 'desc', name: 'Desc'} ],
+            optionsText: 'name',
+            optionsValue: 'id',
+            value: sortOrder,
+          "
+      >
+      </select>
+    </div>
     <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
         <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; padding: 2rem 5rem">  
           <!-- ko foreach: resources -->
