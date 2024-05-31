@@ -44,11 +44,13 @@ class Dashboard(View):
                         userGroupIds.append(str(group.id)) #needs to be a string and not uuid
             
             taskResources = []
+            counters = {}
 
             for group in userGroupIds:
                 if group == PLANNING_GROUP:
                     planningTasks = self.get_planning_consultations(userGroupIds)
                     taskResources.extend(planningTasks)
+                    counters = self.get_count_groups(planningTasks, ['status', 'hierarchy_type'])
                     break
 
             paginator = Paginator(taskResources, request.GET.get('itemsPerPage', 10))
@@ -67,7 +69,7 @@ class Dashboard(View):
                     'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
                     'start_index': page_obj.start_index(),
                     'total': paginator.count,
-                    'status_counts': self.get_status_count(taskResources),
+                    'counters': counters,
                     'response': list(page_obj.object_list)
                 }
             })
@@ -136,12 +138,20 @@ class Dashboard(View):
         elif id == None:
             return 'None'
         
-    def get_status_count(self, resources):
-        status_counts = defaultdict(int)
+    def get_count(self, resources, counter):
+        counts = defaultdict(int)
         for resource in resources:
-            status_counts[resource['status']] += 1
-        return [{'status': key, 'count': value} for key, value in status_counts.items()]
+            counts[resource[counter]] += 1
+        return dict(counts)
     
+    def get_count_groups(self, resources, count_groups: list):
+        counters = {}
+
+        for count in count_groups:
+            counters[count] = self.get_count(resources, count)
+        
+        return counters
+
     def build_planning_resource_data(self, consultation):
 
         action_status = consultation.action[0].action_status if consultation.action else None

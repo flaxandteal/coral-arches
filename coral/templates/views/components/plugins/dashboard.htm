@@ -7,12 +7,21 @@
     <h2>No tasks available</h2>
   <!--/ko -->
   <!--ko if: resources().length -->
-    <div style="display: flex; justify-content:space-around;">
-      <!--ko foreach: counters-->
-        <div style="text-align: center; margin: 2rem;">
-          <h2 data-bind="text: $data.status"></h2>
-          <span style="font-size: 2.5rem; font-weight: bold;" data-bind="text: $data.count"></span>
-        </div>
+    <div style="display: flex;">
+      <div class="panel dashboard-counter-card">
+        <h3>Total</h3>
+        <span style="font-size: 2rem" data-bind="text: total"></span>
+      </div>
+      <!--ko foreach: {data: counters(), as: '_counter'}-->
+      <div class="panel dashboard-counter-card">
+        <h3 data-bind="text: _counter.key"></h3>
+        <!--ko foreach: {data: _counter.value(), as: '_nestedPair'}-->
+          <div style="display: flex; justify-content: space-between; width:100%">
+            <div style="font-size:1.6rem" data-bind="text: _nestedPair.key"></div>
+            <div style="font-size:1.8rem" data-bind="text: _nestedPair.value"></div>
+          </div>
+        <!--/ko-->
+      </div>
       <!--/ko-->
     </div>
     <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">

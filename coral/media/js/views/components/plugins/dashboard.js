@@ -40,6 +40,21 @@ define([
           };
         };
 
+        //convert titles for the counters to capitalise
+        function formatCounters(key) {
+          return key
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+        }
+
+        //this converts a nested object to make it iterable in ko
+        function convertToObservableArray(obj) {
+          return ko.observableArray(Object.keys(obj).map(function(key) {
+              return {key: formatCounters(key), value: ko.observableArray(Object.entries(obj[key]).map(([k, v]) => ({key: k, value: v})))};
+          }));
+        }
+
         const getTasks = async () => {
           try {
             const response = await window.fetch(`${arches.urls.root}dashboard/resources?page=${this.currentPage()}&itemsPerPage=${this.itemsPerPage()}`)
@@ -53,9 +68,7 @@ define([
             koMapping.fromJS(data.paginator, this.paginator)
             this.resources(data.paginator.response)
             this.total(data.paginator.total)
-            const statusCounts = [{'status': 'Total', 'count': this.total}, ...data.paginator.status_counts]
-            this.counters(statusCounts)
-            console.log(this.counters())
+            this.counters(convertToObservableArray(data.paginator.counters))
             this.loading(false)
           } catch (error) {
             console.error(error)
