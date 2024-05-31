@@ -12,7 +12,6 @@ graphid = "b16832e8-dfc9-4fc8-9c07-0c0b980ed220"
 
 [Set.remapping]
 title = "title.title_text"
-members = "members"
 
 ["Logical Set"]
 model_name = "Logical Set"
@@ -45,10 +44,6 @@ graphid = "343cc20c-2c5a-11e8-90fa-0242ac120005"
 ["Bibliographic Source"]
 model_name = "Bibliographic Source"
 graphid = "24d7b54f-5464-11e9-a86b-000d3ab1e588"
-
-["Consultation Clone"]
-model_name = "Consultation Clone"
-graphid = "8effdca4-ffb6-482b-94b8-4d35fb5c88c5"
 
 [Consultation]
 model_name = "Consultation"
@@ -96,7 +91,7 @@ graphid = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
 
 ["Monument Revision"]
 model_name = "Monument Revision"
-graphid = "4262df46-eabf-11ed-9e22-72d420f37f11"
+graphid = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
 
 [Period]
 model_name = "Period"

@@ -1,6 +1,6 @@
 name: Build Arches project
 run-name: Build Arches project
-on: [push]
+on: [push, workflow_dispatch]
 env:
   ARCHES_BASE: ghcr.io/flaxandteal/arches-base:coral-7.6
   ARCHES_PROJECT: coral
