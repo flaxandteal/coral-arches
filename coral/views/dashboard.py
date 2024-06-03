@@ -14,10 +14,10 @@ MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
 HIERARCHY_NODE_GROUP = '0dd6ccb8-cffe-11ee-8a4e-0242ac180006'
 PLANNING_GROUP = '74afc49c-3c68-4f6c-839a-9bc5af76596b'
-HM_GROUP = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
-HB_GROUP = '9a88b67b-cb12-4137-a100-01a977335298'
-HM_MANAGER = 'f1b1b1b1-1b1b-1b1b-1b1b-1b1b1b1b1b1b'
-HB_MANAGER = 'f2b2b2b2-2b2b-2b2b-2b2b-2b2b2b2b2b2b'
+HM_GROUP = '29a43158-5f50-495f-869c-f651adf3ea42'
+HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
+HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
+HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
@@ -54,9 +54,9 @@ class Dashboard(View):
             sort_options = []
 
             #defines the data structure dependent upon the group
-            for group in userGroupIds:
-                if group in [PLANNING_GROUP, HM_GROUP, HB_GROUP]:
-                    planningTasks = self.get_planning_consultations(userGroupIds , person_resource[0].id, sort_by, sort_order)
+            for groupId in userGroupIds:
+                if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
+                    planningTasks = self.get_planning_consultations(groupId, person_resource[0].id, sort_by, sort_order)
                     taskResources.extend(planningTasks)
                     counters = self.get_count_groups(planningTasks, ['status', 'hierarchy_type'])
                     sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
@@ -84,16 +84,16 @@ class Dashboard(View):
                 }
             })
 
-    def get_planning_consultations(self, userGroupIds, userResouceId, sort_by='deadline', sort_order='asc'):
+    def get_planning_consultations(self, groupId, userResouceId, sort_by='deadline', sort_order='asc'):
         
         
             TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
             TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
             TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
 
-            is_hm_group = HM_GROUP in userGroupIds
-            is_hb_group = HB_GROUP in userGroupIds
-            is_manager = [HM_MANAGER, HB_MANAGER] in userGroupIds
+            is_user = groupId in [HM_GROUP, HB_GROUP] 
+            is_manager = groupId in [HM_MANAGER, HB_MANAGER] 
+            is_admin = groupId in [PLANNING_GROUP]
 
             resources = [] 
 
@@ -111,11 +111,11 @@ class Dashboard(View):
                     is_assigned_to_user = action_by == userResouceId
 
                     conditions_for_task = (
-                        (is_hm_group and is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                        (is_hb_group and is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                        (is_hm_group and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                        (is_hb_group and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                        (not is_hm_group and not is_hb_group)
+                        (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                        (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                        (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                        (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                        (is_admin)
                     )
                     if conditions_for_task:                 
                         task = self.build_planning_resource_data(consultation)
@@ -124,7 +124,7 @@ class Dashboard(View):
 
             #sort by deadline date, nulls first
             from datetime import datetime
-            print('111111111', sort_order)
+
             # Convert the 'deadline', 'date' field to a date and sort
             resources.sort(key=lambda x: (
                 x[sort_by] is not None, datetime.strptime(x[sort_by], '%d-%m-%Y') 

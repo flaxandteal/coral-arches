@@ -1,0 +1,425 @@
+{
+  "business_data": {
+    "resources": [
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "Undefined",
+              "map_popup": "Undefined",
+              "name": "Planning Team Admin"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "Planning Team Admin",
+          "principaluser_id": null,
+          "resourceinstanceid": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Planning Team Admin" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "256dbccf-2f0a-4f64-b6e8-1044e280dd0a",
+                  "resourceXresourceId": "923b7c90-26dc-4cbf-a775-58ec4c21a001"
+                }
+              ]
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+            "sortorder": 0,
+            "tileid": "176d8f64-6571-4363-bee0-c610ee162d99"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "e62562c5-5cbc-4697-a2ce-7cc6e27d4640",
+                  "resourceXresourceId": "ec00ba0f-1e69-4995-b9ad-184cbe01ece7"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+            "sortorder": 0,
+            "tileid": "e30f6ba3-b973-4f4f-aea4-3c3a6f102426"
+          },
+          {
+            "data": {
+              "448bcdb8-7071-11ee-8b8c-0242ac140008": null,
+              "7cb692b2-7072-11ee-bb7a-0242ac140008": []
+            },
+            "nodegroup_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+            "sortorder": 0,
+            "tileid": "90afacbc-3541-4e41-a628-d311f51d6ab2"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "Undefined",
+              "map_popup": "Undefined",
+              "name": "HM Planning Managers"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "HM Planning Managers",
+          "principaluser_id": null,
+          "resourceinstanceid": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "HM Planning Managers" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+                  "resourceXresourceId": "06123ce0-67e9-4427-9faa-00c41745ac08"
+                }
+              ]
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
+            "sortorder": 0,
+            "tileid": "1b7ca10a-6265-48c1-b6e5-34de31e2383c"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "c4c17a92-e784-4e5f-952a-12f614155c3c",
+                  "resourceXresourceId": "8abb08e7-d25b-43dd-973a-f8f0e851fc77"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
+            "sortorder": 0,
+            "tileid": "9c893f81-fe6a-48b2-95a1-ccbc898ee84c"
+          },
+          {
+            "data": {
+              "448bcdb8-7071-11ee-8b8c-0242ac140008": null,
+              "7cb692b2-7072-11ee-bb7a-0242ac140008": [
+                "e3a6493e-5df4-4ad4-a699-ade7ccf01917"
+              ]
+            },
+            "nodegroup_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
+            "sortorder": 0,
+            "tileid": "60e6d66c-f1ee-4a81-9afb-fd69876adc81"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "Undefined",
+              "map_popup": "Undefined",
+              "name": "HB Planning Managers"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "HB Planning Managers",
+          "principaluser_id": null,
+          "resourceinstanceid": "9a88b67b-cb12-4137-a100-01a977335298",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "c6955a22-2dcb-44a0-9beb-98e7401def17",
+                  "resourceXresourceId": "0ee0a6f6-b923-4136-8a3e-e7117d10cb02"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "9a88b67b-cb12-4137-a100-01a977335298",
+            "sortorder": 0,
+            "tileid": "cab2cd41-6086-4a3d-baaf-2e04415854e5"
+          },
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "HB Planning Managers" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+                  "resourceXresourceId": "9ad8c3d9-ce9f-41b4-a2f7-822ac3db2a1a"
+                }
+              ]
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "9a88b67b-cb12-4137-a100-01a977335298",
+            "sortorder": 0,
+            "tileid": "891766f1-7ccd-4b25-925e-880c8552d314"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "HB Planning Users"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "HB Planning Users",
+          "principaluser_id": 1,
+          "resourceinstanceid": "f240895c-edae-4b18-9c3b-875b0bf5b235",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "HB Planning Users" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "9a88b67b-cb12-4137-a100-01a977335298",
+                  "resourceXresourceId": "76fc8a3e-f9a5-4eca-892d-ee9ac5ac8771"
+                }
+              ]
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "f240895c-edae-4b18-9c3b-875b0bf5b235",
+            "sortorder": 0,
+            "tileid": "1f52dd6a-3fc1-40f1-bf2b-e42a8e4b1e50"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "c6955a22-2dcb-44a0-9beb-98e7401def17",
+                  "resourceXresourceId": "d0224f8b-e220-44fe-ba89-094153f582c1"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "f240895c-edae-4b18-9c3b-875b0bf5b235",
+            "sortorder": 0,
+            "tileid": "28343ad8-da92-45e9-9995-1139435e7e8d"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "Planning Team Super Admin"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "Planning Team Super Admin",
+          "principaluser_id": 1,
+          "resourceinstanceid": "256dbccf-2f0a-4f64-b6e8-1044e280dd0a",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": {
+                  "direction": "ltr",
+                  "value": "Planning Team Super Admin"
+                },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+                  "resourceXresourceId": "99e5bdd6-10bb-4bd3-a5b9-b8f57cf56c41"
+                }
+              ]
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "256dbccf-2f0a-4f64-b6e8-1044e280dd0a",
+            "sortorder": 0,
+            "tileid": "2fe33904-a836-4317-b889-70973a012e5b"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "HM Planning Users"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "HM Planning Users",
+          "principaluser_id": 1,
+          "resourceinstanceid": "29a43158-5f50-495f-869c-f651adf3ea42",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "HM Planning Users" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
+                  "resourceXresourceId": "8e3d3073-d69a-4005-a993-d34abc95cdf8"
+                }
+              ]
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "29a43158-5f50-495f-869c-f651adf3ea42",
+            "sortorder": 0,
+            "tileid": "a175f5c4-34b5-48d2-ba42-31c00257bb8f"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "4c55afaf-7b72-4d20-981c-9fee6fb64c2a",
+                  "resourceXresourceId": "bfbb6fb1-c943-43ec-8898-4257de158917"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "29a43158-5f50-495f-869c-f651adf3ea42",
+            "sortorder": 0,
+            "tileid": "027738a9-c933-4ce6-9fe1-56886bc03800"
+          }
+        ]
+      }
+    ]
+  }
+}

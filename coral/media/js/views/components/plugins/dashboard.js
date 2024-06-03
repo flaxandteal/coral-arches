@@ -89,10 +89,11 @@ define([
         } 
 
         this.openFlagged = (resourceId, responseSlug) => {
-            let url = arches.urls.plugin(
-              `${responseSlug}?resource-id=${resourceId}&workflow-id=6aaa72fa-ad6c-4350-bb90-ee32d034797a&workflow-step-id=7f259b0e-6ed6-484d-9d13-1381976cee9a`
-            );
-            window.location.href = url;
+          localStorage.setItem('workflow-open-mode', JSON.stringify(true));
+          let url = arches.urls.plugin(
+            `${responseSlug}?resource-id=${resourceId}`
+          );
+          window.window.location = url;
         };
 
         //reduces the number of items per page based on the window width

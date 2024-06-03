@@ -1026,7 +1026,7 @@ span.rp-tile-title {
 }
 
 .dashboard-card-columns > div > p {
-    font-size: 1.6rem;
+    font-size: 1rem;
 }
 
 .dashboard-card-columns-alt {
@@ -1044,12 +1044,12 @@ span.rp-tile-title {
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-height: 320px;
+    min-height: 220px;
 }
 
 .dashboard-counter-card {
-    width: 350px;
-    min-height: 150px;
+    width: 300px;
+    min-height: 120px;
     margin:2rem 5rem;
     padding: 0 1rem 1rem 1rem;
 }
