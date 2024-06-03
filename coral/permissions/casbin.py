@@ -158,6 +158,8 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 for perm in perms:
                     self._enforcer.add_policy(group_key, map_layer_key, str(perm))
 
+        sets = []
+
         def _fill_group(group):
             group_key = self._subj_to_str(group)
             users = []
@@ -204,8 +206,6 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 group_key = self._subj_to_str(group)
                 self._enforcer.add_named_grouping_policy("g", user_key, group_key)
                 self._enforcer.add_named_grouping_policy("g", user_key, f"dgn:{group.name}")
-
-        sets = []
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
@@ -688,7 +688,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         # specific to Casbin, but at least make the mapping less ad-hoc.
         sets = [st.split(":") for st in sets]
         return {
-            ":".join(("l" if st[0] == "g2l" else "s", st[1])) for st in sets
+            ":".join(("l" if st[0] == "g2l" else "r", st[1])) for st in sets
         }
 
     @context_free
