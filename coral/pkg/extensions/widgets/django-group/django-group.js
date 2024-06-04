@@ -4,7 +4,7 @@ define([
     'underscore', 
     'viewmodels/widget', 
     'arches', 
-    'templates/views/components/widgets/django_group.htm',
+    'templates/views/components/widgets/django-group.htm',
     'bindings/chosen'
 ], function(ko, koMapping, _, WidgetViewModel, arches, djangoGroupWidgetTemplate) {
     /**
@@ -161,7 +161,7 @@ define([
 
     };
 
-    return ko.components.register('django_group', {
+    return ko.components.register('django-group', {
         viewModel: viewModel,
         template: djangoGroupWidgetTemplate,
     });

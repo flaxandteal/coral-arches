@@ -4,9 +4,9 @@ define([
     'underscore', 
     'viewmodels/widget', 
     'arches', 
-    'templates/views/components/widgets/django-group.htm',
+    'templates/views/components/widgets/user.htm',
     'bindings/chosen'
-], function(ko, koMapping, _, WidgetViewModel, arches, djangoGroupWidgetTemplate) {
+], function(ko, koMapping, _, WidgetViewModel, arches, userWidgetTemplate) {
     /**
     * registers a text-widget component for use in forms
     * @function external:"ko.components".text-widget
@@ -161,8 +161,8 @@ define([
 
     };
 
-    return ko.components.register('django_group', {
+    return ko.components.register('user', {
         viewModel: viewModel,
-        template: djangoGroupWidgetTemplate,
+        template: userWidgetTemplate,
     });
 });

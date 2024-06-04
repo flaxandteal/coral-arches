@@ -1,7 +1,7 @@
 define([
     'knockout',
     'viewmodels/card-component',
-    'templates/views/components/cards/django_group.htm',
+    'templates/views/components/cards/django-group-card.htm',
 ], function(ko, CardViewModel, djangoGroupAccountCardTemplate) {
 
     function viewmodel(params) {
