@@ -194,7 +194,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 self._ri_to_django_groups(group)
             for group in group.django_group:
                 if list(group.user_set.all()) != users:
-                    group.user_set = users
+                    group.user_set.set(users)
                     group.save()
             return users
 
