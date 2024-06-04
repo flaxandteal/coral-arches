@@ -4,9 +4,19 @@
     <div class="card-component">
       <div style="display: flex; justify-content: space-between; align-items: center">
         <h4 class="card-title" data-bind="text: title"></h4>
-        <button class="btn btn-danger" data-bind="click: () => removeCard()">
-          <span>Remove</span>
-        </button>
+        <div style="display: flex; gap: 4px">
+          <button
+            class="btn btn-primary fa fa-arrow-up"
+            data-bind="click: () => shiftCard('up')"
+          ></button>
+          <button
+            class="btn btn-primary fa fa-arrow-down"
+            data-bind="click: () => shiftCard('down')"
+          ></button>
+          <button class="btn btn-danger" data-bind="click: () => removeCard()">
+            <span>Remove</span>
+          </button>
+        </div>
       </div>
       <domain-select-widget
         params="
@@ -90,6 +100,11 @@
           pageVm: $root
         "
       ></domain-checkbox-widget>
+      <!-- ko if: !cardHasLoaded() -->
+      <div style="text-align: center">
+        <span style="padding: 4px 8px; background: #eeeeee; border-radius: 4px">Loading...</span>
+      </div>
+      <!-- /ko -->
       <workflow-component-abstract
         params="visible: cardHasLoaded, component: workflowComponentAbstract()"
       ></workflow-component-abstract>

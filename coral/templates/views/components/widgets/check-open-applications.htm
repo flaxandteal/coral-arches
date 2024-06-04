@@ -38,12 +38,15 @@
 
         </div>
         <!-- ko if: currentState() -->
+        <div style="padding: 8px; color: white; max-width: 600px; margin-top: 8px; border-radius: 4px" data-bind="style: { background: colour() }">
+            <div data-bind="text: title()" style="font-size: 14px; font-weight: 700"></div>
+            <div data-bind="text: message()" style="font-size: 13px; font-weight: 600"></div>
+        </div>
+        <div style="padding: 8px; color: white; max-width: 600px; margin-top: 8px; border-radius: 4px; color: black; background: #ddd">
+            <div data-bind="text: totalLicensesMessage()" style="font-size: 13px; font-weight: 600"></div>
+        </div>
 
-    <div style="padding: 8px; color: white; max-width: 600px; margin-top: 8px; border-radius: 4px" data-bind="style: { background: colour() }">
-        <div data-bind="text: title()" style="font-size: 14px; font-weight: 700"></div>
-        <div data-bind="text: message()" style="font-size: 13px; font-weight: 600"></div>
-    </div>
-    <!-- /ko -->
+        <!-- /ko -->
     </div>
 
     <div class="rr-widget">

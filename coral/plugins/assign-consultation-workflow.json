@@ -1,15 +1,15 @@
 {
   "pluginid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
   "name": "Assign Consultation",
-  "icon": "fa fa-check",
+  "icon": "fa fa-file",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
     "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
-    "stepData": [
+    "stepConfig": [
       {
-        "name": "initial-step",
+        "name": "initial-step-step",
         "title": "Initial step",
         "required": true,
         "layoutSections": [
@@ -50,7 +50,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "b4974044-c768-11ee-a945-0242ac180006",
                   "semanticName": "Planning References"
                 },
@@ -61,7 +61,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
                   "semanticName": "CM References"
                 },
@@ -72,7 +72,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
                   "semanticName": "DIF Received Date"
                 },
@@ -84,7 +84,7 @@
                 "parameters": {
                   "tileid": "['initial-step']['system-reference'][0]['tileId']",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
                     "b37552be-9527-11ea-9213-f875a44e0e11"
@@ -99,7 +99,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "54de6acc-8895-11ea-9067-f875a44e0e11",
                   "semanticName": "Application Type"
                 },
@@ -110,7 +110,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "86caf026-c76c-11ee-bf7c-0242ac180006",
                   "semanticName": "Classification Type"
                 },
@@ -121,7 +121,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "73fdfe62-8895-11ea-a058-f875a44e0e11",
                   "semanticName": "Development Type"
                 },
@@ -132,7 +132,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "ecbda08c-fb2d-11ee-838d-0242ac190006",
                     "166ed240-031a-11ef-8ec2-0242ac150006",
@@ -153,7 +153,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "7224417b-893a-11ea-b383-f875a44e0e11",
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
@@ -168,7 +168,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [],
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
                   "semanticName": "Consultation Descriptions"
@@ -180,10 +180,8 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "f279c99d-887e-11ea-9dca-f875a44e0e11"
-                  ],
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
                   "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
                   "semanticName": "Proposal"
                 },
@@ -206,9 +204,9 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
@@ -230,7 +228,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "083fa088-ca61-11ee-afca-0242ac180006",
                     "083ef3fe-ca61-11ee-afca-0242ac180006",
@@ -241,7 +239,7 @@
                     "083f97a0-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Addresses"
                 },
                 "tilesManaged": "one",
@@ -251,9 +249,9 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "69500360-d7c5-11ee-a011-0242ac120006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Council"
                 },
                 "tilesManaged": "one",
@@ -263,12 +261,10 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083f0650-ca61-11ee-afca-0242ac180006"
-                  ],
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["083f0650-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
                 },
                 "tilesManaged": "one",
@@ -278,12 +274,10 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083f146a-ca61-11ee-afca-0242ac180006"
-                  ],
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
                 },
                 "tilesManaged": "one",
@@ -305,7 +299,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
                   "semanticName": "Action"
                 },
@@ -318,7 +312,16 @@
         ],
         "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "Assign a Consultation to the appropriate team",
+      "icon": "fa fa-file",
+      "name": "Planning Consultation",
+      "show": true,
+      "bgColor": "#688294",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#7195ad"
+    }
   },
   "slug": "assign-consultation-workflow",
   "sortorder": 0
