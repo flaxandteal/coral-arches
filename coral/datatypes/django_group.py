@@ -41,7 +41,7 @@ class DjangoGroupDataType(BaseDataType):
 
     def get_display_value(self, tile, node, **kwargs):
         if (group := self.get_django_group(tile, node)):
-            return django_group.name
+            return group.name
         return None
 
     def get_django_group(self, tile: Tile, node: Node) -> Group:
