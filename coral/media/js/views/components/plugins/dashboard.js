@@ -58,14 +58,15 @@ define([
           }));
         }
 
-        const getTasks = async () => {
+        const getTasks = async (update='true') => {
           try {
             const baseUrl = `${arches.urls.root}dashboard/resources`;
             const params = new URLSearchParams({
                 page: this.currentPage(),
                 itemsPerPage: this.itemsPerPage(),
                 sortBy: this.sortBy(),
-                sortOrder: this.sortOrder()
+                sortOrder: this.sortOrder(),
+                update: update
             });
     
             const response = await window.fetch(`${baseUrl}?${params}`);
@@ -129,12 +130,12 @@ define([
             if (prevItemsPerPage === this.itemsPerPage()){
               return
             }
-            await getTasks();
-        }, 500));
+            await getTasks('false');
+        }, 200));
 
         this.newPage = async (pageNumber) => {
             this.currentPage(pageNumber);
-            await getTasks();
+            await getTasks('false');
         };
 
         this.init = async () => {

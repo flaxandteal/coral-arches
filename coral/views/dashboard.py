@@ -1,14 +1,13 @@
-import uuid
 from django.views.generic import View
 from django.http import JsonResponse
 from arches_orm.models import Person, Group, Consultation
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
-from arches.app.models.tile import Tile
-from arches.app.models.resource import Resource
 from django.core.paginator import Paginator
-from datetime import datetime, timedelta
+from datetime import datetime
 from collections import defaultdict 
+from django.core.cache import cache
+import json
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -31,38 +30,55 @@ class Dashboard(View):
 
     def get(self, request):
         with admin():
-            user_id = request.user.id
-                        
+            user_id = request.user.id                     
             person_resource = Person.where(user_account = user_id)
             
             if not person_resource:
                 return JsonResponse({"error": "User not found"}, status=404)
             
-            groups = Group.all()
+            update = request.GET.get('update', 'true') == 'true'
+            cache_key = f'dashboard_{user_id}'
 
-            userGroupIds = []
-
-            for group in groups:
-                for member in group.members:
-                    if member.id == person_resource[0].id:
-                        userGroupIds.append(str(group.id)) #needs to be a string and not uuid
-            
-            taskResources = []
+            task_resources = []
             counters = {}
             sort_by = request.GET.get('sortBy', 'deadline')
             sort_order = request.GET.get('sortOrder', 'asc')
             sort_options = []
 
-            #defines the data structure dependent upon the group
-            for groupId in userGroupIds:
-                if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
-                    planningTasks = self.get_planning_consultations(groupId, person_resource[0].id, sort_by, sort_order)
-                    taskResources.extend(planningTasks)
-                    counters = self.get_count_groups(planningTasks, ['status', 'hierarchy_type'])
-                    sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
-                    break
+            if not update and cache.get(cache_key):
+                cache_data = cache.get(cache_key)
+                data = json.loads(cache_data)
+                task_resources = data['task_resources']
+                counters = data['counters']
+                sort_options = data['sort_options']
 
-            paginator = Paginator(taskResources, request.GET.get('itemsPerPage', 10))
+            else:
+            
+                groups = Group.all()
+
+                userGroupIds = []
+
+                for group in groups:
+                    for member in group.members:
+                        if member.id == person_resource[0].id:
+                            userGroupIds.append(str(group.id)) #needs to be a string and not uuid
+
+                #defines the data structure dependent upon the group
+                for groupId in userGroupIds:
+                    if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
+                        planning_tasks = self.get_planning_consultations(groupId, person_resource[0].id, sort_by, sort_order)
+                        task_resources.extend(planning_tasks)
+                        counters = self.get_count_groups(planning_tasks, ['status', 'hierarchy_type'])
+                        sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
+                        break
+                cache_data = json.dumps({
+                    'task_resources': task_resources,
+                    'counters': counters,
+                    'sort_options': sort_options
+                    })
+                cache.set(cache_key, cache_data, 60 * 15)
+
+            paginator = Paginator(task_resources, request.GET.get('itemsPerPage', 10))
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
 
@@ -155,13 +171,17 @@ class Dashboard(View):
         counts = defaultdict(int)
         for resource in resources:
             counts[resource[counter]] += 1
-        return dict(counts)
+
+        counts = {key: counts[key] for key in sorted(counts)}
+
+        return counts
     
     def get_count_groups(self, resources, count_groups: list):
         counters = {}
 
         for count in count_groups:
             counters[count] = self.get_count(resources, count)
+
         
         return counters
 
@@ -182,7 +202,7 @@ class Dashboard(View):
             deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")           
 
         resource_data = {
-            'id': consultation.id,
+            'id': str(consultation.id),
             'displayname': consultation._._name,
             'displaydescription': consultation._._description,
             'status': self.convert_id_to_string(action_status),
