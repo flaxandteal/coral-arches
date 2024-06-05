@@ -27,10 +27,11 @@ from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm, ArchesStandardPermissionFramework
-
+from arches.app.models.resource import UnindexedError
 from arches_orm.models import Person, Organization, Set, LogicalSet, Group
-from arches_orm.wrapper import ResourceWrapper
+from arches_orm.view_models import ResourceInstanceViewModel
 from arches_orm.adapter import context_free
+from arches.app.search.search_engine_factory import SearchEngineInstance as se
 
 logger = logging.getLogger(__name__)
 REMAPPINGS = {
@@ -104,7 +105,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             obj = f"g2l:{obj.id}"
         elif isinstance(obj, Graph) or isinstance(obj, GraphModel):
             obj = f"gp:{obj.pk}"
-        elif isinstance(obj, ResourceWrapper):
+        elif isinstance(obj, ResourceInstanceViewModel):
             obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
             obj = f"ri:{obj.pk}"
@@ -197,6 +198,8 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                     group.user_set.set(users)
                     group.save()
             return users
+
+        sets = []
 
         _fill_group(root_group)
 
@@ -533,7 +536,11 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         try:
             resource = Resource(resourceinstanceid=resourceid)
-            index = resource.get_index()
+            try:
+                index = resource.get_index()
+            except UnindexedError:
+                se.es.indices.refresh(index="test_resources")
+                index = resource.get_index()
             if (principal_users := index.get("_source", {}).get("permissions", {}).get("principal_user", [])):
                 if len(principal_users) >= 1 and user and user.id in principal_users:
                     if permission == "view_resourceinstance" and self.user_has_resource_model_permissions(user, ["models.read_nodegroup"], resource):
