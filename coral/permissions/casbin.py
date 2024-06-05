@@ -86,7 +86,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         elif isinstance(subj, Organization):
             subj = f"u:{subj.id}"
         elif isinstance(subj, Group):
-            subj = f"g:{subj.id}"
+            subj = f"g1:{subj.id}"
         elif isinstance(subj, str) and ":" in subj:
             return subj
         else:
@@ -165,7 +165,12 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             for member in group.members:
                 if isinstance(member, Group):
                     member_key = self._subj_to_str(member)
-                    self._enforcer.add_named_grouping_policy("g", member_key, group_key)
+                    # This is the reverse of what might be expected, as the more deeply
+                    # nested a group is, the _fewer_ permissions it has. Conversely, the
+                    # top groups gather all the permissions from the groups below them,
+                    # which fits Casbin's transitivity when top groups are _Casbin members of_
+                    # the groups below them.
+                    self._enforcer.add_named_grouping_policy("g", group_key, member_key)
                     users += _fill_group(member)
                 elif member.user_account:
                     member_key = self._subj_to_str(member)
@@ -210,7 +215,8 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
-            sets.remove(set_key)
+            if set_key in sets:
+                sets.remove(set_key)
             # We do not currently handle nesting of logical sets
             if isinstance(st, Set):
                 if st.nested_sets:
@@ -285,7 +291,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     def update_groups_for_user(self, user):
         groups = {self._subj_to_str(group) for group in user.groups.all()}
         user = self._subj_to_str(user)
-        was = set(self._enforcer.get_roles_for_user(user))
+        was = set(role for role in self._enforcer.get_roles_for_user(user) if role.startswith("dg:"))
         for group in groups - was:
             self._enforcer.add_role_for_user(user, group)
         for group in was - groups:
