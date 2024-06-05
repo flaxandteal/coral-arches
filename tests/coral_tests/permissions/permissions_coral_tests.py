@@ -15,6 +15,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import logging
+import importlib
 from pathlib import Path
 from tests import test_settings
 from tests.permissions.base_permissions_framework_test import ArchesPermissionFrameworkTestCase
@@ -50,23 +51,57 @@ class CoralCasbinPermissionTests(ArchesPermissionFrameworkTestCase):
         from coral.settings import GROUPINGS
         from coral.utils.casbin import SetApplicator
 
-        person = Person()
-        ash = person.name.append()
+        # THIS IS NOT GUARANTEED TO HAPPEN IN TIME OTHERWISE...
+        def _sync_es():
+            se.es.indices.refresh(index="test_resources")
+        def _apply_s(activity_id):
+            SetApplicator(False, True).apply_sets(activity_id)
+
+        framework = self.FRAMEWORK()
+        framework.recalculate_table()
+
+        admin = Person()
+        ash = admin.name.append()
         ash.full_name = "Ash"
-        person.user_account = self.user
-        person.save()
+        admin.user_account = self.user
+        admin.save()
+
         activity = Activity.create()
         activity.save()
 
+        resource = activity._.resource
+
+        # The user is now attached to a Person.
+        # They have not yet got any nodegroup _or_ resource instance rights.
+
+        implicit_permission = framework.user_can_read_resource(admin.user_account, str(activity.id))
+        framework.recalculate_table()
+        self.assertFalse(implicit_permission)
+
+        # We give them nodegroup rights. In the casbin context, this should make
+        # no visible difference yet, as they have no entitlement that includes this
+        # resource instance.
+
+        framework.assign_perm("view_resourceinstance", self.group, resource)
+        framework.recalculate_table()
+
+        implicit_permission = framework.user_can_read_resource(admin.user_account, str(activity.id))
+        self.assertFalse(implicit_permission)
+
+        # We put the resource (an Activity) in the Root Set.
         st = Set.find(GROUPINGS["permissions"]["root_group"])
         st.members.append(activity)
         st.save()
 
-        SetApplicator(False, True).apply_sets(activity.id)
+        # Ensure that the set membership appears in Elasticsearch.
+        _apply_s(activity.id)
 
+        # We add the Person to the Root Group.
         gp = ArchesGroup.find(GROUPINGS["groups"]["root_group"])
-        gp.members.append(person)
+        gp.members.append(admin)
         gp.save()
+
+        # We give the Root Set permissions (RW) to the Root Set member tree.
         permission = gp.permissions.append()
         permission.object = st
         PermissionType = permission.action.__collection__
@@ -74,27 +109,168 @@ class CoralCasbinPermissionTests(ArchesPermissionFrameworkTestCase):
         permission.action.append(PermissionType.Writing)
         gp.save()
 
-        # THIS IS NOT GUARANTEED TO HAPPEN IN TIME OTHERWISE...
-        se.es.indices.refresh(index="test_resources")
+        # Ensure that ES has indexed everything.
+        _sync_es()
 
-        framework = self.FRAMEWORK()
         framework.recalculate_table()
-        enforcer = framework._enforcer
-        enforcer.load_policy()
-        logging.disable(logging.NOTSET)
-        enforcer.model.logger.setLevel(logging.INFO)
-        print(enforcer.model.print_policy())
 
-        resource = activity._.resource
-        self.resource_instance_id = activity._.resource.pk
-        implicit_permission = self.framework.user_can_read_resource(self.user, str(activity.id))
-        self.framework.assign_perm("view_resourceinstance", self.group, resource)
+        # The user now has nodegroup _and_ resource instance permissions.
+        # person -> Root Group -> Root Set -> activity
+        can_access_with_view_permission = framework.user_can_read_resource(admin.user_account, activity.id)
+        self.assertTrue(can_access_with_view_permission)
+
+        # We create a nested set under the original set and a second activity.
+        subset = Set.create()
+        subactivity = Activity.create()
+        subset.members.append(subactivity)
+        subactivity.save()
+        _sync_es()
+
+        # If this set is not nested under the Root Set, the user does not yet
+        # have any permissions to its members.
+        cannot_access_if_not_nested = framework.user_can_read_resource(admin.user_account, subactivity.id)
+        self.assertFalse(cannot_access_if_not_nested)
+
+        st.nested_sets.append(subset)
+        subset.save()
+        st.save()
+        _sync_es()
+
+        _apply_s(activity.id)
+        _apply_s(subactivity.id)
+
         framework.recalculate_table()
-        can_access_with_view_permission = self.framework.user_can_read_resource(self.user, self.resource_instance_id)
-        print(implicit_permission, can_access_with_view_permission)
-        self.assertTrue(
-            implicit_permission is False and can_access_with_view_permission is True
-        )
+
+        # Once nested, they do.
+        can_access_if_nested = framework.user_can_read_resource(admin.user_account, subactivity.id)
+        self.assertTrue(can_access_if_nested)
+
+        # Add a subgroup
+        sg = ArchesGroup.create()
+        team_member = Person.create()
+        team_member.user_account = User.objects.get(username="jim")
+        team_member.save()
+        sg.members.append(team_member)
+        sg.save()
+        gp.members.append(sg)
+        gp.save()
+
+        _sync_es()
+        _apply_s(activity.id)
+        _apply_s(subactivity.id)
+
+        framework.recalculate_table()
+
+        # The team member cannot access either activity, as the permission lives in the root group.
+        cannot_access_if_not_in_root_group = framework.user_can_read_resource(team_member.user_account, activity.id)
+        self.assertFalse(cannot_access_if_not_in_root_group)
+        cannot_access_if_not_in_root_group  = framework.user_can_read_resource(team_member.user_account, subactivity.id)
+        self.assertFalse(cannot_access_if_not_in_root_group)
+
+        # Remove the primary permission
+        gp.permissions.pop()
+        gp.save()
+
+        _sync_es()
+        _apply_s(activity.id)
+        _apply_s(subactivity.id)
+
+        framework.recalculate_table()
+
+        cannot_access_if_no_permission = framework.user_can_read_resource(admin.user_account, activity.id)
+        self.assertFalse(cannot_access_if_no_permission)
+        cannot_access_if_no_permission = framework.user_can_read_resource(admin.user_account, subactivity.id)
+        self.assertFalse(cannot_access_if_no_permission)
+
+        # We give the Root Set permissions (RW) to the subgroup member tree.
+        permission = sg.permissions.append()
+        st = Set.find(GROUPINGS["permissions"]["root_group"])
+        permission.object = st
+        PermissionType = permission.action.__collection__
+        permission.action.append(PermissionType.Reading)
+        permission.action.append(PermissionType.Writing)
+        sg.save()
+
+        _apply_s(activity.id)
+        _apply_s(subactivity.id)
+
+        framework.recalculate_table()
+
+        # This should give permissions to both users to both the activity and subactivity.
+        can_access_if_subgroup_permission = framework.user_can_read_resource(admin.user_account, activity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
+        can_access_if_subgroup_permission = framework.user_can_read_resource(admin.user_account, subactivity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
+        can_access_if_subgroup_permission = framework.user_can_read_resource(team_member.user_account, activity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
+        can_access_if_subgroup_permission = framework.user_can_read_resource(team_member.user_account, subactivity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
+
+        # Remove the primary permission
+        sg.permissions.pop()
+        sg.save()
+
+        _sync_es()
+        _apply_s(activity.id)
+        _apply_s(subactivity.id)
+
+        framework.recalculate_table()
+
+        cannot_access_if_no_permission = framework.user_can_read_resource(team_member.user_account, activity.id)
+        self.assertFalse(cannot_access_if_no_permission)
+        cannot_access_if_no_permission = framework.user_can_read_resource(team_member.user_account, subactivity.id)
+        self.assertFalse(cannot_access_if_no_permission)
+
+        # Add a permission to the subset.
+        permission = sg.permissions.append()
+        # FIXME: until we can safely re-parent.
+        subset = Set.find(subset.id)
+        permission.object = subset
+        PermissionType = permission.action.__collection__
+        permission.action.append(PermissionType.Reading)
+        permission.action.append(PermissionType.Writing)
+        sg.save()
+
+        _sync_es()
+        _apply_s(activity.id)
+        _apply_s(subactivity.id)
+
+        framework.recalculate_table()
+
+        # This should give permissions to both users to only the subactivity.
+        cannot_access_if_no_permission = framework.user_can_read_resource(admin.user_account, activity.id)
+        self.assertFalse(cannot_access_if_no_permission)
+        cannot_access_if_no_permission = framework.user_can_read_resource(team_member.user_account, activity.id)
+        self.assertFalse(cannot_access_if_no_permission)
+        can_access_if_subgroup_permission = framework.user_can_read_resource(admin.user_account, subactivity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
+        can_access_if_subgroup_permission = framework.user_can_read_resource(team_member.user_account, subactivity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
+
+        # Add the original permission back, from the Root Group to the Root Set.
+        permission = gp.permissions.append()
+        st = Set.find(GROUPINGS["permissions"]["root_group"])
+        permission.object = st
+        PermissionType = permission.action.__collection__
+        permission.action.append(PermissionType.Reading)
+        permission.action.append(PermissionType.Writing)
+        gp.save()
+
+        _sync_es()
+        _apply_s(activity.id)
+        _apply_s(subactivity.id)
+
+        framework.recalculate_table()
+
+        # This should give permissions to both users to only the subactivity.
+        can_access_if_full_permission = framework.user_can_read_resource(admin.user_account, activity.id)
+        self.assertTrue(can_access_if_full_permission)
+        cannot_access_if_no_permission = framework.user_can_read_resource(team_member.user_account, activity.id)
+        self.assertFalse(cannot_access_if_no_permission)
+        can_access_if_subgroup_permission = framework.user_can_read_resource(admin.user_account, subactivity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
+        can_access_if_subgroup_permission = framework.user_can_read_resource(team_member.user_account, subactivity.id)
+        self.assertTrue(can_access_if_subgroup_permission)
 
     @classmethod
     def setUpClass(cls):
@@ -110,27 +286,21 @@ class CoralCasbinPermissionTests(ArchesPermissionFrameworkTestCase):
         management.call_command("packages", operation="import_business_data", source=str(test_models_path.parent / "business_data" / "Root Group.json"), yes=True, verbosity=0, overwrite="overwrite")
         management.call_command("packages", operation="import_business_data", source=str(test_models_path.parent / "business_data" / "Root Set.json"), yes=True, verbosity=0, overwrite="overwrite")
 
-        import coral.permissions.casbin
-        import coral.utils.casbin
         from arches_orm import wkrm
         wkrm.resource_models = {}
-        models = wkrm.get_resource_models_for_adapter()["by-class"]
+        from arches_orm import models
+        models.reload()
+
+        import coral.permissions.casbin
+        import coral.utils.casbin
+        importlib.reload(coral.permissions.casbin)
+        importlib.reload(coral.utils.casbin)
+
         cls.FRAMEWORK = coral.permissions.casbin.CasbinPermissionFramework
-        coral.permissions.casbin.Person = models["Person"]
-        coral.permissions.casbin.Organization = models["Organization"]
-        coral.permissions.casbin.Set = models["Set"]
-        coral.permissions.casbin.LogicalSet = models["LogicalSet"]
-        coral.permissions.casbin.Group = models["Group"]
-        coral.utils.casbin.Person = models["Person"]
-        coral.utils.casbin.Organization = models["Organization"]
-        coral.utils.casbin.Set = models["Set"]
-        coral.utils.casbin.LogicalSet = models["LogicalSet"]
-        coral.utils.casbin.Group = models["Group"]
 
-        Activity = models["Activity"]
-        Person = models["Person"]
-        Organization = models["Organization"]
-        Set = models["Set"]
-        LogicalSet = models["LogicalSet"]
-        ArchesGroup = models["Group"]
-
+        Activity = models.Activity
+        Person = models.Person
+        Organization = models.Organization
+        Set = models.Set
+        LogicalSet = models.LogicalSet
+        ArchesGroup = models.Group
