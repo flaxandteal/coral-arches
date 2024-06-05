@@ -18,6 +18,7 @@ define([
         this.sortOrder = ko.observable('asc');
         this.sortOptions = ko.observableArray([]);
         this.loading = ko.observable(true);
+        this.loadingCards = ko.observable(false);
 
         this.paginator = koMapping.fromJS({
             current_page: 1,
@@ -83,6 +84,7 @@ define([
             this.counters(convertToObservableArray(data.paginator.counters))
             this.sortOptions(data.paginator.sort_options)
             this.loading(false)
+            this.loadingCards(false)
           } catch (error) {
             console.error(error)
             return
@@ -114,12 +116,14 @@ define([
 
         this.sortBy.subscribe(async () => {
           if (this.sortBy()) {
+            this.loadingCards(true);
             getTasks();
           }
         });
 
         this.sortOrder.subscribe(async () => {
           if (this.sortOrder()) {
+            this.loadingCards(true);
             getTasks();
           }
         });
