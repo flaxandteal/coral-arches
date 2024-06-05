@@ -22,7 +22,7 @@ define([
     this.link = params.link;
     this.message = params.message;
     this.files = params.files;
-
+    console.log("STATE", this.state)
     this.dismiss = function (parent) {
       $.ajax({
         type: 'POST',
@@ -36,6 +36,14 @@ define([
           parent.items.remove(item);
         }
       });
+    };
+
+    this.openFlagged = (resourceId, responseSlug) => {
+      localStorage.setItem('workflow-open-mode', JSON.stringify(true));
+      let url = arches.urls.plugin(
+        `${responseSlug}?resource-id=${resourceId}`
+      );
+      window.window.location = url;
     };
 
     this.getExportFile = function () {

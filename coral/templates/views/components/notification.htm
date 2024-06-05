@@ -38,7 +38,7 @@
         </div>
         <!-- /ko -->
         <!-- /ko -->
-        <!-- ko if: state.fields_cache.notif.context.resource_instance_id -->
+        <!-- ko if: state.fields_cache.notif.context.enforcement_id -->
         <div class='entry'>
             <a data-bind="attr: { href: 'open-workflow?workflow-slug=respond-to-enforcement-workflow&resource-id=' +  state.fields_cache.notif.context.resource_instance_id }" target="_blank" style="color: steelblue">
                 <button class='btn btn-notifs-download btn-labeled btn-sm fa fa-link'>
@@ -47,9 +47,21 @@
             </a>
         </div>
         <!-- /ko -->
+        <!-- ko if: state.fields_cache.notif.context.consultation_id -->
+        <div class='entry'>
+            <a data-bind="click: () => {
+                openFlagged(state.fields_cache.notif.context.resource_instance_id, 'assign-consultation-workflow')
+              } " 
+              target="_blank" style="color: steelblue"
+            >
+                <button class='btn btn-notifs-download btn-labeled btn-sm fa fa-link'>
+                    <span data-bind="text: 'Open ' + state.fields_cache.notif.context.consultation_id"></span>
+                </button>
+            </a>
+        </div>
+        <!-- /ko -->
     </div>
 
-    <!-- ko if: !state.fields_cache.notif.context.enforcement_id -->
     <div class='entry relative'>
         <a href="javascript:void(0);" data-bind="click: function() { dismiss($parents[1]) }" class="ep-notifs-toggle ep-notifs-close">
             <div class="" data-placement="bottom" data-toggle="tooltip" data-original-title="$root.translations.dismiss">
@@ -57,7 +69,7 @@
             </div>
         </a>
     </div>
-    <!-- /ko -->
+
 
 
     {% endblock %}
