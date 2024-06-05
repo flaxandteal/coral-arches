@@ -17,7 +17,6 @@ define([
                 columns: Array(2).fill(null)
             };
 
-            console.log(params.dataConfig);
             self.dataConfig = {
                 userAccount: 'user account',
                 userSignupLink: 'user signup link'
