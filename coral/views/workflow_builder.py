@@ -78,9 +78,11 @@ class WorkflowBuilderGraphComponents(View):
                         "resourceid": "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                         "graphid": graph_id,
                         "nodegroupid": nodegroup_id,
-                        "semanticName": alias_nodes["semantic_name"]
-                        if alias_nodes.get("semantic_name")
-                        else "No semantic name",
+                        "semanticName": (
+                            alias_nodes["semantic_name"]
+                            if alias_nodes.get("semantic_name")
+                            else "No semantic name"
+                        ),
                         # "hiddenNodes": [
                         #     f"{node_id2}"
                         #     for alias2, node_id2 in alias_nodes.items()
@@ -217,9 +219,16 @@ class WorkflowBuilderCardOverride(api.Card):
 
         my_tiles = []
         for nodegroup in nodegroups:
-            print('nodegroup: ', nodegroup)
             if nodegroup.parentnodegroup_id:
-                if len(list(filter(lambda tile: tile['nodegroup_id'] == nodegroup.parentnodegroup_id, my_tiles))):
+                if len(
+                    list(
+                        filter(
+                            lambda tile: tile["nodegroup_id"]
+                            == nodegroup.parentnodegroup_id,
+                            my_tiles,
+                        )
+                    )
+                ):
                     continue
                 my_tiles.append(
                     {
@@ -228,7 +237,7 @@ class WorkflowBuilderCardOverride(api.Card):
                         "parenttile_id": None,
                         "provisionaledits": None,
                         "resourceinstance_id": uuid.uuid4(),
-                        "sortorder": 0, 
+                        "sortorder": 0,
                         "tileid": f"{nodegroup.nodegroupid}-{nodegroup.parentnodegroup_id}",
                     }
                 )
@@ -291,7 +300,7 @@ class WorkflowBuilderWorkflowPlugins(View):
 
         workflow_builder_plugins = []
         for instance in instances:
-            if "stepData" in instance.config:
+            if "stepConfig" in instance.config:
                 workflow_builder_plugins.append(instance)
 
         return JSONResponse({"workflows": workflow_builder_plugins})
@@ -344,3 +353,52 @@ class WorkflowBuilderPluginExport(View):
         response = HttpResponse(json_data, content_type="application/json")
         response["Content-Disposition"] = f"attachment; filename={filename}"
         return response
+
+
+class WorkflowBuilderUpdateInitWorkflow(View):
+    def put(self, request):
+        data = json.loads(request.body.decode("utf-8"))
+        init_data = data.get("initWorkflow")
+        show = init_data["show"]
+        workflow_id = data.get("workflowId")
+
+        plugin = models.Plugin.objects.get(pluginid=workflow_id)
+        init_workflow_plugin = models.Plugin.objects.get(slug="init-workflow")
+
+        workflows = init_workflow_plugin.config["workflows"]
+
+        init_workflow = None
+        workflow_idx = None
+        for idx, workflow in enumerate(workflows):
+            if workflow["workflowid"] == str(plugin.pluginid):
+                workflow_idx = idx
+
+        if not show and not workflow_idx:
+            return JSONResponse({"message": "No change needed"})
+
+        if not show and workflow_idx:
+            del workflows[workflow_idx]
+            init_workflow_plugin.config["workflows"] = workflows
+            init_workflow_plugin.save()
+            return JSONResponse({"message": "Removed workflow from init workflow"})
+
+        init_workflow = {
+            "workflowid": str(plugin.pluginid),
+            "slug": init_data["slugPrefix"] + plugin.slug,
+            "name": init_data["name"],
+            "icon": init_data["icon"],
+            "bgColor": init_data["bgColor"],
+            "circleColor": init_data["circleColor"],
+            "desc": init_data["desc"],
+        }
+
+        if workflow_idx:
+            workflows[workflow_idx] = init_workflow
+            init_workflow_plugin.config["workflows"] = workflows
+            init_workflow_plugin.save()
+            return JSONResponse({"message": "Updated init workflow with latest data"})
+
+        workflows.append(init_workflow)
+        init_workflow_plugin.config["workflows"] = workflows
+        init_workflow_plugin.save()
+        return JSONResponse({"message": "Workflow added to init workflow"})

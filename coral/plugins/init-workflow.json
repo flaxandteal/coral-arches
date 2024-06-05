@@ -145,7 +145,7 @@
       },
       {
         "workflowid": "2d785399-83a7-4887-b73b-776f8006e7e6",
-        "slug": "open-workflow?workflow-slug=fmw-workflow",
+        "slug": "open-workflow?workflow-slug=fmw-inspection-workflow",
         "name": "FMW Inspection",
         "icon": "fa fa-file-text",
         "bgColor": "#86679c",
@@ -178,6 +178,44 @@
         "bgColor": "#688294",
         "circleColor": "#7195ad",
         "desc": "Respond to a consultation for HB"
+      },
+      {
+        "workflowid": "df0f8920-aef3-4b3e-ab3d-41b78dad7e05",
+        "desc": "Create a new Garden",
+        "icon": "fa fa-tree",
+        "name": "Add Garden",
+        "bgColor": "#619974",
+        "slug": "open-workflow?workflow-slug=add-garden-workflow",
+        "circleColor": "#4a946d"
+      },
+      {
+        "workflowid": "df0f8920-aef3-4b3e-ab3d-41b78dad7e05",
+        "desc": "IHR",
+        "icon": "fa fa-file-text",
+        "name": "IHR",
+        "bgColor": "#978dd6",
+        "slug": "open-workflow?workflow-slug=ihr-workflow",
+        "circleColor": "#867bc9"
+      },
+      {
+        "workflowid": "753b37c2-ac8a-48e8-9828-d16a87563847",
+        "desc": "Create a new Monument",
+        "icon": "fa fa-building",
+        "name": "Add Monument",
+        "show": true,
+        "bgColor": "#619974",
+        "slug": "open-workflow?workflow-slug=add-monument-workflow",
+        "circleColor": "#4a946d"
+      },
+      {
+        "workflowid": "47fe1619-6563-4460-87a5-e8ce9548c14b",
+        "desc": "Create a new Building",
+        "icon": "fa fa-building",
+        "name": "Add Building",
+        "show": true,
+        "bgColor": "#619974",
+        "slug": "open-workflow?workflow-slug=add-building-workflow",
+        "circleColor": "#4a946d"
       }
     ],
     "show": true

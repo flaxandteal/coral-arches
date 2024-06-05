@@ -1,15 +1,15 @@
 {
   "pluginid": "e916d5ec-171a-43d3-b691-9e3d220f04ee",
   "name": "Meeting Evaluation",
-  "icon": "fa fa-check",
+  "icon": "fa fa-group",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
     "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
-    "stepData": [
+    "stepConfig": [
       {
-        "name": "ed52a55f-9085-4287-ac82-b94132d649a8",
+        "name": "start-meeting-step",
         "title": "Start Meeting",
         "required": false,
         "layoutSections": [
@@ -53,7 +53,7 @@
                 "parameters": {
                   "labels": [["Listing Query", "LQ"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4254be30-03b3-11ef-b0e2-0242ac150003",
                   "semanticName": "Listing Query"
                 },
@@ -65,7 +65,7 @@
                 "parameters": {
                   "labels": [["Monument or Area", "HB"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
                   "semanticName": "Related Monuments and Areas"
                 },
@@ -76,7 +76,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "7eb29fb6-031b-11ef-8ec2-0242ac150006",
                   "semanticName": "Existing Grade Type"
                 },
@@ -87,7 +87,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "c6cb8c66-0318-11ef-8ec2-0242ac150006",
                   "semanticName": "Evaluation Meeting Type"
                 },
@@ -98,7 +98,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "2ca5f42c-0319-11ef-8a7d-0242ac150006",
                   "semanticName": "Full Survey Requirement Type"
                 },
@@ -110,7 +110,7 @@
                 "parameters": {
                   "labels": [["Date Consulted", "Meeting Date"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "7224417b-893a-11ea-b383-f875a44e0e11",
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
@@ -129,7 +129,7 @@
                     ["Historian", "Historian Present"]
                   ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "b7304f4c-3ace-11eb-8884-f875a44e0e11",
                     "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
@@ -152,7 +152,7 @@
                 "parameters": {
                   "labels": [["Application Reason", "Reason"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
                   "semanticName": "Consultation Descriptions"
                 },
@@ -175,13 +175,13 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "083ef3fe-ca61-11ee-afca-0242ac180006",
                     "083fa088-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
                   "semanticName": "Addresses"
                 },
                 "tilesManaged": "one",
@@ -191,13 +191,13 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "083f0650-ca61-11ee-afca-0242ac180006",
                     "083f0db2-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
                 },
                 "tilesManaged": "one",
@@ -207,9 +207,9 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
                   "semanticName": "National Grid References"
                 },
                 "tilesManaged": "one",
@@ -219,10 +219,10 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
                 },
                 "tilesManaged": "one",
@@ -244,7 +244,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['ed52a55f-9085-4287-ac82-b94132d649a8']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "34959a52-03aa-11ef-948f-0242ac150003",
                   "semanticName": "Evaluation"
                 },
@@ -257,7 +257,16 @@
         ],
         "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "Start or modify a Meeting Evaluation",
+      "icon": "fa fa-group",
+      "name": "Meeting Evaluation",
+      "show": true,
+      "bgColor": "#86679c",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#aa86c4"
+    }
   },
   "slug": "meeting-evaluation-workflow",
   "sortorder": 0
