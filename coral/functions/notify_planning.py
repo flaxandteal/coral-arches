@@ -70,11 +70,13 @@ class TaskNotification(BaseFunction):
             if data[ACTION_TYPE] in [ASSIGN_HM, ASSIGN_BOTH] and data[ACTION_STATUS] == STATUS_OPEN and data[ACTION_BY] == None:
                 if existing_notification and existing_notification.context["last_notified"] == HM_MANAGERS:
                     return
+                
                 self.notify_group(HM_MANAGERS, notification)
 
             elif data[ACTION_TYPE] in [ASSIGN_HB, ASSIGN_BOTH] and data[ACTION_STATUS] == STATUS_OPEN and data[ACTION_BY] == None:
                 if existing_notification and existing_notification.context["last_notified"] == HB_MANAGERS:
                     return
+                
                 self.notify_group(HB_MANAGERS, notification)
 
             elif data[ACTION_STATUS] == STATUS_OPEN and data[ACTION_BY] != None:
@@ -83,6 +85,7 @@ class TaskNotification(BaseFunction):
 
                     if existing_notification and existing_notification.context["last_notified"] == str(selected_user.id):
                         return
+                    
                     notification.context["last_notified"] = selected_user.id
                     notification.save()
                     
