@@ -196,6 +196,26 @@
         "bgColor": "#978dd6",
         "slug": "open-workflow?workflow-slug=ihr-workflow",
         "circleColor": "#867bc9"
+      },
+      {
+        "workflowid": "753b37c2-ac8a-48e8-9828-d16a87563847",
+        "desc": "Create a new Monument",
+        "icon": "fa fa-building",
+        "name": "Add Monument",
+        "show": true,
+        "bgColor": "#619974",
+        "slug": "open-workflow?workflow-slug=add-monument-workflow",
+        "circleColor": "#4a946d"
+      },
+      {
+        "workflowid": "47fe1619-6563-4460-87a5-e8ce9548c14b",
+        "desc": "Create a new Building",
+        "icon": "fa fa-building",
+        "name": "Add Building",
+        "show": true,
+        "bgColor": "#619974",
+        "slug": "open-workflow?workflow-slug=add-building-workflow",
+        "circleColor": "#4a946d"
       }
     ],
     "show": true
