@@ -4,25 +4,6 @@ from arches.app.models.resource import Resource
 from arches_orm.models import Group, Person
 from arches_orm.adapter import admin
 from django.utils import timezone
-import logging
-
-import logging
-
-# Create a logger
-logger = logging.getLogger(__name__)
-
-# Set the log level
-logger.setLevel(logging.DEBUG)
-
-# Create a file handler
-handler = logging.FileHandler('logfile.log')
-
-# Create a logging format
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-
-# Add the handler to the logger
-logger.addHandler(handler)
 
 ACTION_NODEGROUP = "a5e15f5c-51a3-11eb-b240-f875a44e0e11"
 ACTION_STATUS = "19eef70c-69b8-11ee-8431-0242ac120002"
@@ -59,7 +40,7 @@ details = {
 class NotifyPlanning(BaseFunction):       
 
     def post_save(self, tile, request, context):
-        logger.debug("Notify Planning post_save")
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         existing_notification = models.Notification.objects.filter(
