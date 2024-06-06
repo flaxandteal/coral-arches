@@ -32,8 +32,8 @@ class UserDataType(BaseDataType):
     """DataType for a Django User."""
 
     def append_to_document(self, document, nodevalue, nodeid, tile, provisional=False):
-        document["strings"].append(
-            {"string": nodevalue, "nodegroup_id": tile.nodegroup_id}
+        document["numbers"].append(
+            {"number": nodevalue, "nodegroup_id": tile.nodegroup_id}
         )
 
     def get_search_terms(self, nodevalue, nodeid=None):

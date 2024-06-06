@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:Concept rdf:about="http://arches:8000/45d54859-bf3c-48f2-a387-55a0050ff572">
+    <skos:scopeNote xml:lang="en">{"id": "563b6a04-b639-48d8-b75b-f4f2f3648bfa", "value": "Allows executing of an object (resource/concept/etc.)"}</skos:scopeNote>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/c308faf5-04f9-45ff-b6ad-86001264918f">
+        <skos:hasTopConcept rdf:resource="http://arches:8000/809598ac-6dc5-498e-a7af-52b1381942a4"/>
+        <dcterms:title xml:lang="en">{"id": "5fd2cf18-fd76-475f-8864-ad11d2d7f3e2", "value": "Permission Types"}</dcterms:title>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/33a0218b-b1cc-42d8-9a79-31a6b2147893"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/45d54859-bf3c-48f2-a387-55a0050ff572"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/70415d03-b11b-48a6-b989-933d788ffc88"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+    <skos:prefLabel xml:lang="en">{"id": "1f5cb79d-035a-4d3e-a79b-f9c0489fd076", "value": "Executing"}</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/70415d03-b11b-48a6-b989-933d788ffc88">
+    <skos:inScheme rdf:resource="http://arches:8000/c308faf5-04f9-45ff-b6ad-86001264918f"/>
+    <skos:prefLabel xml:lang="en">{"id": "e3a6493e-5df4-4ad4-a699-ade7ccf01917", "value": "Reading"}</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">{"id": "1b5844bc-18e3-41ac-8f92-b28837fe24ec", "value": "Allows reading of an object (resource/concept/etc.)"}</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/33a0218b-b1cc-42d8-9a79-31a6b2147893">
+    <skos:scopeNote xml:lang="en">{"id": "8ee8bec1-1898-49a0-9215-cd6c11702912", "value": "Allows deleting of an object (resource/concept/etc.)"}</skos:scopeNote>
+    <skos:prefLabel xml:lang="en">{"id": "9790952e-6f1d-4938-a02c-492915950107", "value": "Deleting"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/c308faf5-04f9-45ff-b6ad-86001264918f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/809598ac-6dc5-498e-a7af-52b1381942a4">
+    <skos:prefLabel xml:lang="en">{"id": "4ccc137b-8804-4610-8378-a271fdb4385f", "value": "Writing"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/c308faf5-04f9-45ff-b6ad-86001264918f"/>
+    <skos:scopeNote xml:lang="en">{"id": "05bb38cf-378d-473e-9c15-701da731c877", "value": "Allows writing of an object (resource/concept/etc.)"}</skos:scopeNote>
+  </skos:Concept>
+</rdf:RDF>

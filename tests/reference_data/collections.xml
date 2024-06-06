@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:Collection rdf:about="http://arches:8000/cfe3d404-7461-433a-a6fd-05697d5ad0ca">
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/45d54859-bf3c-48f2-a387-55a0050ff572"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/33a0218b-b1cc-42d8-9a79-31a6b2147893"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/809598ac-6dc5-498e-a7af-52b1381942a4"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/70415d03-b11b-48a6-b989-933d788ffc88"/>
+    </skos:member>
+    <skos:prefLabel xml:lang="en">{"id": "49dc05f0-8dea-40b7-b73e-af77bcaf0b3d", "value": "Permission Type"}</skos:prefLabel>
+  </skos:Collection>
+</rdf:RDF>
