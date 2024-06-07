@@ -13,6 +13,7 @@ from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphCo
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResources
 from coral.views.monument_revision_remap import MonumentRevisionRemap
+from coral.views.dashboard import Dashboard
 from coral.views.file_template import FileTemplateView
 
 
@@ -44,6 +45,11 @@ urlpatterns = [
         WorkflowBuilderUpdateInitWorkflow.as_view(),
         name="wb_update_init_workflow",
     ),
+
+    #
+    # Dashboard
+    #
+    re_path(r"^dashboard/resources", Dashboard.as_view(), name="dashboard"),
 
     #
     # Open Workflow

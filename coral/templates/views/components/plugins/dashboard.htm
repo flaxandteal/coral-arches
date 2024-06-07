@@ -1,0 +1,138 @@
+<div style="margin: 15px; display: flex; flex-direction: column; flex-wrap: wrap; width: 100%">
+  <!--ko if: loading() -->
+    <div class='loading-mask'></div>
+  <!--/ko-->
+  <!--ko ifnot: resources().length -->
+    <h2>No tasks available</h2>
+  <!--/ko -->
+  <!--ko if: resources().length -->
+    <div style="display: flex;">
+      <div class="panel dashboard-counter-card">
+        <h4>Total</h4>
+        <span style="font-size: 1.6rem" data-bind="text: total"></span>
+      </div>
+      <!--ko foreach: {data: counters(), as: '_counter'}-->
+      <div class="panel dashboard-counter-card">
+        <h4 data-bind="text: _counter.key"></h4>
+        <!--ko foreach: {data: _counter.value(), as: '_nestedPair'}-->
+          <div style="display: flex; justify-content: space-between; width:100%">
+            <div style="font-size:1.2rem" data-bind="text: _nestedPair.key"></div>
+            <div style="font-size:1.2rem" data-bind="text: _nestedPair.value"></div>
+          </div>
+        <!--/ko-->
+      </div>
+      <!--/ko-->
+    </div>
+    <div style="display:flex; margin: 1rem 5rem; align-items: center;">
+      Sort By:
+      <select 
+          style="text-align-last:unset; margin-left: 1rem" 
+          data-bind="
+            options: sortOptions,
+            optionsText: 'name',
+            optionsValue: 'id',
+            value: sortBy,
+          "
+      >
+      </select>
+      <select 
+          style="text-align-last:unset; margin-left: 1rem" 
+          data-bind="
+            options: [ {id: 'asc', name: 'Asc'}, {id: 'desc', name: 'Desc'} ],
+            optionsText: 'name',
+            optionsValue: 'id',
+            value: sortOrder,
+          "
+      >
+      </select>
+    </div>
+    <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
+        <!--ko if: loadingCards() -->
+          <div class='branch-list-loading-mask'></div>
+        <!--/ko-->
+        <!--ko if: !loadingCards()-->
+          <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; padding: 0 5rem">  
+            <!-- ko foreach: resources -->
+              <div class="card-grid-item" style="margin: 2rem; width:375px">
+                <div class="panel mar-no dashboard-card-panel">
+                  <div class="panel-heading" style="height: 38px">
+                    <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
+                      <span data-bind="text: $data.displayname"></span>
+                    </h3>
+                  </div>
+                  <div class="dashboard-card-columns">
+                    <div>
+                      <h5>Consultaiton Date</h5>
+                      <p data-bind="text: $data.date ?? 'Not Set'"></p>
+                    </div>
+                    <div>
+                      <h5>Deadline</h5>
+                      <p data-bind="text: $data.deadline ?? 'Not Set'"></p>
+                    </div>
+                    <div>
+                      <h5>Hierarchy</h5>
+                      <p data-bind="text: $data.hierarchy_type"></p>
+                    </div>
+                  </div>
+                  <div class="dashboard-card-columns-alt">
+                    <div style="max-height: 80px">
+                      <h5>Description</h5> 
+                      <div style="max-height: 50px; overflow: auto">
+                        <p style="font-size: 1rem" data-bind="text: $data.displaydescription"></p>
+                      </div>
+                      
+                    </div>
+                    <div>
+                      <h5>Address</h5> 
+                      <!-- ko foreach: $data.address -->
+                      <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+                      <!-- /ko -->
+                    </div>
+                  </div>
+                  <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between; margin-top:auto">
+                    <div style="height:100%; display:flex; align-items:center">
+                      <h5>Status: <span style="font-weight: initial" data-bind="text: $data.status"></span></h5>
+                    </div>
+                    <div>
+                      <button
+                        id="f1"
+                        class="add-function-button btn btn-primary btn-labeled fa fa-link"
+                        data-bind="click: () => {
+                          $parent.openFlagged($data.id, $data.responseslug)
+                        } "
+                      >
+                        <span>Open</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /ko -->
+          </div>
+        <!--/ko-->
+    </div>
+  <!--/ko-->
+  <!--ko if: resources().length -->
+    <div id="paginator" data-bind="with: paginator" style="position: absolute; bottom: 0px; width: 100%">
+      <nav class="text-center" aria-label="paginator">
+          <ul class="pagination" role="menubar">
+              <li><a data-bind="css: {'disabled': !has_previous()}, onEnterkeyClick, click: $parent.newPage.bind($parent, previous_page_number()), 
+                  attr: {'aria-label': $root.translations.previousPage, 'aria-disabled': !has_previous(), 'role': 'menuitem'}" href="#">«</a></li>
+              <!-- ko foreach: { data: pages, as: 'page' } -->
+                  <!-- ko if: page -->
+                  <li class="page" data-bind="click: $parents[1].newPage.bind($parents[1]), css: {'current active': (page == $parent.current_page())}">
+                      <a href="#" data-bind="text: page, attr:{'data-page':page, 'aria-label': $root.translations.page + ' ' + page, 
+                      'role': 'menuitem', 'aria-posinet': page}"
+                  ></a></li>
+                  <!-- /ko -->
+                  <!-- ko ifnot: page -->
+                  <li class="disabled"><a href="#" data-bind="attr: {'aria-label': $root.translations.morePages, 'aria-disabled': true}">...</a></li>
+                  <!-- /ko -->
+              <!-- /ko -->
+              <li><a data-bind="css: { 'disabled': !has_next()}, onEnterkeyClick, click: $parent.newPage.bind($parent, next_page_number()),
+                  attr: {'aria-label': $root.translations.nextPage, 'aria-disabled': !has_next(), 'role': 'menuitem'}" href="#">»</a></li>
+          </ul>
+      </nav>
+    </div>
+  <!-- /ko -->
+</div>
