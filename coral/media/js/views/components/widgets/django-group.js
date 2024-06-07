@@ -161,7 +161,7 @@ define([
 
     };
 
-    return ko.components.register('django_group', {
+    return ko.components.register('django-group', {
         viewModel: viewModel,
         template: djangoGroupWidgetTemplate,
     });
