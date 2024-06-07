@@ -3642,15 +3642,6 @@
                 {
                     "description": null,
                     "domainnode_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
-                    "edgeid": "668bcc26-8111-4a15-853b-230922e58b1c",
-                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "4306acc0-174b-11ef-b2a4-0242ac180002"
-                },
-                {               
-                    "description": null,
-                    "domainnode_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
                     "edgeid": "6448197d-484e-4c95-9a48-eecd4171cc47",
                     "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
                     "name": null,
@@ -4331,6 +4322,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "b1d2e18f-f446-11eb-aa7c-a87eeabdefba"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
+                    "edgeid": "b1ddc60b-f446-11eb-bfa1-a87eeabdefba",
+                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "b1d30c03-f446-11eb-bbcc-a87eeabdefba"
                 },
                 {
                     "description": null,
@@ -7172,6 +7172,26 @@
                     "nodeid": "b1d30c02-f446-11eb-991a-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "national_grid_reference",
+                    "config": {},
+                    "datatype": "bngcentrepoint",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "NGR",
+                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "National Grid Reference",
+                    "nodegroup_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
+                    "nodeid": "b1d30c03-f446-11eb-bbcc-a87eeabdefba",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "sortorder": 0
                 },
                 {
