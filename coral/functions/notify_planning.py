@@ -1,7 +1,6 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.resource import Resource
-from arches_orm.models import Group, Person
 from arches_orm.adapter import admin
 from django.utils import timezone
 
@@ -40,6 +39,7 @@ details = {
 class NotifyPlanning(BaseFunction):       
 
     def post_save(self, tile, request, context):
+        from arches_orm.models import Person
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
@@ -101,6 +101,8 @@ class NotifyPlanning(BaseFunction):
                 self.notify_group(PLANNING_ADMIN, notification)
 
     def notify_group(self, group_id, notification):
+        from arches_orm.models import Group, Person
+        
         with admin():
             group = Group.find(group_id)
             persons = [Person.find(member.id) for member in group.members]
