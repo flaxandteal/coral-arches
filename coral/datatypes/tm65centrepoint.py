@@ -20,7 +20,6 @@ details = {
 
 class TM65CentreDataType(BaseDataType):
     def validate(self, value, row_number=None, source=None, node=None, nodeid=None, strict=False, request=None):
-        print("VALIDATION FOR TM65")
         errors = []
         gridSquareArray = [
             "A",
@@ -53,16 +52,12 @@ class TM65CentreDataType(BaseDataType):
             # CS - Validation for datatype.  Replicates functionality in widget which will be removed once datatype validation is fixed.
             firstCharacter = value[0:1]
             numberElement = value[1:]
-            print(firstCharacter, numberElement)
             firstCharacter in gridSquareArray
-            print(firstCharacter in gridSquareArray)
             isinstance(int(numberElement), int)
-            print(isinstance(int(numberElement), int))
             len(value) == 11
-        except Exception:
-            print("EXEPTIONAL")
+        except Exception as e:
+            print(e)
             errors.append({"type": "ERROR", "message": "Issue with input data"})
-        print("ERRORS FROM VALIDATION", errors)
         return errors
 
     def append_to_document(self, document, nodevalue, nodeid, tile, provisional=False):

@@ -37,7 +37,6 @@ define([
         var fullNumber = 5;
         while (numberIn.length < fullNumber) {
           numberIn = numberIn + '0';
-          console.log(numberIn);
         }
         return numberIn;
       };
@@ -282,7 +281,6 @@ define([
               this.value(pre);
               this.errorMessage('');
               this.messageVisible(false);
-              console.log(pre);
               return pre;
             } else {
               this.value('');

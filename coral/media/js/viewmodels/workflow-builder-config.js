@@ -4,55 +4,50 @@ define([
   'knockout',
   'knockout-mapping',
   'arches',
-  'templates/views/viewmodels/workflow-builder-config.htm'
+  'templates/views/viewmodels/workflow-builder-config.htm',
+  'bindings/color-picker',
+  'views/components/icon-selector',
+  'viewmodels/generate-slug'
 ], function ($, _, ko, koMapping, arches, template) {
   const WorkflowBuilderConfig = function (params) {
     _.extend(this, params);
 
-    this.workflowName = params?.workflowName || '';
-    this.showWorkflowInSidebar = params?.showWorkflowInSidebar || false;
-    this.workflowSlug = params?.workflowSlug || '';
-    this.autoGenerateSlug = ko.observable(true);
+    this.workflowName = ko.observable(params?.workflowName || 'Basic');
+    this.workflowSlug = ko.observable(params?.workflowSlug);
+    this.showOnSidebar = ko.observable(params?.showOnSidebar || false);
 
-    this.setShowWorkflowInSidebar = (show) => {
-      this.showWorkflowInSidebar(show);
-    };
+    this.showOnInitWorkflow = ko.observable(params?.initWorkflow?.show || false);
+    this.initWorkflowName = ko.observable(params?.initWorkflow?.name || this.workflowName());
+    this.initDescription = ko.observable(params?.initWorkflow?.desc || '');
+    this.initIcon = ko.observable(params?.initWorkflow?.icon || 'fa fa-file-text');
+    this.initBackgroundColour = ko.observable(params?.initWorkflow?.bgColor || '#617099');
+    this.initCircleColour = ko.observable(params?.initWorkflow?.circleColor || '#4a5e94');
+    this.initSlugPrefix = ko.observable(params?.initWorkflow?.slugPrefix || '');
 
-    this.setAutoGenerateSlug = (show) => {
-      this.autoGenerateSlug(show);
-      if (show) {
-        this.workflowSlug(this.createSlug());
-      }
-    };
+    this.iconData = ko.observableArray(params?.iconData || []);
+    this.iconFilter = ko.observable('');
 
-    this.workflowName.subscribe((value) => {
-      if (this.autoGenerateSlug()) {
-        this.workflowSlug(this.createSlug());
-      }
+    this.iconList = ko.computed(() => {
+      return _.filter(this.iconData(), (icon) => {
+        return icon.name.indexOf(this.iconFilter()) >= 0;
+      });
     });
 
-    this.workflowSlug.subscribe(() => {
-      this.autoGenerateSlug(this.isAutoGenerateSlugActive());
-    });
-
-    this.isAutoGenerateSlugActive = () => {
-      return this.workflowSlug() === this.createSlug();
+    this.getInitWorkflowConfig = () => {
+      return {
+        show: this.showOnInitWorkflow(),
+        name: this.initWorkflowName(),
+        desc: this.initDescription(),
+        icon: this.initIcon(),
+        bgColor: this.initBackgroundColour(),
+        circleColor: this.initCircleColour(),
+        slugPrefix: this.initSlugPrefix()
+      };
     };
-
-    this.createSlug = () => {
-      return this.workflowName().toLowerCase().split(' ').join('-') + '-workflow';
-    };
-
-    this.init = () => {
-      this.autoGenerateSlug(this.isAutoGenerateSlugActive());
-    };
-
-    this.init();
   };
 
   ko.components.register('workflow-builder-config', {
-    template: template,
-    viewModel: WorkflowBuilderConfig
+    template: template
   });
 
   return WorkflowBuilderConfig;

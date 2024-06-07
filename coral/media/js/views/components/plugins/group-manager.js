@@ -11,7 +11,7 @@ define([
     'utils/ontology',
     'templates/views/components/plugins/group-manager.htm',
     'views/components/plugins/group-manager-graph',
-    'plugins/knockout-select2',
+    // 'plugins/knockout-select2',
     'bindings/datepicker',
     'bindings/datatable'
 ], function($, _, Backbone, ko, koMapping, arches, AlertViewModel, ResourceInstanceSelect, RelatedResourcesNodeList, ontologyUtils, groupManagerTemplate) {

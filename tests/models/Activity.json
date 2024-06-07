@@ -1,0 +1,313 @@
+{
+    "graph": [
+        {
+            "author": "Heavily reduced from Phil Carlisle's original",
+            "cards": [
+                {
+                    "active": true,
+                    "cardid": "be3831a4-813e-11e9-9e2c-80000b44d1d9",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Record Status"
+                    },
+                    "nodegroup_id": "be3831a2-813e-11e9-a6d8-80000b44d1d9",
+                    "sortorder": 2,
+                    "visible": true
+                }
+            ],
+            "cards_x_nodes_x_widgets": [
+            ],
+            "color": "rgba(204,112,109,1)",
+            "config": {
+                "basemap": "streets",
+                "bearing": 0,
+                "centerX": -1.5983286851933372,
+                "centerY": 53.155430248627454,
+                "featureColor": "rgba(0,41,255,1)",
+                "featureEditingDisabled": true,
+                "featureLineWidth": 1,
+                "featurePointSize": 3,
+                "geocodePlaceholder": "Search",
+                "geocodeProvider": "10000000-0000-0000-0000-010000000000",
+                "geocoderVisible": true,
+                "geometryTypes": [
+                    {
+                        "id": "Point",
+                        "text": "Point"
+                    },
+                    {
+                        "id": "Line",
+                        "text": "Line"
+                    },
+                    {
+                        "id": "Polygon",
+                        "text": "Polygon"
+                    }
+                ],
+                "mapControlsHidden": false,
+                "maxZoom": 20,
+                "minZoom": 0,
+                "overlayConfigs": [],
+                "overlayOpacity": 0,
+                "pitch": 0,
+                "zoom": "5"
+            },
+            "deploymentdate": null,
+            "deploymentfile": null,
+            "description": {
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of monuments or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+            },
+            "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "b9e0705b-5463-11e9-9368-000d3ab1e588",
+                    "edgeid": "2a5c35e6-fe48-11ea-8461-f875a44e0e11",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P9i_forms_part_of",
+                    "rangenode_id": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "be3831a2-813e-11e9-a6d8-80000b44d1d9",
+                    "edgeid": "be3858b0-813e-11e9-84f2-80000b44d1d9",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P141_assigned",
+                    "rangenode_id": "be3831a5-813e-11e9-9a94-80000b44d1d9"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "b9e0705b-5463-11e9-9368-000d3ab1e588",
+                    "edgeid": "be3858b1-813e-11e9-938b-80000b44d1d9",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
+                    "rangenode_id": "be3831a2-813e-11e9-a6d8-80000b44d1d9"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                    "edgeid": "4c200659-e258-469d-bcae-b1c5661a40f7",
+                    "graph_id": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                    "name": null,
+                    "rangenode_id": "9f326ff8-78b4-48f7-89a0-ae9f5ad99b5e"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                    "edgeid": "2a5c0ee4-fe48-11ea-a0d0-f875a44e0e11",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "rangenode_id": "2a5b99ac-fe48-11ea-a4f6-f875a44e0e11"
+                }
+            ],
+            "functions_x_graphs": [
+            ],
+            "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+            "iconclass": "fa fa-cogs",
+            "is_editable": false,
+            "isresource": true,
+            "jsonldcontext": null,
+            "name": {
+                "en": "Activity"
+            },
+            "nodegroups": [
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "be3831a2-813e-11e9-a6d8-80000b44d1d9",
+                    "parentnodegroup_id": null
+                }
+            ],
+            "nodes": [
+                {
+                    "alias": "associated_actors",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actors",
+                    "nodegroup_id": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                    "nodeid": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9i_forms_part_of",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "associated_actor",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Associated Actor",
+                    "nodegroup_id": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                    "nodeid": "2a5b99ac-fe48-11ea-a4f6-f875a44e0e11",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "actor_name",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "ActorName",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Actor Name",
+                    "nodegroup_id": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                    "nodeid": "9f326ff8-78b4-48f7-89a0-ae9f5ad99b5e",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "activity",
+                    "config": {
+                        "fillColor": "rgba(233,112,111,0.8)"
+                    },
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": true,
+                    "name": "Activity",
+                    "nodegroup_id": null,
+                    "nodeid": "b9e0705b-5463-11e9-9368-000d3ab1e588",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+                    "parentproperty": "",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "record_status_assignment",
+                    "config": {},
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": "",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Record_Status_Assignment",
+                    "nodegroup_id": "be3831a2-813e-11e9-a6d8-80000b44d1d9",
+                    "nodeid": "be3831a2-813e-11e9-a6d8-80000b44d1d9",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "record_status",
+                    "config": {
+                        "rdmCollection": "7849cd3c-3f0d-454d-aaea-db9164629641"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "Rec_Status",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Record Status",
+                    "nodegroup_id": "be3831a2-813e-11e9-a6d8-80000b44d1d9",
+                    "nodeid": "be3831a5-813e-11e9-9a94-80000b44d1d9",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P141_assigned",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                }
+            ],
+            "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+            "publication": {
+                "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                "notes": null,
+                "publicationid": "61ca3cc8-6e8e-11ee-98c3-0242ac120007",
+                "published_time": "2023-10-19T14:47:10.012",
+                "user_id": 1
+            },
+            "relatable_resource_model_ids": [],
+            "resource_2_resource_constraints": [],
+            "root": {
+                "alias": "activity",
+                "config": {
+                    "fillColor": "rgba(233,112,111,0.8)"
+                },
+                "datatype": "semantic",
+                "description": "",
+                "exportable": false,
+                "fieldname": "",
+                "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                "hascustomalias": false,
+                "is_collector": false,
+                "isrequired": false,
+                "issearchable": true,
+                "istopnode": true,
+                "name": "Activity",
+                "nodegroup_id": null,
+                "nodeid": "b9e0705b-5463-11e9-9368-000d3ab1e588",
+                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+                "sortorder": 0
+            },
+            "slug": null,
+            "subtitle": {
+                "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of monuments or areas. They provide information on \u2018how we know what we know\u2019 (for example investigative activities or research and analysis) or on how a particular Monument or Area has been managed through time (management activities)."
+            },
+            "ontology_id": null,
+            "template_id": "50000000-0000-0000-0000-000000000001",
+            "version": ""
+        }
+    ]
+}

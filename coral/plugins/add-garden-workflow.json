@@ -1,0 +1,280 @@
+{
+  "pluginid": "df0f8920-aef3-4b3e-ab3d-41b78dad7e05",
+  "name": "Add Garden",
+  "icon": "fa fa-tree",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+    "stepConfig": [
+      {
+        "name": "start-step",
+        "title": "Start",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "labels": [["SMR Number", "Historic Parks & Gardens Number"]],
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "hiddenNodes": [
+                    "325a441c-efe4-11eb-9283-a87eeabdefba",
+                    "325a2f33-efe4-11eb-b0bb-a87eeabdefba"
+                  ],
+                  "nodegroupid": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
+                  "semanticName": "System Reference Numbers",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba"
+                    }
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "12645f4a-6638-4f80-b020-c7dd7f886163"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "heritage-asset-details-step",
+        "title": "Heritage Asset Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "676d47fc-9c1c-11ea-b5b0-f875a44e0e11",
+                    "676d47fd-9c1c-11ea-9d73-f875a44e0e11"
+                  ],
+                  "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+                  "semanticName": "Heritage Asset Names",
+                  "labels": [["Name", "Site Name"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "4e9bd639-96b9-4add-ad74-145a4f8a8e93"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "77e8f294-efdc-11eb-a9a2-a87eeabdefba",
+                    "77e9065e-efdc-11eb-baa2-a87eeabdefba",
+                    "77e8f29f-efdc-11eb-a58e-a87eeabdefba",
+                    "77e8f293-efdc-11eb-ac31-a87eeabdefba",
+                    "77e8f292-efdc-11eb-acfd-a87eeabdefba",
+                    "77e8f29d-efdc-11eb-b890-a87eeabdefba",
+                    "77e8f291-efdc-11eb-9441-a87eeabdefba",
+                    "77e8f29c-efdc-11eb-a0ba-a87eeabdefba",
+                    "77e8f29b-efdc-11eb-b248-a87eeabdefba",
+                    "77e8f28e-efdc-11eb-b9f5-a87eeabdefba",
+                    "77e8f28d-efdc-11eb-afe4-a87eeabdefba",
+                    "77e8f298-efdc-11eb-9465-a87eeabdefba",
+                    "77e8f295-efdc-11eb-a593-a87eeabdefba",
+                    "77e8f28a-efdc-11eb-9600-a87eeabdefba"
+                  ],
+                  "nodegroupid": "77e8f287-efdc-11eb-a790-a87eeabdefba",
+                  "semanticName": "Construction Phases",
+                  "labels": [["Heritage Asset Type", "Gen Type"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "84598d3e-271f-4a4a-bc62-69ce085176ba"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3c2a4-f44f-11eb-a170-a87eeabdefba",
+                    "87d3c3f9-f44f-11eb-bed4-a87eeabdefba",
+                    "87d3c3fd-f44f-11eb-97d8-a87eeabdefba",
+                    "87d3d7e7-f44f-11eb-bc69-a87eeabdefba",
+                    "87d3c3f0-f44f-11eb-87e0-a87eeabdefba"
+                  ],
+                  "nodegroupid": "87d38728-f44f-11eb-900d-a87eeabdefba",
+                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
+                  "semanticName": "Land Use Classification Assignment"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "276ed390-ce2f-4537-ac10-af28ab6f4927"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "ba345579-b554-11ea-9232-f875a44e0e11",
+                    "ba34557b-b554-11ea-ab95-f875a44e0e11",
+                    "6a37ae2a-1f4d-11ef-bf79-0242ac150006",
+                    "a537c7cc-2343-11ef-89fe-0242ac1a0006"
+                  ],
+                  "nodegroupid": "ba342e69-b554-11ea-a027-f875a44e0e11",
+                  "semanticName": "Descriptions"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "1b9b874c-313d-4b45-ae55-ba0440819507"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "location-details-step",
+        "title": "Location Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3d7e0-f44f-11eb-9594-a87eeabdefba",
+                    "87d3ff2b-f44f-11eb-aad3-a87eeabdefba",
+                    "87d3ff27-f44f-11eb-a92b-a87eeabdefba",
+                    "87d3ff25-f44f-11eb-a4eb-a87eeabdefba",
+                    "87d3d7ba-f44f-11eb-a2dd-a87eeabdefba",
+                    "87d39b36-f44f-11eb-a905-a87eeabdefba",
+                    "87d39b49-f44f-11eb-a564-a87eeabdefba",
+                    "87d39b43-f44f-11eb-8b0b-a87eeabdefba"
+                  ],
+                  "nodegroupid": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
+                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
+                  "semanticName": "Addresses"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "8c40ac77-1bf6-4248-ae30-c3beea99ef1b"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "447973ce-d7e2-11ee-a4a1-0242ac120006",
+                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
+                  "semanticName": "Council"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "73639516-ee29-4e81-8d45-d2349d4e02d4"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "87d3d7c8-f44f-11eb-938d-a87eeabdefba"
+                  ],
+                  "nodegroupid": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
+                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
+                  "semanticName": "Location Descriptions"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "1226d1b4-b651-4514-9db2-88370fd5728c"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "map-step",
+        "title": "Map",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
+                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
+                  "semanticName": "Geometry"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "a14974e4-5fce-4322-96d3-1bcf739789d3"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "digital-files-step",
+        "title": "Digital Files",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "resourceModelDigitalObjectNodeGroupId": "b3addca4-8882-11ea-acc1-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "932b065c-d631-42e5-8e41-7a155a4c4fe3"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "finish-step",
+        "title": "Finish",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "3897b87a-1902-11ef-aa9f-0242ac150006",
+                  "semanticName": "Garden Sign Off"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "fdbda47e-fbe4-4254-9df6-d619b7f984c6"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ],
+    "initWorkflow": {
+      "desc": "Create a new Garden",
+      "icon": "fa fa-tree",
+      "name": "Add Garden",
+      "show": true,
+      "bgColor": "#619974",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#4a946d"
+    }
+  },
+  "slug": "add-garden-workflow",
+  "sortorder": 0
+}

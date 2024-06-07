@@ -482,6 +482,21 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "b1d2cd1e-f446-11eb-abee-a87eeabdefba",
+                    "config": {
+                        "label": "Irish Grid Reference (TM65)",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "068156b7-8458-494f-b915-16a7298d5413",
+                    "label": {
+                        "en": "Irish Grid Reference (TM65)"
+                    },
+                    "node_id": "8272435a-1689-11ef-b341-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
+                },
+                {
                     "card_id": "b1d2cd1b-f446-11eb-b158-a87eeabdefba",
                     "config": {
                         "defaultValue": "",
@@ -3566,6 +3581,21 @@
                     "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "b1d2cd1e-f446-11eb-abee-a87eeabdefba",
+                    "config": {
+                        "label": "National Grid Reference",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "c8d4236f-87ff-11ec-a99f-a87eeabdefba",
+                    "label": {
+                        "en": "National Grid Reference"
+                    },
+                    "node_id": "b1d30c03-f446-11eb-bbcc-a87eeabdefba",
+                    "sortorder": null,
+                    "visible": false,
+                    "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
                 }
             ],
             "color": "rgba(204,112,109,1)",
@@ -3617,6 +3647,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "rangenode_id": "4306acc0-174b-11ef-b2a4-0242ac180002"
+                },
+                {               
+                    "description": null,
+                    "domainnode_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
+                    "edgeid": "6448197d-484e-4c95-9a48-eecd4171cc47",
+                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "8272435a-1689-11ef-b341-0242ac120006"
                 },
                 {
                     "description": null,
@@ -5289,7 +5328,7 @@
                     "istopnode": false,
                     "name": "Irish Grid Reference (TM65)",
                     "nodegroup_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
-                    "nodeid": "4306acc0-174b-11ef-b2a4-0242ac180002",
+                    "nodeid": "8272435a-1689-11ef-b341-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "sortorder": 0,
