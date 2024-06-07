@@ -21674,7 +21674,77 @@
                                 "id": "059da29b-9413-41e1-a064-bb1190e91e05",
                                 "selected": false,
                                 "text": {
-                                    "en": "List to be provided by HED"
+                                    "en": "WELL PRESERVED (Complete/substantially complete)"
+                                }
+                            },
+                            {
+                                "id": "61908388-0c04-4be3-8367-9f7046951a54",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBSTANTIAL REMAINS (Vast majority definable)"
+                                }
+                            },
+                            {
+                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
+                                "selected": false,
+                                "text": {
+                                    "en": "SOME REMAINS (Some definable features)"
+                                }
+                            },
+                            {
+                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "TRACES ONLY (No definable features)"
+                                }
+                            },
+                            {
+                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
+                                "selected": false,
+                                "text": {
+                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
+                                }
+                            },
+                            {
+                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
+                                "selected": false,
+                                "text": {
+                                    "en": "DESTROYED"
+                                }
+                            },
+                            {
+                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
+                                "selected": false,
+                                "text": {
+                                    "en": "EXCAVATED"
+                                }
+                            },
+                            {
+                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
+                                "selected": false,
+                                "text": {
+                                    "en": "TIDALLY SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "61e61e5c-e0b2-4127-8fba-42ad471f4898",
+                                "selected": false,
+                                "text": {
+                                    "en": "Partial remains of a rectangular platform"
+                                }
+                            },
+                            {
+                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
+                                "selected": false,
+                                "text": {
+                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
                                 }
                             }
                         ]
@@ -23467,10 +23537,31 @@
                         },
                         "options": [
                             {
+                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "selected": false,
+                                "text": {
+                                    "en": "Standing Buildings"
+                                }
+                            },
+                            {
+                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
+                                "selected": false,
+                                "text": {
+                                    "en": "Field Monuments"
+                                }
+                            },
+                            {
+                                "id": "4b46c463-b16e-4f3d-93ee-f0a9bdd78925",
+                                "selected": false,
+                                "text": {
+                                    "en": "Carved Stone"
+                                }
+                            },
+                            {
                                 "id": "86177acb-d727-49b8-b79c-8633530d8704",
                                 "selected": false,
                                 "text": {
-                                    "en": "List to be provided by HED"
+                                    "en": "Aquatic Monuments"
                                 }
                             }
                         ]
