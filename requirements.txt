@@ -24,7 +24,7 @@ requests_oauthlib
 python-docx
 
 
-git+https://github.com/flaxandteal/arches-orm@release/0.1.0
+git+https://github.com/flaxandteal/arches-orm@f9ba5714157c93a6a9b951ee017fde679c8f6ee5
 pika
 django-authorization
 casbin-django-orm-adapter
