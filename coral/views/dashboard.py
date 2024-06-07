@@ -1,6 +1,5 @@
 from django.views.generic import View
 from django.http import JsonResponse
-from arches_orm.models import Person, Group, Consultation
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
@@ -29,6 +28,8 @@ NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
 class Dashboard(View):
 
     def get(self, request):
+        from arches_orm.models import Person, Group
+
         with admin():
             user_id = request.user.id                     
             person_resource = Person.where(user_account = user_id)
@@ -101,6 +102,7 @@ class Dashboard(View):
             })
 
     def get_planning_consultations(self, groupId, userResouceId, sort_by='deadline', sort_order='asc'):
+            from arches_orm.models import Consultation
         
         
             TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
