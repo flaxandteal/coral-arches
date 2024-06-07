@@ -27,10 +27,11 @@ from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm, ArchesStandardPermissionFramework
-
+from arches.app.models.resource import UnindexedError
 from arches_orm.models import Person, Organization, Set, LogicalSet, Group
-from arches_orm.wrapper import ResourceWrapper
+from arches_orm.view_models import ResourceInstanceViewModel
 from arches_orm.adapter import context_free
+from arches.app.search.search_engine_factory import SearchEngineInstance as se
 
 logger = logging.getLogger(__name__)
 REMAPPINGS = {
@@ -85,7 +86,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         elif isinstance(subj, Organization):
             subj = f"u:{subj.id}"
         elif isinstance(subj, Group):
-            subj = f"g:{subj.id}"
+            subj = f"g1:{subj.id}"
         elif isinstance(subj, str) and ":" in subj:
             return subj
         else:
@@ -104,7 +105,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             obj = f"g2l:{obj.id}"
         elif isinstance(obj, Graph) or isinstance(obj, GraphModel):
             obj = f"gp:{obj.pk}"
-        elif isinstance(obj, ResourceWrapper):
+        elif isinstance(obj, ResourceInstanceViewModel):
             obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
             obj = f"ri:{obj.pk}"
@@ -166,7 +167,12 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             for member in group.members:
                 if isinstance(member, Group):
                     member_key = self._subj_to_str(member)
-                    self._enforcer.add_named_grouping_policy("g", member_key, group_key)
+                    # This is the reverse of what might be expected, as the more deeply
+                    # nested a group is, the _fewer_ permissions it has. Conversely, the
+                    # top groups gather all the permissions from the groups below them,
+                    # which fits Casbin's transitivity when top groups are _Casbin members of_
+                    # the groups below them.
+                    self._enforcer.add_named_grouping_policy("g", group_key, member_key)
                     users += _fill_group(member)
                 elif member.user_account:
                     member_key = self._subj_to_str(member)
@@ -194,9 +200,11 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 self._ri_to_django_groups(group)
             for group in group.django_group:
                 if list(group.user_set.all()) != users:
-                    group.user_set = users
+                    group.user_set.set(users)
                     group.save()
             return users
+
+        sets = []
 
         _fill_group(root_group)
 
@@ -209,7 +217,8 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
-            sets.remove(set_key)
+            if set_key in sets:
+                sets.remove(set_key)
             # We do not currently handle nesting of logical sets
             if isinstance(st, Set):
                 if st.nested_sets:
@@ -262,7 +271,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def _ri_to_django_groups(group: Group):
         if not group.django_group:
-            group.django_group = [DjangoGroup.objects.create(name=str(group))]
+            group.django_group = [DjangoGroup.objects.get_or_create(name=str(group))]
             group.save()
         return group.django_group
 
@@ -284,7 +293,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     def update_groups_for_user(self, user):
         groups = {self._subj_to_str(group) for group in user.groups.all()}
         user = self._subj_to_str(user)
-        was = set(self._enforcer.get_roles_for_user(user))
+        was = set(role for role in self._enforcer.get_roles_for_user(user) if role.startswith("dg:"))
         for group in groups - was:
             self._enforcer.add_role_for_user(user, group)
         for group in was - groups:
@@ -533,7 +542,11 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         try:
             resource = Resource(resourceinstanceid=resourceid)
-            index = resource.get_index()
+            try:
+                index = resource.get_index()
+            except UnindexedError:
+                se.es.indices.refresh(index="test_resources")
+                index = resource.get_index()
             if (principal_users := index.get("_source", {}).get("permissions", {}).get("principal_user", [])):
                 if len(principal_users) >= 1 and user and user.id in principal_users:
                     if permission == "view_resourceinstance" and self.user_has_resource_model_permissions(user, ["models.read_nodegroup"], resource):
