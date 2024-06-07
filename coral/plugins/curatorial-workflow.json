@@ -1,6 +1,6 @@
 {
   "pluginid": "2d785399-83a7-4887-b73b-776f8006e7e6",
-  "name": "Curitorial Inspection",
+  "name": "Curatorial Inspection",
   "icon": "fa fa-file",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -145,18 +145,85 @@
           }
         ],
         "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "comments-step",
+        "title": "Comments",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "75d950a6-24d6-11ef-bb69-0242ac130006"
+                },
+                "tilesManaged": "many",
+                "componentName": "default-card",
+                "uniqueInstanceName": "353d0a42-27fd-4002-b6f0-c2fd1680124f"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "upload-step",
+        "title": "Upload",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceModelDigitalObjectNodeGroupId": "b3addca4-8882-11ea-acc1-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "upload"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "sign-off-step",
+        "title": "Sign Off",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "hiddenNodes": [
+                    "998d6728-fb26-11ee-838d-0242ac190006"
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "54ae3160-93a5-4c65-831c-52706b89a22a"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
       }
     ],
     "initWorkflow": {
-      "desc": "Start a Curitorial Inspection",
+      "desc": "Start a Curatorial Inspection",
       "icon": "fa fa-file",
-      "name": "Curitorial Inspection",
+      "name": "Curatorial Inspection",
       "show": true,
       "bgColor": "#86679c",
       "slugPrefix": "open-workflow?workflow-slug=",
       "circleColor": "#aa86c4"
     }
   },
-  "slug": "curitorial-workflow",
+  "slug": "curatorial-workflow",
   "sortorder": 0
 }
