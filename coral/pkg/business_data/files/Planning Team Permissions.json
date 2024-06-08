@@ -26,7 +26,7 @@
                   "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                   "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                   "resourceId": "6affd23b-da12-425e-b0cd-2007a20a065b",
-                  "resourceXresourceId": "682dd259-9d26-4daf-b1eb-5f621d61a937"
+                  "resourceXresourceId": "1edfbfca-c804-418c-ab79-3ade1c11eb5b"
                 }
               ],
               "7cb692b2-7072-11ee-bb7a-0242ac140008": [
@@ -62,7 +62,7 @@
                   "inverseOntologyProperty": "",
                   "ontologyProperty": "",
                   "resourceId": "256dbccf-2f0a-4f64-b6e8-1044e280dd0a",
-                  "resourceXresourceId": "aaa74c46-91c9-4a1e-8639-6da94704cb54"
+                  "resourceXresourceId": "419d66a0-399f-4aaa-924e-31daa2233b19"
                 }
               ]
             },
@@ -72,6 +72,30 @@
             "resourceinstance_id": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
             "sortorder": 0,
             "tileid": "176d8f64-6571-4363-bee0-c610ee162d99"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
+                  "resourceXresourceId": "8869f123-df7a-4e58-a857-6335b6a0eb52"
+                },
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "9a88b67b-cb12-4137-a100-01a977335298",
+                  "resourceXresourceId": "d8ca2d00-6fb2-416d-a2eb-09c30f4b8d39"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+            "sortorder": 0,
+            "tileid": "4f1b115b-6337-4cd0-bbc5-94af92fff699"
           }
         ]
       },
@@ -112,7 +136,7 @@
                   "inverseOntologyProperty": "",
                   "ontologyProperty": "",
                   "resourceId": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
-                  "resourceXresourceId": "8c8213af-7317-42c5-ad60-01460cb7392c"
+                  "resourceXresourceId": "2d33074e-a742-4864-a47b-9a9b8a1053ec"
                 }
               ]
             },
@@ -122,6 +146,24 @@
             "resourceinstance_id": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
             "sortorder": 0,
             "tileid": "1b7ca10a-6265-48c1-b6e5-34de31e2383c"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "29a43158-5f50-495f-869c-f651adf3ea42",
+                  "resourceXresourceId": "25a436ac-a9b1-478a-a844-8ff4e84b5c2c"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
+            "sortorder": 0,
+            "tileid": "abb2b2bf-c455-4d8b-89f3-331f60c41b17"
           }
         ]
       },
@@ -162,7 +204,7 @@
                   "inverseOntologyProperty": "",
                   "ontologyProperty": "",
                   "resourceId": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
-                  "resourceXresourceId": "a83490a4-d575-475b-93c6-ae23a0e3052c"
+                  "resourceXresourceId": "ce854eaa-5daa-4b9e-b5f4-6b69f714694c"
                 }
               ]
             },
@@ -172,6 +214,24 @@
             "resourceinstance_id": "9a88b67b-cb12-4137-a100-01a977335298",
             "sortorder": 0,
             "tileid": "891766f1-7ccd-4b25-925e-880c8552d314"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "f240895c-edae-4b18-9c3b-875b0bf5b235",
+                  "resourceXresourceId": "3295fe34-c51e-4933-8482-73db1059f00b"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "9a88b67b-cb12-4137-a100-01a977335298",
+            "sortorder": 0,
+            "tileid": "3ad124de-360e-45f9-b84d-1d177567106d"
           }
         ]
       },
@@ -212,7 +272,7 @@
                   "inverseOntologyProperty": "",
                   "ontologyProperty": "",
                   "resourceId": "9a88b67b-cb12-4137-a100-01a977335298",
-                  "resourceXresourceId": "3a4586f6-9a9f-4694-9749-e7a9cd492bce"
+                  "resourceXresourceId": "e14620f3-c269-40cc-8115-7c352871bd7e"
                 }
               ]
             },
@@ -230,7 +290,7 @@
                   "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                   "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                   "resourceId": "b37faedc-27d7-4a44-9b62-cfa32e8b60fb",
-                  "resourceXresourceId": "084046a6-3816-4bb8-ba8d-62071b9a16fb"
+                  "resourceXresourceId": "5366590d-192d-47e8-a924-36ccd623fb92"
                 }
               ],
               "7cb692b2-7072-11ee-bb7a-0242ac140008": [
@@ -285,7 +345,7 @@
                   "inverseOntologyProperty": "",
                   "ontologyProperty": "",
                   "resourceId": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
-                  "resourceXresourceId": "c610ca2f-8df8-4517-99a8-d5dd9e2566ee"
+                  "resourceXresourceId": "8f0b2363-48b5-46c5-be5d-9463a61a6bde"
                 }
               ]
             },
@@ -295,6 +355,24 @@
             "resourceinstance_id": "256dbccf-2f0a-4f64-b6e8-1044e280dd0a",
             "sortorder": 0,
             "tileid": "2fe33904-a836-4317-b889-70973a012e5b"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                  "resourceId": "74afc49c-3c68-4f6c-839a-9bc5af76596b",
+                  "resourceXresourceId": "419c5702-d126-4139-a90d-948441e4ef4d"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "256dbccf-2f0a-4f64-b6e8-1044e280dd0a",
+            "sortorder": 0,
+            "tileid": "7cbe6208-28f3-441f-a778-384786a25e32"
           }
         ]
       },
@@ -335,7 +413,7 @@
                   "inverseOntologyProperty": "",
                   "ontologyProperty": "",
                   "resourceId": "905c40e1-430b-4ced-94b8-0cbdab04bc33",
-                  "resourceXresourceId": "5fd3413c-235f-4cdc-9ed9-0fc66f4b8593"
+                  "resourceXresourceId": "2ea3a6ba-2828-43ee-b612-91c1399a69ea"
                 }
               ]
             },
@@ -353,7 +431,7 @@
                   "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                   "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                   "resourceId": "4edddd68-d59c-4173-9be4-208d4be36ad8",
-                  "resourceXresourceId": "cffc9ade-f679-4094-97a7-165d98156f95"
+                  "resourceXresourceId": "8839c59b-0027-45ea-99f5-033a96e7b9a8"
                 }
               ],
               "7cb692b2-7072-11ee-bb7a-0242ac140008": [
