@@ -67,11 +67,11 @@ build: docker
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
 	if [ -z $(ARCHES_PROJECT)/media/node_modules/jquery-validation ]; then rm -rf $(ARCHES_PROJECT)/media/node_modules; fi
 	$(DOCKER_COMPOSE_COMMAND) stop
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_npm_components
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
 
 	if [ -d $(ARCHES_PROJECT)/pkg ]; then $(TOOLKIT_FOLDER)/act.py . load_package --yes; fi
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_yarn_build_development
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_npm_build_development
 	$(DOCKER_COMPOSE_COMMAND) stop
 	@echo "IF THIS IS YOUR FIRST TIME RUNNING make build AND YOU HAVE NOT ALREADY, MAKE SURE TO UPDATE urls.py (see make help)"
 
@@ -96,9 +96,9 @@ web: docker
 	$(DOCKER_COMPOSE_COMMAND) stop arches
 	$(DOCKER_COMPOSE_COMMAND) run --service-ports arches
 
-.PHONY: yarn-development
-yarn-development: docker
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
+.PHONY: npm-development
+npm-development: docker
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_npm_components
 
 .PHONY: docker-compose
 docker-compose: docker

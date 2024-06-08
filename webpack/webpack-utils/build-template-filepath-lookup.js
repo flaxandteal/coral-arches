@@ -1,23 +1,23 @@
 const Path = require('path');
 const fs = require('fs');
 
-const buildVueFilePathLookup = function(path, outerAcc, vueDirectoryPath) {
+const buildTemplateFilePathLookup = function(path, outerAcc, templateDirectoryPath) {
     if (!fs.existsSync(path)) {
         return;
     }
     
     return fs.readdirSync(path).reduce((acc, name) => {
-        const outerPath = vueDirectoryPath || path;   // original `path` arg is persisted through recursion
+        const outerPath = templateDirectoryPath || path;   // original `path` arg is persisted through recursion
         
         if (fs.lstatSync(Path.join(path, name)).isDirectory() ) {
-            return buildVueFilePathLookup(
+            return buildTemplateFilePathLookup(
                 Path.join(path, name), 
                 acc, 
                 outerPath
             );
         }
         else {
-            let subPath = (Path.join(path, name)).split(/src(.*)/s)[1];  // splits only on first occurance
+            let subPath = (Path.join(path, name)).split(/templates(.*)/s)[1];  // splits only on first occurance
             subPath = subPath.substring(1);
 
             const parsedPath = Path.parse(subPath);
@@ -29,11 +29,11 @@ const buildVueFilePathLookup = function(path, outerAcc, vueDirectoryPath) {
             else {
                 return { 
                     ...acc, 
-                    [filename.replace(/\\/g, '/')]: Path.resolve(__dirname, Path.join(outerPath, subPath))
+                    [Path.join('templates', filename).replace(/\\/g, '/')]: Path.resolve(__dirname, Path.join(outerPath, subPath))
                 };
             }
         }
     }, outerAcc);
 };
 
-module.exports = { buildVueFilePathLookup };
+module.exports = { buildTemplateFilePathLookup };

@@ -49,7 +49,7 @@ MAX_ARCHES_VERSION = arches.__version__
 
 WEBPACK_LOADER = {
     "DEFAULT": {
-        "STATS_FILE": os.path.join(APP_ROOT, 'webpack/webpack-stats.json'),
+        "STATS_FILE": os.path.join(APP_ROOT, '..', 'webpack/webpack-stats.json'),
     },
 }
 
@@ -95,7 +95,7 @@ except:
     with (Path(__file__).parent / "wkrm.toml").open("r") as wkrm_f:
         WELL_KNOWN_RESOURCE_MODELS = [model for _, model in tomllib.load(wkrm_f).items()]
 
-LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
+LOCALE_PATHS.insert(0, os.path.join(APP_ROOT, 'locale'))
 
 FILE_TYPE_CHECKING = False
 FILE_TYPES = ["bmp", "gif", "jpg", "jpeg", "pdf", "png", "psd", "rtf", "tif", "tiff", "xlsx", "csv", "zip"]
@@ -199,7 +199,6 @@ INSTALLED_APPS = (
     "corsheaders",
     "oauth2_provider",
     "django_celery_results",
-    "compressor",
     "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",
