@@ -5046,15 +5046,6 @@
             "edges": [
                 {
                     "description": null,
-                    "domainnode_id": "959b6e79-1acb-11eb-ad10-f875a44e0e11",
-                    "edgeid": "959b6e7d-1acb-11eb-966e-f875a44e0e11",
-                    "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "959b6e7c-1acb-11eb-86a0-f875a44e0e11"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "934cc466-480a-11ea-9b79-c4d9877d154e",
                     "edgeid": "02f0fa14-482c-11ea-8360-c4d9877d154e",
                     "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
@@ -7029,34 +7020,6 @@
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
                     "id": "ce6f1613-d1a6-4010-a12a-47907ca22d51"
-                },
-                {
-                    "config": {
-                        "geojson_node": "6678040f-3dff-11eb-a042-f875a44e0e11",
-                        "geojson_nodegroup": "6677b647-3dff-11eb-bbd8-f875a44e0e11",
-                        "tm65_node": "955b7424-16bf-11ef-af79-0242ac180006",
-                        "tm65_nodegroup": "959b6e79-1acb-11eb-ad10-f875a44e0e11",
-                        "triggering_nodegroups": [
-                            "959b6e79-1acb-11eb-ad10-f875a44e0e11"
-                        ]
-                    },
-                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
-                    "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
-                    "id": "7138b3d5-9c5b-4595-8adb-15a159cc4d9f"
-                },
-                {
-                    "config": {
-                        "geojson_input_node": "6678040f-3dff-11eb-a042-f875a44e0e11",
-                        "geojson_input_nodegroup": "6677b647-3dff-11eb-bbd8-f875a44e0e11",
-                        "tm65_output_node": "955b7424-16bf-11ef-af79-0242ac180006",
-                        "tm65_output_nodegroup": "959b6e79-1acb-11eb-ad10-f875a44e0e11",
-                        "triggering_nodegroups": [
-                            "6677b647-3dff-11eb-bbd8-f875a44e0e11"
-                        ]
-                    },
-                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
-                    "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
-                    "id": "c100fb50-d87c-4e43-bfd3-83f6d7290f36"
                 }
             ],
             "graphid": "934cd7f0-480a-11ea-9240-c4d9877d154e",
@@ -7196,29 +7159,6 @@
                 }
             ],
             "nodes": [
-                {
-                    "alias": "irish_grid_reference_tm65_",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "tm65centrepoint",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Irish Grid Reference (TM65)",
-                    "nodegroup_id": "959b6e79-1acb-11eb-ad10-f875a44e0e11",
-                    "nodeid": "955b7424-16bf-11ef-af79-0242ac180006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
                 {
                     "alias": "historic_land_use_character_attributes",
                     "config": {},
