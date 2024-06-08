@@ -1,0 +1,317 @@
+{
+  "business_data": {
+    "resources": [
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "Enforcement Management Group"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "Enforcement Management Group",
+          "principaluser_id": null,
+          "resourceinstanceid": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": { "5acdfb22-1135-11ef-a3bd-0242ac170006": 102 },
+            "nodegroup_id": "5acdfb22-1135-11ef-a3bd-0242ac170006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+            "sortorder": 0,
+            "tileid": "a7c2fe04-2fc7-4705-b499-29298b62ebbc"
+          },
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Enforcement Management Group" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": null
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+            "sortorder": 0,
+            "tileid": "017e5055-52d0-484e-b81f-2aacca914c10"
+          },
+          {
+            "data": {
+              "448bcdb8-7071-11ee-8b8c-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "5bb86c22-f674-4a11-9307-577cabc4055a",
+                  "resourceXresourceId": "a1ed4c72-8d44-4446-b9ed-a8225480ba53"
+                }
+              ],
+              "7cb692b2-7072-11ee-bb7a-0242ac140008": [
+                "9790952e-6f1d-4938-a02c-492915950107",
+                "1f5cb79d-035a-4d3e-a79b-f9c0489fd076",
+                "e3a6493e-5df4-4ad4-a699-ade7ccf01917",
+                "4ccc137b-8804-4610-8378-a271fdb4385f"
+              ]
+            },
+            "nodegroup_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+            "sortorder": 0,
+            "tileid": "42533276-436e-407e-bc9c-440b43252a13"
+          },
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": []
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+            "sortorder": 0,
+            "tileid": "0cf62d7c-9a5e-40c5-bf0f-47a48f5c29b2"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "Enforcement Admin Group"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "Enforcement Admin Group",
+          "principaluser_id": null,
+          "resourceinstanceid": "90e30a96-4e6c-4847-af80-964500835ab2",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+                  "resourceXresourceId": "605d4c26-fe49-413a-aaec-a9e1e09de1a3"
+                }
+              ]
+            },
+            "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "90e30a96-4e6c-4847-af80-964500835ab2",
+            "sortorder": 0,
+            "tileid": "57a68459-c5f3-4c35-af3e-1a033599eab8"
+          },
+          {
+            "data": {
+              "448bcdb8-7071-11ee-8b8c-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "d40bcedd-bc5a-48ab-a349-dbd85792847c",
+                  "resourceXresourceId": "08c899ef-0d14-43aa-83cb-5cff8ef309d8"
+                }
+              ],
+              "7cb692b2-7072-11ee-bb7a-0242ac140008": [
+                "9790952e-6f1d-4938-a02c-492915950107",
+                "1f5cb79d-035a-4d3e-a79b-f9c0489fd076",
+                "e3a6493e-5df4-4ad4-a699-ade7ccf01917",
+                "4ccc137b-8804-4610-8378-a271fdb4385f"
+              ]
+            },
+            "nodegroup_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "90e30a96-4e6c-4847-af80-964500835ab2",
+            "sortorder": 0,
+            "tileid": "b5270145-f51c-4bb5-be38-01c670b5c23c"
+          },
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Enforcement Admin Group" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": null
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "90e30a96-4e6c-4847-af80-964500835ab2",
+            "sortorder": 0,
+            "tileid": "b9b97517-74b6-4964-9a64-2a1326edb602"
+          },
+          {
+            "data": { "5acdfb22-1135-11ef-a3bd-0242ac170006": 103 },
+            "nodegroup_id": "5acdfb22-1135-11ef-a3bd-0242ac170006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "90e30a96-4e6c-4847-af80-964500835ab2",
+            "sortorder": 0,
+            "tileid": "ef9f11cb-7812-4053-82aa-e413f1e119d0"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "Undefined",
+              "map_popup": "Undefined",
+              "name": "Enforcement Groups Set"
+            }
+          },
+          "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+          "graph_publication_id": "d3344a68-2417-11ef-b048-0242ac1d0006",
+          "legacyid": null,
+          "name": "Enforcement Groups Set",
+          "principaluser_id": null,
+          "resourceinstanceid": "d40bcedd-bc5a-48ab-a349-dbd85792847c",
+          "publication_id": "d3344a68-2417-11ef-b048-0242ac1d0006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "a829879a-6f43-11ee-9ebf-0242ac140008": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Enforcement Groups Set" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "2cd7a956-6f42-11ee-9192-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "d40bcedd-bc5a-48ab-a349-dbd85792847c",
+            "sortorder": 0,
+            "tileid": "83b07e98-c284-4108-aa49-add2886f60a2"
+          },
+          {
+            "data": {
+              "7383b2c6-705c-11ee-977f-0242ac140008": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                  "resourceId": "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8",
+                  "resourceXresourceId": "335f8e5a-a0c8-430b-afff-eae09e03100f"
+                },
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                  "resourceId": "90e30a96-4e6c-4847-af80-964500835ab2",
+                  "resourceXresourceId": "504d6534-f722-4c7e-ba02-fb72bfe6fc5a"
+                }
+              ]
+            },
+            "nodegroup_id": "7383b2c6-705c-11ee-977f-0242ac140008",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "d40bcedd-bc5a-48ab-a349-dbd85792847c",
+            "sortorder": 0,
+            "tileid": "90cb3c26-e270-4d8f-adff-2b37e0d0785b"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "Undefined",
+              "map_popup": "Undefined",
+              "name": "Enforcement LogSet"
+            }
+          },
+          "graph_id": "5b8b4084-9687-11ee-8782-0242ac140006",
+          "graph_publication_id": "6d9d83c6-9688-11ee-a81e-0242ac140006",
+          "legacyid": null,
+          "name": "Enforcement LogSet",
+          "principaluser_id": null,
+          "resourceinstanceid": "5bb86c22-f674-4a11-9307-577cabc4055a",
+          "publication_id": "6d9d83c6-9688-11ee-a81e-0242ac140006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "5b8b46b0-9687-11ee-8782-0242ac140006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Enforcement LogSet" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "5b8b43ae-9687-11ee-8782-0242ac140006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "5bb86c22-f674-4a11-9307-577cabc4055a",
+            "sortorder": 0,
+            "tileid": "c4ff5cdc-3f7b-40df-983e-eedc639e7bf0"
+          },
+          {
+            "data": {
+              "2f94332c-9688-11ee-8782-0242ac140006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": {
+                  "direction": "ltr",
+                  "value": "resource-type-filter=[{\"graphid\":\"8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84\",\"name\":\"Enforcement\",\"inverted\":false}]"
+                },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "2f94332c-9688-11ee-8782-0242ac140006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "5bb86c22-f674-4a11-9307-577cabc4055a",
+            "sortorder": 0,
+            "tileid": "871c15ec-6e99-4988-b856-ed23a673789e"
+          }
+        ]
+      }
+    ]
+  }
+}
