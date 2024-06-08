@@ -212,13 +212,13 @@
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": true,
                     "name": {
@@ -1891,6 +1891,33 @@
                         "en": "Associated By"
                     },
                     "nodegroup_id": "35628c1a-7502-45dc-bd78-659f61fd823f",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "f2b9ee13-1963-4baf-a5c1-f0a0f2e6ae8e",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Monument Type"
+                    },
+                    "nodegroup_id": "8b94df3e-233f-11ef-89fe-0242ac1a0006",
                     "sortorder": null,
                     "visible": true
                 },
@@ -6052,6 +6079,21 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "a6f58743-7e76-49fd-8c13-0c81c95f9307",
+                    "config": {
+                        "label": "Irish Grid Reference (TM65)",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "5d973440-a86b-4c19-a1b0-cdc158923204",
+                    "label": {
+                        "en": "Irish Grid Reference (TM65)"
+                    },
+                    "node_id": "86057658-1685-11ef-b341-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
+                },
+                {
                     "card_id": "7b2537f8-6453-4ae7-9085-03b95249d34d",
                     "config": {
                         "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
@@ -6507,21 +6549,6 @@
                     "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "a6f58743-7e76-49fd-8c13-0c81c95f9307",
-                    "config": {
-                        "label": "National Grid Reference",
-                        "placeholder": "Enter the centre point map reference of the resource."
-                    },
-                    "id": "6d1a5ee8-115d-476a-aeda-d642b48f1726",
-                    "label": {
-                        "en": "National Grid Reference"
-                    },
-                    "node_id": "ea58814b-90a8-4831-82bd-5a7fae50cbc2",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
                 },
                 {
                     "card_id": "fc87de7f-7235-42ff-9fc9-36b71f386348",
@@ -10927,8 +10954,14 @@
                 {
                     "card_id": "7f412684-4380-4bad-a407-318d5dd81253",
                     "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Condition Type",
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "c58a58fd-0207-4178-8213-cc306285dab6",
                     "label": {
@@ -12341,8 +12374,14 @@
                 {
                     "card_id": "c2d8b992-d617-482e-a1e3-cbd6b4e1b3d0",
                     "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Category Type",
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "e398d4d8-2b8d-4fc6-9a11-154ef68fb9b3",
                     "label": {
@@ -12373,6 +12412,28 @@
                     "node_id": "229d18c0-1908-11ef-aa9f-0242ac150006",
                     "sortorder": 5,
                     "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "f2b9ee13-1963-4baf-a5c1-f0a0f2e6ae8e",
+                    "config": {
+                        "defaultValue": "44b1e6af-5c5a-4c68-9eb9-4eb43bdbe823",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Monument Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "e3e4f106-f029-4526-a23a-2104ddff0a30",
+                    "label": {
+                        "en": "Monument Metatype"
+                    },
+                    "node_id": "bd6ec0c4-233f-11ef-8b6b-0242ac1a0006",
+                    "sortorder": 1,
+                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -12922,6 +12983,28 @@
                     "node_id": "dd227918-6e2d-4b51-b903-cae3468a9162",
                     "sortorder": 13,
                     "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "f2b9ee13-1963-4baf-a5c1-f0a0f2e6ae8e",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Monument Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f0a75b92-ff50-4fbc-9996-0f864ca70f3b",
+                    "label": {
+                        "en": "Monument Type"
+                    },
+                    "node_id": "8b94df3e-233f-11ef-89fe-0242ac1a0006",
+                    "sortorder": 0,
+                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -14360,15 +14443,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "e290279d-9857-441e-a511-50d9d4dc4210",
-                    "edgeid": "1ecfcc21-7eed-4270-91ab-edd4464c1741",
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "ea58814b-90a8-4831-82bd-5a7fae50cbc2"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "3c5103ba-cc63-4abb-afa1-f0008edf040b",
                     "edgeid": "1f43bdf8-98cb-435f-897b-45178d3ee959",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -15698,6 +15772,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "b64c0039-72c0-42a2-af5a-2685016af9f8"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
+                    "edgeid": "57b3befd-8eb8-42ee-bba9-f7e877b60dd9",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "8b94df3e-233f-11ef-89fe-0242ac1a0006"
                 },
                 {
                     "description": null,
@@ -17051,6 +17134,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
+                    "edgeid": "940ac71c-b359-4694-b0f9-aa9dab16fe87",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "dcb45d40-2344-11ef-89fe-0242ac1a0006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "324afd0d-1da1-450c-9b51-0c59e00da754",
                     "edgeid": "94d226dd-c074-4fa0-9ab0-50412ae28528",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -18077,6 +18169,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "8b94df3e-233f-11ef-89fe-0242ac1a0006",
+                    "edgeid": "bf8573e7-f677-491f-9cbf-a513373c0800",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "bd6ec0c4-233f-11ef-8b6b-0242ac1a0006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "7c9e1b7a-bf8f-47cc-bc09-3d820eebadde",
                     "edgeid": "bfc2409a-9db0-4c6d-839c-14d88af6a97f",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -18326,6 +18427,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "df3dcabb-3492-4622-b6c0-8113691e7cbd"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "e290279d-9857-441e-a511-50d9d4dc4210",
+                    "edgeid": "ceba9441-7393-4434-9e92-dc4a9ced3982",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "86057658-1685-11ef-b341-0242ac120006"
                 },
                 {
                     "description": null,
@@ -19276,7 +19386,35 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "id": "1ac1d78e-9fc0-42f4-bb16-34a7b6da9938"
+                    "id": "5314314a-f3dc-4e59-894e-cf20a165f670"
+                },
+                {
+                    "config": {
+                        "geojson_input_node": "43e1a4d4-f58c-4107-a025-1b49c843760e",
+                        "geojson_input_nodegroup": "b1cc5576-d0ad-4921-aa4a-8d8f675da3ae",
+                        "tm65_output_node": "86057658-1685-11ef-b341-0242ac120006",
+                        "tm65_output_nodegroup": "e290279d-9857-441e-a511-50d9d4dc4210",
+                        "triggering_nodegroups": [
+                            "b1cc5576-d0ad-4921-aa4a-8d8f675da3ae"
+                        ]
+                    },
+                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "id": "85075dad-1e91-4c38-a8c8-47d6ec18c49f"
+                },
+                {
+                    "config": {
+                        "geojson_node": "43e1a4d4-f58c-4107-a025-1b49c843760e",
+                        "geojson_nodegroup": "b1cc5576-d0ad-4921-aa4a-8d8f675da3ae",
+                        "tm65_node": "86057658-1685-11ef-b341-0242ac120006",
+                        "tm65_nodegroup": "e290279d-9857-441e-a511-50d9d4dc4210",
+                        "triggering_nodegroups": [
+                            "e290279d-9857-441e-a511-50d9d4dc4210"
+                        ]
+                    },
+                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "id": "a1d5cf4f-de75-40cd-b2c1-3a2021b24cc9"
                 },
                 {
                     "config": {
@@ -19525,6 +19663,12 @@
                     "legacygroupid": null,
                     "nodegroupid": "86b17b8d-b006-43fb-aefe-b6681c917236",
                     "parentnodegroup_id": "b1cc5576-d0ad-4921-aa4a-8d8f675da3ae"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "8b94df3e-233f-11ef-89fe-0242ac1a0006",
+                    "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
@@ -21530,7 +21674,77 @@
                                 "id": "059da29b-9413-41e1-a064-bb1190e91e05",
                                 "selected": false,
                                 "text": {
-                                    "en": "List to be provided by HED"
+                                    "en": "WELL PRESERVED (Complete/substantially complete)"
+                                }
+                            },
+                            {
+                                "id": "61908388-0c04-4be3-8367-9f7046951a54",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBSTANTIAL REMAINS (Vast majority definable)"
+                                }
+                            },
+                            {
+                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
+                                "selected": false,
+                                "text": {
+                                    "en": "SOME REMAINS (Some definable features)"
+                                }
+                            },
+                            {
+                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "TRACES ONLY (No definable features)"
+                                }
+                            },
+                            {
+                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
+                                "selected": false,
+                                "text": {
+                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
+                                }
+                            },
+                            {
+                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
+                                "selected": false,
+                                "text": {
+                                    "en": "DESTROYED"
+                                }
+                            },
+                            {
+                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
+                                "selected": false,
+                                "text": {
+                                    "en": "EXCAVATED"
+                                }
+                            },
+                            {
+                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
+                                "selected": false,
+                                "text": {
+                                    "en": "TIDALLY SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "61e61e5c-e0b2-4127-8fba-42ad471f4898",
+                                "selected": false,
+                                "text": {
+                                    "en": "Partial remains of a rectangular platform"
+                                }
+                            },
+                            {
+                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
+                                "selected": false,
+                                "text": {
+                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
                                 }
                             }
                         ]
@@ -23323,10 +23537,31 @@
                         },
                         "options": [
                             {
+                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "selected": false,
+                                "text": {
+                                    "en": "Standing Buildings"
+                                }
+                            },
+                            {
+                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
+                                "selected": false,
+                                "text": {
+                                    "en": "Field Monuments"
+                                }
+                            },
+                            {
+                                "id": "4b46c463-b16e-4f3d-93ee-f0a9bdd78925",
+                                "selected": false,
+                                "text": {
+                                    "en": "Carved Stone"
+                                }
+                            },
+                            {
                                 "id": "86177acb-d727-49b8-b79c-8633530d8704",
                                 "selected": false,
                                 "text": {
-                                    "en": "List to be provided by HED"
+                                    "en": "Aquatic Monuments"
                                 }
                             }
                         ]
@@ -27864,6 +28099,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "irish_grid_reference_tm65_",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "tm65centrepoint",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Irish Grid Reference (TM65)",
+                    "nodegroup_id": "e290279d-9857-441e-a511-50d9d4dc4210",
+                    "nodeid": "86057658-1685-11ef-b341-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "designation_end_date",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
@@ -28189,6 +28447,29 @@
                     "name": "Town or City Metatype",
                     "nodegroup_id": "38dad285-9014-4c7b-ad81-b0562038ebf2",
                     "nodeid": "8a960ba2-33e4-4473-b5dd-b1ef816f7cba",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "monument_type_n1",
+                    "config": {
+                        "rdmCollection": "b82ee4cf-2f90-4dab-bed7-bda3feaf6d64"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Monument Type",
+                    "nodegroup_id": "8b94df3e-233f-11ef-89fe-0242ac1a0006",
+                    "nodeid": "8b94df3e-233f-11ef-89fe-0242ac1a0006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
@@ -31085,6 +31366,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "monument_metatype_n1",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Monument Metatype",
+                    "nodegroup_id": "8b94df3e-233f-11ef-89fe-0242ac1a0006",
+                    "nodeid": "bd6ec0c4-233f-11ef-8b6b-0242ac1a0006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "spatial_record_update_type",
                     "config": {
                         "rdmCollection": "7be81f21-af24-4ec9-a73b-6187e83cb8c5"
@@ -32876,6 +33180,75 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "add_building_description_type",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "aacfbf92-d5e9-4594-b3c7-584dc64bc3c7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Admin Comments"
+                                }
+                            },
+                            {
+                                "id": "58d8431e-e42f-48fa-a3c8-b32a0f507b1e",
+                                "selected": false,
+                                "text": {
+                                    "en": "Notes"
+                                }
+                            },
+                            {
+                                "id": "c41812cf-d572-42b5-9afd-c72a2619616c",
+                                "selected": false,
+                                "text": {
+                                    "en": "Evaluation"
+                                }
+                            },
+                            {
+                                "id": "8771f01a-3dbb-485f-b843-287d29cafb61",
+                                "selected": false,
+                                "text": {
+                                    "en": "Historical Information"
+                                }
+                            },
+                            {
+                                "id": "beadd615-b3ba-4901-98c9-48a61849bf49",
+                                "selected": false,
+                                "text": {
+                                    "en": "Interior Description"
+                                }
+                            },
+                            {
+                                "id": "2914d36d-2972-43e1-9dfb-b0a2183fd114",
+                                "selected": false,
+                                "text": {
+                                    "en": "Exterior Description"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Add Building Description Type",
+                    "nodegroup_id": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
+                    "nodeid": "dcb45d40-2344-11ef-89fe-0242ac1a0006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "association_metatype_n1",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -33639,29 +34012,6 @@
                     "nodeid": "e9d8a90e-0982-4436-8b1f-ef71d9e343bf",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "national_grid_reference",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "bngcentrepoint",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "NGR",
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "National Grid Reference",
-                    "nodegroup_id": "e290279d-9857-441e-a511-50d9d4dc4210",
-                    "nodeid": "ea58814b-90a8-4831-82bd-5a7fae50cbc2",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -34608,8 +34958,8 @@
             "publication": {
                 "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                 "notes": null,
-                "publicationid": "1ae2c376-1f63-11ef-b84e-0242ac150006",
-                "published_time": "2024-05-31T15:33:18.506"
+                "publicationid": "d0f684b8-234b-11ef-89fe-0242ac1a0006",
+                "published_time": "2024-06-05T14:56:40.711"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -34643,8 +34993,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
+        "git hash": "ce5aabf11 2024-06-05 03:45:12 +0100",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "5.10.0-21-amd64"
     }
 }

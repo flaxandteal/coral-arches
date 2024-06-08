@@ -356,6 +356,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "4954ccb4-0376-49d9-b5f6-77558752a88f",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "National Grid References"
+                    },
+                    "nodegroup_id": "33b4430a-16be-11ef-8633-0242ac180006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "4a7bba1f-9938-11ea-8311-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -375,7 +402,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Activity Names"
                     },
@@ -818,7 +845,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Geometry"
                     },
@@ -932,35 +959,6 @@
                     },
                     "nodegroup_id": "a5416b40-f121-11eb-9cb6-a87eeabdefba",
                     "sortorder": 3,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "a5416b45-f121-11eb-a6db-a87eeabdefba",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": {
-                        "en": "Used to record the OSGB Grid ReferenceDependencies:> bngcentrepoint datatype"
-                    },
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": "National Grid references, map names, and other common location identifiers for the resource"
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "Eastings and Northings"
-                    },
-                    "nodegroup_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
-                    "sortorder": 5,
                     "visible": true
                 },
                 {
@@ -1173,7 +1171,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -7709,6 +7707,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "33b4430a-16be-11ef-8633-0242ac180006",
+                    "edgeid": "02806ac9-9e5f-4dce-abb3-33289d2331cd",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "4bd349a4-16be-11ef-af79-0242ac180006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "b9e0705b-5463-11e9-9368-000d3ab1e588",
                     "edgeid": "04aaeda4-a209-432e-847a-d66b1178be51",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -7913,15 +7920,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
                     "rangenode_id": "cb473574-02f5-11ef-a4eb-0242ac150006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
-                    "edgeid": "1265c57e-8acc-48b8-9110-07d4d1d6d3f9",
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "a7d98d68-5eb2-11ee-aa2d-0242ac120008"
                 },
                 {
                     "description": null,
@@ -9392,15 +9390,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "a5416b49-f121-11eb-8e2c-a87eeabdefba",
-                    "edgeid": "a54ac3c2-f121-11eb-a9ac-a87eeabdefba",
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "name": null,
-                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMgeo/Q11i_is_approximated_by",
-                    "rangenode_id": "a5416b43-f121-11eb-b691-a87eeabdefba"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "a5416b3a-f121-11eb-b88d-a87eeabdefba",
                     "edgeid": "a54ac3c3-f121-11eb-839b-a87eeabdefba",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -10706,6 +10695,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "a5416b49-f121-11eb-8e2c-a87eeabdefba",
+                    "edgeid": "fdcc9024-fe39-4cf0-b27d-1c978c62e161",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMgeo/Q11i_is_approximated_by",
+                    "rangenode_id": "33b4430a-16be-11ef-8633-0242ac180006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "b9e0705b-5463-11e9-9368-000d3ab1e588",
                     "edgeid": "fee505b7-8d25-41c8-9488-eaab24c2ccfd",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -10717,19 +10715,27 @@
             "functions_x_graphs": [
                 {
                     "config": {
-                        "geojson_input_node": "a5419248-f121-11eb-86a9-a87eeabdefba",
-                        "geojson_input_nodegroup": "a541560c-f121-11eb-aa92-a87eeabdefba",
+                        "geojson_node": "a5419248-f121-11eb-86a9-a87eeabdefba",
+                        "geojson_nodegroup": "a541560c-f121-11eb-aa92-a87eeabdefba",
+                        "tm65_node": "4bd349a4-16be-11ef-af79-0242ac180006",
+                        "tm65_nodegroup": "33b4430a-16be-11ef-8633-0242ac180006",
                         "triggering_nodegroups": [
-                            "a541560c-f121-11eb-aa92-a87eeabdefba",
-                            "a541560c-f121-11eb-aa92-a87eeabdefba"
-                        ],
-                        "utm_list_nodegroup": "",
-                        "utm_output_node": "a7d98d68-5eb2-11ee-aa2d-0242ac120008",
-                        "utm_output_nodegroup": "a5416b43-f121-11eb-b691-a87eeabdefba"
+                            "33b4430a-16be-11ef-8633-0242ac180006"
+                        ]
                     },
-                    "function_id": "317a318b-792b-4de3-bea9-e4212850431f",
+                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "4efed52b-7f9c-4afd-afd5-a8a26f61b9f6"
+                    "id": "0560bf8b-3d13-4bd4-a088-b152ba282d0e"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "e7d695ff-9939-11ea-8fff-f875a44e0e11"
+                        ]
+                    },
+                    "function_id": "29b52180-9520-4614-bcd0-77370659d2d2",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "id": "27ca9c9f-4177-4a11-9e81-51332989f199"
                 },
                 {
                     "config": {
@@ -10751,17 +10757,21 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "9add2de4-7d31-4fa6-8d2c-0c02c8f08cbd"
+                    "id": "7ea857f8-79b9-4035-8995-1748c8046842"
                 },
                 {
                     "config": {
+                        "geojson_input_node": "a5419248-f121-11eb-86a9-a87eeabdefba",
+                        "geojson_input_nodegroup": "a541560c-f121-11eb-aa92-a87eeabdefba",
+                        "tm65_output_node": "4bd349a4-16be-11ef-af79-0242ac180006",
+                        "tm65_output_nodegroup": "33b4430a-16be-11ef-8633-0242ac180006",
                         "triggering_nodegroups": [
-                            "e7d695ff-9939-11ea-8fff-f875a44e0e11"
+                            "a541560c-f121-11eb-aa92-a87eeabdefba"
                         ]
                     },
-                    "function_id": "29b52180-9520-4614-bcd0-77370659d2d2",
+                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "id": "cab38388-e829-470b-98ae-86a5614b3f4e"
+                    "id": "a1cafb13-e37a-4427-a764-d1511826ab50"
                 }
             ],
             "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -10802,6 +10812,12 @@
                     "legacygroupid": null,
                     "nodegroupid": "316c7d1e-8554-11ea-aed7-f875a44e0e11",
                     "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "33b4430a-16be-11ef-8633-0242ac180006",
+                    "parentnodegroup_id": "a5416b49-f121-11eb-8e2c-a87eeabdefba"
                 },
                 {
                     "cardinality": "1",
@@ -10927,12 +10943,6 @@
                     "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "a5416b40-f121-11eb-9cb6-a87eeabdefba",
-                    "parentnodegroup_id": "a5416b49-f121-11eb-8e2c-a87eeabdefba"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "a5416b43-f121-11eb-b691-a87eeabdefba",
                     "parentnodegroup_id": "a5416b49-f121-11eb-8e2c-a87eeabdefba"
                 },
                 {
@@ -11907,6 +11917,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": null,
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "National Grid References",
+                    "nodegroup_id": "33b4430a-16be-11ef-8633-0242ac180006",
+                    "nodeid": "33b4430a-16be-11ef-8633-0242ac180006",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMgeo/SP6_Declarative_Place",
+                    "parentproperty": "http://www.ics.forth.gr/isl/CRMgeo/Q11i_is_approximated_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "activity_type",
                     "config": {
                         "rdmCollection": "2953436b-3673-40e8-a521-ab34801800db"
@@ -12442,6 +12475,29 @@
                     "nodeid": "4b779f34-9aa7-11ea-b818-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "irish_grid_reference_tm65_",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "tm65centrepoint",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Irish Grid Reference (TM65)",
+                    "nodegroup_id": "33b4430a-16be-11ef-8633-0242ac180006",
+                    "nodeid": "4bd349a4-16be-11ef-af79-0242ac180006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -14050,29 +14106,6 @@
                     "nodeid": "a5416b40-f121-11eb-9cb6-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "eastings_and_northings",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
-                    "exportable": false,
-                    "fieldname": "",
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "hascustomalias": false,
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Eastings and Northings",
-                    "nodegroup_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
-                    "nodeid": "a5416b43-f121-11eb-b691-a87eeabdefba",
-                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMgeo/SP6_Declarative_Place",
-                    "parentproperty": "http://www.ics.forth.gr/isl/CRMgeo/Q11i_is_approximated_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -17913,29 +17946,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "utm_easting_and_northing",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "UTM Easting and Northing",
-                    "nodegroup_id": "a5416b43-f121-11eb-b691-a87eeabdefba",
-                    "nodeid": "a7d98d68-5eb2-11ee-aa2d-0242ac120008",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "standards_met",
                     "config": {
                         "falseLabel": {
@@ -18899,8 +18909,8 @@
             "publication": {
                 "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                 "notes": null,
-                "publicationid": "d89f6868-030e-11ef-9e41-0242ac150006",
-                "published_time": "2024-04-25T14:19:37.052"
+                "publicationid": "660b4df8-16be-11ef-af79-0242ac180006",
+                "published_time": "2024-05-20T15:34:08.338"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -18936,8 +18946,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "5d638652a 2024-04-15 10:30:00 +0100",
+        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "5.10.0-21-amd64"
     }
 }
