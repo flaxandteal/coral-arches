@@ -6796,21 +6796,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "87d39b2d-f44f-11eb-9660-a87eeabdefba",
-                    "config": {
-                        "label": "National Grid Reference",
-                        "placeholder": "Enter the centre point map reference of the resource."
-                    },
-                    "id": "7e212e18-2dc8-11ec-b5ef-a87eeabdefba",
-                    "label": {
-                        "en": "National Grid Reference"
-                    },
-                    "node_id": "87d3d7bd-f44f-11eb-b1e4-a87eeabdefba",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
-                },
-                {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
                     "config": {
                         "defaultValue": {
@@ -6839,6 +6824,21 @@
                     "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "87d39b2d-f44f-11eb-9660-a87eeabdefba",
+                    "config": {
+                        "label": "Irish Grid Reference (TM65)",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "826595d6-78c0-436d-836c-2c46b4f1a537",
+                    "label": {
+                        "en": "Irish Grid Reference (TM65)"
+                    },
+                    "node_id": "2fdedbd0-1459-11ef-8cdd-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
                 },
                 {
                     "card_id": "247943ca-f089-4a5f-ae1a-cbae18436e15",
@@ -15899,6 +15899,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                    "edgeid": "82804945-f879-446e-ad84-ec5b6709cf86",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "2fdedbd0-1459-11ef-8cdd-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "6184d4fe-1905-11ef-aa9c-0242ac150006",
                     "edgeid": "7fe24aa6-a88f-46f0-ada4-27167d231158",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -16778,15 +16787,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "87d39b42-f44f-11eb-9a05-a87eeabdefba"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
-                    "edgeid": "87dc7383-f44f-11eb-b278-a87eeabdefba",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "87d3d7bd-f44f-11eb-b1e4-a87eeabdefba"
                 },
                 {
                     "description": null,
@@ -19051,6 +19051,34 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "geojson_node": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba",
+                        "geojson_nodegroup": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
+                        "tm65_node": "2fdedbd0-1459-11ef-8cdd-0242ac120006",
+                        "tm65_nodegroup": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                        "triggering_nodegroups": [
+                            "87d39b2b-f44f-11eb-af5e-a87eeabdefba"
+                        ]
+                    },
+                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "id": "79e94760-55e6-465f-bfb0-980bd957f8ed"
+                },
+                {
+                    "config": {
+                        "geojson_input_node": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba",
+                        "geojson_input_nodegroup": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
+                        "tm65_output_node": "2fdedbd0-1459-11ef-8cdd-0242ac120006",
+                        "tm65_output_nodegroup": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                        "triggering_nodegroups": [
+                            "87d3872b-f44f-11eb-bd0c-a87eeabdefba"
+                        ]
+                    },
+                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "id": "b4f0a3de-5044-4b4d-b3f8-0391948f3c86"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "ba342e69-b554-11ea-a027-f875a44e0e11",
@@ -20620,6 +20648,29 @@
                     "nodeid": "2ca418de-07b8-11ef-9053-0242ac140006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "irish_grid_reference_tm65_",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "tm65centrepoint",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Irish Grid Reference (TM65)",
+                    "nodegroup_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                    "nodeid": "2fdedbd0-1459-11ef-8cdd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -28180,29 +28231,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "national_grid_reference",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "bngcentrepoint",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "NGR",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "National Grid Reference",
-                    "nodegroup_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
-                    "nodeid": "87d3d7bd-f44f-11eb-b1e4-a87eeabdefba",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "area_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -34294,6 +34322,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "ce5aabf11 2024-06-05 03:45:12 +0100",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "5.10.0-21-amd64"
     }
 }
