@@ -996,7 +996,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "b8a60efb-29a4-11eb-bffe-f875a44e0e11",
                     "sortorder": 19,
@@ -3438,21 +3438,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "9f07bc4a-f457-11eb-bbb8-a87eeabdefba",
-                    "config": {
-                        "label": "National Grid Reference",
-                        "placeholder": "Enter the centre point map reference of the resource."
-                    },
-                    "id": "6b45ff6d-2dc3-11ec-a2ea-a87eeabdefba",
-                    "label": {
-                        "en": "National Grid Reference"
-                    },
-                    "node_id": "9f07e457-f457-11eb-b218-a87eeabdefba",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
-                },
-                {
                     "card_id": "8b1aa8b3-59df-11e9-9889-18cf5eb368c4",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
@@ -5100,7 +5085,7 @@
                                         "conceptid": "f15236e8-c8c9-420c-a8e3-fa68a1901ee8",
                                         "id": "a87aec59-b59d-4c29-9def-9c69396609ac",
                                         "sortorder": "",
-                                        "text": "Other 8 (Dedicated to the display of a monument)"
+                                        "text": "Other 8 (Dedicated to the display of a heritage asset)"
                                     },
                                     {
                                         "children": [],
@@ -8774,14 +8759,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Monument, Area or Artefact",
+                        "label": "Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "b8a60f01-29a4-11eb-b068-f875a44e0e11",
                     "label": {
-                        "en": "Monument, Area or Artefact"
+                        "en": "Heritage Asset, Area or Artefact"
                     },
                     "node_id": "b8a60f00-29a4-11eb-be8c-f875a44e0e11",
                     "sortorder": 0,
@@ -11267,6 +11252,15 @@
                 "en": ""
             },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "9f07bc48-f457-11eb-9d88-a87eeabdefba",
+                    "edgeid": "ba5e734c-60ab-4920-b0ac-048da5208136",
+                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "ee82b4ba-16c2-11ef-af79-0242ac180006"
+                },
                 {
                     "description": null,
                     "domainnode_id": "cf98efe8-50ee-11eb-83c4-f875a44e0e11",
@@ -13816,15 +13810,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "9f07bc48-f457-11eb-9d88-a87eeabdefba",
-                    "edgeid": "9f100436-f457-11eb-b80a-a87eeabdefba",
-                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "9f07e457-f457-11eb-b218-a87eeabdefba"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "9f07bc4b-f457-11eb-9833-a87eeabdefba",
                     "edgeid": "9f100437-f457-11eb-882e-a87eeabdefba",
                     "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
@@ -15736,6 +15721,34 @@
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
                     "id": "12d89234-d908-413a-9bb7-61853015a8a0"
+                },
+                {
+                    "config": {
+                        "geojson_input_node": "9f07fa25-f457-11eb-98c7-a87eeabdefba",
+                        "geojson_input_nodegroup": "9f07956f-f457-11eb-b63c-a87eeabdefba",
+                        "tm65_output_node": "ee82b4ba-16c2-11ef-af79-0242ac180006",
+                        "tm65_output_nodegroup": "9f07bc48-f457-11eb-9d88-a87eeabdefba",
+                        "triggering_nodegroups": [
+                            "9f07956f-f457-11eb-b63c-a87eeabdefba"
+                        ]
+                    },
+                    "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
+                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+                    "id": "94be85c7-b6c4-4ec2-89ef-9262ad781fd5"
+                },
+                {
+                    "config": {
+                        "geojson_node": "9f07fa25-f457-11eb-98c7-a87eeabdefba",
+                        "geojson_nodegroup": "9f07956f-f457-11eb-b63c-a87eeabdefba",
+                        "tm65_node": "ee82b4ba-16c2-11ef-af79-0242ac180006",
+                        "tm65_nodegroup": "9f07bc48-f457-11eb-9d88-a87eeabdefba",
+                        "triggering_nodegroups": [
+                            "9f07bc48-f457-11eb-9d88-a87eeabdefba"
+                        ]
+                    },
+                    "function_id": "e83afc88-4c6a-40f1-9490-55c62b2912c2",
+                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+                    "id": "ef371991-3c35-4c07-a49e-cd1401763c89"
                 }
             ],
             "graphid": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
@@ -15995,6 +16008,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "irish_grid_reference_tm65_",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "tm65centrepoint",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Irish Grid Reference (TM65)",
+                    "nodegroup_id": "9f07bc48-f457-11eb-9d88-a87eeabdefba",
+                    "nodeid": "ee82b4ba-16c2-11ef-af79-0242ac180006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "construction_phase_end_date",
                     "config": {
@@ -22106,26 +22142,6 @@
                     "sortorder": 0
                 },
                 {
-                    "alias": "national_grid_reference",
-                    "config": {},
-                    "datatype": "bngcentrepoint",
-                    "description": null,
-                    "exportable": true,
-                    "fieldname": "NGR",
-                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "National Grid Reference",
-                    "nodegroup_id": "9f07bc48-f457-11eb-9d88-a87eeabdefba",
-                    "nodeid": "9f07e457-f457-11eb-b218-a87eeabdefba",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "sortorder": 0
-                },
-                {
                     "alias": "area_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -24290,7 +24306,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monuments, Areas and Artefacts",
+                    "name": "Associated Heritage Assets, Areas and Artefacts",
                     "nodegroup_id": "b8a60efb-29a4-11eb-bffe-f875a44e0e11",
                     "nodeid": "b8a60efb-29a4-11eb-bffe-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -24359,7 +24375,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -24381,7 +24397,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument, Area or Artefact",
+                    "name": "Heritage Asset, Area or Artefact",
                     "nodegroup_id": "b8a60efb-29a4-11eb-bffe-f875a44e0e11",
                     "nodeid": "b8a60f00-29a4-11eb-be8c-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -26909,7 +26925,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record the details of historic vessels which are either retained as monuments (eg. Museum Ships or Memorials) or have been identified through the discovery of associated wreck sites. A Monument record should be created for the wreck site where known."
+                "en": "Used to record the details of historic vessels which are either retained as heritage assets (eg. Museum Ships or Memorials) or have been identified through the discovery of associated wreck sites. A Heritage Asset record should be created for the wreck site where known."
             },
             "template_id": "03871d64-7076-46e8-b0ed-4b8813b0afd4",
             "version": ""

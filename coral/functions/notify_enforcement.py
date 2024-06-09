@@ -2,7 +2,7 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from arches.app.models import models
-
+from arches_orm.models import Person, Group
 
 SYSTEM_REF_NODEGROUP = "ba39c036-b551-11ee-94ee-0242ac120006"
 SYSTEM_REF_RESOURCE_ID_NODE = "ba3a083e-b551-11ee-94ee-0242ac120006"
@@ -19,13 +19,17 @@ ASSOCIATED_ACTOR_NODE = "f0b9edd4-b551-11ee-805b-0242ac120006"
 FLAGGED_DATE_NODEGROUP = "229501c2-b552-11ee-805b-0242ac120006"
 FLAGGED_DATE_NODE = "2295085c-b552-11ee-805b-0242ac120006"
 
+ENFORCEMENT_GROUP = "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8"
+
 
 details = {
     "functionid": "3cf14ca7-4c4d-46c8-8b69-41d7d36a365f",
     "name": "Notify Enforcement",
     "type": "node",
     "description": "Will send a notification on creation of an enforcement to a specified user",
-    "defaultconfig": {"triggering_nodegroups": [REASON_DESC_NODEGROUP]},
+    "defaultconfig": {
+        "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, REASON_DESC_NODEGROUP]
+    },
     "classname": "NotifyEnforcement",
     "component": "",
 }
@@ -38,16 +42,24 @@ class NotifyEnforcement(BaseFunction):
         existing_notification = models.Notification.objects.filter(
             context__resource_instance_id=resource_instance_id
         ).first()
-        if existing_notification:
-            return
 
         reason_description = models.TileModel.objects.filter(
             resourceinstance_id=resource_instance_id, nodegroup_id=REASON_DESC_NODEGROUP
         ).first()
 
+        if existing_notification:
+            existing_notification.message = (
+                reason_description.data.get(REASON_DESC_NODE).get("en").get("value")
+            )
+            existing_notification.save()
+            return
+
         system_ref = models.TileModel.objects.filter(
             resourceinstance_id=resource_instance_id, nodegroup_id=SYSTEM_REF_NODEGROUP
         ).first()
+
+        if not reason_description or not system_ref:
+            return
 
         notification = models.Notification(
             message=reason_description.data.get(REASON_DESC_NODE)
@@ -62,7 +74,14 @@ class NotifyEnforcement(BaseFunction):
         )
         notification.save()
 
-        user_x_notification = models.UserXNotification(
-            notif=notification, recipient=request.user
-        )
-        user_x_notification.save()
+        enforcement_group = Group.find(ENFORCEMENT_GROUP)
+
+        persons = [Person.find(member.id) for member in enforcement_group.members]
+
+        for person in persons:
+            user = person.user_account
+
+            user_x_notification = models.UserXNotification(
+                notif=notification, recipient=user
+            )
+            user_x_notification.save()

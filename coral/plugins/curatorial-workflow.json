@@ -1,0 +1,229 @@
+{
+  "pluginid": "2d785399-83a7-4887-b73b-776f8006e7e6",
+  "name": "Curatorial Inspection",
+  "icon": "fa fa-file",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
+    "stepConfig": [
+      {
+        "name": "start-step",
+        "title": "Start",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "prefix": "CIN",
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11",
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11"
+                  ],
+                  "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
+                    }
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "system-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "asset-details-step",
+        "title": "Asset Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "labels": [["Monument or Area", "SMR Number"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d"
+                },
+                "tilesManaged": "one",
+                "componentName": "get-selected-monument-details",
+                "uniqueInstanceName": "281fac87-89eb-44de-bb43-aaf54707c53a"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "e85f6714-24cc-11ef-a3a4-0242ac130006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "38e300d3-20d8-4b58-8b77-3bed76a28e29"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "0ecfd47a-24cc-11ef-97ad-0242ac130006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "5b49286a-a44a-4121-90a0-36bfdbd8e5b8"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "a2cda8b4-24cc-11ef-97ad-0242ac130006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "56fe1352-c0b0-4241-8ecf-95b7bf44d979"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
+                  "hiddenNodes": [
+                    "7224417b-893a-11ea-b383-f875a44e0e11",
+                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "f3bcbb6a-8b21-4665-ba49-0addca8d5518"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "c1a49ce2-24cd-11ef-97ad-0242ac130006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "7ec14b81-139c-4588-9dbe-66b874f0d7c1"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "attendees-details-step",
+        "title": "Attendees Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
+                  "hiddenNodes": [
+                    "a3047fd4-031a-11ef-8ec2-0242ac150006",
+                    "166ed240-031a-11ef-8ec2-0242ac150006",
+                    "166ed240-031a-11ef-8ec2-0242ac150006",
+                    "b7304f4c-3ace-11eb-8884-f875a44e0e11",
+                    "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
+                    "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
+                    "4ea4a19a-184f-11eb-aef8-f875a44e0e11",
+                    "4ea4c884-184f-11eb-b64d-f875a44e0e11",
+                    "4ea4a197-184f-11eb-9152-f875a44e0e11",
+                    "4c00b292-fb2d-11ee-838d-0242ac190006",
+                    "ecbda08c-fb2d-11ee-838d-0242ac190006"
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "3fe230bb-0470-4a97-a122-a4fd3e68c0fe"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "comments-step",
+        "title": "Comments",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "75d950a6-24d6-11ef-bb69-0242ac130006"
+                },
+                "tilesManaged": "many",
+                "componentName": "default-card",
+                "uniqueInstanceName": "353d0a42-27fd-4002-b6f0-c2fd1680124f"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "upload-step",
+        "title": "Upload",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceModelDigitalObjectNodeGroupId": "b3addca4-8882-11ea-acc1-f875a44e0e11"
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "upload"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "sign-off-step",
+        "title": "Sign Off",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "hiddenNodes": [
+                    "998d6728-fb26-11ee-838d-0242ac190006"
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "54ae3160-93a5-4c65-831c-52706b89a22a"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ],
+    "initWorkflow": {
+      "desc": "Start a Curatorial Inspection",
+      "icon": "fa fa-file",
+      "name": "Curatorial Inspection",
+      "show": true,
+      "bgColor": "#86679c",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#aa86c4"
+    }
+  },
+  "slug": "curatorial-workflow",
+  "sortorder": 0
+}

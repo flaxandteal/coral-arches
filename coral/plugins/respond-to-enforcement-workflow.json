@@ -1,14 +1,15 @@
 {
   "pluginid": "cdf928fb-8666-4eea-a9ce-aeb0830192fc",
   "name": "Respond to Enforcement",
-  "icon": "fa fa-asterisk",
+  "icon": "fa fa-file-text",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
-    "stepData": [
+    "graphId": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+    "stepConfig": [
       {
-        "name": "initial-step",
+        "name": "initial-step-step",
         "title": "Initial step",
         "required": true,
         "layoutSections": [
@@ -17,7 +18,6 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "",
                   "nodegroupid": "ba39c036-b551-11ee-94ee-0242ac120006",
                   "semanticName": "System Reference Numbers"
                 },
@@ -40,7 +40,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
                   "semanticName": "Associated Resources"
                 },
@@ -51,7 +51,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "2a6b7040-b555-11ee-baf6-0242ac120006",
                   "semanticName": "Enforcement Names"
                 },
@@ -62,7 +62,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "ac823b90-b555-11ee-805b-0242ac120006",
                   "semanticName": "Enforcement Status"
                 },
@@ -73,10 +73,8 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "25e2708a-b557-11ee-805b-0242ac120006"
-                  ],
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["25e2708a-b557-11ee-805b-0242ac120006"],
                   "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
                   "semanticName": "Case References"
                 },
@@ -87,7 +85,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "0674ff12-b5e6-11ee-a372-0242ac120006",
                   "semanticName": "Crime References"
                 },
@@ -98,7 +96,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "89bf628e-b552-11ee-805b-0242ac120006",
                   "semanticName": "Reason Description"
                 },
@@ -109,7 +107,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "7b7c6466-b556-11ee-baf6-0242ac120006",
                   "semanticName": "Agreed Action Description"
                 },
@@ -120,7 +118,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "b6cef4d4-b556-11ee-805b-0242ac120006",
                   "semanticName": "Current Position Description"
                 },
@@ -131,7 +129,7 @@
               {
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "f3fbe146-b556-11ee-805b-0242ac120006",
                   "semanticName": "Result Description"
                 },
@@ -143,8 +141,36 @@
           }
         ],
         "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "summary-step",
+        "title": "Enforcement Summary",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "enforcement-summary-step"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "",
+      "icon": "fa fa-file-text",
+      "name": "Respond to Enforcement",
+      "show": false,
+      "bgColor": "#617099",
+      "slugPrefix": "",
+      "circleColor": "#4a5e94"
+    }
   },
   "slug": "respond-to-enforcement-workflow",
   "sortorder": 0

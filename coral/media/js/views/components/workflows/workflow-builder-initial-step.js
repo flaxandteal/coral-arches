@@ -20,12 +20,31 @@ define([
       self.dirty(val);
     });
 
+    this.labels = params.labels || [];
+    params.form
+      .card()
+      ?.widgets()
+      .forEach((widget) => {
+        this.labels?.forEach(([prevLabel, newLabel]) => {
+          if (widget.label() === prevLabel) {
+            widget.label(newLabel);
+          }
+        });
+      });
+
     params.form.save = async () => {
       await self.tile().save();
 
       if (!params.requiredParentTiles) {
+        params.form.savedData({
+          tileData: koMapping.toJSON(self.tile().data),
+          tileId: self.tile().tileid,
+          resourceInstanceId: self.tile().resourceinstance_id,
+          nodegroupId: self.tile().nodegroup_id,
+        });
         params.form.complete(true);
         params.form.saving(false);
+        return;
       }
 
       const responses = await Promise.all(params.requiredParentTiles.map(self.saveParentTile));

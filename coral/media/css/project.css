@@ -999,3 +999,57 @@ span.rp-tile-title {
 .workflow-form-component {
     height: min-content;
 }
+
+.docx-preview--overrides .docx-wrapper {
+    background: #eceef0 !important;
+}
+
+
+.full-height-map {
+    height: 100%;
+}
+
+.full-height-map .workflow-component-based-step {
+    height: 100%;
+}
+
+.full-height-map .workbench-card-sidebar {
+    visibility: hidden;
+}
+
+.dashboard-card-columns {
+    display:flex; 
+    justify-content: space-between; 
+    width:100%;
+    padding: 0 2rem;
+    margin-bottom: 1rem;
+}
+
+.dashboard-card-columns > div > p {
+    font-size: 1rem;
+}
+
+.dashboard-card-columns-alt {
+    display:flex; 
+    width:100%;
+    padding: 0 2rem;
+    margin-bottom: 1rem;
+}
+
+.dashboard-card-columns-alt > div:first-child {
+    width: 75%;
+}
+
+.dashboard-card-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 220px;
+}
+
+.dashboard-counter-card {
+    width: 300px;
+    min-height: 120px;
+    margin:2rem 5rem;
+    padding: 0 1rem 1rem 1rem;
+}

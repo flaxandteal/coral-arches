@@ -5,33 +5,28 @@ define([
   'uuid',
   'underscore',
   'viewmodels/alert',
-  'templates/views/components/widgets/check-open-applications.htm',
-  // 'templates/views/components/widgets/resource-instance-select.htm'
-], function (
-  $,
-  ko,
-  arches,
-  uuid,
-  _,
-  AlertViewModel,
-  checkOpenApplicationsTemplate
-) {
-
+  'templates/views/components/widgets/check-open-applications.htm'
+], function ($, ko, arches, uuid, _, AlertViewModel, checkOpenApplicationsTemplate) {
   const viewModel = function (params) {
     const ResourceInstanceSelectViewModel = require('viewmodels/resource-instance-select');
 
     params.multiple = false;
     params.datatype = 'resource-instance';
-    // params.configKeys = ['placeholder', 'defaultResourceInstance'];
-
-    console.log('params: ', params);
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
 
     this.totalOpenApplications = ko.observable();
+    this.totalLicenses = ko.observable();
     this.currentState = ko.observable();
 
-    this.limit = ko.observable(6);
+    this.limit = ko.observable(params.config().limit);
+
+    this.limit.subscribe((value) => {
+      this.config({
+        ...this.config(),
+        limit: value
+      });
+    }, this);
 
     this.OK = 'OK';
     this.WARNING = 'WARNING';
@@ -75,6 +70,10 @@ define([
       }
     }, true);
 
+    this.totalLicensesMessage = ko.computed(() => {
+      return `This licensee has had ${this.totalLicenses()} licenses approved.`;
+    }, true);
+
     this.colour = ko.computed(() => {
       if (this.currentState() in this.states) {
         return this.states[this.currentState()].colour;
@@ -94,6 +93,7 @@ define([
     this.value.subscribe(async (value) => {
       console.log('value selection updated: ', value);
       if (value && value[0]?.resourceId()) {
+        await this.checkTotalApplications(value[0].resourceId());
         await this.checkOpenApplications(value[0].resourceId());
       } else {
         this.currentState(null);
@@ -101,6 +101,7 @@ define([
     }, this);
 
     this.openApplicationsRequest = null;
+    this.totalLicensesRequest = null;
     this.openApplicationsState = ko.observable(false);
 
     this.checkOpenApplications = async (personResourceId) => {
@@ -123,96 +124,92 @@ define([
           'advanced-search': JSON.stringify([
             {
               op: 'and',
-              '6d2924b6-5891-11ee-a624-0242ac120004': {
-                // Applicant
+              '6d2924b6-5891-11ee-a624-0242ac120004': { op: '', val: '' },
+              '6d294784-5891-11ee-a624-0242ac120004': {
                 op: '',
-                val: personResourceId // Resource ID
+                val: personResourceId
               },
-              // '6d292a2e-5891-11ee-a624-0242ac120004': { op: '', val: '' },
-              // '6d292f88-5891-11ee-a624-0242ac120004': { op: '', val: '' },
               '6d293532-5891-11ee-a624-0242ac120004': { op: '', val: '' },
-              '6d294784-5891-11ee-a624-0242ac120004': { op: '', val: '' }
+              '07d3905c-d58b-11ee-a02f-0242ac180006': { op: '', val: '' },
+              '318184a4-d58b-11ee-89d9-0242ac180006': { op: 'eq', val: '' },
+              '4936d1c6-d58b-11ee-a02f-0242ac180006': { op: 'eq', val: '' }
+            },
+            {
+              op: 'and',
+              '2a5151f0-c42e-11ee-94bf-0242ac180006': { op: 'null', val: '' },
+              'd48f412c-c42e-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f51490-c42d-11ee-94bf-0242ac180006': { op: '', val: '' },
+              'c9f5174c-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f518aa-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' }
             },
             {
               op: 'or',
-              'a79fedae-bad5-11ee-900d-0242ac180006': {
-                op: '',
-                val: '3e437a57-954f-49de-baae-536c7e0bcb74' // Not Used
-              }
+              '2a5151f0-c42e-11ee-94bf-0242ac180006': {
+                op: 'eq',
+                val: '0c888ace-b068-470a-91cb-9e5f57c660b4'
+              },
+              'd48f412c-c42e-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f51490-c42d-11ee-94bf-0242ac180006': { op: '', val: '' },
+              'c9f5174c-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f518aa-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' }
             },
             {
               op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
               'a79fedae-bad5-11ee-900d-0242ac180006': {
-                op: '',
-                val: '5b119129-7d05-44af-b7f3-d6cc4e7d13de' // Withdrawn
-              }
-            },
-            // {
-            //   op: 'or',
-            //   'a79fedae-bad5-11ee-900d-0242ac180006': {
-            //     op: '',
-            //     val: '40557c74-cb18-4111-a349-a91eb926e163' // Refused
-            //   }
-            // },
-            // {
-            //   op: 'or',
-            //   'a79fedae-bad5-11ee-900d-0242ac180006': {
-            //     op: '',
-            //     val: '8c454982-c470-437d-a9c6-87460b07b3d9' // Granted
-            //   }
-            // },
-            {
-              op: 'or',
-              'a79fedae-bad5-11ee-900d-0242ac180006': {
-                op: '',
-                val: '48e031eb-9be3-4ba2-9cb7-798184a9d2bf' // Paused
-              }
+                op: 'eq',
+                val: '0df1843b-28e9-4868-9a9a-d19229fe5c48'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
             },
             {
               op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
               'a79fedae-bad5-11ee-900d-0242ac180006': {
-                op: '',
-                val: 'af08ac99-205f-4d97-8829-55a8e7da1c9d' // In progress
-              }
+                op: 'eq',
+                val: '2e2703e4-4f19-47ca-842d-a45c8502a547'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
             },
             {
               op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
               'a79fedae-bad5-11ee-900d-0242ac180006': {
-                op: '',
-                val: '0df1843b-28e9-4868-9a9a-d19229fe5c48' // Acknowledged
-              }
+                op: 'eq',
+                val: 'af08ac99-205f-4d97-8829-55a8e7da1c9d'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
             },
             {
               op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
               'a79fedae-bad5-11ee-900d-0242ac180006': {
-                op: '',
-                val: '2e2703e4-4f19-47ca-842d-a45c8502a547' // Received
-              }
-            },
+                op: 'eq',
+                val: '48e031eb-9be3-4ba2-9cb7-798184a9d2bf'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
+            }
           ])
         },
         context: this,
         success: function (response) {
-          console.log('search response: ', response);
           this.totalOpenApplications(response.results.hits.total.value);
+          let limit = parseInt(this.limit());
 
           switch (true) {
-            case this.totalOpenApplications() <= this.limit() - 2:
+            case this.totalOpenApplications() <= limit - 2:
               this.currentState(this.OK);
               break;
-            case this.totalOpenApplications() === this.limit() - 1:
+            case this.totalOpenApplications() === limit - 1:
               this.currentState(this.WARNING);
               break;
-            case this.totalOpenApplications() === this.limit():
+            case this.totalOpenApplications() === limit:
               this.currentState(this.MAX);
               break;
-            case this.totalOpenApplications() >= this.limit() + 1:
+            case this.totalOpenApplications() >= limit + 1:
               this.currentState(this.EXCEEDED);
               break;
           }
-
-          // console.log('this.currentState(): ', this.currentState());
-          // console.log('this.totalOpenApplications(): ', this.totalOpenApplications());
         },
         error: function (response, status, error) {
           if (this.openApplicationsRequest.statusText !== 'abort') {
@@ -225,13 +222,146 @@ define([
               )
             );
           }
-          this.exceededThreshold = false;
         },
         complete: function (request, status) {
           this.openApplicationsRequest = undefined;
         }
       });
     };
+
+    this.checkTotalApplications = async (personResourceId) => {
+      if (this.totalLicensesRequest) {
+        this.totalLicensesRequest.abort();
+      }
+
+      this.totalLicensesRequest = $.ajax({
+        type: 'GET',
+        url: arches.urls.search_results,
+        data: {
+          'paging-filter': 1,
+          tiles: true,
+          format: 'tilecsv',
+          reportlink: 'false',
+          precision: '6',
+          total: '0',
+          'advanced-search': JSON.stringify([
+            {
+              op: 'and',
+              '6d2924b6-5891-11ee-a624-0242ac120004': { op: '', val: '' },
+              '6d294784-5891-11ee-a624-0242ac120004': {
+                op: '',
+                val: personResourceId
+              },
+              '6d293532-5891-11ee-a624-0242ac120004': { op: '', val: '' },
+              '07d3905c-d58b-11ee-a02f-0242ac180006': { op: '', val: '' },
+              '318184a4-d58b-11ee-89d9-0242ac180006': { op: 'eq', val: '' },
+              '4936d1c6-d58b-11ee-a02f-0242ac180006': { op: 'eq', val: '' }
+            },
+            {
+              op: 'and',
+              '2a5151f0-c42e-11ee-94bf-0242ac180006': {
+                op: 'eq',
+                val: '0c888ace-b068-470a-91cb-9e5f57c660b4'
+              },
+              'd48f412c-c42e-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f51490-c42d-11ee-94bf-0242ac180006': { op: '', val: '' },
+              'c9f5174c-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f518aa-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' }
+            },
+            {
+              op: 'or',
+              '2a5151f0-c42e-11ee-94bf-0242ac180006': { op: 'null', val: '' },
+              'd48f412c-c42e-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f51490-c42d-11ee-94bf-0242ac180006': { op: '', val: '' },
+              'c9f5174c-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' },
+              'c9f518aa-c42d-11ee-94bf-0242ac180006': { op: 'eq', val: '' }
+            },
+            {
+              op: 'and',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
+              'a79fedae-bad5-11ee-900d-0242ac180006': {
+                op: 'eq',
+                val: '8c454982-c470-437d-a9c6-87460b07b3d9'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
+            },
+            {
+              op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
+              'a79fedae-bad5-11ee-900d-0242ac180006': {
+                op: 'eq',
+                val: '40557c74-cb18-4111-a349-a91eb926e163'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
+            },
+            {
+              op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
+              'a79fedae-bad5-11ee-900d-0242ac180006': {
+                op: 'eq',
+                val: '5b119129-7d05-44af-b7f3-d6cc4e7d13de'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
+            },
+            {
+              op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
+              'a79fedae-bad5-11ee-900d-0242ac180006': {
+                op: 'eq',
+                val: '3e437a57-954f-49de-baae-536c7e0bcb74'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
+            },
+            {
+              op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
+              'a79fedae-bad5-11ee-900d-0242ac180006': {
+                op: 'eq',
+                val: '7c812dd6-30eb-4d27-b37d-72645706921d'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
+            },
+            {
+              op: 'or',
+              'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
+              'a79fedae-bad5-11ee-900d-0242ac180006': {
+                op: 'eq',
+                val: '81f88515-42b8-41b9-bc8b-82518be3af07'
+              },
+              'c2f40174-5dd5-11ee-ae2c-0242ac120008': { val: '' }
+            }
+          ])
+        },
+        context: this,
+        success: function (response) {
+          this.totalLicenses(response.results.hits.total.value);
+        },
+        error: function (response, status, error) {
+          if (this.totalLicensesRequest.statusText !== 'abort') {
+            console.log(response, status, error);
+            params.pageVm.alert(
+              new AlertViewModel(
+                'ep-alert-red',
+                arches.translations.requestFailed.title,
+                response.responseText
+              )
+            );
+          }
+        },
+        complete: function (request, status) {
+          this.totalLicensesRequest = undefined;
+        }
+      });
+    };
+
+    this.init = async () => {
+      if (this.value()) {
+        await this.checkTotalApplications(this.value());
+        await this.checkOpenApplications(this.value());
+      }
+    };
+
+    this.init();
   };
 
   /**

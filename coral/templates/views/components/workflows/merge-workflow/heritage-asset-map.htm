@@ -1,5 +1,6 @@
 {% load i18n %}
-<div class="workbench-card-wrapper" style="height: 600px">
+  <!--ko if: !loading() -->
+<div class="workbench-card-wrapper" style="height: 100%">
   <div class="workbench-card-sidebar">
     {% block tabs %}
     <div
@@ -150,3 +151,4 @@
         }"
   ></div>
 </div>
+  <!-- /ko  -->

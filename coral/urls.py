@@ -9,10 +9,12 @@ from coral.views.group_manager import GroupManagerView
 from coral.views.person_user import PersonUserSignupView
 from arches.app.views.plugin import PluginView
 from coral.views.auth import PersonSignupView, PersonConfirmSignupView
-from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport
+from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport, WorkflowBuilderUpdateInitWorkflow
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResources
 from coral.views.monument_revision_remap import MonumentRevisionRemap
+from coral.views.dashboard import Dashboard
+from coral.views.file_template import FileTemplateView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -26,6 +28,7 @@ urlpatterns = [
     re_path(r'^groupmanager/(?P<grouping>[a-zA-Z_-]+)/(?P<resourceid>%s|())$' % uuid_regex, GroupManagerView.as_view(), name='groupmanager'),
     re_path(r'^person-signup', PersonSignupView.as_view(), name="person-signup"),
     re_path(r'^person-confirm-signup', PersonConfirmSignupView.as_view(), name="person-confirm-signup"),
+    re_path(r'^filetemplate', FileTemplateView.as_view(), name='filetemplate'),
 
     #
     # Workflow Builder URLs 
@@ -37,6 +40,16 @@ urlpatterns = [
     re_path(r"^workflow-builder/plugins", WorkflowBuilderWorkflowPlugins.as_view(), name="wb_plugins"),
     re_path(r"^workflow-builder/export", WorkflowBuilderPluginExport.as_view(), name="wb_export_plugin"),
     re_path(r"^workflow-builder/update", WorkflowBuilderWorkflowPlugins.as_view(), name="wb_update"),
+    re_path(
+        r"^workflow-builder/init-workflow",
+        WorkflowBuilderUpdateInitWorkflow.as_view(),
+        name="wb_update_init_workflow",
+    ),
+
+    #
+    # Dashboard
+    #
+    re_path(r"^dashboard/resources", Dashboard.as_view(), name="dashboard"),
 
     #
     # Open Workflow

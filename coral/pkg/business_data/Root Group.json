@@ -1,0 +1,70 @@
+{
+  "business_data": {
+    "resources": [
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "Global Group"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+          "legacyid": null,
+          "name": "Global Group",
+          "principaluser_id": null,
+          "resourceinstanceid": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+          "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Global Group" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": null
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+            "sortorder": 0,
+            "tileid": "8225f975-813d-4705-9ada-e8cedd6fea48"
+          },
+          {
+            "data": {
+              "32dba023-c05e-11e9-aa88-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Global root of group hierarchy." },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "32db94f8-c05e-11e9-a2c1-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+            "sortorder": 0,
+            "tileid": "98e7a90d-b1dc-49f6-8919-9434785e86ff"
+          }
+        ]
+      }
+    ]
+  }
+}

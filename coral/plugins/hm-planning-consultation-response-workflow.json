@@ -1,15 +1,15 @@
 {
   "pluginid": "ccc37d70-d4f1-4e8f-afa4-f633de6a8121",
   "name": "HM Planning Consultation Response",
-  "icon": "fa fa-check",
+  "icon": "fa fa-file-text",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
   "config": {
     "show": false,
     "graphId": "8d41e49e-a250-11e9-9eab-00224800b26d",
-    "stepData": [
+    "stepConfig": [
       {
-        "name": "initial-step",
+        "name": "initial-step-step",
         "title": "Initial step",
         "required": false,
         "layoutSections": [
@@ -50,7 +50,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
                   "semanticName": "Assignment"
                 },
@@ -61,7 +61,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "ac905d54-ca65-11ee-b83c-0242ac180006",
                     "19eef70c-69b8-11ee-8431-0242ac120002",
@@ -80,7 +80,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
                   "semanticName": "CM References"
                 },
@@ -103,7 +103,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "b4974044-c768-11ee-a945-0242ac180006",
                   "semanticName": "Planning References"
                 },
@@ -114,7 +114,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
                   "semanticName": "CM References"
                 },
@@ -125,7 +125,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
                   "semanticName": "DIF Received Date"
                 },
@@ -136,7 +136,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "b37552be-9527-11ea-9213-f875a44e0e11",
                     "b37552bf-9527-11ea-9c87-f875a44e0e11"
@@ -151,7 +151,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "54de6acc-8895-11ea-9067-f875a44e0e11",
                   "semanticName": "Application Type"
                 },
@@ -162,7 +162,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "86caf026-c76c-11ee-bf7c-0242ac180006",
                   "semanticName": "Classification Type"
                 },
@@ -173,7 +173,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "73fdfe62-8895-11ea-a058-f875a44e0e11",
                   "semanticName": "Development Type"
                 },
@@ -184,12 +184,16 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
+                    "ecbda08c-fb2d-11ee-838d-0242ac190006",
+                    "166ed240-031a-11ef-8ec2-0242ac150006",
+                    "a3047fd4-031a-11ef-8ec2-0242ac150006",
+                    "4c00b292-fb2d-11ee-838d-0242ac190006",
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
-                    "b7304f4c-3ace-11eb-8884-f875a44e0e11",
+                    "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
                     "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
-                    "4ea4a192-184f-11eb-a0d6-f875a44e0e11"
+                    "b7304f4c-3ace-11eb-8884-f875a44e0e11"
                   ],
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
                   "semanticName": "Contacts"
@@ -201,7 +205,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11",
                     "7224417b-893a-11ea-b383-f875a44e0e11"
@@ -226,7 +230,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
                   "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
                   "semanticName": "Proposal"
@@ -250,9 +254,9 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step']['system-reference'][0]['resourceid']['locationData']",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
@@ -274,7 +278,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
                   "semanticName": "Response Action"
                 },
@@ -311,7 +315,16 @@
         ],
         "workflowstepclass": "workflow-form-component"
       }
-    ]
+    ],
+    "initWorkflow": {
+      "desc": "Respond to a consultation for HM",
+      "icon": "fa fa-file-text",
+      "name": "HM Planning Consultation Response",
+      "show": true,
+      "bgColor": "#688294",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#7195ad"
+    }
   },
   "slug": "hm-planning-consultation-response-workflow",
   "sortorder": 0

@@ -7,35 +7,36 @@ define([
   'templates/views/components/plugins/workflow-builder-editor.htm',
   'viewmodels/workflow-builder-step',
   'viewmodels/workflow-builder-config',
-  'plugins/knockout-select2'
+  // 'plugins/knockout-select2'
 ], function ($, ko, koMapping, arches, uuid, pageTemplate, WorkflowBuilderStep) {
   const pageViewModel = function (params) {
     this.loading = params.loading;
 
     this.graphId = ko.observable();
-    this.workflowName = ko.observable('Basic');
-    this.showWorkflowInSidebar = ko.observable(false);
-    this.workflowSlug = ko.observable('basic-workflow');
+
+    this.builderConfig = ko.observable();
+    this.configActive = ko.observable(false);
 
     this.workflowSteps = ko.observableArray();
     this.activeStep = ko.observable();
 
     this.workflowPlugin = ko.observable();
 
-    this.configActive = ko.observable(false);
-
     this.graphNodegroupOptions = ko.observable({});
     this.graphCards = ko.observable({});
 
-    this.addStep = (stepData) => {
-      const title = stepData?.title || 'New Step';
+    this.addStep = (stepConfig) => {
       const step = new WorkflowBuilderStep({
-        title: title,
-        cards: stepData?.layoutSections[0].componentConfigs,
+        title: stepConfig?.title,
+        cards: stepConfig?.layoutSections[0].componentConfigs,
         graphId: this.graphId(),
-        required: stepData?.required || false,
-        stepId: stepData?.name || uuid.generate(),
-        parentWorkflow: this
+        required: stepConfig?.required,
+        stepName: stepConfig?.name,
+        parentWorkflow: this,
+        informationBox: {
+          heading: stepConfig?.informationboxdata?.heading,
+          text: stepConfig?.informationboxdata?.text
+        }
       });
       this.workflowSteps().push(step);
       this.workflowSteps.valueHasMutated();
@@ -45,8 +46,8 @@ define([
     };
 
     this.loadSteps = (steps) => {
-      steps?.forEach((stepData) => {
-        this.addStep(stepData);
+      steps?.forEach((stepConfig) => {
+        this.addStep(stepConfig);
       });
     };
 
@@ -74,15 +75,16 @@ define([
 
     this.getWorkflowData = () => {
       return {
-        pluginid: this.workflowPluginId(),
+        pluginid: this.workflowId(),
         name: this.workflowName(),
-        icon: 'fa fa-check',
+        icon: this.initWorkflowConfig().icon,
         component: 'views/components/plugins/workflow-builder-loader',
         componentname: 'workflow-builder-loader',
         config: {
-          show: this.showWorkflowInSidebar(),
+          show: this.showOnSidebar(),
+          initWorkflow: this.initWorkflowConfig(),
           graphId: this.graphId(),
-          stepData: this.workflowSteps().map((step) => step.getStepData())
+          stepConfig: this.workflowSteps().map((step) => step.getStepConfig())
         },
         slug: this.workflowSlug(),
         sortorder: 0
@@ -90,6 +92,7 @@ define([
     };
 
     this.registerWorkflow = async () => {
+      this.loading(true);
       const data = this.getWorkflowData();
       const workflowPlugin = await $.ajax({
         type: 'POST',
@@ -103,9 +106,11 @@ define([
       currentUrl.searchParams.delete('graph-id');
       currentUrl.searchParams.append('workflow-id', this.workflowPlugin().pluginid);
       history.replaceState(null, null, currentUrl.href);
+      this.loading(false);
     };
 
     this.exportWorkflow = async () => {
+      this.loading(true);
       await this.updateWorkflow();
       if (this.workflowId()) {
         const downloadAnchorNode = document.createElement('a');
@@ -118,9 +123,11 @@ define([
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
       }
+      this.loading(false);
     };
 
     this.updateWorkflow = async () => {
+      this.loading(true);
       const data = this.getWorkflowData();
       const workflowPlugin = await $.ajax({
         type: 'PUT',
@@ -133,6 +140,24 @@ define([
         }
       });
       this.workflowPlugin(workflowPlugin);
+      await this.updateInitWorkflow();
+      this.loading(false);
+    };
+
+    this.updateInitWorkflow = async () => {
+      await $.ajax({
+        type: 'PUT',
+        url: '/workflow-builder/init-workflow',
+        dataType: 'json',
+        data: JSON.stringify({
+          workflowId: this.workflowId(),
+          initWorkflow: this.initWorkflowConfig()
+        }),
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
     };
 
     this.workflowId = ko.computed(() => {
@@ -144,6 +169,22 @@ define([
       if (workflowId) {
         return workflowId;
       }
+    }, this);
+
+    this.workflowName = ko.computed(() => {
+      return this.builderConfig() ? this.builderConfig().workflowName() : '';
+    }, this);
+
+    this.workflowSlug = ko.computed(() => {
+      return this.builderConfig() ? this.builderConfig().workflowSlug() : '';
+    }, this);
+
+    this.showOnSidebar = ko.computed(() => {
+      return this.builderConfig() ? this.builderConfig().showOnSidebar() : false;
+    }, this);
+
+    this.initWorkflowConfig = ko.computed(() => {
+      return this.builderConfig() ? this.builderConfig().getInitWorkflowConfig() : {};
     }, this);
 
     /**
@@ -158,10 +199,6 @@ define([
       if (graphId) {
         return graphId;
       }
-    }, this);
-
-    this.workflowPluginId = ko.computed(() => {
-      return this.workflowPlugin()?.pluginid || '';
     }, this);
 
     this.getRequiredParentTiles = () => {
@@ -198,9 +235,9 @@ define([
               id: resourceIdPaths.length
             };
             pathData.text += ` > ${card.title()}`;
-            pathData.resourceIdPath = `['${step.stepId}']['${card.cardId}'][0]['resourceid']['resourceInstanceId']`;
-            pathData.tileIdPath = `['${step.stepId}']['${card.cardId}'][0]['tileId']`;
-            pathData.basePath = `['${step.stepId}']['${card.cardId}'][0]['resourceid']`;
+            pathData.resourceIdPath = `['${step.stepName()}']['${card.cardId}'][0]['resourceid']['resourceInstanceId']`;
+            pathData.tileIdPath = `['${step.stepName()}']['${card.cardId}'][0]['tileId']`;
+            pathData.basePath = `['${step.stepName()}']['${card.cardId}'][0]['resourceid']`;
             resourceIdPaths.push(pathData);
           }
         });
@@ -208,19 +245,24 @@ define([
       return resourceIdPaths;
     });
 
+    this.stepIdx = (stepId) => {
+      return ko.computed(() => {
+        return this.workflowSteps().findIndex((step) => step.stepId === stepId);
+      }, this);
+    };
+
     this.loadExistingWorkflow = async () => {
       if (this.workflowId()) {
-        this.loading(true);
         const workflow = await $.getJSON(
           arches.urls.root + `workflow-builder/plugins?id=${this.workflowId()}`
         );
         this.workflowPlugin(workflow);
-        await Promise.all([this.loadGraphComponents(), this.loadGraphCards()]);
-        this.loadSteps(this.workflowPlugin()?.config.stepData);
-        this.workflowName(this.workflowPlugin()?.name);
-        this.showWorkflowInSidebar(this.workflowPlugin()?.config.show);
-        this.workflowSlug(this.workflowPlugin().slug);
-        this.loading(false);
+      }
+    };
+
+    this.loadExistingSteps = () => {
+      if (this.workflowId()) {
+        this.loadSteps(this.workflowPlugin()?.config.stepConfig);
       }
     };
 
@@ -242,17 +284,43 @@ define([
       this.graphNodegroupOptions()[this.graphId()] = nodegroupOptions;
     };
 
+    this.loadWorkflowConfig = async () => {
+      const iconData = (await $.getJSON(arches.urls.icons)).icons;
+      if (this.workflowId()) {
+        this.builderConfig(
+          new WorkflowBuilderConfig({
+            workflowName: this.workflowPlugin()?.name,
+            workflowSlug: this.workflowPlugin()?.slug,
+            showOnSidebar: this.workflowPlugin()?.config.show,
+            initWorkflow: this.workflowPlugin()?.config.initWorkflow,
+            iconData: iconData
+          })
+        );
+        return;
+      }
+      this.builderConfig(
+        new WorkflowBuilderConfig({
+          iconData: iconData
+        })
+      );
+    };
+
     this.loadGraphCards = async () => {
       const cards = await $.getJSON(arches.urls.api_card + this.graphId() + '/override');
       this.graphCards()[this.graphId()] = cards;
     };
 
     this.init = async () => {
+      this.loading(true);
       await this.loadExistingWorkflow();
+      await Promise.all([this.loadGraphComponents(), this.loadGraphCards()]);
+      this.loadExistingSteps();
+      await this.loadWorkflowConfig();
       if (!this.workflowSteps().length) {
         this.configActive(true);
       }
       this.workflowResourceIdPathOptions();
+      this.loading(false);
     };
 
     this.init();

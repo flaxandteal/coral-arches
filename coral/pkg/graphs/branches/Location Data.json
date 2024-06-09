@@ -256,7 +256,7 @@
                     "constraints": [],
                     "cssclass": null,
                     "description": {
-                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
+                        "en": "Links an E13_Attribute_Assignment to an E!8_Physical_ThingUsed to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM"
                     },
                     "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
                     "helpenabled": false,
@@ -481,6 +481,21 @@
                 }
             ],
             "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "b1d2cd1e-f446-11eb-abee-a87eeabdefba",
+                    "config": {
+                        "label": "Irish Grid Reference (TM65)",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "068156b7-8458-494f-b915-16a7298d5413",
+                    "label": {
+                        "en": "Irish Grid Reference (TM65)"
+                    },
+                    "node_id": "8272435a-1689-11ef-b341-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
+                },
                 {
                     "card_id": "b1d2cd1b-f446-11eb-b158-a87eeabdefba",
                     "config": {
@@ -1094,7 +1109,7 @@
                         "label": "Land Use Classification",
                         "options": [],
                         "placeholder": {
-                            "en": "Use to record a particular status associated with the Area/Artefact/Aircraft/Monument/Vessel."
+                            "en": "Use to record a particular status associated with the Area/Artefact/Aircraft/Heritage Asset/Vessel."
                         }
                     },
                     "id": "b1d348f8-f446-11eb-8f4b-a87eeabdefba",
@@ -3579,7 +3594,7 @@
                     },
                     "node_id": "b1d30c03-f446-11eb-bbcc-a87eeabdefba",
                     "sortorder": null,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "bcae8e90-09f7-4ae3-906b-7c7bb71a6ddf"
                 }
             ],
@@ -3624,6 +3639,15 @@
                 "en": ""
             },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
+                    "edgeid": "6448197d-484e-4c95-9a48-eecd4171cc47",
+                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "8272435a-1689-11ef-b341-0242ac120006"
+                },
                 {
                     "description": null,
                     "domainnode_id": "b1d32058-f446-11eb-905c-a87eeabdefba",
@@ -5288,6 +5312,29 @@
             ],
             "nodes": [
                 {
+                    "alias": "irish_grid_reference_tm65_",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "tm65centrepoint",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Irish Grid Reference (TM65)",
+                    "nodegroup_id": "b1d2cd1c-f446-11eb-9718-a87eeabdefba",
+                    "nodeid": "8272435a-1689-11ef-b341-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E94_Space_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "localities_administrative_areas",
                     "config": {},
                     "datatype": "semantic",
@@ -5311,7 +5358,7 @@
                     "alias": "land_use_classification_assignment",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a monument. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
+                    "description": "Links an E13_Attribute_Assignment to an E!8_Physical_Thing. Used to record the Land Use Classification associated with a heritage asset. Included for migration purposes.Dependencies:> Land Use concept collection available in the RDM",
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "b1d2b794-f446-11eb-9eee-a87eeabdefba",

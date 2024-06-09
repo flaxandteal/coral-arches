@@ -544,7 +544,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated Monuments, Areas and Artefacts"
+                        "en": "Associated Heritage Assets, Areas and Artefacts"
                     },
                     "nodegroup_id": "86ce8acb-4eaa-11eb-8468-f875a44e0e11",
                     "sortorder": 8,
@@ -3925,14 +3925,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Monument, Area or Artefact",
+                        "label": "Associated Heritage Asset, Area or Artefact",
                         "placeholder": {
                             "en": null
                         }
                     },
                     "id": "86ceb205-4eaa-11eb-9203-f875a44e0e11",
                     "label": {
-                        "en": "Associated Monument, Area or Artefact"
+                        "en": "Associated Heritage Asset, Area or Artefact"
                     },
                     "node_id": "86ceb202-4eaa-11eb-8dc6-f875a44e0e11",
                     "sortorder": 0,
@@ -5041,7 +5041,7 @@
             "deploymentdate": null,
             "deploymentfile": null,
             "description": {
-                "en": "Used to record areas of the historic landscape. Historic Landscape Characterization is a method of identifying and interpreting the varying historic character within an area that looks beyond individual monuments as it brings together an understanding of the whole landscape and townscape."
+                "en": "Used to record areas of the historic landscape. Historic Landscape Characterization is a method of identifying and interpreting the varying historic character within an area that looks beyond individual heritage assets as it brings together an understanding of the whole landscape and townscape."
             },
             "edges": [
                 {
@@ -10728,7 +10728,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated Monuments, Areas and Artefacts",
+                    "name": "Associated Heritage Assets, Areas and Artefacts",
                     "nodegroup_id": "86ce8acb-4eaa-11eb-8468-f875a44e0e11",
                     "nodeid": "86ce8acb-4eaa-11eb-8468-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -10797,7 +10797,7 @@
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Monument"
+                                "name": "Heritage Asset"
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
@@ -10819,7 +10819,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Monument, Area or Artefact",
+                    "name": "Heritage Asset, Area or Artefact",
                     "nodegroup_id": "86ce8acb-4eaa-11eb-8468-f875a44e0e11",
                     "nodeid": "86ceb202-4eaa-11eb-8dc6-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
@@ -11930,7 +11930,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Used to record areas of the historic landscape. Historic Landscape Characterization is a method of identifying and interpreting the varying historic character within an area that looks beyond individual monuments as it brings together an understanding of the whole landscape and townscape."
+                "en": "Used to record areas of the historic landscape. Historic Landscape Characterization is a method of identifying and interpreting the varying historic character within an area that looks beyond individual heritage assets as it brings together an understanding of the whole landscape and townscape."
             },
             "template_id": "5c757462-97d9-43fc-bd39-54367f6f3c2e",
             "version": ""

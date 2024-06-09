@@ -23,5 +23,10 @@ PyJWT
 requests_oauthlib
 python-docx
 
-git+https://github.com/flaxandteal/arches-orm@master
+
+git+https://github.com/flaxandteal/arches-orm@229050b75c0f3ab624350d57875a23e5e445e100
 pika
+django-authorization
+casbin-django-orm-adapter
+cachetools
+websockets

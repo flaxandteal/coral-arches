@@ -111,6 +111,7 @@ def unregister_plugin(name):
 
 
 def update_plugin(slug):
+    print(f"Updating: {slug}")
     source = os.path.join(dirname, "..", "..", "plugins", f"{slug}.json")
     import json
 
@@ -125,6 +126,7 @@ def update_plugin(slug):
     instance.componentname = details["componentname"]
     instance.config = details["config"]
     instance.save()
+    print(f"Updated: {slug}")
 
 
 def register_widget(slug):
@@ -195,16 +197,14 @@ class Command(BaseCommand):
         all_widgets = list(set(registered_widgets + available_widgets))
 
         special_plugin_cases = ["Bulk Data Manager", "Image Service Manager"]
-        for idx, plugin in enumerate(all_plugins):
+        for plugin in all_plugins:
             if plugin in special_plugin_cases:
                 continue
             if plugin not in registered_plugins:
                 register_plugin(names_to_slugs[plugin])
-                has_plugin_change = True
                 continue
             if plugin not in available_plugins:
                 unregister_plugin(plugin)
-                has_plugin_change = True
                 continue
 
         special_widget_cases = [
@@ -236,19 +236,12 @@ class Command(BaseCommand):
                 continue
             if widget not in registered_widgets:
                 register_widget(widget)
-                has_widget_change = True
                 continue
             if widget not in available_widgets:
                 unregister_widget(widget)
-                has_widget_change = True
                 continue
 
-        print("Updating: init-workflow")
-        update_plugin("init-workflow")
-        print("Updated: init-workflow")
-
-        print("Updating: open-workflow")
-        update_plugin("open-workflow")
-        print("Updated: open-workflow")
+        for slug in names_to_slugs.values():
+            update_plugin(slug)
 
         print("Plugins and widgets have been reloaded.")
