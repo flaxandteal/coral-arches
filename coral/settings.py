@@ -56,6 +56,8 @@ WEBPACK_LOADER = {
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
 CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
 
+CORAL_UPGRADE_WINDOW_FILE = os.getenv("CORAL_UPGRADE_WINDOW_FILE", "")
+
 DAUTHZ = {
     # DEFAULT Dauthz enforcer
     "DEFAULT": {
