@@ -106,7 +106,7 @@ class NotifyPlanning(BaseFunction):
         
         with admin():
             group = Group.find(group_id)
-            persons = [Person.find(member.id) for member in group.members]
+            persons = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
 
             notification.context["last_notified"] = group_id
             notification.save()
