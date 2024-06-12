@@ -204,7 +204,6 @@ INSTALLED_APPS = (
     # "silk",
     "coral",
     "arches_orm.arches_django.apps.ArchesORMConfig",
-    "revproxy",
 )
 if DEBUG:
     INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
