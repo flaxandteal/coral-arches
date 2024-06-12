@@ -133,6 +133,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         # (implicitly resource models) and map layers, but nothing else.
         for django_group in DjangoGroup.objects.all():
             group_key = self._subj_to_str(django_group)
+            self._enforcer.add_named_grouping_policy("g", group_key, f"dgn:{django_group.name}")
             nodegroups = {
                 nodegroup: set(perms)
                 for nodegroup, perms in
@@ -213,7 +214,6 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             for group in user.groups.all():
                 group_key = self._subj_to_str(group)
                 self._enforcer.add_named_grouping_policy("g", user_key, group_key)
-                self._enforcer.add_named_grouping_policy("g", user_key, f"dgn:{group.name}")
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
@@ -902,7 +902,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def user_in_group_by_name(self, user, names):
         subj = self._subj_to_str(user)
-        roles = self._enforcer.get_roles_for_user(subj)
+        roles = self._enforcer.get_implicit_roles_for_user(subj)
         return any(f"dgn:{name}" in roles for name in names)
 
 from contextlib import contextmanager

@@ -27,6 +27,7 @@ HB_USER = "f240895c-edae-4b18-9c3b-875b0bf5b235"
 PLANNING_ADMIN = "74afc49c-3c68-4f6c-839a-9bc5af76596b"
 
 details = {
+    "functionid": "e5de46d7-dd01-418b-a71d-f5b27c143de4",
     'name': 'Notify Planning',
     'type': 'node',
     'description': 'Will send a notification on creation or edit of certain nodes to a specified user or group',
@@ -105,7 +106,7 @@ class NotifyPlanning(BaseFunction):
         
         with admin():
             group = Group.find(group_id)
-            persons = [Person.find(member.id) for member in group.members]
+            persons = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
 
             notification.context["last_notified"] = group_id
             notification.save()

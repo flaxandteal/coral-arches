@@ -216,6 +216,15 @@
         "bgColor": "#619974",
         "slug": "open-workflow?workflow-slug=add-building-workflow",
         "circleColor": "#4a946d"
+      },
+      {
+        "workflowid": "2d785399-83a7-4887-b73b-776f8006e7e6",
+        "desc": "Start a Curatorial Inspection",
+        "icon": "fa fa-file",
+        "name": "Curatorial Inspection",
+        "bgColor": "#86679c",
+        "slug": "open-workflow?workflow-slug=curatorial-workflow",
+        "circleColor": "#aa86c4"
       }
     ],
     "show": true

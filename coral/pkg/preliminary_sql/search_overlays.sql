@@ -2,6 +2,7 @@ INSERT INTO map_layers(maplayerid, name, layerdefinitions, isoverlay, icon, acti
    VALUES (public.uuid_generate_v1mc(), 'Search Results Heat Map', '[
         {
           "source": "search-results-hashes",
+          "sortorder": 0,
           "paint": {
             "heatmap-intensity": [
               "interpolate",
@@ -94,6 +95,7 @@ INSERT INTO map_layers(maplayerid, name, layerdefinitions, isoverlay, icon, acti
           "icon-size": 1
         },
         "source": "search-results-points",
+        "sortorder": 1,
         "filter": [
           "all",
           [
@@ -121,6 +123,7 @@ INSERT INTO map_layers(maplayerid, name, layerdefinitions, isoverlay, icon, acti
           ],
           "icon-size": 1.3
         },
+        "sortorder": 2,
         "source": "search-results-points",
         "filter": [
           "all",
@@ -143,6 +146,7 @@ INSERT INTO map_layers(maplayerid, name, layerdefinitions, isoverlay, icon, acti
         "layout": {
           "visibility": "visible"
         },
+        "sortorder": 3,
         "source": "search-results-points",
         "filter": [
           "all",
@@ -172,6 +176,7 @@ INSERT INTO map_layers(maplayerid, name, layerdefinitions, isoverlay, icon, acti
         "layout": {
           "visibility": "visible"
         },
+        "sortorder": 4,
         "source": "search-results-points",
         "filter": [
           "all",
@@ -200,6 +205,7 @@ INSERT INTO map_layers(maplayerid, name, layerdefinitions, isoverlay, icon, acti
    VALUES (public.uuid_generate_v1mc(), 'Hex', '[
       {
         "layout": {},
+        "sortorder": 5,
         "source": "search-results-hex",
         "filter": [
           "==",
@@ -229,6 +235,7 @@ INSERT INTO map_layers(maplayerid, name, layerdefinitions, isoverlay, icon, acti
       },
       {
         "layout": {},
+        "sortorder": 6,
         "source": "search-results-hex",
         "filter": [
           "all",
