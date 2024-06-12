@@ -15,6 +15,7 @@ from coral.views.merge_resources import MergeResources
 from coral.views.monument_revision_remap import MonumentRevisionRemap
 from coral.views.dashboard import Dashboard
 from coral.views.file_template import FileTemplateView
+from coral.views.extrados import ExtradosTemplateView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -66,6 +67,10 @@ urlpatterns = [
     #
     re_path(r"^monument-revision-remap", MonumentRevisionRemap.as_view(), name="monument_revision_remap"),
 
+    #
+    # Extrados
+    #
+    re_path(r'(?P<path>.*)', ExtradosTemplateView.as_view(), name="extrados"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.SHOW_LANGUAGE_SWITCH is True:
