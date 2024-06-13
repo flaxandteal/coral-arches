@@ -27,8 +27,6 @@ define([
     var self = this;
     params.configKeys = ['minDate', 'maxDate', 'viewMode', 'dateFormat', 'defaultValue'];
 
-    console.log('params test: ', params);
-
     WidgetViewModel.apply(this, [params]);
 
     if (self.node.config && ko.unwrap(self.node.config.dateFormat)) {
@@ -41,18 +39,7 @@ define([
     /**
      * Date format overriding logic
      */
-    this.dateFormat = ko.observable('DD-MM-YYYY');
     this.dateValue = ko.observable();
-    if (this.value()) {
-      const parsedDate = moment(this.value(), 'YYYY-MM-DD');
-      const formattedDate = parsedDate.format('DD-MM-YYYY');
-      this.dateValue(formattedDate);
-    }
-    this.dateValue.subscribe((value) => {
-      const parsedDate = moment(value, 'DD-MM-YYYY');
-      const formattedDate = parsedDate.format('YYYY-MM-DD');
-      this.value(formattedDate);
-    }, this);
 
     this.placeholder = this.config().placeholder;
     this.viewModeOptions = ko.observableArray([
@@ -109,12 +96,27 @@ define([
     if (self.form && this.defaultValue() === 'Date of Data Entry') {
       if (this.value() === 'Date of Data Entry') {
         const today = new Date();
-        self.value(today.toLocaleDateString('en-GB')); //"en-CA" formats the date in the desired format YYYY-MM-DD
+        self.value(today.toLocaleDateString('en-CA')); //"en-CA" formats the date in the desired format YYYY-MM-DD
         const tileData = JSON.parse(self.tile._tileData());
         tileData[this.node.id] = today.toLocaleDateString('en-CA');
         self.tile._tileData(koMapping.toJSON(tileData));
       }
     }
+
+    /**
+     * Date format overriding logic
+     */
+    this.dateFormat = ko.observable('DD-MM-YYYY');
+    if (this.value()) {
+      const parsedDate = moment(this.value(), 'YYYY-MM-DD');
+      const formattedDate = parsedDate.format('DD-MM-YYYY');
+      this.dateValue(formattedDate);
+    }
+    this.dateValue.subscribe((value) => {
+      const parsedDate = moment(value, 'DD-MM-YYYY');
+      const formattedDate = parsedDate.format('YYYY-MM-DD');
+      this.value(formattedDate);
+    }, this);
 
     this.disposables.push(this.getdefault);
   };
