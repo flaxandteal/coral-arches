@@ -211,7 +211,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Incident Report"
                     },
@@ -346,7 +346,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -697,7 +697,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Documentation"
                     },
@@ -778,7 +778,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Incident Reference"
                     },
@@ -1346,7 +1346,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Location Data"
                     },
@@ -15899,15 +15899,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
-                    "edgeid": "82804945-f879-446e-ad84-ec5b6709cf86",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
-                    "rangenode_id": "2fdedbd0-1459-11ef-8cdd-0242ac120006"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "6184d4fe-1905-11ef-aa9c-0242ac150006",
                     "edgeid": "7fe24aa6-a88f-46f0-ada4-27167d231158",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -15923,6 +15914,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "4a60d056-1f5a-11ef-a340-0242ac150006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                    "edgeid": "82804945-f879-446e-ad84-ec5b6709cf86",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
+                    "rangenode_id": "2fdedbd0-1459-11ef-8cdd-0242ac120006"
                 },
                 {
                     "description": null,
@@ -19051,6 +19051,28 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "ba342e69-b554-11ea-a027-f875a44e0e11",
+                                "string_template": "<Description>"
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+                                "string_template": " <Heritage Asset Name>"
+                            },
+                            "name": {
+                                "nodegroup_id": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
+                                "string_template": "<ResourceID>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "id": "6788c40b-344d-45a1-9893-9228520d32d5"
+                },
+                {
+                    "config": {
                         "geojson_node": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba",
                         "geojson_nodegroup": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
                         "tm65_node": "2fdedbd0-1459-11ef-8cdd-0242ac120006",
@@ -19076,28 +19098,6 @@
                     "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "id": "b4f0a3de-5044-4b4d-b3f8-0391948f3c86"
-                },
-                {
-                    "config": {
-                        "descriptor_types": {
-                            "description": {
-                                "nodegroup_id": "ba342e69-b554-11ea-a027-f875a44e0e11",
-                                "string_template": "<Description>"
-                            },
-                            "map_popup": {
-                                "nodegroup_id": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
-                                "string_template": " <Heritage Asset Name>"
-                            },
-                            "name": {
-                                "nodegroup_id": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
-                                "string_template": "<ResourceID>"
-                            }
-                        },
-                        "triggering_nodegroups": []
-                    },
-                    "function_id": "60000000-0000-0000-0000-000000000001",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "id": "6788c40b-344d-45a1-9893-9228520d32d5"
                 }
             ],
             "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -19597,17 +19597,10 @@
                         },
                         "options": [
                             {
-                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
                                 "selected": false,
                                 "text": {
-                                    "en": "Standing Buildings"
-                                }
-                            },
-                            {
-                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
-                                "selected": false,
-                                "text": {
-                                    "en": "Field Monuments"
+                                    "en": "Aquatic Monuments"
                                 }
                             },
                             {
@@ -19618,10 +19611,17 @@
                                 }
                             },
                             {
-                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
+                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
                                 "selected": false,
                                 "text": {
-                                    "en": "Aquatic Monuments"
+                                    "en": "Field Monuments"
+                                }
+                            },
+                            {
+                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "selected": false,
+                                "text": {
+                                    "en": "Standing Buildings"
                                 }
                             }
                         ]
@@ -20140,66 +20140,10 @@
                         },
                         "options": [
                             {
-                                "id": "059da29b-9413-41e1-a064-bb1190e91e05",
+                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
                                 "selected": false,
                                 "text": {
-                                    "en": "WELL PRESERVED (Complete/substantially complete)"
-                                }
-                            },
-                            {
-                                "id": "61908388-0c04-4be3-8367-9f7046951a54",
-                                "selected": false,
-                                "text": {
-                                    "en": "SUBSTANTIAL REMAINS (Vast majority definable)"
-                                }
-                            },
-                            {
-                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
-                                "selected": false,
-                                "text": {
-                                    "en": "SOME REMAINS (Some definable features)"
-                                }
-                            },
-                            {
-                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "TRACES ONLY (No definable features)"
-                                }
-                            },
-                            {
-                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
-                                "selected": false,
-                                "text": {
-                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
-                                }
-                            },
-                            {
-                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
-                                "selected": false,
-                                "text": {
-                                    "en": "DESTROYED"
-                                }
-                            },
-                            {
-                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
-                                "selected": false,
-                                "text": {
-                                    "en": "EXCAVATED"
-                                }
-                            },
-                            {
-                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
-                                "selected": false,
-                                "text": {
-                                    "en": "SUBMERGED"
-                                }
-                            },
-                            {
-                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
-                                "selected": false,
-                                "text": {
-                                    "en": "TIDALLY SUBMERGED"
+                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
                                 }
                             },
                             {
@@ -20210,10 +20154,66 @@
                                 }
                             },
                             {
-                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
+                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
                                 "selected": false,
                                 "text": {
-                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
+                                    "en": "TIDALLY SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
+                                "selected": false,
+                                "text": {
+                                    "en": "EXCAVATED"
+                                }
+                            },
+                            {
+                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
+                                "selected": false,
+                                "text": {
+                                    "en": "DESTROYED"
+                                }
+                            },
+                            {
+                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
+                                "selected": false,
+                                "text": {
+                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
+                                }
+                            },
+                            {
+                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "TRACES ONLY (No definable features)"
+                                }
+                            },
+                            {
+                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
+                                "selected": false,
+                                "text": {
+                                    "en": "SOME REMAINS (Some definable features)"
+                                }
+                            },
+                            {
+                                "id": "61908388-0c04-4be3-8367-9f7046951a54",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBSTANTIAL REMAINS (Vast majority definable)"
+                                }
+                            },
+                            {
+                                "id": "059da29b-9413-41e1-a064-bb1190e91e05",
+                                "selected": false,
+                                "text": {
+                                    "en": "WELL PRESERVED (Complete/substantially complete)"
                                 }
                             }
                         ]
@@ -21251,17 +21251,17 @@
                         },
                         "options": [
                             {
-                                "id": "7f81d135-45ac-483f-96f4-2fa8ca882d79",
-                                "selected": false,
-                                "text": {
-                                    "en": "Provisional"
-                                }
-                            },
-                            {
                                 "id": "294f38d0-e391-4f7d-af83-72fbf7fcdfcb",
                                 "selected": false,
                                 "text": {
                                     "en": "Approved"
+                                }
+                            },
+                            {
+                                "id": "7f81d135-45ac-483f-96f4-2fa8ca882d79",
+                                "selected": false,
+                                "text": {
+                                    "en": "Provisional"
                                 }
                             }
                         ]
@@ -21611,66 +21611,10 @@
                         },
                         "options": [
                             {
-                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
                                 "selected": false,
                                 "text": {
-                                    "en": "37: Ards and North Down"
-                                }
-                            },
-                            {
-                                "id": "c3fb7b10-9117-46ac-b1ef-65bca03e9896",
-                                "selected": false,
-                                "text": {
-                                    "en": "36: Newry Mourne and Down"
-                                }
-                            },
-                            {
-                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
-                                "selected": false,
-                                "text": {
-                                    "en": "35: Mid Ulster"
-                                }
-                            },
-                            {
-                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "34: Mid and East Antrim"
-                                }
-                            },
-                            {
-                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
-                                "selected": false,
-                                "text": {
-                                    "en": "33: Lisburn and Castlereagh"
-                                }
-                            },
-                            {
-                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
-                                "selected": false,
-                                "text": {
-                                    "en": "32: Fermanagh and Omagh"
-                                }
-                            },
-                            {
-                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
-                                "selected": false,
-                                "text": {
-                                    "en": "31: Derry City and Strabane"
-                                }
-                            },
-                            {
-                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
-                                "selected": false,
-                                "text": {
-                                    "en": "30: Causeway Coast and Glens"
-                                }
-                            },
-                            {
-                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "29: Belfast"
+                                    "en": "27: Antrim and Newtownabbey"
                                 }
                             },
                             {
@@ -21681,10 +21625,66 @@
                                 }
                             },
                             {
-                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
                                 "selected": false,
                                 "text": {
-                                    "en": "27: Antrim and Newtownabbey"
+                                    "en": "29: Belfast"
+                                }
+                            },
+                            {
+                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
+                                "selected": false,
+                                "text": {
+                                    "en": "30: Causeway Coast and Glens"
+                                }
+                            },
+                            {
+                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
+                                "selected": false,
+                                "text": {
+                                    "en": "31: Derry City and Strabane"
+                                }
+                            },
+                            {
+                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
+                                "selected": false,
+                                "text": {
+                                    "en": "32: Fermanagh and Omagh"
+                                }
+                            },
+                            {
+                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
+                                "selected": false,
+                                "text": {
+                                    "en": "33: Lisburn and Castlereagh"
+                                }
+                            },
+                            {
+                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "34: Mid and East Antrim"
+                                }
+                            },
+                            {
+                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
+                                "selected": false,
+                                "text": {
+                                    "en": "35: Mid Ulster"
+                                }
+                            },
+                            {
+                                "id": "c3fb7b10-9117-46ac-b1ef-65bca03e9896",
+                                "selected": false,
+                                "text": {
+                                    "en": "36: Newry Mourne and Down"
+                                }
+                            },
+                            {
+                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "selected": false,
+                                "text": {
+                                    "en": "37: Ards and North Down"
                                 }
                             }
                         ]
@@ -24458,24 +24458,10 @@
                         },
                         "options": [
                             {
-                                "id": "f49dd598-dc67-40d0-bb91-eb16b2c3ab94",
+                                "id": "2e850266-53e0-4b4f-b2c6-974f73c79dd8",
                                 "selected": false,
                                 "text": {
-                                    "en": "Site Summary"
-                                }
-                            },
-                            {
-                                "id": "34b32f79-801f-4f57-b0c6-7a7563e23edc",
-                                "selected": false,
-                                "text": {
-                                    "en": "Reason for Scheduling"
-                                }
-                            },
-                            {
-                                "id": "ba35130e-01e7-4885-a187-9d6cf96f7675",
-                                "selected": false,
-                                "text": {
-                                    "en": "Site Management"
+                                    "en": "Description of Scheduled Area"
                                 }
                             },
                             {
@@ -24486,10 +24472,24 @@
                                 }
                             },
                             {
-                                "id": "2e850266-53e0-4b4f-b2c6-974f73c79dd8",
+                                "id": "ba35130e-01e7-4885-a187-9d6cf96f7675",
                                 "selected": false,
                                 "text": {
-                                    "en": "Description of Scheduled Area"
+                                    "en": "Site Management"
+                                }
+                            },
+                            {
+                                "id": "34b32f79-801f-4f57-b0c6-7a7563e23edc",
+                                "selected": false,
+                                "text": {
+                                    "en": "Reason for Scheduling"
+                                }
+                            },
+                            {
+                                "id": "f49dd598-dc67-40d0-bb91-eb16b2c3ab94",
+                                "selected": false,
+                                "text": {
+                                    "en": "Site Summary"
                                 }
                             }
                         ],
@@ -25938,17 +25938,10 @@
                         },
                         "options": [
                             {
-                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
                                 "selected": false,
                                 "text": {
-                                    "en": "Enforcement actioned"
-                                }
-                            },
-                            {
-                                "id": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
-                                "selected": false,
-                                "text": {
-                                    "en": "Not completed"
+                                    "en": "In progress"
                                 }
                             },
                             {
@@ -25959,10 +25952,17 @@
                                 }
                             },
                             {
-                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "id": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
                                 "selected": false,
                                 "text": {
-                                    "en": "In progress"
+                                    "en": "Not completed"
+                                }
+                            },
+                            {
+                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "selected": false,
+                                "text": {
+                                    "en": "Enforcement actioned"
                                 }
                             }
                         ],
@@ -27177,10 +27177,10 @@
                         },
                         "options": [
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             },
                             {
@@ -27191,10 +27191,10 @@
                                 }
                             },
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             }
                         ]
@@ -27386,10 +27386,10 @@
                         },
                         "options": [
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             },
                             {
@@ -27400,10 +27400,10 @@
                                 }
                             },
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             }
                         ]
@@ -31832,31 +31832,10 @@
                         },
                         "options": [
                             {
-                                "id": "2914d36d-2972-43e1-9dfb-b0a2183fd114",
+                                "id": "aacfbf92-d5e9-4594-b3c7-584dc64bc3c7",
                                 "selected": false,
                                 "text": {
-                                    "en": "Exterior Description"
-                                }
-                            },
-                            {
-                                "id": "beadd615-b3ba-4901-98c9-48a61849bf49",
-                                "selected": false,
-                                "text": {
-                                    "en": "Interior Description"
-                                }
-                            },
-                            {
-                                "id": "8771f01a-3dbb-485f-b843-287d29cafb61",
-                                "selected": false,
-                                "text": {
-                                    "en": "Historical Information"
-                                }
-                            },
-                            {
-                                "id": "c41812cf-d572-42b5-9afd-c72a2619616c",
-                                "selected": false,
-                                "text": {
-                                    "en": "Evaluation"
+                                    "en": "Admin Comments"
                                 }
                             },
                             {
@@ -31867,10 +31846,31 @@
                                 }
                             },
                             {
-                                "id": "aacfbf92-d5e9-4594-b3c7-584dc64bc3c7",
+                                "id": "c41812cf-d572-42b5-9afd-c72a2619616c",
                                 "selected": false,
                                 "text": {
-                                    "en": "Admin Comments"
+                                    "en": "Evaluation"
+                                }
+                            },
+                            {
+                                "id": "8771f01a-3dbb-485f-b843-287d29cafb61",
+                                "selected": false,
+                                "text": {
+                                    "en": "Historical Information"
+                                }
+                            },
+                            {
+                                "id": "beadd615-b3ba-4901-98c9-48a61849bf49",
+                                "selected": false,
+                                "text": {
+                                    "en": "Interior Description"
+                                }
+                            },
+                            {
+                                "id": "2914d36d-2972-43e1-9dfb-b0a2183fd114",
+                                "selected": false,
+                                "text": {
+                                    "en": "Exterior Description"
                                 }
                             }
                         ]
@@ -32999,17 +32999,10 @@
                         },
                         "options": [
                             {
-                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
+                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
                                 "selected": false,
                                 "text": {
-                                    "en": "Drawings Description"
-                                }
-                            },
-                            {
-                                "id": "d013a32b-e4ad-4d54-99af-bf6d716b8226",
-                                "selected": false,
-                                "text": {
-                                    "en": "Photos Description"
+                                    "en": "Threats"
                                 }
                             },
                             {
@@ -33020,10 +33013,17 @@
                                 }
                             },
                             {
-                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
+                                "id": "d013a32b-e4ad-4d54-99af-bf6d716b8226",
                                 "selected": false,
                                 "text": {
-                                    "en": "Threats"
+                                    "en": "Photos Description"
+                                }
+                            },
+                            {
+                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
+                                "selected": false,
+                                "text": {
+                                    "en": "Drawings Description"
                                 }
                             }
                         ]
@@ -33675,17 +33675,10 @@
                         },
                         "options": [
                             {
-                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
                                 "selected": false,
                                 "text": {
-                                    "en": "Resolve with Owner"
-                                }
-                            },
-                            {
-                                "id": "c240cec6-982f-401b-80d6-eaac04a18d88",
-                                "selected": false,
-                                "text": {
-                                    "en": "Resolve with Occupier"
+                                    "en": "Contact PSNI"
                                 }
                             },
                             {
@@ -33696,10 +33689,17 @@
                                 }
                             },
                             {
-                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "id": "c240cec6-982f-401b-80d6-eaac04a18d88",
                                 "selected": false,
                                 "text": {
-                                    "en": "Contact PSNI"
+                                    "en": "Resolve with Occupier"
+                                }
+                            },
+                            {
+                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "selected": false,
+                                "text": {
+                                    "en": "Resolve with Owner"
                                 }
                             }
                         ]
@@ -34287,7 +34287,12 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": null,
+            "publication": {
+                "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                "notes": null,
+                "publicationid": "1cb7e192-2966-11ef-ad58-0242ac1f0006",
+                "published_time": "2024-06-13T09:20:01.699"
+            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
@@ -34320,8 +34325,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "ce5aabf11 2024-06-05 03:45:12 +0100",
+        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.10.0-21-amd64"
+        "os version": "5.10.0-23-amd64"
     }
 }
