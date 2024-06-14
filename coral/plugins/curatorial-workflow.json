@@ -61,7 +61,8 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "e85f6714-24cc-11ef-a3a4-0242ac130006"
+                  "nodegroupid": "e85f6714-24cc-11ef-a3a4-0242ac130006",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -70,7 +71,8 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "0ecfd47a-24cc-11ef-97ad-0242ac130006"
+                  "nodegroupid": "0ecfd47a-24cc-11ef-97ad-0242ac130006",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -79,7 +81,8 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "a2cda8b4-24cc-11ef-97ad-0242ac130006"
+                  "nodegroupid": "a2cda8b4-24cc-11ef-97ad-0242ac130006",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -89,6 +92,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "7224417b-893a-11ea-b383-f875a44e0e11",
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
@@ -101,7 +105,8 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "c1a49ce2-24cd-11ef-97ad-0242ac130006"
+                  "nodegroupid": "c1a49ce2-24cd-11ef-97ad-0242ac130006",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -123,6 +128,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "a3047fd4-031a-11ef-8ec2-0242ac150006",
                     "166ed240-031a-11ef-8ec2-0242ac150006",
@@ -156,7 +162,8 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "75d950a6-24d6-11ef-bb69-0242ac130006"
+                  "nodegroupid": "75d950a6-24d6-11ef-bb69-0242ac130006",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
@@ -200,6 +207,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "998d6728-fb26-11ee-838d-0242ac190006"
                   ]
