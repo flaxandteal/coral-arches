@@ -55,8 +55,9 @@ class MergeResources(View):
 
     def remove_parent_nodegroup_tiles(self):
         for nodegroup_id in self.parent_nodegroups:
-            self.parent_tiles_merge_map[nodegroup_id] = self.merge_map[nodegroup_id]
-            del self.merge_map[nodegroup_id]
+            if nodegroup_id in self.merge_map:
+                self.parent_tiles_merge_map[nodegroup_id] = self.merge_map[nodegroup_id]
+                del self.merge_map[nodegroup_id]
 
     def discover_parent_tile(self, tile):
         parent_tile = None
