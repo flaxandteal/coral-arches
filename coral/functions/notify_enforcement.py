@@ -76,7 +76,7 @@ class NotifyEnforcement(BaseFunction):
 
         enforcement_group = Group.find(ENFORCEMENT_GROUP)
 
-        persons = [Person.find(member.id) for member in enforcement_group.members]
+        persons = [Person.find(member.id) for member in enforcement_group.members if isinstance(member, Person)]
 
         for person in persons:
             user = person.user_account

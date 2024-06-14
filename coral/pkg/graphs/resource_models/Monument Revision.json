@@ -6079,21 +6079,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "a6f58743-7e76-49fd-8c13-0c81c95f9307",
-                    "config": {
-                        "label": "Irish Grid Reference (TM65)",
-                        "placeholder": "Enter the centre point map reference of the resource."
-                    },
-                    "id": "5d973440-a86b-4c19-a1b0-cdc158923204",
-                    "label": {
-                        "en": "Irish Grid Reference (TM65)"
-                    },
-                    "node_id": "86057658-1685-11ef-b341-0242ac120006",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
-                },
-                {
                     "card_id": "7b2537f8-6453-4ae7-9085-03b95249d34d",
                     "config": {
                         "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
@@ -6114,6 +6099,21 @@
                     "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "a6f58743-7e76-49fd-8c13-0c81c95f9307",
+                    "config": {
+                        "label": "Irish Grid Reference (TM65)",
+                        "placeholder": "Enter the centre point map reference of the resource."
+                    },
+                    "id": "5d973440-a86b-4c19-a1b0-cdc158923204",
+                    "label": {
+                        "en": "Irish Grid Reference (TM65)"
+                    },
+                    "node_id": "86057658-1685-11ef-b341-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
                 },
                 {
                     "card_id": "380a7f86-9234-4d05-980a-dfbd5bbea066",
@@ -11305,27 +11305,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "57cd5afa-c483-47d4-b8d6-f8c82ba35cf0",
-                    "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Description Type",
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "cd48b422-0fd2-4890-9a97-bc0e9fac529b",
-                    "label": {
-                        "en": "Description Type"
-                    },
-                    "node_id": "3d3861e8-1f4e-11ef-bf79-0242ac150006",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000015"
-                },
-                {
                     "card_id": "8812b684-f4d4-4561-9137-ed209932b8d7",
                     "config": {
                         "defaultResourceInstance": [],
@@ -15190,15 +15169,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
-                    "edgeid": "41a19ddd-bcae-4364-a3ed-6a80f6ececab",
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "3d3861e8-1f4e-11ef-bf79-0242ac150006"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "72d0b185-86b8-4247-9ebf-cb7f53febef5",
                     "edgeid": "41b11a21-2dc5-4f34-9298-7ed39d57d3cc",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -17131,15 +17101,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "f78bbba5-c1c2-441b-8e32-1d934eac9def"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
-                    "edgeid": "940ac71c-b359-4694-b0f9-aa9dab16fe87",
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "dcb45d40-2344-11ef-89fe-0242ac1a0006"
                 },
                 {
                     "description": null,
@@ -22799,31 +22760,66 @@
                         },
                         "options": [
                             {
-                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
+                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
                                 "selected": false,
                                 "text": {
-                                    "en": "Threats"
-                                }
-                            },
-                            {
-                                "id": "87c40306-43a1-4522-a496-d0d773029f2f",
-                                "selected": false,
-                                "text": {
-                                    "en": "Site Description"
+                                    "en": "Summary"
                                 }
                             },
                             {
                                 "id": "d013a32b-e4ad-4d54-99af-bf6d716b8226",
                                 "selected": false,
                                 "text": {
-                                    "en": "Photos Description"
+                                    "en": "Abstract"
                                 }
                             },
                             {
-                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
+                                "id": "87c40306-43a1-4522-a496-d0d773029f2f",
                                 "selected": false,
                                 "text": {
-                                    "en": "Drawings Description"
+                                    "en": "Full"
+                                }
+                            },
+                            {
+                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Interior"
+                                }
+                            },
+                            {
+                                "id": "671952e8-7b73-4524-8bcb-3324ed9524e5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Exterior"
+                                }
+                            },
+                            {
+                                "id": "467f724e-d36b-4347-8ebf-cf9648fefb96",
+                                "selected": false,
+                                "text": {
+                                    "en": "History"
+                                }
+                            },
+                            {
+                                "id": "0fb56869-37af-4573-a978-5fc4dcbb5840",
+                                "selected": false,
+                                "text": {
+                                    "en": "Statutory"
+                                }
+                            },
+                            {
+                                "id": "3f507168-6411-42b6-a8e6-1e771db53fff",
+                                "selected": false,
+                                "text": {
+                                    "en": "Reference"
+                                }
+                            },
+                            {
+                                "id": "219c6377-d9d9-47b3-bea3-269aca0075d4",
+                                "selected": false,
+                                "text": {
+                                    "en": "Notes"
                                 }
                             }
                         ]
@@ -23812,68 +23808,6 @@
                     "name": "Role Metatype",
                     "nodegroup_id": "8d863b85-4798-4aa2-a46f-ffe602002ac6",
                     "nodeid": "3d2ed33c-b2b2-4d9a-bf6b-a6e5029f31d4",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "add_monument_description_type",
-                    "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "2e850266-53e0-4b4f-b2c6-974f73c79dd8",
-                                "selected": false,
-                                "text": {
-                                    "en": "Description of Scheduled Area"
-                                }
-                            },
-                            {
-                                "id": "10ab041d-beaf-4770-97c5-1b739b1845a2",
-                                "selected": false,
-                                "text": {
-                                    "en": "Warden Condition Report Summary"
-                                }
-                            },
-                            {
-                                "id": "ba35130e-01e7-4885-a187-9d6cf96f7675",
-                                "selected": false,
-                                "text": {
-                                    "en": "Site Management"
-                                }
-                            },
-                            {
-                                "id": "34b32f79-801f-4f57-b0c6-7a7563e23edc",
-                                "selected": false,
-                                "text": {
-                                    "en": "Reason for Scheduling"
-                                }
-                            },
-                            {
-                                "id": "f49dd598-dc67-40d0-bb91-eb16b2c3ab94",
-                                "selected": false,
-                                "text": {
-                                    "en": "Site Summary"
-                                }
-                            }
-                        ]
-                    },
-                    "datatype": "domain-value",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Add Monument Description Type",
-                    "nodegroup_id": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
-                    "nodeid": "3d3861e8-1f4e-11ef-bf79-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
@@ -33180,75 +33114,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "add_building_description_type",
-                    "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "aacfbf92-d5e9-4594-b3c7-584dc64bc3c7",
-                                "selected": false,
-                                "text": {
-                                    "en": "Admin Comments"
-                                }
-                            },
-                            {
-                                "id": "58d8431e-e42f-48fa-a3c8-b32a0f507b1e",
-                                "selected": false,
-                                "text": {
-                                    "en": "Notes"
-                                }
-                            },
-                            {
-                                "id": "c41812cf-d572-42b5-9afd-c72a2619616c",
-                                "selected": false,
-                                "text": {
-                                    "en": "Evaluation"
-                                }
-                            },
-                            {
-                                "id": "8771f01a-3dbb-485f-b843-287d29cafb61",
-                                "selected": false,
-                                "text": {
-                                    "en": "Historical Information"
-                                }
-                            },
-                            {
-                                "id": "beadd615-b3ba-4901-98c9-48a61849bf49",
-                                "selected": false,
-                                "text": {
-                                    "en": "Interior Description"
-                                }
-                            },
-                            {
-                                "id": "2914d36d-2972-43e1-9dfb-b0a2183fd114",
-                                "selected": false,
-                                "text": {
-                                    "en": "Exterior Description"
-                                }
-                            }
-                        ]
-                    },
-                    "datatype": "domain-value",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Add Building Description Type",
-                    "nodegroup_id": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
-                    "nodeid": "dcb45d40-2344-11ef-89fe-0242ac1a0006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "association_metatype_n1",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -34958,8 +34823,8 @@
             "publication": {
                 "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                 "notes": null,
-                "publicationid": "d0f684b8-234b-11ef-89fe-0242ac1a0006",
-                "published_time": "2024-06-05T14:56:40.711"
+                "publicationid": "769821e6-29c9-11ef-bbff-0242ac1f0006",
+                "published_time": "2024-06-13T21:11:12.662"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -34993,8 +34858,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "ce5aabf11 2024-06-05 03:45:12 +0100",
+        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.10.0-21-amd64"
+        "os version": "5.10.0-23-amd64"
     }
 }

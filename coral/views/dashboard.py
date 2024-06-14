@@ -7,6 +7,7 @@ from datetime import datetime
 from collections import defaultdict 
 from django.core.cache import cache
 import json
+import logging
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -122,9 +123,9 @@ class Dashboard(View):
 
             #checks against type & status and assigns to user if in correct group
             for consultation in planning_consultations:
-                    action_status = consultation.action[0].action_status if consultation.action else None
-                    action_type = consultation.action[0].action_type if consultation.action else None
-                    action_by = consultation.action[0].action_by[0].id if consultation.action and consultation.action[0].action_by else None
+                    action_status = self.node_check(lambda: consultation.action[0].action_status )
+                    action_type = self.node_check(lambda: consultation.action[0].action_type) 
+                    action_by = self.node_check(lambda: consultation.action[0].action_by[0].id)
 
                     is_assigned_to_user = action_by == userResouceId
 
@@ -186,14 +187,23 @@ class Dashboard(View):
 
         
         return counters
+    
+    # Method to check if a node exists
+    def node_check(self, func, default=None):
+        try:
+            print(func)
+            return func()
+        except Exception as error:
+            logging.error(f'Node does not exist: {error}')
+            return default
 
     def build_planning_resource_data(self, consultation):
 
-        action_status = consultation.action[0].action_status if consultation.action else None
-        date_entered = consultation.consultation_dates.log_date if consultation.consultation_dates else None
-        deadline = consultation.action[0].target_date_n1 if consultation.action else None
-        hierarchy_type = consultation.hierarchy_type
-        address = consultation.location_data.addresses
+        action_status = self.node_check(lambda: consultation.action[0].action_status)
+        date_entered = self.node_check(lambda: consultation.consultation_dates.log_date)
+        deadline = self.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
+        hierarchy_type = self.node_check(lambda: consultation.hierarchy_type)
+        address = self.node_check(lambda: consultation.location_data.addresses)
 
         address_parts = [address.street.street_value, address.town_or_city.town_or_city_value, address.postcode.postcode_value]
         address = [part for part in address_parts if part is not None and part != 'None']
@@ -215,4 +225,5 @@ class Dashboard(View):
             'responseslug': 'assign-consultation-workflow'
         }
         return resource_data
+
         

@@ -17160,6 +17160,16 @@
                     "function_id": "561abd7c-69ab-4240-ae5b-d12b11d4ec91",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
                     "id": "ecdc4d72-4707-4204-bcf2-9b45c58053f5"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "a5e15f5c-51a3-11eb-b240-f875a44e0e11"
+                        ]
+                    },
+                    "function_id": "e5de46d7-dd01-418b-a71d-f5b27c143de4",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "95199944-616a-4753-b6cc-f1affa308238"
                 }
             ],
             "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
