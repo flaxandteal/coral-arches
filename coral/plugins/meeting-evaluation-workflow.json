@@ -1,6 +1,6 @@
 {
   "pluginid": "e916d5ec-171a-43d3-b691-9e3d220f04ee",
-  "name": "Meeting Evaluation",
+  "name": "Evaluation Meeting",
   "icon": "fa fa-group",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -18,7 +18,7 @@
               {
                 "parameters": {
                   "labels": [["Consultation ID", "Meeting ID"]],
-                  "prefix": "MEV",
+                  "prefix": "EVM",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
@@ -259,15 +259,15 @@
       }
     ],
     "initWorkflow": {
-      "desc": "Start or modify a Meeting Evaluation",
+      "desc": "Start or modify a Evaluation Meeting",
       "icon": "fa fa-group",
-      "name": "Meeting Evaluation",
+      "name": "Evaluation Meeting",
       "show": true,
       "bgColor": "#86679c",
       "slugPrefix": "open-workflow?workflow-slug=",
       "circleColor": "#aa86c4"
     }
   },
-  "slug": "meeting-evaluation-workflow",
+  "slug": "evaluation-meeting-workflow",
   "sortorder": 0
 }
