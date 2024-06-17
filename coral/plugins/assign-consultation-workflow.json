@@ -82,22 +82,6 @@
               },
               {
                 "parameters": {
-                  "tileid": "['initial-step-step']['system-reference'][0]['tileId']",
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552be-9527-11ea-9213-f875a44e0e11"
-                  ],
-                  "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
-                  "semanticName": "System Reference Numbers"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "system-reference"
-              },
-              {
-                "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "54de6acc-8895-11ea-9067-f875a44e0e11",
