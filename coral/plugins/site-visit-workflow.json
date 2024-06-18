@@ -1,0 +1,12 @@
+{
+  "pluginid": "d884c425-4a0b-4c04-9c28-ab34583188ba",
+  "name": "Site Visit Workflow",
+  "icon": "fa fa-edit",
+  "component": "views/components/plugins/site-visit-workflow",
+  "componentname": "site-visit-workflow",
+  "config": {
+    "show": true
+  },
+  "slug": "site-visit-workflow",
+  "sortorder": 0
+}
