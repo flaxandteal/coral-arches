@@ -1287,38 +1287,9 @@
                         "en": "Application Stage Metatype"
                     },
                     "node_id": "b407df02-bad5-11ee-900d-0242ac180006",
-                    "sortorder": 7,
+                    "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Excavation Type",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%%"
-                    },
-                    "id": "311fa938-f2a9-4dde-917b-35d0ae451e19",
-                    "label": {
-                        "en": "Excavation Type"
-                    },
-                    "node_id": "3ff6e2ce-cf35-11ee-a12a-0242ac180006",
-                    "sortorder": 6,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -1360,6 +1331,28 @@
                         "en": "Grade E Role Metatype"
                     },
                     "node_id": "5097058a-c4d3-11ee-90c5-0242ac180006",
+                    "sortorder": 9,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
+                    "config": {
+                        "defaultValue": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Excavation Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "380efeb7-6a89-486a-b8cf-1363480c576c",
+                    "label": {
+                        "en": "Excavation Metatype"
+                    },
+                    "node_id": "a08ed94c-2d50-11ef-bbfd-0242ac120006",
                     "sortorder": 9,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
@@ -1942,7 +1935,7 @@
                         "en": "Funding Available"
                     },
                     "node_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
-                    "sortorder": 8,
+                    "sortorder": 7,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -3588,6 +3581,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Excavation Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "a3f221cf-230e-4754-965f-6ddff1bd8139",
+                    "label": {
+                        "en": "Excavation Type"
+                    },
+                    "node_id": "8f87fdae-2d50-11ef-bbfd-0242ac120006",
+                    "sortorder": 8,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
                     "config": {
                         "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
@@ -4801,15 +4816,6 @@
                 "en": ""
             },
             "edges": [
-                {
-                    "description": null,
-                    "domainnode_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
-                    "edgeid": "019f7635-6fee-410d-a79f-e1a4cf40ece0",
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "3ff6e2ce-cf35-11ee-a12a-0242ac180006"
-                },
                 {
                     "description": null,
                     "domainnode_id": "058cc682-c44d-11ee-94bf-0242ac180006",
@@ -6234,6 +6240,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "8f87fdae-2d50-11ef-bbfd-0242ac120006",
+                    "edgeid": "7942627d-0f86-4abe-b54d-54fbd781e936",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "a08ed94c-2d50-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "05f6b846-5d49-11ee-911e-0242ac130003",
                     "edgeid": "7997fd7a-cb14-4055-ac31-c7131e37e3af",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -6411,6 +6426,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "rangenode_id": "92361eba-bad1-11ee-b3f2-0242ac180006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "edgeid": "93241397-147d-4c0d-9423-aa7ae198db22",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "8f87fdae-2d50-11ef-bbfd-0242ac120006"
                 },
                 {
                     "description": null,
@@ -8884,29 +8908,6 @@
                     "nodeid": "3fe982a0-c436-11ee-94bf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "excavation_type",
-                    "config": {
-                        "rdmCollection": null
-                    },
-                    "datatype": "string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": false,
-                    "istopnode": false,
-                    "name": "Excavation Type",
-                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
-                    "nodeid": "3ff6e2ce-cf35-11ee-a12a-0242ac180006",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -11533,6 +11534,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "excavation_type",
+                    "config": {
+                        "rdmCollection": "2953436b-3673-40e8-a521-ab34801800db"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Excavation Type",
+                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "nodeid": "8f87fdae-2d50-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "application_description_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -12092,6 +12116,29 @@
                     "nodeid": "9a9e198c-c502-11ee-af34-0242ac180006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "excavation_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Excavation Metatype",
+                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "nodeid": "a08ed94c-2d50-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -13642,8 +13689,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "aed0193c-2d4e-11ef-bbfd-0242ac120006",
-                "published_time": "2024-06-18T08:42:23.534"
+                "publicationid": "3d52d102-2d51-11ef-bbfd-0242ac120006",
+                "published_time": "2024-06-18T09:00:41.621"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
