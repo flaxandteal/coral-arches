@@ -23,12 +23,6 @@
 </div>
 {% endblock form %}
 
-<!-- ko if: !configForm  && state === 'display_value' -->
-{% block display_value %}
-<span data-bind="text: dateValue() ||  $root.translations.noDateEntered"></span>
-{% endblock display_value %}
-<!-- /ko -->
-
 {% block report %}
 <dt data-bind="text: label, class: nodeCssClasses"></dt>
 <!-- ko if: value() !== null -->

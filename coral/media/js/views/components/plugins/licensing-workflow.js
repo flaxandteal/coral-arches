@@ -372,8 +372,7 @@ define([
                     hiddenNodes: [
                       '777596ba-48cf-11ee-8e4e-0242ac140007',
                       'aec103a2-48cf-11ee-8e4e-0242ac140007',
-                      'c2f40174-5dd5-11ee-ae2c-0242ac120008',
-                      '3ff6e2ce-cf35-11ee-a12a-0242ac180006'
+                      'c2f40174-5dd5-11ee-ae2c-0242ac120008'
                     ]
                   }
                 },

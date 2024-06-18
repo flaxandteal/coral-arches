@@ -86,6 +86,9 @@ class NotifyPlanning(BaseFunction):
                 with admin():
                     selected_user = Person.find(data[ACTION_BY][0]['resourceId'])
 
+                    if not selected_user.user_account:
+                        return
+
                     if existing_notification and existing_notification.context["last_notified"] == str(selected_user.id):
                         return
                     
