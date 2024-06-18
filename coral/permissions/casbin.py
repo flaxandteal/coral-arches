@@ -545,7 +545,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             try:
                 index = resource.get_index()
             except UnindexedError:
-                se.es.indices.refresh(index="test_resources")
+                se.es.indices.refresh(index="coral_resources")
                 index = resource.get_index()
             if (principal_users := index.get("_source", {}).get("permissions", {}).get("principal_user", [])):
                 if len(principal_users) >= 1 and user and user.id in principal_users:
