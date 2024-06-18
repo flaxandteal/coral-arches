@@ -305,7 +305,6 @@ define([
       const tileTemplate = {
         tileid: '',
         data: {
-          '3ff6e2ce-cf35-11ee-a12a-0242ac180006': null,
           '777596ba-48cf-11ee-8e4e-0242ac140007': 'daa4cddc-8636-4842-b836-eb2e10aabe18',
           '916b5e7e-48cf-11ee-8e4e-0242ac140007': '6fbe3775-e51d-4f90-af53-5695dd204c9a',
           'a79fedae-bad5-11ee-900d-0242ac180006': null,
