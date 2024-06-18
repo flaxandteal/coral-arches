@@ -1287,7 +1287,7 @@
                         "en": "Application Stage Metatype"
                     },
                     "node_id": "b407df02-bad5-11ee-900d-0242ac180006",
-                    "sortorder": 5,
+                    "sortorder": 7,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -1316,7 +1316,7 @@
                         "en": "Excavation Type"
                     },
                     "node_id": "3ff6e2ce-cf35-11ee-a12a-0242ac180006",
-                    "sortorder": 4,
+                    "sortorder": 6,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -1942,7 +1942,7 @@
                         "en": "Funding Available"
                     },
                     "node_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
-                    "sortorder": 6,
+                    "sortorder": 8,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
@@ -2956,6 +2956,27 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Excavation Reason Type",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "8d4976f6-280b-4227-ac71-c2bb3173df36",
+                    "label": {
+                        "en": "Excavation Reason Type"
+                    },
+                    "node_id": "ba8aab44-2d4d-11ef-bbfd-0242ac120006",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000016"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -4004,6 +4025,28 @@
                     "sortorder": 16,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000017"
+                },
+                {
+                    "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
+                    "config": {
+                        "defaultValue": "62f3f620-ea25-46c8-9a7b-dbadf23aa874",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Excavation Reason Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "c085b8b1-31f3-483b-ada1-46e26551ea9e",
+                    "label": {
+                        "en": "Excavation Reason Metatype"
+                    },
+                    "node_id": "fd9b98a8-2d4d-11ef-bbfd-0242ac120006",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -5471,6 +5514,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "ba8aab44-2d4d-11ef-bbfd-0242ac120006",
+                    "edgeid": "5059975f-d3df-496c-9933-6d846286d82c",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "fd9b98a8-2d4d-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "5096df56-c4d3-11ee-90c5-0242ac180006",
                     "edgeid": "50976174-c4d3-11ee-90c5-0242ac180006",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -6812,6 +6864,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "edgeid": "d85d8717-23f0-42bd-87d8-745f93934d81",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "ba8aab44-2d4d-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "d8f7275e-dc6e-11ee-8def-0242ac120006",
                     "edgeid": "d8f77d08-dc6e-11ee-8def-0242ac120006",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -7368,17 +7429,17 @@
                         },
                         "options": [
                             {
-                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
-                                "selected": false,
-                                "text": {
-                                    "en": "Do not grant license"
-                                }
-                            },
-                            {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
                                     "en": "Grant license"
+                                }
+                            },
+                            {
+                                "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
+                                "selected": false,
+                                "text": {
+                                    "en": "Do not grant license"
                                 }
                             }
                         ]
@@ -8327,17 +8388,17 @@
                         },
                         "options": [
                             {
-                                "id": "c1dd481d-c84c-42ae-9231-a41d4f518eaf",
-                                "selected": false,
-                                "text": {
-                                    "en": "Decline"
-                                }
-                            },
-                            {
                                 "id": "0c888ace-b068-470a-91cb-9e5f57c660b4",
                                 "selected": false,
                                 "text": {
                                     "en": "Approved"
+                                }
+                            },
+                            {
+                                "id": "c1dd481d-c84c-42ae-9231-a41d4f518eaf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Decline"
                                 }
                             }
                         ]
@@ -9316,17 +9377,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -11394,24 +11455,10 @@
                         },
                         "options": [
                             {
-                                "id": "31423973-518d-480f-8ad1-0bfb7812d16a",
+                                "id": "b82a7d0d-b446-4aff-b3ac-b6d5121fb5d0",
                                 "selected": false,
                                 "text": {
-                                    "en": "Summary"
-                                }
-                            },
-                            {
-                                "id": "103b86ec-2324-4752-82a4-e3bd6df44be5",
-                                "selected": false,
-                                "text": {
-                                    "en": "Unclassified"
-                                }
-                            },
-                            {
-                                "id": "3e73773f-8adf-44dd-a4da-3310bf5d238a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Interim"
+                                    "en": "Final"
                                 }
                             },
                             {
@@ -11422,10 +11469,24 @@
                                 }
                             },
                             {
-                                "id": "b82a7d0d-b446-4aff-b3ac-b6d5121fb5d0",
+                                "id": "3e73773f-8adf-44dd-a4da-3310bf5d238a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Final"
+                                    "en": "Interim"
+                                }
+                            },
+                            {
+                                "id": "103b86ec-2324-4752-82a4-e3bd6df44be5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Unclassified"
+                                }
+                            },
+                            {
+                                "id": "31423973-518d-480f-8ad1-0bfb7812d16a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Summary"
                                 }
                             }
                         ]
@@ -12042,17 +12103,17 @@
                         },
                         "options": [
                             {
-                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
-                                "selected": false,
-                                "text": {
-                                    "en": "Grant license"
-                                }
-                            },
-                            {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
                                     "en": "Do not grant license"
+                                }
+                            },
+                            {
+                                "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Grant license"
                                 }
                             }
                         ]
@@ -12083,59 +12144,10 @@
                         },
                         "options": [
                             {
-                                "id": "7c812dd6-30eb-4d27-b37d-72645706921d",
+                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
                                 "selected": false,
                                 "text": {
-                                    "en": "Unresolved - person"
-                                }
-                            },
-                            {
-                                "id": "81f88515-42b8-41b9-bc8b-82518be3af07",
-                                "selected": false,
-                                "text": {
-                                    "en": "Unresolved - company"
-                                }
-                            },
-                            {
-                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
-                                "selected": false,
-                                "text": {
-                                    "en": "Received"
-                                }
-                            },
-                            {
-                                "id": "0df1843b-28e9-4868-9a9a-d19229fe5c48",
-                                "selected": false,
-                                "text": {
-                                    "en": "Acknowledged"
-                                }
-                            },
-                            {
-                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
-                                "selected": false,
-                                "text": {
-                                    "en": "In progress"
-                                }
-                            },
-                            {
-                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
-                                "selected": false,
-                                "text": {
-                                    "en": "Paused"
-                                }
-                            },
-                            {
-                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
-                                "selected": false,
-                                "text": {
-                                    "en": "Granted"
-                                }
-                            },
-                            {
-                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refused"
+                                    "en": "Not Used"
                                 }
                             },
                             {
@@ -12146,10 +12158,59 @@
                                 }
                             },
                             {
-                                "id": "3e437a57-954f-49de-baae-536c7e0bcb74",
+                                "id": "40557c74-cb18-4111-a349-a91eb926e163",
                                 "selected": false,
                                 "text": {
-                                    "en": "Not Used"
+                                    "en": "Refused"
+                                }
+                            },
+                            {
+                                "id": "8c454982-c470-437d-a9c6-87460b07b3d9",
+                                "selected": false,
+                                "text": {
+                                    "en": "Granted"
+                                }
+                            },
+                            {
+                                "id": "48e031eb-9be3-4ba2-9cb7-798184a9d2bf",
+                                "selected": false,
+                                "text": {
+                                    "en": "Paused"
+                                }
+                            },
+                            {
+                                "id": "af08ac99-205f-4d97-8829-55a8e7da1c9d",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
+                                }
+                            },
+                            {
+                                "id": "0df1843b-28e9-4868-9a9a-d19229fe5c48",
+                                "selected": false,
+                                "text": {
+                                    "en": "Acknowledged"
+                                }
+                            },
+                            {
+                                "id": "2e2703e4-4f19-47ca-842d-a45c8502a547",
+                                "selected": false,
+                                "text": {
+                                    "en": "Received"
+                                }
+                            },
+                            {
+                                "id": "81f88515-42b8-41b9-bc8b-82518be3af07",
+                                "selected": false,
+                                "text": {
+                                    "en": "Unresolved - company"
+                                }
+                            },
+                            {
+                                "id": "7c812dd6-30eb-4d27-b37d-72645706921d",
+                                "selected": false,
+                                "text": {
+                                    "en": "Unresolved - person"
                                 }
                             }
                         ],
@@ -12517,6 +12578,103 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "excavation_reason_type",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "a46ad5b7-f2b4-4e9d-b9bb-b9a03b0226f1",
+                                "selected": false,
+                                "text": {
+                                    "en": "Pre-planning"
+                                }
+                            },
+                            {
+                                "id": "33edd0cd-8ea6-49c3-b6e8-ec2e5e43679f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Planning - evaluation"
+                                }
+                            },
+                            {
+                                "id": "7c5def32-9411-4f87-a8fe-90313823e1dd",
+                                "selected": false,
+                                "text": {
+                                    "en": "Planning - mitigation"
+                                }
+                            },
+                            {
+                                "id": "70619958-1aa7-45a0-8bd4-3bda9ffd8c05",
+                                "selected": false,
+                                "text": {
+                                    "en": "Research"
+                                }
+                            },
+                            {
+                                "id": "a379f6e4-9669-4842-962b-56d00fe37471",
+                                "selected": false,
+                                "text": {
+                                    "en": "Infrastructural"
+                                }
+                            },
+                            {
+                                "id": "172cc21a-9180-40db-99da-95be34d8f8dc",
+                                "selected": false,
+                                "text": {
+                                    "en": "Community project"
+                                }
+                            },
+                            {
+                                "id": "d3955ae3-f16e-4243-8638-efde3d120ae4",
+                                "selected": false,
+                                "text": {
+                                    "en": "Conservation"
+                                }
+                            },
+                            {
+                                "id": "6188a44e-7dde-4a03-9bd8-9e67eab5e532",
+                                "selected": false,
+                                "text": {
+                                    "en": "Rescue"
+                                }
+                            },
+                            {
+                                "id": "f13743f8-10b8-43df-81e3-2085b7760573",
+                                "selected": false,
+                                "text": {
+                                    "en": "Metal detector survey"
+                                }
+                            },
+                            {
+                                "id": "cd3833e4-5371-4f39-8167-4487acaaf0a2",
+                                "selected": false,
+                                "text": {
+                                    "en": "Other"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Excavation Reason Type",
+                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "nodeid": "ba8aab44-2d4d-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "gis_dataset_received",
                     "config": {
                         "i18n_config": {
@@ -12524,10 +12682,10 @@
                         },
                         "options": [
                             {
-                                "id": "256a8355-1a9b-4f21-ac8c-f5d1bb63a554",
+                                "id": "d0384ecc-dbf8-4178-991d-07d2ffe76326",
                                 "selected": false,
                                 "text": {
-                                    "en": "N/A"
+                                    "en": "Yes"
                                 }
                             },
                             {
@@ -12538,10 +12696,10 @@
                                 }
                             },
                             {
-                                "id": "d0384ecc-dbf8-4178-991d-07d2ffe76326",
+                                "id": "256a8355-1a9b-4f21-ac8c-f5d1bb63a554",
                                 "selected": false,
                                 "text": {
-                                    "en": "Yes"
+                                    "en": "N/A"
                                 }
                             }
                         ]
@@ -12969,17 +13127,17 @@
                         },
                         "options": [
                             {
-                                "id": "d298a772-7666-4d8c-8d22-4e9bf4207b51",
-                                "selected": false,
-                                "text": {
-                                    "en": "No"
-                                }
-                            },
-                            {
                                 "id": "1d529285-ada6-419f-9d81-6173bcc3c8f1",
                                 "selected": false,
                                 "text": {
                                     "en": "Yes"
+                                }
+                            },
+                            {
+                                "id": "d298a772-7666-4d8c-8d22-4e9bf4207b51",
+                                "selected": false,
+                                "text": {
+                                    "en": "No"
                                 }
                             }
                         ]
@@ -13179,10 +13337,10 @@
                         },
                         "options": [
                             {
-                                "id": "256a8355-1a9b-4f21-ac8c-f5d1bb63a554",
+                                "id": "d0384ecc-dbf8-4178-991d-07d2ffe76326",
                                 "selected": false,
                                 "text": {
-                                    "en": "N/A"
+                                    "en": "Yes"
                                 }
                             },
                             {
@@ -13193,10 +13351,10 @@
                                 }
                             },
                             {
-                                "id": "d0384ecc-dbf8-4178-991d-07d2ffe76326",
+                                "id": "256a8355-1a9b-4f21-ac8c-f5d1bb63a554",
                                 "selected": false,
                                 "text": {
-                                    "en": "Yes"
+                                    "en": "N/A"
                                 }
                             }
                         ]
@@ -13434,6 +13592,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "excavation_reason_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Excavation Reason Metatype",
+                    "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                    "nodeid": "fd9b98a8-2d4d-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "pow_file",
                     "config": {
                         "en": ""
@@ -13461,8 +13642,8 @@
             "publication": {
                 "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                 "notes": null,
-                "publicationid": "feb162c6-2cc2-11ef-8ae7-0242ac120006",
-                "published_time": "2024-06-17T16:02:28.009"
+                "publicationid": "aed0193c-2d4e-11ef-bbfd-0242ac120006",
+                "published_time": "2024-06-18T08:42:23.534"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
