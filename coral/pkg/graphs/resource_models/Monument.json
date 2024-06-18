@@ -329,6 +329,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Decision"
+                    },
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "325a2f31-efe4-11eb-a444-a87eeabdefba",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -346,7 +373,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -589,7 +616,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Correspondence"
                     },
@@ -980,7 +1007,7 @@
                     "instructions": {
                         "en": "Use to record any designation or protection regimes directly associated with the application area."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Designation and Protection Assignment"
                     },
@@ -1346,7 +1373,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Data"
                     },
@@ -1969,7 +1996,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Associated Digital File(s)"
                     },
@@ -2878,6 +2905,28 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "defaultValue": "39a33725-9b43-47b0-9997-daa99ab29d26",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Date Qualifier",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "33c81824-a85c-47a2-8b41-07d3e6cc5c14",
+                    "label": {
+                        "en": "Date Qualifier"
+                    },
+                    "node_id": "ca07bba8-2d5b-11ef-bbfd-0242ac120006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "346001be-d23e-11ee-9ae7-0242ac180006",
                     "config": {
                         "defaultValue": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
@@ -3100,6 +3149,26 @@
                     "sortorder": 7,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Issued Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "371de7c2-f13e-4e14-9c04-e02c9eaab33f",
+                    "label": {
+                        "en": "Issued Date"
+                    },
+                    "node_id": "ca07b860-2d5b-11ef-bbfd-0242ac120006",
+                    "sortorder": 6,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "9eceaff9-795b-497c-982b-cfb41e8f8ec0",
@@ -3811,6 +3880,26 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000016"
+                },
+                {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Provisional Issued Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "5105eec3-8a33-48f4-9e9b-c4a8a0d2ea9a",
+                    "label": {
+                        "en": "Provisional Issued Date"
+                    },
+                    "node_id": "ca07ba22-2d5b-11ef-bbfd-0242ac120006",
+                    "sortorder": 5,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "e8bbef96-4db7-4c11-a91a-3459490e61af",
@@ -6679,6 +6768,35 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Works to be carried out",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "7c23f0d8-b97f-4143-9269-48da2a6d5a73",
+                    "label": {
+                        "en": "Works to be carried out"
+                    },
+                    "node_id": "7819ddda-2d5b-11ef-8722-0242ac120006",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000005"
+                },
+                {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
                     "config": {
                         "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
@@ -6839,6 +6957,27 @@
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "60328bdb-bac3-410b-bcee-6c05d7689b29"
+                },
+                {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Consent",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "838a3a7a-0a91-4579-93ea-e592856aa98d",
+                    "label": {
+                        "en": "Consent"
+                    },
+                    "node_id": "f2f3970e-2d5a-11ef-bbfd-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "247943ca-f089-4a5f-ae1a-cbae18436e15",
@@ -11535,6 +11674,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Date Qualifier Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "a5210869-5f79-467d-aadb-e17aa108e6e9",
+                    "label": {
+                        "en": "Date Qualifier Metatype"
+                    },
+                    "node_id": "ca07be96-2d5b-11ef-bbfd-0242ac120006",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "247943ca-f089-4a5f-ae1a-cbae18436e15",
                     "config": {
                         "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
@@ -12895,6 +13056,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Issued By",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "dc2be69f-25b9-4f4c-acfd-bf0625a440cc",
+                    "label": {
+                        "en": "Issued By"
+                    },
+                    "node_id": "a408358e-2d5d-11ef-8722-0242ac120006",
+                    "sortorder": 7,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
                     "card_id": "13854c13-4dd8-47e3-9665-123ee0ca1a06",
                     "config": {
                         "defaultValue": {
@@ -13309,6 +13491,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Status",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "f27ae91f-8143-49f7-a6d3-750275a73412",
+                    "label": {
+                        "en": "Status"
+                    },
+                    "node_id": "fa3d683c-2d5a-11ef-bbfd-0242ac120006",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                },
+                {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
                     "config": {
                         "defaultValue": "586a2776-7f4a-4be9-9219-3a9896c7f965",
@@ -13562,6 +13765,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "0f6ba1f3-b541-46d7-b693-423cc38406c4",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P137_exemplifies",
+                    "rangenode_id": "82c9eef6-2d5a-11ef-8722-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "cacc9d20-d62f-11ee-9454-0242ac180006",
                     "edgeid": "100f298a-d13b-412b-88f9-47417db8b923",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -13766,6 +13978,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "rangenode_id": "30d5defa-d64a-11ee-8b04-0242ac180006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "edgeid": "31483e82-76f3-40f4-abd4-0f51a00d8767",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P137i_is_exemplified_by",
+                    "rangenode_id": "ca07933a-2d5b-11ef-bbfd-0242ac120006"
                 },
                 {
                     "description": null,
@@ -15776,6 +15997,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "edgeid": "7a7729b3-5f80-4a36-816a-940e8a40e57b",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "fa3d683c-2d5a-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "7ac8a50a-d64b-11ee-8b04-0242ac180006",
                     "edgeid": "7ac8dbf6-d64b-11ee-8b04-0242ac180006",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -17450,6 +17680,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "edgeid": "8a2ca704-aa6c-44ae-b8ce-6445b292e4fe",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f2f3970e-2d5a-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "8e4109f9-04a1-11eb-9732-f875a44e0e11",
                     "edgeid": "8e4109fd-04a1-11eb-bf1e-f875a44e0e11",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -18278,6 +18517,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "edgeid": "b04eb430-5b06-4b29-9e4c-7d4931902ace",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P137i_is_exemplified_by",
+                    "rangenode_id": "a408358e-2d5d-11ef-8722-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "b2133e70-efdc-11eb-8765-a87eeabdefba",
                     "edgeid": "b213668c-efdc-11eb-b3f7-a87eeabdefba",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -18563,6 +18811,42 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P141_assigned",
                     "rangenode_id": "35d8256a-d7d6-11ee-9916-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ca07933a-2d5b-11ef-bbfd-0242ac120006",
+                    "edgeid": "ca07eee8-2d5b-11ef-bbfd-0242ac120006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "rangenode_id": "ca07b860-2d5b-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ca07933a-2d5b-11ef-bbfd-0242ac120006",
+                    "edgeid": "ca07f0fa-2d5b-11ef-bbfd-0242ac120006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "rangenode_id": "ca07ba22-2d5b-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ca07933a-2d5b-11ef-bbfd-0242ac120006",
+                    "edgeid": "ca07f29e-2d5b-11ef-bbfd-0242ac120006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "ca07bba8-2d5b-11ef-bbfd-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ca07bba8-2d5b-11ef-bbfd-0242ac120006",
+                    "edgeid": "ca07f5aa-2d5b-11ef-bbfd-0242ac120006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "ca07be96-2d5b-11ef-bbfd-0242ac120006"
                 },
                 {
                     "description": null,
@@ -18944,6 +19228,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "edgeid": "fb40e570-a1c5-4504-9256-fb4e027b65bf",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "7819ddda-2d5b-11ef-8722-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
                     "edgeid": "fc6b6b0f-5118-11eb-b765-f875a44e0e11",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -19042,7 +19335,7 @@
             ],
             "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
             "iconclass": "fa fa-bank",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -19239,6 +19532,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "7d5eb9d4-dbc9-11ee-8835-0242ac120006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "82c9eef6-2d5a-11ef-8722-0242ac120006",
                     "parentnodegroup_id": null
                 },
                 {
@@ -19537,17 +19836,10 @@
                         },
                         "options": [
                             {
-                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
                                 "selected": false,
                                 "text": {
-                                    "en": "Standing Buildings"
-                                }
-                            },
-                            {
-                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
-                                "selected": false,
-                                "text": {
-                                    "en": "Field Monuments"
+                                    "en": "Aquatic Monuments"
                                 }
                             },
                             {
@@ -19558,10 +19850,17 @@
                                 }
                             },
                             {
-                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
+                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
                                 "selected": false,
                                 "text": {
-                                    "en": "Aquatic Monuments"
+                                    "en": "Field Monuments"
+                                }
+                            },
+                            {
+                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "selected": false,
+                                "text": {
+                                    "en": "Standing Buildings"
                                 }
                             }
                         ]
@@ -20080,66 +20379,10 @@
                         },
                         "options": [
                             {
-                                "id": "059da29b-9413-41e1-a064-bb1190e91e05",
+                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
                                 "selected": false,
                                 "text": {
-                                    "en": "WELL PRESERVED (Complete/substantially complete)"
-                                }
-                            },
-                            {
-                                "id": "61908388-0c04-4be3-8367-9f7046951a54",
-                                "selected": false,
-                                "text": {
-                                    "en": "SUBSTANTIAL REMAINS (Vast majority definable)"
-                                }
-                            },
-                            {
-                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
-                                "selected": false,
-                                "text": {
-                                    "en": "SOME REMAINS (Some definable features)"
-                                }
-                            },
-                            {
-                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "TRACES ONLY (No definable features)"
-                                }
-                            },
-                            {
-                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
-                                "selected": false,
-                                "text": {
-                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
-                                }
-                            },
-                            {
-                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
-                                "selected": false,
-                                "text": {
-                                    "en": "DESTROYED"
-                                }
-                            },
-                            {
-                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
-                                "selected": false,
-                                "text": {
-                                    "en": "EXCAVATED"
-                                }
-                            },
-                            {
-                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
-                                "selected": false,
-                                "text": {
-                                    "en": "SUBMERGED"
-                                }
-                            },
-                            {
-                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
-                                "selected": false,
-                                "text": {
-                                    "en": "TIDALLY SUBMERGED"
+                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
                                 }
                             },
                             {
@@ -20150,10 +20393,66 @@
                                 }
                             },
                             {
-                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
+                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
                                 "selected": false,
                                 "text": {
-                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
+                                    "en": "TIDALLY SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
+                                "selected": false,
+                                "text": {
+                                    "en": "EXCAVATED"
+                                }
+                            },
+                            {
+                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
+                                "selected": false,
+                                "text": {
+                                    "en": "DESTROYED"
+                                }
+                            },
+                            {
+                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
+                                "selected": false,
+                                "text": {
+                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
+                                }
+                            },
+                            {
+                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "TRACES ONLY (No definable features)"
+                                }
+                            },
+                            {
+                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
+                                "selected": false,
+                                "text": {
+                                    "en": "SOME REMAINS (Some definable features)"
+                                }
+                            },
+                            {
+                                "id": "61908388-0c04-4be3-8367-9f7046951a54",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBSTANTIAL REMAINS (Vast majority definable)"
+                                }
+                            },
+                            {
+                                "id": "059da29b-9413-41e1-a064-bb1190e91e05",
+                                "selected": false,
+                                "text": {
+                                    "en": "WELL PRESERVED (Complete/substantially complete)"
                                 }
                             }
                         ]
@@ -21191,17 +21490,17 @@
                         },
                         "options": [
                             {
-                                "id": "7f81d135-45ac-483f-96f4-2fa8ca882d79",
-                                "selected": false,
-                                "text": {
-                                    "en": "Provisional"
-                                }
-                            },
-                            {
                                 "id": "294f38d0-e391-4f7d-af83-72fbf7fcdfcb",
                                 "selected": false,
                                 "text": {
                                     "en": "Approved"
+                                }
+                            },
+                            {
+                                "id": "7f81d135-45ac-483f-96f4-2fa8ca882d79",
+                                "selected": false,
+                                "text": {
+                                    "en": "Provisional"
                                 }
                             }
                         ]
@@ -21551,66 +21850,10 @@
                         },
                         "options": [
                             {
-                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
                                 "selected": false,
                                 "text": {
-                                    "en": "37: Ards and North Down"
-                                }
-                            },
-                            {
-                                "id": "c3fb7b10-9117-46ac-b1ef-65bca03e9896",
-                                "selected": false,
-                                "text": {
-                                    "en": "36: Newry Mourne and Down"
-                                }
-                            },
-                            {
-                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
-                                "selected": false,
-                                "text": {
-                                    "en": "35: Mid Ulster"
-                                }
-                            },
-                            {
-                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "34: Mid and East Antrim"
-                                }
-                            },
-                            {
-                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
-                                "selected": false,
-                                "text": {
-                                    "en": "33: Lisburn and Castlereagh"
-                                }
-                            },
-                            {
-                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
-                                "selected": false,
-                                "text": {
-                                    "en": "32: Fermanagh and Omagh"
-                                }
-                            },
-                            {
-                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
-                                "selected": false,
-                                "text": {
-                                    "en": "31: Derry City and Strabane"
-                                }
-                            },
-                            {
-                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
-                                "selected": false,
-                                "text": {
-                                    "en": "30: Causeway Coast and Glens"
-                                }
-                            },
-                            {
-                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "29: Belfast"
+                                    "en": "27: Antrim and Newtownabbey"
                                 }
                             },
                             {
@@ -21621,10 +21864,66 @@
                                 }
                             },
                             {
-                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
                                 "selected": false,
                                 "text": {
-                                    "en": "27: Antrim and Newtownabbey"
+                                    "en": "29: Belfast"
+                                }
+                            },
+                            {
+                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
+                                "selected": false,
+                                "text": {
+                                    "en": "30: Causeway Coast and Glens"
+                                }
+                            },
+                            {
+                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
+                                "selected": false,
+                                "text": {
+                                    "en": "31: Derry City and Strabane"
+                                }
+                            },
+                            {
+                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
+                                "selected": false,
+                                "text": {
+                                    "en": "32: Fermanagh and Omagh"
+                                }
+                            },
+                            {
+                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
+                                "selected": false,
+                                "text": {
+                                    "en": "33: Lisburn and Castlereagh"
+                                }
+                            },
+                            {
+                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "34: Mid and East Antrim"
+                                }
+                            },
+                            {
+                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
+                                "selected": false,
+                                "text": {
+                                    "en": "35: Mid Ulster"
+                                }
+                            },
+                            {
+                                "id": "c3fb7b10-9117-46ac-b1ef-65bca03e9896",
+                                "selected": false,
+                                "text": {
+                                    "en": "36: Newry Mourne and Down"
+                                }
+                            },
+                            {
+                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "selected": false,
+                                "text": {
+                                    "en": "37: Ards and North Down"
                                 }
                             }
                         ]
@@ -25808,6 +26107,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "works_to_be_carried_out",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Works to be carried out",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "7819ddda-2d5b-11ef-8722-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "status_type",
                     "config": {
                         "i18n_config": {
@@ -25815,17 +26137,10 @@
                         },
                         "options": [
                             {
-                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
                                 "selected": false,
                                 "text": {
-                                    "en": "Enforcement actioned"
-                                }
-                            },
-                            {
-                                "id": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
-                                "selected": false,
-                                "text": {
-                                    "en": "Not completed"
+                                    "en": "In progress"
                                 }
                             },
                             {
@@ -25836,10 +26151,17 @@
                                 }
                             },
                             {
-                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "id": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
                                 "selected": false,
                                 "text": {
-                                    "en": "In progress"
+                                    "en": "Not completed"
+                                }
+                            },
+                            {
+                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "selected": false,
+                                "text": {
+                                    "en": "Enforcement actioned"
                                 }
                             }
                         ],
@@ -26136,6 +26458,29 @@
                     "nodeid": "808b1cc6-0eda-11ef-a2cd-0242ac140006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E32_Authority_Document",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P71i_is_listed_in",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "decision",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Decision",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMsci/S9_Property_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P137_exemplifies",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -27054,10 +27399,10 @@
                         },
                         "options": [
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             },
                             {
@@ -27068,10 +27413,10 @@
                                 }
                             },
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             }
                         ]
@@ -27263,10 +27608,10 @@
                         },
                         "options": [
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             },
                             {
@@ -27277,10 +27622,10 @@
                                 }
                             },
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             }
                         ]
@@ -31702,6 +32047,40 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "issued_by",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Person",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Issued By",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "a408358e-2d5d-11ef-8722-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P137i_is_exemplified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "area_archaeologist",
                     "config": {
                         "graphs": [
@@ -32807,52 +33186,10 @@
                         },
                         "options": [
                             {
-                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
+                                "id": "219c6377-d9d9-47b3-bea3-269aca0075d4",
                                 "selected": false,
                                 "text": {
-                                    "en": "Summary"
-                                }
-                            },
-                            {
-                                "id": "d013a32b-e4ad-4d54-99af-bf6d716b8226",
-                                "selected": false,
-                                "text": {
-                                    "en": "Abstract"
-                                }
-                            },
-                            {
-                                "id": "87c40306-43a1-4522-a496-d0d773029f2f",
-                                "selected": false,
-                                "text": {
-                                    "en": "Full"
-                                }
-                            },
-                            {
-                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
-                                "selected": false,
-                                "text": {
-                                    "en": "Interior"
-                                }
-                            },
-                            {
-                                "id": "671952e8-7b73-4524-8bcb-3324ed9524e5",
-                                "selected": false,
-                                "text": {
-                                    "en": "Exterior"
-                                }
-                            },
-                            {
-                                "id": "467f724e-d36b-4347-8ebf-cf9648fefb96",
-                                "selected": false,
-                                "text": {
-                                    "en": "History"
-                                }
-                            },
-                            {
-                                "id": "0fb56869-37af-4573-a978-5fc4dcbb5840",
-                                "selected": false,
-                                "text": {
-                                    "en": "Statutory"
+                                    "en": "Notes"
                                 }
                             },
                             {
@@ -32863,10 +33200,52 @@
                                 }
                             },
                             {
-                                "id": "219c6377-d9d9-47b3-bea3-269aca0075d4",
+                                "id": "0fb56869-37af-4573-a978-5fc4dcbb5840",
                                 "selected": false,
                                 "text": {
-                                    "en": "Notes"
+                                    "en": "Statutory"
+                                }
+                            },
+                            {
+                                "id": "467f724e-d36b-4347-8ebf-cf9648fefb96",
+                                "selected": false,
+                                "text": {
+                                    "en": "History"
+                                }
+                            },
+                            {
+                                "id": "671952e8-7b73-4524-8bcb-3324ed9524e5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Exterior"
+                                }
+                            },
+                            {
+                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Interior"
+                                }
+                            },
+                            {
+                                "id": "87c40306-43a1-4522-a496-d0d773029f2f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Full"
+                                }
+                            },
+                            {
+                                "id": "d013a32b-e4ad-4d54-99af-bf6d716b8226",
+                                "selected": false,
+                                "text": {
+                                    "en": "Abstract"
+                                }
+                            },
+                            {
+                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
+                                "selected": false,
+                                "text": {
+                                    "en": "Summary"
                                 }
                             }
                         ]
@@ -32976,6 +33355,121 @@
                     "name": "Input By Role Type",
                     "nodegroup_id": "3897b87a-1902-11ef-aa9f-0242ac150006",
                     "nodeid": "c995b1ae-1904-11ef-aa9f-0242ac150006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "issued_date",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": "{\"en\": \"\"}",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Issued Date",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "ca07933a-2d5b-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P137i_is_exemplified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": "a153c508-06d9-11ed-ad22-acde48001122"
+                },
+                {
+                    "alias": "actual_issued_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Actual Issued Date",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "ca07b860-2d5b-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "provisional_issued_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Provisional Issued Date",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "ca07ba22-2d5b-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "date_qualifier_n1",
+                    "config": {
+                        "rdmCollection": "366686d6-deb0-4245-81a3-f94d791a388c"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Date Qualifier",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "ca07bba8-2d5b-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "date_qualifier_metatype_n2",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Date Qualifier Metatype",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "ca07be96-2d5b-11ef-bbfd-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
@@ -33518,17 +34012,10 @@
                         },
                         "options": [
                             {
-                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
                                 "selected": false,
                                 "text": {
-                                    "en": "Resolve with Owner"
-                                }
-                            },
-                            {
-                                "id": "c240cec6-982f-401b-80d6-eaac04a18d88",
-                                "selected": false,
-                                "text": {
-                                    "en": "Resolve with Occupier"
+                                    "en": "Contact PSNI"
                                 }
                             },
                             {
@@ -33539,10 +34026,17 @@
                                 }
                             },
                             {
-                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "id": "c240cec6-982f-401b-80d6-eaac04a18d88",
                                 "selected": false,
                                 "text": {
-                                    "en": "Contact PSNI"
+                                    "en": "Resolve with Occupier"
+                                }
+                            },
+                            {
+                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "selected": false,
+                                "text": {
+                                    "en": "Resolve with Owner"
                                 }
                             }
                         ]
@@ -34076,6 +34570,47 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "consent",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "6dbde4c3-eeab-4fab-9106-718af3bba238",
+                                "selected": false,
+                                "text": {
+                                    "en": "Accepted"
+                                }
+                            },
+                            {
+                                "id": "7c10f127-3358-4cc9-b4df-75cd6c5f7cd7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Returned"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Consent",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "f2f3970e-2d5a-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "approver",
                     "config": {
                         "en": ""
@@ -34095,6 +34630,82 @@
                     "nodeid": "f625839e-d64b-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "status",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "904508da-fd0e-4b4c-8898-0c46c8fa4bda",
+                                "selected": false,
+                                "text": {
+                                    "en": "Cancelled / Withdrawn"
+                                }
+                            },
+                            {
+                                "id": "cbb67ab2-76ac-4035-9002-1d127a21c2d5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Refused"
+                                }
+                            },
+                            {
+                                "id": "f6a4a8ea-e6cd-4a28-ae8a-c417a38a7a4b",
+                                "selected": false,
+                                "text": {
+                                    "en": "Final issued"
+                                }
+                            },
+                            {
+                                "id": "85975a2a-c3b6-42b2-a99a-51d0a2727402",
+                                "selected": false,
+                                "text": {
+                                    "en": "Provisional issued"
+                                }
+                            },
+                            {
+                                "id": "e7da1b40-58c1-450f-bd7e-5904c6ea565f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Draft sent for approval"
+                                }
+                            },
+                            {
+                                "id": "7c10f127-3358-4cc9-b4df-75cd6c5f7cd7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Additional Information Requested"
+                                }
+                            },
+                            {
+                                "id": "6dbde4c3-eeab-4fab-9106-718af3bba238",
+                                "selected": false,
+                                "text": {
+                                    "en": "On-going"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Status",
+                    "nodegroup_id": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "nodeid": "fa3d683c-2d5a-11ef-bbfd-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -34133,8 +34744,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "1acefd9c-29cb-11ef-8adf-0242ac1f0006",
-                "published_time": "2024-06-13T21:22:57.664"
+                "publicationid": "a00909bc-2d5e-11ef-8722-0242ac120006",
+                "published_time": "2024-06-18T10:36:30.689"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -34168,7 +34779,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
+        "git hash": "72958682a 2024-06-15 23:37:12 +0100",
         "os": "Linux",
         "os version": "5.10.0-23-amd64"
     }

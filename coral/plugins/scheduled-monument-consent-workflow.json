@@ -197,6 +197,28 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
+        "name": "decision-step",
+        "title": "Decision",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "82c9eef6-2d5a-11ef-8722-0242ac120006"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "decision"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
         "name": "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
         "title": "Letter",
         "required": false,
