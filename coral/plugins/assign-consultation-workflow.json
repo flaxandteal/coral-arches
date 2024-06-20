@@ -82,22 +82,6 @@
               },
               {
                 "parameters": {
-                  "tileid": "['initial-step-step']['system-reference'][0]['tileId']",
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552be-9527-11ea-9213-f875a44e0e11"
-                  ],
-                  "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
-                  "semanticName": "System Reference Numbers"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "system-reference"
-              },
-              {
-                "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "54de6acc-8895-11ea-9067-f875a44e0e11",
@@ -134,13 +118,17 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "ecbda08c-fb2d-11ee-838d-0242ac190006",
-                    "166ed240-031a-11ef-8ec2-0242ac150006",
+                    "53388daa-24d1-11ef-a3a4-0242ac130006",
                     "a3047fd4-031a-11ef-8ec2-0242ac150006",
+                    "54131242-24cf-11ef-a3a4-0242ac130006",
+                    "ecbda08c-fb2d-11ee-838d-0242ac190006",
                     "4c00b292-fb2d-11ee-838d-0242ac190006",
+                    "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
                     "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
-                    "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
+                    "db45aa50-24ce-11ef-97ad-0242ac130006",
+                    "166ed240-031a-11ef-8ec2-0242ac150006",
+                    "936fdbc8-24cf-11ef-97ad-0242ac130006",
                     "b7304f4c-3ace-11eb-8884-f875a44e0e11"
                   ],
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",

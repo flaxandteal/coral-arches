@@ -140,7 +140,12 @@ define([
 
       const validate = (resourceId) =>
         new Promise(async (resolve, reject) => {
-          const tiles = await this.fetchTileData(resourceId);
+          let tiles = [];
+          try {
+            tiles = await this.fetchTileData(resourceId);
+          } catch (error) {
+            console.error(error);
+          };
           if (!tiles.length) {
             removeWorkflows.push(resourceId);
           }
