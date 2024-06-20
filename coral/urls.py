@@ -11,7 +11,7 @@ from arches.app.views.plugin import PluginView
 from coral.views.auth import PersonSignupView, PersonConfirmSignupView
 from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport, WorkflowBuilderUpdateInitWorkflow
 from coral.views.open_workflow import OpenWorkflow
-from coral.views.merge_resources import MergeResources
+from coral.views.merge_resources import MergeResourcesView
 from coral.views.monument_revision_remap import MonumentRevisionRemap
 from coral.views.dashboard import Dashboard
 from coral.views.file_template import FileTemplateView
@@ -59,7 +59,7 @@ urlpatterns = [
     #
     # Merge Resources
     #
-    re_path(r"^merge-resources", MergeResources.as_view(), name="merge_resources"),
+    re_path(r"^merge-resources", MergeResourcesView.as_view(), name="merge_resources"),
 
     #
     # Monument Revision Remap
