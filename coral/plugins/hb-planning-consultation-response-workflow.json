@@ -265,7 +265,16 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
-                  "semanticName": "Response Action"
+                  "semanticName": "Response Action",
+                  "hiddenNodes": [
+                    "cd77b29c-2ef6-11ef-b1c4-0242ac140006"
+                  ],
+                  "prefilledNodes": [
+                    [
+                      "cd77b29c-2ef6-11ef-b1c4-0242ac140006",
+                      "70fddadb-8172-4029-b8fd-87f9101a3a2d"
+                    ]
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
