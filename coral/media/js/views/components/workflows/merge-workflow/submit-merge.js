@@ -34,8 +34,8 @@ define([
         params.pageVm.alert(
           new AlertViewModel(
             'ep-alert-blue',
-            'Resources merged successfully',
-            'You can now safely save and exit the workflow.',
+            'Merge process has STARTED',
+            'You can now safely save and exit the workflow. Be aware that these two resources are in the process of merging which can take up to 5 minutes to complete.',
             null,
             function () {}
           )
