@@ -1,4 +1,3 @@
-from django.views.generic import View
 import logging
 from arches.app.models import models
 import uuid
@@ -10,7 +9,7 @@ from arches.app.utils.data_management.resources.exporter import ResourceExporter
 logger = logging.getLogger(__name__)
 
 
-class MergeResources(View):
+class MergeResources:
     merge_map = {}
     nodegroups = {}
     parent_nodegroups = []
