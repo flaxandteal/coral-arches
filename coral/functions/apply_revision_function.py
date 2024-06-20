@@ -8,7 +8,7 @@ from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from arches.app.models.tile import Tile
 from copy import deepcopy
-from coral.views.merge_resources import MergeResources
+from coral.tasks import merge_resources_task
 from django.db import transaction
 
 
@@ -374,8 +374,6 @@ class ApplyRevisionFunction(BaseFunction):
             )
             merge_tracker_sys_ref.save()
 
-            MergeResources().merge_resources(
-                monument_resource_id, new_monument_resource_id, None
-            )
+            merge_resources_task.delay(monument_resource_id, new_monument_resource_id, None)
 
             self.new_monument_resource.delete(user=request.user)
