@@ -20,7 +20,10 @@ class OpenWorkflow(View):
     nodegroups = {}
     setup_workflows = {
         "licensing-workflow": "setup_licensing_workflow",
+        "hb-planning-consultation-response-workflow": "setup_planning_consultation",
+        "hm-planning-consultation-response-workflow": "setup_planning_consultation",
     }
+    workflow_slug = None
 
     def get_plugin(self, plugin_slug):
         plugin = None
@@ -214,6 +217,30 @@ class OpenWorkflow(View):
             "cmRefTileId": str(cm_reference_tile.tileid),
         }
 
+    def setup_planning_consultation(self):
+        HM_RESPONSE_SLUG = 'hm-planning-consultation-response-workflow'
+        HB_RESPONSE_SLUG = 'hb-planning-consultation-response-workflow'
+
+        RESPONSE_ACTION_NODEGROUP = 'af7677ba-cfe2-11ee-8a4e-0242ac180006'
+        RESPONSE_DESIGNATED_TEAM_NODE = 'cd77b29c-2ef6-11ef-b1c4-0242ac140006'
+        RESPONSE_TEAM_HM = '2628d62f-c206-4c06-b26a-3511e38ea243'
+        RESPONSE_TEAM_HB = '70fddadb-8172-4029-b8fd-87f9101a3a2d'
+
+        response_tiles = self.grouped_tiles.get(RESPONSE_ACTION_NODEGROUP, [])
+
+        remove_ids = []
+        for tile in response_tiles:
+            if tile.data[RESPONSE_DESIGNATED_TEAM_NODE] == RESPONSE_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+            if tile.data[RESPONSE_DESIGNATED_TEAM_NODE] == RESPONSE_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+        
+        self.grouped_tiles[RESPONSE_ACTION_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, response_tiles))
+
+        pass
+
     def post(self, request):
         # For some reason I need to reset the class defaults every time
         # a request is sent. It will persist the data and add it onto the
@@ -232,7 +259,7 @@ class OpenWorkflow(View):
         step_config = data.get("stepConfig")
         resource_id = data.get("resourceId")
         workflow_id = data.get("workflowId")
-        workflow_slug = data.get("workflowSlug")
+        self.workflow_slug = data.get("workflowSlug")
         self.open_config = data.get("openConfig", {})
         user_id = request.user.pk
 
@@ -241,7 +268,7 @@ class OpenWorkflow(View):
         if step_config:
             self.step_config = step_config
         else:
-            plugin = self.get_plugin(workflow_slug)
+            plugin = self.get_plugin(self.workflow_slug)
             self.step_config = plugin.config["stepConfig"]
 
         # Get all the resources tiles
@@ -249,14 +276,18 @@ class OpenWorkflow(View):
         self.resource = self.get_resource(resource_id)
         resource_tiles = Tile.objects.filter(resourceinstance=self.resource)
 
+        # Loop through tiles and add them to the component data lookup
+
+        self.group_tiles(resource_tiles)
+
         # Get node configs
 
         self.get_node_configuration(self.resource.graph)
 
         # If setup required
 
-        if workflow_slug in self.setup_workflows:
-            setup_function = getattr(self, self.setup_workflows[workflow_slug], None)
+        if self.workflow_slug in self.setup_workflows:
+            setup_function = getattr(self, self.setup_workflows[self.workflow_slug], None)
             setup_function()
 
         # Generate the structure for step data
@@ -264,10 +295,6 @@ class OpenWorkflow(View):
         self.workflow_step_data, self.step_mapping = self.generate_step_data_structure(
             self.step_config
         )
-
-        # Loop through tiles and add them to the component data lookup
-
-        self.group_tiles(resource_tiles)
 
         for map_data in self.step_mapping:
             nodegroup_id = map_data["nodegroup_id"]
