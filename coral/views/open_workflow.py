@@ -222,24 +222,36 @@ class OpenWorkflow(View):
         HB_RESPONSE_SLUG = 'hb-planning-consultation-response-workflow'
 
         RESPONSE_ACTION_NODEGROUP = 'af7677ba-cfe2-11ee-8a4e-0242ac180006'
-        RESPONSE_DESIGNATED_TEAM_NODE = 'cd77b29c-2ef6-11ef-b1c4-0242ac140006'
+        RESPONSE_TEAM_NODE = 'cd77b29c-2ef6-11ef-b1c4-0242ac140006'
         RESPONSE_TEAM_HM = '2628d62f-c206-4c06-b26a-3511e38ea243'
         RESPONSE_TEAM_HB = '70fddadb-8172-4029-b8fd-87f9101a3a2d'
 
-        response_tiles = self.grouped_tiles.get(RESPONSE_ACTION_NODEGROUP, [])
+        ASSIGNMENT_NODEGROUP = 'dc9bfb24-cfd9-11ee-8cc1-0242ac180006'
+        ASSIGNMENT_TEAM_NODE = '6b8f5866-2f0d-11ef-b37c-0242ac140006'
+        ASSIGNMENT_TEAM_HM = 'e377b8a9-ced0-4186-84ff-0b5c3ece9c78'
+        ASSIGNMENT_TEAM_HB = '18b628c9-149f-4c37-bc27-e8e0d714a037'
 
+        response_tiles = self.grouped_tiles.get(RESPONSE_ACTION_NODEGROUP, [])
         remove_ids = []
         for tile in response_tiles:
-            if tile.data[RESPONSE_DESIGNATED_TEAM_NODE] == RESPONSE_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
+            if tile.data[RESPONSE_TEAM_NODE] == RESPONSE_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
                 remove_ids.append(tile.tileid)
                 continue
-            if tile.data[RESPONSE_DESIGNATED_TEAM_NODE] == RESPONSE_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
+            if tile.data[RESPONSE_TEAM_NODE] == RESPONSE_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
                 remove_ids.append(tile.tileid)
                 continue
-        
         self.grouped_tiles[RESPONSE_ACTION_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, response_tiles))
 
-        pass
+        assignment_tiles = self.grouped_tiles.get(ASSIGNMENT_NODEGROUP, [])
+        remove_ids = []
+        for tile in assignment_tiles:
+            if tile.data[ASSIGNMENT_TEAM_NODE] == ASSIGNMENT_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+            if tile.data[ASSIGNMENT_TEAM_NODE] == ASSIGNMENT_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+        self.grouped_tiles[ASSIGNMENT_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, assignment_tiles))
 
     def post(self, request):
         # For some reason I need to reset the class defaults every time
