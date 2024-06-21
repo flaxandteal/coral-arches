@@ -706,12 +706,24 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
     @context_free
     def get_groups_for_object(self, perm, obj):
-        raise NotImplementedError()
+        obj_str = self._obj_to_str(obj)
+        groups = self._enforcer.get_implicit_users_for_permission(obj_str, perm)
+        django_group_ids = {
+            django_group[2:] for django_group, _, act in groups
+            if django_group.startswith("dg:")
+        }
+        return DjangoGroup.objects.filter(pk__in=django_group_ids).all()
 
 
     @context_free
     def get_users_for_object(self, perm, obj):
-        raise NotImplementedError()
+        obj_str = self._obj_to_str(obj)
+        users = self._enforcer.get_implicit_users_for_permission(obj_str, perm)
+        user_ids = {
+            user[2:] for user, _, act in users
+            if user.startswith("u:")
+        }
+        return User.objects.filter(pk__in=user_ids).all()
 
 
     @context_free
