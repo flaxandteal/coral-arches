@@ -36,7 +36,7 @@
 
 <!-- ko if: !configForm  && state === 'display_value' -->
 {% block display_value %}
-<span data-bind="text: displayValue && displayValue() && currentLanguage() && displayValue()[currentLanguage().code] && displayValue()[currentLanguage().code]['value'] ? displayValue()[currentLanguage().code]['value'] : '' || $root.translations.none"></span>
+<span data-bind="text: enDisplayValue() || $root.translations.none"></span>
 {% endblock display_value %}
 <!-- /ko -->
 
@@ -44,7 +44,7 @@
 <!-- ko if: !ko.unwrap(hideEmptyNodes) || ko.unwrap(hideEmptyNodes) === true && displayValue() -->
 {% block report %}
 <dt data-bind="text: label"></dt>
-<dd data-bind="text: displayValue() && currentLanguage() && displayValue()[currentLanguage().code] && displayValue()[currentLanguage().code]['value'] ? displayValue()[currentLanguage().code]['value'] : $root.translations.none"></dd>
+<dd data-bind="text: enDisplayValue() || $root.translations.none"></dd>
 {% endblock report %}
 <!-- /ko -->
 <!-- /ko -->
