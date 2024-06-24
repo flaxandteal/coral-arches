@@ -43,7 +43,8 @@ define([
             self.classificationDataConfig = {
                 production: 'construction phases',
                 components: 'components',
-                usePhase: 'use phases'
+                usePhase: 'use phases',
+                historicalPeriodType: 'historical period type'
             };
 
             self.descriptionDataConfig = {
