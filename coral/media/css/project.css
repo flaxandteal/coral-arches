@@ -4,6 +4,17 @@
     width: 50px;
 }
 
+#container {
+    min-height: 100vh;
+    height: auto;
+    position: relative;
+    min-width: 290px;
+    /* overflow-x: hidden; */
+    /* overflow-y: scroll; */
+    opacity: 1;
+    visibility: visible
+}
+
 .navbarclosed li.workflow-main-nav-item {
     text-align: center;
     padding-left: 0;
