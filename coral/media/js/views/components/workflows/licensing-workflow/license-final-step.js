@@ -52,7 +52,19 @@ define([
       },
       report: {
         label: 'Report',
-        nodegroupId: 'f060583a-6120-11ee-9fd1-0242ac120003'
+        nodegroupId: 'f060583a-6120-11ee-9fd1-0242ac120003',
+        renderNodeIds: [
+          'd8f74d42-dc6e-11ee-8def-0242ac120006',
+          '59b77af6-dc6f-11ee-8def-0242ac120006',
+          '8d13575c-dc70-11ee-8def-0242ac120006',
+          'ea6ea7a8-dc70-11ee-b70c-0242ac120006',
+          '5707d294-dc72-11ee-b70c-0242ac120006',
+          'bcee40e6-dc74-11ee-8def-0242ac120006',
+          'dc960c08-dc74-11ee-8def-0242ac120006',
+          'cc4c862a-dc78-11ee-b70c-0242ac120006',
+          '0a089af2-dc7a-11ee-8def-0242ac120006',
+          '39fc595c-dc79-11ee-8def-0242ac120006'
+        ]
       },
       systemRef: {
         label: 'System Reference',

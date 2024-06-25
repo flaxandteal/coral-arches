@@ -22,12 +22,16 @@ define([
 
       const self = this;
 
-      self.prefixStatic = params.config().prefix;
+      self.prefixStatic = ko.isObservable(params.config) ?  params.config()?.prefix : params.config?.prefix;
       if (self.form?.componentData?.parameters?.prefix) {
         self.prefixStatic = self.form?.componentData?.parameters?.prefix
       }
 
       self.currentLanguage = ko.observable({ code: arches.activeLanguage });
+
+      self.enDisplayValue = ko.computed(() => {
+        return ko.unwrap(ko.unwrap(this.displayValue)[ko.unwrap(arches.activeLanguage)]['value']);
+      }, self);
 
       self.idValue = ko.observable();
 
