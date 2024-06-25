@@ -610,5 +610,36 @@
         <!-- /ko -->
     </div>
 </div>
+
+<!-- Historical Period -->
+<div class="aher-report-section" data-bind="visible: !!dataConfig.historicalPeriodType">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.historicalPeriod)}" class="fa fa-angle-double-right toggle"></i> {% trans "Historical Period" %}</h2>
+    <a class="aher-report-a" data-bind="if: cards.historicalPeriod, click: function(){addNewTile(cards.historicalPeriod)}">
+        <i class="fa fa-mail-reply"></i>
+        <span data-bind="ifnot: cards.historicalPeriod.tiles().length">{% trans "Add Historical Period" %}</span>
+        <span data-bind="if: cards.historicalPeriod.tiles().length">{% trans "Edit Historical Period" %}</span>
+    </a>
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.historicalPeriod" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: historicalPeriods().length -->
+        <div class="aher-nodata-note">No uses for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: historicalPeriods().length -->
+        <div class="aher-report-subsection">
+            <div class="firstchild-container">
+                <div class="aher-report-subsection-ite">
+                    <!-- ko foreach: { data: historicalPeriods, as: 'hp', noChildContext: true } -->
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">{% trans "Historical Period" %}: </h4>
+                        <div class="aher-block-value" data-bind="text: hp.period"></div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
 {% endblock body %}
 {% endblock report %}

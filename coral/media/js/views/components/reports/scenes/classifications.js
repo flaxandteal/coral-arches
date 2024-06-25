@@ -73,6 +73,7 @@ define([
                 production: undefined,
                 components: undefined,
                 usePhase: undefined,
+                historicalPeriodType: undefined,
                 dimensions: undefined,
                 inscriptions: undefined,
                 dates: undefined,
@@ -89,6 +90,7 @@ define([
             self.production = ko.observableArray();
             self.dimensions = ko.observableArray();
             self.usePhases = ko.observableArray();
+            self.historicalPeriods = ko.observableArray();
             self.typeData = ko.observable();
             self.organizationFormation = ko.observableArray();
             self.dates = ko.observableArray();
@@ -97,6 +99,7 @@ define([
                 production: ko.observable(true),
                 components: ko.observable(true),
                 usePhase: ko.observable(true),
+                historicalPeriod: ko.observable(true),
                 dimensions: ko.observable(true),
                 dates: ko.observable(true),
                 organizationFormation: ko.observable(true)
@@ -441,6 +444,15 @@ define([
                             dateQualifier
                         }
                     }));
+                }
+
+                const historicalPeriodNode = self.getRawNodeValue(params.data(), self.dataConfig.historicalPeriodType);
+                if(historicalPeriodNode) {
+                    self.historicalPeriods([
+                        {
+                            "period": historicalPeriodNode['@display_value']
+                        }
+                    ]);
                 }
 
                 const datesNode = self.getRawNodeValue(params.data(), self.dataConfig.dates);
