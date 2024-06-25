@@ -26,7 +26,7 @@
 {% block report %}
 <dt data-bind="text: label, class: nodeCssClasses"></dt>
 <!-- ko if: value() !== null -->
-<dd data-bind="date: dateValue(), dateFormat: dateFormat || $root.translations.noDateEntered, class: nodeCssClasses"></dd>
+<dd data-bind="date: value(), dateFormat: dateFormat || $root.translations.noDateEntered, class: nodeCssClasses"></dd>
 <!-- /ko -->
 <!-- ko if: value() === null -->
 <dd>

@@ -39,6 +39,7 @@ define([
     /**
      * Date format overriding logic
      */
+    this.dateFormat('DD-MM-YYYY');
     this.dateValue = ko.observable();
 
     this.placeholder = this.config().placeholder;
@@ -106,7 +107,6 @@ define([
     /**
      * Date format overriding logic
      */
-    this.dateFormat = ko.observable('DD-MM-YYYY');
     if (this.value()) {
       const parsedDate = moment(this.value(), 'YYYY-MM-DD');
       const formattedDate = parsedDate.format('DD-MM-YYYY');
