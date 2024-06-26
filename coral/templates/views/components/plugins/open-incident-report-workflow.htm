@@ -1,3 +1,4 @@
+<!-- ko if: !workflow()?.hideRecents -->
 <div style="margin: 15px; white-space: nowrap">
   <h5>Recently opened</h5>
   <!-- ko if: !recentlyOpenedResources().length -->
@@ -22,6 +23,7 @@
   </div>
   <!-- /ko -->
 </div>
+<!-- /ko -->
 <div class="card-component" style="width: 100%">
   <div class="row widget-wrapper">
     <h4 data-bind="text: workflow().name"></h4>
@@ -31,12 +33,10 @@
       data-bind="component: {
         name: 'resource-instance-select-widget',
         params: {
-          graphids: [
-            graphId(),
-          ],
+          graphids: graphIds(),
           config: {
             label: 'Select License',
-            placeholder: 'Start new or please select below',
+            placeholder: 'Please select a Monument',
           },
           renderContext: 'workflow',
           value: selectedResource
@@ -54,7 +54,7 @@
           configKeys: configKeys
         },
         config: {
-          placeholder: 'Start new or please select below',
+          placeholder: 'Select an Incident Report or start new',
           
           label: 'Selected Incident Report',
         },
