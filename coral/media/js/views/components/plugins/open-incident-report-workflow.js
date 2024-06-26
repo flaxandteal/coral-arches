@@ -42,7 +42,6 @@ define([
           };
         })
       );
-      console.log('this.parentTileOptions: ', this.parentTileOptions())
     };
 
     this.setAdditionalOpenConfigData = () => {
