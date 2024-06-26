@@ -732,6 +732,13 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         if allresources is False and user.is_superuser is True:
             return []
+        
+        if allresources is True:
+            # Loop through casbin table for ids that match the user id and container resource instances
+            # -> Logical sets will have some sort of implementation here as well for gather rids
+            # Create array of rids the user has access to
+            # Perform db query aganist resources that don't have ids in the array we created
+            # return restricted ids
 
         # We assume all instances are (or can be) restricted instances
         query = Query(search_engine, start=0, limit=settings.SEARCH_RESULT_LIMIT)
