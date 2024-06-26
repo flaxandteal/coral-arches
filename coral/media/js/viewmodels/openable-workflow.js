@@ -27,6 +27,7 @@ define([
         let configData = {};
         if (rawConfigData) {
           configData = JSON.parse(rawConfigData);
+          localStorage.removeItem(this.OPEN_WORKFLOW_CONFIG);
         }
 
         if (openMode) {
