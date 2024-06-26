@@ -191,8 +191,5 @@ define([
     this.init();
   };
 
-  return ko.components.register('open-workflow', {
-    viewModel: openWorkflowViewModel,
-    template: pageTemplate
-  });
+  return openWorkflowViewModel;
 });
