@@ -242,7 +242,7 @@
                 "parameters": {
                   "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
-                  "resourceModelId": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceModelId": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "fileObjectNamePrefix": "Documentation for ",
                   "resourceModelDigitalObjectNodeGroupId": "1dcfe920-332f-4163-be56-ebfada8752fa"
                 },
@@ -294,7 +294,7 @@
               {
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "010db21a-0eda-11ef-aa66-0242ac140006",
                   "semanticName": "HMC Reference"
                 },
@@ -305,7 +305,7 @@
               {
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['initial-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "c9de6058-0edb-11ef-aa66-0242ac140006",
                   "semanticName": "Name of Meeting"
                 },
