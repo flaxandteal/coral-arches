@@ -738,15 +738,41 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         # We assume all instances are (or can be) restricted instances
         query = Query(search_engine, start=0, limit=settings.SEARCH_RESULT_LIMIT)
+        query.add_query({
+            "bool": {
+                "must_not": {
+                    "nested": {
+                        "path": "sets",
+                        "query": {
+                            "terms": {
+                                "sets.id": ["l:ffa54776-c8a0-4da9-bec7-7373347fda53"]
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        print('query: ', query)
         results = query.search(index=RESOURCES_INDEX, scroll="1m")
+        # print('query: ', results)
+
         scroll_id = results["_scroll_id"]
+        print('scroll_id: ', scroll_id)
+
         total = results["hits"]["total"]["value"]
+        print('total: ', total)
+
         if total > settings.SEARCH_RESULT_LIMIT:
+            print('total > settings.SEARCH_RESULT_LIMIT: ', settings.SEARCH_RESULT_LIMIT)
             pages = total // settings.SEARCH_RESULT_LIMIT
+            print('pages: ', pages)
             for page in range(pages):
+                print('page: ', page)
                 results_scrolled = query.se.es.scroll(scroll_id=scroll_id, scroll="1m")
                 results["hits"]["hits"] += results_scrolled["hits"]["hits"]
+
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
+        print('restricted_ids: ', restricted_ids)
         return restricted_ids
 
     @context_free
