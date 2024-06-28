@@ -732,9 +732,30 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         if allresources is False and user.is_superuser is True:
             return []
+        
+        if allresources is True and not search_engine:
+            search_engine = se
+
+        user_sets = self.get_sets_for_user(user, 'view_resourceinstance')
 
         # We assume all instances are (or can be) restricted instances
         query = Query(search_engine, start=0, limit=settings.SEARCH_RESULT_LIMIT)
+        # Exclude set IDs the user DOES have access to to gather a list of resource
+        # IDs they do not have access to
+        query.add_query({
+            "bool": {
+                "must_not": {
+                    "nested": {
+                        "path": "sets",
+                        "query": {
+                            "terms": {
+                                "sets.id": user_sets
+                            }
+                        }
+                    }
+                }
+            }
+        })
         results = query.search(index=RESOURCES_INDEX, scroll="1m")
         scroll_id = results["_scroll_id"]
         total = results["hits"]["total"]["value"]
@@ -743,6 +764,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             for page in range(pages):
                 results_scrolled = query.se.es.scroll(scroll_id=scroll_id, scroll="1m")
                 results["hits"]["hits"] += results_scrolled["hits"]["hits"]
+
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         return restricted_ids
 

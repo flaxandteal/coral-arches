@@ -85,7 +85,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Nested Sets"
                     },
@@ -260,12 +260,6 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "6a895298-705c-11ee-977f-0242ac140008",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
                     "nodegroupid": "7383b2c6-705c-11ee-977f-0242ac140008",
                     "parentnodegroup_id": null
                 }
@@ -278,8 +272,8 @@
                             {
                                 "graphid": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
                                 "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P10i_contains",
                                 "name": "Set",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P10i_contains",
                                 "useOntologyRelationship": true
                             }
                         ],
@@ -333,160 +327,171 @@
                         "graphs": [
                             {
                                 "graphid": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Set",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Person",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "f9045867-8861-11ea-b06f-f875a44e0e11",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Period",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Organization",
-                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
-                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
-                                "useOntologyRelationship": true
-                            },
-                            {
-                                "graphid": "4262df46-eabf-11ed-9e22-72d420f37f11",
                                 "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
-                                "name": "Heritage Asset Revision",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Heritage Asset",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Maritime Vessel",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "934cd7f0-480a-11ea-9240-c4d9877d154e",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Historic Landscape Characterization",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "b8032b00-594d-11e9-9cf0-18cf5eb368c4",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Historic Aircraft",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "0add0e11-99aa-11ea-9ab8-f875a44e0e11",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Heritage Story",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Group",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Grant",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Digital Object",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Consultation",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "24d7b54f-5464-11e9-a86b-000d3ab1e588",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Bibliographic Source",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "343cc20c-2c5a-11e8-90fa-0242ac120005",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Artefact",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Area",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Archive Source",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "42ce82f6-83bf-11ea-b1e8-f875a44e0e11",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Application Area",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "name": "Activity",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/BM.PX_is_related_to",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
@@ -564,32 +569,10 @@
             "publication": {
                 "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
                 "notes": null,
-                "publicationid": "5ce8cde2-705e-11ee-977f-0242ac140008",
-                "published_time": "2023-10-21T22:08:28.306",
-                "user_id": 1
+                "publicationid": "06640308-3497-11ef-9c38-0242ac150006",
+                "published_time": "2024-06-27T15:07:52.369"
             },
-            "relatable_resource_model_ids": [
-                "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
-                "24d7b54f-5464-11e9-a86b-000d3ab1e588",
-                "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                "f9045867-8861-11ea-b06f-f875a44e0e11",
-                "22477f01-1a44-11e9-b0a9-000d3ab1e588",
-                "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
-                "42ce82f6-83bf-11ea-b1e8-f875a44e0e11",
-                "a535a235-8481-11ea-a6b9-f875a44e0e11",
-                "4262df46-eabf-11ed-9e22-72d420f37f11",
-                "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
-                "343cc20c-2c5a-11e8-90fa-0242ac120005",
-                "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
-                "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                "8d41e49e-a250-11e9-9eab-00224800b26d",
-                "979aaf0b-7042-11ea-9674-287fcf6a5e72",
-                "0add0e11-99aa-11ea-9ab8-f875a44e0e11",
-                "b8032b00-594d-11e9-9cf0-18cf5eb368c4",
-                "934cd7f0-480a-11ea-9240-c4d9877d154e",
-                "49bac32e-5464-11e9-a6e2-000d3ab1e588"
-            ],
+            "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": null,
@@ -597,7 +580,7 @@
                     "en": ""
                 },
                 "datatype": "semantic",
-                "description": "Nestable collection of subject resources on which actors may have permissions.",
+                "description": "",
                 "exportable": false,
                 "fieldname": null,
                 "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
@@ -623,8 +606,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "/bin/sh: 1: git: not found",
+        "git hash": "4d3c9cc22 2024-06-25 15:54:29 +0100",
         "os": "Linux",
-        "os version": "5.10.0-1050-oem"
+        "os version": "5.10.0-23-amd64"
     }
 }
