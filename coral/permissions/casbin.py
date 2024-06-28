@@ -736,7 +736,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         if allresources is True and not search_engine:
             search_engine = se
 
-        user_sets = self.get_sets_for_user(user, 'view_resourceinstance')
+        user_sets = self.get_sets_for_user(user, 'view_resourceinstance') or []
 
         # We assume all instances are (or can be) restricted instances
         query = Query(search_engine, start=0, limit=settings.SEARCH_RESULT_LIMIT)
