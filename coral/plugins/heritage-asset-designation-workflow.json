@@ -90,9 +90,7 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "425b6c5f-7b32-4cd6-8597-0f605cc8992b"
-                  ],
+                  "hiddenNodes": ["425b6c5f-7b32-4cd6-8597-0f605cc8992b"],
                   "nodegroupid": "cc176b79-d9d3-4aab-bbd5-f604a73cae34",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
@@ -105,9 +103,7 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "4680d6d9-9167-4607-bf72-9d4fb708c74d"
-                  ],
+                  "hiddenNodes": ["4680d6d9-9167-4607-bf72-9d4fb708c74d"],
                   "nodegroupid": "d11ce538-6681-42a1-9f75-b671c352e185",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
@@ -157,12 +153,13 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
+                    "1df8346e-3567-11ef-9263-0242ac150006",
                     "444ed7db-bd99-42ba-a2f5-236399c92ec2"
                   ],
-                  "nodegroupid": "050b959f-c4d8-4a2b-a704-94cc3e00d7ca",
-                  "semanticName": "Descriptions"
+                  "nodegroupid": "1df7fb20-3567-11ef-9263-0242ac150006",
+                  "semanticName": "Designation Descriptions"
                 },
-                "tilesManaged": "many",
+                "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "4ae2af75-3829-4633-9b69-618f89691195"
               }
@@ -210,7 +207,7 @@
                 "parameters": {
                   "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
-                  "resourceModelId":"['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "resourceModelId": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "fileObjectNamePrefix": "Documentation for ",
                   "resourceModelDigitalObjectNodeGroupId": "1dcfe920-332f-4163-be56-ebfada8752fa"
                 },
@@ -229,7 +226,19 @@
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "nodegroupid": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                  "resourceModelId": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "semanticName": "Approvals"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "78965eb2-7064-47aa-a65b-cecc9f05884f"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"
