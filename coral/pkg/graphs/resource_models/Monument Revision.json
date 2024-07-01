@@ -816,7 +816,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Descriptions"
+                        "en": "Designation Descriptions"
                     },
                     "nodegroup_id": "67712762-378e-11ef-9263-0242ac150006",
                     "sortorder": null,
@@ -2544,6 +2544,27 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "67712ce4-378e-11ef-9263-0242ac150006",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Recommended Designation Type",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "0aa2ef18-a035-481c-aa55-75a6c1fc0958",
+                    "label": {
+                        "en": "Recommended Designation Type"
+                    },
+                    "node_id": "60032b9a-3790-11ef-a167-0242ac150006",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "458dcc3f-5b44-4a08-852b-2dacb074f26d",
@@ -6647,7 +6668,7 @@
                         "en": "Designation Description Language Metatype"
                     },
                     "node_id": "677130a4-378e-11ef-9263-0242ac150006",
-                    "sortorder": 4,
+                    "sortorder": 5,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -6676,7 +6697,7 @@
                         "en": "Designation Description"
                     },
                     "node_id": "677133f6-378e-11ef-9263-0242ac150006",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
@@ -6698,8 +6719,8 @@
                         "en": "Designation Description Language"
                     },
                     "node_id": "67713cb6-378e-11ef-9263-0242ac150006",
-                    "sortorder": 3,
-                    "visible": true,
+                    "sortorder": 4,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -7516,7 +7537,7 @@
                         "en": "Designation Descriptions Type"
                     },
                     "node_id": "b2d6a190-378f-11ef-a167-0242ac150006",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
@@ -12989,7 +13010,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Designation Descriptions Metatype",
+                        "label": "Designation Description Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -12997,10 +13018,10 @@
                     },
                     "id": "e427ac36-3c33-494b-b2cb-6b0924c51366",
                     "label": {
-                        "en": "Designation Descriptions Metatype"
+                        "en": "Designation Description Metatype"
                     },
                     "node_id": "ece188e6-378f-11ef-9263-0242ac150006",
-                    "sortorder": null,
+                    "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -20521,7 +20542,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "n",
+                    "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "67712762-378e-11ef-9263-0242ac150006",
                     "parentnodegroup_id": null
@@ -32178,7 +32199,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "designation_descriptions_type",
+                    "alias": "designation_description_type",
                     "config": {
                         "i18n_config": {
                             "fn": "arches.app.datatypes.datatypes.DomainDataType"
@@ -32210,7 +32231,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Designation Descriptions Type",
+                    "name": "Designation Description Type",
                     "nodegroup_id": "67712762-378e-11ef-9263-0242ac150006",
                     "nodeid": "b2d6a190-378f-11ef-a167-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -35777,7 +35798,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "designation_descriptions_metatype",
+                    "alias": "designation_description_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -35791,7 +35812,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Designation Descriptions Metatype",
+                    "name": "Designation Description Metatype",
                     "nodegroup_id": "67712762-378e-11ef-9263-0242ac150006",
                     "nodeid": "ece188e6-378f-11ef-9263-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -36700,8 +36721,8 @@
             "publication": {
                 "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                 "notes": null,
-                "publicationid": "7d34bf62-37a9-11ef-9263-0242ac150006",
-                "published_time": "2024-07-01T12:57:36.138"
+                "publicationid": "ebdeb6d2-37b5-11ef-9263-0242ac150006",
+                "published_time": "2024-07-01T14:26:35.762"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
