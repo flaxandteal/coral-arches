@@ -344,7 +344,7 @@ class WorkflowBuilderPluginExport(View):
                 "icon": plugin.icon,
                 "component": plugin.component,
                 "componentname": plugin.componentname,
-                "config": plugin.config,
+                "config": dict(plugin.config),
                 "slug": plugin.slug,
                 "sortorder": plugin.sortorder,
             },
