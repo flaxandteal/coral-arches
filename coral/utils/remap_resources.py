@@ -1,8 +1,6 @@
 # from django.views.generic import View
 import logging
 from arches.app.models import models
-# from arches.app.utils.response import JSONResponse, HttpResponse
-import json
 import uuid
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
@@ -90,7 +88,6 @@ class RemapResources:
     def get_node_configuration(self, target, graph):
         nodes = graph.node_set.all().select_related("nodegroup")
         for node in nodes:
-            print("node: ", node)
             alias = node.alias
             nodegroup_id = str(node.nodegroup.nodegroupid) if node.nodegroup else None
             if alias in self.excluded_aliases:
@@ -245,50 +242,27 @@ class RemapResources:
 
             data = deepcopy(tile.data)
             parent_tile = self.get_parent_tile(tile)
-            try:
-                for data_node_id in tile.data.keys():
-                    destination_node_id = self.node_mapping[data_node_id][
-                        "destination"
-                    ]["node_id"]
-                    data[destination_node_id] = data[data_node_id]
-                    del data[data_node_id]
+            for data_node_id in tile.data.keys():
+                destination_node_id = self.node_mapping[data_node_id][
+                    "destination"
+                ]["node_id"]
+                data[destination_node_id] = data[data_node_id]
+                del data[data_node_id]
 
-                new_tile = Tile(
-                    tileid=uuid.uuid4(),
-                    resourceinstance=self.destination_resource,
-                    parenttile=parent_tile,
-                    data=data,
-                    nodegroup=destination_nodegroup,
-                )
-                new_tile.save()
+            new_tile = Tile(
+                tileid=uuid.uuid4(),
+                resourceinstance=self.destination_resource,
+                parenttile=parent_tile,
+                data=data,
+                nodegroup=destination_nodegroup,
+            )
+            new_tile.save()
 
-                # If this is true, it means the parent tile had data and needed
-                # that data to be remapped. We then add into the created parent
-                # tiles dictionary for child tiles to look up
-                if tile_nodegroup_id in self.parent_nodegroup_ids:
-                    self.created_parent_tiles[str(tile.tileid)] = new_tile
-
-            except Exception as e:
-                print("Failed while remapping the target tile data: ", e)
-                raise e
-
-        parent_target_nodegroup = self.get_nodegroup(
-            "6375be6e-dc64-11ee-924e-0242ac120006"
-        )
-        parent_target_tile = Tile(
-            resourceinstance=self.destination_resource,
-            data={
-                "6375be6e-dc64-11ee-924e-0242ac120006": [
-                    {
-                        "resourceId": self.target_resource_id,
-                        "ontologyProperty": "",
-                        "inverseOntologyProperty": "",
-                    }
-                ]
-            },
-            nodegroup=parent_target_nodegroup,
-        )
-        parent_target_tile.save()
+            # If this is true, it means the parent tile had data and needed
+            # that data to be remapped. We then add into the created parent
+            # tiles dictionary for child tiles to look up
+            if tile_nodegroup_id in self.parent_nodegroup_ids:
+                self.created_parent_tiles[str(tile.tileid)] = new_tile
 
         return {
             "message": "Target has been remapped successfully",
