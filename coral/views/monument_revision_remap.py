@@ -23,7 +23,43 @@ class MonumentRevisionRemap(View):
     excluded_aliases = [
         "monument",
         "monument_revision",
+        "approvals",
+        "designation_descriptions"
+        # "desg_approved_date_qualifier",
+        # "desg_approved_date_qualifier_metatype",
+        # "desg_approved_date_value",
+        # "assessment_date_qualifier",
+        # "assessment_date_qualifier_metatype",
+        # "assessment_date_value",
+        # "local_authority_notification_date_qualifier",
+        # "local_authority_notification_date_qualifier_metatype",
+        # "local_authority_notification_date_value",
+        # "owner_notified_date_value",
+        # "owner_notified_date_qualifier",
+        # "owner_notified_date_qualifier_metatype",
+        # "desg_approver_role_type",
+        # "desg_approver_role_metatype",
+        # "desg_approved_by",
+        # "director_sign_off_date_qualifier",
+        # "director_sign_off_date_qualifier_metatype",
+        # "director_sign_off_date_value",
+        # "statutory_consultee_notification_date_qualifier",
+        # "statutory_consultee_notification_date_qualifier_metatype",
+        # "statutory_consultee_notification_date_value",
+        # "assessment_done_by_value",
+        # "assessment_done_by_role_type",
+        # "assessment_done_by_role_metatype",
+        # # "designation_descriptions",   
+        # "designation_description_language",
+        # "designation_description_language_metatype",
+        # "designation_description",
+        # "designation_description_type",
+        # "designation_description_metatype",
+        # "recommended_designation_type"
     ]
+    # Will populate from excluded aliases, you only need to provide 
+    # the parent nodegroups alias to exclude the tiles from the remapping process
+    excluded_nodegroup_ids = [] 
     parent_nodegroup_ids = []
     created_parent_tiles = {}
 
@@ -69,10 +105,12 @@ class MonumentRevisionRemap(View):
         nodes = graph.node_set.all().select_related("nodegroup")
         for node in nodes:
             alias = node.alias
+            nodegroup_id = str(node.nodegroup.nodegroupid) if node.nodegroup else None
             if alias in self.excluded_aliases:
+                if nodegroup_id: 
+                    self.excluded_nodegroup_ids.append(nodegroup_id)
                 continue
             node_id = str(node.nodeid)
-            nodegroup_id = str(node.nodegroup.nodegroupid) if node.nodegroup else None
             if alias not in self.alias_mapping:
                 self.alias_mapping[alias] = {"monument": None, "revision": None}
             parent_nodegroup_id = (
@@ -142,10 +180,7 @@ class MonumentRevisionRemap(View):
         self.nodes = {"monument": {}, "revision": {}}
         self.alias_mapping = {}
         self.node_mapping = {}
-        self.excluded_aliases = [
-            "monument",
-            "monument_revision",
-        ]
+        self.excluded_nodegroup_ids = [] 
         self.parent_nodegroup_ids = []
         self.created_parent_tiles = {}
 
@@ -222,6 +257,11 @@ class MonumentRevisionRemap(View):
             # it was missing from the look up
             if tile_nodegroup_id in self.parent_nodegroup_ids and not len(tile.data):
                 continue
+            
+            # if the nodegroup id is part of the excluded which is created
+            # from the excluded aliases continue to the next tile
+            if tile_nodegroup_id in self.excluded_nodegroup_ids:
+                continue
 
             node_map = self.node_mapping[tile_nodegroup_id]
 
@@ -239,15 +279,22 @@ class MonumentRevisionRemap(View):
             data = deepcopy(tile.data)
             parent_tile = self.get_parent_tile(tile)
             try:
+                has_failed = False
                 for data_node_id in tile.data.keys():
-                    revision_node_id = self.node_mapping[data_node_id]["revision"][
-                        "node_id"
-                    ]
+                    revision_node_id = self.node_mapping.get(data_node_id, {}).get("revision", {}).get(
+                        "node_id", {}
+                    )
+                    
                     if not revision_node_id:
-                        failed_node_data[data_node_id] = self.node_mapping[data_node_id]
-                        raise Exception("Revision node ID does not exist")
+                        failed_node_data[data_node_id] = self.node_mapping.get(data_node_id, None)
+                        has_failed = True
+                        break
+                        # raise Exception("Revision node ID does not exist")
                     data[revision_node_id] = data[data_node_id]
                     del data[data_node_id]
+
+                if has_failed:
+                    continue
 
                 new_tile = Tile(
                     tileid=uuid.uuid4(),
@@ -266,7 +313,7 @@ class MonumentRevisionRemap(View):
 
             except Exception as e:
                 print("Failed while remapping the monument tile data: ", e)
-                continue
+                raise e
 
         parent_monument_nodegroup = self.get_nodegroup(
             "6375be6e-dc64-11ee-924e-0242ac120006"
@@ -291,8 +338,8 @@ class MonumentRevisionRemap(View):
                 "message": "Monument has been remapped successfully",
                 "monumentResourceId": monument_resource_id,
                 "revisionResourceId": revision_resource_id,
-                # "aliasMapping": self.alias_mapping,
-                # "nodeMapping": self.node_mapping,
+                "aliasMapping": self.alias_mapping,
+                "nodeMapping": self.node_mapping,
                 "missingMap": missing_map,
                 "failedNodeData": failed_node_data,
             }
