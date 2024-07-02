@@ -6,6 +6,7 @@ from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from arches.app.models.tile import Tile
 from copy import deepcopy
+from django.db import transaction
 
 logger = logging.getLogger(__name__)
 
@@ -158,117 +159,118 @@ class RemapResources:
         return parent_tile
 
     def remap_resources(self, user):
-        self.target_resource = self.get_resource(self.target_resource_id)
+        with transaction.atomic():
+            self.target_resource = self.get_resource(self.target_resource_id)
 
-        target_graph = self.get_graph(self.target_graph_id)
-        destination_graph = self.get_graph(self.destination_graph_id)
-
-        if (
-            self.target_resource.graph != target_graph
-            and self.target_resource.graph != destination_graph
-        ):
-            raise "The resource ID provided does not belong to the target or destination graph"
-
-        if self.target_resource.graph == destination_graph:
-            return {
-                "message": "This resource ID has already been remapped to the destination",
-                "destinationResourceId": str(self.target_resource.resourceinstanceid),
-            }
-
-        self.get_node_configuration("target", target_graph)
-        self.get_node_configuration("destination", destination_graph)
-
-        missing_map = self.missing_alias_map()
-        self.node_mapping = self.id_alias_map_with_node_id()
-
-        target_tiles = list(Tile.objects.filter(resourceinstance=self.target_resource))
-
-        self.destination_resource = Resource.objects.create(
-            graph=destination_graph, principaluser=user
-        )
-        destination_resource_id = str(self.destination_resource.resourceinstanceid)
-
-        # Sort tiles so that the very top level parent tiles are created first
-        # this allows child parent tiles of the main parent tile to use the
-        # correct parent tile they belong to
-
-        parent_target_tiles = {}
-        temp_parent_target_tiles = []
-        temp_target_tiles = []
-        for tile in target_tiles:
-            tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
-            if tile_nodegroup_id not in self.parent_nodegroup_ids:
-                temp_target_tiles.append(tile)
-                continue
-            parent_target_tiles[tile_nodegroup_id] = tile
-
-        for parent_nodegroup_id in self.parent_nodegroup_ids:
-            if parent_nodegroup_id not in parent_target_tiles:
-                continue
-            tile = parent_target_tiles[parent_nodegroup_id]
-            temp_parent_target_tiles.append(tile)
-
-        ordered_target_tiles = temp_parent_target_tiles + temp_target_tiles
-
-        # Loop through the targets tiles and re-create them on the destination model
-        # with the correct parent tile look ups
-        for tile in ordered_target_tiles:
-            tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
-            parent_nodegroup_id = self.get_parent_nodegroup_from_tile(tile)
-
-            # If the nodegroup is a parent tile nodegroup and contains no
-            # additional data. Continue and let a child tile create it if
-            # it was missing from the look up
-            if tile_nodegroup_id in self.parent_nodegroup_ids and not len(tile.data):
-                continue
-
-            # If the nodegroup id is part of the excluded which is created
-            # from the excluded aliases continue to the next tile
-            if tile_nodegroup_id in self.excluded_nodegroup_ids:
-                continue
-
-            node_map = self.node_mapping[tile_nodegroup_id]
-
-            if not node_map["destination"]:
-                continue
+            target_graph = self.get_graph(self.target_graph_id)
+            destination_graph = self.get_graph(self.destination_graph_id)
 
             if (
-                parent_nodegroup_id is not None
-                and parent_nodegroup_id not in self.node_mapping
+                self.target_resource.graph != target_graph
+                and self.target_resource.graph != destination_graph
             ):
-                continue
+                raise "The resource ID provided does not belong to the target or destination graph"
 
-            destination_nodegroup = node_map["destination"]["node"].nodegroup
+            if self.target_resource.graph == destination_graph:
+                return {
+                    "message": "This resource ID has already been remapped to the destination",
+                    "destinationResourceId": str(self.target_resource.resourceinstanceid),
+                }
 
-            data = deepcopy(tile.data)
-            parent_tile = self.get_parent_tile(tile)
-            for data_node_id in tile.data.keys():
-                destination_node_id = self.node_mapping[data_node_id][
-                    "destination"
-                ]["node_id"]
-                data[destination_node_id] = data[data_node_id]
-                del data[data_node_id]
+            self.get_node_configuration("target", target_graph)
+            self.get_node_configuration("destination", destination_graph)
 
-            new_tile = Tile(
-                tileid=uuid.uuid4(),
-                resourceinstance=self.destination_resource,
-                parenttile=parent_tile,
-                data=data,
-                nodegroup=destination_nodegroup,
+            missing_map = self.missing_alias_map()
+            self.node_mapping = self.id_alias_map_with_node_id()
+
+            target_tiles = list(Tile.objects.filter(resourceinstance=self.target_resource))
+
+            self.destination_resource = Resource.objects.create(
+                graph=destination_graph, principaluser=user
             )
-            new_tile.save()
+            destination_resource_id = str(self.destination_resource.resourceinstanceid)
 
-            # If this is true, it means the parent tile had data and needed
-            # that data to be remapped. We then add into the created parent
-            # tiles dictionary for child tiles to look up
-            if tile_nodegroup_id in self.parent_nodegroup_ids:
-                self.created_parent_tiles[str(tile.tileid)] = new_tile
+            # Sort tiles so that the very top level parent tiles are created first
+            # this allows child parent tiles of the main parent tile to use the
+            # correct parent tile they belong to
 
-        return {
-            "message": "Target has been remapped successfully",
-            "targetResourceId": self.target_resource_id,
-            "destinationResourceId": destination_resource_id,
-            # "aliasMapping": self.alias_mapping,
-            # "nodeMapping": self.node_mapping,
-            "missingMap": missing_map,
-        }
+            parent_target_tiles = {}
+            temp_parent_target_tiles = []
+            temp_target_tiles = []
+            for tile in target_tiles:
+                tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
+                if tile_nodegroup_id not in self.parent_nodegroup_ids:
+                    temp_target_tiles.append(tile)
+                    continue
+                parent_target_tiles[tile_nodegroup_id] = tile
+
+            for parent_nodegroup_id in self.parent_nodegroup_ids:
+                if parent_nodegroup_id not in parent_target_tiles:
+                    continue
+                tile = parent_target_tiles[parent_nodegroup_id]
+                temp_parent_target_tiles.append(tile)
+
+            ordered_target_tiles = temp_parent_target_tiles + temp_target_tiles
+
+            # Loop through the targets tiles and re-create them on the destination model
+            # with the correct parent tile look ups
+            for tile in ordered_target_tiles:
+                tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
+                parent_nodegroup_id = self.get_parent_nodegroup_from_tile(tile)
+
+                # If the nodegroup is a parent tile nodegroup and contains no
+                # additional data. Continue and let a child tile create it if
+                # it was missing from the look up
+                if tile_nodegroup_id in self.parent_nodegroup_ids and not len(tile.data):
+                    continue
+
+                # If the nodegroup id is part of the excluded which is created
+                # from the excluded aliases continue to the next tile
+                if tile_nodegroup_id in self.excluded_nodegroup_ids:
+                    continue
+
+                node_map = self.node_mapping[tile_nodegroup_id]
+
+                if not node_map["destination"]:
+                    continue
+
+                if (
+                    parent_nodegroup_id is not None
+                    and parent_nodegroup_id not in self.node_mapping
+                ):
+                    continue
+
+                destination_nodegroup = node_map["destination"]["node"].nodegroup
+
+                data = deepcopy(tile.data)
+                parent_tile = self.get_parent_tile(tile)
+                for data_node_id in tile.data.keys():
+                    destination_node_id = self.node_mapping[data_node_id][
+                        "destination"
+                    ]["node_id"]
+                    data[destination_node_id] = data[data_node_id]
+                    del data[data_node_id]
+
+                new_tile = Tile(
+                    tileid=uuid.uuid4(),
+                    resourceinstance=self.destination_resource,
+                    parenttile=parent_tile,
+                    data=data,
+                    nodegroup=destination_nodegroup,
+                )
+                new_tile.save()
+
+                # If this is true, it means the parent tile had data and needed
+                # that data to be remapped. We then add into the created parent
+                # tiles dictionary for child tiles to look up
+                if tile_nodegroup_id in self.parent_nodegroup_ids:
+                    self.created_parent_tiles[str(tile.tileid)] = new_tile
+
+            return {
+                "message": "Target has been remapped successfully",
+                "targetResourceId": self.target_resource_id,
+                "destinationResourceId": destination_resource_id,
+                # "aliasMapping": self.alias_mapping,
+                # "nodeMapping": self.node_mapping,
+                "missingMap": missing_map,
+            }
