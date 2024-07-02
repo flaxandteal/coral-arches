@@ -76,7 +76,7 @@ define([
       const monumentResourceId = this.selectedResource();
       const response = await $.ajax({
         type: 'POST',
-        url: '/monument-revision-remap',
+        url: '/remap-monument-to-revision',
         dataType: 'json',
         data: JSON.stringify({
           targetResourceId: monumentResourceId
