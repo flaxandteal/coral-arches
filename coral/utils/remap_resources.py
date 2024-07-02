@@ -1,7 +1,7 @@
-from django.views.generic import View
+# from django.views.generic import View
 import logging
 from arches.app.models import models
-from arches.app.utils.response import JSONResponse, HttpResponse
+# from arches.app.utils.response import JSONResponse, HttpResponse
 import json
 import uuid
 from arches.app.models.resource import Resource
@@ -12,28 +12,34 @@ from copy import deepcopy
 logger = logging.getLogger(__name__)
 
 
-
-
-
 class RemapResources:
- MONUMENT_GRAPH_ID = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
-    MONUMENT_REVISION_GRAPH_ID = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
+    target_graph_id = None
+    destination_graph_id = None
+    target_resource_id = None
     target_resource = None
     destination_resource = None
     nodes = {"target": {}, "destination": {}}
     alias_mapping = {}
     node_mapping = {}
-    excluded_aliases = [
-        "monument",
-        "monument_revision",
-        "approvals",
-        "designation_descriptions"
-    ]
-    # Will populate from excluded aliases, you only need to provide 
+    excluded_aliases = []
+    # Will populate from excluded aliases, you only need to provide
     # the parent nodegroups alias to exclude the tiles from the remapping process
-    excluded_nodegroup_ids = [] 
+    excluded_nodegroup_ids = []
     parent_nodegroup_ids = []
     created_parent_tiles = {}
+
+    def __init__(
+        self,
+        target_graph_id=None,
+        destination_graph_id=None,
+        excluded_aliases=[],
+        target_resource_id=None,
+    ):
+        self.target_graph_id = target_graph_id
+        self.destination_graph_id = destination_graph_id
+        self.excluded_aliases = excluded_aliases
+        self.target_resource_id = target_resource_id
+        pass
 
     def get_resource(self, resource_id):
         resource = None
@@ -62,7 +68,9 @@ class RemapResources:
             if not map_data["target"]:
                 missing_map[alias] = "Missing target mapping"
                 # Exclude the parent nodegroup so the tile won't get processed
-                self.excluded_nodegroup_ids.append(map_data["destination"]["nodegroup_id"])
+                self.excluded_nodegroup_ids.append(
+                    map_data["destination"]["nodegroup_id"]
+                )
                 continue
             if not map_data["destination"]:
                 missing_map[alias] = "Missing destination mapping"
@@ -82,11 +90,11 @@ class RemapResources:
     def get_node_configuration(self, target, graph):
         nodes = graph.node_set.all().select_related("nodegroup")
         for node in nodes:
-            print('node: ', node)
+            print("node: ", node)
             alias = node.alias
             nodegroup_id = str(node.nodegroup.nodegroupid) if node.nodegroup else None
             if alias in self.excluded_aliases:
-                if nodegroup_id: 
+                if nodegroup_id:
                     self.excluded_nodegroup_ids.append(nodegroup_id)
                 continue
             node_id = str(node.nodeid)
@@ -136,9 +144,9 @@ class RemapResources:
         if target_parent_tile_id in self.created_parent_tiles:
             return self.created_parent_tiles[target_parent_tile_id]
 
-        destination_parent_nodegroup = self.node_mapping[parent_nodegroup_id]["destination"][
-            "node"
-        ].nodegroup
+        destination_parent_nodegroup = self.node_mapping[parent_nodegroup_id][
+            "destination"
+        ]["node"].nodegroup
 
         parent_tile = Tile(
             tileid=uuid.uuid4(),
@@ -152,39 +160,23 @@ class RemapResources:
 
         return parent_tile
 
-    def post(self, request):
-        # Some how these requests manage to maintain state from the previous
-        self.target_resource = None
-        self.destination_resource = None
-        self.nodes = {"target": {}, "destination": {}}
-        self.alias_mapping = {}
-        self.node_mapping = {}
-        self.excluded_nodegroup_ids = [] 
-        self.parent_nodegroup_ids = []
-        self.created_parent_tiles = {}
+    def remap_resources(self, user):
+        self.target_resource = self.get_resource(self.target_resource_id)
 
-        data = json.loads(request.body.decode("utf-8"))
-        target_resource_id = data.get("targetResourceId")
-        self.target_resource = self.get_resource(target_resource_id)
-
-        target_graph = self.get_graph(self.MONUMENT_GRAPH_ID)
-        destination_graph = self.get_graph(self.MONUMENT_REVISION_GRAPH_ID)
+        target_graph = self.get_graph(self.target_graph_id)
+        destination_graph = self.get_graph(self.destination_graph_id)
 
         if (
             self.target_resource.graph != target_graph
             and self.target_resource.graph != destination_graph
         ):
-            raise "The resource ID provided does not belong to Monument or Monument Revision"
+            raise "The resource ID provided does not belong to the target or destination graph"
 
         if self.target_resource.graph == destination_graph:
-            return JSONResponse(
-                {
-                    "message": "This is a remapped Monument",
-                    "destinationResourceId": str(
-                        self.target_resource.resourceinstanceid
-                    ),
-                }
-            )
+            return {
+                "message": "This resource ID has already been remapped to the destination",
+                "destinationResourceId": str(self.target_resource.resourceinstanceid),
+            }
 
         self.get_node_configuration("target", target_graph)
         self.get_node_configuration("destination", destination_graph)
@@ -192,12 +184,10 @@ class RemapResources:
         missing_map = self.missing_alias_map()
         self.node_mapping = self.id_alias_map_with_node_id()
 
-        target_tiles = list(
-            Tile.objects.filter(resourceinstance=self.target_resource)
-        )
+        target_tiles = list(Tile.objects.filter(resourceinstance=self.target_resource))
 
         self.destination_resource = Resource.objects.create(
-            graph=destination_graph, principaluser=request.user
+            graph=destination_graph, principaluser=user
         )
         destination_resource_id = str(self.destination_resource.resourceinstanceid)
 
@@ -234,7 +224,7 @@ class RemapResources:
             # it was missing from the look up
             if tile_nodegroup_id in self.parent_nodegroup_ids and not len(tile.data):
                 continue
-            
+
             # If the nodegroup id is part of the excluded which is created
             # from the excluded aliases continue to the next tile
             if tile_nodegroup_id in self.excluded_nodegroup_ids:
@@ -257,7 +247,9 @@ class RemapResources:
             parent_tile = self.get_parent_tile(tile)
             try:
                 for data_node_id in tile.data.keys():
-                    destination_node_id = self.node_mapping[data_node_id]["destination"]["node_id"]
+                    destination_node_id = self.node_mapping[data_node_id][
+                        "destination"
+                    ]["node_id"]
                     data[destination_node_id] = data[data_node_id]
                     del data[data_node_id]
 
@@ -288,7 +280,7 @@ class RemapResources:
             data={
                 "6375be6e-dc64-11ee-924e-0242ac120006": [
                     {
-                        "resourceId": target_resource_id,
+                        "resourceId": self.target_resource_id,
                         "ontologyProperty": "",
                         "inverseOntologyProperty": "",
                     }
@@ -298,13 +290,11 @@ class RemapResources:
         )
         parent_target_tile.save()
 
-        return JSONResponse(
-            {
-                "message": "Target has been remapped successfully",
-                "targetResourceId": target_resource_id,
-                "destinationResourceId": destination_resource_id,
-                # "aliasMapping": self.alias_mapping,
-                # "nodeMapping": self.node_mapping,
-                "missingMap": missing_map,
-            }
-        )
+        return {
+            "message": "Target has been remapped successfully",
+            "targetResourceId": self.target_resource_id,
+            "destinationResourceId": destination_resource_id,
+            # "aliasMapping": self.alias_mapping,
+            # "nodeMapping": self.node_mapping,
+            "missingMap": missing_map,
+        }
