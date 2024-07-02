@@ -15,9 +15,9 @@ logger = logging.getLogger(__name__)
 class MonumentRevisionRemap(View):
     MONUMENT_GRAPH_ID = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
     MONUMENT_REVISION_GRAPH_ID = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
-    monument_resource = None
-    revision_resource = None
-    nodes = {"monument": {}, "revision": {}}
+    target_resource = None
+    destination_resource = None
+    nodes = {"target": {}, "destination": {}}
     alias_mapping = {}
     node_mapping = {}
     excluded_aliases = [
@@ -51,27 +51,27 @@ class MonumentRevisionRemap(View):
     def missing_alias_map(self):
         missing_map = {}
         for alias, map_data in self.alias_mapping.items():
-            if not map_data["monument"] and not map_data["revision"]:
-                missing_map[alias] = "Missing monument and revision mapping"
+            if not map_data["target"] and not map_data["destination"]:
+                missing_map[alias] = "Missing target and destination mapping"
                 # If there is none for both then there shouldn't be a tile
                 # to get processed
                 continue
-            if not map_data["monument"]:
-                missing_map[alias] = "Missing monument mapping"
+            if not map_data["target"]:
+                missing_map[alias] = "Missing target mapping"
                 # Exclude the parent nodegroup so the tile won't get processed
-                self.excluded_nodegroup_ids.append(map_data["revision"]["nodegroup_id"])
+                self.excluded_nodegroup_ids.append(map_data["destination"]["nodegroup_id"])
                 continue
-            if not map_data["revision"]:
-                missing_map[alias] = "Missing revision mapping"
+            if not map_data["destination"]:
+                missing_map[alias] = "Missing destination mapping"
                 # Exclude the parent nodegroup so the tile won't get processed
-                self.excluded_nodegroup_ids.append(map_data["monument"]["nodegroup_id"])
+                self.excluded_nodegroup_ids.append(map_data["target"]["nodegroup_id"])
                 continue
         return missing_map
 
     def id_alias_map_with_node_id(self):
         self.node_mapping = {}
         for value in self.alias_mapping.values():
-            node_id = value["monument"]["node_id"] if value["monument"] else None
+            node_id = value["target"]["node_id"] if value["target"] else None
             if node_id:
                 self.node_mapping[node_id] = value
         return self.node_mapping
@@ -79,6 +79,7 @@ class MonumentRevisionRemap(View):
     def get_node_configuration(self, target, graph):
         nodes = graph.node_set.all().select_related("nodegroup")
         for node in nodes:
+            print('node: ', node)
             alias = node.alias
             nodegroup_id = str(node.nodegroup.nodegroupid) if node.nodegroup else None
             if alias in self.excluded_aliases:
@@ -87,7 +88,7 @@ class MonumentRevisionRemap(View):
                 continue
             node_id = str(node.nodeid)
             if alias not in self.alias_mapping:
-                self.alias_mapping[alias] = {"monument": None, "revision": None}
+                self.alias_mapping[alias] = {"target": None, "destination": None}
             parent_nodegroup_id = (
                 str(node.nodegroup.parentnodegroup_id)
                 if node.nodegroup.parentnodegroup_id
@@ -128,31 +129,31 @@ class MonumentRevisionRemap(View):
         if not parent_nodegroup_id:
             return parent_tile
 
-        monument_parent_tile_id = str(tile.parenttile.tileid)
-        if monument_parent_tile_id in self.created_parent_tiles:
-            return self.created_parent_tiles[monument_parent_tile_id]
+        target_parent_tile_id = str(tile.parenttile.tileid)
+        if target_parent_tile_id in self.created_parent_tiles:
+            return self.created_parent_tiles[target_parent_tile_id]
 
-        revision_parent_nodegroup = self.node_mapping[parent_nodegroup_id]["revision"][
+        destination_parent_nodegroup = self.node_mapping[parent_nodegroup_id]["destination"][
             "node"
         ].nodegroup
 
         parent_tile = Tile(
             tileid=uuid.uuid4(),
-            resourceinstance=self.revision_resource,
+            resourceinstance=self.destination_resource,
             parenttile=None,
             data={},
-            nodegroup=revision_parent_nodegroup,
+            nodegroup=destination_parent_nodegroup,
         )
         parent_tile.save()
-        self.created_parent_tiles[monument_parent_tile_id] = parent_tile
+        self.created_parent_tiles[target_parent_tile_id] = parent_tile
 
         return parent_tile
 
     def post(self, request):
         # Some how these requests manage to maintain state from the previous
-        self.monument_resource = None
-        self.revision_resource = None
-        self.nodes = {"monument": {}, "revision": {}}
+        self.target_resource = None
+        self.destination_resource = None
+        self.nodes = {"target": {}, "destination": {}}
         self.alias_mapping = {}
         self.node_mapping = {}
         self.excluded_nodegroup_ids = [] 
@@ -160,68 +161,68 @@ class MonumentRevisionRemap(View):
         self.created_parent_tiles = {}
 
         data = json.loads(request.body.decode("utf-8"))
-        monument_resource_id = data.get("monumentResourceId")
-        self.monument_resource = self.get_resource(monument_resource_id)
+        target_resource_id = data.get("targetResourceId")
+        self.target_resource = self.get_resource(target_resource_id)
 
-        monument_graph = self.get_graph(self.MONUMENT_GRAPH_ID)
-        revision_graph = self.get_graph(self.MONUMENT_REVISION_GRAPH_ID)
+        target_graph = self.get_graph(self.MONUMENT_GRAPH_ID)
+        destination_graph = self.get_graph(self.MONUMENT_REVISION_GRAPH_ID)
 
         if (
-            self.monument_resource.graph != monument_graph
-            and self.monument_resource.graph != revision_graph
+            self.target_resource.graph != target_graph
+            and self.target_resource.graph != destination_graph
         ):
             raise "The resource ID provided does not belong to Monument or Monument Revision"
 
-        if self.monument_resource.graph == revision_graph:
+        if self.target_resource.graph == destination_graph:
             return JSONResponse(
                 {
                     "message": "This is a remapped Monument",
-                    "revisionResourceId": str(
-                        self.monument_resource.resourceinstanceid
+                    "destinationResourceId": str(
+                        self.target_resource.resourceinstanceid
                     ),
                 }
             )
 
-        self.get_node_configuration("monument", monument_graph)
-        self.get_node_configuration("revision", revision_graph)
+        self.get_node_configuration("target", target_graph)
+        self.get_node_configuration("destination", destination_graph)
 
         missing_map = self.missing_alias_map()
         self.node_mapping = self.id_alias_map_with_node_id()
 
-        monument_tiles = list(
-            Tile.objects.filter(resourceinstance=self.monument_resource)
+        target_tiles = list(
+            Tile.objects.filter(resourceinstance=self.target_resource)
         )
 
-        self.revision_resource = Resource.objects.create(
-            graph=revision_graph, principaluser=request.user
+        self.destination_resource = Resource.objects.create(
+            graph=destination_graph, principaluser=request.user
         )
-        revision_resource_id = str(self.revision_resource.resourceinstanceid)
+        destination_resource_id = str(self.destination_resource.resourceinstanceid)
 
         # Sort tiles so that the very top level parent tiles are created first
         # this allows child parent tiles of the main parent tile to use the
         # correct parent tile they belong to
 
-        parent_monument_tiles = {}
-        temp_parent_monument_tiles = []
-        temp_monument_tiles = []
-        for tile in monument_tiles:
+        parent_target_tiles = {}
+        temp_parent_target_tiles = []
+        temp_target_tiles = []
+        for tile in target_tiles:
             tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
             if tile_nodegroup_id not in self.parent_nodegroup_ids:
-                temp_monument_tiles.append(tile)
+                temp_target_tiles.append(tile)
                 continue
-            parent_monument_tiles[tile_nodegroup_id] = tile
+            parent_target_tiles[tile_nodegroup_id] = tile
 
         for parent_nodegroup_id in self.parent_nodegroup_ids:
-            if parent_nodegroup_id not in parent_monument_tiles:
+            if parent_nodegroup_id not in parent_target_tiles:
                 continue
-            tile = parent_monument_tiles[parent_nodegroup_id]
-            temp_parent_monument_tiles.append(tile)
+            tile = parent_target_tiles[parent_nodegroup_id]
+            temp_parent_target_tiles.append(tile)
 
-        ordered_monument_tiles = temp_parent_monument_tiles + temp_monument_tiles
+        ordered_target_tiles = temp_parent_target_tiles + temp_target_tiles
 
-        # Loop through the monuments tiles and re-create them on the revision model
+        # Loop through the targets tiles and re-create them on the destination model
         # with the correct parent tile look ups
-        for tile in ordered_monument_tiles:
+        for tile in ordered_target_tiles:
             tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
             parent_nodegroup_id = self.get_parent_nodegroup_from_tile(tile)
 
@@ -238,7 +239,7 @@ class MonumentRevisionRemap(View):
 
             node_map = self.node_mapping[tile_nodegroup_id]
 
-            if not node_map["revision"]:
+            if not node_map["destination"]:
                 continue
 
             if (
@@ -247,22 +248,22 @@ class MonumentRevisionRemap(View):
             ):
                 continue
 
-            revision_nodegroup = node_map["revision"]["node"].nodegroup
+            destination_nodegroup = node_map["destination"]["node"].nodegroup
 
             data = deepcopy(tile.data)
             parent_tile = self.get_parent_tile(tile)
             try:
                 for data_node_id in tile.data.keys():
-                    revision_node_id = self.node_mapping[data_node_id]["revision"]["node_id"]
-                    data[revision_node_id] = data[data_node_id]
+                    destination_node_id = self.node_mapping[data_node_id]["destination"]["node_id"]
+                    data[destination_node_id] = data[data_node_id]
                     del data[data_node_id]
 
                 new_tile = Tile(
                     tileid=uuid.uuid4(),
-                    resourceinstance=self.revision_resource,
+                    resourceinstance=self.destination_resource,
                     parenttile=parent_tile,
                     data=data,
-                    nodegroup=revision_nodegroup,
+                    nodegroup=destination_nodegroup,
                 )
                 new_tile.save()
 
@@ -273,32 +274,32 @@ class MonumentRevisionRemap(View):
                     self.created_parent_tiles[str(tile.tileid)] = new_tile
 
             except Exception as e:
-                print("Failed while remapping the monument tile data: ", e)
+                print("Failed while remapping the target tile data: ", e)
                 raise e
 
-        parent_monument_nodegroup = self.get_nodegroup(
+        parent_target_nodegroup = self.get_nodegroup(
             "6375be6e-dc64-11ee-924e-0242ac120006"
         )
-        parent_monument_tile = Tile(
-            resourceinstance=self.revision_resource,
+        parent_target_tile = Tile(
+            resourceinstance=self.destination_resource,
             data={
                 "6375be6e-dc64-11ee-924e-0242ac120006": [
                     {
-                        "resourceId": monument_resource_id,
+                        "resourceId": target_resource_id,
                         "ontologyProperty": "",
                         "inverseOntologyProperty": "",
                     }
                 ]
             },
-            nodegroup=parent_monument_nodegroup,
+            nodegroup=parent_target_nodegroup,
         )
-        parent_monument_tile.save()
+        parent_target_tile.save()
 
         return JSONResponse(
             {
-                "message": "Monument has been remapped successfully",
-                "monumentResourceId": monument_resource_id,
-                "revisionResourceId": revision_resource_id,
+                "message": "Target has been remapped successfully",
+                "targetResourceId": target_resource_id,
+                "destinationResourceId": destination_resource_id,
                 # "aliasMapping": self.alias_mapping,
                 # "nodeMapping": self.node_mapping,
                 "missingMap": missing_map,

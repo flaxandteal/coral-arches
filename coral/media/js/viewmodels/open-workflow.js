@@ -79,7 +79,7 @@ define([
         url: '/monument-revision-remap',
         dataType: 'json',
         data: JSON.stringify({
-          monumentResourceId: monumentResourceId
+          targetResourceId: monumentResourceId
         }),
         context: this,
         error: (response, status, error) => {
