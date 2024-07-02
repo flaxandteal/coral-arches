@@ -193,7 +193,7 @@
                     "instructions": {
                         "en": "Use to record any designation or protection regimes directly associated with the application area."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Designation and Protection Assignment"
                     },
@@ -328,7 +328,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Location Data"
                     },
@@ -436,7 +436,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Construction Phases"
                     },
@@ -787,7 +787,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Parent Heritage Asset"
                     },
@@ -843,7 +843,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Contacts"
                     },
@@ -1342,7 +1342,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "CM References"
                     },
@@ -1425,7 +1425,7 @@
                     "instructions": {
                         "en": "Administrative, geopolitical areas, localities, and other areas (e.g.: Research or zoning areas)  "
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Localities/Administrative Areas"
                     },
@@ -1479,7 +1479,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Complete Revision"
                     },
@@ -1533,7 +1533,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -1697,7 +1697,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Heritage Asset Names"
                     },
@@ -1996,7 +1996,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Land Use Classification Assignment"
                     },
@@ -2485,7 +2485,7 @@
                         "en": "County Type"
                     },
                     "node_id": "2e278df3-1de8-4c47-a217-c64fb5920968",
-                    "sortorder": 25,
+                    "sortorder": 28,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2922,7 +2922,7 @@
                         "en": "Building Number Type"
                     },
                     "node_id": "610b588d-f7b8-45a7-874a-8690fc53a32c",
-                    "sortorder": 13,
+                    "sortorder": 10,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2944,7 +2944,7 @@
                         "en": "County Metatype"
                     },
                     "node_id": "2848ab94-bb76-4bf5-ab10-ac5c4d88c341",
-                    "sortorder": 26,
+                    "sortorder": 29,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -3081,7 +3081,7 @@
                         "en": "County "
                     },
                     "node_id": "5c865d99-b9c2-43c8-813e-e77948afa21d",
-                    "sortorder": 24,
+                    "sortorder": 27,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -4122,7 +4122,7 @@
                         "en": "Sub-Street Metatype"
                     },
                     "node_id": "e381387f-f7e6-41cf-8ac8-36026336a7ea",
-                    "sortorder": 11,
+                    "sortorder": 17,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -4974,7 +4974,7 @@
                         "en": "Postcode"
                     },
                     "node_id": "4d8870fd-66d9-450a-9fc5-2d7362ae87dd",
-                    "sortorder": 27,
+                    "sortorder": 24,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -6295,7 +6295,7 @@
                         "en": "Postcode Type"
                     },
                     "node_id": "86a23710-bd6c-48c3-9ea0-573aa7073b37",
-                    "sortorder": 28,
+                    "sortorder": 25,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -6510,7 +6510,7 @@
                         "en": "Sub-Street Type"
                     },
                     "node_id": "d08c986b-eb30-496f-bb2c-745b291013f1",
-                    "sortorder": 10,
+                    "sortorder": 16,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -6806,6 +6806,28 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
+                    "card_id": "c225523c-a711-4088-9b11-89f31c2d1243",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Townland",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "7204e83e-861f-4f93-8f10-096caf052243",
+                    "label": {
+                        "en": "Townland"
+                    },
+                    "node_id": "1db0ed52-3521-11ef-850f-0242ac120003",
+                    "sortorder": 34,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "c0895e0c-ff03-4d89-b333-f82197e113ec",
                     "config": {
                         "defaultValue": "",
@@ -6910,7 +6932,7 @@
                         "en": "Street"
                     },
                     "node_id": "e0ae0d03-a7fa-440d-943a-b4d1504ae6b5",
-                    "sortorder": 15,
+                    "sortorder": 12,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -7108,7 +7130,7 @@
                         "en": "Building Number"
                     },
                     "node_id": "d16a913e-63fd-4361-ae9b-25965c731f82",
-                    "sortorder": 12,
+                    "sortorder": 9,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -9344,7 +9366,7 @@
                         "en": "Street Type"
                     },
                     "node_id": "a90823a1-4d41-4f09-a5e7-da01035631e8",
-                    "sortorder": 16,
+                    "sortorder": 13,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -9410,7 +9432,7 @@
                         "en": "Postcode Metatype"
                     },
                     "node_id": "aaa2b225-a3ee-4cd0-b512-4392f3908959",
-                    "sortorder": 29,
+                    "sortorder": 26,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -9716,7 +9738,7 @@
                         "en": "Building Number Metatype"
                     },
                     "node_id": "0c99fa5f-711a-4e4a-958f-9fd589d60e0c",
-                    "sortorder": 14,
+                    "sortorder": 11,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10982,7 +11004,7 @@
                         "en": "Sub-Street"
                     },
                     "node_id": "2fa946b5-5127-4bd2-b571-33515ef17788",
-                    "sortorder": 9,
+                    "sortorder": 15,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -12866,7 +12888,7 @@
                         "en": "Street Metatype"
                     },
                     "node_id": "22b4dcc3-488c-4d8b-8b84-ace346d452c3",
-                    "sortorder": 17,
+                    "sortorder": 14,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -18038,6 +18060,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "38dad285-9014-4c7b-ad81-b0562038ebf2",
+                    "edgeid": "ad5f9c50-8303-4f1d-a2c0-ccff37c2c2fe",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "c65bc676-3520-11ef-b062-0242ac120003"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "6bbf9c01-0643-459b-abce-8a3f9061a90a",
                     "edgeid": "ae21105e-106e-40d9-a0b9-dc0a68a0a3ca",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -18359,6 +18390,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
                     "rangenode_id": "db4a4cda-871d-4802-9eab-38511ebc89f7"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "c65bc676-3520-11ef-b062-0242ac120003",
+                    "edgeid": "bbd58965-83c6-4eb7-81e0-26c63060a263",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "1db0ed52-3521-11ef-850f-0242ac120003"
                 },
                 {
                     "description": null,
@@ -19721,7 +19761,7 @@
             ],
             "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
             "iconclass": "fa fa-copy",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -22131,6 +22171,29 @@
                     "nodeid": "1d813f86-a837-41ad-a917-ebd12ee2bbd5",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "townland",
+                    "config": {
+                        "rdmCollection": "1dc70528-0083-4d56-a7cb-a1836c78a384"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Townland",
+                    "nodegroup_id": "38dad285-9014-4c7b-ad81-b0562038ebf2",
+                    "nodeid": "1db0ed52-3521-11ef-850f-0242ac120003",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -32553,6 +32616,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "townlands",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Townlands",
+                    "nodegroup_id": "38dad285-9014-4c7b-ad81-b0562038ebf2",
+                    "nodeid": "c65bc676-3520-11ef-b062-0242ac120003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "geology",
                     "config": {
                         "graphs": [],
@@ -35491,8 +35577,8 @@
             "publication": {
                 "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                 "notes": null,
-                "publicationid": "9f13079c-2edf-11ef-9c7c-0242ac140006",
-                "published_time": "2024-06-20T08:32:25.318"
+                "publicationid": "822ceab0-3521-11ef-850f-0242ac120003",
+                "published_time": "2024-06-28T07:39:10.594"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -35526,8 +35612,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "72958682a 2024-06-15 23:37:12 +0100",
+        "git hash": "f8671a0bd 2024-06-18 14:23:46 +0100",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "6.8.0-31-generic"
     }
 }
