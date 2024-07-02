@@ -276,7 +276,7 @@ class MergeResources:
         associated_resources_tile.save()
 
     def merge_resources(
-        self, base_resource_id, merge_resource_id, merge_tracker_resource_id
+        self, base_resource_id, merge_resource_id, merge_tracker_resource_id, overwrite_multiple_tiles=False
     ):
         if not base_resource_id or not merge_resource_id:
             raise "Missing base or merge resource ID"
@@ -364,6 +364,9 @@ class MergeResources:
 
             # Create the additional tiles for the base resource
             if merge_data["cardinality"] == "n":
+                if overwrite_multiple_tiles:
+                    for tile in merge_data["base_tiles"]:
+                        tile.delete()
                 for tile in merge_data["merge_tiles"]:
                     parent_tile = self.discover_parent_tile(tile)
                     new_tile = Tile(
