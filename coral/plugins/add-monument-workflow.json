@@ -268,6 +268,42 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "1226d1b4-b651-4514-9db2-88370fd5728c"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["ecdce17a-3865-11ef-b665-0242ac120006"],
+                  "nodegroupid": "ba17d3b2-3865-11ef-b665-0242ac120006",
+                  "semanticName": "Unique Building ID"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "monument-unique-building-id"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["0ac944f2-386c-11ef-8b1f-0242ac120006"],
+                  "nodegroupid": "8967e324-386a-11ef-8caf-0242ac120006",
+                  "semanticName": "LP Fusion ID"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "monument-lp-fusion-building-id"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
+                  "nodegroupid": "16099fb6-386b-11ef-8caf-0242ac120006",
+                  "semanticName": "BU Fusion ID"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "monument-bu-fusion-id"
               }
             ]
           }
