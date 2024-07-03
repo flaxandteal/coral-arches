@@ -173,6 +173,7 @@ class RemapResources:
 
             if self.target_resource.graph == destination_graph:
                 return {
+                    "remapped": False,
                     "message": "This resource ID has already been remapped to the destination",
                     "destinationResourceId": str(self.target_resource.resourceinstanceid),
                 }
@@ -267,6 +268,7 @@ class RemapResources:
                     self.created_parent_tiles[str(tile.tileid)] = new_tile
 
             return {
+                "remapped": True,
                 "message": "Target has been remapped successfully",
                 "targetResourceId": self.target_resource_id,
                 "destinationResourceId": destination_resource_id,
