@@ -328,7 +328,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Location Data"
                     },
@@ -787,7 +787,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Parent Heritage Asset"
                     },
@@ -1506,7 +1506,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Approvals"
                     },
@@ -1560,7 +1560,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -20386,7 +20386,7 @@
             ],
             "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
             "iconclass": "fa fa-copy",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -20580,7 +20580,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "67712762-378e-11ef-9263-0242ac150006",
                     "parentnodegroup_id": null
@@ -36786,8 +36786,8 @@
             "publication": {
                 "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                 "notes": null,
-                "publicationid": "c491dfd4-392a-11ef-abc3-0242ac150006",
-                "published_time": "2024-07-03T10:55:32.107"
+                "publicationid": "ad0bdf80-393f-11ef-b875-0242ac150006",
+                "published_time": "2024-07-03T13:25:12.073"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
