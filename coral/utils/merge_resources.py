@@ -298,10 +298,10 @@ class MergeResources:
 
         # Store an original copy of the the 2 resources
 
-        # if merge_tracker_resource_id:
-        #     self.jsonify_original_resources(
-        #         base_resource_id, merge_resource_id, merge_tracker_resource_id
-        #     )
+        if merge_tracker_resource_id:
+            self.jsonify_original_resources(
+                base_resource_id, merge_resource_id, merge_tracker_resource_id
+            )
 
         # Grab all the tiles for both resources
 
