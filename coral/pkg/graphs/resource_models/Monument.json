@@ -373,7 +373,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -670,7 +670,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Approvals"
                     },
@@ -2299,7 +2299,7 @@
                         "en": "Approved Date"
                     },
                     "node_id": "6694d802-37c0-11ef-a167-0242ac150006",
-                    "sortorder": 2,
+                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -2321,7 +2321,7 @@
                         "en": "Approved Date Qualifier"
                     },
                     "node_id": "6694dafa-37c0-11ef-a167-0242ac150006",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2450,7 +2450,7 @@
                         "en": "Local Authority Notification Date Qualifier"
                     },
                     "node_id": "98c43022-37be-11ef-a167-0242ac150006",
-                    "sortorder": 13,
+                    "sortorder": 14,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2591,7 +2591,7 @@
                         "en": "Approved Date Qualifier Metatype"
                     },
                     "node_id": "6694ddb6-37c0-11ef-a167-0242ac150006",
-                    "sortorder": 5,
+                    "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -3390,7 +3390,7 @@
                         "en": "Approved By"
                     },
                     "node_id": "bce3b97a-3852-11ef-9263-0242ac150006",
-                    "sortorder": 1,
+                    "sortorder": 2,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -3655,7 +3655,7 @@
                         "en": "Director Sign Off Date Qualifier"
                     },
                     "node_id": "5253a6dc-37bd-11ef-a167-0242ac150006",
-                    "sortorder": 14,
+                    "sortorder": 15,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -3677,7 +3677,7 @@
                         "en": "Owner Notified Date Qualifier Metatype"
                     },
                     "node_id": "e28163ca-37bd-11ef-a167-0242ac150006",
-                    "sortorder": 18,
+                    "sortorder": 19,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -4101,7 +4101,7 @@
                         "en": "Statutory Consultee Notification Date"
                     },
                     "node_id": "85396d94-37bc-11ef-9263-0242ac150006",
-                    "sortorder": 10,
+                    "sortorder": 11,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -4143,7 +4143,7 @@
                         "en": "Local Authority Notification Date"
                     },
                     "node_id": "98c42ca8-37be-11ef-a167-0242ac150006",
-                    "sortorder": 11,
+                    "sortorder": 12,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -4315,7 +4315,7 @@
                         "en": "Assessment Done By Role Type"
                     },
                     "node_id": "dfcfbc40-37b7-11ef-9263-0242ac150006",
-                    "sortorder": 22,
+                    "sortorder": 23,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -5835,7 +5835,7 @@
                         "en": "Assessment Done By Role Metatype"
                     },
                     "node_id": "0562ae68-37b8-11ef-9263-0242ac150006",
-                    "sortorder": 23,
+                    "sortorder": 24,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -5857,7 +5857,7 @@
                         "en": "Local Authority Notification Date Qualifier Metatype"
                     },
                     "node_id": "98c432de-37be-11ef-a167-0242ac150006",
-                    "sortorder": 12,
+                    "sortorder": 13,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -7294,6 +7294,35 @@
                     },
                     "node_id": "30d5defa-d64a-11ee-8b04-0242ac180006",
                     "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Approval Resource ID",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Populated from Revision Resource"
+                        },
+                        "uneditable": true,
+                        "width": "100%"
+                    },
+                    "id": "8225f380-c2e7-41ca-83bb-88c7a109e779",
+                    "label": {
+                        "en": "Approval Resource ID"
+                    },
+                    "node_id": "1f421fb2-3925-11ef-9e8a-0242ac150006",
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -10891,7 +10920,7 @@
                         "en": "Statutory Consultee Notification Date Qualifier Metatype"
                     },
                     "node_id": "85397474-37bc-11ef-9263-0242ac150006",
-                    "sortorder": 21,
+                    "sortorder": 22,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -11519,7 +11548,7 @@
                         "en": "Statutory Consultee Notification Date Qualifier"
                     },
                     "node_id": "85397082-37bc-11ef-9263-0242ac150006",
-                    "sortorder": 20,
+                    "sortorder": 21,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -12861,7 +12890,7 @@
                         "en": "Owner Notified Date"
                     },
                     "node_id": "e2815e0c-37bd-11ef-a167-0242ac150006",
-                    "sortorder": 19,
+                    "sortorder": 20,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -13352,7 +13381,7 @@
                         "en": "Assessment Done By"
                     },
                     "node_id": "25c78714-37b8-11ef-9263-0242ac150006",
-                    "sortorder": 6,
+                    "sortorder": 7,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -13599,7 +13628,7 @@
                         "en": "Assessment Date Qualifier"
                     },
                     "node_id": "8273133c-37bf-11ef-a167-0242ac150006",
-                    "sortorder": 8,
+                    "sortorder": 9,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -13743,7 +13772,7 @@
                         "en": "Owner Notified Date Qualifier"
                     },
                     "node_id": "e2816104-37bd-11ef-a167-0242ac150006",
-                    "sortorder": 17,
+                    "sortorder": 18,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -13872,7 +13901,7 @@
                         "en": "Approver Role Metatype"
                     },
                     "node_id": "bcdddefa-3853-11ef-a167-0242ac150006",
-                    "sortorder": 4,
+                    "sortorder": 5,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -13894,7 +13923,7 @@
                         "en": "Director Sign Off Date Qualifier Metatype"
                     },
                     "node_id": "5253a9ac-37bd-11ef-a167-0242ac150006",
-                    "sortorder": 15,
+                    "sortorder": 16,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -14002,7 +14031,7 @@
                         "en": "Assessment Date Qualifier Metatype"
                     },
                     "node_id": "82731756-37bf-11ef-a167-0242ac150006",
-                    "sortorder": 9,
+                    "sortorder": 10,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -14173,7 +14202,7 @@
                         "en": "Approver Role Type"
                     },
                     "node_id": "8f4d35ee-3853-11ef-9263-0242ac150006",
-                    "sortorder": 7,
+                    "sortorder": 8,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -14214,7 +14243,7 @@
                         "en": "Assessment Date"
                     },
                     "node_id": "82731030-37bf-11ef-a167-0242ac150006",
-                    "sortorder": 3,
+                    "sortorder": 4,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -14278,7 +14307,7 @@
                         "en": "Director Sign Off Date"
                     },
                     "node_id": "5253a3a8-37bd-11ef-a167-0242ac150006",
-                    "sortorder": 16,
+                    "sortorder": 17,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -14597,15 +14626,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
                     "rangenode_id": "e28159ac-37bd-11ef-a167-0242ac150006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "7e0533aa-37b7-11ef-9263-0242ac150006",
-                    "edgeid": "1e72d448-859b-4f22-b6c0-0d290057220e",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "c9a45d40-3915-11ef-8239-0242ac150006"
                 },
                 {
                     "description": null,
@@ -15281,6 +15301,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "940d8a34-d7d7-11ee-9916-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "7e0533aa-37b7-11ef-9263-0242ac150006",
+                    "edgeid": "48ddd053-56bc-4b26-a593-940cff04302a",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "1f421fb2-3925-11ef-9e8a-0242ac150006"
                 },
                 {
                     "description": null,
@@ -20458,7 +20487,7 @@
             ],
             "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
             "iconclass": "fa fa-bank",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -21671,6 +21700,29 @@
                     "nodeid": "1e2e1872-1f5a-11ef-b84e-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "approval_resource_id",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Approval Resource ID",
+                    "nodegroup_id": "7e0533aa-37b7-11ef-9263-0242ac150006",
+                    "nodeid": "1f421fb2-3925-11ef-9e8a-0242ac150006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -35433,29 +35485,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "resourceid_n1",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "non-localized-string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "ResourceID",
-                    "nodegroup_id": "7e0533aa-37b7-11ef-9263-0242ac150006",
-                    "nodeid": "c9a45d40-3915-11ef-8239-0242ac150006",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "issued_date",
                     "config": {
                         "en": ""
@@ -36981,8 +37010,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "35eee1d2-3916-11ef-81b2-0242ac150006",
-                "published_time": "2024-07-03T08:28:22.868"
+                "publicationid": "c13d28c0-392a-11ef-80ed-0242ac150006",
+                "published_time": "2024-07-03T10:55:26.519"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],

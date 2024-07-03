@@ -328,7 +328,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Data"
                     },
@@ -787,7 +787,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Parent Heritage Asset"
                     },
@@ -1506,7 +1506,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Approvals"
                     },
@@ -1560,7 +1560,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -3483,6 +3483,35 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "bd9292aa-4b19-4d57-ba07-8bb144bd507e",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Approval Resource ID",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Populated from Revision Resource"
+                        },
+                        "uneditable": true,
+                        "width": "100%"
+                    },
+                    "id": "1c629dee-2f75-4f61-b574-f31781742522",
+                    "label": {
+                        "en": "Approval Resource ID"
+                    },
+                    "node_id": "99605e36-3924-11ef-82af-0242ac150006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "a08d5461-6718-4bb5-b705-b4f29c4cfec5",
@@ -16028,6 +16057,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "edgeid": "45e974c3-f7ac-4253-a248-c085fc5fdfce",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "99605e36-3924-11ef-82af-0242ac150006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "506acb1a-6545-4fa1-86fa-87652985a3a1",
                     "edgeid": "46810df4-1b0d-4057-8efa-bce1ebc8943c",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -16961,15 +16999,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
                     "rangenode_id": "8e148895-c5a8-43d1-ae50-5feef45f476c"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
-                    "edgeid": "6b7ebbc8-df09-42f7-a49d-41f03cdd0e05",
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "c1f1977a-3915-11ef-8239-0242ac150006"
                 },
                 {
                     "description": null,
@@ -20357,7 +20386,7 @@
             ],
             "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
             "iconclass": "fa fa-copy",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -30606,6 +30635,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "approval_resource_id",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Approval Resource ID",
+                    "nodegroup_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "nodeid": "99605e36-3924-11ef-82af-0242ac150006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "capture_scale_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -33210,29 +33262,6 @@
                     "nodeid": "c176b322-84ac-4e2f-b014-c86462167d44",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "resourceid_n1",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "non-localized-string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "ResourceID",
-                    "nodegroup_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
-                    "nodeid": "c1f1977a-3915-11ef-8239-0242ac150006",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -36757,8 +36786,8 @@
             "publication": {
                 "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                 "notes": null,
-                "publicationid": "3e4bff54-3916-11ef-81b2-0242ac150006",
-                "published_time": "2024-07-03T08:28:36.900"
+                "publicationid": "c491dfd4-392a-11ef-abc3-0242ac150006",
+                "published_time": "2024-07-03T10:55:32.107"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
