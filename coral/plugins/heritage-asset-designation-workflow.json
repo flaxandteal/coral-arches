@@ -152,11 +152,7 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "1df8346e-3567-11ef-9263-0242ac150006",
-                    "444ed7db-bd99-42ba-a2f5-236399c92ec2"
-                  ],
-                  "nodegroupid": "1df7fb20-3567-11ef-9263-0242ac150006",
+                  "nodegroupid": "67712762-378e-11ef-9263-0242ac150006",
                   "semanticName": "Designation Descriptions"
                 },
                 "tilesManaged": "many",
@@ -238,7 +234,7 @@
                   "semanticName": "Approvals"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "start-remap-and-merge",
                 "uniqueInstanceName": "78965eb2-7064-47aa-a65b-cecc9f05884f"
               }
             ]
