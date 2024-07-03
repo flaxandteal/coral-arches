@@ -86,7 +86,7 @@ define([
           console.log(response, status, error);
         }
       });
-      this.selectedResource(response.revisionResourceId);
+      this.selectedResource(response.destinationResourceId);
     };
 
     this.openWorkflow = async () => {
