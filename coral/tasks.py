@@ -7,6 +7,7 @@ from coral.utils.remap_resources import RemapResources
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
+from django.db import transaction
 
 logging.basicConfig()
 
@@ -41,39 +42,51 @@ def merge_resources_task(
 
 @shared_task
 def remap_and_merge_revision_task(user_id, target_resource_id):
-    MONUMENT_GRAPH_ID = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
-    MONUMENT_REVISION_GRAPH_ID = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
-    PARENT_MONUMENT_NODEGROUP = "6375be6e-dc64-11ee-924e-0242ac120006"
-    PARENT_MONUMENT_NODE = PARENT_MONUMENT_NODEGROUP
-    user = models.User.objects.get(pk=user_id)
+    with transaction.atomic():
+        MONUMENT_GRAPH_ID = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
+        MONUMENT_REVISION_GRAPH_ID = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
+        PARENT_MONUMENT_NODEGROUP = "6375be6e-dc64-11ee-924e-0242ac120006"
+        PARENT_MONUMENT_NODE = PARENT_MONUMENT_NODEGROUP
+        user = models.User.objects.get(pk=user_id)
 
-    rr = RemapResources(
-        target_graph_id=MONUMENT_REVISION_GRAPH_ID,
-        destination_graph_id=MONUMENT_GRAPH_ID,
-        excluded_aliases=["monument", "monument_revision", "parent_monument"],
-        target_resource_id=target_resource_id,
-    )
-    result = rr.remap_resources(user)
-
-    if result["remapped"]:
-        parent_monumnet_tile = Tile.objects.filter(
-            resourceinstance_id=target_resource_id,
-            nodegroup_id=PARENT_MONUMENT_NODEGROUP,
-        ).first()
-        monument_node = parent_monumnet_tile.data[PARENT_MONUMENT_NODE]
-        monument_resource_id = monument_node[0].get("resourceId")
-
-        merge_tracker_resource_id = setup_merge_resource_tracker(user)
-
-        mr = MergeResources()
-        mr.merge_resources(
-            base_resource_id=monument_resource_id,
-            merge_resource_id=result["destinationResourceId"],
-            merge_tracker_resource_id=merge_tracker_resource_id,
-            overwrite_multiple_tiles=True,
+        rr = RemapResources(
+            target_graph_id=MONUMENT_REVISION_GRAPH_ID,
+            destination_graph_id=MONUMENT_GRAPH_ID,
+            excluded_aliases=["monument", "monument_revision", "parent_monument"],
+            target_resource_id=target_resource_id,
         )
-        mr.merge_resource.delete(user=user)
+        result = rr.remap_resources(user)
 
+        if result["remapped"]:
+            parent_monumnet_tile = Tile.objects.filter(
+                resourceinstance_id=target_resource_id,
+                nodegroup_id=PARENT_MONUMENT_NODEGROUP,
+            ).first()
+            monument_node = parent_monumnet_tile.data[PARENT_MONUMENT_NODE]
+            monument_resource_id = monument_node[0].get("resourceId")
+
+            merge_tracker_resource_id = setup_merge_resource_tracker(user)
+
+            mr = MergeResources()
+            mr.merge_resources(
+                base_resource_id=monument_resource_id,
+                merge_resource_id=result["destinationResourceId"],
+                merge_tracker_resource_id=merge_tracker_resource_id,
+                overwrite_multiple_tiles=True,
+            )
+            mr.merge_resource.delete(user=user)
+
+            target_resource = get_resource(target_resource_id)
+            target_resource.delete(user=user)
+
+
+def get_resource(resource_id):
+    resource = None
+    try:
+        resource = Resource.objects.filter(pk=resource_id).first()
+    except Resource.DoesNotExist:
+        raise f"Resource ID ({resource_id}) does not exist"
+    return resource
 
 def setup_merge_resource_tracker(user):
     def get_graph(graph_id):
