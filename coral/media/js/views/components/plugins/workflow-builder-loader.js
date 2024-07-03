@@ -16,6 +16,7 @@ define([
   'views/components/workflows/excavation-site-visit-workflow/get-selected-license-details',
   'views/components/workflows/fmw-workflow/calculate-composite-score',
   'views/components/workflows/heritage-asset-designation-workflow/ha-summary',
+  'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
