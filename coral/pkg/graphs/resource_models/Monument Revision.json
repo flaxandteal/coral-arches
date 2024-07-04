@@ -2637,7 +2637,7 @@
                         "en": "County Type"
                     },
                     "node_id": "2e278df3-1de8-4c47-a217-c64fb5920968",
-                    "sortorder": 28,
+                    "sortorder": 25,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -3074,7 +3074,7 @@
                         "en": "Building Number Type"
                     },
                     "node_id": "610b588d-f7b8-45a7-874a-8690fc53a32c",
-                    "sortorder": 10,
+                    "sortorder": 13,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -3096,7 +3096,7 @@
                         "en": "County Metatype"
                     },
                     "node_id": "2848ab94-bb76-4bf5-ab10-ac5c4d88c341",
-                    "sortorder": 29,
+                    "sortorder": 26,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -3233,7 +3233,7 @@
                         "en": "County "
                     },
                     "node_id": "5c865d99-b9c2-43c8-813e-e77948afa21d",
-                    "sortorder": 27,
+                    "sortorder": 24,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -4347,7 +4347,7 @@
                         "en": "Sub-Street Metatype"
                     },
                     "node_id": "e381387f-f7e6-41cf-8ac8-36026336a7ea",
-                    "sortorder": 17,
+                    "sortorder": 11,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -5199,7 +5199,7 @@
                         "en": "Postcode"
                     },
                     "node_id": "4d8870fd-66d9-450a-9fc5-2d7362ae87dd",
-                    "sortorder": 24,
+                    "sortorder": 27,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -6676,7 +6676,7 @@
                         "en": "Postcode Type"
                     },
                     "node_id": "86a23710-bd6c-48c3-9ea0-573aa7073b37",
-                    "sortorder": 25,
+                    "sortorder": 28,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -6891,7 +6891,7 @@
                         "en": "Sub-Street Type"
                     },
                     "node_id": "d08c986b-eb30-496f-bb2c-745b291013f1",
-                    "sortorder": 16,
+                    "sortorder": 10,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -7313,7 +7313,7 @@
                         "en": "Street"
                     },
                     "node_id": "e0ae0d03-a7fa-440d-943a-b4d1504ae6b5",
-                    "sortorder": 12,
+                    "sortorder": 15,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -7511,7 +7511,7 @@
                         "en": "Building Number"
                     },
                     "node_id": "d16a913e-63fd-4361-ae9b-25965c731f82",
-                    "sortorder": 9,
+                    "sortorder": 12,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -9842,7 +9842,7 @@
                         "en": "Street Type"
                     },
                     "node_id": "a90823a1-4d41-4f09-a5e7-da01035631e8",
-                    "sortorder": 13,
+                    "sortorder": 16,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -9908,7 +9908,7 @@
                         "en": "Postcode Metatype"
                     },
                     "node_id": "aaa2b225-a3ee-4cd0-b512-4392f3908959",
-                    "sortorder": 26,
+                    "sortorder": 29,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10243,7 +10243,7 @@
                         "en": "Building Number Metatype"
                     },
                     "node_id": "0c99fa5f-711a-4e4a-958f-9fd589d60e0c",
-                    "sortorder": 11,
+                    "sortorder": 14,,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -11509,7 +11509,7 @@
                         "en": "Sub-Street"
                     },
                     "node_id": "2fa946b5-5127-4bd2-b571-33515ef17788",
-                    "sortorder": 15,
+                    "sortorder": 9,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -13521,7 +13521,7 @@
                         "en": "Street Metatype"
                     },
                     "node_id": "22b4dcc3-488c-4d8b-8b84-ace346d452c3",
-                    "sortorder": 14,
+                    "sortorder": 17,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -20690,7 +20690,7 @@
             },
             "nodegroups": [
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "67712762-378e-11ef-9263-0242ac150006",
                     "parentnodegroup_id": null
