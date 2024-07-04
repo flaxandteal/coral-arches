@@ -2142,6 +2142,35 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "bd9292aa-4b19-4d57-ba07-8bb144bd507e",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Approval Resource ID",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Populated from Revision Resource"
+                        },
+                        "uneditable": true,
+                        "width": "100%"
+                    },
+                    "id": "1c629dee-2f75-4f61-b574-f31781742522",
+                    "label": {
+                        "en": "Approval Resource ID"
+                    },
+                    "node_id": "99605e36-3924-11ef-82af-0242ac150006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
                     "card_id": "67712ce4-378e-11ef-9263-0242ac150006",
                     "config": {
                         "defaultValue": "",
@@ -14583,6 +14612,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "edgeid": "45e974c3-f7ac-4253-a248-c085fc5fdfce",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "99605e36-3924-11ef-82af-0242ac150006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "ce10b8c5-5bf9-4757-ad6c-0ee006e0887f",
                     "edgeid": "0045e429-d6e0-4be5-a046-47d0e0ee2e41",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -21180,6 +21218,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "approval_resource_id",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Approval Resource ID",
+                    "nodegroup_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "nodeid": "99605e36-3924-11ef-82af-0242ac150006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "referred_to",
                     "config": {
