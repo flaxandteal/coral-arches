@@ -3,8 +3,9 @@ define([
   'knockout',
   'knockout-mapping',
   'arches',
+  'viewmodels/alert',
   'templates/views/components/plugins/open-workflow.htm'
-], function ($, ko, koMapping, arches, pageTemplate) {
+], function ($, ko, koMapping, arches, AlertViewModel, pageTemplate) {
   const openWorkflowViewModel = function (params) {
     this.loading = params.loading;
 
@@ -86,7 +87,7 @@ define([
           console.log(response, status, error);
         }
       });
-      this.selectedResource(response.destinationResourceId);
+      this.selectedResource(null);
     };
 
     this.openWorkflow = async () => {
@@ -95,6 +96,22 @@ define([
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
       await this.updateRecentlyOpened(this.selectedResource());
       await this.setupWorkflow();
+      if (!this.selectedResource()) {
+        this.loading(false);
+        params.alert(
+          new AlertViewModel(
+            'ep-alert-blue',
+            `Build Process Started`,
+            `The Monument Revision is currently building. This process takes a few minutes. 
+            \n You will receive a notification when the process is complete.`,
+            null,
+            () => { 
+              window.window.location = arches.urls.plugin('init-workflow'); 
+            }
+          )
+        );
+        return;
+      }
       this.workflowUrl(
         arches.urls.plugin(this.workflowSlug()) + `?resource-id=${this.selectedResource()}`
       );

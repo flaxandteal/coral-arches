@@ -39,6 +39,42 @@ def merge_resources_task(
     )
     mr.merge_resource.delete(user=user)
 
+@shared_task
+def remap_monument_to_revision(user_id, target_resource_id):
+    with transaction.atomic():
+        MONUMENT_GRAPH_ID = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
+        MONUMENT_REVISION_GRAPH_ID = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
+        REVISION_PARENT_MONUMENT_NODEGROUP_ID = "6375be6e-dc64-11ee-924e-0242ac120006"
+        user = models.User.objects.get(pk=user_id)
+
+        rr = RemapResources(
+            target_graph_id=MONUMENT_GRAPH_ID,
+            destination_graph_id=MONUMENT_REVISION_GRAPH_ID,
+            excluded_aliases=["monument", "monument_revision"],
+            target_resource_id=target_resource_id,
+        )
+        result = rr.remap_resources(user)
+
+        if result['remapped']:
+            parent_target_nodegroup = models.NodeGroup.objects.filter(pk=REVISION_PARENT_MONUMENT_NODEGROUP_ID).first()
+            destination_resource = Resource.objects.filter(pk=result['destinationResourceId']).first()
+            parent_target_tile = Tile(
+                resourceinstance=destination_resource,
+                data={
+                    REVISION_PARENT_MONUMENT_NODEGROUP_ID: [
+                        {
+                            "resourceId": target_resource_id,
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": "",
+                        }
+                    ]
+                },
+                nodegroup=parent_target_nodegroup,
+            )
+            parent_target_tile.save()
+            return result
+        
+
 
 @shared_task
 def remap_and_merge_revision_task(user_id, target_resource_id):

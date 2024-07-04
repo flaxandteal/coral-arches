@@ -6,51 +6,21 @@ from coral.utils.remap_resources import RemapResources
 from arches.app.models import models
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
-from coral.tasks import remap_and_merge_revision_task
+from coral.tasks import remap_and_merge_revision_task, remap_monument_to_revision
 
 logger = logging.getLogger(__name__)
 
 
 class RemapMonumentToRevision(View):
     def post(self, request):
-        MONUMENT_GRAPH_ID = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
-        MONUMENT_REVISION_GRAPH_ID = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
-
         data = json.loads(request.body.decode("utf-8"))
         target_resource_id = data.get("targetResourceId")
 
-        rr = RemapResources(
-            target_graph_id=MONUMENT_GRAPH_ID,
-            destination_graph_id=MONUMENT_REVISION_GRAPH_ID,
-            excluded_aliases = [
-                "monument",
-                "monument_revision"
-            ],
-            target_resource_id=target_resource_id
-        )
+        remap_monument_to_revision.delay(request.user.id, target_resource_id)
 
-        result = rr.remap_resources(request.user)
-
-        if result['remapped']:
-            REVISION_PARENT_MONUMENT_NODEGROUP_ID = "6375be6e-dc64-11ee-924e-0242ac120006"
-            parent_target_nodegroup = models.NodeGroup.objects.filter(pk=REVISION_PARENT_MONUMENT_NODEGROUP_ID).first()
-            destination_resource = Resource.objects.filter(pk=result['destinationResourceId']).first()
-            parent_target_tile = Tile(
-                resourceinstance=destination_resource,
-                data={
-                    REVISION_PARENT_MONUMENT_NODEGROUP_ID: [
-                        {
-                            "resourceId": target_resource_id,
-                            "ontologyProperty": "",
-                            "inverseOntologyProperty": "",
-                        }
-                    ]
-                },
-                nodegroup=parent_target_nodegroup,
-            )
-            parent_target_tile.save()
-
-        return JSONResponse(result)
+        return JSONResponse({
+            "message":"Remap to revision has started this can take a few minutes to complete"
+        })
 
 
 class RemapRevisionToMonument(View):
