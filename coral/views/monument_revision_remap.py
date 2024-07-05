@@ -17,7 +17,7 @@ class RemapMonumentToRevision(View):
         data = json.loads(request.body.decode("utf-8"))
         target_resource_id = data.get("targetResourceId")
         resource = Resource.objects.filter(pk=target_resource_id).first()
-        if (MONUMENT_REVISION_GRAPH_ID == resource.graph.graphid):
+        if (MONUMENT_REVISION_GRAPH_ID == str(resource.graph.graphid)):
             return JSONResponse({
                 "message": "This resource is already a revision",
                 "started" : False
