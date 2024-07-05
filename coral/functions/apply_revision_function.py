@@ -10,6 +10,7 @@ from arches.app.models.tile import Tile
 from copy import deepcopy
 from coral.tasks import merge_resources_task
 from django.db import transaction
+from coral.utils.merge_resources import MergeResources
 
 
 REVISION_COMPLETE_NODEGROUP = "3c51740c-dbd0-11ee-8835-0242ac120006"
@@ -45,23 +46,23 @@ class ApplyRevisionFunction(BaseFunction):
         "monument",
         "monument_revision",
         "parent_monument",
-        "complete_revision",
-        "approved_date",
-        "approved_date_qualifier",
-        "approved_date_qualifier_metatype",
-        "approved_on",
-        "completion_date",
-        "completion_date_qualifier",
-        "completion_date_qualifier_metatype",
-        "completed_on",
-        "completer",
-        "completer_role_type",
-        "completer_role_metatype",
-        "completed_by",
-        "approver_n1",
-        "approver_role_type_n1",
-        "approver_role_metatype",
-        "approved_by_n1",
+        # "complete_revision",
+        # "approved_date",
+        # "approved_date_qualifier",
+        # "approved_date_qualifier_metatype",
+        # "approved_on",
+        # "completion_date",
+        # "completion_date_qualifier",
+        # "completion_date_qualifier_metatype",
+        # "completed_on",
+        # "completer",
+        # "completer_role_type",
+        # "completer_role_metatype",
+        # "completed_by",
+        # "approver_n1",
+        # "approver_role_type_n1",
+        # "approver_role_metatype",
+        # "approved_by_n1",
     ]
     parent_nodegroup_ids = []
     created_parent_tiles = {}
@@ -192,6 +193,7 @@ class ApplyRevisionFunction(BaseFunction):
         return id_format
 
     def post_save(self, tile, request, context):
+        return
         with transaction.atomic():
             self.revision_resource = tile.resourceinstance
             data = tile.data
@@ -208,34 +210,55 @@ class ApplyRevisionFunction(BaseFunction):
                 or not data[COMPLETED_ON_NODE]
             ):
                 return
+            
+            print('self.revision_resource: ', str(self.revision_resource))
 
             parent_monumnet_tile = Tile.objects.filter(
                 resourceinstance_id=self.revision_resource,
                 nodegroup_id=PARENT_MONUMENT_NODEGROUP,
             ).first()
 
+            print('parent_monumnet_tile: ', parent_monumnet_tile)
+
             monument_node = parent_monumnet_tile.data[PARENT_MONUMENT_NODE]
             monument_resource_id = monument_node[0].get("resourceId")
 
+            print('log 1')
+
             self.monument_resource = self.get_resource(monument_resource_id)
+
+            print('log 2')
+
 
             # Get graph data and node configurations
 
             monument_graph = self.get_graph(self.MONUMENT_GRAPH_ID)
             revision_graph = self.get_graph(self.MONUMENT_REVISION_GRAPH_ID)
 
+            print('log 3')
+
+
             self.get_node_configuration("monument", monument_graph)
             self.get_node_configuration("revision", revision_graph)
+
+            print('log 4')
+
 
             # Map aliases with node ids
 
             self.node_mapping = self.id_alias_map_with_node_id()
+
+            print('log 5')
+
 
             # Get tiles for both resources
 
             revision_tiles = Tile.objects.filter(
                 resourceinstance=self.revision_resource
             )
+
+            print('log 6')
+
 
             self.new_monument_resource = Resource.objects.create(
                 graph=monument_graph, principaluser=request.user
@@ -244,10 +267,15 @@ class ApplyRevisionFunction(BaseFunction):
                 self.new_monument_resource.resourceinstanceid
             )
 
+            print('log 7')
+
+
             for tile in revision_tiles:
                 tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
                 if tile_nodegroup_id in self.parent_nodegroup_ids:
                     continue
+                
+                print('log 8')
 
                 node_map = self.node_mapping.get(tile_nodegroup_id, None)
                 if node_map:
@@ -256,6 +284,8 @@ class ApplyRevisionFunction(BaseFunction):
                     ]["node"].nodegroup
                 else:
                     continue
+                
+                print('log 9')
 
                 data = deepcopy(tile.data)
 
@@ -285,6 +315,9 @@ class ApplyRevisionFunction(BaseFunction):
                 except Exception as e:
                     print("Failed while remapping the monument tile data: ", e)
                     continue
+
+            print('log 10')
+        
 
             TRACKER_GRAPH_ID = "d9318eb6-f28d-427c-b061-6fe3021ce8aa"
             TRACKER_ASSOCIATED_RESOURCES_NODEGROUP = (
@@ -323,6 +356,7 @@ class ApplyRevisionFunction(BaseFunction):
                 nodegroup=merge_tracker_associated_resources_nodegroup,
             )
             associated_resources_tile.save()
+            print('log 11')
 
             # FIXME: Need to configure a system reference number for the tracker resource
 
@@ -349,6 +383,10 @@ class ApplyRevisionFunction(BaseFunction):
             merge_tracker_sys_ref.sortorder = 0
             merge_tracker_sys_ref.save()
 
+
+            print('log 12')
+
+
             TRACKER_DESCRIPTION_NODEGROUP = "5dff7478-ccdf-11ee-af2a-0242ac180006"
             TRACKER_DESCRIPTION_NODE = "5dff7e8c-ccdf-11ee-af2a-0242ac180006"
             TRACKER_DESCRIPTION_TYPE_NODE = "5dff80e4-ccdf-11ee-af2a-0242ac180006"
@@ -374,6 +412,10 @@ class ApplyRevisionFunction(BaseFunction):
             )
             merge_tracker_sys_ref.save()
 
-            merge_resources_task.delay(monument_resource_id, new_monument_resource_id, None)
+            print('log 13')
+
+            MergeResources().merge_resources(
+                monument_resource_id, new_monument_resource_id, None
+            )
 
             self.new_monument_resource.delete(user=request.user)
