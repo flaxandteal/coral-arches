@@ -75,6 +75,7 @@ define([
 
     this.setupMonumentRevision = async () => {
       const monumentResourceId = this.selectedResource();
+      console.log("graph", this.graphIds())
       const response = await $.ajax({
         type: 'POST',
         url: '/remap-monument-to-revision',
@@ -87,7 +88,9 @@ define([
           console.log(response, status, error);
         }
       });
-      this.selectedResource(null);
+      if (response.started) {
+        this.selectedResource(null);
+      } 
     };
 
     this.openWorkflow = async () => {

@@ -13,13 +13,21 @@ logger = logging.getLogger(__name__)
 
 class RemapMonumentToRevision(View):
     def post(self, request):
+        MONUMENT_REVISION_GRAPH_ID = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
         data = json.loads(request.body.decode("utf-8"))
         target_resource_id = data.get("targetResourceId")
+        resource = Resource.objects.filter(pk=target_resource_id).first()
+        if (MONUMENT_REVISION_GRAPH_ID == resource.graph.graphid):
+            return JSONResponse({
+                "message": "This resource is already a revision",
+                "started" : False
+            })
 
         remap_monument_to_revision.delay(request.user.id, target_resource_id)
 
         return JSONResponse({
-            "message":"Remap to revision has started this can take a few minutes to complete"
+            "message":"Remap to revision has started this can take a few minutes to complete",
+            "started": True
         })
 
 
