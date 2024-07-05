@@ -32,6 +32,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "0ba33641-3c04-4b34-a76f-a89722077790",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Heritage Asset References"
+                    },
+                    "nodegroup_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "0c43dd9e-dbc7-11ee-8835-0242ac120006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -49,7 +76,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Condition Description"
                     },
@@ -103,7 +130,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Incident Contacts"
                     },
@@ -130,7 +157,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Date of Visit"
                     },
@@ -157,7 +184,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Excavation License Reference"
                     },
@@ -184,7 +211,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Spatial Record Compilation"
                     },
@@ -211,7 +238,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Incident Report"
                     },
@@ -238,7 +265,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Threats Description"
                     },
@@ -265,7 +292,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Historical Period"
                     },
@@ -292,7 +319,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Spatial Record Authorization"
                     },
@@ -319,7 +346,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Meeting"
                     },
@@ -427,7 +454,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Proposal"
                     },
@@ -454,7 +481,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Spatial Record Update"
                     },
@@ -508,7 +535,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "CM References"
                     },
@@ -535,7 +562,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Spatial Accuracy Qualifier"
                     },
@@ -562,7 +589,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Damage Type"
                     },
@@ -589,7 +616,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Council"
                     },
@@ -643,7 +670,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Correspondence"
                     },
@@ -670,7 +697,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Current Base Map"
                     },
@@ -724,7 +751,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Approvals"
                     },
@@ -751,7 +778,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Components"
                     },
@@ -778,7 +805,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Coordinate System"
                     },
@@ -832,7 +859,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Spatial Metadata Descriptions"
                     },
@@ -886,7 +913,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Incident Reference"
                     },
@@ -942,7 +969,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Scientific Date Assignment"
                     },
@@ -1025,7 +1052,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Heritage Asset Names"
                     },
@@ -1052,7 +1079,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Capture Scale"
                     },
@@ -1088,7 +1115,7 @@
                     "instructions": {
                         "en": "Use to record any designation or protection regimes directly associated with the application area."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Designation and Protection Assignment"
                     },
@@ -1115,7 +1142,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Component Damage Type"
                     },
@@ -1142,7 +1169,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Construction Phases"
                     },
@@ -1169,7 +1196,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Scheduling Reason Description"
                     },
@@ -1223,7 +1250,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Monument Type"
                     },
@@ -1252,7 +1279,7 @@
                     "instructions": {
                         "en": "Administrative, geopolitical areas, localities, and other areas (e.g.: Research or zoning areas)  "
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Localities/Administrative Areas"
                     },
@@ -1281,7 +1308,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Land Use Classification Assignment"
                     },
@@ -1317,7 +1344,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Geometry"
                     },
@@ -1371,7 +1398,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Area Assignments"
                     },
@@ -1398,7 +1425,7 @@
                     "instructions": {
                         "en": "Used to record the postal address of a resource."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Addresses"
                     },
@@ -1425,7 +1452,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location Descriptions"
                     },
@@ -1454,7 +1481,7 @@
                     "instructions": {
                         "en": "National Grid references, map names, and other common location identifiers for the resource"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "National Grid References"
                     },
@@ -1508,7 +1535,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Condition Type"
                     },
@@ -1562,7 +1589,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Sign Off Date"
                     },
@@ -1616,7 +1643,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "B File Reference"
                     },
@@ -1643,7 +1670,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Garden Sign Off"
                     },
@@ -1670,7 +1697,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Bibliographic Source Citation"
                     },
@@ -1697,7 +1724,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Incident Proposal"
                     },
@@ -1726,7 +1753,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Contacts"
                     },
@@ -1753,7 +1780,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "HMC Reference"
                     },
@@ -1780,7 +1807,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Use Phase"
                     },
@@ -1807,7 +1834,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Descriptions"
                     },
@@ -1861,7 +1888,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Signed Off"
                     },
@@ -1888,7 +1915,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Material/Fabric Damage Type"
                     },
@@ -1915,7 +1942,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Category Type"
                     },
@@ -1942,7 +1969,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Incident Notes"
                     },
@@ -1969,7 +1996,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Altitude"
                     },
@@ -1996,7 +2023,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Work Finish Date"
                     },
@@ -2050,7 +2077,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Status Type"
                     },
@@ -2077,7 +2104,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Received Date"
                     },
@@ -2104,7 +2131,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -2229,6 +2256,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "bba34a38-37b4-11ef-9263-0242ac150006",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Recommended Designation Type",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "05b8416c-d103-4503-a656-31e6c6c1dea2",
+                    "label": {
+                        "en": "Recommended Designation Type"
+                    },
+                    "node_id": "74ef37e0-37b5-11ef-9263-0242ac150006",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                },
+                {
                     "card_id": "7e303e62-7bd0-4d89-84c0-cb4782a228cc",
                     "config": {
                         "defaultValue": {
@@ -2256,27 +2304,6 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "bba34a38-37b4-11ef-9263-0242ac150006",
-                    "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Recommended Designation Type",
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "05b8416c-d103-4503-a656-31e6c6c1dea2",
-                    "label": {
-                        "en": "Recommended Designation Type"
-                    },
-                    "node_id": "74ef37e0-37b5-11ef-9263-0242ac150006",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "346001be-d23e-11ee-9ae7-0242ac180006",
@@ -2394,28 +2421,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "7e303e62-7bd0-4d89-84c0-cb4782a228cc",
-                    "config": {
-                        "defaultValue": "19afd557-cc21-44b4-b1df-f32568181b2c",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "LP Fusion ID Source",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "110f9c32-ea4f-4931-9f9e-87f61e83e22b",
-                    "label": {
-                        "en": "LP Fusion ID Source"
-                    },
-                    "node_id": "0ac944f2-386c-11ef-8b1f-0242ac120006",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
                     "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
                     "config": {
                         "dateFormat": "DD-MM-YYYY",
@@ -2455,6 +2460,28 @@
                     "node_id": "6694dafa-37c0-11ef-a167-0242ac150006",
                     "sortorder": 1,
                     "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "7e303e62-7bd0-4d89-84c0-cb4782a228cc",
+                    "config": {
+                        "defaultValue": "19afd557-cc21-44b4-b1df-f32568181b2c",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "LP Fusion ID Source",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "110f9c32-ea4f-4931-9f9e-87f61e83e22b",
+                    "label": {
+                        "en": "LP Fusion ID Source"
+                    },
+                    "node_id": "0ac944f2-386c-11ef-8b1f-0242ac120006",
+                    "sortorder": 1,
+                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -13087,6 +13114,26 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
+                        "label": "Owner Notified Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "b5ed165a-e248-48ab-a7d4-7861a7a876cd",
+                    "label": {
+                        "en": "Owner Notified Date"
+                    },
+                    "node_id": "e2815e0c-37bd-11ef-a167-0242ac150006",
+                    "sortorder": 20,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
                     "card_id": "30ca586e-fa92-4109-b778-e153d1d97214",
                     "config": {
                         "defaultValue": "19afd557-cc21-44b4-b1df-f32568181b2c",
@@ -13107,26 +13154,6 @@
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
-                    "config": {
-                        "dateFormat": "DD-MM-YYYY",
-                        "defaultValue": "",
-                        "label": "Owner Notified Date",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "b5ed165a-e248-48ab-a7d4-7861a7a876cd",
-                    "label": {
-                        "en": "Owner Notified Date"
-                    },
-                    "node_id": "e2815e0c-37bd-11ef-a167-0242ac150006",
-                    "sortorder": 20,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "ba345576-b554-11ea-9aa7-f875a44e0e11",
@@ -14827,6 +14854,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "edgeid": "17097294-a131-4e92-b7c8-7ca0fd86be52",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "rangenode_id": "158e1ed2-3aae-11ef-a2d0-0242ac120003"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "096de7b2-d240-11ee-9ae7-0242ac180006",
                     "edgeid": "17cb5fe3-2818-474e-a3de-2e175ee4a5da",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -14923,6 +14959,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P19_was_intended_use_of",
                     "rangenode_id": "a1f0e104-d648-11ee-9a11-0242ac180006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "edgeid": "25d832ab-1c6c-48fa-9886-aa9ca0e3452d",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "rangenode_id": "250002fe-3aae-11ef-91fd-0242ac120003"
                 },
                 {
                     "description": null,
@@ -16795,6 +16840,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "rangenode_id": "efc9b6ba-3865-11ef-8bde-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "edgeid": "6d779240-7444-4fb7-b4a1-a72ce11cfbce",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "rangenode_id": "1de9abf0-3aae-11ef-91fd-0242ac120003"
                 },
                 {
                     "description": null,
@@ -19336,6 +19390,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "9eb3a698-79cb-4a94-8101-129bce2d27ec",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "a0cb43ee-d62c-11ee-9454-0242ac180006",
                     "edgeid": "9fd395a4-7f09-4d57-b5ea-127ed64248aa",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -20746,6 +20809,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "3bd2a2ca-d631-11ee-a5a3-0242ac180006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "edgeid": "ff73f77c-a2a5-4e97-bb9c-03076c1ccf06",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "rangenode_id": "2c2d02fc-3aae-11ef-91fd-0242ac120003"
                 }
             ],
             "functions_x_graphs": [
@@ -21257,6 +21329,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "e0991c1b-51b4-11eb-b7ef-f875a44e0e11",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
                     "parentnodegroup_id": null
                 },
                 {
@@ -21892,6 +21970,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "smr_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "smr_num",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "SMR Number",
+                    "nodegroup_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "nodeid": "158e1ed2-3aae-11ef-a2d0-0242ac120003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "bu_fusion_id",
                     "config": {
                         "en": ""
@@ -21975,6 +22076,29 @@
                     "nodeid": "17cdafa6-d649-11ee-8b04-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "ihr_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "ihr_num",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "IHR Number",
+                    "nodegroup_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "nodeid": "1de9abf0-3aae-11ef-91fd-0242ac120003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -22291,6 +22415,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "hb_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "hb_num",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "HB Number",
+                    "nodegroup_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "nodeid": "250002fe-3aae-11ef-91fd-0242ac120003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "material_fabric_damage_type",
                     "config": {
                         "rdmCollection": "e5babb70-bcfa-48aa-81df-79b11ce9b1ae"
@@ -22524,6 +22671,29 @@
                     "nodeid": "2c151cea-d240-11ee-9373-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "historic_parks_and_gardens",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "gar_num",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Historic Parks and Gardens",
+                    "nodegroup_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "nodeid": "2c2d02fc-3aae-11ef-91fd-0242ac120003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -36903,6 +37073,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "heritage_asset_references",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Heritage Asset References",
+                    "nodegroup_id": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "nodeid": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E62_String",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "damage_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -37547,12 +37740,7 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": {
-                "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                "notes": null,
-                "publicationid": "c13d28c0-392a-11ef-80ed-0242ac150006",
-                "published_time": "2024-07-03T10:55:26.519"
-            },
+            "publication": null,
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
@@ -37585,8 +37773,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "4d3c9cc22 2024-06-25 15:54:29 +0100",
+        "git hash": "f8671a0bd 2024-06-18 14:23:46 +0100",
         "os": "Linux",
-        "os version": "5.10.0-23-amd64"
+        "os version": "6.8.0-36-generic"
     }
 }
