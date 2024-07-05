@@ -51,6 +51,7 @@ class FileTemplateView(View):
         self.resource = None
 
     def get(self, request):
+
         parenttile_id = request.GET.get("parenttile_id")
         parent_tile = Tile.objects.get(tileid=parenttile_id)
         letter_tiles = Tile.objects.filter(parenttile=parent_tile)
@@ -69,6 +70,7 @@ class FileTemplateView(View):
         return HttpResponseNotFound("No letters tile matching query by parent tile")
 
     def post(self, request):
+
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
         parenttile_id = request.POST.get("parenttile_id")
@@ -186,11 +188,14 @@ class FileTemplateView(View):
                 "filename": "smc-refusal-template.docx",
                 "provider": MonumentTemplateProvider
             },
-            "test-letter": {
-                "filename": "Test Letter.docx",
-                "provider": LicenseTemplateProvider,
-            }
-
+            "290579d4-3536-4e2d-96bf-86cce4b70452" : {
+                "filename": "licence-covering-letter.docx",
+                "provider": LicenceTemplateProvider
+            },
+            "09a0c36b-b889-4ec6-aa40-04009ca14ace": {
+                "filename": "test-letter.docx",
+                "provider": LicenceTemplateProvider,
+            },
         }
         for key, value in list(template_dict.items()):
             if key == template_id:
@@ -277,107 +282,115 @@ class FileTemplateView(View):
 
 # TODO: Come back and refactor provider in a ckass
 
-class LicenseTemplateProvider:
-    LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
-    LICENSE_NUMBER_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
+# class LicenseTemplateProvider:
+#     LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+#     LICENSE_NUMBER_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
 
-    LICENSE_SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
-    LICENSE_SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
+#     LICENSE_SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
+#     LICENSE_SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
 
-    LICENSE_DATES_NODEGROUP = '05f6b846-5d49-11ee-911e-0242ac130003'
-    LICENSE_DURATION_NODE = 'c688af34-d589-11ee-89d9-0242ac180006'
+#     LICENSE_DURATION_NODE = 'c688af34-d589-11ee-89d9-0242ac180006'
 
-    TOWNLAND_NODEGROUP = "a5416b46-f121-11eb-8f2d-a87eeabdefba"
+#     TOWNLAND_NODEGROUP = "a5416b46-f121-11eb-8f2d-a87eeabdefba"
 
-    ACTIVITY_SYSTEM_REF_NODEGROUP = "e7d695ff-9939-11ea-8fff-f875a44e0e11"
-    ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE = "e7d69603-9939-11ea-9e7f-f875a44e0e11"
+#     ACTIVITY_SYSTEM_REF_NODEGROUP = "e7d695ff-9939-11ea-8fff-f875a44e0e11"
+#     ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE = "e7d69603-9939-11ea-9e7f-f875a44e0e11"
 
-    ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP = 'a5416b46-f121-11eb-8f2d-a87eeabdefba'
-    ACTIVITY_AREA_NAME_NODE = 'a5416b53-f121-11eb-a507-a87eeabdefba'
+#     ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP = 'a5416b46-f121-11eb-8f2d-a87eeabdefba'
+#     ACTIVITY_AREA_NAME_NODE = 'a5416b53-f121-11eb-a507-a87eeabdefba'
 
-    ACTIVITY_ADDRESSES_NODEGROUP = 'a5416b3d-f121-11eb-85b4-a87eeabdefba'
-    ACTIVITY_COUNTY_NODE = 'a541e034-f121-11eb-8803-a87eeabdefba'
+#     ACTIVITY_ADDRESSES_NODEGROUP = 'a5416b3d-f121-11eb-85b4-a87eeabdefba'
+#     ACTIVITY_COUNTY_NODE = 'a541e034-f121-11eb-8803-a87eeabdefba'
 
-    ACTIVITY_NAME_NODEGROUP = '4a7bba1d-9938-11ea-86aa-f875a44e0e11'
-    ACTIVITY_NAME_NODE = '4a7be135-9938-11ea-b0e2-f875a44e0e11'
+#     ACTIVITY_NAME_NODEGROUP = '4a7bba1d-9938-11ea-86aa-f875a44e0e11'
+#     ACTIVITY_NAME_NODE = '4a7be135-9938-11ea-b0e2-f875a44e0e11'
 
-    def __init__(self, resource_instance):
-        self.resource_instance = resource_instance
-        self.datatype_factory = DataTypeFactory()
-        self.tiles = resource_instance.tiles
-        self.mapping = {
-            "Licensee": "",
-            "Townland": "",
-            "County": "",
-            "Site Name": "",
-            "Duration": "",
-            "Duration Dates": "",
-            "License Number": "",
-        }
-        self.activity_resource = None
-        self.activity_tiles = None
+#     def __init__(self, resource_instance):
+#         self.resource_instance = resource_instance
+#         self.datatype_factory = DataTypeFactory()
+#         self.tiles = resource_instance.tiles
+#         self.mapping = {
+#             "Licensee": "",
+#             "Townland": "",
+#             "County": "",
+#             "Site Name": "",
+#             "Duration": "",
+#             "Duration Dates": "",
+#             "License Number": "",
+#         }
+#         self.activity_resource = None
+#         self.activity_tiles = None
 
-    def get_value_from_tile(self, tile, node_id):
-        current_node = models.Node.objects.get(nodeid=node_id)
-        datatype = self.datatype_factory.get_instance(current_node.datatype)
-        returnvalue = datatype.get_display_value(tile, current_node)
-        return "" if returnvalue is None else returnvalue
+#     def get_value_from_tile(self, tile, node_id):
+#         current_node = models.Node.objects.get(nodeid=node_id)
+#         datatype = self.datatype_factory.get_instance(current_node.datatype)
+#         returnvalue = datatype.get_display_value(tile, current_node)
+#         return "" if returnvalue is None else returnvalue
+    
+#     def get_values_from_tile(self, tile):
+#         values = []
+#         tileDict = dict(tile.data)
+#         for node_id in tileDict.keys():     
+#             current_node = models.Node.objects.get(nodeid=node_id)
+#             datatype = self.datatype_factory.get_instance(current_node.datatype)
+#             values.append(datatype.get_display_value(tile, current_node))
+#         return ' '.join(filter(lambda x: ("" if x is None else x),values))
 
-    def get_activity_resource(self):
-        license_system_ref_tile = Tile.objects.filter(
-            resourceinstance_id=self.resource_instance.resourceinstanceid,
-            nodegroup_id=self.LICENSE_SYSTEM_REF_NODEGROUP
-        ).first()
-        ref_num = (
-            license_system_ref_tile.data
-            .get(self.LICENSE_SYSTEM_REF_RESOURCE_ID_NODE)
-            .get("en")
-            .get("value")
-        )
-        activity_system_ref_query = {
-            f"data__{self.ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE}__en__value__icontains": ref_num,
-        }
-        activity_system_ref_tile = Tile.objects.filter(**activity_system_ref_query).exclude(
-            nodegroup_id=self.ACTIVITY_SYSTEM_REF_NODEGROUP,
-            resourceinstance_id=self.resource_instance.resourceinstanceid,
-        ).first()
-        activity_resource = Resource.objects.filter(
-            pk=activity_system_ref_tile.resourceinstance.resourceinstanceid
-        ).first()
-        return activity_resource
+#     def get_activity_resource(self):
+#         license_system_ref_tile = Tile.objects.filter(
+#             resourceinstance_id=self.resource_instance.resourceinstanceid,
+#             nodegroup_id=self.LICENSE_SYSTEM_REF_NODEGROUP
+#         ).first()
+#         ref_num = (
+#             license_system_ref_tile.data
+#             .get(self.LICENSE_SYSTEM_REF_RESOURCE_ID_NODE)
+#             .get("en")
+#             .get("value")
+#         )
+#         activity_system_ref_query = {
+#             f"data__{self.ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE}__en__value__icontains": ref_num,
+#         }
+#         activity_system_ref_tile = Tile.objects.filter(**activity_system_ref_query).exclude(
+#             nodegroup_id=self.ACTIVITY_SYSTEM_REF_NODEGROUP,
+#             resourceinstance_id=self.resource_instance.resourceinstanceid,
+#         ).first()
+#         activity_resource = Resource.objects.filter(
+#             pk=activity_system_ref_tile.resourceinstance.resourceinstanceid
+#         ).first()
+#         return activity_resource
 
-    def get_mapping(self):
-        self.activity_resource = self.get_activity_resource()
-        self.activity_resource.load_tiles()
-        self.activity_tiles = self.activity_resource.tiles
+#     def get_mapping(self):
+#         self.activity_resource = self.get_activity_resource()
+#         self.activity_resource.load_tiles()
+#         self.activity_tiles = self.activity_resource.tiles
 
-        for tile in self.tiles:
-            nodegroup_id = str(tile.nodegroup_id)
-            if nodegroup_id == self.LICENSE_NUMBER_NODEGROUP:
-                self.mapping["License Number"] = self.get_value_from_tile(
-                    tile, self.LICENSE_NUMBER_NODE
-                )
-            if nodegroup_id == self.LICENSE_DATES_NODEGROUP:
-                self.mapping["Duration"] = self.get_value_from_tile(
-                    tile, self.LICENSE_DURATION_NODE
-                )
+#         for tile in self.tiles:
+#             nodegroup_id = str(tile.nodegroup_id)
+#             if nodegroup_id == self.LICENSE_SYSTEM_REF_NODEGROUP:
+#                 self.mapping["License Number"] = self.get_value_from_tile(
+#                     tile, self.LICENSE_SYSTEM_REF_RESOURCE_ID_NODE
+#                 )
+#             if nodegroup_id == self.LICENSE_DATES_NODEGROUP:
+#                 self.mapping["Duration"] = self.get_value_from_tile(
+#                     tile, self.LICENSE_DURATION_NODE
+#                 )
 
-        for tile in self.activity_tiles:
-            nodegroup_id = str(tile.nodegroup_id)
-            if nodegroup_id == self.ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP:
-                self.mapping["Townland"] = self.get_value_from_tile(
-                    tile, self.ACTIVITY_AREA_NAME_NODE
-                )
-            if nodegroup_id == self.ACTIVITY_ADDRESSES_NODEGROUP:
-                self.mapping["County"] = self.get_value_from_tile(
-                    tile, self.ACTIVITY_COUNTY_NODE
-                )
-            if nodegroup_id == self.ACTIVITY_NAME_NODEGROUP:
-                self.mapping["Site Name"] = self.get_value_from_tile(
-                    tile, self.ACTIVITY_NAME_NODE
-                )
+#         for tile in self.activity_tiles:
+#             nodegroup_id = str(tile.nodegroup_id)
+#             if nodegroup_id == self.ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP:
+#                 self.mapping["Townland"] = self.get_value_from_tile(
+#                     tile, self.ACTIVITY_AREA_NAME_NODE
+#                 )
+#             if nodegroup_id == self.ACTIVITY_ADDRESSES_NODEGROUP:
+#                 self.mapping["County"] = self.get_value_from_tile(
+#                     tile, self.ACTIVITY_COUNTY_NODE
+#                 )
+#             if nodegroup_id == self.ACTIVITY_NAME_NODEGROUP:
+#                 self.mapping["Site Name"] = self.get_value_from_tile(
+#                     tile, self.ACTIVITY_NAME_NODE
+#                 )
 
-        return self.mapping
+#         return self.mapping
     
 class MonumentTemplateProvider:
     MONUMENT_NAME_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11'
@@ -440,12 +453,14 @@ class MonumentTemplateProvider:
         }
 
     def get_value_from_tile(self, tile, node_id):
+
         current_node = models.Node.objects.get(nodeid=node_id)
         datatype = self.datatype_factory.get_instance(current_node.datatype)
         returnvalue = datatype.get_display_value(tile, current_node)
         return "" if returnvalue is None else returnvalue
     
     def get_resource(self, resource_id):
+
         resource = None
         try:
             resource = Resource.objects.filter(pk=resource_id).first()
@@ -454,6 +469,7 @@ class MonumentTemplateProvider:
         return resource
 
     def get_mapping(self):
+
         for tile in self.tiles:
             nodegroup_id = str(tile.nodegroup_id)
 
@@ -524,6 +540,745 @@ class MonumentTemplateProvider:
         return self.mapping
     
 
+class LicenceTemplateProvider:
+    LICENCE_NAME_NODEGROUP = '59d65ec0-48b9-11ee-84da-0242ac140007'
+    LICENCE_NAME_NODE = '59d6676c-48b9-11ee-84da-0242ac140007'
+
+    LICENCE_SYSTEM_REF_RESOURCE_ID_NODEGROUP = '991c3c74-48b6-11ee-85af-0242ac140007'
+    LICENCE_SYSTEM_REF_RESOURCE_ID_NODE = '991c4340-48b6-11ee-85af-0242ac140007'
+    LICENCE_NUMBER_NODE = '991c49b2-48b6-11ee-85af-0242ac140007'
+
+    LICENCE_CONTACTS_NODEGROUP = '6397b05c-c443-11ee-94bf-0242ac180006'
+    LICENCE_CONTACTS_APPLICANT_NODE = '6d2924b6-5891-11ee-a624-0242ac120004'
+
+    # LICENCE_LOCALITIES_ADMIN_AREA_NODEGROUP = '87d38725-f44f-11eb-8d4b-a87eeabdefba'
+    # LICENCE_AREA_NAME_NODE = '87d3c3ea-f44f-11eb-b532-a87eeabdefba'
+
+    # LICENCE_ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
+    # LICENCE_COUNTY_NODE = '87d3ff32-f44f-11eb-aa82-a87eeabdefba'
+
+    LICENCE_CM_REFERENCE_NODEGROUP = 'b84fa9c6-bad2-11ee-b3f2-0242ac180006'
+    LICENCE_CM_REFERENCE_NODE = 'b84fb182-bad2-11ee-b3f2-0242ac180006'
+
+    REQUEST_DATE_NODEGROUP = '69b2738e-c4d2-11ee-b171-0242ac180006'
+    REQUEST_DATE_NODE = 'c6f09242-c4d2-11ee-b171-0242ac180006'
+
+    REPORTED_DATE_NODEGROUP = 'f060583a-6120-11ee-9fd1-0242ac120003'
+    REPORTED_DATE_NODE = '0a089af2-dc7a-11ee-8def-0242ac120006'
+
+    REPORT_SUBMITTED_DATE_NODEGROUP = 'f060583a-6120-11ee-9fd1-0242ac120003'    
+    REPORT_SUBMITTED_DATE_NODE = '59b77af6-dc6f-11ee-8def-0242ac120006'
+
+    ISSUED_DATE_N1_NODEGROUP = '69b2738e-c4d2-11ee-b171-0242ac180006'
+    ISSUED_DATE_N1_NODE = '4129013c-c4d5-11ee-90c5-0242ac180006'
+    
+    ISSUED_DATE_NODEGROUP = '1887f678-c42d-11ee-bc4b-0242ac180006'
+    ISSUED_DATE_NODE = '1887faf6-c42d-11ee-bc4b-0242ac180006'
+    
+    VALID_UNTIL_DATE_NODEGROUP = '1887f678-c42d-11ee-bc4b-0242ac180006'
+    VALID_UNTIL_DATE_NODE = '1887fc86-c42d-11ee-bc4b-0242ac180006'
+
+    DATES_NODEGROUP = '05f6b846-5d49-11ee-911e-0242ac130003'
+    PROPOSED_START_DATE_N1_NODE = '84e2983c-5d49-11ee-911e-0242ac130003'
+    PROPOSED_START_DATE_NODE = '84e2983c-5d49-11ee-911e-0242ac130003'
+    ACKNOWLEDGED_DATE_N1_NODE = 'ed16bb80-5d4a-11ee-9b75-0242ac130003'
+    ACTUAL_START_DATE_NODE = '97f6c776-5d4a-11ee-9b75-0242ac130003'
+    ACTUAL_END_DATE_NODE = '7ee258e0-5d4a-11ee-9b75-0242ac130003'
+    RECIVED_DATE_NODE = '58880bd6-5d4a-11ee-9b75-0242ac130003'
+    DURATION_NODE = 'c688af34-d589-11ee-89d9-0242ac180006'
+
+    CMREF_NODE = 'b84fb182-bad2-11ee-b3f2-0242ac180006'
+
+    LPA_PLANNING_REFERENCE_NODEGROUP = '9236156e-bad1-11ee-b3f2-0242ac180006'
+    PLANNING_REFERENCE_NODE = '92361d48-bad1-11ee-b3f2-0242ac180006'
+
+    CLASSIFICATION_DATE_NODEGROUP = 'f060583a-6120-11ee-9fd1-0242ac120003'
+    CLASSIFICATION_DATE_NODE = 'ea6ea7a8-dc70-11ee-b70c-0242ac120006'
+    
+    APPLICANT_N1_NODEGROUP = '6397b05c-c443-11ee-94bf-0242ac180006'
+    APPLICANT_N1_NODE = 'f870c35e-c447-11ee-8be7-0242ac180006'
+    
+    APPLICANT_NODEGROUP = '6d290832-5891-11ee-a624-0242ac120004'
+    APPLICANT_NODE = '6d2924b6-5891-11ee-a624-0242ac120004'
+    COMPANY_NODE = '07d3905c-d58b-11ee-a02f-0242ac180006'
+    LICENSEE_NODE = '6d294784-5891-11ee-a624-0242ac120004'
+# {'07d3905c-d58b-11ee-a02f-0242ac180006': [{'resourceId': '5a5857b8-7612-48fa-a442-180c2fd22800', 'ontologyProperty': 'ac41d9be-79db-4256-b368-2f4559cfbe55', 'resourceXresourceId': '6e0b30c7-e9ff-4c65-854d-00f4d55fef6e', 'inverseOntologyProperty': 'ac41d9be-79db-4256-b368-2f4559cfbe55'}], '318184a4-d58b-11ee-89d9-0242ac180006': '6a08646f-a2d8-45f7-b2f5-bafa2200e1f8', '4936d1c6-d58b-11ee-a02f-0242ac180006': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d29144e-5891-11ee-a624-0242ac120004': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d2924b6-5891-11ee-a624-0242ac120004': [{'resourceId': '76c563e1-c7ce-40c4-86cf-32291b932ebb', 'ontologyProperty': '', 'resourceXresourceId': 'e90cfeb1-2946-4cf1-aed1-7b19a7359b41', 'inverseOntologyProperty': ''}], '6d292772-5891-11ee-a624-0242ac120004': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d292cf4-5891-11ee-a624-0242ac120004': 'b2489138-dcc5-4151-999e-977809179bb3', '6d293532-5891-11ee-a624-0242ac120004': None, '6d29392e-5891-11ee-a624-0242ac120004': '31a0f492-2c6d-4c1b-8bfa-74da97fa14fc', '6d2941f8-5891-11ee-a624-0242ac120004': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d2944f0-5891-11ee-a624-0242ac120004': '0a32a247-2b40-4f89-a24e-ce9b88bac793', '6d294784-5891-11ee-a624-0242ac120004': [{'resourceId': 'e12597ad-dfad-4081-bbcb-f7007f50542d', 'ontologyProperty': '', 'resourceXresourceId': 'e3e62a28-2395-46d6-abcf-f68cc18a5436', 'inverseOntologyProperty': ''}]}
+
+    NEW_LICENSEE_NODEGROUP = '6397b05c-c443-11ee-94bf-0242ac180006'
+    NEW_LICENSEE_NODE = '66a2157a-c449-11ee-8be7-0242ac180006'
+    
+    FORMER_LICENSEE_NODEGROUP = '6397b05c-c443-11ee-94bf-0242ac180006'
+    FORMER_LICENSEE_NODE = '69fec032-c445-11ee-94bf-0242ac180006'
+    
+    FILES_NODEGROUP ='8c5356f4-48ce-11ee-8e4e-0242ac140007'
+    FILES_NODE ='8c5356f4-48ce-11ee-8e4e-0242ac140007'
+    
+    ASSOCIATED_ACTIVITIES_NODEGROUP = 'a9f53f00-48b6-11ee-85af-0242ac140007'
+    ASSOCIATED_ACTIVITIES_NODE = 'a9f53f00-48b6-11ee-85af-0242ac140007'  
+
+    DECISION_NODEGROUP = '2749ea5a-48cb-11ee-be76-0242ac140007'
+    DECISION_NODE = '2749ea5a-48cb-11ee-be76-0242ac140007'    
+    
+    GRADE_E_NODEGROUP = '69f2eb3c-c430-11ee-94bf-0242ac180006'
+    GRADE_E_NODE = '69f30298-c430-11ee-94bf-0242ac180006'
+    
+    GRADE_E_N1_NODEGROUP = '6397b05c-c443-11ee-94bf-0242ac180006'
+    GRADE_E_N1_NODE = '058ccf60-c44d-11ee-94bf-0242ac180006'
+    
+    GRADE_D_NODEGROUP = 'c9f504b4-c42d-11ee-94bf-0242ac180006'
+    GRADE_D_NODE = 'c9f51490-c42d-11ee-94bf-0242ac180006'
+    
+    GRADE_D_N1_NODEGROUP = '6397b05c-c443-11ee-94bf-0242ac180006'
+    GRADE_D_N1_NODE = '6bc892c8-c44d-11ee-94bf-0242ac180006'
+    
+    GRADE_D_N2_NODEGROUP = '69b2738e-c4d2-11ee-b171-0242ac180006'
+    GRADE_D_N2_NODE = '2e7a876e-c4d4-11ee-b171-0242ac180006'
+    
+    # LICENCE_NUMBER_NODEGROUP = '6de3741e-c502-11ee-86cf-0242ac180006'    
+    # LICENCE_NUMBER_NODE = '6de3741e-c502-11ee-86cf-0242ac180006'
+    
+    PERSON_TITLE_NODEGROUP = '4110f741-1a44-11e9-885e-000d3ab1e588'
+    PERSON_TITLE_NODE = '6da2f03b-7e55-11ea-8fe5-f875a44e0e11'
+    
+    PERSON_CONTACT_POINT_NODEGROUP = '2547c12f-9505-11ea-a507-f875a44e0e11'
+    PERSON_CONTACT_POINT_NODE = '2547c133-9505-11ea-8e49-f875a44e0e11'
+    
+    PERSON_ADDRESSES_NODEGROUP = '5f93048e-80a9-11ea-b0da-f875a44e0e11'
+    PERSON_COUNTY_NODE = 'b3a28c1d-effb-11eb-95a1-a87eeabdefba'
+
+    PERSON_CORRESPONDENCE_NODEGROUP = '2547c12f-9505-11ea-a507-f875a44e0e11'
+    PERSON_CORRESPONDENCE_NAMES_NODEGROUP = '2beefb51-4084-11eb-9b2b-f875a44e0e11'
+    PERSON_CORRESPONDENCE_NAME_NODE = '2beefb56-4084-11eb-bcc5-f875a44e0e11'
+    PERSON_CORRESPONDENCE_EMAIL_NODE = '2547c133-9505-11ea-8e49-f875a44e0e11'
+
+    # if nodegroup_id == self.NEW_LICENSEE_NODEGROUP:
+    #     self.mapping["New Licensee"] = self.get_value_from_tile(
+    #     tile, self.NEW_LICENSEE_NODE
+    # )
+    PERSON_POSTCODE_NODE = 'b3a27619-effb-11eb-a66d-a87eeabdefba'
+    PERSON_FULL_ADDRESS_NODE = 'b3a27611-effb-11eb-a79c-a87eeabdefba'
+    # if nodegroup_id == self.NEW_LICENSEE_NODEGROUP:
+    #     self.mapping["New Licensee"] = self.get_value_from_tile(
+    #     tile, self.NEW_LICENSEE_NODE
+    # )
+
+
+    COMPANY_NAMES_NODEGROUP = 'e8431c5d-8098-11ea-8348-f875a44e0e11'
+    COMPANY_NAME_NODE = 'e8431c61-8098-11ea-8b01-f875a44e0e11'
+
+    COMPANY_CORRESPONDENCE_NODEGROUP = '1b6f9cb4-51ae-11eb-a1fe-f875a44e0e11'
+    COMPANY_CORRESPONDENCE_NAME_NODE = '1b6f9cb9-51ae-11eb-9ece-f875a44e0e11'
+    COMPANY_EMAIL_NODE = '1b6f9cbf-51ae-11eb-b61d-f875a44e0e11'
+
+    COMPANY_ADDRESSES_NODEGROUP = 'af3b0116-29a9-11eb-8333-f875a44e0e11'
+    COMPANY_FULL_ADDRESS_NODE = '9e7907c7-eff3-11eb-b606-a87eeabdefba'
+    COMPANY_BUILDING_NAME_NODE = '9e7907d3-eff3-11eb-ac11-a87eeabdefba'
+    COMPANY_BUILDING_NUMBER_NODE = '9e7907d5-eff3-11eb-a511-a87eeabdefba'
+    COMPANY_STREET_NODE = '9e7907d7-eff3-11eb-8e7a-a87eeabdefba'
+    COMPANY_LOCALITY_NODE = '9e7907cd-eff3-11eb-b0f1-a87eeabdefba'
+    COMPANY_COUNTY_NODE = '9e791cfe-eff3-11eb-9c35-a87eeabdefba'
+    COMPANY_POSTCODE_NODE = '9e7907cf-eff3-11eb-8412-a87eeabdefba'
+
+    ACTIVITY_NODEGROUP = 'a9f53f00-48b6-11ee-85af-0242ac140007'
+    ACTIVITY_SITE_NAME_NODE = 'a9f53f00-48b6-11ee-85af-0242ac140007'
+    ACTIVITY_NODE = 'a9f53f00-48b6-11ee-85af-0242ac140007'
+
+    ACTIVITY_AREA_NODEGROUP = 'a5416b46-f121-11eb-8f2d-a87eeabdefba'
+    ACTIVITY_TOWNLAND_NODE = 'a5416b53-f121-11eb-a507-a87eeabdefba'
+
+    ACTIVITY_COUNCIL_NODEGROUP = '5f81a8d4-d7de-11ee-b2c1-0242ac120006'
+    ACTIVITY_COUNCIL_NODE = '5f81a8d4-d7de-11ee-b2c1-0242ac120006'
+
+    ACTIVITY_GRID_REFERENCES_NODEGROUP = '33b4430a-16be-11ef-8633-0242ac180006'
+    ACTIVITY_IRISH_GRID_REFERENCE_NODE = '4bd349a4-16be-11ef-af79-0242ac180006'
+
+    ACTIVITY_LOCATION_DESCRIPTION_NODEGROUP = 'a541b934-f121-11eb-9d20-a87eeabdefba:'
+    ACTIVITY_LOCATION_DESCRIPTION_NODE = 'a5416b40-f121-11eb-9cb6-a87eeabdefba'
+
+    def __init__(self, resource_instance):
+        self.resource_instance = resource_instance
+        self.datatype_factory = DataTypeFactory()
+        self.tiles = resource_instance.tiles
+        self.mapping = {
+            "Courtesy Title": "", 
+            "Address": "", 
+            "County": "", 
+            "Postcode": "", 
+            "Monument Townland": "", 
+            "Monument County": "",
+            "Monument Name": "", 
+            "SMC": "", # NOT PROVIDED
+            "SMR": "", 
+            "CM Reference": "", 
+            "Recipient Email": "", 
+            "Recipient Name": "", 
+            "Received Date": "",
+            "Send Date": "", # NOT PROVIDED
+            "Granted Date": "", # NOT PROVIDED
+            "Addendum Condition": "", # NOT PROVIDED
+            "Additional Conditions Pretext": "", # NOT PROVIDED
+            "Archaeological Inspector": "", # NOT PROVIDED
+            "Field Monument Warden": "", # NOT PROVIDED
+            "Letter Send Date": "" # NOT PROVIDED
+        }
+
+    def get_value_from_tile(self, tile, node_id):
+
+        current_node = models.Node.objects.get(nodeid=node_id)
+        datatype = self.datatype_factory.get_instance(current_node.datatype)
+        returnvalue = datatype.get_display_value(tile, current_node)
+        return "" if returnvalue is None else returnvalue
+    
+    def get_values_from_tile(self, tile):
+        values = []
+        tileDict = dict(tile.data)
+        for node_id in tileDict.keys():     
+            current_node = models.Node.objects.get(nodeid=node_id)
+            datatype = self.datatype_factory.get_instance(current_node.datatype)
+            values.append(datatype.get_display_value(tile, current_node))
+
+        for (idx, value) in enumerate(values):
+             if value is None:
+                  values[idx] = ""
+
+    
+    def get_resource(self, resource_id):
+
+        resource = None
+        try:
+            resource = Resource.objects.filter(pk=resource_id).first()
+        except Resource.DoesNotExist:
+            raise f"Resource ID ({resource_id}) does not exist"
+        return resource
+
+    def get_mapping(self):
+
+        for tile in self.tiles:
+            nodegroup_id = str(tile.nodegroup_id)
+
+            if nodegroup_id == self.COMPANY_ADDRESSES_NODEGROUP:
+                        self.mapping["Company County"] = self.get_value_from_tile(
+                            tile, self.COMPANY_COUNTY_NODE
+                        )
+                        self.mapping["Company Postcode"] = self.get_value_from_tile(
+                            tile, self.COMPANY_POSTCODE_NODE
+                        )
+                        self.mapping["Company Building Name"] = self.get_value_from_tile(
+                            tile, self.COMPANY_BUILDING_NAME_NODE
+                        )
+                        self.mapping["Company Building Number"] = self.get_value_from_tile(
+                            tile, self.COMPANY_BUILDING_NUMBER_NODE
+                        )
+                        self.mapping["Company Street"] = self.get_value_from_tile(
+                            tile, self.COMPANY_STREET_NODE
+                        )
+                        self.mapping["Company Locality"] = self.get_value_from_tile(
+                            tile, self.COMPANY_LOCALITY_NODE
+                        )
+
+                        self.mapping["Company Address"] = self.get_value_from_tile(
+                            tile, self.COMPANY_FULL_ADDRESS_NODE
+                        )
+            if nodegroup_id == self.GRADE_E_NODEGROUP:
+                if not tile.data.get(self.GRADE_E_NODE) or not len(tile.data.get(self.GRADE_E_NODE)):
+                    continue
+
+                grade_e_resource_id = tile.data.get(self.GRADE_E_NODE)[0].get('resourceId')
+                grade_e_resource = self.get_resource(grade_e_resource_id)
+                grade_e_resource.load_tiles()
+                grade_e_tiles = grade_e_resource.tiles
+
+                for grade_e_tile in grade_e_tiles:
+
+                    grade_e_nodegroup_id = str(grade_e_tile.nodegroup_id)
+                    if grade_e_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+                        self.mapping["Grade E Courtesy Title"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_TITLE_NODE
+                        )
+                    if grade_e_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+                        self.mapping["Grade E Email"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_CONTACT_POINT_NODE
+                        )
+                    if grade_e_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
+                        self.mapping["Grade E County"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_COUNTY_NODE
+                        )
+                        self.mapping["Grade E Postcode"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_POSTCODE_NODE
+                        )
+                        self.mapping["Grade E Address"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_FULL_ADDRESS_NODE
+                        )
+            if nodegroup_id == self.GRADE_D_NODEGROUP:
+                if not tile.data.get(self.GRADE_D_NODE) or not len(tile.data.get(self.GRADE_D_NODE)):
+                    continue
+
+                grade_d_resource_id = tile.data.get(self.GRADE_D_NODE)[0].get('resourceId')
+                grade_d_resource = self.get_resource(grade_d_resource_id)
+                grade_d_resource.load_tiles()
+                grade_d_tiles = grade_d_resource.tiles
+
+                for grade_d_tile in grade_d_tiles:
+
+                    grade_d_nodegroup_id = str(grade_d_tile.nodegroup_id)
+                    if grade_d_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+                        self.mapping["Grade D Courtesy Title"] = self.get_value_from_tile(
+                            grade_d_tile, self.PERSON_TITLE_NODE
+                        )
+                    if grade_d_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+                        self.mapping["Grade D Email"] = self.get_value_from_tile(
+                            grade_d_tile, self.PERSON_CONTACT_POINT_NODE
+                        )
+                    if grade_d_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
+                        self.mapping["Grade D County"] = self.get_value_from_tile(
+                            grade_d_tile, self.PERSON_COUNTY_NODE
+                        )
+                        self.mapping["Grade D Postcode"] = self.get_value_from_tile(
+                            grade_d_tile, self.PERSON_POSTCODE_NODE
+                        )
+                        self.mapping["Grade D Address"] = self.get_value_from_tile(
+                            grade_d_tile, self.PERSON_FULL_ADDRESS_NODE
+                        )
+
+
+
+            if nodegroup_id == self.LICENCE_NAME_NODEGROUP:
+                self.mapping["Licence Name"] = self.get_value_from_tile(
+                    tile, self.LICENCE_NAME_NODE
+                )
+
+
+            if nodegroup_id == self.LICENCE_SYSTEM_REF_RESOURCE_ID_NODEGROUP:
+                self.mapping["SMR"] = self.get_value_from_tile(
+                    tile, self.LICENCE_SYSTEM_REF_RESOURCE_ID_NODE
+                )
+                self.mapping["Licence Number"] = self.get_value_from_tile(
+                    tile, self.LICENCE_NUMBER_NODE
+                )
+
+
+            # if nodegroup_id == self.LICENCE_LOCALITIES_ADMIN_AREA_NODEGROUP:
+            #     self.mapping["Licence Townland"] = self.get_value_from_tile(
+            #         tile, self.LICENCE_AREA_NAME_NODE
+            #     )
+            
+            # if nodegroup_id == self.LICENCE_ADDRESSES_NODEGROUP:
+            #     self.mapping["Licence County"] = self.get_value_from_tile(
+            #         tile, self.LICENCE_COUNTY_NODE
+            #     )
+
+            if nodegroup_id == self.LICENCE_CM_REFERENCE_NODEGROUP:
+                self.mapping["CM Reference"] = self.get_value_from_tile(
+                    tile, self.LICENCE_CM_REFERENCE_NODE
+                )
+
+            # if nodegroup_id == self.LICENCE_SYSTEM_REF_RESOURCE_ID_NODEGROUP:
+            #     self.mapping["Licence Number"] = self.get_value_from_tile(
+            #         tile, self.LICENCE_SYSTEM_REF_RESOURCE_ID_NODE
+            #     )
+            #         tile, self.LICENCE_SYSTEM_REF_RESOURCE_ID_NODE
+            #     ))
+            # if nodegroup_id == self.SMC_RECEIVED_DATE_NODEGROUP:
+            #     self.mapping["Received Date"] = self.get_value_from_tile(
+            #         tile, self.SMC_RECEIVED_DATE_NODE
+            #     )
+            
+
+            if nodegroup_id == self.LICENCE_CONTACTS_NODEGROUP:
+                self.mapping["Licence Contacts"] = self.get_value_from_tile(
+                    tile, self.LICENCE_CONTACTS_APPLICANT_NODE
+                )
+            
+            if nodegroup_id == self.LICENCE_CM_REFERENCE_NODEGROUP:
+                            self.mapping["Licence CM"] = self.get_value_from_tile(
+                                tile, self.LICENCE_CM_REFERENCE_NODE
+                            )
+            
+            if nodegroup_id == self.REQUEST_DATE_NODEGROUP:
+                            self.mapping["Licence Request Date"] = self.get_value_from_tile(
+                                tile, self.REQUEST_DATE_NODE
+                            )
+            if nodegroup_id == self.REPORTED_DATE_NODEGROUP:
+                            self.mapping["Licence Reported Date"] = self.get_value_from_tile(
+                                tile, self.REPORTED_DATE_NODE
+                            )
+            if nodegroup_id == self.DATES_NODEGROUP:
+                            self.mapping["Licence Acknowledged Date"] = self.get_value_from_tile(
+                                tile, self.ACKNOWLEDGED_DATE_N1_NODE
+                            )
+                            self.mapping["Proposed Start Date"] = self.get_value_from_tile(
+                                tile, self.PROPOSED_START_DATE_N1_NODE
+                            )
+                            self.mapping["Actual Start Date"] = self.get_value_from_tile(
+                                                        tile, self.ACTUAL_START_DATE_NODE
+                            )
+                            self.mapping["Actual End Date"] = self.get_value_from_tile(
+                                                        tile, self.ACTUAL_END_DATE_NODE
+                            )
+
+            if nodegroup_id == self.REPORT_SUBMITTED_DATE_NODEGROUP:
+                            self.mapping["Licence Submitted Date"] = self.get_value_from_tile(
+                                tile, self.REPORT_SUBMITTED_DATE_NODE
+                            )
+            if nodegroup_id == self.ISSUED_DATE_N1_NODEGROUP:
+                        self.mapping["Licence Issued Date n1"] = self.get_value_from_tile(
+                            tile, self.ISSUED_DATE_N1_NODE
+                        )
+            if nodegroup_id == self.ISSUED_DATE_NODEGROUP:
+                        self.mapping["Licence Issued Date"] = self.get_value_from_tile(
+                            tile, self.ISSUED_DATE_NODE
+                        )
+            if nodegroup_id == self.VALID_UNTIL_DATE_NODEGROUP:
+                        self.mapping["Valid Until"] = self.get_value_from_tile(
+                            tile, self.VALID_UNTIL_DATE_NODE
+                        )
+            
+
+            if nodegroup_id == self.CLASSIFICATION_DATE_NODEGROUP:
+                        self.mapping["Classification Date"] = self.get_value_from_tile(
+                            tile, self.CLASSIFICATION_DATE_NODE
+                        )
+            
+            if nodegroup_id == self.APPLICANT_N1_NODEGROUP:
+                    self.mapping["Applicant n1"] = self.get_value_from_tile(
+                        tile, self.APPLICANT_N1_NODE
+                    )
+            
+            if nodegroup_id == self.APPLICANT_NODEGROUP:
+                    self.mapping["Applicant"] = self.get_value_from_tile(
+                    tile, self.APPLICANT_NODE
+                )
+            
+            if nodegroup_id == self.NEW_LICENSEE_NODEGROUP:
+                    self.mapping["New Licensee"] = self.get_value_from_tile(
+                    tile, self.NEW_LICENSEE_NODE
+                )
+            
+            if nodegroup_id == self.FILES_NODEGROUP:
+                    self.mapping["Files"] = self.get_value_from_tile(
+                    tile, self.FILES_NODE
+                )
+            
+            
+            if nodegroup_id == self.ASSOCIATED_ACTIVITIES_NODEGROUP:
+                    self.mapping["Associated Activities"] = self.get_value_from_tile(
+                    tile, self.ASSOCIATED_ACTIVITIES_NODE
+                )
+            
+            if nodegroup_id == self.GRADE_E_NODEGROUP:
+                    self.mapping["Grade E"] = self.get_value_from_tile(
+                    tile, self.GRADE_E_NODE
+                )
+            
+            if nodegroup_id == self.GRADE_E_N1_NODEGROUP:
+                    self.mapping["Grade E n1"] = self.get_value_from_tile(
+                    tile, self.GRADE_E_N1_NODE
+                )
+            
+            if nodegroup_id == self.GRADE_D_NODEGROUP:
+                    self.mapping["Grade D"] = self.get_value_from_tile(
+                    tile, self.GRADE_D_NODE
+                )
+            
+            if nodegroup_id == self.GRADE_D_N1_NODEGROUP:
+                    self.mapping["Grade D n1"] = self.get_value_from_tile(
+                    tile, self.GRADE_D_N1_NODE
+                )
+            if nodegroup_id == self.GRADE_D_N2_NODEGROUP:
+                    self.mapping["Grade D n2"] = self.get_value_from_tile(
+                    tile, self.GRADE_D_N2_NODE
+                )
+                    
+            # if nodegroup_id == self.LICENCE_NUMBER_NODEGROUP:
+            #         self.mapping["Licence Number"] = self.get_value_from_tile(
+            #         tile, self.LICENCE_NUMBER_NODE
+            #     )
+            
+            # if nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+            #         self.mapping["Applicant Title"] = self.get_value_from_tile(
+            #         tile, self.PERSON_TITLE_NODE
+            #     )
+            
+            # if nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+            #         self.mapping["Applicant Contact Point"] = self.get_value_from_tile(
+            #         tile, self.PERSON_CONTACT_POINT_NODE
+            #     )
+
+            if nodegroup_id == self.APPLICANT_NODEGROUP:
+                self.mapping["Recipient Name"] = self.get_value_from_tile(
+                    tile, self.APPLICANT_NODE
+                )
+
+                #     tile, self.LICENCE_CONTACTS_APPLICANT_NODE
+                # ))
+
+                if not tile.data.get(self.LICENCE_CONTACTS_APPLICANT_NODE) or not len(tile.data.get(self.LICENCE_CONTACTS_APPLICANT_NODE)):
+                    continue
+
+                applicant_resource_id = tile.data.get(self.LICENCE_CONTACTS_APPLICANT_NODE)[0].get('resourceId')
+                applicant_resource = self.get_resource(applicant_resource_id)
+                applicant_resource.load_tiles()
+                applicant_tiles = applicant_resource.tiles
+
+                if not tile.data.get(self.COMPANY_NODE) or not len(tile.data.get(self.COMPANY_NODE)):
+                    continue
+
+                # {'07d3905c-d58b-11ee-a02f-0242ac180006': [{'resourceId': '5a5857b8-7612-48fa-a442-180c2fd22800', 'ontologyProperty': 'ac41d9be-79db-4256-b368-2f4559cfbe55', 'resourceXresourceId': '6e0b30c7-e9ff-4c65-854d-00f4d55fef6e', 'inverseOntologyProperty': 'ac41d9be-79db-4256-b368-2f4559cfbe55'}], '318184a4-d58b-11ee-89d9-0242ac180006': '6a08646f-a2d8-45f7-b2f5-bafa2200e1f8', '4936d1c6-d58b-11ee-a02f-0242ac180006': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d29144e-5891-11ee-a624-0242ac120004': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d2924b6-5891-11ee-a624-0242ac120004': [{'resourceId': '76c563e1-c7ce-40c4-86cf-32291b932ebb', 'ontologyProperty': '', 'resourceXresourceId': 'e90cfeb1-2946-4cf1-aed1-7b19a7359b41', 'inverseOntologyProperty': ''}], '6d292772-5891-11ee-a624-0242ac120004': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d292cf4-5891-11ee-a624-0242ac120004': 'b2489138-dcc5-4151-999e-977809179bb3', '6d293532-5891-11ee-a624-0242ac120004': None, '6d29392e-5891-11ee-a624-0242ac120004': '31a0f492-2c6d-4c1b-8bfa-74da97fa14fc', '6d2941f8-5891-11ee-a624-0242ac120004': 'b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e', '6d2944f0-5891-11ee-a624-0242ac120004': '0a32a247-2b40-4f89-a24e-ce9b88bac793', '6d294784-5891-11ee-a624-0242ac120004': [{'resourceId': 'e12597ad-dfad-4081-bbcb-f7007f50542d', 'ontologyProperty': '', 'resourceXresourceId': 'e3e62a28-2395-46d6-abcf-f68cc18a5436', 'inverseOntologyProperty': ''}]}
+
+
+                company_resource_id = tile.data.get(self.COMPANY_NODE)[0].get('resourceId')
+                company_resource = self.get_resource(company_resource_id)
+                company_resource.load_tiles()
+                company_tiles = company_resource.tiles
+
+
+                for applicant_tile in applicant_tiles:
+
+                    applicant_nodegroup_id = str(applicant_tile.nodegroup_id)
+                    if applicant_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+                        self.mapping["Applicant Courtesy Title"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_TITLE_NODE
+                        )
+                    if applicant_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+                        self.mapping["Applicant Email"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_CONTACT_POINT_NODE
+                        )
+
+                    if applicant_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
+                        self.mapping["Applicant County"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_COUNTY_NODE
+                        )
+                        self.mapping["Applicant Postcode"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_POSTCODE_NODE
+                        )
+                        self.mapping["Applicant Address"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_FULL_ADDRESS_NODE
+                        )
+                    if applicant_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+                        self.mapping["Applicant Courtesy Title"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_TITLE_NODE
+                        )
+                    if applicant_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+                        self.mapping["Recipient Email"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_CONTACT_POINT_NODE
+                        )
+
+                    if applicant_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
+                        self.mapping["Recipient County"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_COUNTY_NODE
+                        )
+                        self.mapping["Recipient Postcode"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_POSTCODE_NODE
+                        )
+                        self.mapping["Recipient Address"] = self.get_value_from_tile(
+                            applicant_tile, self.PERSON_FULL_ADDRESS_NODE
+                        )
+                        
+
+# PERSON_CORRESPONDENCE_NODEGROUP = '2547c12f-9505-11ea-a507-f875a44e0e11'
+# PERSON_CORRESPONDENCE_NAMES_NODEGROUP = '2beefb51-4084-11eb-9b2b-f875a44e0e11'
+# PERSON_CORRESPONDENCE_NAME_NODE = '2beefb56-4084-11eb-bcc5-f875a44e0e11'
+# PERSON_CORRESPONDENCE_EMAIL_NODE = '2547c133-9505-11ea-8e49-f875a44e0e11'
+
+                for company_tile in company_tiles:
+
+                    company_nodegroup_id = str(company_tile.nodegroup_id)
+                    if company_nodegroup_id == self.COMPANY_NAMES_NODEGROUP:
+                        self.mapping["Company Name"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_NAME_NODE
+                        )
+                    if company_nodegroup_id == self.COMPANY_CORRESPONDENCE_NODEGROUP:
+                        self.mapping["Company Correspondence Name"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_CORRESPONDENCE_NAME_NODE
+                        )
+                    if company_nodegroup_id == self.COMPANY_CORRESPONDENCE_NODEGROUP:
+                        self.mapping["Company Email"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_EMAIL_NODE
+                        )
+                    if company_nodegroup_id == self.COMPANY_ADDRESSES_NODEGROUP:
+                        self.mapping["Company County"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_COUNTY_NODE
+                        )
+                        self.mapping["Company Postcode"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_POSTCODE_NODE
+                        )
+                        self.mapping["Company Building Name"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_BUILDING_NAME_NODE
+                        )
+                        self.mapping["Company Building Number"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_BUILDING_NUMBER_NODE
+                        )
+                        self.mapping["Company Street"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_STREET_NODE
+                        )
+                        self.mapping["Company Locality"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_LOCALITY_NODE
+                        )
+
+                        self.mapping["Company Address"] = self.get_value_from_tile(
+                            company_tile, self.COMPANY_FULL_ADDRESS_NODE
+                        )
+                
+
+
+            if nodegroup_id == self.DECISION_NODEGROUP:
+                self.mapping["DECISION"] = self.get_value_from_tile(
+                   tile, self.DECISION_NODE
+                )
+
+
+            if nodegroup_id == self.GRADE_D_NODEGROUP:
+                self.get_values_from_tile(tile)
+                self.mapping["Grade D"] = self.get_value_from_tile(
+                    tile, self.GRADE_D_NODE
+                )
+
+            # if nodegroup_id == self.GRADE_E_NODEGROUP:
+            #     self.get_values_from_tile(tile)
+            #     self.mapping["Grade E"] = self.get_value_from_tile(
+            #         tile, self.GRADE_E_NODE
+                # )
+                #     tile, self.LICENCE_CONTACTS_GRADE_D_NODE
+                # ))
+
+                # if not tile.data.get(self.GRADE_D_NODE) or not len(tile.data.get(self.GRADE_D_NODE)):
+                #     continue
+
+                # grade_d_resource_id = tile.data.get(self.GRADE_D_NODE)[0].get('resourceId')
+                # grade_d_resource = self.get_resource(grade_d_resource_id)
+                # grade_d_resource.load_tiles()
+                # grade_d_tiles = grade_d_resource.tiles
+
+                # for grade_d_tile in grade_d_tiles:
+
+                #     grade_d_nodegroup_id = str(grade_d_tile.nodegroup_id)
+                #     if grade_d_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+                #         self.mapping["Grade D Courtesy Title"] = self.get_value_from_tile(
+                #             grade_d_tile, self.PERSON_TITLE_NODE
+                #         )
+                #     if grade_d_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+                #         self.mapping["Grade D Email"] = self.get_value_from_tile(
+                #             grade_d_tile, self.PERSON_CONTACT_POINT_NODE
+                #         )
+                #     if grade_d_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
+                #         self.mapping["Grade D County"] = self.get_value_from_tile(
+                #             grade_d_tile, self.PERSON_COUNTY_NODE
+                #         )
+                #         self.mapping["Grade D Postcode"] = self.get_value_from_tile(
+                #             grade_d_tile, self.PERSON_POSTCODE_NODE
+                #         )
+                #         self.mapping["Grade D Address"] = self.get_value_from_tile(
+                #             grade_d_tile, self.PERSON_FULL_ADDRESS_NODE
+                #         )
+
+            if nodegroup_id == self.GRADE_E_NODEGROUP:
+                self.mapping["Grade E Name"] = self.get_value_from_tile(
+                    tile, self.GRADE_E_NODE
+                )
+
+                #     tile, self.LICENCE_CONTACTS_GRADE_E_NODE
+                # ))
+
+                if not tile.data.get(self.GRADE_E_NODE) or not len(tile.data.get(self.GRADE_E_NODE)):
+                    continue
+
+                grade_e_resource_id = tile.data.get(self.GRADE_E_NODE)[0].get('resourceId')
+                grade_e_resource = self.get_resource(grade_e_resource_id)
+                grade_e_resource.load_tiles()
+                grade_e_tiles = grade_e_resource.tiles
+
+                for grade_e_tile in grade_e_tiles:
+
+                    grade_e_nodegroup_id = str(grade_e_tile.nodegroup_id)
+                    if grade_e_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+                        self.mapping["Grade E Courtesy Title"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_TITLE_NODE
+                        )
+                    if grade_e_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+                        self.mapping["Grade E Email"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_CONTACT_POINT_NODE
+                        )
+                    if grade_e_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
+                        self.mapping["Grade E County"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_COUNTY_NODE
+                        )
+                        self.mapping["Grade E Postcode"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_POSTCODE_NODE
+                        )
+                        self.mapping["Grade E Address"] = self.get_value_from_tile(
+                            grade_e_tile, self.PERSON_FULL_ADDRESS_NODE
+                        )
+
+
+            # if nodegroup_id == self.GRADE_D_NODEGROUP:
+            #     self.mapping["Recipient Name"] = self.get_value_from_tile(
+            #         tile, self.GRADE_D_NODE
+            #     )
+
+            #     #     tile, self.LICENCE_CONTACTS_GRADE_D_NODE
+            #     # ))
+
+            #     if not tile.data.get(self.LICENCE_CONTACTS_GRADE_D_NODE) or not len(tile.data.get(self.LICENCE_CONTACTS_GRADE_D_NODE)):
+            #         continue
+
+            #     grade_d_resource_id = tile.data.get(self.LICENCE_CONTACTS_GRADE_D_NODE)[0].get('resourceId')
+            #     grade_d_resource = self.get_resource(grade_d_resource_id)
+            #     grade_d_resource.load_tiles()
+            #     grade_d_tiles = grade_d_resource.tiles
+
+            #     for grade_d_tile in grade_d_tiles:
+
+            #         grade_d_nodegroup_id = str(grade_d_tile.nodegroup_id)
+            #         if grade_d_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
+            #             self.mapping["Grade D Courtesy Title"] = self.get_value_from_tile(
+            #                 grade_d_tile, self.PERSON_TITLE_NODE
+            #             )
+            #         if grade_d_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
+            #             self.mapping["Grade D Email"] = self.get_value_from_tile(
+            #                 grade_d_tile, self.PERSON_CONTACT_POINT_NODE
+            #             )
+            #         if grade_d_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
+            #             self.mapping["Grade D County"] = self.get_value_from_tile(
+            #                 grade_d_tile, self.PERSON_COUNTY_NODE
+            #             )
+            #             self.mapping["Grade D Postcode"] = self.get_value_from_tile(
+            #                 grade_d_tile, self.PERSON_POSTCODE_NODE
+            #             )
+            #             self.mapping["Grade D Address"] = self.get_value_from_tile(
+            #                 grade_d_tile, self.PERSON_FULL_ADDRESS_NODE
+            #             )
+
+            if nodegroup_id == self.ACTIVITY_NODEGROUP:
+                self.mapping["Site Name"] = self.get_value_from_tile(
+                    tile, self.ACTIVITY_SITE_NAME_NODE
+                )
+                activity_resource_id = tile.data.get(self.ACTIVITY_NODE)[0].get('resourceId')
+                activity_resource = self.get_resource(activity_resource_id)
+                activity_resource.load_tiles()
+                activity_tiles = activity_resource.tiles
+                for activity_tile in activity_tiles:
+                    activity_nodegroup_id = str(activity_tile.nodegroup_id)  
+                    if activity_nodegroup_id == self.ACTIVITY_AREA_NODEGROUP:
+                       self.mapping["Townland"] = self.get_value_from_tile(
+                           activity_tile, self.ACTIVITY_TOWNLAND_NODE
+                       )
+                    if activity_nodegroup_id == self.ACTIVITY_COUNCIL_NODEGROUP:
+                       self.mapping["Council"] = self.get_value_from_tile(
+                           activity_tile, self.ACTIVITY_COUNCIL_NODE
+                       )
+                    if activity_nodegroup_id == self.ACTIVITY_GRID_REFERENCES_NODEGROUP:
+                       self.mapping["Irish Grid Reference"] = self.get_value_from_tile(
+                           activity_tile, self.ACTIVITY_IRISH_GRID_REFERENCE_NODE
+                       )
+                    if activity_nodegroup_id == self.ACTIVITY_LOCATION_DESCRIPTION_NODEGROUP:
+                       self.mapping["Location Description"] = self.get_value_from_tile(
+                           activity_tile, self.ACTIVITY_LOCATION_DESCRIPTION_NODE
+                       )
+        print(self.mapping)
+        return self.mapping
+
+
+
 # class ExampleTemplateProvider:
 
 #     def __init__(self, resource_instance):
@@ -555,6 +1310,7 @@ class MonumentTemplateProvider:
 
 class DocumentHTMLParser(HTMLParser):
     def __init__(self, paragraph, document):
+
         HTMLParser.__init__(self)
         self.document = document
         self.paragraph = paragraph
@@ -580,6 +1336,7 @@ class DocumentHTMLParser(HTMLParser):
         return new_para
 
     def add_hyperlink(self, paragraph, url, text, color=None, underline=None):
+
         # This gets access to the document.xml.rels file and gets a new relation id value
         part = self.paragraph.part
         r_id = part.relate_to(
@@ -620,11 +1377,13 @@ class DocumentHTMLParser(HTMLParser):
         return hyperlink
 
     def insert_into_paragraph_and_feed(self, html):
+
         html = html.replace("\n\n", "<br>")
         self.run = self.paragraph.add_run()
         self.feed(html)
 
     def handle_starttag(self, tag, attrs):
+
         self.run = self.paragraph.add_run()
         if tag == "i" or tag == "em":
             self.run.italic = True
@@ -665,6 +1424,7 @@ class DocumentHTMLParser(HTMLParser):
             self.td_cursor = True
 
     def handle_endtag(self, tag):
+        
         if tag in ["br", "li", "ul", "ol"]:
             self.run.add_break()
         self.run = self.paragraph.add_run()
@@ -684,6 +1444,7 @@ class DocumentHTMLParser(HTMLParser):
             self.td_cursor = False
 
     def handle_data(self, data):
+
         if "&#39;" in data:
             data = data.replace("&#39;", "'")
 

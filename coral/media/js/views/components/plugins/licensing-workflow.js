@@ -7,6 +7,7 @@ define([
   'views/components/workflows/licensing-workflow/license-initial-step',
   'views/components/workflows/related-document-upload',
   'views/components/workflows/licensing-workflow/license-cover-letter',
+  'views/components/workflows/file-template',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-license-number'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
@@ -410,6 +411,34 @@ define([
               ]
             }
           ]
+        },
+        {
+          name: "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
+          title: "Letter",
+          required: false,
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  parameters: {
+                    graphid: "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    // hiddenNodes: ["49c65ece-f5af-11ee-9f07-0242ac170006"],
+                    nodegroupid: "87bdb8d8-3927-11ef-ab34-0242ac140006",
+                    semanticName: "Correspondence",
+                    letterMetatype: "976e49fe-3928-11ef-ab34-0242ac140006",
+                    letterTypeNode: "56364572-3928-11ef-b242-0242ac140006",
+                    letterResourceNode: "21319570-3928-11ef-b242-0242ac140006"
+                  },
+                  noTileSidebar: true,
+                  tilesManaged: "many",
+                  componentName: "file-template",
+                  uniqueInstanceName: "letter-template"
+                }
+              ]
+            }
+          ],
+          workflowstepclass: "workflow-form-component"
         },
         {
           title: 'Cover Letter',
