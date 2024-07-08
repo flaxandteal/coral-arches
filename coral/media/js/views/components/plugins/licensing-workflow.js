@@ -443,7 +443,7 @@ define([
                 {
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'transfer-of-license',
-                  tilesManaged: 'one',
+                  tilesManaged: 'many',
                   parameters: {
                     title: 'Transfer of License',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
