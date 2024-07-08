@@ -3627,7 +3627,7 @@
                     "node_id": "8f87fdae-2d50-11ef-bbfd-0242ac120006",
                     "sortorder": 8,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
@@ -4153,7 +4153,7 @@
                     "node_id": "07d3905c-d58b-11ee-a02f-0242ac180006",
                     "sortorder": 9,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -7739,7 +7739,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
                     "fieldname": "LicenseCom",
