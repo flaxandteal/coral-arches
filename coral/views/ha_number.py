@@ -23,12 +23,12 @@ class HaNumberView(View):
             if sys_ref_tile and sys_ref_tile.data.get(
                 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None
             ):
-                print("Heritage Asset ID has already been generated: ", id)
                 id = (
                     sys_ref_tile.data.get(SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None)
                     .get("en")
                     .get("value")
                 )
+                print("Heritage Asset ID has already been generated: ", id)
                 return JSONResponse(
                     {
                         "message": "Heritage Asset ID has already been generated",
