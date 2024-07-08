@@ -12,7 +12,7 @@ from coral.views.auth import PersonSignupView, PersonConfirmSignupView
 from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport, WorkflowBuilderUpdateInitWorkflow
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResourcesView
-from coral.views.monument_revision_remap import MonumentRevisionRemap
+from coral.views.monument_revision_remap import RemapMonumentToRevision, RemapRevisionToMonument
 from coral.views.dashboard import Dashboard
 from coral.views.file_template import FileTemplateView
 from coral.views.ha_number import HaNumberView
@@ -65,7 +65,8 @@ urlpatterns = [
     #
     # Monument Revision Remap
     #
-    re_path(r"^monument-revision-remap", MonumentRevisionRemap.as_view(), name="monument_revision_remap"),
+    re_path(r"^remap-monument-to-revision", RemapMonumentToRevision.as_view(), name="remap_monument_to_revision"),
+    re_path(r"^remap-revision-to-monument", RemapRevisionToMonument.as_view(), name="remap_revision_to_monument"),
 
     #
     # Heritage Asset Number
