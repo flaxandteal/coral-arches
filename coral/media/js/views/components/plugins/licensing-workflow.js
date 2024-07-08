@@ -453,21 +453,10 @@ define([
                 },
                 {
                   componentName: 'default-card-util',
-                  uniqueInstanceName: 'extension-of-license-1',
-                  tilesManaged: 'one',
+                  uniqueInstanceName: 'extension-of-license',
+                  tilesManaged: 'many',
                   parameters: {
-                    title: 'Extension of License 1',
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                  }
-                },
-                {
-                  componentName: 'default-card-util',
-                  uniqueInstanceName: 'extension-of-license-2',
-                  tilesManaged: 'one',
-                  parameters: {
-                    title: 'Extension of License 2',
+                    title: 'Extension of License',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
