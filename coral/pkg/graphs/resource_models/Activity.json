@@ -12612,7 +12612,7 @@
                         "multiplier_if_both": 1,
                         "multiplier_if_uncertain": 1
                     },
-                    "datatype": "edtf",
+                    "datatype": "date",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Start_date",
@@ -12641,7 +12641,7 @@
                         "multiplier_if_both": 1,
                         "multiplier_if_uncertain": 1
                     },
-                    "datatype": "edtf",
+                    "datatype": "date",
                     "description": null,
                     "exportable": true,
                     "fieldname": "End_Date",
