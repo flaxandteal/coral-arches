@@ -7191,6 +7191,16 @@
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                     "id": "a5c056e3-6b48-4a68-a936-0af2d3a9b028"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "6397b05c-c443-11ee-94bf-0242ac180006"
+                        ]
+                    },
+                    "function_id": "9b955a8d-64b0-4139-9470-1085d802475f",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "e68c12c0-cdde-45f1-9c6c-4f2e870f7a0c"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
