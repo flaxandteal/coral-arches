@@ -15,6 +15,7 @@ define([
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
 
+    this.applicationData = ko.observable({});
     this.totalOpenApplications = ko.observable();
     this.totalLicenses = ko.observable();
     this.currentState = ko.observable();
@@ -59,59 +60,98 @@ define([
       }
     };
 
-    this.message = ko.computed(() => {
-      if (this.currentState() in this.states) {
-        return this.states[this.currentState()].message.replace(
-          '[openApplications]',
-          this.totalOpenApplications()
-        );
-      } else {
-        return '';
-      }
-    }, true);
+    this.message = (resourceId, state) =>
+      ko.computed(() => {
+        if (!this.applicationData()?.[resourceId]) return '';
+        if (state in this.states) {
+          return this.states[state].message.replace(
+            '[openApplications]',
+            this.applicationData()?.[resourceId].totalOpenApplications
+          );
+        } else {
+          return '';
+        }
+      }, true);
 
-    this.totalLicensesMessage = ko.computed(() => {
-      return `This licensee has had ${this.totalLicenses()} licenses approved.`;
-    }, true);
+    this.totalLicensesMessage = (resourceId) =>
+      ko.computed(() => {
+        if (!this.applicationData()?.[resourceId]) return '';
+        return `This licensee has had ${
+          this.applicationData()[resourceId].totalLicenses
+        } licenses approved.`;
+      }, true);
 
-    this.colour = ko.computed(() => {
-      if (this.currentState() in this.states) {
-        return this.states[this.currentState()].colour;
-      } else {
-        return '';
-      }
-    }, true);
+    this.colour = (state) =>
+      ko.computed(() => {
+        if (state in this.states) {
+          return this.states[state].colour;
+        } else {
+          return '';
+        }
+      }, true);
 
-    this.title = ko.computed(() => {
-      if (this.currentState() in this.states) {
-        return this.states[this.currentState()].title;
-      } else {
-        return '';
-      }
-    }, true);
+    this.title = (state) =>
+      ko.computed(() => {
+        if (state in this.states) {
+          return this.states[state].title;
+        } else {
+          return '';
+        }
+      }, true);
 
     this.value.subscribe(async (value) => {
-      console.log('value selection updated: ', value);
-      if (value && value[0]?.resourceId()) {
-        await this.checkTotalApplications(value[0].resourceId());
-        await this.checkOpenApplications(value[0].resourceId());
-      } else {
-        this.currentState(null);
-      }
+      await this.loadApplicationData(value);
     }, this);
+
+    this.loadApplicationData = async (selectedResources) => {
+      const applicationData = {};
+
+      selectedResources.forEach((resource) => {
+        applicationData[ko.unwrap(resource.resourceId)] = {
+          resourceId: ko.unwrap(resource.resourceId),
+          state: null,
+          totalOpenApplications: null,
+          totalLicenses: null,
+          name: null
+        };
+      });
+
+      // This is not my best work lol
+      for (const data of Object.values(applicationData)) {
+        await Promise.all([
+          new Promise(async (resolve) => {
+            const result = await this.checkTotalApplications(data.resourceId);
+            applicationData[data.resourceId].totalLicenses = result;
+            resolve();
+          }),
+          new Promise(async (resolve) => {
+            const result = await this.checkOpenApplications(data.resourceId);
+            applicationData[data.resourceId].totalOpenApplications = result.total;
+            applicationData[data.resourceId].state = result.state;
+            resolve();
+          }),
+          new Promise(async (resolve) => {
+            const result = await this.getName(data.resourceId);
+            applicationData[data.resourceId].name = result;
+            resolve();
+          })
+        ]);
+        this.applicationData(null);
+        this.applicationData(applicationData);
+      }
+    };
 
     this.openApplicationsRequest = null;
     this.totalLicensesRequest = null;
-    this.openApplicationsState = ko.observable(false);
+    this.getNameRequest = null;
 
     this.checkOpenApplications = async (personResourceId) => {
-      this.currentState(null);
+      const result = {
+        total: null,
+        state: null
+      };
 
-      if (this.openApplicationsRequest) {
-        this.openApplicationsRequest.abort();
-      }
-
-      this.openApplicationsRequest = $.ajax({
+      this.openApplicationsRequest = await $.ajax({
         type: 'GET',
         url: arches.urls.search_results,
         data: {
@@ -193,21 +233,21 @@ define([
         },
         context: this,
         success: function (response) {
-          this.totalOpenApplications(response.results.hits.total.value);
+          result.total = response.results.hits.total.value;
           let limit = parseInt(this.limit());
 
           switch (true) {
-            case this.totalOpenApplications() <= limit - 2:
-              this.currentState(this.OK);
+            case result.total <= limit - 2:
+              result.state = this.OK;
               break;
-            case this.totalOpenApplications() === limit - 1:
-              this.currentState(this.WARNING);
+            case result.total === limit - 1:
+              result.state = this.WARNING;
               break;
-            case this.totalOpenApplications() === limit:
-              this.currentState(this.MAX);
+            case result.total === limit:
+              result.state = this.MAX;
               break;
-            case this.totalOpenApplications() >= limit + 1:
-              this.currentState(this.EXCEEDED);
+            case result.total >= limit + 1:
+              result.state = this.EXCEEDED;
               break;
           }
         },
@@ -227,14 +267,14 @@ define([
           this.openApplicationsRequest = undefined;
         }
       });
+
+      return result;
     };
 
     this.checkTotalApplications = async (personResourceId) => {
-      if (this.totalLicensesRequest) {
-        this.totalLicensesRequest.abort();
-      }
+      let result = null;
 
-      this.totalLicensesRequest = $.ajax({
+      this.totalLicensesRequest = await $.ajax({
         type: 'GET',
         url: arches.urls.search_results,
         data: {
@@ -334,7 +374,44 @@ define([
         },
         context: this,
         success: function (response) {
-          this.totalLicenses(response.results.hits.total.value);
+          result = response.results.hits.total.value;
+        },
+        error: function (response, status, error) {
+          console.log('checkTotalApplications PROMISES error');
+
+          if (this.totalLicensesRequest.statusText !== 'abort') {
+            console.log(response, status, error);
+            params.pageVm.alert(
+              new AlertViewModel(
+                'ep-alert-red',
+                arches.translations.requestFailed.title,
+                response.responseText
+              )
+            );
+          }
+        },
+        complete: function (request, status) {
+          console.log('checkTotalApplications PROMISES complete');
+          this.totalLicensesRequest = undefined;
+        }
+      });
+
+      return result;
+    };
+
+    this.getName = async (personResourceId) => {
+      let result = null;
+
+      this.getNameRequest = await $.ajax({
+        type: 'GET',
+        url: arches.urls.search_results,
+        data: {
+          id: personResourceId,
+          tiles: true
+        },
+        context: this,
+        success: function (response) {
+          result = response.results.hits.hits?.[0]?.['_source']['displayname'];
         },
         error: function (response, status, error) {
           if (this.totalLicensesRequest.statusText !== 'abort') {
@@ -349,15 +426,16 @@ define([
           }
         },
         complete: function (request, status) {
-          this.totalLicensesRequest = undefined;
+          this.getNameRequest = undefined;
         }
       });
+
+      return result;
     };
 
     this.init = async () => {
       if (this.value()) {
-        await this.checkTotalApplications(this.value());
-        await this.checkOpenApplications(this.value());
+        await this.loadApplicationData(this.value());
       }
     };
 
