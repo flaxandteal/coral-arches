@@ -10,7 +10,7 @@ define([
   const viewModel = function (params) {
     const ResourceInstanceSelectViewModel = require('viewmodels/resource-instance-select');
 
-    params.multiple = false;
+    params.multiple = true;
     params.datatype = 'resource-instance';
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
