@@ -7722,21 +7722,30 @@
             "edges": [
                 {
                     "description": null,
-                    "domainnode_id": "a472226f-9937-11ea-966a-f875a44e0e11",
-                    "edgeid": "c9277e99-5e38-4659-acb6-b4e15593898a",
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P129_is_about",
-                    "rangenode_id": "d5b9a386-3ddb-11ef-943e-0242ac140007"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
                     "edgeid": "d5769fb0-3fc2-4ba8-a756-994be192a585",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
                     "rangenode_id": "f59b45be-3dd2-11ef-a49f-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "edgeid": "b18f1579-c299-41c3-a690-871ae705db9d",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "rangenode_id": "a64c82ae-3de4-11ef-8288-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "edgeid": "bb71472c-09b6-49d8-a4e5-4f123df8909c",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P80_end_is_qualified_by",
+                    "rangenode_id": "cb7cb53e-3de5-11ef-8288-0242ac140007"
                 },
                 {
                     "description": null,
@@ -11089,67 +11098,6 @@
             ],
             "nodes": [
                 {
-                    "alias": "description_type",
-                    "config": {
-                        "falseLabel": "No",
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
-                        "options": [
-                            {
-                                "id": "d4bce675-a639-4af1-bb0f-f407a467d6f2",
-                                "selected": false,
-                                "text": {
-                                    "en": "General"
-                                }
-                            },
-                            {
-                                "id": "35e8ff0d-034b-4f87-899c-ac3e3d0b5002",
-                                "selected": false,
-                                "text": {
-                                    "en": "Finds"
-                                }
-                            },
-                            {
-                                "id": "705ccea4-8c79-4d23-b50e-999caddaf849",
-                                "selected": false,
-                                "text": {
-                                    "en": "Archives"
-                                }
-                            },
-                            {
-                                "id": "649e7b7a-bda9-44b3-949c-b0d30b445ea2",
-                                "selected": false,
-                                "text": {
-                                    "en": "Survey Methods"
-                                }
-                            }
-                        ],
-                        "trueLabel": "Yes"
-                    },
-                    "datatype": "domain-value",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Description Type",
-                    "nodegroup_id": "a472226f-9937-11ea-966a-f875a44e0e11",
-                    "nodeid": "d5b9a386-3ddb-11ef-943e-0242ac140007",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E28_Conceptual_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129_is_about",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "hed_inspector_present",
                     "config": {
                         "falseLabel": {
@@ -11178,6 +11126,52 @@
                     "nodeid": "f59b45be-3dd2-11ef-a49f-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "start_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Start Date",
+                    "nodegroup_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "nodeid": "a64c82ae-3de4-11ef-8288-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "end_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "End Date",
+                    "nodegroup_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "nodeid": "cb7cb53e-3de5-11ef-8288-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P80_end_is_qualified_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -12738,7 +12732,7 @@
                         "multiplier_if_both": 1,
                         "multiplier_if_uncertain": 1
                     },
-                    "datatype": "date",
+                    "datatype": "edtf",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Start_date",
@@ -12767,7 +12761,7 @@
                         "multiplier_if_both": 1,
                         "multiplier_if_uncertain": 1
                     },
-                    "datatype": "date",
+                    "datatype": "edtf",
                     "description": null,
                     "exportable": true,
                     "fieldname": "End_Date",
