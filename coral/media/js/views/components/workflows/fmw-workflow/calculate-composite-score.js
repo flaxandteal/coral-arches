@@ -10,7 +10,6 @@ define([
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
-
     this.totalCompositeScore = ko.observable(0);
     this.disabled = ko.observable(true);
 
@@ -28,14 +27,15 @@ define([
     this.tile.data[this.CONDITION_SCORE_NODE_ID].subscribe((value) => {
       const conditionScoreValue = this.scoreLookup[value] || 0;
       const riskScoreValue = this.scoreLookup[this.tile.data[this.RISK_SCORE_NODE_ID]()] || 0;
-      this.totalCompositeScore(conditionScoreValue + riskScoreValue);
+      console.log(conditionScoreValue)
+      this.totalCompositeScore(conditionScoreValue * riskScoreValue);
     }, this);
 
     this.tile.data[this.RISK_SCORE_NODE_ID].subscribe((value) => {
       const riskScoreValue = this.scoreLookup[value] || 0;
       const conditionScoreValue =
         this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODE_ID]()] || 0;
-      this.totalCompositeScore(conditionScoreValue + riskScoreValue);
+      this.totalCompositeScore(conditionScoreValue * riskScoreValue);
     }, this);
   }
 
