@@ -440,27 +440,27 @@ define([
           ],
           workflowstepclass: "workflow-form-component"
         },
-        {
-          title: 'Cover Letter',
-          name: 'cover-letter-step',
-          required: false,
-          layoutSections: [
-            {
-              componentConfigs: [
-                {
-                  componentName: 'license-cover-letter',
-                  uniqueInstanceName: 'cover-letter',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '0dcf7c74-53d5-11ee-844f-0242ac130008',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                  }
-                }
-              ]
-            }
-          ]
-        },
+        // {
+        //   title: 'Cover Letter',
+        //   name: 'cover-letter-step',
+        //   required: false,
+        //   layoutSections: [
+        //     {
+        //       componentConfigs: [
+        //         {
+        //           componentName: 'license-cover-letter',
+        //           uniqueInstanceName: 'cover-letter',
+        //           tilesManaged: 'one',
+        //           parameters: {
+        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
+        //             nodegroupid: '0dcf7c74-53d5-11ee-844f-0242ac130008',
+        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // },
         {
           title: 'Ammendments',
           name: 'ammendments-step',
