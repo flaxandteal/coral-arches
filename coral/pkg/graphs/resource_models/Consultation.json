@@ -1965,7 +1965,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Condition Descriptions"
+                        "en": "Inspection Reports"
                     },
                     "nodegroup_id": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "sortorder": null,
@@ -12167,7 +12167,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Condition",
+                        "label": "Inspection Report",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -12177,7 +12177,7 @@
                     },
                     "id": "fc5cc652-fb15-11ee-b5d2-0242ac190006",
                     "label": {
-                        "en": "Condition"
+                        "en": "Inspection Report"
                     },
                     "node_id": "fc5cbebe-fb15-11ee-b5d2-0242ac190006",
                     "sortorder": 0,
@@ -30954,7 +30954,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "condition_descriptions",
+                    "alias": "inspection_reports",
                     "config": {
                         "en": ""
                     },
@@ -30968,7 +30968,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Condition Descriptions",
+                    "name": "Inspection Reports",
                     "nodegroup_id": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "nodeid": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
@@ -30977,7 +30977,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "condition_description",
+                    "alias": "inspection_report",
                     "config": {
                         "en": ""
                     },
@@ -30991,7 +30991,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Condition Description",
+                    "name": "Inspection Report",
                     "nodegroup_id": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "nodeid": "fc5cbebe-fb15-11ee-b5d2-0242ac190006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
