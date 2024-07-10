@@ -1955,11 +1955,11 @@
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
                     "config": {
                         "defaultValue": null,
-                        "label": "Funding Available"
+                        "label": "Confirmation of Funding Provided"
                     },
                     "id": "604cb153-27d9-4818-a924-9adea6e1fe33",
                     "label": {
-                        "en": "Funding Available"
+                        "en": "Confirmation of Funding Provided"
                     },
                     "node_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
                     "sortorder": 7,
@@ -12962,7 +12962,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "funding_available",
+                    "alias": "confirmation_of_funding_provided",
                     "config": {
                         "falseLabel": {
                             "en": "No"
@@ -12985,7 +12985,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Funding Available",
+                    "name": "Confirmation of Funding Provided",
                     "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
                     "nodeid": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E29_Design_or_Procedure",
