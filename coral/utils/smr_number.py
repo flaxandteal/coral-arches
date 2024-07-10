@@ -5,8 +5,9 @@ from django.db.models import Max
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
 SMR_NUMBER_NODE_ID = "158e1ed2-3aae-11ef-a2d0-0242ac120003"
 
+
 class SmrNumber:
-    map_sheet_id = ''
+    map_sheet_id = ""
 
     def __init__(self, map_sheet_id):
         self.map_sheet_id = map_sheet_id
@@ -18,7 +19,7 @@ class SmrNumber:
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{SMR_NUMBER_NODE_ID}__en__value__icontains": self.map_sheet_id,
+                f"data__{SMR_NUMBER_NODE_ID}__icontains": self.map_sheet_id,
             }
             query_result = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -39,9 +40,7 @@ class SmrNumber:
             return
 
         latest_id_number = (
-            latest_id_number_tile.data.get(SMR_NUMBER_NODE_ID)
-            .get("en")
-            .get("value")
+            latest_id_number_tile.data.get(SMR_NUMBER_NODE_ID).get("en").get("value")
         )
 
         print(f"Previous ID number: {latest_id_number}")
@@ -60,23 +59,23 @@ class SmrNumber:
             return self.generate_id_number(resource_instance_id, attempts)
 
         if resource_instance_id:
-          id_number_tile = None
-          try:
-              generated_id_query = {
-                  f"data__{SMR_NUMBER_NODE_ID}__en__value__icontains": self.map_sheet_id,
-              }
-              id_number_tile = Tile.objects.filter(
-                  resourceinstance_id=resource_instance_id,
-                  nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                  **generated_id_query,
-              ).first()
-          except Exception as e:
-              print(f"Failed checking if ID number tile already exists: {e}")
-              return retry()
+            id_number_tile = None
+            try:
+                generated_id_query = {
+                    f"data__{SMR_NUMBER_NODE_ID}__icontains": self.map_sheet_id,
+                }
+                id_number_tile = Tile.objects.filter(
+                    resourceinstance_id=resource_instance_id,
+                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                    **generated_id_query,
+                ).first()
+            except Exception as e:
+                print(f"Failed checking if ID number tile already exists: {e}")
+                return retry()
 
-          if id_number_tile:
-              print("A ID number has already been created for this resource")
-              return
+            if id_number_tile:
+                print("A ID number has already been created for this resource")
+                return
 
         latest_id_number = None
         try:
@@ -106,9 +105,7 @@ class SmrNumber:
             id_number_tile = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
                 data__contains={
-                    SMR_NUMBER_NODE_ID: {
-                        "en": {"direction": "ltr", "value": id_number}
-                    }
+                    SMR_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
                 },
             ).first()
             if id_number_tile:
