@@ -335,24 +335,6 @@
                 }, click: function(data, e) { if (!widget.selected() && self.preview) {widget.selected(true);}
             }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
-                <text-widget
-                params="
-                    config: {
-                        label: 'SMR Number',
-                        placeholder: 'Auto generated',
-                        
-                    },
-                    disable: ko.observable(true),
-                    value: {
-                        en: {
-                            value: smrNumber,
-                            direction: ko.observable('ltr')
-                        }
-                    },
-                    loading: false,
-                    pageVm: $root
-                    "
-                ></text-widget>
                 <div class="row widget-wrapper">
          
                     <button
