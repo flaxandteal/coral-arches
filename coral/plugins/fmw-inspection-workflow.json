@@ -229,13 +229,14 @@
           {
             "componentConfigs": [
               {
+                "labels": [["Reviewed By Value", "Reviewed By"]],
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "sign-off"
               }
             ]
