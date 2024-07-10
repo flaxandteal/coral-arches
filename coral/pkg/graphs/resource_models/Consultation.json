@@ -12265,6 +12265,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "93199292-fb24-11ee-838d-0242ac190006",
+                    "edgeid": "f0050529-2876-4007-b31c-b788f21bf1c4",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "rangenode_id": "ff42f8f2-3e93-11ef-9023-0242ac140007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
                     "edgeid": "01a78d0a-11df-420a-9703-1ad8d7be1dbd",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -17648,6 +17657,38 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "send_papers",
+                    "config": {
+                        "falseLabel": {
+                            "en": "No"
+                        },
+                        "i18n_properties": [
+                            "trueLabel",
+                            "falseLabel"
+                        ],
+                        "trueLabel": {
+                            "en": "Yes"
+                        }
+                    },
+                    "datatype": "boolean",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Send Papers",
+                    "nodegroup_id": "93199292-fb24-11ee-838d-0242ac190006",
+                    "nodeid": "ff42f8f2-3e93-11ef-9023-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "action_metatype",
                     "config": {
