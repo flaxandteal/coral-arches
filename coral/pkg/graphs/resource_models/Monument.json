@@ -2169,6 +2169,28 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "87d39b27-f44f-11eb-a02c-a87eeabdefba",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "County Selected",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "955107a5-e3a0-4077-8776-e7aa07fa068f",
+                    "label": {
+                        "en": "County Selected"
+                    },
+                    "node_id": "8bfe714e-3ec2-11ef-9023-0242ac140007",
+                    "sortorder": 27,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "346001be-d23e-11ee-9ae7-0242ac180006",
                     "config": {
                         "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
@@ -14683,6 +14705,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "87d3ff2a-f44f-11eb-9951-a87eeabdefba",
+                    "edgeid": "b7526642-57ff-478b-a8ad-007f051dc816",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "8bfe714e-3ec2-11ef-9023-0242ac140007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "d0f45bbe-d645-11ee-8b04-0242ac180006",
                     "edgeid": "002d5a57-e2ff-43a3-b804-1d28544d4909",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -21357,6 +21388,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "county_selected",
+                    "config": {
+                        "rdmCollection": "763ba635-3800-324a-8d54-c1427bcaa5aa"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "County Selected",
+                    "nodegroup_id": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
+                    "nodeid": "8bfe714e-3ec2-11ef-9023-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E44_Place_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "issue_identifiers",
                     "config": {
