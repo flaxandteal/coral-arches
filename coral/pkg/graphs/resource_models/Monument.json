@@ -427,7 +427,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "System Reference Numbers"
                     },
@@ -1508,7 +1508,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Location Data"
                     },
@@ -1952,6 +1952,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "d19bfff4-a60d-4e37-b025-1ea1f996f739",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Nismr Numbering Type"
+                    },
+                    "nodegroup_id": "86c19e92-3ea7-11ef-818b-0242ac140006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "d25928b2-d62d-11ee-9454-0242ac180006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -2188,6 +2215,28 @@
                     "node_id": "46f726f2-d240-11ee-9373-0242ac180006",
                     "sortorder": 8,
                     "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "d19bfff4-a60d-4e37-b025-1ea1f996f739",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Nismr Numbering Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "046fcc1e-fe03-48d6-8e0b-5a4ea254b379",
+                    "label": {
+                        "en": "Nismr Numbering Type"
+                    },
+                    "node_id": "86c19e92-3ea7-11ef-818b-0242ac140006",
+                    "sortorder": 0,
+                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -13872,6 +13921,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
                 {
+                    "card_id": "d19bfff4-a60d-4e37-b025-1ea1f996f739",
+                    "config": {
+                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Nismr Numbering Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "d43f8a0b-9f87-45fc-a685-322f86bf22f7",
+                    "label": {
+                        "en": "Nismr Numbering Metatype"
+                    },
+                    "node_id": "a1f6d2f4-3ea7-11ef-b911-0242ac140006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "0f8de9cf-9e23-406c-99d6-f87d9b6348ab",
                     "config": {
                         "defaultValue": "ddbf586d-1970-46bd-ad19-c865eae3bddc",
@@ -15817,6 +15888,15 @@
                 {
                     "description": null,
                     "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "55186b26-062a-4ffc-9e17-0850971a889e",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "86c19e92-3ea7-11ef-818b-0242ac140006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
                     "edgeid": "557dac6c-8801-44a1-9445-8f5e43ee7d74",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "name": null,
@@ -17505,6 +17585,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168_place_is_defined_by",
                     "rangenode_id": "2fdedbd0-1459-11ef-8cdd-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "86c19e92-3ea7-11ef-818b-0242ac140006",
+                    "edgeid": "8320b1fe-cc10-4a66-a92e-7e48ecb816b4",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "a1f6d2f4-3ea7-11ef-b911-0242ac140006"
                 },
                 {
                     "description": null,
@@ -20990,7 +21079,7 @@
             ],
             "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
             "iconclass": "fa fa-bank",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -21205,6 +21294,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "86c19e92-3ea7-11ef-818b-0242ac140006",
                     "parentnodegroup_id": null
                 },
                 {
@@ -28937,6 +29032,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "nismr_numbering_type",
+                    "config": {
+                        "rdmCollection": "a51ff316-0223-4c30-92a5-27ed43840ae0"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Nismr Numbering Type",
+                    "nodegroup_id": "86c19e92-3ea7-11ef-818b-0242ac140006",
+                    "nodeid": "86c19e92-3ea7-11ef-818b-0242ac140006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "localities_administrative_areas",
                     "config": {},
                     "datatype": "semantic",
@@ -34687,6 +34805,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "nismr_numbering_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Nismr Numbering Metatype",
+                    "nodegroup_id": "86c19e92-3ea7-11ef-818b-0242ac140006",
+                    "nodeid": "a1f6d2f4-3ea7-11ef-b911-0242ac140006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": null,
                     "config": {
                         "en": ""
@@ -37859,8 +38000,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "935f2a64-3d2d-11ef-bc0f-0242ac120006",
-                "published_time": "2024-07-08T13:25:42.708"
+                "publicationid": "597cb5e2-3ea8-11ef-818b-0242ac140006",
+                "published_time": "2024-07-10T10:37:04.854"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -37896,6 +38037,6 @@
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
         "git hash": "f8671a0bd 2024-06-18 14:23:46 +0100",
         "os": "Linux",
-        "os version": "6.8.0-36-generic"
+        "os version": "5.10.0-23-amd64"
     }
 }
