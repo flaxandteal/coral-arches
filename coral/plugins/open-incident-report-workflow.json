@@ -10,7 +10,8 @@
       {
         "slug": "incident-report-workflow",
         "name": "Incident Report",
-        "graphId": "076f9381-7b00-11e9-8d6b-80000b44d1d9"
+        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"],
+        "hideRecents": true
       }
     ]
   },

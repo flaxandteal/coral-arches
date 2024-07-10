@@ -1,0 +1,3250 @@
+{
+  "business_data": {
+    "resources": [
+      {
+        "resourceinstance": {
+          "descriptors": { "en": { "description": "1", "map_popup": " 1", "name": "SMR/01" } },
+          "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+          "graph_publication_id": "1cb7e192-2966-11ef-ad58-0242ac1f0006",
+          "legacyid": null,
+          "name": "SMR/01",
+          "principaluser_id": 1,
+          "resourceinstanceid": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+          "publication_id": "1cb7e192-2966-11ef-ad58-0242ac1f0006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "87d39b39-f44f-11eb-9b17-a87eeabdefba": null,
+              "87d3d7dc-f44f-11eb-bee9-a87eeabdefba": {
+                "features": [
+                  {
+                    "geometry": {
+                      "coordinates": [
+                        [
+                          [-6.20743553862431, 54.782532953306344],
+                          [-6.342018058156356, 54.61429053135987],
+                          [-6.061866690969538, 54.52193782224515],
+                          [-5.954749991750731, 54.690562217661494],
+                          [-6.20743553862431, 54.782532953306344]
+                        ]
+                      ],
+                      "type": "Polygon"
+                    },
+                    "id": "e879c8d858faf8bc749a817eaeacbdaa",
+                    "properties": { "nodeId": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba" },
+                    "type": "Feature"
+                  }
+                ],
+                "type": "FeatureCollection"
+              },
+              "87d3ff1c-f44f-11eb-9b1e-a87eeabdefba": "dbc18bc0-ec10-4623-b866-52ece47d9780"
+            },
+            "nodegroup_id": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "fb60e846-b28e-468c-99a1-31126475c386"
+          },
+          {
+            "data": {
+              "325a2f33-efe4-11eb-b0bb-a87eeabdefba": 0,
+              "325a2f34-efe4-11eb-a003-a87eeabdefba": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "325a2f35-efe4-11eb-b2d5-a87eeabdefba": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "325a430a-efe4-11eb-810b-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "SMR/01" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "325a430b-efe4-11eb-95a5-a87eeabdefba": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "325a4419-efe4-11eb-9e0e-a87eeabdefba": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "325a441a-efe4-11eb-9531-a87eeabdefba": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "325a441b-efe4-11eb-872d-a87eeabdefba": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "325a441c-efe4-11eb-9283-a87eeabdefba": null
+            },
+            "nodegroup_id": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "8be6d1a5-cbca-471a-a3f4-de79882116d9"
+          },
+          {
+            "data": {
+              "0b5b3430-233f-11ef-89fe-0242ac1a0006": "7b85f902-b660-4d7c-8882-5f3017b9ccf0",
+              "7bc54a3a-233f-11ef-8b6b-0242ac1a0006": null
+            },
+            "nodegroup_id": "0b5b3430-233f-11ef-89fe-0242ac1a0006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "0c3257ad-a555-4179-b84d-9598f67e7960"
+          },
+          {
+            "data": {
+              "f17f6584-efc7-11eb-81f1-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Cross ref" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "f17f6585-efc7-11eb-8ac0-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "f17f6587-efc7-11eb-b56f-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "f17f6588-efc7-11eb-8c12-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "f17f6589-efc7-11eb-9b90-a87eeabdefba": null,
+              "f17f658a-efc7-11eb-a216-a87eeabdefba": "27e7896d-0c65-47a0-8fcd-93c9adda9410"
+            },
+            "nodegroup_id": "f17f6581-efc7-11eb-b09f-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "8785bc17-1736-4f5d-abf3-cf586068ccdb"
+          },
+          {
+            "data": {
+              "3d418ea4-d23b-11ee-9373-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "3d419020-d23b-11ee-9373-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "3d41919c-d23b-11ee-9373-0242ac180006": null,
+              "3d419304-d23b-11ee-9373-0242ac180006": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "3d419476-d23b-11ee-9373-0242ac180006": "19afd557-cc21-44b4-b1df-f32568181b2c"
+            },
+            "nodegroup_id": "3d415e98-d23b-11ee-9373-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "201ca270-cd7e-4786-b72e-4385bf2092c5"
+          },
+          {
+            "data": {
+              "a1d4ee93-efc5-11eb-b117-a87eeabdefba": null,
+              "a1d4ee96-efc5-11eb-9b00-a87eeabdefba": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+              "a1d4ee97-efc5-11eb-82d3-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "a1d4ee99-efc5-11eb-b625-a87eeabdefba": "51796e90-9ef1-44ec-a967-81b077983768",
+              "a1d4ee9a-efc5-11eb-a6e5-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d4ee9b-efc5-11eb-b2c2-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "a1d4ee9c-efc5-11eb-b502-a87eeabdefba": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+              "a1d4ee9e-efc5-11eb-9ad7-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d4ee9f-efc5-11eb-b9ea-a87eeabdefba": "5e878125-f49a-438e-9256-10d36a39d4a9",
+              "a1d5030a-efc5-11eb-88c6-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "a1d5030c-efc5-11eb-890d-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d5030d-efc5-11eb-a884-a87eeabdefba": "bdb339b0-0f97-43f7-859b-3a03f6e60ea1",
+              "a1d5030e-efc5-11eb-bf4d-a87eeabdefba": "f8062103-0421-41ec-a1c6-2927ea4414dc",
+              "a1d5030f-efc5-11eb-bcc0-a87eeabdefba": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+              "a1d50310-efc5-11eb-964d-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d50312-efc5-11eb-bde1-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "a1d4ee93-efc5-11eb-b117-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "329e3f4e-8710-4e05-8e0b-5f9ccabd3fed"
+          },
+          {
+            "data": {
+              "64f4f797-f11b-11eb-bf2c-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "64f4f799-f11b-11eb-a083-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f4f79a-f11b-11eb-bfd8-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "64f4f79c-f11b-11eb-9ccb-a87eeabdefba": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+              "64f4f79d-f11b-11eb-9519-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f4f79e-f11b-11eb-9b52-a87eeabdefba": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+              "64f4f79f-f11b-11eb-b7d2-a87eeabdefba": "84283ac9-c985-4e94-966e-b4bd78c658c3",
+              "64f4f7a0-f11b-11eb-bfa0-a87eeabdefba": "0001",
+              "64f4f7a1-f11b-11eb-9eca-a87eeabdefba": "0001",
+              "64f4f7a2-f11b-11eb-8b03-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "64f4f7a3-f11b-11eb-a5d6-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "64f4f7a5-f11b-11eb-92a2-a87eeabdefba": "2024-06-13",
+              "64f4f7a6-f11b-11eb-9ab7-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "64f50b6f-f11b-11eb-b7df-a87eeabdefba": "4e234fcf-4052-483f-9e8c-d18f1935ebd1",
+              "64f50cb6-f11b-11eb-bfea-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f50cb7-f11b-11eb-8b7b-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "64f50cb8-f11b-11eb-94ed-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f50cb9-f11b-11eb-a483-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "64f50cba-f11b-11eb-8997-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "64f50cbb-f11b-11eb-8977-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "64f50cbc-f11b-11eb-ab5d-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "64f50cbe-f11b-11eb-9123-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "64f50cbf-f11b-11eb-ab46-a87eeabdefba": "2024-06-13",
+              "64f50cc0-f11b-11eb-8956-a87eeabdefba": "b29ec4bd-8cbf-4a00-9762-4f51ba013469",
+              "64f50cc1-f11b-11eb-92d2-a87eeabdefba": null
+            },
+            "nodegroup_id": "64f4f793-f11b-11eb-9a99-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "035de9eb-5cde-4878-9bb9-1d369927f47b"
+          },
+          {
+            "data": {
+              "577a40be-07b9-11ef-859d-0242ac140006": "2dfbd199-469a-42d9-98ae-ca9354ae21c1",
+              "650bb092-07b8-11ef-a15f-0242ac140006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "6be0ea15-21fe-4246-9768-7499a9193c29"
+                }
+              ],
+              "75cfb788-07b9-11ef-b9f5-0242ac140006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa629ea8-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62a024-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62a18c-d23e-11ee-9ae7-0242ac180006": "17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06",
+              "aa62a5d8-d23e-11ee-9ae7-0242ac180006": "a69c21b4-34e2-4781-b6c8-5c539e6fe14a",
+              "aa62a736-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "795a4573-0178-4e9b-ad1e-049cc3e95e11"
+                }
+              ],
+              "aa62a89e-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62aa06-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "6090a9b5-79d9-4106-8364-d773b902607f"
+                }
+              ],
+              "aa62ac36-d23e-11ee-9ae7-0242ac180006": "b2489138-dcc5-4151-999e-977809179bb3",
+              "aa62ada8-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "f59900d3-2e00-4620-b05f-b353b79cb9bd"
+                }
+              ],
+              "aa62af1a-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62b10e-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "35c10952-d40f-47a5-ad9b-8641a4ae5ce8"
+                }
+              ],
+              "aa62b302-d23e-11ee-9ae7-0242ac180006": "1541abf7-3a3c-40d2-a729-08fcd2fb2633"
+            },
+            "nodegroup_id": "aa629840-d23e-11ee-9ae7-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "e1e8bc1f-3838-455c-b8e5-9d160d6fd221"
+          },
+          {
+            "data": {
+              "0efa33e8-049e-11eb-bc30-f875a44e0e11": "496b4a50-3325-4704-b1c5-57542dc62011",
+              "46cd4b7e-049d-11eb-ba3a-f875a44e0e11": ["f681f1e3-1fca-4dc6-bf5e-975ceeaa354b"],
+              "5e8cc866-049d-11eb-afab-f875a44e0e11": "953238ab-fefc-42e9-9b20-0b4441df2b41",
+              "8e4109f9-04a1-11eb-9732-f875a44e0e11": ["d7ce0ba7-3fa8-4985-a1a4-f18b3868d90d"],
+              "8e4109fc-04a1-11eb-add6-f875a44e0e11": "1cc6f0e9-432f-4177-bae1-16cab5afd3ac",
+              "a0c7f934-04a4-11eb-9d78-f875a44e0e11": null,
+              "bdd57f54-04a1-11eb-bede-f875a44e0e11": ["8cbe6ac2-7e52-4b19-9bec-a5d864eb8614"],
+              "d72e2974-049d-11eb-84c6-f875a44e0e11": "b76086ee-8807-46b3-ae96-4ba1a5b505ae",
+              "ed06fc08-04a1-11eb-8131-f875a44e0e11": "d03ff048-0234-49c0-919b-c0c2376d7cb0"
+            },
+            "nodegroup_id": "55d6a53e-049c-11eb-8618-f875a44e0e11",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "d5093a69-38dc-4f50-acba-15dc1124acb3"
+          },
+          {
+            "data": {
+              "b2133e67-efdc-11eb-b3ea-a87eeabdefba": ["72e82b54-26f8-42f8-ae5c-867e9b3b75fd"],
+              "b2133e68-efdc-11eb-9f2d-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "b2133e69-efdc-11eb-a3d3-a87eeabdefba": "953238ab-fefc-42e9-9b20-0b4441df2b41",
+              "b2133e6a-efdc-11eb-a294-a87eeabdefba": "1cc6f0e9-432f-4177-bae1-16cab5afd3ac",
+              "b2133e6b-efdc-11eb-aa04-a87eeabdefba": ["be8d765c-44a4-4382-8658-1d137f469ad2"],
+              "b2133e6c-efdc-11eb-8c3c-a87eeabdefba": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+              "b2133e6d-efdc-11eb-b877-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "b2133e6e-efdc-11eb-a96a-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "b2133e6f-efdc-11eb-a120-a87eeabdefba": "0001",
+              "b2133e71-efdc-11eb-a6f7-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "b2133e72-efdc-11eb-a68d-a87eeabdefba": null,
+              "b2133e74-efdc-11eb-b241-a87eeabdefba": null,
+              "b2133e75-efdc-11eb-af28-a87eeabdefba": "0001"
+            },
+            "nodegroup_id": "b2133dda-efdc-11eb-ab07-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "689f06eb-1491-4fd6-8928-caa4aa4824c9"
+          },
+          {
+            "data": {
+              "77e8f28a-efdc-11eb-9600-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "77e8f28b-efdc-11eb-b757-a87eeabdefba": "f2054168-b8dc-416a-b6df-f5aff733c0c3",
+              "77e8f28c-efdc-11eb-b5fc-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "77e8f28d-efdc-11eb-afe4-a87eeabdefba": "920eb901-d9cc-4574-8c6a-279bd6fe9af3",
+              "77e8f28e-efdc-11eb-b9f5-a87eeabdefba": "0001",
+              "77e8f291-efdc-11eb-9441-a87eeabdefba": ["5ffa2eee-0a97-44ee-bdcc-e747bcb7d1ad"],
+              "77e8f292-efdc-11eb-acfd-a87eeabdefba": "a05714b3-17ef-4dc4-9ea7-a2e93fc4b3b0",
+              "77e8f293-efdc-11eb-ac31-a87eeabdefba": ["8cbe6ac2-7e52-4b19-9bec-a5d864eb8614"],
+              "77e8f294-efdc-11eb-a9a2-a87eeabdefba": "ece5f508-b292-480f-b727-36251846bd4f",
+              "77e8f295-efdc-11eb-a593-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "77e8f296-efdc-11eb-a8fe-a87eeabdefba": "d03ff048-0234-49c0-919b-c0c2376d7cb0",
+              "77e8f297-efdc-11eb-a06e-a87eeabdefba": "1cc6f0e9-432f-4177-bae1-16cab5afd3ac",
+              "77e8f298-efdc-11eb-9465-a87eeabdefba": "ab5445d1-514c-4ab5-9f92-c7d0c68c46f1",
+              "77e8f299-efdc-11eb-84bc-a87eeabdefba": "44b1e6af-5c5a-4c68-9eb9-4eb43bdbe823",
+              "77e8f29a-efdc-11eb-813a-a87eeabdefba": "d03ff048-0234-49c0-919b-c0c2376d7cb0",
+              "77e8f29b-efdc-11eb-b248-a87eeabdefba": ["8cbe6ac2-7e52-4b19-9bec-a5d864eb8614"],
+              "77e8f29c-efdc-11eb-a0ba-a87eeabdefba": "39651f89-87a1-4b99-bce5-30a2cd54341c",
+              "77e8f29d-efdc-11eb-b890-a87eeabdefba": null,
+              "77e8f29e-efdc-11eb-a8d8-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "77e8f29f-efdc-11eb-a58e-a87eeabdefba": "0001",
+              "77e9065c-efdc-11eb-bb1d-a87eeabdefba": "4fa77fc1-252a-4930-a756-71dca73aaf31",
+              "77e9065e-efdc-11eb-baa2-a87eeabdefba": "ab5445d1-514c-4ab5-9f92-c7d0c68c46f1",
+              "77e90834-efdc-11eb-b2b9-a87eeabdefba": ["885e2b88-8a70-4b8f-980b-bafe2cc4d9b5"],
+              "77e90835-efdc-11eb-91d3-a87eeabdefba": "f2054168-b8dc-416a-b6df-f5aff733c0c3",
+              "77e90836-efdc-11eb-8022-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "77e90837-efdc-11eb-a451-a87eeabdefba": "953238ab-fefc-42e9-9b20-0b4441df2b41",
+              "77e90838-efdc-11eb-bc1c-a87eeabdefba": "496b4a50-3325-4704-b1c5-57542dc62011"
+            },
+            "nodegroup_id": "77e8f287-efdc-11eb-a790-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "7492c431-e305-4bb2-9ade-11f788c51d29"
+          },
+          {
+            "data": {
+              "6af2a0ce-efc5-11eb-88d1-a87eeabdefba": "a9ef4ad1-2ed6-4204-9140-1c008c01c016",
+              "6af2a0cf-efc5-11eb-806d-a87eeabdefba": "2024-06-13",
+              "6af2a0d0-efc5-11eb-ab44-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6af2b4b4-efc5-11eb-a0d8-a87eeabdefba": null,
+              "6af2b4b5-efc5-11eb-9977-a87eeabdefba": "8f985e91-6cd2-4d70-a03c-b49a50d09a3b",
+              "6af2b4b6-efc5-11eb-b8cf-a87eeabdefba": "337514d3-a8a8-46c1-a89a-aea83e582a8d",
+              "6af2b692-efc5-11eb-8adf-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "6af2b693-efc5-11eb-a32f-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "6af2b695-efc5-11eb-a0c0-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "6af2b696-efc5-11eb-b0b5-a87eeabdefba": "795add69-bc13-4301-85b1-3e4167a0278f",
+              "6af2b697-efc5-11eb-8152-a87eeabdefba": "85c26c81-e356-4454-a2ba-67e7ad9b95cd",
+              "6af2b698-efc5-11eb-9eeb-a87eeabdefba": "22215ca1-7fdd-4dde-8a74-8b06ad5c71bc",
+              "6af2b699-efc5-11eb-b88e-a87eeabdefba": null,
+              "6af2b69a-efc5-11eb-848d-a87eeabdefba": "c9bc15cc-46fe-4d34-a530-a228854845c8",
+              "6af2b69b-efc5-11eb-8d5a-a87eeabdefba": "2024-06-13",
+              "6af2b69c-efc5-11eb-bf2b-a87eeabdefba": "8687011e-9dfa-463e-89e2-79bfdbbe7dda",
+              "6af2b69e-efc5-11eb-801e-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6af2b6a0-efc5-11eb-985a-a87eeabdefba": "2024-06-21",
+              "6af2b6a2-efc5-11eb-aef4-a87eeabdefba": "62f3f620-ea25-46c8-9a7b-dbadf23aa874",
+              "6af2b6a3-efc5-11eb-af76-a87eeabdefba": ["4052687c-0d73-4ac3-a399-4b5fc844dcf6"],
+              "6af2b6a4-efc5-11eb-b5d4-a87eeabdefba": null
+            },
+            "nodegroup_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "d8f35318-3763-42d7-be2c-df9873d92ace"
+          },
+          {
+            "data": {},
+            "nodegroup_id": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "7a5e8b0c-d58e-481d-876a-45c9f360516a"
+          },
+          {
+            "data": { "d48c6688-1f5e-11ef-b84e-0242ac150006": 100 },
+            "nodegroup_id": "d48c6688-1f5e-11ef-b84e-0242ac150006",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "49bb8db3-119c-42ce-885c-0a6d58fb9a20"
+          },
+          {
+            "data": {
+              "447973ce-d7e2-11ee-a4a1-0242ac120006": "72a92f38-f802-4926-9758-d1d0f38e1f00"
+            },
+            "nodegroup_id": "447973ce-d7e2-11ee-a4a1-0242ac120006",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "aeb0ea46-d4d3-460f-b154-d30eeba05fb7"
+          },
+          {
+            "data": {
+              "87d3c3ef-f44f-11eb-a23c-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7c8-f44f-11eb-938d-a87eeabdefba": "f5bbf49b-eb8b-40df-8031-8e3788cb7c7d",
+              "87d3d7e3-f44f-11eb-a725-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "4b03bb30-fa88-4f77-85a5-bf3bcf41f8eb"
+          },
+          {
+            "data": {
+              "87d3c3e9-f44f-11eb-ac77-a87eeabdefba": "35999571-5ac9-4bca-abc6-db5ba2588253",
+              "87d3c3ea-f44f-11eb-b532-a87eeabdefba": "1d7ea7f5-158f-4c5c-8fed-88155acf0497",
+              "87d3c3eb-f44f-11eb-be3c-a87eeabdefba": "f1ec77ee-c2f2-4cad-a128-87c1537adb54",
+              "87d3c407-f44f-11eb-a93d-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3d7be-f44f-11eb-b976-a87eeabdefba": "35999571-5ac9-4bca-abc6-db5ba2588253",
+              "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba": "e756530f-40af-4a88-a1d5-39b03c1b809a",
+              "87d3d7c5-f44f-11eb-8459-a87eeabdefba": "ce7e79af-4d3f-4fb7-bbb2-caaee0f98261"
+            },
+            "nodegroup_id": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "0d710942-0eae-4580-ba0f-a50fc11d5628"
+          },
+          {
+            "data": {
+              "87d39b36-f44f-11eb-a905-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b3d-f44f-11eb-aa0d-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b3e-f44f-11eb-bec5-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d39b3f-f44f-11eb-be51-a87eeabdefba": "67b76fd1-4906-4055-b493-711c93fc0996",
+              "87d39b40-f44f-11eb-9828-a87eeabdefba": "8a37a140-0be2-44bc-aa64-74c1f3f3b372",
+              "87d39b41-f44f-11eb-8be6-a87eeabdefba": "f27c88b2-d8e3-46f7-b730-ceae86161447",
+              "87d39b42-f44f-11eb-9a05-a87eeabdefba": "2d5e7f32-ee8d-4ae5-b660-3b7eeb9604eb",
+              "87d39b43-f44f-11eb-8b0b-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b49-f44f-11eb-a564-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b4b-f44f-11eb-80ef-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b4c-f44f-11eb-8cf1-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b4d-f44f-11eb-8dbc-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b4e-f44f-11eb-a9d1-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b4f-f44f-11eb-b2d3-a87eeabdefba": "98355a3e-6f84-45ae-9281-8aa7e20d47f5",
+              "87d39b50-f44f-11eb-8284-a87eeabdefba": "78b7f967-9831-42ea-b744-1737c5cb2ebc",
+              "87d3d7b9-f44f-11eb-a91d-a87eeabdefba": "3ccd7de2-49c9-44d1-99cd-47cc83fa583e",
+              "87d3d7ba-f44f-11eb-a2dd-a87eeabdefba": "11f5e4bc-4f4d-4527-8b35-3c4652ade77f",
+              "87d3d7dd-f44f-11eb-bb45-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3d7de-f44f-11eb-99cc-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3d7df-f44f-11eb-8389-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3d7e0-f44f-11eb-9594-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff21-f44f-11eb-9ce9-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff23-f44f-11eb-ad2f-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff25-f44f-11eb-a4eb-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff27-f44f-11eb-a92b-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff28-f44f-11eb-a365-a87eeabdefba": "6b77c7ee-1b64-4a0d-a870-e554e59f2eb6",
+              "87d3ff29-f44f-11eb-b39f-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3ff2b-f44f-11eb-aad3-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3ff2c-f44f-11eb-b680-a87eeabdefba": "326b5f21-b744-41a1-a009-e60adb9de95c",
+              "87d3ff2d-f44f-11eb-b859-a87eeabdefba": "2103d23d-2b68-4bfb-ad23-2689f060e357",
+              "87d3ff2e-f44f-11eb-8319-a87eeabdefba": "34260e17-20ef-4cc4-b512-1ebcc6a55f1e",
+              "87d3ff31-f44f-11eb-8a20-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3ff32-f44f-11eb-aa82-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff33-f44f-11eb-94d4-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8"
+            },
+            "nodegroup_id": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "fcbc3fcb-757a-4247-bbfc-01da81580ef3"
+          },
+          {
+            "data": {
+              "87d39b51-f44f-11eb-ba0c-a87eeabdefba": "91c9d738-2306-4f87-8300-0facfa417f0e",
+              "87d39b52-f44f-11eb-aadd-a87eeabdefba": "2024-06-08",
+              "87d3c3e8-f44f-11eb-9866-a87eeabdefba": "35999571-5ac9-4bca-abc6-db5ba2588253",
+              "87d3c3ec-f44f-11eb-8b03-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "87d3c3ed-f44f-11eb-8d6c-a87eeabdefba": "bc85f924-4079-4ecc-9ebe-8bc7ba57abbf",
+              "87d3c3f7-f44f-11eb-bd00-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "87d3c3f8-f44f-11eb-b343-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "87d3c3fc-f44f-11eb-beff-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7b8-f44f-11eb-9b47-a87eeabdefba": "2024-06-14",
+              "87d3d7c1-f44f-11eb-ade9-a87eeabdefba": "65ef7ae0-6a6b-4fac-9324-41dd8e712880",
+              "87d3d7c3-f44f-11eb-aeaf-a87eeabdefba": "c6dd5482-6687-44ae-bb54-7d49e084664a",
+              "87d3d7c4-f44f-11eb-bf67-a87eeabdefba": "b29ec4bd-8cbf-4a00-9762-4f51ba013469",
+              "87d3d7c6-f44f-11eb-a1bd-a87eeabdefba": "d8327844-9336-4928-8ba9-637448c6a6e5",
+              "87d3d7ca-f44f-11eb-b80a-a87eeabdefba": "d8f675d0-0f47-4987-b47a-86295b5130a4",
+              "87d3d7e2-f44f-11eb-951c-a87eeabdefba": "1d5c7465-7225-4bca-b1df-045a86e286b2"
+            },
+            "nodegroup_id": "87d39b22-f44f-11eb-887e-a87eeabdefba",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "282959a3-a6ee-4457-b6b1-fe601eba95e7"
+          },
+          {
+            "data": { "2fdedbd0-1459-11ef-8cdd-0242ac120006": "J1956079808" },
+            "nodegroup_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "3a716b01-a82c-47f5-8f5a-9ebb2f87ae8d"
+          },
+          {
+            "data": {
+              "7d5ec05a-dbc9-11ee-8835-0242ac120006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "7d5ec1d6-dbc9-11ee-8835-0242ac120006": "35508b82-062a-469f-830a-6040c5e5eb8c",
+              "7d5ec352-dbc9-11ee-8835-0242ac120006": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "7d5eb9d4-dbc9-11ee-8835-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "c4031671-abf4-477e-8507-748b73508b01"
+          },
+          {
+            "data": {
+              "87d39b37-f44f-11eb-b053-a87eeabdefba": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+              "87d39b38-f44f-11eb-b2f7-a87eeabdefba": "e5739feb-21d0-430a-968f-caadd8e4ccf7",
+              "87d3c3fb-f44f-11eb-a313-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3c3ff-f44f-11eb-b418-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3c400-f44f-11eb-8b9a-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "87d3c404-f44f-11eb-ac71-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3c405-f44f-11eb-b6b7-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3d7b6-f44f-11eb-a60d-a87eeabdefba": "2024-06-13",
+              "87d3d7cb-f44f-11eb-9df1-a87eeabdefba": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "87d3d7cd-f44f-11eb-83d9-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3d7d0-f44f-11eb-81ae-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3d7d6-f44f-11eb-97dd-a87eeabdefba": "ecf19964-58a0-49a1-a31a-76262d807130",
+              "87d3ff20-f44f-11eb-866a-a87eeabdefba": null
+            },
+            "nodegroup_id": "87d3d7ec-f44f-11eb-bab9-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "03d69b7e-8b26-4dc6-b02e-bd3679144ad5"
+          },
+          {
+            "data": {
+              "87d39b31-f44f-11eb-ae8e-a87eeabdefba": "8d653928-e41f-455f-89a0-d649d24feafe",
+              "87d39b3b-f44f-11eb-a159-a87eeabdefba": null,
+              "87d3c3f5-f44f-11eb-86f6-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3c406-f44f-11eb-82a0-a87eeabdefba": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+              "87d3c408-f44f-11eb-b594-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7b7-f44f-11eb-acd2-a87eeabdefba": "2024-06-13",
+              "87d3d7cf-f44f-11eb-8186-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3d7d8-f44f-11eb-bce5-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "87d3d7d9-f44f-11eb-82a3-a87eeabdefba": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "87d3d7da-f44f-11eb-9f3a-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3d7e8-f44f-11eb-b20f-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3d7e9-f44f-11eb-83a9-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3d7ea-f44f-11eb-b263-a87eeabdefba": "e5739feb-21d0-430a-968f-caadd8e4ccf7"
+            },
+            "nodegroup_id": "87d3c3f1-f44f-11eb-9d33-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "cc02e754-2fe1-4024-b0d2-5ccba48276d2"
+          },
+          {
+            "data": {
+              "87d39b33-f44f-11eb-83f5-a87eeabdefba": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+              "87d39b35-f44f-11eb-b368-a87eeabdefba": "dc33ee6d-e7e4-4095-a31f-05e381195aee",
+              "87d3c3f2-f44f-11eb-8649-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3c3f3-f44f-11eb-883a-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3d7bc-f44f-11eb-b884-a87eeabdefba": "2024-06-15",
+              "87d3d7ce-f44f-11eb-823a-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3d7d2-f44f-11eb-83ec-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3d7d3-f44f-11eb-9bde-a87eeabdefba": "e5739feb-21d0-430a-968f-caadd8e4ccf7",
+              "87d3d7d4-f44f-11eb-ad91-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7d5-f44f-11eb-9125-a87eeabdefba": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "87d3d7d7-f44f-11eb-a6e8-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "87d3ff1e-f44f-11eb-bcb4-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3ff1f-f44f-11eb-b7fb-a87eeabdefba": null
+            },
+            "nodegroup_id": "87d3d7d1-f44f-11eb-b908-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "b524feda-e8f1-4a7f-8f4e-f2711117bb46"
+          },
+          {
+            "data": {
+              "87d39b34-f44f-11eb-adbd-a87eeabdefba": "e6cf2f57-55f1-4598-ab1a-1f0c4285b9b2",
+              "87d3c402-f44f-11eb-9f4e-a87eeabdefba": "ed219b43-9a0c-443d-a930-83b367660398"
+            },
+            "nodegroup_id": "87d3c402-f44f-11eb-9f4e-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "0d7e77f8-dd0b-4ad4-9703-f9723edcf389"
+          },
+          {
+            "data": {
+              "87d3c3fa-f44f-11eb-bca2-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3c403-f44f-11eb-b85f-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3d7f1-f44f-11eb-9a2a-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7f6-f44f-11eb-ae86-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3ff18-f44f-11eb-ba94-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3ff19-f44f-11eb-868d-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3ff1a-f44f-11eb-8ca1-a87eeabdefba": "8a96a261-cd79-48e2-9f12-74924c152b00"
+            },
+            "nodegroup_id": "87d3d7f4-f44f-11eb-8904-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "7e5bda04-9d4f-4fb0-9d1e-9445b79b7c80"
+          },
+          {
+            "data": {
+              "87d39b3c-f44f-11eb-975c-a87eeabdefba": "5cea99e4-8835-4721-a2b8-7bba45f55889"
+            },
+            "nodegroup_id": "87d3c3fe-f44f-11eb-9ea3-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "0bad1b2e-cf2e-4076-b7db-50247aeb2ce6"
+          },
+          {
+            "data": {
+              "87d39b32-f44f-11eb-a11e-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7db-f44f-11eb-a250-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "87d3d7ed-f44f-11eb-bf7d-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "87d3d7f0-f44f-11eb-b73d-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "87d3d7f3-f44f-11eb-b560-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18"
+            },
+            "nodegroup_id": "87d3d7ee-f44f-11eb-8ba1-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "13357afb-cad4-4054-8031-2568302eb8b4"
+          },
+          {
+            "data": {
+              "87d39b3a-f44f-11eb-84c8-a87eeabdefba": "d3284599-47b3-47fe-8675-d5a61086df50",
+              "87d3ff1b-f44f-11eb-8e30-a87eeabdefba": "5cfdc599-978d-4685-bb0c-dff3ca650873"
+            },
+            "nodegroup_id": "87d3ff1b-f44f-11eb-8e30-a87eeabdefba",
+            "parenttile_id": "fb60e846-b28e-468c-99a1-31126475c386",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "3a9b7465-7222-4dfd-99fe-989a6df8f3d3"
+          },
+          {
+            "data": {
+              "87d39b44-f44f-11eb-b4f1-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "87d39b45-f44f-11eb-8242-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "87d3c2a4-f44f-11eb-a170-a87eeabdefba": "2024-06-19",
+              "87d3c3ee-f44f-11eb-a26f-a87eeabdefba": ["00a3a8e9-f7dd-412c-b14f-4b4e585d3001"],
+              "87d3c3f0-f44f-11eb-87e0-a87eeabdefba": ["730d77e8-1eb8-4e90-adb1-0a708cb28c9e"],
+              "87d3c3f9-f44f-11eb-bed4-a87eeabdefba": "2024-06-27",
+              "87d3c3fd-f44f-11eb-97d8-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7bf-f44f-11eb-ac62-a87eeabdefba": "d079f49f-13ed-480c-87bb-e5c77ee901e2",
+              "87d3d7c0-f44f-11eb-8304-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "87d3d7e4-f44f-11eb-9d29-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "87d3d7e5-f44f-11eb-bab9-a87eeabdefba": "7a518871-4949-4e57-908e-eb17751a404a",
+              "87d3d7e6-f44f-11eb-8cb3-a87eeabdefba": "f1a24b1f-7a72-4718-b54d-604644cc9e99",
+              "87d3d7e7-f44f-11eb-bc69-a87eeabdefba": ["2d8f8d5c-67fa-4c82-baaf-4a090fcfa5c6"]
+            },
+            "nodegroup_id": "87d38728-f44f-11eb-900d-a87eeabdefba",
+            "parenttile_id": "7a5e8b0c-d58e-481d-876a-45c9f360516a",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "97ea8833-6985-4759-8734-6c018d785e62"
+          },
+          {
+            "data": {
+              "2c151cea-d240-11ee-9373-0242ac180006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "3460040c-d23e-11ee-9ae7-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "346006e6-d23e-11ee-9ae7-0242ac180006": null,
+              "34600970-d23e-11ee-9ae7-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "34600b82-d23e-11ee-9ae7-0242ac180006": "39a21ebf-7dd6-4a7f-a211-9453202f60aa",
+              "46f726f2-d240-11ee-9373-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "5261762e-d23f-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "8762bc00-53a8-4c0c-8136-e678dae2ea00"
+                }
+              ],
+              "656e16e0-d240-11ee-9373-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "10d3aa8f-ba1c-4548-afbd-5a5041d5b30b"
+                }
+              ],
+              "6ccf392e-d23f-11ee-9ae7-0242ac180006": "f9a2893b-655e-48fa-af3c-8d09d37c9ec2",
+              "c4ba462e-d23f-11ee-9373-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e"
+            },
+            "nodegroup_id": "345ffce6-d23e-11ee-9ae7-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "9b68ae3c-a683-4dad-8006-0b60e5228dc9"
+          },
+          {
+            "data": {
+              "ba345577-b554-11ea-a9ee-f875a44e0e11": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "ba345578-b554-11ea-97b3-f875a44e0e11": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "ba345579-b554-11ea-9232-f875a44e0e11": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "ba34557a-b554-11ea-9a51-f875a44e0e11": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "ba34557b-b554-11ea-ab95-f875a44e0e11": "87c40306-43a1-4522-a496-d0d773029f2f"
+            },
+            "nodegroup_id": "ba342e69-b554-11ea-a027-f875a44e0e11",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "3ce85984-c584-491d-91e3-4eee11ea99b5"
+          },
+          {
+            "data": {
+              "eeec9e68-d23c-11ee-9373-0242ac180006": "2024-06-14",
+              "eeeca17e-d23c-11ee-9373-0242ac180006": null,
+              "eeeca44e-d23c-11ee-9373-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "eeec9986-d23c-11ee-9373-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "2e269406-8681-4958-b6b3-d3c5df72495a"
+          },
+          {
+            "data": {
+              "0532349a-1f5d-11ef-a340-0242ac150006": "4b46c463-b16e-4f3d-93ee-f0a9bdd78925",
+              "21aa66ce-1f5d-11ef-b84e-0242ac150006": "62f3f620-ea25-46c8-9a7b-dbadf23aa874"
+            },
+            "nodegroup_id": "0532349a-1f5d-11ef-a340-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "337b4801-88c9-4e60-b572-3ec3558e1809"
+          },
+          {
+            "data": {
+              "29b5adb2-0eda-11ef-aa66-0242ac140006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "808b1cc6-0eda-11ef-a2cd-0242ac140006": "f666c25d-90a4-4b1d-bca6-465a7e4815ce"
+            },
+            "nodegroup_id": "a00cef8a-0ed9-11ef-aa66-0242ac140006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "f0673541-c812-4fcc-af38-d23e4423bc41"
+          },
+          {
+            "data": {
+              "1200e850-1905-11ef-aa9f-0242ac150006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "58bff06a-bbd2-4b1c-bfd5-60cc32cc662f"
+                }
+              ],
+              "3a0ab672-190b-11ef-aa9c-0242ac150006": "294f38d0-e391-4f7d-af83-72fbf7fcdfcb",
+              "3ba88f30-190c-11ef-905d-0242ac150006": {
+                "en": { "direction": "ltr", "value": "REF/2024/hkCe3Y" }
+              },
+              "3ba890e8-190c-11ef-905d-0242ac150006": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "3ba89282-190c-11ef-905d-0242ac150006": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "6f2d7240-190b-11ef-905d-0242ac150006": "c9bc15cc-46fe-4d34-a530-a228854845c8",
+              "9382b7b4-1905-11ef-aa9f-0242ac150006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "c5423861-ecde-49f1-87d1-739d1f9da174"
+                }
+              ],
+              "ac25af94-1903-11ef-aa9c-0242ac150006": "2024-06-14",
+              "ac25b480-1903-11ef-aa9c-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "ac25b912-1903-11ef-aa9c-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "b7ddb762-1905-11ef-aa9f-0242ac150006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "c995b1ae-1904-11ef-aa9f-0242ac150006": "2aab4259-2381-4987-907a-fa461dfc0adc",
+              "d4e4c1ac-1905-11ef-aa9c-0242ac150006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "d9368892-1902-11ef-aa9c-0242ac150006": "2024-06-13",
+              "d9368c0c-1902-11ef-aa9c-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "d9368f18-1902-11ef-aa9c-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "e8c637c4-1904-11ef-aa9f-0242ac150006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e"
+            },
+            "nodegroup_id": "3897b87a-1902-11ef-aa9f-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "437075a7-471d-44ff-894e-b1e4c7a3b121"
+          },
+          {
+            "data": {
+              "901eff84-1f3f-11ef-ac74-0242ac150006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "4e6c2d46-1f3f-11ef-ac74-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "4e4bf111-0507-4123-9783-32f3abe1f4a6"
+          },
+          {
+            "data": {
+              "1e2e1872-1f5a-11ef-b84e-0242ac150006": "61e61e5c-e0b2-4127-8fba-42ad471f4898",
+              "4a60d056-1f5a-11ef-a340-0242ac150006": null
+            },
+            "nodegroup_id": "1e2e1872-1f5a-11ef-b84e-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "2dad19b4-0ecd-458c-bc74-7ee24d058c91"
+          },
+          {
+            "data": {
+              "676d47fc-9c1c-11ea-b5b0-f875a44e0e11": "85c26c81-e356-4454-a2ba-67e7ad9b95cd",
+              "676d47fd-9c1c-11ea-9d73-f875a44e0e11": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "676d47fe-9c1c-11ea-aa28-f875a44e0e11": "8f985e91-6cd2-4d70-a03c-b49a50d09a3b",
+              "676d47ff-9c1c-11ea-b07f-f875a44e0e11": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "676d4800-9c1c-11ea-93f6-f875a44e0e11": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "676d4801-9c1c-11ea-8d11-f875a44e0e11": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "676d4802-9c1c-11ea-a30f-f875a44e0e11": "5a88136a-bf3a-4b48-a830-a7f42000dd24"
+            },
+            "nodegroup_id": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "3e91050e-a5a5-4ea7-aaac-4339745947fd"
+          },
+          {
+            "data": {
+              "49c6587a-f5af-11ee-9f07-0242ac170006": "7f1e7061-8bb0-4338-9342-118f1e9214aa",
+              "49c65b86-f5af-11ee-9f07-0242ac170006": "956f9779-3524-448e-b2de-eabf2de95d51",
+              "49c65ece-f5af-11ee-9f07-0242ac170006": null
+            },
+            "nodegroup_id": "49c65316-f5af-11ee-9f07-0242ac170006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "7ba20fda-54e7-4df2-ad22-1945d2680a79"
+          },
+          {
+            "data": {
+              "ce8a6282-0edb-11ef-a2cd-0242ac140006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "8c52472c-0edb-11ef-aa66-0242ac140006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "69c2688b-061e-433e-bcb8-cf08a6238fb4"
+          },
+          {
+            "data": {
+              "0bb36520-1f3d-11ef-ac74-0242ac150006": "bb33f953-2a12-44ed-9fe7-4cd5023104cc",
+              "ce44532a-1f3c-11ef-ac74-0242ac150006": "a55ceb8b-e8d4-4eb2-be78-fab2df7e278c"
+            },
+            "nodegroup_id": "ce44532a-1f3c-11ef-ac74-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "36cad5f8-ac69-41c3-be46-97f3c886df75"
+          },
+          {
+            "data": {
+              "2ace50ae-dbc8-11ee-b0db-0242ac120006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "2ace5266-dbc8-11ee-b0db-0242ac120006": "35508b82-062a-469f-830a-6040c5e5eb8c",
+              "2ace540a-dbc8-11ee-b0db-0242ac120006": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "2ace483e-dbc8-11ee-b0db-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "3b075db5-5c19-49ed-938a-f342ae99a38b"
+          },
+          {
+            "data": {},
+            "nodegroup_id": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "95cbf767-1037-4145-9de6-bea09ec8b556"
+          },
+          {
+            "data": {
+              "d2592c72-d62d-11ee-9454-0242ac180006": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "d2592e8e-d62d-11ee-9454-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "d259306e-d62d-11ee-9454-0242ac180006": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "d259324e-d62d-11ee-9454-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "d259341a-d62d-11ee-9454-0242ac180006": null
+            },
+            "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "f30cbe1f-51ba-4eac-810c-61ffe9eca95a"
+          },
+          {
+            "data": {
+              "d9bd0b80-d643-11ee-8b04-0242ac180006": "2024-06-07",
+              "d9bd0cfc-d643-11ee-8b04-0242ac180006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "d9bd0fea-d643-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "d9bd0504-d643-11ee-8b04-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "021cda86-c154-4305-9ddf-1fa5183702e4"
+          },
+          {
+            "data": {
+              "07aef484-d632-11ee-a5a3-0242ac180006": "ddbf586d-1970-46bd-ad19-c865eae3bddc",
+              "247032cc-d632-11ee-9454-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "28db88ea-d630-11ee-9454-0242ac180006": "3ccb1f26-64a0-4a77-a61b-42b5a98678c0",
+              "3bd2a2ca-d631-11ee-a5a3-0242ac180006": "58efc6e4-840b-43e5-b91f-0cf087833e75",
+              "4564a05a-d630-11ee-9454-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "506dd6ae-d632-11ee-9454-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "bf6cec55-b4f7-40e4-b638-5c5177789983"
+                }
+              ],
+              "5b469cc4-d631-11ee-a5a3-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "6d65ffb8-d630-11ee-9454-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "469479fb-b8c0-489a-9733-36f7aeb4d9c6"
+                }
+              ],
+              "a53af708-d631-11ee-a5a3-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "8b34d019-c6f4-45a0-a9d5-66ca94ea80cf"
+                }
+              ]
+            },
+            "nodegroup_id": "cacc9d20-d62f-11ee-9454-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "a54348cd-58a2-4a42-bb43-d89b592ce89b"
+          },
+          {
+            "data": {
+              "a0cb43ee-d62c-11ee-9454-0242ac180006": "3d158426-5f8c-411f-834b-01f8b6e0be61",
+              "e7ca82dc-d62c-11ee-8f7b-0242ac180006": "ffcdfdf2-0222-473a-934d-58dc6a703cbf"
+            },
+            "nodegroup_id": "a0cb43ee-d62c-11ee-9454-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "7d668697-f5f6-43f5-be2d-d2118e749e2d"
+          },
+          {
+            "data": {
+              "2001a33a-d711-11ee-9dd0-0242ac120006": {
+                "en": { "direction": "ltr", "value": "INC/2024/lRXHOn" }
+              },
+              "2001a574-d711-11ee-9dd0-0242ac120006": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "2001a6f0-d711-11ee-9dd0-0242ac120006": "7346be23-bff6-42dc-91d0-7c5182aa0031"
+            },
+            "nodegroup_id": "20017860-d711-11ee-9dd0-0242ac120006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "25bac4d1-ae74-4c8d-b015-2731da42128b"
+          },
+          {
+            "data": {
+              "723aaf3c-d62d-11ee-8f7b-0242ac180006": "9738d9bb-490e-4355-88fb-07bb0073b001",
+              "98a851e2-d62d-11ee-9454-0242ac180006": "ffcdfdf2-0222-473a-934d-58dc6a703cbf"
+            },
+            "nodegroup_id": "723aaf3c-d62d-11ee-8f7b-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "e247fbb4-9299-441e-9dfe-fd47804887ca"
+          },
+          {
+            "data": {
+              "96656e9c-d646-11ee-8b04-0242ac180006": "2024-06-13",
+              "9665702c-d646-11ee-8b04-0242ac180006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "9665731a-d646-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "9665660e-d646-11ee-8b04-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "de7bfb4f-59dd-4b7f-aeb3-b58578d1aae1"
+          },
+          {
+            "data": {
+              "2255201a-d646-11ee-8a7c-0242ac180006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "3d963b16-d646-11ee-8b04-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "6037c630-d646-11ee-8b04-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "dc5f6f25-f012-4ae6-a609-82e12ab0bf7f"
+                }
+              ]
+            },
+            "nodegroup_id": "d0f45bbe-d645-11ee-8b04-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "d7e45244-7c49-477d-aa6a-91a2953bd0df"
+          },
+          {
+            "data": {
+              "2596ab22-d62d-11ee-8f7b-0242ac180006": "638cb164-ca4b-441b-8c69-f20c8e92626e",
+              "4920bbd2-d62d-11ee-9454-0242ac180006": "ffcdfdf2-0222-473a-934d-58dc6a703cbf"
+            },
+            "nodegroup_id": "2596ab22-d62d-11ee-8f7b-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "de7f40f0-218d-4304-9265-61e992dc2dd8"
+          },
+          {
+            "data": {
+              "788bf15a-d643-11ee-8b04-0242ac180006": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
+              "8e7ca022-d643-11ee-8a7c-0242ac180006": "c9bc15cc-46fe-4d34-a530-a228854845c8"
+            },
+            "nodegroup_id": "788bf15a-d643-11ee-8b04-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "6f06128e-fe42-4c29-9870-54a04dce3137"
+          },
+          {
+            "data": {
+              "17cdafa6-d649-11ee-8b04-0242ac180006": "c9bc15cc-46fe-4d34-a530-a228854845c8",
+              "2a8f11a4-d64c-11ee-8b04-0242ac180006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "30d5defa-d64a-11ee-8b04-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "447c7fa0-d649-11ee-9a11-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "7ac8a992-d64b-11ee-8b04-0242ac180006": "2024-06-07",
+              "7ac8ab18-d64b-11ee-8b04-0242ac180006": "2024-06-14",
+              "7ac8ac8a-d64b-11ee-8b04-0242ac180006": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+              "7ac8af50-d64b-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "7e3f910c-d64c-11ee-8b04-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "a1a755d0-d64c-11ee-8b04-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "f144cae6-96f8-40fa-9ba4-323f6ac5b4cb"
+                }
+              ],
+              "a1f10602-d648-11ee-9a11-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "a1f10936-d648-11ee-9a11-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1f10a9e-d648-11ee-9a11-0242ac180006": "39a21ebf-7dd6-4a7f-a211-9453202f60aa",
+              "dff3a4d2-d648-11ee-8b04-0242ac180006": ["ce9e43cc-9f46-426b-83e3-eee965818a5f"],
+              "e8d511cc-d64c-11ee-8b04-0242ac180006": "2024-06-13",
+              "e8d515a0-d64c-11ee-8b04-0242ac180006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "e8d51938-d64c-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
+            "parenttile_id": "95cbf767-1037-4145-9de6-bea09ec8b556",
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "54ae2441-c714-4605-a958-4b9924cd5558"
+          },
+          {
+            "data": {
+              "e29ba81e-1f4b-11ef-ac74-0242ac150006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "b6baf62d-7254-4a1f-8803-5ff7846c1acc"
+          },
+          {
+            "data": {
+              "126c0042-dbc3-11ee-8835-0242ac120006": "2024-06-21",
+              "126c0330-dbc3-11ee-8835-0242ac120006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "126c05e2-dbc3-11ee-8835-0242ac120006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "bbedbcd1-195c-4b15-8165-fc574e4b35b4"
+          },
+          {
+            "data": {
+              "0c43e366-dbc7-11ee-8835-0242ac120006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "1" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "0c43e816-dbc7-11ee-8835-0242ac120006": "35508b82-062a-469f-830a-6040c5e5eb8c",
+              "0c43e9b0-dbc7-11ee-8835-0242ac120006": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "0c43d9de-dbc7-11ee-8835-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "df8bd341-e215-4415-b269-c7829ed1ef4f",
+            "sortorder": 0,
+            "tileid": "9b278ac4-c0ab-4fa0-9507-ca95744b59d4"
+          }
+        ]
+      },
+      {
+        "resourceinstance": {
+          "descriptors": { "en": { "description": "2", "map_popup": " 2", "name": "SMR/02" } },
+          "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+          "graph_publication_id": "1cb7e192-2966-11ef-ad58-0242ac1f0006",
+          "legacyid": null,
+          "name": "SMR/02",
+          "principaluser_id": 1,
+          "resourceinstanceid": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+          "publication_id": "1cb7e192-2966-11ef-ad58-0242ac1f0006"
+        },
+        "tiles": [
+          {
+            "data": {
+              "577a40be-07b9-11ef-859d-0242ac140006": "2dfbd199-469a-42d9-98ae-ca9354ae21c1",
+              "650bb092-07b8-11ef-a15f-0242ac140006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "2d5414b0-62e2-4e37-9f43-176b4854091f"
+                }
+              ],
+              "75cfb788-07b9-11ef-b9f5-0242ac140006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa629ea8-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62a024-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62a18c-d23e-11ee-9ae7-0242ac180006": "17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06",
+              "aa62a5d8-d23e-11ee-9ae7-0242ac180006": "a69c21b4-34e2-4781-b6c8-5c539e6fe14a",
+              "aa62a736-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "aa81b700-9649-4160-844c-a5dce2f58b3c"
+                }
+              ],
+              "aa62a89e-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62aa06-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "5bc076e8-7291-49f1-aa7c-6c9edf12eed6"
+                }
+              ],
+              "aa62ac36-d23e-11ee-9ae7-0242ac180006": "b2489138-dcc5-4151-999e-977809179bb3",
+              "aa62ada8-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "9a13c70e-c6d2-443c-86f9-98fd5a0ebf8b"
+                }
+              ],
+              "aa62af1a-d23e-11ee-9ae7-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "aa62b10e-d23e-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "9290f97d-b09f-450b-97fe-7e26fc145f19"
+                }
+              ],
+              "aa62b302-d23e-11ee-9ae7-0242ac180006": "1541abf7-3a3c-40d2-a729-08fcd2fb2633"
+            },
+            "nodegroup_id": "aa629840-d23e-11ee-9ae7-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "d93cbb82-dc8e-4eb3-95f3-254167fa31e2"
+          },
+          {
+            "data": {
+              "0efa33e8-049e-11eb-bc30-f875a44e0e11": "496b4a50-3325-4704-b1c5-57542dc62011",
+              "46cd4b7e-049d-11eb-ba3a-f875a44e0e11": ["f681f1e3-1fca-4dc6-bf5e-975ceeaa354b"],
+              "5e8cc866-049d-11eb-afab-f875a44e0e11": "953238ab-fefc-42e9-9b20-0b4441df2b41",
+              "8e4109f9-04a1-11eb-9732-f875a44e0e11": ["d7ce0ba7-3fa8-4985-a1a4-f18b3868d90d"],
+              "8e4109fc-04a1-11eb-add6-f875a44e0e11": "1cc6f0e9-432f-4177-bae1-16cab5afd3ac",
+              "a0c7f934-04a4-11eb-9d78-f875a44e0e11": null,
+              "bdd57f54-04a1-11eb-bede-f875a44e0e11": ["8cbe6ac2-7e52-4b19-9bec-a5d864eb8614"],
+              "d72e2974-049d-11eb-84c6-f875a44e0e11": "a05714b3-17ef-4dc4-9ea7-a2e93fc4b3b0",
+              "ed06fc08-04a1-11eb-8131-f875a44e0e11": "d03ff048-0234-49c0-919b-c0c2376d7cb0"
+            },
+            "nodegroup_id": "55d6a53e-049c-11eb-8618-f875a44e0e11",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "b28f5164-bb92-4d2d-be1e-584246773589"
+          },
+          {
+            "data": {
+              "325a2f33-efe4-11eb-b0bb-a87eeabdefba": 0,
+              "325a2f34-efe4-11eb-a003-a87eeabdefba": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "325a2f35-efe4-11eb-b2d5-a87eeabdefba": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "325a430a-efe4-11eb-810b-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "SMR/02" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "325a430b-efe4-11eb-95a5-a87eeabdefba": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "325a4419-efe4-11eb-9e0e-a87eeabdefba": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "325a441a-efe4-11eb-9531-a87eeabdefba": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "325a441b-efe4-11eb-872d-a87eeabdefba": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "325a441c-efe4-11eb-9283-a87eeabdefba": null
+            },
+            "nodegroup_id": "325a2f2f-efe4-11eb-9b0c-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "3b77e297-8df4-4e3a-a68e-2a4954eb74df"
+          },
+          {
+            "data": {
+              "f17f6584-efc7-11eb-81f1-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "f17f6585-efc7-11eb-8ac0-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "f17f6587-efc7-11eb-b56f-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "f17f6588-efc7-11eb-8c12-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "f17f6589-efc7-11eb-9b90-a87eeabdefba": null,
+              "f17f658a-efc7-11eb-a216-a87eeabdefba": "9bdb6b98-011c-4a65-9b69-e398f8f5aa63"
+            },
+            "nodegroup_id": "f17f6581-efc7-11eb-b09f-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "5434b62d-1811-4f2f-84bb-6c1c84c9d337"
+          },
+          {
+            "data": {
+              "3d418ea4-d23b-11ee-9373-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "3d419020-d23b-11ee-9373-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "3d41919c-d23b-11ee-9373-0242ac180006": null,
+              "3d419304-d23b-11ee-9373-0242ac180006": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "3d419476-d23b-11ee-9373-0242ac180006": "19afd557-cc21-44b4-b1df-f32568181b2c"
+            },
+            "nodegroup_id": "3d415e98-d23b-11ee-9373-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "f9e38546-5a94-4325-9bf6-0626869273fb"
+          },
+          {
+            "data": {
+              "a1d4ee93-efc5-11eb-b117-a87eeabdefba": null,
+              "a1d4ee96-efc5-11eb-9b00-a87eeabdefba": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+              "a1d4ee97-efc5-11eb-82d3-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "a1d4ee99-efc5-11eb-b625-a87eeabdefba": "51796e90-9ef1-44ec-a967-81b077983768",
+              "a1d4ee9a-efc5-11eb-a6e5-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d4ee9b-efc5-11eb-b2c2-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "a1d4ee9c-efc5-11eb-b502-a87eeabdefba": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+              "a1d4ee9e-efc5-11eb-9ad7-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d4ee9f-efc5-11eb-b9ea-a87eeabdefba": "5e878125-f49a-438e-9256-10d36a39d4a9",
+              "a1d5030a-efc5-11eb-88c6-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "a1d5030c-efc5-11eb-890d-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d5030d-efc5-11eb-a884-a87eeabdefba": "bdb339b0-0f97-43f7-859b-3a03f6e60ea1",
+              "a1d5030e-efc5-11eb-bf4d-a87eeabdefba": "f8062103-0421-41ec-a1c6-2927ea4414dc",
+              "a1d5030f-efc5-11eb-bcc0-a87eeabdefba": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+              "a1d50310-efc5-11eb-964d-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1d50312-efc5-11eb-bde1-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "a1d4ee93-efc5-11eb-b117-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "718fc9b4-0415-4a2d-89d8-b95445a686a5"
+          },
+          {
+            "data": {
+              "64f4f797-f11b-11eb-bf2c-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "64f4f799-f11b-11eb-a083-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f4f79a-f11b-11eb-bfd8-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "64f4f79c-f11b-11eb-9ccb-a87eeabdefba": "ece5f508-b292-480f-b727-36251846bd4f",
+              "64f4f79d-f11b-11eb-9519-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f4f79e-f11b-11eb-9b52-a87eeabdefba": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+              "64f4f79f-f11b-11eb-b7d2-a87eeabdefba": "84283ac9-c985-4e94-966e-b4bd78c658c3",
+              "64f4f7a0-f11b-11eb-bfa0-a87eeabdefba": "0002",
+              "64f4f7a1-f11b-11eb-9eca-a87eeabdefba": "0002",
+              "64f4f7a2-f11b-11eb-8b03-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "64f4f7a3-f11b-11eb-a5d6-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "64f4f7a5-f11b-11eb-92a2-a87eeabdefba": "2024-06-15",
+              "64f4f7a6-f11b-11eb-9ab7-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "64f50b6f-f11b-11eb-b7df-a87eeabdefba": "ac641216-b918-4428-9655-8c55bd5f852f",
+              "64f50cb6-f11b-11eb-bfea-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f50cb7-f11b-11eb-8b7b-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "64f50cb8-f11b-11eb-94ed-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "64f50cb9-f11b-11eb-a483-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "64f50cba-f11b-11eb-8997-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "64f50cbb-f11b-11eb-8977-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "64f50cbc-f11b-11eb-ab5d-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "64f50cbe-f11b-11eb-9123-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "64f50cbf-f11b-11eb-ab46-a87eeabdefba": "2024-06-14",
+              "64f50cc0-f11b-11eb-8956-a87eeabdefba": "b29ec4bd-8cbf-4a00-9762-4f51ba013469",
+              "64f50cc1-f11b-11eb-92d2-a87eeabdefba": null
+            },
+            "nodegroup_id": "64f4f793-f11b-11eb-9a99-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "ad3b1602-845a-4839-95ec-8650cc5b41e4"
+          },
+          {
+            "data": {
+              "b2133e67-efdc-11eb-b3ea-a87eeabdefba": ["72e82b54-26f8-42f8-ae5c-867e9b3b75fd"],
+              "b2133e68-efdc-11eb-9f2d-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "b2133e69-efdc-11eb-a3d3-a87eeabdefba": "953238ab-fefc-42e9-9b20-0b4441df2b41",
+              "b2133e6a-efdc-11eb-a294-a87eeabdefba": "1cc6f0e9-432f-4177-bae1-16cab5afd3ac",
+              "b2133e6b-efdc-11eb-aa04-a87eeabdefba": ["be8d765c-44a4-4382-8658-1d137f469ad2"],
+              "b2133e6c-efdc-11eb-8c3c-a87eeabdefba": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+              "b2133e6d-efdc-11eb-b877-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "b2133e6e-efdc-11eb-a96a-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "b2133e6f-efdc-11eb-a120-a87eeabdefba": "0002",
+              "b2133e71-efdc-11eb-a6f7-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "b2133e72-efdc-11eb-a68d-a87eeabdefba": null,
+              "b2133e74-efdc-11eb-b241-a87eeabdefba": null,
+              "b2133e75-efdc-11eb-af28-a87eeabdefba": "0002"
+            },
+            "nodegroup_id": "b2133dda-efdc-11eb-ab07-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "b0c50efd-54a9-4581-bd2c-a659ad535861"
+          },
+          {
+            "data": {
+              "77e8f28a-efdc-11eb-9600-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "77e8f28b-efdc-11eb-b757-a87eeabdefba": "f2054168-b8dc-416a-b6df-f5aff733c0c3",
+              "77e8f28c-efdc-11eb-b5fc-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "77e8f28d-efdc-11eb-afe4-a87eeabdefba": "05f23c56-8617-4be0-8389-27839f550e9e",
+              "77e8f28e-efdc-11eb-b9f5-a87eeabdefba": "0002",
+              "77e8f291-efdc-11eb-9441-a87eeabdefba": ["5ffa2eee-0a97-44ee-bdcc-e747bcb7d1ad"],
+              "77e8f292-efdc-11eb-acfd-a87eeabdefba": "6e9375fd-b21a-49cd-972a-c411e1c9f2a2",
+              "77e8f293-efdc-11eb-ac31-a87eeabdefba": ["638cb164-ca4b-441b-8c69-f20c8e92626e"],
+              "77e8f294-efdc-11eb-a9a2-a87eeabdefba": "ece5f508-b292-480f-b727-36251846bd4f",
+              "77e8f295-efdc-11eb-a593-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "77e8f296-efdc-11eb-a8fe-a87eeabdefba": "d03ff048-0234-49c0-919b-c0c2376d7cb0",
+              "77e8f297-efdc-11eb-a06e-a87eeabdefba": "1cc6f0e9-432f-4177-bae1-16cab5afd3ac",
+              "77e8f298-efdc-11eb-9465-a87eeabdefba": "a833c81c-c545-44c7-9a8d-f30caa20d0f7",
+              "77e8f299-efdc-11eb-84bc-a87eeabdefba": "44b1e6af-5c5a-4c68-9eb9-4eb43bdbe823",
+              "77e8f29a-efdc-11eb-813a-a87eeabdefba": "d03ff048-0234-49c0-919b-c0c2376d7cb0",
+              "77e8f29b-efdc-11eb-b248-a87eeabdefba": ["638cb164-ca4b-441b-8c69-f20c8e92626e"],
+              "77e8f29c-efdc-11eb-a0ba-a87eeabdefba": "597639a8-efa4-4d15-884d-74b93ce93b25",
+              "77e8f29d-efdc-11eb-b890-a87eeabdefba": null,
+              "77e8f29e-efdc-11eb-a8d8-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "77e8f29f-efdc-11eb-a58e-a87eeabdefba": "0002",
+              "77e9065c-efdc-11eb-bb1d-a87eeabdefba": "4fa77fc1-252a-4930-a756-71dca73aaf31",
+              "77e9065e-efdc-11eb-baa2-a87eeabdefba": "a833c81c-c545-44c7-9a8d-f30caa20d0f7",
+              "77e90834-efdc-11eb-b2b9-a87eeabdefba": ["885e2b88-8a70-4b8f-980b-bafe2cc4d9b5"],
+              "77e90835-efdc-11eb-91d3-a87eeabdefba": "f2054168-b8dc-416a-b6df-f5aff733c0c3",
+              "77e90836-efdc-11eb-8022-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "77e90837-efdc-11eb-a451-a87eeabdefba": "953238ab-fefc-42e9-9b20-0b4441df2b41",
+              "77e90838-efdc-11eb-bc1c-a87eeabdefba": "496b4a50-3325-4704-b1c5-57542dc62011"
+            },
+            "nodegroup_id": "77e8f287-efdc-11eb-a790-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "78965551-bb4b-4389-bd60-a9fd4e7979f7"
+          },
+          {
+            "data": {
+              "6af2a0ce-efc5-11eb-88d1-a87eeabdefba": "516a8535-7881-4479-a363-19760f7ec87e",
+              "6af2a0cf-efc5-11eb-806d-a87eeabdefba": "2024-06-10",
+              "6af2a0d0-efc5-11eb-ab44-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6af2b4b4-efc5-11eb-a0d8-a87eeabdefba": null,
+              "6af2b4b5-efc5-11eb-9977-a87eeabdefba": "8f985e91-6cd2-4d70-a03c-b49a50d09a3b",
+              "6af2b4b6-efc5-11eb-b8cf-a87eeabdefba": "337514d3-a8a8-46c1-a89a-aea83e582a8d",
+              "6af2b692-efc5-11eb-8adf-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "6af2b693-efc5-11eb-a32f-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "6af2b695-efc5-11eb-a0c0-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "6af2b696-efc5-11eb-b0b5-a87eeabdefba": "795add69-bc13-4301-85b1-3e4167a0278f",
+              "6af2b697-efc5-11eb-8152-a87eeabdefba": "85c26c81-e356-4454-a2ba-67e7ad9b95cd",
+              "6af2b698-efc5-11eb-9eeb-a87eeabdefba": "227420a6-8b30-4bb5-9871-24a3109b7010",
+              "6af2b699-efc5-11eb-b88e-a87eeabdefba": null,
+              "6af2b69a-efc5-11eb-848d-a87eeabdefba": "c9bc15cc-46fe-4d34-a530-a228854845c8",
+              "6af2b69b-efc5-11eb-8d5a-a87eeabdefba": "2024-06-14",
+              "6af2b69c-efc5-11eb-bf2b-a87eeabdefba": "8687011e-9dfa-463e-89e2-79bfdbbe7dda",
+              "6af2b69e-efc5-11eb-801e-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6af2b6a0-efc5-11eb-985a-a87eeabdefba": "2024-06-15",
+              "6af2b6a2-efc5-11eb-aef4-a87eeabdefba": "62f3f620-ea25-46c8-9a7b-dbadf23aa874",
+              "6af2b6a3-efc5-11eb-af76-a87eeabdefba": ["4052687c-0d73-4ac3-a399-4b5fc844dcf6"],
+              "6af2b6a4-efc5-11eb-b5d4-a87eeabdefba": null
+            },
+            "nodegroup_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "ca9253fb-344c-4c4a-8613-9ff8f5987f81"
+          },
+          {
+            "data": {},
+            "nodegroup_id": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208"
+          },
+          {
+            "data": { "d48c6688-1f5e-11ef-b84e-0242ac150006": 2 },
+            "nodegroup_id": "d48c6688-1f5e-11ef-b84e-0242ac150006",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "4d4630bd-86c2-4331-95f6-6b514a45ddb6"
+          },
+          {
+            "data": {
+              "447973ce-d7e2-11ee-a4a1-0242ac120006": "4d61c510-0a59-4995-9ec5-a38f640864f6"
+            },
+            "nodegroup_id": "447973ce-d7e2-11ee-a4a1-0242ac120006",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "1e4f3dca-d277-497e-9c6f-03709ac90ee4"
+          },
+          {
+            "data": {
+              "87d3c3ef-f44f-11eb-a23c-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7c8-f44f-11eb-938d-a87eeabdefba": "f5bbf49b-eb8b-40df-8031-8e3788cb7c7d",
+              "87d3d7e3-f44f-11eb-a725-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "518be550-01f2-4c77-bb21-9fdc3007c982"
+          },
+          {
+            "data": {
+              "87d3c3e9-f44f-11eb-ac77-a87eeabdefba": "35999571-5ac9-4bca-abc6-db5ba2588253",
+              "87d3c3ea-f44f-11eb-b532-a87eeabdefba": "1d7ea7f5-158f-4c5c-8fed-88155acf0497",
+              "87d3c3eb-f44f-11eb-be3c-a87eeabdefba": "f1ec77ee-c2f2-4cad-a128-87c1537adb54",
+              "87d3c407-f44f-11eb-a93d-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3d7be-f44f-11eb-b976-a87eeabdefba": "35999571-5ac9-4bca-abc6-db5ba2588253",
+              "87d3d7c2-f44f-11eb-8ddc-a87eeabdefba": "2e820298-0d7b-4810-9e46-e16f255b9631",
+              "87d3d7c5-f44f-11eb-8459-a87eeabdefba": "b66856da-9c70-4a88-ad56-00e68dab16a4"
+            },
+            "nodegroup_id": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "10bdf564-136e-4883-a192-c63f20fc70ce"
+          },
+          {
+            "data": {
+              "87d39b36-f44f-11eb-a905-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b3d-f44f-11eb-aa0d-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b3e-f44f-11eb-bec5-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d39b3f-f44f-11eb-be51-a87eeabdefba": "67b76fd1-4906-4055-b493-711c93fc0996",
+              "87d39b40-f44f-11eb-9828-a87eeabdefba": "8a37a140-0be2-44bc-aa64-74c1f3f3b372",
+              "87d39b41-f44f-11eb-8be6-a87eeabdefba": "f27c88b2-d8e3-46f7-b730-ceae86161447",
+              "87d39b42-f44f-11eb-9a05-a87eeabdefba": "2d5e7f32-ee8d-4ae5-b660-3b7eeb9604eb",
+              "87d39b43-f44f-11eb-8b0b-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b49-f44f-11eb-a564-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b4b-f44f-11eb-80ef-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d39b4c-f44f-11eb-8cf1-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b4d-f44f-11eb-8dbc-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b4e-f44f-11eb-a9d1-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d39b4f-f44f-11eb-b2d3-a87eeabdefba": "98355a3e-6f84-45ae-9281-8aa7e20d47f5",
+              "87d39b50-f44f-11eb-8284-a87eeabdefba": "78b7f967-9831-42ea-b744-1737c5cb2ebc",
+              "87d3d7b9-f44f-11eb-a91d-a87eeabdefba": "3ccd7de2-49c9-44d1-99cd-47cc83fa583e",
+              "87d3d7ba-f44f-11eb-a2dd-a87eeabdefba": "a3fb36fd-4cb6-4380-91e2-3589e2bd2daf",
+              "87d3d7dd-f44f-11eb-bb45-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3d7de-f44f-11eb-99cc-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3d7df-f44f-11eb-8389-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3d7e0-f44f-11eb-9594-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff21-f44f-11eb-9ce9-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff23-f44f-11eb-ad2f-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff25-f44f-11eb-a4eb-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff27-f44f-11eb-a92b-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff28-f44f-11eb-a365-a87eeabdefba": "6b77c7ee-1b64-4a0d-a870-e554e59f2eb6",
+              "87d3ff29-f44f-11eb-b39f-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3ff2b-f44f-11eb-aad3-a87eeabdefba": "e756530f-40af-4a88-a1d5-39b03c1b809a",
+              "87d3ff2c-f44f-11eb-b680-a87eeabdefba": "326b5f21-b744-41a1-a009-e60adb9de95c",
+              "87d3ff2d-f44f-11eb-b859-a87eeabdefba": "2103d23d-2b68-4bfb-ad23-2689f060e357",
+              "87d3ff2e-f44f-11eb-8319-a87eeabdefba": "34260e17-20ef-4cc4-b512-1ebcc6a55f1e",
+              "87d3ff31-f44f-11eb-8a20-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8",
+              "87d3ff32-f44f-11eb-aa82-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3ff33-f44f-11eb-94d4-a87eeabdefba": "6bdffb5e-9f5b-44f7-a3a6-11cf81219fd8"
+            },
+            "nodegroup_id": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "8f858c80-decb-4cd3-9aa1-433126f06c9e"
+          },
+          {
+            "data": {
+              "87d39b51-f44f-11eb-ba0c-a87eeabdefba": "82e54bc3-39df-443b-86a7-40cfc34d13aa",
+              "87d39b52-f44f-11eb-aadd-a87eeabdefba": "2024-06-15",
+              "87d3c3e8-f44f-11eb-9866-a87eeabdefba": "35999571-5ac9-4bca-abc6-db5ba2588253",
+              "87d3c3ec-f44f-11eb-8b03-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "87d3c3ed-f44f-11eb-8d6c-a87eeabdefba": "3620365b-6294-4356-93c0-52f53a2e4a49",
+              "87d3c3f7-f44f-11eb-bd00-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "87d3c3f8-f44f-11eb-b343-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "87d3c3fc-f44f-11eb-beff-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7b8-f44f-11eb-9b47-a87eeabdefba": "2024-06-21",
+              "87d3d7c1-f44f-11eb-ade9-a87eeabdefba": "65ef7ae0-6a6b-4fac-9324-41dd8e712880",
+              "87d3d7c3-f44f-11eb-aeaf-a87eeabdefba": "c6dd5482-6687-44ae-bb54-7d49e084664a",
+              "87d3d7c4-f44f-11eb-bf67-a87eeabdefba": "b29ec4bd-8cbf-4a00-9762-4f51ba013469",
+              "87d3d7c6-f44f-11eb-a1bd-a87eeabdefba": "84985826-d4d4-47ee-9e76-bb9d9bb0aa8b",
+              "87d3d7ca-f44f-11eb-b80a-a87eeabdefba": "60b41071-1442-4ec6-8ee6-963e0f37ac7e",
+              "87d3d7e2-f44f-11eb-951c-a87eeabdefba": "1d5c7465-7225-4bca-b1df-045a86e286b2"
+            },
+            "nodegroup_id": "87d39b22-f44f-11eb-887e-a87eeabdefba",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "8f799714-62df-4cd4-a5af-76017625e28a"
+          },
+          {
+            "data": { "2fdedbd0-1459-11ef-8cdd-0242ac120006": "J3616967249" },
+            "nodegroup_id": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "277d697c-a1f2-4fb0-a3e1-f3df385cae1d"
+          },
+          {
+            "data": {
+              "87d39b39-f44f-11eb-9b17-a87eeabdefba": null,
+              "87d3d7dc-f44f-11eb-bee9-a87eeabdefba": {
+                "features": [
+                  {
+                    "geometry": {
+                      "coordinates": [
+                        [
+                          [-5.749442984919341, 54.661182791627596],
+                          [-6.117484977106869, 54.45572940212449],
+                          [-5.9252242349195114, 54.40939961884686],
+                          [-5.6766585610911875, 54.50758847351568],
+                          [-5.749442984919341, 54.661182791627596]
+                        ]
+                      ],
+                      "type": "Polygon"
+                    },
+                    "id": "375fb7e5448de32e84c7ee38f561b0ac",
+                    "properties": { "nodeId": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba" },
+                    "type": "Feature"
+                  }
+                ],
+                "type": "FeatureCollection"
+              },
+              "87d3ff1c-f44f-11eb-9b1e-a87eeabdefba": "dbc18bc0-ec10-4623-b866-52ece47d9780"
+            },
+            "nodegroup_id": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "df23b5d7-cbc7-49df-894b-5134895b8a6f"
+          },
+          {
+            "data": {
+              "87d39b37-f44f-11eb-b053-a87eeabdefba": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+              "87d39b38-f44f-11eb-b2f7-a87eeabdefba": "e5739feb-21d0-430a-968f-caadd8e4ccf7",
+              "87d3c3fb-f44f-11eb-a313-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3c3ff-f44f-11eb-b418-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3c400-f44f-11eb-8b9a-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "87d3c404-f44f-11eb-ac71-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3c405-f44f-11eb-b6b7-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3d7b6-f44f-11eb-a60d-a87eeabdefba": "2024-06-14",
+              "87d3d7cb-f44f-11eb-9df1-a87eeabdefba": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "87d3d7cd-f44f-11eb-83d9-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3d7d0-f44f-11eb-81ae-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3d7d6-f44f-11eb-97dd-a87eeabdefba": "ecf19964-58a0-49a1-a31a-76262d807130",
+              "87d3ff20-f44f-11eb-866a-a87eeabdefba": null
+            },
+            "nodegroup_id": "87d3d7ec-f44f-11eb-bab9-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "7331611a-485f-481a-b833-8d365b62fb5b"
+          },
+          {
+            "data": {
+              "87d39b31-f44f-11eb-ae8e-a87eeabdefba": "1373b8e6-2607-4586-b8c0-8aa28d4aaf8c",
+              "87d39b3b-f44f-11eb-a159-a87eeabdefba": null,
+              "87d3c3f5-f44f-11eb-86f6-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3c406-f44f-11eb-82a0-a87eeabdefba": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+              "87d3c408-f44f-11eb-b594-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7b7-f44f-11eb-acd2-a87eeabdefba": "2024-06-13",
+              "87d3d7cf-f44f-11eb-8186-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3d7d8-f44f-11eb-bce5-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "87d3d7d9-f44f-11eb-82a3-a87eeabdefba": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "87d3d7da-f44f-11eb-9f3a-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3d7e8-f44f-11eb-b20f-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3d7e9-f44f-11eb-83a9-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3d7ea-f44f-11eb-b263-a87eeabdefba": "e5739feb-21d0-430a-968f-caadd8e4ccf7"
+            },
+            "nodegroup_id": "87d3c3f1-f44f-11eb-9d33-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "b9564110-799d-4b42-9ca8-7c321eec05cd"
+          },
+          {
+            "data": {
+              "87d39b33-f44f-11eb-83f5-a87eeabdefba": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
+              "87d39b35-f44f-11eb-b368-a87eeabdefba": "dc33ee6d-e7e4-4095-a31f-05e381195aee",
+              "87d3c3f2-f44f-11eb-8649-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3c3f3-f44f-11eb-883a-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3d7bc-f44f-11eb-b884-a87eeabdefba": "2024-06-21",
+              "87d3d7ce-f44f-11eb-823a-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3d7d2-f44f-11eb-83ec-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3d7d3-f44f-11eb-9bde-a87eeabdefba": "e5739feb-21d0-430a-968f-caadd8e4ccf7",
+              "87d3d7d4-f44f-11eb-ad91-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7d5-f44f-11eb-9125-a87eeabdefba": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "87d3d7d7-f44f-11eb-a6e8-a87eeabdefba": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "87d3ff1e-f44f-11eb-bcb4-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3ff1f-f44f-11eb-b7fb-a87eeabdefba": null
+            },
+            "nodegroup_id": "87d3d7d1-f44f-11eb-b908-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "8d4aeef8-73f6-496e-ba60-b63a78364380"
+          },
+          {
+            "data": {
+              "87d39b34-f44f-11eb-adbd-a87eeabdefba": "e6cf2f57-55f1-4598-ab1a-1f0c4285b9b2",
+              "87d3c402-f44f-11eb-9f4e-a87eeabdefba": "92a5b665-33b1-4073-8db6-cc49e2afa88e"
+            },
+            "nodegroup_id": "87d3c402-f44f-11eb-9f4e-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "32ef93c0-874d-4587-9f4e-cf19ab075296"
+          },
+          {
+            "data": {
+              "87d3c3fa-f44f-11eb-bca2-a87eeabdefba": "2df285fa-9cf2-45e7-bc05-a67b7d7ddc2f",
+              "87d3c403-f44f-11eb-b85f-a87eeabdefba": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
+              "87d3d7f1-f44f-11eb-9a2a-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7f6-f44f-11eb-ae86-a87eeabdefba": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "87d3ff18-f44f-11eb-ba94-a87eeabdefba": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "87d3ff19-f44f-11eb-868d-a87eeabdefba": "5a88136a-bf3a-4b48-a830-a7f42000dd24",
+              "87d3ff1a-f44f-11eb-8ca1-a87eeabdefba": "8a96a261-cd79-48e2-9f12-74924c152b00"
+            },
+            "nodegroup_id": "87d3d7f4-f44f-11eb-8904-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "5539a3ce-c2da-4aba-80dc-9d61270ae2de"
+          },
+          {
+            "data": {
+              "87d39b3c-f44f-11eb-975c-a87eeabdefba": "c93164a8-f2d7-437e-87cb-b28066506f70"
+            },
+            "nodegroup_id": "87d3c3fe-f44f-11eb-9ea3-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "fbc954c7-70f2-4d84-8fe6-8e0d2a7cc988"
+          },
+          {
+            "data": {
+              "87d39b32-f44f-11eb-a11e-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7db-f44f-11eb-a250-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "87d3d7ed-f44f-11eb-bf7d-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "87d3d7f0-f44f-11eb-b73d-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "87d3d7f3-f44f-11eb-b560-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18"
+            },
+            "nodegroup_id": "87d3d7ee-f44f-11eb-8ba1-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "82b7618f-5d09-46ec-8b56-aa6fdb5e9c9c"
+          },
+          {
+            "data": {
+              "87d39b3a-f44f-11eb-84c8-a87eeabdefba": "d3284599-47b3-47fe-8675-d5a61086df50",
+              "87d3ff1b-f44f-11eb-8e30-a87eeabdefba": "9c4c235b-ae05-49d9-bd17-05d5059435a6"
+            },
+            "nodegroup_id": "87d3ff1b-f44f-11eb-8e30-a87eeabdefba",
+            "parenttile_id": "df23b5d7-cbc7-49df-894b-5134895b8a6f",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "1c1748a5-20f5-4fcb-871b-74aea9567a9b"
+          },
+          {
+            "data": {
+              "87d39b44-f44f-11eb-b4f1-a87eeabdefba": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "87d39b45-f44f-11eb-8242-a87eeabdefba": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "87d3c2a4-f44f-11eb-a170-a87eeabdefba": "2024-06-28",
+              "87d3c3ee-f44f-11eb-a26f-a87eeabdefba": ["b2bdcce5-90d9-4945-910d-7f768ffa08e6"],
+              "87d3c3f0-f44f-11eb-87e0-a87eeabdefba": ["8adbb54c-d9fe-4281-8270-bd119546ff77"],
+              "87d3c3f9-f44f-11eb-bed4-a87eeabdefba": "2024-06-28",
+              "87d3c3fd-f44f-11eb-97d8-a87eeabdefba": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "87d3d7bf-f44f-11eb-ac62-a87eeabdefba": "d079f49f-13ed-480c-87bb-e5c77ee901e2",
+              "87d3d7c0-f44f-11eb-8304-a87eeabdefba": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "87d3d7e4-f44f-11eb-9d29-a87eeabdefba": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "87d3d7e5-f44f-11eb-bab9-a87eeabdefba": "7a518871-4949-4e57-908e-eb17751a404a",
+              "87d3d7e6-f44f-11eb-8cb3-a87eeabdefba": "f1a24b1f-7a72-4718-b54d-604644cc9e99",
+              "87d3d7e7-f44f-11eb-bc69-a87eeabdefba": ["845d029f-3e12-4c43-9eca-addf96e9f3f6"]
+            },
+            "nodegroup_id": "87d38728-f44f-11eb-900d-a87eeabdefba",
+            "parenttile_id": "363f9777-da65-4ee4-a0d2-1c7e7cbf0208",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "77d264f1-59f7-46d9-808f-68f57233620d"
+          },
+          {
+            "data": {
+              "2c151cea-d240-11ee-9373-0242ac180006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "3460040c-d23e-11ee-9ae7-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "346006e6-d23e-11ee-9ae7-0242ac180006": null,
+              "34600970-d23e-11ee-9ae7-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "34600b82-d23e-11ee-9ae7-0242ac180006": "39a21ebf-7dd6-4a7f-a211-9453202f60aa",
+              "46f726f2-d240-11ee-9373-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "5261762e-d23f-11ee-9ae7-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "92457988-1bae-442a-a7b2-681885f02aa8"
+                }
+              ],
+              "656e16e0-d240-11ee-9373-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "c1e9d628-4594-4f80-9856-0cc96201f8d7"
+                }
+              ],
+              "6ccf392e-d23f-11ee-9ae7-0242ac180006": "f9a2893b-655e-48fa-af3c-8d09d37c9ec2",
+              "c4ba462e-d23f-11ee-9373-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e"
+            },
+            "nodegroup_id": "345ffce6-d23e-11ee-9ae7-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "32174211-3dda-454f-bed0-1cef631d5850"
+          },
+          {
+            "data": {
+              "ba345577-b554-11ea-a9ee-f875a44e0e11": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "ba345578-b554-11ea-97b3-f875a44e0e11": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "ba345579-b554-11ea-9232-f875a44e0e11": "b5f1ff2d-d667-4c4e-86a1-c17fa4b9447b",
+              "ba34557a-b554-11ea-9a51-f875a44e0e11": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "ba34557b-b554-11ea-ab95-f875a44e0e11": "d013a32b-e4ad-4d54-99af-bf6d716b8226"
+            },
+            "nodegroup_id": "ba342e69-b554-11ea-a027-f875a44e0e11",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "e02c7c1d-e697-4b49-a6ee-6babf9b0aa97"
+          },
+          {
+            "data": {
+              "eeec9e68-d23c-11ee-9373-0242ac180006": "2024-06-22",
+              "eeeca17e-d23c-11ee-9373-0242ac180006": null,
+              "eeeca44e-d23c-11ee-9373-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "eeec9986-d23c-11ee-9373-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "dd6b6bd2-1aa3-4531-8571-84a9df8671db"
+          },
+          {
+            "data": {
+              "0532349a-1f5d-11ef-a340-0242ac150006": "4b46c463-b16e-4f3d-93ee-f0a9bdd78925",
+              "21aa66ce-1f5d-11ef-b84e-0242ac150006": "62f3f620-ea25-46c8-9a7b-dbadf23aa874"
+            },
+            "nodegroup_id": "0532349a-1f5d-11ef-a340-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "bd82e190-d149-4a9d-abe1-cfff1359522d"
+          },
+          {
+            "data": {
+              "29b5adb2-0eda-11ef-aa66-0242ac140006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "808b1cc6-0eda-11ef-a2cd-0242ac140006": "f666c25d-90a4-4b1d-bca6-465a7e4815ce"
+            },
+            "nodegroup_id": "a00cef8a-0ed9-11ef-aa66-0242ac140006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "c48a4c3a-1adb-4e58-a4ee-a18ff02efed5"
+          },
+          {
+            "data": {
+              "1200e850-1905-11ef-aa9f-0242ac150006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "e761a0da-ccbd-4c5e-ad6d-a45cf92bcf3e"
+                }
+              ],
+              "3a0ab672-190b-11ef-aa9c-0242ac150006": "294f38d0-e391-4f7d-af83-72fbf7fcdfcb",
+              "3ba88f30-190c-11ef-905d-0242ac150006": {
+                "en": { "direction": "ltr", "value": "REF/2024/JWApl8" }
+              },
+              "3ba890e8-190c-11ef-905d-0242ac150006": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "3ba89282-190c-11ef-905d-0242ac150006": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+              "6f2d7240-190b-11ef-905d-0242ac150006": "c9bc15cc-46fe-4d34-a530-a228854845c8",
+              "9382b7b4-1905-11ef-aa9f-0242ac150006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "a4c0ec1b-7ba2-4b3c-aae6-7b392c3b96d9"
+                }
+              ],
+              "ac25af94-1903-11ef-aa9c-0242ac150006": "2024-06-28",
+              "ac25b480-1903-11ef-aa9c-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "ac25b912-1903-11ef-aa9c-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "b7ddb762-1905-11ef-aa9f-0242ac150006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "c995b1ae-1904-11ef-aa9f-0242ac150006": "2aab4259-2381-4987-907a-fa461dfc0adc",
+              "d4e4c1ac-1905-11ef-aa9c-0242ac150006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "d9368892-1902-11ef-aa9c-0242ac150006": "2024-06-29",
+              "d9368c0c-1902-11ef-aa9c-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "d9368f18-1902-11ef-aa9c-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "e8c637c4-1904-11ef-aa9f-0242ac150006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e"
+            },
+            "nodegroup_id": "3897b87a-1902-11ef-aa9f-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "a3fb3716-11c8-43f1-93d0-c77b9b432b0b"
+          },
+          {
+            "data": {
+              "901eff84-1f3f-11ef-ac74-0242ac150006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "4e6c2d46-1f3f-11ef-ac74-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "a426ce77-e7d7-476b-b75c-271ead62ee9a"
+          },
+          {
+            "data": {
+              "1e2e1872-1f5a-11ef-b84e-0242ac150006": "61e61e5c-e0b2-4127-8fba-42ad471f4898",
+              "4a60d056-1f5a-11ef-a340-0242ac150006": null
+            },
+            "nodegroup_id": "1e2e1872-1f5a-11ef-b84e-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "06c7ebef-6dac-4ee6-867a-0718a6551375"
+          },
+          {
+            "data": {
+              "0b5b3430-233f-11ef-89fe-0242ac1a0006": "885e2b88-8a70-4b8f-980b-bafe2cc4d9b5",
+              "7bc54a3a-233f-11ef-8b6b-0242ac1a0006": null
+            },
+            "nodegroup_id": "0b5b3430-233f-11ef-89fe-0242ac1a0006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "6552b889-8a99-45c9-8d7b-51e8cdd9cea5"
+          },
+          {
+            "data": {
+              "7d5ec05a-dbc9-11ee-8835-0242ac120006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "7d5ec1d6-dbc9-11ee-8835-0242ac120006": "35508b82-062a-469f-830a-6040c5e5eb8c",
+              "7d5ec352-dbc9-11ee-8835-0242ac120006": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "7d5eb9d4-dbc9-11ee-8835-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "412860f6-c446-48cd-9efb-9b06700e2eb9"
+          },
+          {
+            "data": {
+              "676d47fc-9c1c-11ea-b5b0-f875a44e0e11": "85c26c81-e356-4454-a2ba-67e7ad9b95cd",
+              "676d47fd-9c1c-11ea-9d73-f875a44e0e11": "e756530f-40af-4a88-a1d5-39b03c1b809a",
+              "676d47fe-9c1c-11ea-aa28-f875a44e0e11": "8f985e91-6cd2-4d70-a03c-b49a50d09a3b",
+              "676d47ff-9c1c-11ea-b07f-f875a44e0e11": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "676d4800-9c1c-11ea-93f6-f875a44e0e11": "a0e096e2-f5ae-4579-950d-3040714713b4",
+              "676d4801-9c1c-11ea-8d11-f875a44e0e11": "04a4c4d5-5a5e-4018-93aa-65abaa53fb53",
+              "676d4802-9c1c-11ea-a30f-f875a44e0e11": "5a88136a-bf3a-4b48-a830-a7f42000dd24"
+            },
+            "nodegroup_id": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "4f0bdd87-658a-4392-8d2c-b13ff2ecfe53"
+          },
+          {
+            "data": {
+              "49c6587a-f5af-11ee-9f07-0242ac170006": "7f1e7061-8bb0-4338-9342-118f1e9214aa",
+              "49c65b86-f5af-11ee-9f07-0242ac170006": "956f9779-3524-448e-b2de-eabf2de95d51",
+              "49c65ece-f5af-11ee-9f07-0242ac170006": null
+            },
+            "nodegroup_id": "49c65316-f5af-11ee-9f07-0242ac170006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "a428eea2-1d15-4526-bcc7-3885d2549a35"
+          },
+          {
+            "data": {
+              "ce8a6282-0edb-11ef-a2cd-0242ac140006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "8c52472c-0edb-11ef-aa66-0242ac140006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "00f03a1d-da09-4b07-8d3f-fe94f773bf0d"
+          },
+          {
+            "data": {
+              "0bb36520-1f3d-11ef-ac74-0242ac150006": "bb33f953-2a12-44ed-9fe7-4cd5023104cc",
+              "ce44532a-1f3c-11ef-ac74-0242ac150006": "0863427a-be64-4492-93d6-98dba9bac42f"
+            },
+            "nodegroup_id": "ce44532a-1f3c-11ef-ac74-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "28c9c06c-f464-42f9-af18-166b23b845a6"
+          },
+          {
+            "data": {
+              "2ace50ae-dbc8-11ee-b0db-0242ac120006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "2ace5266-dbc8-11ee-b0db-0242ac120006": "35508b82-062a-469f-830a-6040c5e5eb8c",
+              "2ace540a-dbc8-11ee-b0db-0242ac120006": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "2ace483e-dbc8-11ee-b0db-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "81ce14a7-f76f-45d8-a3df-aa34cc180911"
+          },
+          {
+            "data": {},
+            "nodegroup_id": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "e3610261-555d-4a32-8d03-2718d3846176"
+          },
+          {
+            "data": {
+              "d2592c72-d62d-11ee-9454-0242ac180006": "d5366899-09ec-4db1-8a49-a32b7e4784e3",
+              "d2592e8e-d62d-11ee-9454-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "d259306e-d62d-11ee-9454-0242ac180006": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+              "d259324e-d62d-11ee-9454-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "d259341a-d62d-11ee-9454-0242ac180006": null
+            },
+            "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "4c1b4282-7a5e-4cc7-bf03-6c2dd70b7be0"
+          },
+          {
+            "data": {
+              "d9bd0b80-d643-11ee-8b04-0242ac180006": "2024-06-13",
+              "d9bd0cfc-d643-11ee-8b04-0242ac180006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "d9bd0fea-d643-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "d9bd0504-d643-11ee-8b04-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "2d1ffa9a-14d5-4c95-9a55-64d05f391e51"
+          },
+          {
+            "data": {
+              "07aef484-d632-11ee-a5a3-0242ac180006": "ddbf586d-1970-46bd-ad19-c865eae3bddc",
+              "247032cc-d632-11ee-9454-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "28db88ea-d630-11ee-9454-0242ac180006": "3ccb1f26-64a0-4a77-a61b-42b5a98678c0",
+              "3bd2a2ca-d631-11ee-a5a3-0242ac180006": "58efc6e4-840b-43e5-b91f-0cf087833e75",
+              "4564a05a-d630-11ee-9454-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "506dd6ae-d632-11ee-9454-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "94126f4a-8293-4201-aeb0-2a528511eb19"
+                }
+              ],
+              "5b469cc4-d631-11ee-a5a3-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "6d65ffb8-d630-11ee-9454-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "39e5a0ae-8f77-439e-b21e-faaa70f7cc0a"
+                }
+              ],
+              "a53af708-d631-11ee-a5a3-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "908afe69-d120-47bb-bc78-ebec5fc74aa9"
+                }
+              ]
+            },
+            "nodegroup_id": "cacc9d20-d62f-11ee-9454-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "35f0975f-5e0f-439a-8c66-bd49e58279f4"
+          },
+          {
+            "data": {
+              "a0cb43ee-d62c-11ee-9454-0242ac180006": "3d158426-5f8c-411f-834b-01f8b6e0be61",
+              "e7ca82dc-d62c-11ee-8f7b-0242ac180006": "ffcdfdf2-0222-473a-934d-58dc6a703cbf"
+            },
+            "nodegroup_id": "a0cb43ee-d62c-11ee-9454-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "a4d889f7-a681-43c8-a379-acbd37be4529"
+          },
+          {
+            "data": {
+              "2001a33a-d711-11ee-9dd0-0242ac120006": {
+                "en": { "direction": "ltr", "value": "INC/2024/1z0dIM" }
+              },
+              "2001a574-d711-11ee-9dd0-0242ac120006": "1992741b-cc36-4613-b04e-943fa8c9d6fa",
+              "2001a6f0-d711-11ee-9dd0-0242ac120006": "7346be23-bff6-42dc-91d0-7c5182aa0031"
+            },
+            "nodegroup_id": "20017860-d711-11ee-9dd0-0242ac120006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "f2978cb6-7807-45b3-b802-2e88ffc9f8ef"
+          },
+          {
+            "data": {
+              "723aaf3c-d62d-11ee-8f7b-0242ac180006": "74da8272-952e-4d32-81a7-d4b63a36bda3",
+              "98a851e2-d62d-11ee-9454-0242ac180006": "ffcdfdf2-0222-473a-934d-58dc6a703cbf"
+            },
+            "nodegroup_id": "723aaf3c-d62d-11ee-8f7b-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "9e43a5ac-03e1-48b1-b093-19e2e186d2be"
+          },
+          {
+            "data": {
+              "96656e9c-d646-11ee-8b04-0242ac180006": "2024-06-13",
+              "9665702c-d646-11ee-8b04-0242ac180006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "9665731a-d646-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "9665660e-d646-11ee-8b04-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "5076f152-06fc-434a-b9c5-0b789a5e61f2"
+          },
+          {
+            "data": {
+              "2255201a-d646-11ee-8a7c-0242ac180006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "3d963b16-d646-11ee-8b04-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "6037c630-d646-11ee-8b04-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "",
+                  "ontologyProperty": "",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "3d7aa61c-6ba6-409d-9add-496244b5959c"
+                }
+              ]
+            },
+            "nodegroup_id": "d0f45bbe-d645-11ee-8b04-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "1ae9acf3-2ad7-49ba-a367-4af32a61777e"
+          },
+          {
+            "data": {
+              "2596ab22-d62d-11ee-8f7b-0242ac180006": "638cb164-ca4b-441b-8c69-f20c8e92626e",
+              "4920bbd2-d62d-11ee-9454-0242ac180006": "ffcdfdf2-0222-473a-934d-58dc6a703cbf"
+            },
+            "nodegroup_id": "2596ab22-d62d-11ee-8f7b-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "854ab7ba-19b2-4b87-a590-e68de8569fda"
+          },
+          {
+            "data": {
+              "788bf15a-d643-11ee-8b04-0242ac180006": "77a7d9fb-e1ab-4b1e-9425-64b588920ae1",
+              "8e7ca022-d643-11ee-8a7c-0242ac180006": "c9bc15cc-46fe-4d34-a530-a228854845c8"
+            },
+            "nodegroup_id": "788bf15a-d643-11ee-8b04-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "ef780dc7-eecc-4e16-b0d4-f2ae6f26ed65"
+          },
+          {
+            "data": {
+              "17cdafa6-d649-11ee-8b04-0242ac180006": "c9bc15cc-46fe-4d34-a530-a228854845c8",
+              "2a8f11a4-d64c-11ee-8b04-0242ac180006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+              "30d5defa-d64a-11ee-8b04-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "447c7fa0-d649-11ee-9a11-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "7ac8a992-d64b-11ee-8b04-0242ac180006": "2024-06-21",
+              "7ac8ab18-d64b-11ee-8b04-0242ac180006": "2024-06-21",
+              "7ac8ac8a-d64b-11ee-8b04-0242ac180006": "586a2776-7f4a-4be9-9219-3a9896c7f965",
+              "7ac8af50-d64b-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+              "7e3f910c-d64c-11ee-8b04-0242ac180006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+              "a1a755d0-d64c-11ee-8b04-0242ac180006": [
+                {
+                  "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                  "resourceId": "897dfb3c-88dd-4f18-92aa-295a8f17ba90",
+                  "resourceXresourceId": "252313ee-d141-4fdc-a8f5-7a962547cbf8"
+                }
+              ],
+              "a1f10602-d648-11ee-9a11-0242ac180006": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+              "a1f10936-d648-11ee-9a11-0242ac180006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "a1f10a9e-d648-11ee-9a11-0242ac180006": "39a21ebf-7dd6-4a7f-a211-9453202f60aa",
+              "dff3a4d2-d648-11ee-8b04-0242ac180006": ["c240cec6-982f-401b-80d6-eaac04a18d88"],
+              "e8d511cc-d64c-11ee-8b04-0242ac180006": "2024-06-13",
+              "e8d515a0-d64c-11ee-8b04-0242ac180006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "e8d51938-d64c-11ee-8b04-0242ac180006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
+            "parenttile_id": "e3610261-555d-4a32-8d03-2718d3846176",
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "0e97067d-04a9-476b-a796-208695dac8a4"
+          },
+          {
+            "data": {
+              "e29ba81e-1f4b-11ef-ac74-0242ac150006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "98f97872-e48a-445f-b670-796e6f433c3c"
+          },
+          {
+            "data": {
+              "126c0042-dbc3-11ee-8835-0242ac120006": "2024-06-21",
+              "126c0330-dbc3-11ee-8835-0242ac120006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+              "126c05e2-dbc3-11ee-8835-0242ac120006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4"
+            },
+            "nodegroup_id": "126bf91c-dbc3-11ee-8835-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "0499d0ca-7274-4954-85cb-a00f19770842"
+          },
+          {
+            "data": {
+              "0c43e366-dbc7-11ee-8835-0242ac120006": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "2" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "0c43e816-dbc7-11ee-8835-0242ac120006": "35508b82-062a-469f-830a-6040c5e5eb8c",
+              "0c43e9b0-dbc7-11ee-8835-0242ac120006": "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+            },
+            "nodegroup_id": "0c43d9de-dbc7-11ee-8835-0242ac120006",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "b5bbe464-638f-4321-a070-00e8e30c6d6a",
+            "sortorder": 0,
+            "tileid": "4b668672-16b0-4321-9205-53bfc080d361"
+          }
+        ]
+      }
+    ]
+  }
+}

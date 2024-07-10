@@ -217,6 +217,42 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "f86cdb8e-e5b5-4e43-bf4c-4c52e76364d1"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["ecdce17a-3865-11ef-b665-0242ac120006"],
+                  "nodegroupid": "ba17d3b2-3865-11ef-b665-0242ac120006",
+                  "semanticName": "Unique Building ID"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "ihr-unique-building-id"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["0ac944f2-386c-11ef-8b1f-0242ac120006"],
+                  "nodegroupid": "8967e324-386a-11ef-8caf-0242ac120006",
+                  "semanticName": "LP Fusion ID"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "ihr-lp-fusion-building-id"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
+                  "nodegroupid": "16099fb6-386b-11ef-8caf-0242ac120006",
+                  "semanticName": "BU Fusion ID"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "ihr-bu-fusion-id"
               }
             ]
           }

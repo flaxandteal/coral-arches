@@ -60,7 +60,7 @@
         "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"]
       },
       {
-        "slug": "designation-workflow",
+        "slug": "heritage-asset-designation-workflow",
         "name": "Heritage Asset Designation",
         "graphIds": [
           "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -110,7 +110,8 @@
       {
         "slug": "curatorial-workflow",
         "name": "Curatorial Inspection",
-        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"]
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"CIN\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
       }
     ]
   },
