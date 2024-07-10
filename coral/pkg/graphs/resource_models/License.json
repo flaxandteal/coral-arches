@@ -4141,14 +4141,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Company",
+                        "label": "Employing Body",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "c1836c15-8a16-440d-a65a-fb2a2eaf6fd5",
                     "label": {
-                        "en": "Company"
+                        "en": "Employing Body"
                     },
                     "node_id": "07d3905c-d58b-11ee-a02f-0242ac180006",
                     "sortorder": 9,
@@ -7734,7 +7734,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "company",
+                    "alias": "employing_body",
                     "config": {
                         "graphs": [
                             {
@@ -7759,7 +7759,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Company",
+                    "name": "Employing Body",
                     "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
                     "nodeid": "07d3905c-d58b-11ee-a02f-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
