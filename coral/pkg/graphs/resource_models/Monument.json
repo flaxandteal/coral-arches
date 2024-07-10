@@ -2175,7 +2175,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "County Selected",
+                        "label": "County",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -2183,7 +2183,7 @@
                     },
                     "id": "955107a5-e3a0-4077-8776-e7aa07fa068f",
                     "label": {
-                        "en": "County Selected"
+                        "en": "County"
                     },
                     "node_id": "8bfe714e-3ec2-11ef-9023-0242ac140007",
                     "sortorder": 27,
@@ -8520,7 +8520,7 @@
                     },
                     "node_id": "87d3ff32-f44f-11eb-aa82-a87eeabdefba",
                     "sortorder": 27,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
