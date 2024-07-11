@@ -32,8 +32,8 @@ define([
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
       let currentDate = `${year}-${month}-${day}`;
-      params.config.maxDate = currentDate
-      params.config().maxDate = currentDate
+      params.config.maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
+      params.config().maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
     }
     WidgetViewModel.apply(this, [params]);
 
@@ -121,6 +121,7 @@ define([
       this.dateValue(formattedDate);
     }
     this.dateValue.subscribe((value) => {
+      console.log("date Value updating", value)
       const parsedDate = moment(value, 'DD-MM-YYYY');
       const formattedDate = parsedDate.format('YYYY-MM-DD');
       this.value(formattedDate);
