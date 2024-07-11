@@ -32,7 +32,7 @@ class CalculateCompositeScoreFunction(BaseFunction):
         condition_score = SCORE_LOOKUP.get(tile.data.get(CONDITION_SCORE_NODE_ID), 0)
         risk_score = SCORE_LOOKUP.get(tile.data.get(RISK_SCORE_NODE_ID), 0)
 
-        total_score = condition_score + risk_score
+        total_score = condition_score * risk_score
 
         if total_score != tile.data[TOTAL_SCORE_NODE_ID]:
             tile.data[TOTAL_SCORE_NODE_ID] = total_score

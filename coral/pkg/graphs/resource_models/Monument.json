@@ -2289,7 +2289,7 @@
                             "placeholder"
                         ],
                         "label": "LP Fusion ID",
-                        "maxLength": "12",
+                        "maxLength": "36",
                         "placeholder": {
                             "en": "Enter text"
                         },
@@ -2767,7 +2767,7 @@
                             "placeholder"
                         ],
                         "label": "BU Fusion ID",
-                        "maxLength": "12",
+                        "maxLength": "36",
                         "placeholder": {
                             "en": "Enter text"
                         },
@@ -14683,6 +14683,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
+                    "edgeid": "3642ac0f-3893-497f-ba93-25b21dfca6e4",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P19i_was_made_for",
+                    "rangenode_id": "fa70c068-3ea5-11ef-9023-0242ac140007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "d0f45bbe-d645-11ee-8b04-0242ac180006",
                     "edgeid": "002d5a57-e2ff-43a3-b804-1d28544d4909",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -21357,6 +21366,129 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "excavation_licence",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "License",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": {
+                            "bool": {
+                                "filter": [
+                                    {
+                                        "terms": {
+                                            "graph_id": [
+                                                "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+                                                "d4a88461-5463-11e9-90d9-000d3ab1e588",
+                                                "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                                                "78b32d8c-b6f2-11ea-af42-f875a44e0e11",
+                                                "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
+                                                "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+                                                "5b8b4084-9687-11ee-8782-0242ac140006",
+                                                "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                                                "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+                                                "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                                                "8d41e49e-a250-11e9-9eab-00224800b26d",
+                                                "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                                                "24d7b54f-5464-11e9-a86b-000d3ab1e588",
+                                                "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                                "42ce82f6-83bf-11ea-b1e8-f875a44e0e11",
+                                                "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                                                "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+                                                "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                                                "343cc20c-2c5a-11e8-90fa-0242ac120005",
+                                                "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+                                                "0add0e11-99aa-11ea-9ab8-f875a44e0e11",
+                                                "b8032b00-594d-11e9-9cf0-18cf5eb368c4",
+                                                "934cd7f0-480a-11ea-9240-c4d9877d154e",
+                                                "f9045867-8861-11ea-b06f-f875a44e0e11",
+                                                "16d0a87b-4dad-4400-a1f6-b7e67705c9d4",
+                                                "cc5da227-24e7-4088-bb83-a564c4331efd"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "must": [
+                                    {
+                                        "bool": {
+                                            "filter": [],
+                                            "minimum_should_match": 1,
+                                            "must": [],
+                                            "must_not": [],
+                                            "should": [
+                                                {
+                                                    "bool": {
+                                                        "filter": [],
+                                                        "must": [
+                                                            {
+                                                                "nested": {
+                                                                    "path": "tiles",
+                                                                    "query": {
+                                                                        "bool": {
+                                                                            "filter": [],
+                                                                            "must": [
+                                                                                {
+                                                                                    "match_phrase": {
+                                                                                        "tiles.data.a79fedae-bad5-11ee-900d-0242ac180006": {
+                                                                                            "query": "8c454982-c470-437d-a9c6-87460b07b3d9"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "must_not": [],
+                                                                            "should": []
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "bool": {
+                                                                    "filter": [],
+                                                                    "must": [],
+                                                                    "must_not": [],
+                                                                    "should": []
+                                                                }
+                                                            }
+                                                        ],
+                                                        "must_not": [],
+                                                        "should": []
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "must_not": [],
+                                "should": []
+                            }
+                        },
+                        "searchString": "http://localhost/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=48&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22aec103a2-48cf-11ee-8e4e-0242ac140007%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22a79fedae-bad5-11ee-900d-0242ac180006%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%228c454982-c470-437d-a9c6-87460b07b3d9%22%7D%2C%22ba8aab44-2d4d-11ef-bbfd-0242ac120006%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%2C%22fd9b98a8-2d4d-11ef-bbfd-0242ac120006%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%2C%22c2f40174-5dd5-11ee-ae2c-0242ac120008%22%3A%7B%22val%22%3A%22%22%7D%2C%228f87fdae-2d50-11ef-bbfd-0242ac120006%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%2C%22a08ed94c-2d50-11ef-bbfd-0242ac120006%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%7D%5D"
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Excavation Licence",
+                    "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
+                    "nodeid": "fa70c068-3ea5-11ef-9023-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E14_Condition_Assessment",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P19i_was_made_for",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "issue_identifiers",
                     "config": {
