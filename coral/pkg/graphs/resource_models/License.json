@@ -4481,7 +4481,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Licensee",
+                        "label": "Nominated Excavation Director",
                         "limit": 6,
                         "placeholder": {
                             "en": ""
@@ -4489,7 +4489,7 @@
                     },
                     "id": "dad1f0c1-5f9b-43d1-9de5-0b0782797eca",
                     "label": {
-                        "en": "New Licensee"
+                        "en": "Nominated Excavation Director"
                     },
                     "node_id": "ab2db0ec-c448-11ee-94bf-0242ac180006",
                     "sortorder": 6,
@@ -4554,14 +4554,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Company",
+                        "label": "Employing Body",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "de95faaa-767d-4748-9079-cce905db25e1",
                     "label": {
-                        "en": "New Company"
+                        "en": "Employing Body"
                     },
                     "node_id": "29b2355e-c44a-11ee-94bf-0242ac180006",
                     "sortorder": 9,
@@ -8574,7 +8574,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "New Company",
+                    "name": "Employing Body",
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "nodeid": "29b2355e-c44a-11ee-94bf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
@@ -12555,7 +12555,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "New Licensee",
+                    "name": "Nominated Excavation Director",
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "nodeid": "ab2db0ec-c448-11ee-94bf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
