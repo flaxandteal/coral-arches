@@ -168,7 +168,8 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "a05d0dd0-1f4b-11ef-ac74-0242ac150006"
+                  "nodegroupid": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
+                  "hiddenNodes": ["e29ba81e-1f4b-11ef-ac74-0242ac150006"]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
