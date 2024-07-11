@@ -70,6 +70,7 @@
               },
               {
                 "parameters": {
+                  "labels": [["Person or Organization", "HED Inspector"]],
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -83,7 +84,7 @@
                   "nodegroupid": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "associated-actors"
               },
               {
