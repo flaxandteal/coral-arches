@@ -53,14 +53,9 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
                   "semanticName": "Assignment",
-                  "hiddenNodes": [
-                    "6b8f5866-2f0d-11ef-b37c-0242ac140006"
-                  ],
+                  "hiddenNodes": ["6b8f5866-2f0d-11ef-b37c-0242ac140006"],
                   "prefilledNodes": [
-                    [
-                      "6b8f5866-2f0d-11ef-b37c-0242ac140006",
-                      "18b628c9-149f-4c37-bc27-e8e0d714a037"
-                    ]
+                    ["6b8f5866-2f0d-11ef-b37c-0242ac140006", "18b628c9-149f-4c37-bc27-e8e0d714a037"]
                   ]
                 },
                 "tilesManaged": "one",
@@ -208,23 +203,11 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
-                  "semanticName": "Consultation Descriptions"
+                  "semanticName": "Consultation Descriptions",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "consultation-descriptions"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
-                  "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
-                  "semanticName": "Proposal"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "proposal"
+                "tilesManaged": "none",
+                "componentName": "pc-summary"
               }
             ]
           }
@@ -268,14 +251,9 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
                   "semanticName": "Response Action",
-                  "hiddenNodes": [
-                    "cd77b29c-2ef6-11ef-b1c4-0242ac140006"
-                  ],
+                  "hiddenNodes": ["cd77b29c-2ef6-11ef-b1c4-0242ac140006"],
                   "prefilledNodes": [
-                    [
-                      "cd77b29c-2ef6-11ef-b1c4-0242ac140006",
-                      "70fddadb-8172-4029-b8fd-87f9101a3a2d"
-                    ]
+                    ["cd77b29c-2ef6-11ef-b1c4-0242ac140006", "70fddadb-8172-4029-b8fd-87f9101a3a2d"]
                   ]
                 },
                 "tilesManaged": "one",
