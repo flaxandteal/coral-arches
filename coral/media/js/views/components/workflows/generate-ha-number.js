@@ -13,7 +13,9 @@ define([
     this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = '325a430a-efe4-11eb-810b-a87eeabdefba';
 
     this.generateId = async () => {
+      if (ko.unwrap(ko.unwrap(this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID])?.en?.value)) return;
       params.pageVm.loading(true);
+
       const data = {
         resourceInstanceId: this.tile().resourceinstance_id
       };
