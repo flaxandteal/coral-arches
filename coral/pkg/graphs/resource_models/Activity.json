@@ -7707,6 +7707,24 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "edgeid": "b18f1579-c299-41c3-a690-871ae705db9d",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "rangenode_id": "a64c82ae-3de4-11ef-8288-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "edgeid": "bb71472c-09b6-49d8-a4e5-4f123df8909c",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P80_end_is_qualified_by",
+                    "rangenode_id": "cb7cb53e-3de5-11ef-8288-0242ac140007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "33b4430a-16be-11ef-8633-0242ac180006",
                     "edgeid": "02806ac9-9e5f-4dce-abb3-33289d2331cd",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -11055,6 +11073,52 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "start_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Start Date",
+                    "nodegroup_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "nodeid": "a64c82ae-3de4-11ef-8288-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "end_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "End Date",
+                    "nodegroup_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "nodeid": "cb7cb53e-3de5-11ef-8288-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P80_end_is_qualified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "bibliographic_source_citation",
                     "config": {
