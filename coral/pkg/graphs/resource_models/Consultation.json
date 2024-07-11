@@ -1965,7 +1965,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Condition Descriptions"
+                        "en": "Inspection Reports"
                     },
                     "nodegroup_id": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "sortorder": null,
@@ -11727,14 +11727,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Reviewed By Value",
+                        "label": "Reviewed By",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "e6c14d9f-ea14-49ab-938c-61181586a202",
                     "label": {
-                        "en": "Reviewed By Value"
+                        "en": "Reviewed By"
                     },
                     "node_id": "998d6728-fb26-11ee-838d-0242ac190006",
                     "sortorder": null,
@@ -12167,7 +12167,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Condition",
+                        "label": "Inspection Report",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -12177,7 +12177,7 @@
                     },
                     "id": "fc5cc652-fb15-11ee-b5d2-0242ac190006",
                     "label": {
-                        "en": "Condition"
+                        "en": "Inspection Report"
                     },
                     "node_id": "fc5cbebe-fb15-11ee-b5d2-0242ac190006",
                     "sortorder": 0,
@@ -12263,6 +12263,15 @@
                 "en": "Version 0.1; A model to represent activities and information related to the review and evaluation of proposed developments or alterations to a structure.  This model supposes that an official of a government agency must review proposed construction activities and determine whether the activities require conditions/mitigations to conform with local requirements.  This model allows for formal application review and informal (e.g.: pre-application) consultations."
             },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "93199292-fb24-11ee-838d-0242ac190006",
+                    "edgeid": "f0050529-2876-4007-b31c-b788f21bf1c4",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "rangenode_id": "ff42f8f2-3e93-11ef-9023-0242ac140007"
+                },
                 {
                     "description": null,
                     "domainnode_id": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
@@ -17648,6 +17657,38 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "send_papers",
+                    "config": {
+                        "falseLabel": {
+                            "en": "No"
+                        },
+                        "i18n_properties": [
+                            "trueLabel",
+                            "falseLabel"
+                        ],
+                        "trueLabel": {
+                            "en": "Yes"
+                        }
+                    },
+                    "datatype": "boolean",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Send Papers",
+                    "nodegroup_id": "93199292-fb24-11ee-838d-0242ac190006",
+                    "nodeid": "ff42f8f2-3e93-11ef-9023-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "action_metatype",
                     "config": {
@@ -30954,7 +30995,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "condition_descriptions",
+                    "alias": "inspection_reports",
                     "config": {
                         "en": ""
                     },
@@ -30968,7 +31009,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Condition Descriptions",
+                    "name": "Inspection Reports",
                     "nodegroup_id": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "nodeid": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
@@ -30977,7 +31018,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "condition_description",
+                    "alias": "inspection_report",
                     "config": {
                         "en": ""
                     },
@@ -30991,7 +31032,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Condition Description",
+                    "name": "Inspection Report",
                     "nodegroup_id": "fc5c8c46-fb15-11ee-b5d2-0242ac190006",
                     "nodeid": "fc5cbebe-fb15-11ee-b5d2-0242ac190006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
