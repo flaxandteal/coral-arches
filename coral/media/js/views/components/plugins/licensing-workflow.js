@@ -8,7 +8,8 @@ define([
   'views/components/workflows/related-document-upload',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
-  'views/components/workflows/licensing-workflow/fetch-generated-license-number'
+  'views/components/workflows/licensing-workflow/fetch-generated-license-number',
+  'views/components/workflows/licensing-workflow/fetch-updated-dates'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -322,7 +323,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-updated-dates',
                   uniqueInstanceName: 'license-valid-timespan',
                   tilesManaged: 'one',
                   parameters: {
