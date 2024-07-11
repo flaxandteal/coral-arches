@@ -15,6 +15,8 @@ from coral.views.merge_resources import MergeResourcesView
 from coral.views.monument_revision_remap import RemapMonumentToRevision, RemapRevisionToMonument
 from coral.views.dashboard import Dashboard
 from coral.views.file_template import FileTemplateView
+from coral.views.ha_number import HaNumberView
+from coral.views.smr_number import SmrNumberView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -66,6 +68,12 @@ urlpatterns = [
     #
     re_path(r"^remap-monument-to-revision", RemapMonumentToRevision.as_view(), name="remap_monument_to_revision"),
     re_path(r"^remap-revision-to-monument", RemapRevisionToMonument.as_view(), name="remap_revision_to_monument"),
+
+    #
+    # Heritage Asset Number
+    #
+    re_path(r"^generate-ha-number", HaNumberView.as_view(), name="generate_ha_number"),
+    re_path(r"^generate-smr-number", SmrNumberView.as_view(), name="generate_smr_number"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

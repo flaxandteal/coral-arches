@@ -158,6 +158,30 @@
                 "tilesManaged": "many",
                 "componentName": "default-card",
                 "uniqueInstanceName": "4ae2af75-3829-4633-9b69-618f89691195"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "2af35abc-9dee-4438-a127-c0fb69e63124",
+                  "semanticName": "Designation and Protection Assignment",
+                  "hiddenNodes": [
+                    "6f588050-8ead-4131-9ea5-495bf62f2443",
+                    "d11ecd97-0a37-4e2b-90d3-35ec5bfcc8dc",
+                    "2f1563f3-92a6-4985-8eb1-53b88e34f538",
+                    "8623e2d5-5407-4b57-b769-89c934941ac5",
+                    "e1d85f71-85d2-4357-951f-9318f1df36b5",
+                    "2cbc7bf7-ccbb-4ac2-bb29-bc3bc597c753",
+                    "b803fb83-2d39-4bd7-8668-8c931c9082e6",
+                    "b850af26-7f33-4b26-a7e2-daa15308c56c",
+                    "482d0935-2330-491a-aa41-d0cc3293b568",
+                    "15b164d5-9509-4d4c-a0b7-e4b430ba5d31"
+
+                ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "designation-protection-type"
               }
             ]
           }
