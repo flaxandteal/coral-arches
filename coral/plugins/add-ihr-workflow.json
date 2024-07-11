@@ -1,6 +1,6 @@
 {
   "pluginid": "f139dc88-c4eb-4347-8203-324b01d168ef",
-  "name": "IHR",
+  "name": "Add IHR",
   "icon": "fa fa-file-text",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -350,13 +350,13 @@
     "initWorkflow": {
       "desc": "Start a new IHR workflow",
       "icon": "fa fa-file-text",
-      "name": "IHR",
+      "name": "Add IHR",
       "show": true,
       "bgColor": "#619974",
       "slugPrefix": "open-workflow?workflow-slug=",
       "circleColor": "#4a946d"
     }
   },
-  "slug": "ihr-workflow",
+  "slug": "add-ihr-workflow",
   "sortorder": 0
 }
