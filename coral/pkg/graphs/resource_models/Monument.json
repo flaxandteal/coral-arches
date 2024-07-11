@@ -76,7 +76,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Condition Description"
                     },
@@ -130,7 +130,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Incident Contacts"
                     },
@@ -157,7 +157,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Date of Visit"
                     },
@@ -184,7 +184,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Excavation License Reference"
                     },
@@ -211,7 +211,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Spatial Record Compilation"
                     },
@@ -238,7 +238,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Incident Report"
                     },
@@ -265,7 +265,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Threats Description"
                     },
@@ -292,7 +292,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Historical Period"
                     },
@@ -319,7 +319,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Spatial Record Authorization"
                     },
@@ -346,7 +346,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Name of Meeting"
                     },
@@ -454,7 +454,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Proposal"
                     },
@@ -481,7 +481,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Spatial Record Update"
                     },
@@ -535,7 +535,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "CM References"
                     },
@@ -562,7 +562,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Spatial Accuracy Qualifier"
                     },
@@ -589,7 +589,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Damage Type"
                     },
@@ -616,7 +616,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Council"
                     },
@@ -670,7 +670,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Correspondence"
                     },
@@ -697,7 +697,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Current Base Map"
                     },
@@ -778,7 +778,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Components"
                     },
@@ -805,7 +805,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Coordinate System"
                     },
@@ -859,7 +859,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Spatial Metadata Descriptions"
                     },
@@ -913,7 +913,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Incident Reference"
                     },
@@ -969,7 +969,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Scientific Date Assignment"
                     },
@@ -1052,7 +1052,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Heritage Asset Names"
                     },
@@ -1079,7 +1079,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Capture Scale"
                     },
@@ -1115,7 +1115,7 @@
                     "instructions": {
                         "en": "Use to record any designation or protection regimes directly associated with the application area."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Designation and Protection Assignment"
                     },
@@ -1142,7 +1142,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Component Damage Type"
                     },
@@ -1169,7 +1169,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Construction Phases"
                     },
@@ -1196,7 +1196,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Scheduling Reason Description"
                     },
@@ -1250,7 +1250,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Monument Type"
                     },
@@ -1279,7 +1279,7 @@
                     "instructions": {
                         "en": "Administrative, geopolitical areas, localities, and other areas (e.g.: Research or zoning areas)  "
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Localities/Administrative Areas"
                     },
@@ -1308,7 +1308,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Land Use Classification Assignment"
                     },
@@ -1344,7 +1344,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Geometry"
                     },
@@ -1398,7 +1398,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Area Assignments"
                     },
@@ -1425,7 +1425,7 @@
                     "instructions": {
                         "en": "Used to record the postal address of a resource."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Addresses"
                     },
@@ -1452,7 +1452,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Location Descriptions"
                     },
@@ -1481,7 +1481,7 @@
                     "instructions": {
                         "en": "National Grid references, map names, and other common location identifiers for the resource"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "National Grid References"
                     },
@@ -1535,7 +1535,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Condition Type"
                     },
@@ -1589,7 +1589,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Sign Off Date"
                     },
@@ -1643,7 +1643,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "B File Reference"
                     },
@@ -1670,7 +1670,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Garden Sign Off"
                     },
@@ -1697,7 +1697,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Bibliographic Source Citation"
                     },
@@ -1724,7 +1724,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Incident Proposal"
                     },
@@ -1753,7 +1753,7 @@
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Contacts"
                     },
@@ -1780,7 +1780,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "HMC Reference"
                     },
@@ -1807,7 +1807,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Use Phase"
                     },
@@ -1834,7 +1834,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Descriptions"
                     },
@@ -1888,7 +1888,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Signed Off"
                     },
@@ -1915,7 +1915,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Material/Fabric Damage Type"
                     },
@@ -1942,7 +1942,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Category Type"
                     },
@@ -1969,7 +1969,7 @@
                     "instructions": {
                         "en": "Used to record text descriptions associated with a resource. Where appropriate different types of description may be recorded."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Incident Notes"
                     },
@@ -1996,7 +1996,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Altitude"
                     },
@@ -2023,7 +2023,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Work Finish Date"
                     },
@@ -2077,7 +2077,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Status Type"
                     },
@@ -2104,7 +2104,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Received Date"
                     },
@@ -2131,7 +2131,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "External Cross References"
                     },
@@ -2762,6 +2762,28 @@
                     "widget_id": "f7f712aa-23f4-43b3-9d43-ef75f9b52ab2"
                 },
                 {
+                    "card_id": "87d39b27-f44f-11eb-a02c-a87eeabdefba",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "County",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "1b1224ff-0662-4495-a17e-3ef7cc33a9bd",
+                    "label": {
+                        "en": "County"
+                    },
+                    "node_id": "ed831c74-3d3e-11ef-bc0f-0242ac120006",
+                    "sortorder": 27,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "0f8de9cf-9e23-406c-99d6-f87d9b6348ab",
                     "config": {
                         "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
@@ -2827,6 +2849,35 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "0ba33641-3c04-4b34-a76f-a89722077790",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "SMR Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": true,
+                        "width": "100%%"
+                    },
+                    "id": "21048e5e-ec5f-4688-afbc-5cde7751af70",
+                    "label": {
+                        "en": "SMR Number"
+                    },
+                    "node_id": "158e1ed2-3aae-11ef-a2d0-0242ac120003",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "51ec4343-762a-4079-bbad-c065be7a7ee3",
@@ -3015,6 +3066,35 @@
                     "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "0ba33641-3c04-4b34-a76f-a89722077790",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "IHR Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "2c4a7a88-3065-4957-b88a-9ea9d8e24941",
+                    "label": {
+                        "en": "IHR Number"
+                    },
+                    "node_id": "1de9abf0-3aae-11ef-91fd-0242ac120003",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "9eceaff9-795b-497c-982b-cfb41e8f8ec0",
@@ -3865,6 +3945,35 @@
                     "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "0ba33641-3c04-4b34-a76f-a89722077790",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Historic Parks and Gardens",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": true,
+                        "width": "100%%"
+                    },
+                    "id": "3d797518-67e5-4a2d-a229-4d9885853265",
+                    "label": {
+                        "en": "Historic Parks and Gardens"
+                    },
+                    "node_id": "2c2d02fc-3aae-11ef-91fd-0242ac120003",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "9eceaff9-795b-497c-982b-cfb41e8f8ec0",
@@ -13917,6 +14026,35 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "0ba33641-3c04-4b34-a76f-a89722077790",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "HB Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": true,
+                        "width": "100%%"
+                    },
+                    "id": "d818b802-1f96-47b0-8ca3-fe4ae5271852",
+                    "label": {
+                        "en": "HB Number"
+                    },
+                    "node_id": "250002fe-3aae-11ef-91fd-0242ac120003",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
                     "card_id": "d9bd07e8-d643-11ee-8b04-0242ac180006",
                     "config": {
                         "defaultValue": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
@@ -20345,6 +20483,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "87d3ff2a-f44f-11eb-9951-a87eeabdefba",
+                    "edgeid": "bfdde1e0-0b2c-4edf-9283-2679328d43ba",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "ed831c74-3d3e-11ef-bc0f-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "a00cef8a-0ed9-11ef-aa66-0242ac140006",
                     "edgeid": "c02c8bdb-d254-4e2a-8af6-35d4e87dc794",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -21520,17 +21667,10 @@
                         },
                         "options": [
                             {
-                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
+                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
                                 "selected": false,
                                 "text": {
-                                    "en": "Aquatic Monuments"
-                                }
-                            },
-                            {
-                                "id": "4b46c463-b16e-4f3d-93ee-f0a9bdd78925",
-                                "selected": false,
-                                "text": {
-                                    "en": "Carved Stone"
+                                    "en": "Standing Buildings"
                                 }
                             },
                             {
@@ -21541,10 +21681,17 @@
                                 }
                             },
                             {
-                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "id": "4b46c463-b16e-4f3d-93ee-f0a9bdd78925",
                                 "selected": false,
                                 "text": {
-                                    "en": "Standing Buildings"
+                                    "en": "Carved Stone"
+                                }
+                            },
+                            {
+                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
+                                "selected": false,
+                                "text": {
+                                    "en": "Aquatic Monuments"
                                 }
                             }
                         ]
@@ -22132,17 +22279,17 @@
                         },
                         "options": [
                             {
-                                "id": "a6307099-d789-47ed-b503-aa6cb058b335",
-                                "selected": false,
-                                "text": {
-                                    "en": "Statutory"
-                                }
-                            },
-                            {
                                 "id": "caa243ad-e284-4a5a-983f-1cf06df01a39",
                                 "selected": false,
                                 "text": {
                                     "en": "Assessment"
+                                }
+                            },
+                            {
+                                "id": "a6307099-d789-47ed-b503-aa6cb058b335",
+                                "selected": false,
+                                "text": {
+                                    "en": "Statutory"
                                 }
                             }
                         ]
@@ -22219,66 +22366,10 @@
                         },
                         "options": [
                             {
-                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
+                                "id": "059da29b-9413-41e1-a064-bb1190e91e05",
                                 "selected": false,
                                 "text": {
-                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
-                                }
-                            },
-                            {
-                                "id": "61e61e5c-e0b2-4127-8fba-42ad471f4898",
-                                "selected": false,
-                                "text": {
-                                    "en": "Partial remains of a rectangular platform"
-                                }
-                            },
-                            {
-                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
-                                "selected": false,
-                                "text": {
-                                    "en": "TIDALLY SUBMERGED"
-                                }
-                            },
-                            {
-                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
-                                "selected": false,
-                                "text": {
-                                    "en": "SUBMERGED"
-                                }
-                            },
-                            {
-                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
-                                "selected": false,
-                                "text": {
-                                    "en": "EXCAVATED"
-                                }
-                            },
-                            {
-                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
-                                "selected": false,
-                                "text": {
-                                    "en": "DESTROYED"
-                                }
-                            },
-                            {
-                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
-                                "selected": false,
-                                "text": {
-                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
-                                }
-                            },
-                            {
-                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "TRACES ONLY (No definable features)"
-                                }
-                            },
-                            {
-                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
-                                "selected": false,
-                                "text": {
-                                    "en": "SOME REMAINS (Some definable features)"
+                                    "en": "WELL PRESERVED (Complete/substantially complete)"
                                 }
                             },
                             {
@@ -22289,10 +22380,66 @@
                                 }
                             },
                             {
-                                "id": "059da29b-9413-41e1-a064-bb1190e91e05",
+                                "id": "2bc4ec83-1be4-4820-a907-db3f45b1df18",
                                 "selected": false,
                                 "text": {
-                                    "en": "WELL PRESERVED (Complete/substantially complete)"
+                                    "en": "SOME REMAINS (Some definable features)"
+                                }
+                            },
+                            {
+                                "id": "ae76dcba-7c5c-4dc7-a054-a3438f2e29fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "TRACES ONLY (No definable features)"
+                                }
+                            },
+                            {
+                                "id": "ef81d890-c311-4df4-b469-1152d62980ab",
+                                "selected": false,
+                                "text": {
+                                    "en": "NO VISIBLE REMAINS (All above ground features removed)"
+                                }
+                            },
+                            {
+                                "id": "d9320196-370d-401d-9914-57c0bd20aec8",
+                                "selected": false,
+                                "text": {
+                                    "en": "DESTROYED"
+                                }
+                            },
+                            {
+                                "id": "8526b5db-f391-4916-bf84-817ff1ea5f54",
+                                "selected": false,
+                                "text": {
+                                    "en": "EXCAVATED"
+                                }
+                            },
+                            {
+                                "id": "e645466f-d34c-476f-88f9-1b2739232158",
+                                "selected": false,
+                                "text": {
+                                    "en": "SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "a5ac8a34-9d74-43ee-98e4-c988fdc51bd5",
+                                "selected": false,
+                                "text": {
+                                    "en": "TIDALLY SUBMERGED"
+                                }
+                            },
+                            {
+                                "id": "61e61e5c-e0b2-4127-8fba-42ad471f4898",
+                                "selected": false,
+                                "text": {
+                                    "en": "Partial remains of a rectangular platform"
+                                }
+                            },
+                            {
+                                "id": "da9f989a-8fe8-4b56-9a9b-e1611c203f57",
+                                "selected": false,
+                                "text": {
+                                    "en": "Fragmentary remains of stone wall and possible bawn flankers"
                                 }
                             }
                         ]
@@ -23429,17 +23576,17 @@
                         },
                         "options": [
                             {
-                                "id": "294f38d0-e391-4f7d-af83-72fbf7fcdfcb",
-                                "selected": false,
-                                "text": {
-                                    "en": "Approved"
-                                }
-                            },
-                            {
                                 "id": "7f81d135-45ac-483f-96f4-2fa8ca882d79",
                                 "selected": false,
                                 "text": {
                                     "en": "Provisional"
+                                }
+                            },
+                            {
+                                "id": "294f38d0-e391-4f7d-af83-72fbf7fcdfcb",
+                                "selected": false,
+                                "text": {
+                                    "en": "Approved"
                                 }
                             }
                         ]
@@ -23812,66 +23959,10 @@
                         },
                         "options": [
                             {
-                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
                                 "selected": false,
                                 "text": {
-                                    "en": "27: Antrim and Newtownabbey"
-                                }
-                            },
-                            {
-                                "id": "3c928df6-dbec-49b0-926d-da947391948e",
-                                "selected": false,
-                                "text": {
-                                    "en": "28: Armagh City Banbridge and Craigavon"
-                                }
-                            },
-                            {
-                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "29: Belfast"
-                                }
-                            },
-                            {
-                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
-                                "selected": false,
-                                "text": {
-                                    "en": "30: Causeway Coast and Glens"
-                                }
-                            },
-                            {
-                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
-                                "selected": false,
-                                "text": {
-                                    "en": "31: Derry City and Strabane"
-                                }
-                            },
-                            {
-                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
-                                "selected": false,
-                                "text": {
-                                    "en": "32: Fermanagh and Omagh"
-                                }
-                            },
-                            {
-                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
-                                "selected": false,
-                                "text": {
-                                    "en": "33: Lisburn and Castlereagh"
-                                }
-                            },
-                            {
-                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
-                                "selected": false,
-                                "text": {
-                                    "en": "34: Mid and East Antrim"
-                                }
-                            },
-                            {
-                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
-                                "selected": false,
-                                "text": {
-                                    "en": "35: Mid Ulster"
+                                    "en": "37: Ards and North Down"
                                 }
                             },
                             {
@@ -23882,10 +23973,66 @@
                                 }
                             },
                             {
-                                "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
+                                "id": "fa6dc908-f8b4-4dcb-9452-0c6b888fc6d7",
                                 "selected": false,
                                 "text": {
-                                    "en": "37: Ards and North Down"
+                                    "en": "35: Mid Ulster"
+                                }
+                            },
+                            {
+                                "id": "1b9efca1-96cf-4b7e-8e31-8ca21d1c73fd",
+                                "selected": false,
+                                "text": {
+                                    "en": "34: Mid and East Antrim"
+                                }
+                            },
+                            {
+                                "id": "fe1633e5-a7fa-4550-91c1-a00ce3393ccf",
+                                "selected": false,
+                                "text": {
+                                    "en": "33: Lisburn and Castlereagh"
+                                }
+                            },
+                            {
+                                "id": "34d99a63-3864-43b3-bad9-a84026d74aa5",
+                                "selected": false,
+                                "text": {
+                                    "en": "32: Fermanagh and Omagh"
+                                }
+                            },
+                            {
+                                "id": "5b370006-3baa-4c71-bea7-cbbbf7ed4271",
+                                "selected": false,
+                                "text": {
+                                    "en": "31: Derry City and Strabane"
+                                }
+                            },
+                            {
+                                "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
+                                "selected": false,
+                                "text": {
+                                    "en": "30: Causeway Coast and Glens"
+                                }
+                            },
+                            {
+                                "id": "4d61c510-0a59-4995-9ec5-a38f640864f6",
+                                "selected": false,
+                                "text": {
+                                    "en": "29: Belfast"
+                                }
+                            },
+                            {
+                                "id": "3c928df6-dbec-49b0-926d-da947391948e",
+                                "selected": false,
+                                "text": {
+                                    "en": "28: Armagh City Banbridge and Craigavon"
+                                }
+                            },
+                            {
+                                "id": "72a92f38-f802-4926-9758-d1d0f38e1f00",
+                                "selected": false,
+                                "text": {
+                                    "en": "27: Antrim and Newtownabbey"
                                 }
                             }
                         ]
@@ -27515,31 +27662,10 @@
                         },
                         "options": [
                             {
-                                "id": "13d95f40-e699-4ae1-86f0-38dae6269816",
+                                "id": "119d4ad2-5c68-49bf-ab57-9011f6c280f6",
                                 "selected": false,
                                 "text": {
-                                    "en": "Delist"
-                                }
-                            },
-                            {
-                                "id": "92cdabd1-7ae3-4086-a3bd-86dbd24018e7",
-                                "selected": false,
-                                "text": {
-                                    "en": "Record Only"
-                                }
-                            },
-                            {
-                                "id": "a7568640-f5a7-4643-9889-9a5e9ce0d53a",
-                                "selected": false,
-                                "text": {
-                                    "en": "B2"
-                                }
-                            },
-                            {
-                                "id": "0e6f2cfa-3ba7-4dfd-abdd-901923327d7e",
-                                "selected": false,
-                                "text": {
-                                    "en": "B1"
+                                    "en": "Scheduled"
                                 }
                             },
                             {
@@ -27550,10 +27676,31 @@
                                 }
                             },
                             {
-                                "id": "119d4ad2-5c68-49bf-ab57-9011f6c280f6",
+                                "id": "0e6f2cfa-3ba7-4dfd-abdd-901923327d7e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Scheduled"
+                                    "en": "B1"
+                                }
+                            },
+                            {
+                                "id": "a7568640-f5a7-4643-9889-9a5e9ce0d53a",
+                                "selected": false,
+                                "text": {
+                                    "en": "B2"
+                                }
+                            },
+                            {
+                                "id": "92cdabd1-7ae3-4086-a3bd-86dbd24018e7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Record Only"
+                                }
+                            },
+                            {
+                                "id": "13d95f40-e699-4ae1-86f0-38dae6269816",
+                                "selected": false,
+                                "text": {
+                                    "en": "Delist"
                                 }
                             }
                         ]
@@ -28375,17 +28522,10 @@
                         },
                         "options": [
                             {
-                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
                                 "selected": false,
                                 "text": {
-                                    "en": "In progress"
-                                }
-                            },
-                            {
-                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
-                                "selected": false,
-                                "text": {
-                                    "en": "Finished"
+                                    "en": "Enforcement actioned"
                                 }
                             },
                             {
@@ -28396,10 +28536,17 @@
                                 }
                             },
                             {
-                                "id": "6ac8ca76-38d6-4e81-94a1-cb332a914808",
+                                "id": "dd1a443f-bf18-479c-add0-04710b3e5871",
                                 "selected": false,
                                 "text": {
-                                    "en": "Enforcement actioned"
+                                    "en": "Finished"
+                                }
+                            },
+                            {
+                                "id": "5b306feb-22dc-45d1-9acc-77691f73b1a5",
+                                "selected": false,
+                                "text": {
+                                    "en": "In progress"
                                 }
                             }
                         ],
@@ -29844,10 +29991,10 @@
                         },
                         "options": [
                             {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
+                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
                                 "selected": false,
                                 "text": {
-                                    "en": "State"
+                                    "en": "Public"
                                 }
                             },
                             {
@@ -29858,10 +30005,10 @@
                                 }
                             },
                             {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
+                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Public"
+                                    "en": "State"
                                 }
                             }
                         ]
@@ -30053,10 +30200,10 @@
                         },
                         "options": [
                             {
-                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
+                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
                                 "selected": false,
                                 "text": {
-                                    "en": "High"
+                                    "en": "Low"
                                 }
                             },
                             {
@@ -30067,10 +30214,10 @@
                                 }
                             },
                             {
-                                "id": "3620365b-6294-4356-93c0-52f53a2e4a49",
+                                "id": "d2d9a694-f6b0-4a41-9331-25a1d77ee1da",
                                 "selected": false,
                                 "text": {
-                                    "en": "Low"
+                                    "en": "High"
                                 }
                             }
                         ]
@@ -35890,52 +36037,10 @@
                         },
                         "options": [
                             {
-                                "id": "219c6377-d9d9-47b3-bea3-269aca0075d4",
+                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
                                 "selected": false,
                                 "text": {
-                                    "en": "Notes"
-                                }
-                            },
-                            {
-                                "id": "3f507168-6411-42b6-a8e6-1e771db53fff",
-                                "selected": false,
-                                "text": {
-                                    "en": "Reference"
-                                }
-                            },
-                            {
-                                "id": "0fb56869-37af-4573-a978-5fc4dcbb5840",
-                                "selected": false,
-                                "text": {
-                                    "en": "Statutory"
-                                }
-                            },
-                            {
-                                "id": "467f724e-d36b-4347-8ebf-cf9648fefb96",
-                                "selected": false,
-                                "text": {
-                                    "en": "History"
-                                }
-                            },
-                            {
-                                "id": "671952e8-7b73-4524-8bcb-3324ed9524e5",
-                                "selected": false,
-                                "text": {
-                                    "en": "Exterior"
-                                }
-                            },
-                            {
-                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
-                                "selected": false,
-                                "text": {
-                                    "en": "Interior"
-                                }
-                            },
-                            {
-                                "id": "87c40306-43a1-4522-a496-d0d773029f2f",
-                                "selected": false,
-                                "text": {
-                                    "en": "Full"
+                                    "en": "Summary"
                                 }
                             },
                             {
@@ -35946,10 +36051,52 @@
                                 }
                             },
                             {
-                                "id": "8b592b30-9002-4940-92fa-ad73a1d19703",
+                                "id": "87c40306-43a1-4522-a496-d0d773029f2f",
                                 "selected": false,
                                 "text": {
-                                    "en": "Summary"
+                                    "en": "Full"
+                                }
+                            },
+                            {
+                                "id": "46907f4a-d7a4-4c4e-b090-23ce70d78ba7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Interior"
+                                }
+                            },
+                            {
+                                "id": "671952e8-7b73-4524-8bcb-3324ed9524e5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Exterior"
+                                }
+                            },
+                            {
+                                "id": "467f724e-d36b-4347-8ebf-cf9648fefb96",
+                                "selected": false,
+                                "text": {
+                                    "en": "History"
+                                }
+                            },
+                            {
+                                "id": "0fb56869-37af-4573-a978-5fc4dcbb5840",
+                                "selected": false,
+                                "text": {
+                                    "en": "Statutory"
+                                }
+                            },
+                            {
+                                "id": "3f507168-6411-42b6-a8e6-1e771db53fff",
+                                "selected": false,
+                                "text": {
+                                    "en": "Reference"
+                                }
+                            },
+                            {
+                                "id": "219c6377-d9d9-47b3-bea3-269aca0075d4",
+                                "selected": false,
+                                "text": {
+                                    "en": "Notes"
                                 }
                             }
                         ]
@@ -36961,17 +37108,10 @@
                         },
                         "options": [
                             {
-                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
                                 "selected": false,
                                 "text": {
-                                    "en": "Contact PSNI"
-                                }
-                            },
-                            {
-                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refer to Enforcement"
+                                    "en": "Resolve with Owner"
                                 }
                             },
                             {
@@ -36982,10 +37122,17 @@
                                 }
                             },
                             {
-                                "id": "803f79ba-cf73-4191-a234-e94a1b298cfe",
+                                "id": "d3b244db-8d96-49a2-84de-477ab973cbb6",
                                 "selected": false,
                                 "text": {
-                                    "en": "Resolve with Owner"
+                                    "en": "Refer to Enforcement"
+                                }
+                            },
+                            {
+                                "id": "ce9e43cc-9f46-426b-83e3-eee965818a5f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Contact PSNI"
                                 }
                             }
                         ]
@@ -37391,6 +37538,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "county_value",
+                    "config": {
+                        "rdmCollection": "8fcf7b93-0760-38e7-bd2d-beb72b3de851"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "county",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "County Value",
+                    "nodegroup_id": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
+                    "nodeid": "ed831c74-3d3e-11ef-bc0f-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "received_date",
                     "config": {
                         "en": ""
@@ -37687,17 +37857,17 @@
                         },
                         "options": [
                             {
-                                "id": "6dbde4c3-eeab-4fab-9106-718af3bba238",
-                                "selected": false,
-                                "text": {
-                                    "en": "Accepted"
-                                }
-                            },
-                            {
                                 "id": "7c10f127-3358-4cc9-b4df-75cd6c5f7cd7",
                                 "selected": false,
                                 "text": {
                                     "en": "Returned"
+                                }
+                            },
+                            {
+                                "id": "6dbde4c3-eeab-4fab-9106-718af3bba238",
+                                "selected": false,
+                                "text": {
+                                    "en": "Accepted"
                                 }
                             }
                         ]
@@ -37751,38 +37921,10 @@
                         },
                         "options": [
                             {
-                                "id": "904508da-fd0e-4b4c-8898-0c46c8fa4bda",
+                                "id": "6dbde4c3-eeab-4fab-9106-718af3bba238",
                                 "selected": false,
                                 "text": {
-                                    "en": "Cancelled / Withdrawn"
-                                }
-                            },
-                            {
-                                "id": "cbb67ab2-76ac-4035-9002-1d127a21c2d5",
-                                "selected": false,
-                                "text": {
-                                    "en": "Refused"
-                                }
-                            },
-                            {
-                                "id": "f6a4a8ea-e6cd-4a28-ae8a-c417a38a7a4b",
-                                "selected": false,
-                                "text": {
-                                    "en": "Final issued"
-                                }
-                            },
-                            {
-                                "id": "85975a2a-c3b6-42b2-a99a-51d0a2727402",
-                                "selected": false,
-                                "text": {
-                                    "en": "Provisional issued"
-                                }
-                            },
-                            {
-                                "id": "e7da1b40-58c1-450f-bd7e-5904c6ea565f",
-                                "selected": false,
-                                "text": {
-                                    "en": "Draft sent for approval"
+                                    "en": "On-going"
                                 }
                             },
                             {
@@ -37793,10 +37935,38 @@
                                 }
                             },
                             {
-                                "id": "6dbde4c3-eeab-4fab-9106-718af3bba238",
+                                "id": "e7da1b40-58c1-450f-bd7e-5904c6ea565f",
                                 "selected": false,
                                 "text": {
-                                    "en": "On-going"
+                                    "en": "Draft sent for approval"
+                                }
+                            },
+                            {
+                                "id": "85975a2a-c3b6-42b2-a99a-51d0a2727402",
+                                "selected": false,
+                                "text": {
+                                    "en": "Provisional issued"
+                                }
+                            },
+                            {
+                                "id": "f6a4a8ea-e6cd-4a28-ae8a-c417a38a7a4b",
+                                "selected": false,
+                                "text": {
+                                    "en": "Final issued"
+                                }
+                            },
+                            {
+                                "id": "cbb67ab2-76ac-4035-9002-1d127a21c2d5",
+                                "selected": false,
+                                "text": {
+                                    "en": "Refused"
+                                }
+                            },
+                            {
+                                "id": "904508da-fd0e-4b4c-8898-0c46c8fa4bda",
+                                "selected": false,
+                                "text": {
+                                    "en": "Cancelled / Withdrawn"
                                 }
                             }
                         ]
@@ -37854,8 +38024,8 @@
             "publication": {
                 "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                 "notes": null,
-                "publicationid": "c520428a-f382-4448-a2c5-66e39f0700d5",
-                "published_time": "2024-07-02T13:59:35.991"
+                "publicationid": "b9b5cb2a-3d3f-11ef-a6da-0242ac120006",
+                "published_time": "2024-07-08T15:35:37.970"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
