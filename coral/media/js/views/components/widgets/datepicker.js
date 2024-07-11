@@ -26,7 +26,15 @@ define([
   var DatePickerWidget = function (params) {
     var self = this;
     params.configKeys = ['minDate', 'maxDate', 'viewMode', 'dateFormat', 'defaultValue'];
-
+    if (params.config().maxDate === "today") {
+      const date = new Date();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let currentDate = `${year}-${month}-${day}`;
+      params.config.maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
+      params.config().maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
+    }
     WidgetViewModel.apply(this, [params]);
 
     if (self.node.config && ko.unwrap(self.node.config.dateFormat)) {
@@ -113,6 +121,7 @@ define([
       this.dateValue(formattedDate);
     }
     this.dateValue.subscribe((value) => {
+      console.log("date Value updating", value)
       const parsedDate = moment(value, 'DD-MM-YYYY');
       const formattedDate = parsedDate.format('YYYY-MM-DD');
       this.value(formattedDate);

@@ -5468,7 +5468,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Signed Off On",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6461,7 +6461,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Sign Off Date Value",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -7772,7 +7772,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Date of Visit",
-                        "maxDate": null,
+                        "maxDate": false,
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -12015,7 +12015,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date Consulted",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
