@@ -43,7 +43,7 @@ define([
     if (!ko.unwrap(this.dateFormat)) {
       this.dateFormat = ko.observable(self.node.datatypeLookup.date.config);
     }
-
+ 
     /**
      * Date format overriding logic
      */
@@ -111,7 +111,7 @@ define([
         self.tile._tileData(koMapping.toJSON(tileData));
       }
     }
-
+    
     /**
      * Date format overriding logic
      */
@@ -120,6 +120,11 @@ define([
       const formattedDate = parsedDate.format('DD-MM-YYYY');
       this.dateValue(formattedDate);
     }
+    this.value.subscribe((value) => {
+      const parsedDate = moment(this.value(), 'YYYY-MM-DD');
+      const formattedDate = parsedDate.format('DD-MM-YYYY');
+      this.dateValue(formattedDate);
+    })
     this.dateValue.subscribe((value) => {
       console.log("date Value updating", value)
       const parsedDate = moment(value, 'DD-MM-YYYY');

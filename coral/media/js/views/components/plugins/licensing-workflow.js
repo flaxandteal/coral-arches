@@ -8,7 +8,8 @@ define([
   'views/components/workflows/related-document-upload',
   'views/components/workflows/licensing-workflow/license-cover-letter',
   'views/components/workflows/licensing-workflow/license-final-step',
-  'views/components/workflows/licensing-workflow/fetch-generated-license-number'
+  'views/components/workflows/licensing-workflow/fetch-generated-license-number',
+  'views/components/workflows/licensing-workflow/fetch-updated-dates'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -213,34 +214,6 @@ define([
                   uniqueInstanceName: 'e0a60085-eeeb-44e0-83de-2dcb5ad38d95'
                 },
                 {
-                  componentName: 'default-card-util',
-                  uniqueInstanceName: 'location-names',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid:
-                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
-                    hiddenNodes: [
-                      'a5416b52-f121-11eb-9724-a87eeabdefba', // area_name_metatype,
-                      //'a5416b53-f121-11eb-a507-a87eeabdefba', // area_name,
-                      'a5416b54-f121-11eb-8b8d-a87eeabdefba', // area_name_type,
-                      'a541921a-f121-11eb-93b5-a87eeabdefba', // area_currency_metatype,
-                      'a5419227-f121-11eb-9683-a87eeabdefba', // area_metatype,
-                      'a541922b-f121-11eb-a081-a87eeabdefba', // area_currency_type,
-                      'a541922e-f121-11eb-b2f6-a87eeabdefba' // area_type
-                    ],
-                    // prefilledNodes: [
-                    //   [
-                    //     'a541922e-f121-11eb-b2f6-a87eeabdefba',
-                    //     '26910978-5742-d0db-8b63-ec8d65ce5198'
-                    //   ]
-                    // ],
-                    labels: [['Area Name', 'Townland']]
-                  }
-                },
-                {
                   componentName: 'default-card',
                   uniqueInstanceName: 'location-description',
                   tilesManaged: 'one',
@@ -350,7 +323,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-updated-dates',
                   uniqueInstanceName: 'license-valid-timespan',
                   tilesManaged: 'one',
                   parameters: {
@@ -443,7 +416,7 @@ define([
                 {
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'transfer-of-license',
-                  tilesManaged: 'one',
+                  tilesManaged: 'many',
                   parameters: {
                     title: 'Transfer of License',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -453,21 +426,10 @@ define([
                 },
                 {
                   componentName: 'default-card-util',
-                  uniqueInstanceName: 'extension-of-license-1',
-                  tilesManaged: 'one',
+                  uniqueInstanceName: 'extension-of-license',
+                  tilesManaged: 'many',
                   parameters: {
-                    title: 'Extension of License 1',
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                  }
-                },
-                {
-                  componentName: 'default-card-util',
-                  uniqueInstanceName: 'extension-of-license-2',
-                  tilesManaged: 'one',
-                  parameters: {
-                    title: 'Extension of License 2',
+                    title: 'Extension of License',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
