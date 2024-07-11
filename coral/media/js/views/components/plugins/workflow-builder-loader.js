@@ -17,6 +17,7 @@ define([
   'views/components/workflows/fmw-workflow/calculate-composite-score',
   'views/components/workflows/heritage-asset-designation-workflow/ha-summary',
   'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',
+  'views/components/workflows/assign-consultation-workflow/pc-summary',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
