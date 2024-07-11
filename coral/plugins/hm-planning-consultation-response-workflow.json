@@ -85,17 +85,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "action"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
-                  "semanticName": "CM References"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "cm-reference"
               }
             ]
           }
@@ -119,17 +108,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "planning-reference"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
-                  "semanticName": "CM References"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "cm-refernce"
               },
               {
                 "parameters": {
@@ -219,23 +197,11 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
-                  "semanticName": "Consultation Descriptions"
+                  "semanticName": "Consultation Descriptions",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "consultation-descriptions"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
-                  "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
-                  "semanticName": "Proposal"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "proposal"
+                "tilesManaged": "none",
+                "componentName": "pc-summary"
               }
             ]
           }
