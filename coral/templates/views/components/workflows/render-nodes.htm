@@ -30,6 +30,16 @@
   </div>
   <!-- /ko -->
   <!-- /ko -->
+  <!-- ko if: !config.data?.length && typeof config !== 'string' -->
+  <div class="her-final-step-section">
+    <h5 class="summary-value" data-bind="text: config.label"></h5>
+    <div class="final-step-section-block-item">
+      <div class="block-item">
+        <div class="summary-label">No data provided for this input.</div>
+      </div>
+    </div>
+  </div>
+  <!-- /ko -->
   <!-- /ko -->
   <!-- /ko -->
 </div>
