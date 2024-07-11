@@ -14971,6 +14971,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "72f3eda8-0bc4-4e41-ba5c-3b3e7a1b7688",
+                    "edgeid": "b7526642-57ff-478b-a8ad-007f051dc816",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "5c865d99-b9c2-43c8-11ba-e77948afa21d"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "0132f890-1f4c-11ef-ac74-0242ac150006",
                     "edgeid": "3642ac0f-3893-497f-ba93-25b21dfca6e4",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -21721,6 +21730,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "county_selected",
+                    "config": {
+                        "rdmCollection": "02458080-9b7a-4a02-b298-f7ea61f60dbb"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "County Selected",
+                    "nodegroup_id": "38dad285-9014-4c7b-ad81-b0562038ebf2",
+                    "nodeid": "5c865d99-b9c2-43c8-11ba-e77948afa21d",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E44_Place_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "excavation_licence",
                     "config": {
