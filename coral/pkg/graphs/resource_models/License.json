@@ -1955,11 +1955,11 @@
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
                     "config": {
                         "defaultValue": null,
-                        "label": "Funding Available"
+                        "label": "Confirmation of Funding Provided"
                     },
                     "id": "604cb153-27d9-4818-a924-9adea6e1fe33",
                     "label": {
-                        "en": "Funding Available"
+                        "en": "Confirmation of Funding Provided"
                     },
                     "node_id": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
                     "sortorder": 7,
@@ -2471,7 +2471,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Nominated Licensees",
+                        "label": "Nominated Excavation Director",
                         "limit": 6,
                         "placeholder": {
                             "en": ""
@@ -2479,7 +2479,7 @@
                     },
                     "id": "6d294e00-5891-11ee-a624-0242ac120004",
                     "label": {
-                        "en": "Nominated Licensees"
+                        "en": "Nominated Excavation Director"
                     },
                     "node_id": "6d294784-5891-11ee-a624-0242ac120004",
                     "sortorder": 3,
@@ -3627,7 +3627,7 @@
                     "node_id": "8f87fdae-2d50-11ef-bbfd-0242ac120006",
                     "sortorder": 8,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
@@ -4141,19 +4141,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Company",
+                        "label": "Employing Body",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "c1836c15-8a16-440d-a65a-fb2a2eaf6fd5",
                     "label": {
-                        "en": "Company"
+                        "en": "Employing Body"
                     },
                     "node_id": "07d3905c-d58b-11ee-a02f-0242ac180006",
                     "sortorder": 9,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "33962b51-1f12-4659-b8da-73a55d9f0d89",
@@ -4481,7 +4481,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Licensee",
+                        "label": "Nominated Excavation Director",
                         "limit": 6,
                         "placeholder": {
                             "en": ""
@@ -4489,7 +4489,7 @@
                     },
                     "id": "dad1f0c1-5f9b-43d1-9de5-0b0782797eca",
                     "label": {
-                        "en": "New Licensee"
+                        "en": "Nominated Excavation Director"
                     },
                     "node_id": "ab2db0ec-c448-11ee-94bf-0242ac180006",
                     "sortorder": 6,
@@ -4554,14 +4554,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Company",
+                        "label": "Employing Body",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "de95faaa-767d-4748-9079-cce905db25e1",
                     "label": {
-                        "en": "New Company"
+                        "en": "Employing Body"
                     },
                     "node_id": "29b2355e-c44a-11ee-94bf-0242ac180006",
                     "sortorder": 9,
@@ -7191,6 +7191,16 @@
                     "function_id": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                     "id": "a5c056e3-6b48-4a68-a936-0af2d3a9b028"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
+                            "6397b05c-c443-11ee-94bf-0242ac180006"
+                        ]
+                    },
+                    "function_id": "9b955a8d-64b0-4139-9470-1085d802475f",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "e68c12c0-cdde-45f1-9c6c-4f2e870f7a0c"
                 }
             ],
             "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -7263,7 +7273,7 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "parentnodegroup_id": null
@@ -7724,7 +7734,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "company",
+                    "alias": "employing_body",
                     "config": {
                         "graphs": [
                             {
@@ -7739,7 +7749,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
                     "fieldname": "LicenseCom",
@@ -7749,7 +7759,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Company",
+                    "name": "Employing Body",
                     "nodegroup_id": "6d290832-5891-11ee-a624-0242ac120004",
                     "nodeid": "07d3905c-d58b-11ee-a02f-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
@@ -8564,7 +8574,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "New Company",
+                    "name": "Employing Body",
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "nodeid": "29b2355e-c44a-11ee-94bf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
@@ -8648,6 +8658,13 @@
                                 "selected": false,
                                 "text": {
                                     "en": "Approved"
+                                }
+                            },
+                            {
+                                "id": "381ae7ae-0d2f-45e3-855d-af7fe3aef9a0",
+                                "selected": false,
+                                "text": {
+                                    "en": "Decline"
                                 }
                             }
                         ]
@@ -10827,6 +10844,13 @@
                                 "text": {
                                     "en": "Approved"
                                 }
+                            },
+                            {
+                                "id": "18af21a8-6fd7-4419-897c-9b1e35a98f86",
+                                "selected": false,
+                                "text": {
+                                    "en": "Decline"
+                                }
                             }
                         ]
                     },
@@ -11331,7 +11355,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Case_Offic",
@@ -12531,7 +12555,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "New Licensee",
+                    "name": "Nominated Excavation Director",
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "nodeid": "ab2db0ec-c448-11ee-94bf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
@@ -12938,7 +12962,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "funding_available",
+                    "alias": "confirmation_of_funding_provided",
                     "config": {
                         "falseLabel": {
                             "en": "No"
@@ -12961,7 +12985,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Funding Available",
+                    "name": "Confirmation of Funding Provided",
                     "nodegroup_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
                     "nodeid": "c2f40174-5dd5-11ee-ae2c-0242ac120008",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E29_Design_or_Procedure",

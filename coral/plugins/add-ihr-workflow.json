@@ -1,6 +1,6 @@
 {
   "pluginid": "f139dc88-c4eb-4347-8203-324b01d168ef",
-  "name": "IHR",
+  "name": "Add IHR",
   "icon": "fa fa-file-text",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -17,6 +17,7 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "labels": [["SMR Number", "HA Number"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "hiddenNodes": [
                     "325a441c-efe4-11eb-9283-a87eeabdefba",
@@ -32,7 +33,7 @@
                   ]
                 },
                 "tilesManaged": "one",
-                "componentName": "workflow-builder-initial-step",
+                "componentName": "generate-ha-number",
                 "uniqueInstanceName": "f100407e-3c79-459d-bf91-21b4358c17f6"
               }
             ]
@@ -47,6 +48,22 @@
         "layoutSections": [
           {
             "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "250002fe-3aae-11ef-91fd-0242ac120003",
+                    "2c2d02fc-3aae-11ef-91fd-0242ac120003",
+                    "158e1ed2-3aae-11ef-a2d0-0242ac120003"
+                  ],
+                  "nodegroupid": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                  "semanticName": "Heritage Asset References"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "ihr-heritage-asset-references"
+              },
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -333,13 +350,13 @@
     "initWorkflow": {
       "desc": "Start a new IHR workflow",
       "icon": "fa fa-file-text",
-      "name": "IHR",
+      "name": "Add IHR",
       "show": true,
       "bgColor": "#619974",
       "slugPrefix": "open-workflow?workflow-slug=",
       "circleColor": "#4a946d"
     }
   },
-  "slug": "ihr-workflow",
+  "slug": "add-ihr-workflow",
   "sortorder": 0
 }
