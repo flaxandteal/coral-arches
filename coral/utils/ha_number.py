@@ -6,6 +6,7 @@ SYSTEM_REFERENCE_NODEGROUP = "325a2f2f-efe4-11eb-9b0c-a87eeabdefba"
 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = "325a430a-efe4-11eb-810b-a87eeabdefba"
 
 ID_NUMBER_PREFIX = "HA"
+ID_NUMBER_PATTERN = r"HA/\d{2}.*"
 
 
 class HaNumber:
@@ -16,7 +17,7 @@ class HaNumber:
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__icontains": ID_NUMBER_PREFIX,
+                f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__regex": ID_NUMBER_PATTERN,
             }
             query_result = Tile.objects.filter(
                 nodegroup_id=SYSTEM_REFERENCE_NODEGROUP,
@@ -61,7 +62,7 @@ class HaNumber:
           id_number_tile = None
           try:
               generated_id_query = {
-                  f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__icontains": ID_NUMBER_PREFIX,
+                  f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__regex": ID_NUMBER_PATTERN,
               }
               id_number_tile = Tile.objects.filter(
                   resourceinstance_id=resource_instance_id,

@@ -26,7 +26,7 @@ define([
   var DatePickerWidget = function (params) {
     var self = this;
     params.configKeys = ['minDate', 'maxDate', 'viewMode', 'dateFormat', 'defaultValue'];
-    if (params.config().maxDate === "today") {
+    if (params.config && typeof params.config === 'function' && params.config().maxDate === "today") {
       const date = new Date();
       let day = date.getDate();
       let month = date.getMonth() + 1;
