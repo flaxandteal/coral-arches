@@ -7,6 +7,7 @@ define([
   'views/components/workflows/licensing-workflow/license-initial-step',
   'views/components/workflows/related-document-upload',
   'views/components/workflows/licensing-workflow/license-cover-letter',
+  'views/components/workflows/file-template',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-license-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates'
@@ -385,25 +386,32 @@ define([
           ]
         },
         {
-          title: 'Cover Letter',
-          name: 'cover-letter-step',
+          name: "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
+          title: "Letter",
           required: false,
           layoutSections: [
             {
               componentConfigs: [
                 {
-                  componentName: 'license-cover-letter',
-                  uniqueInstanceName: 'cover-letter',
-                  tilesManaged: 'one',
                   parameters: {
-                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '0dcf7c74-53d5-11ee-844f-0242ac130008',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-                  }
+                    graphid: "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: ["976e49fe-3928-11ef-ab34-0242ac140006", "21319570-3928-11ef-b242-0242ac140006"],
+                    nodegroupid: "87bdb8d8-3927-11ef-ab34-0242ac140006",
+                    semanticName: "Correspondence",
+                    letterMetatype: "976e49fe-3928-11ef-ab34-0242ac140006",
+                    letterTypeNode: "56364572-3928-11ef-b242-0242ac140006",
+                    letterResourceNode: "21319570-3928-11ef-b242-0242ac140006"
+                  },
+                  noTileSidebar: true,
+                  tilesManaged: "many",
+                  componentName: "file-template",
+                  uniqueInstanceName: "letter-template"
                 }
               ]
             }
-          ]
+          ],
+          workflowstepclass: "workflow-form-component"
         },
         {
           title: 'Ammendments',
