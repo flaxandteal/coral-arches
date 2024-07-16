@@ -396,7 +396,7 @@ define([
                   parameters: {
                     graphid: "cc5da227-24e7-4088-bb83-a564c4331efd",
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    // hiddenNodes: ["49c65ece-f5af-11ee-9f07-0242ac170006"],
+                    hiddenNodes: ["976e49fe-3928-11ef-ab34-0242ac140006", "21319570-3928-11ef-b242-0242ac140006"],
                     nodegroupid: "87bdb8d8-3927-11ef-ab34-0242ac140006",
                     semanticName: "Correspondence",
                     letterMetatype: "976e49fe-3928-11ef-ab34-0242ac140006",
@@ -413,27 +413,6 @@ define([
           ],
           workflowstepclass: "workflow-form-component"
         },
-        // {
-        //   title: 'Cover Letter',
-        //   name: 'cover-letter-step',
-        //   required: false,
-        //   layoutSections: [
-        //     {
-        //       componentConfigs: [
-        //         {
-        //           componentName: 'license-cover-letter',
-        //           uniqueInstanceName: 'cover-letter',
-        //           tilesManaged: 'one',
-        //           parameters: {
-        //             graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-        //             nodegroupid: '0dcf7c74-53d5-11ee-844f-0242ac130008',
-        //             resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
-        //           }
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
         {
           title: 'Ammendments',
           name: 'ammendments-step',
