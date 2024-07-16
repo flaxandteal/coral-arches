@@ -73,6 +73,7 @@ class FileTemplateView(View):
 
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
+        print("temple id", template_id)
         parenttile_id = request.POST.get("parenttile_id")
         resourceinstance_id = request.POST.get(
             "resourceinstance_id", data.get("resourceinstance_id", None)
@@ -89,6 +90,7 @@ class FileTemplateView(View):
 
         fs = default_storage
         template_dict = self.get_template_path(template_id)
+        print("temple dict", template_dict)
         template_path = None
         filesystem_class = default_storage.__class__.__name__
         if filesystem_class == 'S3Boto3Storage':
@@ -188,14 +190,22 @@ class FileTemplateView(View):
                 "filename": "smc-refusal-template.docx",
                 "provider": MonumentTemplateProvider
             },
-            "290579d4-3536-4e2d-96bf-86cce4b70452" : {
+            "b777ebb6-7ab6-4de3-9825-f8564928eee8" : {
                 "filename": "licence-covering-letter.docx",
                 "provider": LicenceTemplateProvider
             },
-            "09a0c36b-b889-4ec6-aa40-04009ca14ace": {
-                "filename": "test-letter.docx",
+            "f86784f0-0c94-4427-bcba-4dd222461e30": {
+                "filename": "final-report-letter.docx",
                 "provider": LicenceTemplateProvider,
             },
+            "c9b643bd-2d28-4c91-9d2e-7e861ed34f0f": {
+                "filename": "extra-name-on-letter.docx",
+                "provider": LicenceTemplateProvider,
+            },
+            "78533d33-e712-48ee-ab4c-6bdc9f0ca51d": {
+                "filename": "extension-of-licence-letter.docx",
+                "provider": LicenceTemplateProvider,
+            }
         }
         for key, value in list(template_dict.items()):
             if key == template_id:
@@ -278,119 +288,6 @@ class FileTemplateView(View):
         # perhaps replaces {{custom_object}} with pre-determined text structure with custom style/format
 
         return True
-
-
-# TODO: Come back and refactor provider in a ckass
-
-# class LicenseTemplateProvider:
-#     LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
-#     LICENSE_NUMBER_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
-
-#     LICENSE_SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
-#     LICENSE_SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
-
-#     LICENSE_DURATION_NODE = 'c688af34-d589-11ee-89d9-0242ac180006'
-
-#     TOWNLAND_NODEGROUP = "a5416b46-f121-11eb-8f2d-a87eeabdefba"
-
-#     ACTIVITY_SYSTEM_REF_NODEGROUP = "e7d695ff-9939-11ea-8fff-f875a44e0e11"
-#     ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE = "e7d69603-9939-11ea-9e7f-f875a44e0e11"
-
-#     ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP = 'a5416b46-f121-11eb-8f2d-a87eeabdefba'
-#     ACTIVITY_AREA_NAME_NODE = 'a5416b53-f121-11eb-a507-a87eeabdefba'
-
-#     ACTIVITY_ADDRESSES_NODEGROUP = 'a5416b3d-f121-11eb-85b4-a87eeabdefba'
-#     ACTIVITY_COUNTY_NODE = 'a541e034-f121-11eb-8803-a87eeabdefba'
-
-#     ACTIVITY_NAME_NODEGROUP = '4a7bba1d-9938-11ea-86aa-f875a44e0e11'
-#     ACTIVITY_NAME_NODE = '4a7be135-9938-11ea-b0e2-f875a44e0e11'
-
-#     def __init__(self, resource_instance):
-#         self.resource_instance = resource_instance
-#         self.datatype_factory = DataTypeFactory()
-#         self.tiles = resource_instance.tiles
-#         self.mapping = {
-#             "Licensee": "",
-#             "Townland": "",
-#             "County": "",
-#             "Site Name": "",
-#             "Duration": "",
-#             "Duration Dates": "",
-#             "License Number": "",
-#         }
-#         self.activity_resource = None
-#         self.activity_tiles = None
-
-#     def get_value_from_tile(self, tile, node_id):
-#         current_node = models.Node.objects.get(nodeid=node_id)
-#         datatype = self.datatype_factory.get_instance(current_node.datatype)
-#         returnvalue = datatype.get_display_value(tile, current_node)
-#         return "" if returnvalue is None else returnvalue
-    
-#     def get_values_from_tile(self, tile):
-#         values = []
-#         tileDict = dict(tile.data)
-#         for node_id in tileDict.keys():     
-#             current_node = models.Node.objects.get(nodeid=node_id)
-#             datatype = self.datatype_factory.get_instance(current_node.datatype)
-#             values.append(datatype.get_display_value(tile, current_node))
-#         return ' '.join(filter(lambda x: ("" if x is None else x),values))
-
-#     def get_activity_resource(self):
-#         license_system_ref_tile = Tile.objects.filter(
-#             resourceinstance_id=self.resource_instance.resourceinstanceid,
-#             nodegroup_id=self.LICENSE_SYSTEM_REF_NODEGROUP
-#         ).first()
-#         ref_num = (
-#             license_system_ref_tile.data
-#             .get(self.LICENSE_SYSTEM_REF_RESOURCE_ID_NODE)
-#             .get("en")
-#             .get("value")
-#         )
-#         activity_system_ref_query = {
-#             f"data__{self.ACTIVITY_SYSTEM_REF_RESOURCE_ID_NODE}__en__value__icontains": ref_num,
-#         }
-#         activity_system_ref_tile = Tile.objects.filter(**activity_system_ref_query).exclude(
-#             nodegroup_id=self.ACTIVITY_SYSTEM_REF_NODEGROUP,
-#             resourceinstance_id=self.resource_instance.resourceinstanceid,
-#         ).first()
-#         activity_resource = Resource.objects.filter(
-#             pk=activity_system_ref_tile.resourceinstance.resourceinstanceid
-#         ).first()
-#         return activity_resource
-
-#     def get_mapping(self):
-#         self.activity_resource = self.get_activity_resource()
-#         self.activity_resource.load_tiles()
-#         self.activity_tiles = self.activity_resource.tiles
-
-#         for tile in self.tiles:
-#             nodegroup_id = str(tile.nodegroup_id)
-#             if nodegroup_id == self.LICENSE_SYSTEM_REF_NODEGROUP:
-#                 self.mapping["License Number"] = self.get_value_from_tile(
-#                     tile, self.LICENSE_SYSTEM_REF_RESOURCE_ID_NODE
-#                 )
-#             if nodegroup_id == self.LICENSE_DATES_NODEGROUP:
-#                 self.mapping["Duration"] = self.get_value_from_tile(
-#                     tile, self.LICENSE_DURATION_NODE
-#                 )
-
-#         for tile in self.activity_tiles:
-#             nodegroup_id = str(tile.nodegroup_id)
-#             if nodegroup_id == self.ACTIVITY_LOCALITIES_ADMIN_AREA_NODEGROUP:
-#                 self.mapping["Townland"] = self.get_value_from_tile(
-#                     tile, self.ACTIVITY_AREA_NAME_NODE
-#                 )
-#             if nodegroup_id == self.ACTIVITY_ADDRESSES_NODEGROUP:
-#                 self.mapping["County"] = self.get_value_from_tile(
-#                     tile, self.ACTIVITY_COUNTY_NODE
-#                 )
-#             if nodegroup_id == self.ACTIVITY_NAME_NODEGROUP:
-#                 self.mapping["Site Name"] = self.get_value_from_tile(
-#                     tile, self.ACTIVITY_NAME_NODE
-#                 )
-
-#         return self.mapping
     
 class MonumentTemplateProvider:
     MONUMENT_NAME_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11'
@@ -1133,51 +1030,10 @@ class LicenceTemplateProvider:
                     tile, self.GRADE_D_NODE
                 )
 
-            # if nodegroup_id == self.GRADE_E_NODEGROUP:
-            #     self.get_values_from_tile(tile)
-            #     self.mapping["Grade E"] = self.get_value_from_tile(
-            #         tile, self.GRADE_E_NODE
-                # )
-                #     tile, self.LICENCE_CONTACTS_GRADE_D_NODE
-                # ))
-
-                # if not tile.data.get(self.GRADE_D_NODE) or not len(tile.data.get(self.GRADE_D_NODE)):
-                #     continue
-
-                # grade_d_resource_id = tile.data.get(self.GRADE_D_NODE)[0].get('resourceId')
-                # grade_d_resource = self.get_resource(grade_d_resource_id)
-                # grade_d_resource.load_tiles()
-                # grade_d_tiles = grade_d_resource.tiles
-
-                # for grade_d_tile in grade_d_tiles:
-
-                #     grade_d_nodegroup_id = str(grade_d_tile.nodegroup_id)
-                #     if grade_d_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
-                #         self.mapping["Grade D Courtesy Title"] = self.get_value_from_tile(
-                #             grade_d_tile, self.PERSON_TITLE_NODE
-                #         )
-                #     if grade_d_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
-                #         self.mapping["Grade D Email"] = self.get_value_from_tile(
-                #             grade_d_tile, self.PERSON_CONTACT_POINT_NODE
-                #         )
-                #     if grade_d_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
-                #         self.mapping["Grade D County"] = self.get_value_from_tile(
-                #             grade_d_tile, self.PERSON_COUNTY_NODE
-                #         )
-                #         self.mapping["Grade D Postcode"] = self.get_value_from_tile(
-                #             grade_d_tile, self.PERSON_POSTCODE_NODE
-                #         )
-                #         self.mapping["Grade D Address"] = self.get_value_from_tile(
-                #             grade_d_tile, self.PERSON_FULL_ADDRESS_NODE
-                #         )
-
             if nodegroup_id == self.GRADE_E_NODEGROUP:
                 self.mapping["Grade E Name"] = self.get_value_from_tile(
                     tile, self.GRADE_E_NODE
                 )
-
-                #     tile, self.LICENCE_CONTACTS_GRADE_E_NODE
-                # ))
 
                 if not tile.data.get(self.GRADE_E_NODE) or not len(tile.data.get(self.GRADE_E_NODE)):
                     continue
@@ -1208,45 +1064,6 @@ class LicenceTemplateProvider:
                         self.mapping["Grade E Address"] = self.get_value_from_tile(
                             grade_e_tile, self.PERSON_FULL_ADDRESS_NODE
                         )
-
-
-            # if nodegroup_id == self.GRADE_D_NODEGROUP:
-            #     self.mapping["Recipient Name"] = self.get_value_from_tile(
-            #         tile, self.GRADE_D_NODE
-            #     )
-
-            #     #     tile, self.LICENCE_CONTACTS_GRADE_D_NODE
-            #     # ))
-
-            #     if not tile.data.get(self.LICENCE_CONTACTS_GRADE_D_NODE) or not len(tile.data.get(self.LICENCE_CONTACTS_GRADE_D_NODE)):
-            #         continue
-
-            #     grade_d_resource_id = tile.data.get(self.LICENCE_CONTACTS_GRADE_D_NODE)[0].get('resourceId')
-            #     grade_d_resource = self.get_resource(grade_d_resource_id)
-            #     grade_d_resource.load_tiles()
-            #     grade_d_tiles = grade_d_resource.tiles
-
-            #     for grade_d_tile in grade_d_tiles:
-
-            #         grade_d_nodegroup_id = str(grade_d_tile.nodegroup_id)
-            #         if grade_d_nodegroup_id == self.PERSON_TITLE_NODEGROUP:
-            #             self.mapping["Grade D Courtesy Title"] = self.get_value_from_tile(
-            #                 grade_d_tile, self.PERSON_TITLE_NODE
-            #             )
-            #         if grade_d_nodegroup_id == self.PERSON_CONTACT_POINT_NODEGROUP:
-            #             self.mapping["Grade D Email"] = self.get_value_from_tile(
-            #                 grade_d_tile, self.PERSON_CONTACT_POINT_NODE
-            #             )
-            #         if grade_d_nodegroup_id == self.PERSON_ADDRESSES_NODEGROUP:
-            #             self.mapping["Grade D County"] = self.get_value_from_tile(
-            #                 grade_d_tile, self.PERSON_COUNTY_NODE
-            #             )
-            #             self.mapping["Grade D Postcode"] = self.get_value_from_tile(
-            #                 grade_d_tile, self.PERSON_POSTCODE_NODE
-            #             )
-            #             self.mapping["Grade D Address"] = self.get_value_from_tile(
-            #                 grade_d_tile, self.PERSON_FULL_ADDRESS_NODE
-            #             )
 
             if nodegroup_id == self.ACTIVITY_NODEGROUP:
                 self.mapping["Site Name"] = self.get_value_from_tile(
