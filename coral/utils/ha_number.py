@@ -6,7 +6,7 @@ SYSTEM_REFERENCE_NODEGROUP = "325a2f2f-efe4-11eb-9b0c-a87eeabdefba"
 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = "325a430a-efe4-11eb-810b-a87eeabdefba"
 
 ID_NUMBER_PREFIX = "HA"
-ID_NUMBER_PATTERN = r"HA/\d{2}"
+ID_NUMBER_PATTERN = r"HA/\d{2}.*"
 
 
 class HaNumber:
