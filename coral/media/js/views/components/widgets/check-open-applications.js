@@ -38,25 +38,25 @@ define([
       [this.OK]: {
         colour: '#5cb85c',
         title: 'Ok',
-        message: 'This person has [openApplications] open applications. It is ok to proceed.'
+        message: 'This person has [openApplications] open applications, including this one. It is ok to proceed.'
       },
       [this.WARNING]: {
         colour: '#fcb103',
         title: 'Warning',
         message:
-          'This person has [openApplications] open applications. They are almost at their limit, consider reviewing their open applications before continuing.'
+          'This person has [openApplications] open applications, including this one. They are almost at their limit, consider reviewing their open applications before continuing.'
       },
       [this.MAX]: {
         colour: '#f75d3f',
         title: 'Maximum Limit',
         message:
-          'This person has [openApplications] open applications. Continuing with this application will exceed their limit. Please consider reviewing their other applications.'
+          'This person has [openApplications] open applications, including this one. Continuing with this application will exceed their limit. Please consider reviewing their other applications.'
       },
       [this.EXCEEDED]: {
         colour: '#f75d3f',
         title: 'Exceeded',
         message:
-          'This person has [openApplications] open applications. They are currently over the limit of open applications. It is not recommended to continue without finishing their other applications first.'
+          'This person has [openApplications] open applications, including this one. They are currently over the limit of open applications. It is not recommended to continue without finishing their other applications first.'
       }
     };
 
