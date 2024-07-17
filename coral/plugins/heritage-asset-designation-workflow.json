@@ -135,6 +135,18 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "6a28726c-926b-44ab-b585-c41976899d23"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "e290279d-9857-441e-a511-50d9d4dc4210",
+                  "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "e290279d-926b-44ab-b585-c41976899d23"
               }
             ]
           }
