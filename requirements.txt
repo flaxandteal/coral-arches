@@ -9,7 +9,7 @@ colorama==0.4.5
 tabulate<0.9
 asciitree
 
-starlette<=0.20.0
+starlette<=0.37.2
 typing_extensions
 starlette-graphene3
 starlette-context
@@ -17,7 +17,7 @@ uvicorn<=0.15.0
 click<8
 graphene_file_upload
 aiodataloader<0.3.0
-python-multipart<0.0.6
+python-multipart<0.0.10
 semantic_version
 PyJWT
 requests_oauthlib
