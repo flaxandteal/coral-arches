@@ -251,7 +251,7 @@ jobs:
           file: docker/Dockerfile.static-py
           network: host
           allow: network.host
-          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},commit-${{ sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VERSION=${{ steps.meta.outputs.tags }}-${{ github.run_id }}
