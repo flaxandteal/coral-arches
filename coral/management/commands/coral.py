@@ -50,8 +50,8 @@ def get_available_plugins():
             with open(file_path, "r") as json_file:
                 json_data = json.load(json_file)
                 if "name" in json_data:
-                    available_plugins.append(json_data["name"])
-                    names_to_slugs[json_data["name"]] = json_data["slug"]
+                    available_plugins.append(str(json_data["name"]))
+                    names_to_slugs[str(json_data["name"])] = json_data["slug"]
 
     return available_plugins, names_to_slugs
 
@@ -66,7 +66,7 @@ def get_available_widgets():
             with open(file_path, "r") as json_file:
                 json_data = json.load(json_file)
                 if "name" in json_data:
-                    available_widgets.append(json_data["name"])
+                    available_widgets.append(str(json_data["name"]))
 
     return available_widgets
 
@@ -182,10 +182,10 @@ class Command(BaseCommand):
         registered_widgets = []
         try:
             registered_plugins = [
-                instance.name for instance in models.Plugin.objects.all()
+                str(instance.name) for instance in models.Plugin.objects.all()
             ]
             registered_widgets = [
-                instance.name for instance in models.Widget.objects.all()
+                str(instance.name) for instance in models.Widget.objects.all()
             ]
         except Exception as e:
             raise e

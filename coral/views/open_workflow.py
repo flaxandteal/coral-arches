@@ -22,8 +22,10 @@ class OpenWorkflow(View):
         "licensing-workflow": "setup_licensing_workflow",
         "hb-planning-consultation-response-workflow": "setup_planning_consultation",
         "hm-planning-consultation-response-workflow": "setup_planning_consultation",
+        "heritage-asset-designation-workflow": "setup_designation",
     }
     workflow_slug = None
+    resource_id = None
 
     def get_plugin(self, plugin_slug):
         plugin = None
@@ -253,6 +255,67 @@ class OpenWorkflow(View):
                 continue
         self.grouped_tiles[ASSIGNMENT_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, assignment_tiles))
 
+    def setup_designation(self):
+        REVISION_APPROVALS_NODEGROUP_ID = "3c51740c-dbd0-11ee-8835-0242ac120006"
+        REVISION_APPROVALS_RESOURCE_NODE_ID = "99605e36-3924-11ef-82af-0242ac150006"
+
+        # Approval tile template
+        approval_tile_data_template = {
+            "0cd0998c-dbd6-11ee-b0db-0242ac120006": None,
+            "0cd09da6-dbd6-11ee-b0db-0242ac120006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+            "0cd0a076-dbd6-11ee-b0db-0242ac120006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+            "3b267ffe-dbd1-11ee-b0db-0242ac120006": None,
+            "55102b04-dbd1-11ee-8835-0242ac120006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+            "59935456-379a-11ef-9263-0242ac150006": None,
+            "5993574e-379a-11ef-9263-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+            "59935a00-379a-11ef-9263-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+            "72fd93e0-dbd1-11ee-8835-0242ac120006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+            "a20d4124-3795-11ef-9263-0242ac150006": None,
+            "a20d4750-3795-11ef-9263-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+            "a20d4cdc-3795-11ef-9263-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+            "ad22dad6-dbd0-11ee-b0db-0242ac120006": None,
+            "af5fd406-dbd1-11ee-b0db-0242ac120006": None,
+            "af5fd6f4-dbd1-11ee-b0db-0242ac120006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+            "af5fd9b0-dbd1-11ee-b0db-0242ac120006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+            REVISION_APPROVALS_RESOURCE_NODE_ID: {
+                "en": {"value": self.resource_id, "direction": "ltr"}  # ResourceID
+            },
+            "cffa2fc8-3797-11ef-a167-0242ac150006": None,
+            "cffa32ca-3797-11ef-a167-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+            "cffa3586-3797-11ef-a167-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+            "d70da550-3798-11ef-a167-0242ac150006": None,
+            "d70da884-3798-11ef-a167-0242ac150006": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+            "d70dab7c-3798-11ef-a167-0242ac150006": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
+            "dc973fc8-dbd0-11ee-8835-0242ac120006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
+            "fbebba34-dbd0-11ee-b0db-0242ac120006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+        }
+
+        revision_approvals_resource_id_query = {
+            f"data__{REVISION_APPROVALS_RESOURCE_NODE_ID}__en__value__icontains": self.resource_id,
+        }
+        approvals_tile = Tile.objects.filter(
+            resourceinstance_id=self.resource_id,
+            nodegroup_id=REVISION_APPROVALS_NODEGROUP_ID,
+            **revision_approvals_resource_id_query,
+        ).first()
+
+        if not approvals_tile:
+            approvals_tile = Tile.objects.create(
+                resourceinstance_id=self.resource_id,
+                nodegroup_id=REVISION_APPROVALS_NODEGROUP_ID,
+                data=approval_tile_data_template,
+            )
+            self.group_tiles([approvals_tile])
+
+        approval_tiles = self.grouped_tiles.get(REVISION_APPROVALS_NODEGROUP_ID, [])
+        remove_ids = []
+        for tile in approval_tiles:
+            if tile.tileid != approvals_tile.tileid:
+                remove_ids.append(tile.tileid)
+        self.grouped_tiles[REVISION_APPROVALS_NODEGROUP_ID] = list(
+            filter(lambda tile: tile.tileid not in remove_ids, approval_tiles)
+        )
+
     def post(self, request):
         # For some reason I need to reset the class defaults every time
         # a request is sent. It will persist the data and add it onto the
@@ -266,10 +329,11 @@ class OpenWorkflow(View):
         self.open_config = {}
         self.nodes = {}
         self.nodegroups = {}
+        self.resource_id = None
 
         data = json.loads(request.body.decode("utf-8"))
         step_config = data.get("stepConfig")
-        resource_id = data.get("resourceId")
+        self.resource_id = data.get("resourceId")
         workflow_id = data.get("workflowId")
         self.workflow_slug = data.get("workflowSlug")
         self.open_config = data.get("openConfig", {})
@@ -285,7 +349,7 @@ class OpenWorkflow(View):
 
         # Get all the resources tiles
 
-        self.resource = self.get_resource(resource_id)
+        self.resource = self.get_resource(self.resource_id)
         resource_tiles = Tile.objects.filter(resourceinstance=self.resource)
 
         # Loop through tiles and add them to the component data lookup
@@ -359,9 +423,10 @@ class OpenWorkflow(View):
                 # if the cardinality allows for multiple how do we
                 # decide which tile is the one that should be displayed
                 tile = tiles[0]
+                print('tile before into comp data: ', tile)
                 component_data = {
                     "nodegroupId": nodegroup_id,
-                    "resourceInstanceId": resource_id,
+                    "resourceInstanceId": self.resource_id,
                     "tileId": str(tile.tileid),
                     "tileData": json.dumps(tile.data),
                 }
