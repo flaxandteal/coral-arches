@@ -332,6 +332,16 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "fdbda47e-fbe4-4254-9df6-d619b7f984c6"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['51d184d9-269c-4562-a29b-3ef9a7aa3d3a'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "de6b6af0-44e3-11ef-9114-0242ac120006"
+                },
+                "tilesManaged": "one",
+                "componentName": "generate-hb-number",
+                "uniqueInstanceName": "abc038d0-f1dc-41a7-bd02-30cc110d8d67"
               }
             ]
           }
