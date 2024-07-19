@@ -463,13 +463,13 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card-util', // Has fix for many tiles
+                  componentName: 'excavation-report-step', // Has fix for many tiles
                   uniqueInstanceName: 'report-info',
                   tilesManaged: 'many',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
