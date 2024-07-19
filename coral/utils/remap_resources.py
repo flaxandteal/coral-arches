@@ -252,20 +252,35 @@ class RemapResources:
                     data[destination_node_id] = data[data_node_id]
                     del data[data_node_id]
 
-                new_tile = Tile(
-                    tileid=uuid.uuid4(),
+                # In the unlikely event that a tile exists on the brand new destination
+                # resource (had a case where a function was creating a tile). This will find
+                # it and update it rather than create it.
+                # 
+                # FIXME: this is only needed for cardinality 1 tiles. Many tiles should just create a new tile
+                #
+                destination_tile = Tile.objects.filter(
                     resourceinstance=self.destination_resource,
-                    parenttile=parent_tile,
-                    data=data,
                     nodegroup=destination_nodegroup,
-                )
-                new_tile.save()
+                ).first()
+
+                if destination_tile:
+                    destination_tile.data = data
+                else:
+                    destination_tile = Tile(
+                        tileid=uuid.uuid4(),
+                        resourceinstance=self.destination_resource,
+                        parenttile=parent_tile,
+                        data=data,
+                        nodegroup=destination_nodegroup,
+                    )
+
+                destination_tile.save()
 
                 # If this is true, it means the parent tile had data and needed
                 # that data to be remapped. We then add into the created parent
                 # tiles dictionary for child tiles to look up
                 if tile_nodegroup_id in self.parent_nodegroup_ids:
-                    self.created_parent_tiles[str(tile.tileid)] = new_tile
+                    self.created_parent_tiles[str(tile.tileid)] = destination_tile
 
             return {
                 "remapped": True,

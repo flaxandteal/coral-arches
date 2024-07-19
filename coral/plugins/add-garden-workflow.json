@@ -17,7 +17,7 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["SMR Number", "Historic Parks & Gardens Number"]],
+                  "labels": [["SMR Number", "HA Number"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "hiddenNodes": [
                     "325a441c-efe4-11eb-9283-a87eeabdefba",
@@ -33,7 +33,7 @@
                   ]
                 },
                 "tilesManaged": "one",
-                "componentName": "workflow-builder-initial-step",
+                "componentName": "generate-ha-number",
                 "uniqueInstanceName": "12645f4a-6638-4f80-b020-c7dd7f886163"
               }
             ]
@@ -48,6 +48,23 @@
         "layoutSections": [
           {
             "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "1de9abf0-3aae-11ef-91fd-0242ac120003",
+                    "250002fe-3aae-11ef-91fd-0242ac120003",
+                    "158e1ed2-3aae-11ef-a2d0-0242ac120003"
+                  ],
+                  "nodegroupid": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
+                  "semanticName": "Heritage Asset References",
+                  "labels": [["Historic Parks and Gardens", "Historic Parks & Gardens Number"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "garden-heritage-asset-references"
+              },
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",

@@ -47,7 +47,9 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "4f5eeb2a-993e-11ea-a2db-f875a44e0e11",
-                    "4f5eeb27-993e-11ea-b9f7-f875a44e0e11"
+                    "4f5eeb27-993e-11ea-b9f7-f875a44e0e11",
+                    "4f5eeb28-993e-11ea-b5c1-f875a44e0e11",
+                    "4f5eeb29-993e-11ea-8078-f875a44e0e11"
                   ],
                   "nodegroupid": "4f5ec415-993e-11ea-bab0-f875a44e0e11"
                 },
@@ -68,6 +70,7 @@
               },
               {
                 "parameters": {
+                  "labels": [["Person or Organization", "HED Inspector"]],
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -81,7 +84,7 @@
                   "nodegroupid": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "associated-actors"
               },
               {

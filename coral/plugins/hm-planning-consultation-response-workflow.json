@@ -85,17 +85,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "action"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
-                  "semanticName": "CM References"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "cm-reference"
               }
             ]
           }
@@ -112,130 +101,10 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "b4974044-c768-11ee-a945-0242ac180006",
-                  "semanticName": "Planning References"
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "planning-reference"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
-                  "semanticName": "CM References"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "cm-refernce"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
-                  "semanticName": "DIF Received Date"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "dif-received-date"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "54de6acc-8895-11ea-9067-f875a44e0e11",
-                  "semanticName": "Application Type"
-                },
-                "tilesManaged": "one",
-                "componentName": "show-hierarchy-change",
-                "uniqueInstanceName": "application-type"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "86caf026-c76c-11ee-bf7c-0242ac180006",
-                  "semanticName": "Classification Type"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "classification-type"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "73fdfe62-8895-11ea-a058-f875a44e0e11",
-                  "semanticName": "Development Type"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "development-type"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "53388daa-24d1-11ef-a3a4-0242ac130006",
-                    "a3047fd4-031a-11ef-8ec2-0242ac150006",
-                    "54131242-24cf-11ef-a3a4-0242ac130006",
-                    "ecbda08c-fb2d-11ee-838d-0242ac190006",
-                    "4c00b292-fb2d-11ee-838d-0242ac190006",
-                    "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
-                    "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
-                    "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
-                    "db45aa50-24ce-11ef-97ad-0242ac130006",
-                    "166ed240-031a-11ef-8ec2-0242ac150006",
-                    "936fdbc8-24cf-11ef-97ad-0242ac130006",
-                    "b7304f4c-3ace-11eb-8884-f875a44e0e11"
-                  ],
-                  "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
-                  "semanticName": "Contacts"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "contacts"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11",
-                    "7224417b-893a-11ea-b383-f875a44e0e11"
-                  ],
-                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
-                  "semanticName": "Consultation Dates"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "consultation-dates"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
-                  "semanticName": "Consultation Descriptions"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "consultation-descriptions"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
-                  "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
-                  "semanticName": "Proposal"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "proposal"
+                "tilesManaged": "none",
+                "componentName": "pc-summary"
               }
             ]
           }
@@ -310,7 +179,7 @@
                   "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "fileObjectNamePrefix": "HM Response files for ",
+                  "fileObjectNamePrefix": "Response files for ",
                   "resourceModelDigitalObjectNodeGroupId": "b3addca4-8882-11ea-acc1-f875a44e0e11"
                 },
                 "tilesManaged": "one",

@@ -15,8 +15,12 @@ define([
   'views/components/workflows/fmw-workflow/get-selected-monument-details',
   'views/components/workflows/excavation-site-visit-workflow/get-selected-license-details',
   'views/components/workflows/fmw-workflow/calculate-composite-score',
+  'views/components/workflows/generate-ha-number',
+  'views/components/workflows/generate-smr-number',
   'views/components/workflows/heritage-asset-designation-workflow/ha-summary',
   'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',
+  'views/components/workflows/assign-consultation-workflow/pc-summary',
+  'views/components/workflows/excavation-license-workflow/excavation-report-step'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {

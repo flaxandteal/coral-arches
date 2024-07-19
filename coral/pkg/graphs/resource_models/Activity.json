@@ -365,7 +365,7 @@
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": null          
                     },
                     "helptitle": {
                         "en": null
@@ -1119,7 +1119,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "License Holder Present"
+                        "en": "People Present"
                     },
                     "nodegroup_id": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
                     "sortorder": null,
@@ -1235,6 +1235,43 @@
                 }
             ],
             "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "a5416b3f-f121-11eb-9d4a-a87eeabdefba",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Townland",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "08971db2-3d5c-41a0-b31f-5c99d7b4e1dc",
+                    "label": {
+                        "en": "Townland"
+                    },
+                    "node_id": "8bfe40fe-3ea7-11ef-bcc1-0242ac120006",
+                    "sortorder": 30,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "c59d428f-ce76-4298-82c2-14a13bae7934",
+                    "config": {
+                        "defaultValue": null,
+                        "label": "HED inspector present"
+                    },
+                    "id": "fd3fc526-81c6-4c5e-bc10-f332320ae1fd",
+                    "label": {
+                        "en": "HED inspector present"
+                    },
+                    "node_id": "f59b45be-3dd2-11ef-a49f-0242ac140007",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000006"
+                },
                 {
                     "card_id": "093a44d5-9937-11ea-a551-f875a44e0e11",
                     "config": {
@@ -4977,7 +5014,7 @@
                         "en": "Address Status Metatype"
                     },
                     "node_id": "a541b91e-f121-11eb-94ea-a87eeabdefba",
-                    "sortorder": 31,
+                    "sortorder": 32,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -4999,7 +5036,7 @@
                         "en": "Address Currency"
                     },
                     "node_id": "a541e02d-f121-11eb-b36f-a87eeabdefba",
-                    "sortorder": 32,
+                    "sortorder": 33,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -5430,7 +5467,7 @@
                         "en": "Address Currency Metatype"
                     },
                     "node_id": "a541b91d-f121-11eb-adf3-a87eeabdefba",
-                    "sortorder": 33,
+                    "sortorder": 34,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -5627,7 +5664,7 @@
                         "en": "Address Status"
                     },
                     "node_id": "a5419222-f121-11eb-8b1f-a87eeabdefba",
-                    "sortorder": 30,
+                    "sortorder": 31,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -7707,6 +7744,33 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
+                    "edgeid": "d5769fb0-3fc2-4ba8-a756-994be192a585",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "rangenode_id": "f59b45be-3dd2-11ef-a49f-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "edgeid": "b18f1579-c299-41c3-a690-871ae705db9d",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "rangenode_id": "a64c82ae-3de4-11ef-8288-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "edgeid": "bb71472c-09b6-49d8-a4e5-4f123df8909c",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P80_end_is_qualified_by",
+                    "rangenode_id": "cb7cb53e-3de5-11ef-8288-0242ac140007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "33b4430a-16be-11ef-8633-0242ac180006",
                     "edgeid": "02806ac9-9e5f-4dce-abb3-33289d2331cd",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -8391,6 +8455,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "64cdc9d2-3ea7-11ef-812e-0242ac120006",
+                    "edgeid": "5a76103a-a0d1-4f34-856d-dbe743648556",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "8bfe40fe-3ea7-11ef-bcc1-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "b9e0705b-5463-11e9-9368-000d3ab1e588",
                     "edgeid": "5f04c4a4-9f63-11ea-be3a-f875a44e0e11",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -8775,6 +8848,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
                     "rangenode_id": "1d4ef3f4-02f4-11ef-927a-0242ac150006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "a5416b3d-f121-11eb-85b4-a87eeabdefba",
+                    "edgeid": "925464f5-d297-4db1-bf6d-2b3234276e90",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "64cdc9d2-3ea7-11ef-812e-0242ac120006"
                 },
                 {
                     "description": null,
@@ -11056,6 +11138,84 @@
             ],
             "nodes": [
                 {
+                    "alias": "hed_inspector_present",
+                    "config": {
+                        "falseLabel": {
+                            "en": "No"
+                        },
+                        "i18n_properties": [
+                            "trueLabel",
+                            "falseLabel"
+                        ],
+                        "trueLabel": {
+                            "en": "Yes"
+                        }
+                    },
+                    "datatype": "boolean",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "HED inspector present",
+                    "nodegroup_id": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
+                    "nodeid": "f59b45be-3dd2-11ef-a49f-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "start_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Start Date",
+                    "nodegroup_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "nodeid": "a64c82ae-3de4-11ef-8288-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P79_beginning_is_qualified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "end_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "End Date",
+                    "nodegroup_id": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
+                    "nodeid": "cb7cb53e-3de5-11ef-8288-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P80_end_is_qualified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "bibliographic_source_citation",
                     "config": {
                         "graphid": [
@@ -12982,6 +13142,29 @@
                     "sourcebranchpublication_id": "bf3b96c6-d7c6-11ee-adfa-0242ac120006"
                 },
                 {
+                    "alias": "townlands",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Townlands",
+                    "nodegroup_id": "a5416b3d-f121-11eb-85b4-a87eeabdefba",
+                    "nodeid": "64cdc9d2-3ea7-11ef-812e-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "audit_metadata",
                     "config": {},
                     "datatype": "semantic",
@@ -13892,6 +14075,29 @@
                     "nodeid": "879fc326-02f6-11ef-927a-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9i_forms_part_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "townland",
+                    "config": {
+                        "rdmCollection": "c333cc6e-9abe-9782-bfe5-085f1389c2c7"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Townland",
+                    "nodegroup_id": "a5416b3d-f121-11eb-85b4-a87eeabdefba",
+                    "nodeid": "8bfe40fe-3ea7-11ef-bcc1-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -18909,8 +19115,8 @@
             "publication": {
                 "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                 "notes": null,
-                "publicationid": "660b4df8-16be-11ef-af79-0242ac180006",
-                "published_time": "2024-05-20T15:34:08.338"
+                "publicationid": "3f4c71e2-3eaa-11ef-812e-0242ac120006",
+                "published_time": "2024-07-10T10:50:39.911"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -18946,8 +19152,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "fatal: not a git repository (or any of the parent directories): .git",
+        "git hash": "f8671a0bd 2024-06-18 14:23:46 +0100",
         "os": "Linux",
-        "os version": "5.10.0-21-amd64"
+        "os version": "6.8.0-36-generic"
     }
 }

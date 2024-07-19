@@ -26,7 +26,15 @@ define([
   var DatePickerWidget = function (params) {
     var self = this;
     params.configKeys = ['minDate', 'maxDate', 'viewMode', 'dateFormat', 'defaultValue'];
-
+    if (params.config && typeof params.config === 'function' && params.config().maxDate === "today") {
+      const date = new Date();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let currentDate = `${year}-${month}-${day}`;
+      params.config.maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
+      params.config().maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
+    }
     WidgetViewModel.apply(this, [params]);
 
     if (self.node.config && ko.unwrap(self.node.config.dateFormat)) {
@@ -35,7 +43,7 @@ define([
     if (!ko.unwrap(this.dateFormat)) {
       this.dateFormat = ko.observable(self.node.datatypeLookup.date.config);
     }
-
+ 
     /**
      * Date format overriding logic
      */
@@ -103,7 +111,7 @@ define([
         self.tile._tileData(koMapping.toJSON(tileData));
       }
     }
-
+    
     /**
      * Date format overriding logic
      */
@@ -112,7 +120,13 @@ define([
       const formattedDate = parsedDate.format('DD-MM-YYYY');
       this.dateValue(formattedDate);
     }
+    this.value.subscribe((value) => {
+      const parsedDate = moment(this.value(), 'YYYY-MM-DD');
+      const formattedDate = parsedDate.format('DD-MM-YYYY');
+      this.dateValue(formattedDate);
+    })
     this.dateValue.subscribe((value) => {
+      console.log("date Value updating", value)
       const parsedDate = moment(value, 'DD-MM-YYYY');
       const formattedDate = parsedDate.format('YYYY-MM-DD');
       this.value(formattedDate);

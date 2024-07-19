@@ -10,8 +10,6 @@ define([
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
-
-    this.totalCompositeScore = ko.observable(0);
     this.disabled = ko.observable(true);
 
     this.CONDITION_SCORE_NODE_ID = '73679068-0c52-11ef-a9bf-0242ac140006';
@@ -25,17 +23,24 @@ define([
       'ef491947-178e-4f62-92ac-192fa6424592': 5
     };
 
+    this.totalCompositeScore = ko.observable(
+      this.tile.data[this.CONDITION_SCORE_NODE_ID]() && this.tile.data[this.RISK_SCORE_NODE_ID]()
+        ? this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODE_ID]()] *
+            this.scoreLookup[this.tile.data[this.RISK_SCORE_NODE_ID]()]
+        : 0
+    );
+
     this.tile.data[this.CONDITION_SCORE_NODE_ID].subscribe((value) => {
       const conditionScoreValue = this.scoreLookup[value] || 0;
       const riskScoreValue = this.scoreLookup[this.tile.data[this.RISK_SCORE_NODE_ID]()] || 0;
-      this.totalCompositeScore(conditionScoreValue + riskScoreValue);
+      this.totalCompositeScore(conditionScoreValue * riskScoreValue);
     }, this);
 
     this.tile.data[this.RISK_SCORE_NODE_ID].subscribe((value) => {
       const riskScoreValue = this.scoreLookup[value] || 0;
       const conditionScoreValue =
         this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODE_ID]()] || 0;
-      this.totalCompositeScore(conditionScoreValue + riskScoreValue);
+      this.totalCompositeScore(conditionScoreValue * riskScoreValue);
     }, this);
   }
 
