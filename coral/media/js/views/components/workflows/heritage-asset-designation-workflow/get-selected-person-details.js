@@ -10,8 +10,8 @@ define([
   ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
     function viewModel(params) {
       CardComponentViewModel.apply(this, [params]);
+      console.log(this.tile.data)
   
-
       this.PERSON_NAME_NODEGROUP = '4110f741-1a44-11e9-885e-000d3ab1e588'
       this.PERSON_TITLE_NODE = '6da2f03b-7e55-11ea-8fe5-f875a44e0e11'
       this.PERSON_FULL_NAME_NODE = '5f8ded26-7ef9-11ea-8e29-f875a44e0e11'
@@ -74,31 +74,7 @@ define([
             }
           });
         });
-      
 
-      params.detailNodes.forEach(node => {
-        this.selectedPeople()[node] = ko.observable({ 
-          value : ko.observable(),
-          name : ko.observable(),
-          contact : ko.observable(),
-          address : ko.observable()
-        })
-        this.tile.data[node].subscribe((value) => {
-            if (value && value.length) {
-                const resourceId = value[0].resourceId();
-                this.selectedPeople()[node]().value(resourceId);
-                this.getMonumentDetails(resourceId, node);
-            }
-        }, this);
-      })
-
-      this.getPerson = (node) => {
-        if (!this.selectedPeople()[node]) {
-        }
-        return this.selectedPeople()[node]
-        
-      }
-  
       this.fetchTileData = async (resourceId) => {
         const tilesResponse = await window.fetch(
           arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
@@ -106,8 +82,8 @@ define([
         const data = await tilesResponse.json();
         return data.tiles;
       };
-  
-      this.getMonumentDetails = async (resourceId, node) => {
+
+      this.getPersonDetails = async (resourceId, node) => {
         const tiles = await this.fetchTileData(resourceId);
         for (const tile of tiles) {
           if (tile.nodegroup === this.PERSON_NAME_NODEGROUP) {
@@ -117,7 +93,9 @@ define([
             this.selectedPeople()[node]().contact(tile.data[this.PERSON_CONTACT_POINT_NODE])
           }
           if (tile.nodegroup === this.PERSON_ADDRESSES_NODEGROUP) {
+
             if (tile.data[this.PERSON_FULL_ADDRESS_NODE]) {
+              this.selectedPeople()[node]().address(null)
               this.selectedPeople()[node]().address(tile.data[this.PERSON_FULL_ADDRESS_NODE])
             } else {
               let fullAddress = `
@@ -133,7 +111,30 @@ define([
           }
         }
       };
+      
+
+      params.detailNodes.forEach(node => {
+        this.selectedPeople()[node] = ko.observable({ 
+          value : ko.observable(),
+          name : ko.observable(),
+          contact : ko.observable(),
+          address : ko.observable()
+        })
+        this.tile.data[node].subscribe((value) => {
+            if (value && value.length) {
+                const resourceId = value[0].resourceId();
+                this.selectedPeople()[node]().value(resourceId);
+                this.getPersonDetails(resourceId, node);
+            }
+        }, this);
+        if (this.tile.data[node]()) {
+          console.log("there's data", this.tile.data[node]())
+          this.getPersonDetails(this.tile.data[node]()[0].resourceId, node)
+        }
+      })
+  
     }
+
   
     ko.components.register('get-selected-person-details', {
       viewModel: viewModel,
