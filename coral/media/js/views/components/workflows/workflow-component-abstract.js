@@ -42,6 +42,7 @@ define([
     function TileBasedComponent() {
         var self = this;
          
+        this.disableAdd = ko.observable(false);
 
         this.tile = ko.observable();
         this.tiles = ko.observable();
@@ -493,6 +494,9 @@ define([
         };
 
         this.addOrUpdateTile = function() {
+            
+            if(this.disableAdd()) return
+
             var tiles = self.tiles();
             self.tiles(null);
 
