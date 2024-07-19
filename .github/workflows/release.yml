@@ -2,7 +2,7 @@ name: Release update to UAT
 run-name: Release update to UAT
 on:
   push:
-    tags: [ 'v*.*.*' ]
+    tags: [ 'v*.*.*-RELEASE' ]
 env:
   ARCHES_BASE: ghcr.io/flaxandteal/arches-base:coral-7.6
   ARCHES_PROJECT: coral
