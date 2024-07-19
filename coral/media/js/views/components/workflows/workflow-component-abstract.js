@@ -15,6 +15,7 @@ define([
     function NonTileBasedComponent() {
         var self = this;
          
+        this.disableAdd = ko.observable(false);
 
         this.initialize = function() {
             self.loading(false);
@@ -286,6 +287,8 @@ define([
     function AbstractCardAdapter() {  // CURRENTLY IN DEVLEOPMENT, USE AT YOUR OWN RISK!
         var self = this;
         this.cardinality = ko.observable();
+
+        this.disableAdd = ko.observable(false);
 
         this.initialize = function() {
             self.loading(true);
@@ -646,6 +649,8 @@ define([
 
     function WorkflowComponentAbstract(params) {
         var self = this;
+
+        this.disableAdd = ko.observable(false);
 
         this.workflowId = params.workflowId;
         this.workflowName = params.workflowName;

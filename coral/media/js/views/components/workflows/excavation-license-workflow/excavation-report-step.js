@@ -17,7 +17,7 @@ define([
 
         this.tile.data[this.DOCUMENT_REFERENCE_NODE].subscribe((newValue) => {
             if (newValue.en.value != ""){
-                console.log(newValue)
+
                 params.disableAdd(false)
             }
         })
