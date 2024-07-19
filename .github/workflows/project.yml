@@ -54,7 +54,7 @@ jobs:
           context: .
           push: true
           file: docker/Dockerfile
-          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             ARCHES_BASE=${{ env.ARCHES_BASE }}
@@ -114,7 +114,7 @@ jobs:
           file: docker/Dockerfile.static
           network: host
           allow: network.host
-          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             ARCHES_DYNAMIC_IMAGE=${{ needs['Build-Arches'].outputs.image }}
