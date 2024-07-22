@@ -7744,6 +7744,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "a472226f-9937-11ea-966a-f875a44e0e11",
+                    "edgeid": "62b74941-e92d-4603-91f2-bf91f159b2b3",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
+                    "rangenode_id": "347f6f46-434e-11ef-a83a-0242ac140007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
                     "edgeid": "d5769fb0-3fc2-4ba8-a756-994be192a585",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -11137,6 +11146,61 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "description_type",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "6da0f3bc-7d98-447f-aa6a-8217ac227052",
+                                "selected": false,
+                                "text": {
+                                    "en": "Survey Methods"
+                                }
+                            },
+                            {
+                                "id": "79812f9c-a747-4410-844a-4f3501a7ba3a",
+                                "selected": false,
+                                "text": {
+                                    "en": "Archives"
+                                }
+                            },
+                            {
+                                "id": "e6f49cf2-6a40-4542-9fe6-26e0d9a4bb8d",
+                                "selected": false,
+                                "text": {
+                                    "en": "Finds"
+                                }
+                            },
+                            {
+                                "id": "0e3395e6-5892-435b-9a50-863b74985e04",
+                                "selected": false,
+                                "text": {
+                                    "en": "General"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Description Type",
+                    "nodegroup_id": "a472226f-9937-11ea-966a-f875a44e0e11",
+                    "nodeid": "347f6f46-434e-11ef-a83a-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E29_Design_or_Procedure",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106i_forms_part_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "hed_inspector_present",
                     "config": {
