@@ -10,7 +10,7 @@ RESOURCE_ID_NODE = "3bdc39fc-9a93-11ea-8cee-f875a44e0e11"
 DISPLAY_NAME_NODE = "eb0b2aec-442b-11ef-a57a-0242ac120002"
 
 details = {
-    # "functionid": "",
+    "functionid": "d9444f81-578e-43e6-9585-bd549a374585",
     "name": "Update Archive Display Name",
     "type": "node",
     "description": "Will update the display name depending on whether the source name is present",
