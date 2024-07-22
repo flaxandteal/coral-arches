@@ -10,7 +10,7 @@ define([
   ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
     function viewModel(params) {
       CardComponentViewModel.apply(this, [params]);
-      console.log(this.tile.data)
+      console.log("v13")
   
       this.PERSON_NAME_NODEGROUP = '4110f741-1a44-11e9-885e-000d3ab1e588'
       this.PERSON_TITLE_NODE = '6da2f03b-7e55-11ea-8fe5-f875a44e0e11'
@@ -85,18 +85,25 @@ define([
 
       this.getPersonDetails = async (resourceId, node) => {
         const tiles = await this.fetchTileData(resourceId);
+        let person = {name: "", contact: "", address: ""}
         for (const tile of tiles) {
+          console.log("Heres the tile", tile.data)
+          if (!this.selectedPeople()[node]) {
+            this.selectedPeople()[node] =[]
+            console.log("just made", this.selectedPeople()[node])
+          }
+          console.log("working with", this.selectedPeople()[node])
           if (tile.nodegroup === this.PERSON_NAME_NODEGROUP) {
-            this.selectedPeople()[node]().name(tile.data[this.PERSON_FULL_NAME_NODE])
+            person.name = tile.data[this.PERSON_FULL_NAME_NODE]
           }
           if (tile.nodegroup === this.PERSON_CONTACT_POINT_NODEGROUP) {
-            this.selectedPeople()[node]().contact(tile.data[this.PERSON_CONTACT_POINT_NODE])
+            person.contact = tile.data[this.PERSON_CONTACT_POINT_NODE]
           }
           if (tile.nodegroup === this.PERSON_ADDRESSES_NODEGROUP) {
 
             if (tile.data[this.PERSON_FULL_ADDRESS_NODE]) {
-              this.selectedPeople()[node]().address(null)
-              this.selectedPeople()[node]().address(tile.data[this.PERSON_FULL_ADDRESS_NODE])
+              person.address = null
+              person.address = tile.data[this.PERSON_FULL_ADDRESS_NODE]
             } else {
               let fullAddress = `
               ${tile.data[this.PERSON_BUILDING_NAME_NODE].en.value ? tile.data[this.PERSON_BUILDING_NAME_NODE].en.value +",\n": ""}
@@ -105,31 +112,52 @@ define([
               ${tile.data[this.PERSON_COUNTY_NODE].en.value},\n
               ${tile.data[this.PERSON_POSTCODE_NODE].en.value}
               `
-              this.selectedPeople()[node]().address({en: {value: fullAddress}})
+              person.address = {en: {value: fullAddress}}
             }
-
           }
+          console.log("this is a person being pushed", person)
+          this.selectedPeople()[node].forEach(selection => {
+            console.log("selection", selection)
+            selection.value(resourceId)
+            selection.name(person.name)
+            selection.contact(person.contact)
+            selection.address(person.address)
+          })
         }
       };
       
 
       params.detailNodes.forEach(node => {
-        this.selectedPeople()[node] = ko.observable({ 
-          value : ko.observable(),
-          name : ko.observable(),
-          contact : ko.observable(),
-          address : ko.observable()
-        })
+        // this.selectedPeople()[node] = ko.observable({ 
+        //   value : ko.observable(),
+        //   name : ko.observable(),
+        //   contact : ko.observable(),
+        //   address : ko.observable()
+        // })
+        this.selectedPeople()[node] = []
         this.tile.data[node].subscribe((value) => {
             if (value && value.length) {
-                const resourceId = value[0].resourceId();
-                this.selectedPeople()[node]().value(resourceId);
-                this.getPersonDetails(resourceId, node);
+                const resourceIds = value.map(v => v.resourceId);
+                resourceIds.forEach((resourceId, idx) => {
+                  this.selectedPeople()[node].push(ko.observable({ 
+                    resourceId : resourceId,
+                    value : ko.observable(),
+                    name : ko.observable(),
+                    contact : ko.observable(),
+                    address : ko.observable()
+                  }))
+                  console.log("person", this.selectedPeople()[node][idx])
+                  this.getPersonDetails(resourceId, node);
+                })
             }
         }, this);
         if (this.tile.data[node]()) {
           console.log("there's data", this.tile.data[node]())
-          this.getPersonDetails(this.tile.data[node]()[0].resourceId, node)
+          this.tile.data[node]().forEach(person => {
+            console.log("getting details for", person)
+            this.getPersonDetails(person.resourceId, node)
+          })
+          // this.getPersonDetails(this.tile.data[node]()[0].resourceId, node)
         }
       })
   
