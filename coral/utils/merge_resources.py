@@ -125,6 +125,10 @@ class MergeResources:
 
     def merge_resource_instance_list(self, base_node_value, merge_node_value):
         resource_map = {}
+        if not base_node_value:
+            base_node_value = []
+        if not merge_node_value:
+            merge_node_value = []
         for resource in base_node_value:
             if resource["resourceId"] not in resource_map:
                 resource_map[resource["resourceId"]] = resource
