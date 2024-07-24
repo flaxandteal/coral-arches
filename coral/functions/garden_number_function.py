@@ -29,22 +29,33 @@ class GardenNumberFunction(BaseFunction):
             resourceinstance_id=ri_id,
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
         ).first()
-
+        
         if not references_tile:
             references_tile = Tile.get_blank_tile_from_nodegroup_id(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID, resourceid=ri_id
             )
 
+        if isinstance(id, str):
+            id = {
+                "en":{
+                    "direction": "ltr",
+                    "value": id
+                }
+            }
         references_tile.data[GARDEN_NUMBER_NODE_ID] = id
         references_tile.save()
 
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
-        id_number = tile.data.get(GENERATED_GARDEN_NODE_ID, None)
+
+        id_number = Tile.objects.filter(
+            resourceinstance_id = resource_instance_id,
+            nodegroup_id = GENERATED_GARDEN_NODEGROUP
+        ).first().data.get(GENERATED_GARDEN_NODE_ID)
 
         if not id_number:
             return
-
+        
         county_tile = Tile.objects.filter(
             resourceinstance_id=resource_instance_id,
             nodegroup_id=ADDRESS_NODEGROUP_ID,
@@ -62,6 +73,8 @@ class GardenNumberFunction(BaseFunction):
             return
 
         id_number = gn.generate_id_number(resource_instance_id)
+        if not id_number:
+            return
         self.update_ha_references(resource_instance_id, id_number)
 
         return
