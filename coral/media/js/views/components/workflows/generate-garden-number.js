@@ -9,15 +9,12 @@ define([
   ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, template) {
     function viewModel(params) {
       CardComponentViewModel.apply(this, [params]);
-      console.log('generate-garden-number: ', this.tiles());
   
       this.gardenNumber = ko.observable('');
   
       this.ADDRESS_NODEGROUP = "87d39b25-f44f-11eb-95e5-a87eeabdefba"
       this.COUNTY_NODE_ID = '8bfe714e-3ec2-11ef-9023-0242ac140007';
-      this.GENERATED_GARDEN_NODE_ID = 'bb3860284-4414-11ef-ac80-0242ac120002';
-      console.log("URL TEST", arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', this.tile.resourceinstance_id) + `?nodeid=${this.COUNTY_NODEGROUP}` )
-      console.log("tile data", this.tile)
+      this.GENERATED_GARDEN_NODE_ID = 'bd85cca2-49a4-11ef-94a5-0242ac120007';
 
       this.selectedCounty = ko.observable();
       this.errorMessage = "No county has been selected"
@@ -42,7 +39,6 @@ define([
           const countyName = tile.data[this.COUNTY_NODE_ID]
           if (countyName) {
             this.selectedCounty(countyName)
-            console.log("county Name", this.selectedCounty())
           }
         }
       }
@@ -53,7 +49,7 @@ define([
   
       this.generateGardenNumber = async () => {
         if (!this.selectedCounty) return;
-        console.log("I'm working!")
+
         params.pageVm.loading(true);
         const data = {
           resourceInstanceId: this.tile.resourceinstance_id,
@@ -69,15 +65,18 @@ define([
             console.log(response, status, error);
           }
         });
+
         if (ko.isObservable(this.tile.data[this.GENERATED_GARDEN_NODE_ID])) {
           this.tile.data[this.GENERATED_GARDEN_NODE_ID]({
             en: {
+              direction: "ltr",
               value: response.gardenNumber
             }
           });
         } else {
           this.tile.data[this.GENERATED_GARDEN_NODE_ID] = {
             en: {
+              direction: "ltr",
               value: response.gardenNumber
             }
           };
