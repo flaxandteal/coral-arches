@@ -36,12 +36,13 @@ define([
         
       }
 
-      this.getCountyName = async () => {
+      this.getCountyID = async () => {
         const tile = await this.fetchCountyTile()
         if (tile) {
-          const countyName = tile.display_values.find(object => object.nodeid === this.COUNTY_NODE_ID).value
+          const countyName = tile.data[this.COUNTY_NODE_ID]
           if (countyName) {
             this.selectedCounty(countyName)
+            console.log("county Name", this.selectedCounty())
           }
         }
       }
@@ -53,38 +54,38 @@ define([
       this.generateGardenNumber = async () => {
         if (!this.selectedCounty) return;
         console.log("I'm working!")
-      //   params.pageVm.loading(true);
-      //   const data = {
-      //     resourceInstanceId: this.tile.resourceinstance_id,
-      //     selectedCountyId: this.tile.data[this.COUNTY_NODE_ID]()
-      //   };
-      //   const response = await $.ajax({
-      //     type: 'POST',
-      //     url: '/generate-garden-number',
-      //     dataType: 'json',
-      //     data: JSON.stringify(data),
-      //     context: this,
-      //     error: (response, status, error) => {
-      //       console.log(response, status, error);
-      //     }
-      //   });
-      //   if (ko.isObservable(this.tile.data[this.GENERATED_GARDEN_NODE_ID])) {
-      //     this.tile.data[this.GENERATED_GARDEN_NODE_ID]({
-      //       en: {
-      //         value: response.gardenNumber
-      //       }
-      //     });
-      //   } else {
-      //     this.tile.data[this.GENERATED_GARDEN_NODE_ID] = {
-      //       en: {
-      //         value: response.gardenNumber
-      //       }
-      //     };
-      //   }
-      //   params.pageVm.loading(false);
+        params.pageVm.loading(true);
+        const data = {
+          resourceInstanceId: this.tile.resourceinstance_id,
+          selectedCountyId: this.selectedCounty()
+        };
+        const response = await $.ajax({
+          type: 'POST',
+          url: '/generate-garden-number',
+          dataType: 'json',
+          data: JSON.stringify(data),
+          context: this,
+          error: (response, status, error) => {
+            console.log(response, status, error);
+          }
+        });
+        if (ko.isObservable(this.tile.data[this.GENERATED_GARDEN_NODE_ID])) {
+          this.tile.data[this.GENERATED_GARDEN_NODE_ID]({
+            en: {
+              value: response.gardenNumber
+            }
+          });
+        } else {
+          this.tile.data[this.GENERATED_GARDEN_NODE_ID] = {
+            en: {
+              value: response.gardenNumber
+            }
+          };
+        }
+        params.pageVm.loading(false);
       };
 
-      this.getCountyName()
+      this.getCountyID()
     }
   
     ko.components.register('generate-garden-number', {
