@@ -34,7 +34,7 @@ class GardenNumber:
             "Down": "DOW",
             "Fermanagh": "FER",
             "Londonderry": "LDY",
-            "Tyron": "TYR"
+            "Tyrone": "TYR"
         }
         abbreviation = abbreviations.get(name, None)
         if abbreviation is None:
@@ -127,13 +127,21 @@ class GardenNumber:
 
     def validate_id(self, id_number):
         try:
-            # Runs a query searching for an identical ID value
-            id_number_tile = Tile.objects.filter(
+            if isinstance(id_number, dict):
+                id_number_tile = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
                 data__contains={
-                    GARDEN_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+                    GARDEN_NUMBER_NODE_ID: id_number
                 },
             ).first()
+            else:
+            # Runs a query searching for an identical ID value
+                id_number_tile = Tile.objects.filter(
+                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                    data__contains={
+                        GARDEN_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+                    },
+                ).first()
             if id_number_tile:
                 return False
         except Exception as e:
