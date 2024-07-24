@@ -39,20 +39,15 @@ class GardenNumberView(View):
                 return JSONResponse(
                     {
                         "message": "Historic Parks and Garden has already been generated",
-                        "haNumber": id,
+                        "gardenNumber": id,
                     }
                 )
             
         self.county_name = ""
 
         if county_tile:
-            county_id = Tile.objects.filter(
-                    resourceinstance_id = resource_instance_id,
-                    nodegroup_id = ADDRESS_NODEGROUP_ID
-                ).first()
-
             county_name_tile = models.Value.objects.filter(
-                valueid= county_id.data.get(COUNTY_NODE_ID)
+                valueid= county_tile.data.get(COUNTY_NODE_ID)
             ).first()
 
             self.county_name = county_name_tile.value

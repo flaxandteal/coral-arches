@@ -45,7 +45,7 @@ class GardenNumber:
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{GARDEN_NUMBER_NODE_ID}__icontains": self.county_name,
+                f"data__{GARDEN_NUMBER_NODE_ID}__icontains": self.county_abbreviation,
             }
             query_result = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -88,7 +88,7 @@ class GardenNumber:
             id_number_tile = None
             try:
                 generated_id_query = {
-                    f"data__{GARDEN_NUMBER_NODE_ID}__icontains": self.county_name,
+                    f"data__{GARDEN_NUMBER_NODE_ID}__icontains": self.county_abbreviation
                 }
                 id_number_tile = Tile.objects.filter(
                     resourceinstance_id=resource_instance_id,
