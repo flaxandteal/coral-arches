@@ -2299,6 +2299,35 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "10f14bcc-4307-422d-afdf-417f6b9eac38",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Generated Historic Parks and Garden",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Auto-generated field"
+                        },
+                        "uneditable": true,
+                        "width": "100%%"
+                    },
+                    "id": "9406facd-dca0-43d2-a705-0e96e42b245a",
+                    "label": {
+                        "en": "Generated Historic Parks and Garden"
+                    },
+                    "node_id": "bd85cca2-49a4-11ef-94a5-0242ac120007",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
                     "card_id": "346001be-d23e-11ee-9ae7-0242ac180006",
                     "config": {
                         "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
