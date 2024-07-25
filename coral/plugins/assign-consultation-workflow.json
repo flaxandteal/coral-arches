@@ -288,8 +288,24 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
+                  "semanticName": "Assignment",
+                  "hiddenNodes": [
+                    "6b8f5866-2f0d-11ef-b37c-0242ac140006",
+                    "fbdd2304-cfda-11ee-8cc1-0242ac180006"
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "assignment"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
-                  "semanticName": "Action"
+                  "semanticName": "Action",
+                  "hiddenNodes": ["8322f9f6-69b5-11ee-93a1-0242ac120002"]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
