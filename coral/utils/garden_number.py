@@ -111,7 +111,7 @@ class GardenNumber:
             return retry()
 
         if latest_id_number:
-            next_number = latest_id_number["index"] + 1
+            next_number = latest_id_number["index"] + attempts + 1
             id_number = self.id_number_format(next_number)
         else:
             # If there is no latest resource to work from we know
@@ -119,6 +119,7 @@ class GardenNumber:
             id_number = self.id_number_format(1)
 
         passed = self.validate_id(id_number)
+
         if not passed:
             return retry()
 
