@@ -118,7 +118,7 @@ class Dashboard(View):
 class TaskStrategy:
     def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
         raise NotImplementedError("Subclasses must implement this method")
-    def build_data(self, consultation):
+    def build_data(self, consultation, groupId):
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
@@ -159,7 +159,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     (is_admin)
                 )
                 if conditions_for_task:                 
-                    task = self.build_data(consultation)
+                    task = self.build_data(consultation, groupId)
                     if task:
                         resources.append(task)
 
@@ -177,7 +177,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
         return resources, counters, sort_options
     
-    def build_data(self, consultation):
+    def build_data(self, consultation, groupId):
         utilities = Utilities()
 
         action_status = utilities.node_check(lambda: consultation.action[0].action_status)
@@ -188,7 +188,9 @@ class PlanningTaskStrategy(TaskStrategy):
 
         address_parts = [address.street.street_value, address.town_or_city.town_or_city_value, address.postcode.postcode_value]
         address = [part for part in address_parts if part is not None and part != 'None']
-
+        
+        responseslug = utilities.get_response_slug(groupId) if groupId else None
+        
         if date_entered:
             date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
         if deadline:
@@ -203,7 +205,7 @@ class PlanningTaskStrategy(TaskStrategy):
             'date': date_entered,
             'deadline': deadline,
             'address': address,
-            'responseslug': 'assign-consultation-workflow'
+            'responseslug': responseslug
         }
         return resource_data
 
@@ -252,3 +254,11 @@ class Utilities:
         except Exception as error:
             logging.error(f'Node does not exist: {error}')
             return default
+        
+    def get_response_slug(self, groupId):
+        if groupId in [HM_GROUP, HM_MANAGER]:
+            return "hm-planning-consultation-response-workflow"
+        elif groupId in [HB_GROUP, HB_MANAGER]:
+            return "hb-planning-consultation-response-workflow"
+        elif groupId in [PLANNING_GROUP]:
+            return "assign-consultation-workflow"
