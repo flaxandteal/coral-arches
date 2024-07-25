@@ -8,6 +8,8 @@ from collections import defaultdict
 from django.core.cache import cache
 import json
 import logging
+from itertools import chain 
+import pdb
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -29,7 +31,7 @@ NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
 class Dashboard(View):
 
     def get(self, request):
-        from arches_orm.models import Person, Group
+        from arches_orm.models import Person
 
         with admin():
             user_id = request.user.id                     
@@ -55,24 +57,16 @@ class Dashboard(View):
                 sort_options = data['sort_options']
 
             else:
-            
-                groups = Group.all()
+                user_group_ids = self.get_groups(person_resource[0].id)
+                strategies = set()
+                for groupId in user_group_ids:
+                    strategy = self.select_strategy(groupId)
+                    if strategy:
+                        strategies.add(self.select_strategy(groupId))
+                for strategy in strategies:
+                    resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
+                    task_resources.extend(resources)
 
-                userGroupIds = []
-
-                for group in groups:
-                    for member in group.members:
-                        if member.id == person_resource[0].id:
-                            userGroupIds.append(str(group.id)) #needs to be a string and not uuid
-
-                #defines the data structure dependent upon the group
-                for groupId in userGroupIds:
-                    if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
-                        planning_tasks = self.get_planning_consultations(groupId, person_resource[0].id, sort_by, sort_order)
-                        task_resources.extend(planning_tasks)
-                        counters = self.get_count_groups(planning_tasks, ['status', 'hierarchy_type'])
-                        sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
-                        break
                 cache_data = json.dumps({
                     'task_resources': task_resources,
                     'counters': counters,
@@ -98,60 +92,122 @@ class Dashboard(View):
                     'total': paginator.count,
                     'counters': counters,
                     'sort_options': sort_options,
-                    'response': list(page_obj.object_list)
+                    'response': page_obj.object_list
                 }
             })
-
-    def get_planning_consultations(self, groupId, userResouceId, sort_by='deadline', sort_order='asc'):
-            from arches_orm.models import Consultation
-        
-        
-            TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
-            TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
-            TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
-
-            is_user = groupId in [HM_GROUP, HB_GROUP] 
-            is_manager = groupId in [HM_MANAGER, HB_MANAGER] 
-            is_admin = groupId in [PLANNING_GROUP]
-
-            resources = [] 
-
-            consultations = Consultation.all()
-
-            #filter out consultations that are not planning consultations
-            planning_consultations=[c for c in consultations if c._._name.startswith('CON/')]
-
-            #checks against type & status and assigns to user if in correct group
-            for consultation in planning_consultations:
-                    action_status = self.node_check(lambda: consultation.action[0].action_status )
-                    action_type = self.node_check(lambda: consultation.action[0].action_type) 
-                    action_by = self.node_check(lambda: consultation.action[0].action_by[0].id)
-
-                    is_assigned_to_user = action_by == userResouceId
-
-                    conditions_for_task = (
-                        (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                        (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                        (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                        (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                        (is_admin)
-                    )
-                    if conditions_for_task:                 
-                        task = self.build_planning_resource_data(consultation)
-                        if task:
-                            resources.append(task)
-
-            #sort by deadline date, nulls first
-            from datetime import datetime
-
-            # Convert the 'deadline', 'date' field to a date and sort
-            resources.sort(key=lambda x: (
-                x[sort_by] is not None, datetime.strptime(x[sort_by], '%d-%m-%Y') 
-                if x[sort_by] else None
-            ), reverse=(sort_order == 'desc'))
-
-            return resources
     
+    def get_groups(self, userId):
+        from arches_orm.models import Group
+
+        groups = Group.all()
+
+        userGroupIds = []
+
+        for group in groups:
+            for member in group.members:
+                if member.id == userId:
+                    userGroupIds.append(str(group.id)) #needs to be a string and not uuid
+
+        return userGroupIds
+    
+    def select_strategy(self, groupId):
+        if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
+            return PlanningTaskStrategy()
+        return
+
+class TaskStrategy:
+    def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
+        raise NotImplementedError("Subclasses must implement this method")
+    def build_data(self, consultation):
+        raise NotImplementedError("Subclasses must implement this method")
+
+class PlanningTaskStrategy(TaskStrategy):
+    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='asc'):
+        from arches_orm.models import Consultation
+    
+        TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
+        TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
+        TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
+
+        is_user = groupId in [HM_GROUP, HB_GROUP] 
+        is_manager = groupId in [HM_MANAGER, HB_MANAGER] 
+        is_admin = groupId in [PLANNING_GROUP]
+
+        resources = [] 
+
+        utilities = Utilities()
+
+        consultations = Consultation.all()
+
+        #filter out consultations that are not planning consultations
+        planning_consultations=[c for c in consultations if c._._name.startswith('CON/')]
+
+        #checks against type & status and assigns to user if in correct group
+        for consultation in planning_consultations:
+                action_status = utilities.node_check(lambda: consultation.action[0].action_status )
+                action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
+                assigned_to_list = utilities.node_check(lambda: consultation.assignment[0].assignee.assigned_to, [])
+                reassigned_to_list = utilities.node_check(lambda: consultation.assignment[0].assignee.re_assignee[0].re_assigned_to, [])
+
+                is_assigned_to_user = any(user.id == userResourceId for user in chain(assigned_to_list, reassigned_to_list))
+
+                conditions_for_task = (
+                    (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                    (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                    (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                    (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                    (is_admin)
+                )
+                if conditions_for_task:                 
+                    task = self.build_data(consultation)
+                    if task:
+                        resources.append(task)
+
+        #sort by deadline date, nulls first
+        from datetime import datetime
+
+        # Convert the 'deadline', 'date' field to a date and sort
+        resources.sort(key=lambda x: (
+            x[sort_by] is not None, datetime.strptime(x[sort_by], '%d-%m-%Y') 
+            if x[sort_by] else None
+        ), reverse=(sort_order == 'desc'))
+
+        counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
+        sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
+
+        return resources, counters, sort_options
+    
+    def build_data(self, consultation):
+        utilities = Utilities()
+
+        action_status = utilities.node_check(lambda: consultation.action[0].action_status)
+        date_entered = utilities.node_check(lambda: consultation.consultation_dates.log_date)
+        deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
+        hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
+        address = utilities.node_check(lambda: consultation.location_data.addresses)
+
+        address_parts = [address.street.street_value, address.town_or_city.town_or_city_value, address.postcode.postcode_value]
+        address = [part for part in address_parts if part is not None and part != 'None']
+
+        if date_entered:
+            date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+        if deadline:
+            deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")           
+
+        resource_data = {
+            'id': str(consultation.id),
+            'displayname': consultation._._name,
+            'displaydescription': consultation._._description,
+            'status': utilities.convert_id_to_string(action_status),
+            'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
+            'date': date_entered,
+            'deadline': deadline,
+            'address': address,
+            'responseslug': 'assign-consultation-workflow'
+        }
+        return resource_data
+
+class Utilities:
     def convert_id_to_string(self, id):
         if id == STATUS_OPEN:
             return 'Open'
@@ -196,34 +252,3 @@ class Dashboard(View):
         except Exception as error:
             logging.error(f'Node does not exist: {error}')
             return default
-
-    def build_planning_resource_data(self, consultation):
-
-        action_status = self.node_check(lambda: consultation.action[0].action_status)
-        date_entered = self.node_check(lambda: consultation.consultation_dates.log_date)
-        deadline = self.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
-        hierarchy_type = self.node_check(lambda: consultation.hierarchy_type)
-        address = self.node_check(lambda: consultation.location_data.addresses)
-
-        address_parts = [address.street.street_value, address.town_or_city.town_or_city_value, address.postcode.postcode_value]
-        address = [part for part in address_parts if part is not None and part != 'None']
-
-        if date_entered:
-            date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
-        if deadline:
-            deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")           
-
-        resource_data = {
-            'id': str(consultation.id),
-            'displayname': consultation._._name,
-            'displaydescription': consultation._._description,
-            'status': self.convert_id_to_string(action_status),
-            'hierarchy_type': self.convert_id_to_string(hierarchy_type),
-            'date': date_entered,
-            'deadline': deadline,
-            'address': address,
-            'responseslug': 'assign-consultation-workflow'
-        }
-        return resource_data
-
-        
