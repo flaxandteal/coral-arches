@@ -21,6 +21,7 @@ define([
   'views/components/workflows/heritage-asset-designation-workflow/ha-summary',
   'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',
   'views/components/workflows/assign-consultation-workflow/pc-summary',
+  'views/components/workflows/excavation-license-workflow/excavation-report-step'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
