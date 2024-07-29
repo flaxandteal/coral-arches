@@ -20,7 +20,7 @@ class HbNumber:
             raise Exception(
                 f"Provided {self.ward_distict_text} does not contain district or ward ID."
             )
-        ward_number, district_number = match.group(0)[1:-1].split("/")
+        district_number, ward_number = match.group(0)[1:-1].split("/")
         return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
 
     def get_latest_id_number(self, resource_instance_id=None):
