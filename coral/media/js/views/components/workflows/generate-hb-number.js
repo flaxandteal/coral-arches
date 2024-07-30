@@ -42,12 +42,14 @@ define([
       if (ko.isObservable(this.tile.data[this.GENERATED_HB_NODE_ID])) {
         this.tile.data[this.GENERATED_HB_NODE_ID]({
           en: {
+            direction: 'ltr',
             value: response.hbNumber
           }
         });
       } else {
         this.tile.data[this.GENERATED_HB_NODE_ID] = {
           en: {
+            direction: 'ltr',
             value: response.hbNumber
           }
         };
