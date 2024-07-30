@@ -584,7 +584,16 @@ define([
 
             self.tiles().forEach(function(tile) {
                 tile.save(
-                    function(){/* onFail */}, 
+                    function(response){
+                        self.alert(new AlertViewModel(
+                            'ep-alert-red', 
+                            response.responseJSON.title,
+                            response.responseJSON.message,
+                            null, 
+                            function(){ return; }
+                        ));
+                        self.saving(false);
+                    }, 
                     function(savedTileData) {
                         unorderedSavedData.push(savedTileData);
                     }
