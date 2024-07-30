@@ -34,7 +34,13 @@ class HbNumberFunction(BaseFunction):
             references_tile = Tile.get_blank_tile_from_nodegroup_id(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID, resourceid=ri_id
             )
-
+        if isinstance(id, str):
+            id = {
+                "en":{
+                    "direction": "ltr",
+                    "value": id
+                }
+            }
         references_tile.data[HB_NUMBER_NODE_ID] = id
         references_tile.save()
 
@@ -57,6 +63,8 @@ class HbNumberFunction(BaseFunction):
             return
 
         id_number = hn.generate_id_number(resource_instance_id)
+        if not id_number:
+            return
         self.update_ha_references(resource_instance_id, id_number)
 
         return

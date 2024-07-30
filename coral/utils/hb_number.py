@@ -109,13 +109,21 @@ class HbNumber:
 
     def validate_id(self, id_number):
         try:
+            if isinstance(id_number, dict):
+                id_number_tile = Tile.objects.filter(
+                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                    data__contains={
+                        HB_NUMBER_NODE_ID: id_number
+                    },
+                ).first()
             # Runs a query searching for an identical ID value
-            id_number_tile = Tile.objects.filter(
+            else:
+                id_number_tile = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                data__contains={
-                    HB_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
-                },
-            ).first()
+                    data__contains={
+                        HB_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+                    },
+                ).first()
             if id_number_tile:
                 return False
         except Exception as e:
