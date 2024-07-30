@@ -22,19 +22,16 @@ details = {
 
 
 class IHRValidationFunction(BaseFunction):
-    # [x] check that the format is correct - regex
-    # [x] return error if not
-    # [ ] check if there is an existing tile with the same name
-    # [ ] return error if this already exists
     def save(self, tile, request, context):
         input_ihr_tile = tile.data.get(IHR_NUMBER_NODE_ID, None)
 
         if not input_ihr_tile:
             return
+        
         input_ihr_string = input_ihr_tile.get("en").get("value")
-        print(input_ihr_string)
+
         is_valid = self.is_valid_format(input_ihr_string) if input_ihr_string else False
-        print(is_valid)
+
         if not is_valid:
             raise ValueError("The IHR Number format is incorrect please format as 00000:000:00")
 
