@@ -47,6 +47,11 @@ define([
         nodegroupId: '38dad285-9014-4c7b-ad81-b0562038ebf2',
         renderNodeIds: ['1db0ed52-3521-11ef-850f-0242ac120003']
       },
+      irishGridReference: {
+        label: 'Irish Grid Reference (TM65)',
+        nodegroupId: 'e290279d-9857-441e-a511-50d9d4dc4210',
+        renderNodeIds: ['86057658-1685-11ef-b341-0242ac120006']
+      },
       descriptions: {
         label: 'Description',
         nodegroupId: '050b959f-c4d8-4a2b-a704-94cc3e00d7ca',
