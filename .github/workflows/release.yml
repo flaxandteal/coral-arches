@@ -21,6 +21,10 @@ jobs:
         with:
           version: latest
           endpoint: builders
+  
+      - name: Echo extracted image name
+        run: |
+          echo "Extracted image name: ${{ steps.extract_image_name.outputs.image_name }}"
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} . -t arches_${{ env.ARCHES_PROJECT }}
