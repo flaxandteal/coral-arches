@@ -32,6 +32,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "a1746b73-2e4f-4f3d-8fa6-365afdd4380a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Generated Garden Reference"
+                    },
+                    "nodegroup_id": "628e9694-4fda-11ef-8e01-0242ac120003",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "042cca2e-3b50-4091-8bd4-8c4ffd2cd1f8",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -14980,6 +15007,24 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
+                    "edgeid": "a4bca986-2884-46ec-a138-34b0ee310d38",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "628e9694-4fda-11ef-8e01-0242ac120003"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "628e9694-4fda-11ef-8e01-0242ac120003",
+                    "edgeid": "ac5af9bd-ab35-4554-8001-ca1231b380d0",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "7e402272-4fda-11ef-a8cc-0242ac120003"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "0132f890-1f4c-11ef-ac74-0242ac150006",
                     "edgeid": "3642ac0f-3893-497f-ba93-25b21dfca6e4",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -21251,6 +21296,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "628e9694-4fda-11ef-8e01-0242ac120003",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "0132f890-1f4c-11ef-ac74-0242ac150006",
                     "parentnodegroup_id": null
                 },
@@ -21749,6 +21800,52 @@
                     "nodegroup_id": "38dad285-9014-4c7b-ad81-b0562038ebf2",
                     "nodeid": "5c865d99-b9c2-43c8-11ba-e77948afa21d",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E44_Place_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "generated_historic_parks_and_garden",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Generated Historic Parks and Garden",
+                    "nodegroup_id": "628e9694-4fda-11ef-8e01-0242ac120003",
+                    "nodeid": "7e402272-4fda-11ef-a8cc-0242ac120003",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "generated_garden_reference",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Generated Garden Reference",
+                    "nodegroup_id": "628e9694-4fda-11ef-8e01-0242ac120003",
+                    "nodeid": "628e9694-4fda-11ef-8e01-0242ac120003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
