@@ -38,6 +38,7 @@
         "name": "site-visit-step",
         "title": "Site Visit",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
