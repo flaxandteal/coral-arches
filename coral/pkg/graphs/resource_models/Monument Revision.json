@@ -2586,31 +2586,23 @@
                 {
                     "card_id": "99baff15-bffb-4f66-802d-433fab3b325f",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
+                        "label": "B File",
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "B File",
-                        "maxLength": null,
+                        "options": [],
                         "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%%"
+                            "en": "Select an option"
+                        }
                     },
                     "id": "07f9868e-fc42-44a9-bc46-b6c6ec9dea68",
                     "label": {
                         "en": "B File"
                     },
-                    "node_id": "0752c8f6-1f40-11ef-bf79-0242ac150006",
+                    "node_id": "0752c8f6-1f40-11ef-bf79-0242ac150009",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "a0e4c7f4-aa3b-468a-ae9d-5e3515f8c3e1",
@@ -16847,8 +16839,8 @@
                     "edgeid": "48b0cbfc-c198-48df-bddb-62afdcb81526",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "0752c8f6-1f40-11ef-bf79-0242ac150006"
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "0752c8f6-1f40-11ef-bf79-0242ac150009"
                 },
                 {
                     "description": null,
@@ -22459,9 +22451,9 @@
                 {
                     "alias": "b_file_reference_number",
                     "config": {
-                        "en": ""
+                        "rdmCollection": "a1c4247f-7286-4cce-a12e-04ef1e053722"
                     },
-                    "datatype": "string",
+                    "datatype": "concept",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -22473,9 +22465,9 @@
                     "istopnode": false,
                     "name": "B File Reference Number",
                     "nodegroup_id": "dd6bb692-1f3f-11ef-bf79-0242ac150006",
-                    "nodeid": "0752c8f6-1f40-11ef-bf79-0242ac150006",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "nodeid": "0752c8f6-1f40-11ef-bf79-0242ac150009",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E75_Conceptual_Object_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
