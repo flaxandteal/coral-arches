@@ -135,17 +135,9 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba",
-                  "hiddenNodes": [
-                    "a1d4ee9e-efc5-11eb-9ad7-a87eeabdefba",
-                    "a1d50310-efc5-11eb-964d-a87eeabdefba",
-                    "a1d5030c-efc5-11eb-890d-a87eeabdefba",
-                    "a1d50312-efc5-11eb-bde1-a87eeabdefba",
-                    "a1d502ba-efc5-11eb-a36a-a87eeabdefba",
-                    "a1d4ee9a-efc5-11eb-a6e5-a87eeabdefba"
-                  ],
                   "labels": [["Bibliographic Source", "Citation"]]
                 },
-                "tilesManaged": "one",
+                "tilesManaged": "many",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "e0da378f-ea20-44d7-8d8a-05b46f8d54c0"
               },
