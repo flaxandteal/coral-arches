@@ -13,7 +13,8 @@
                     ...componentData['parameters'],
                     form: $data,
                     pageVm: $root,
-                    value: $data.value
+                    value: $data.value,
+                    disableAdd: disableAdd
                 }
             }"
         ></div>
@@ -34,8 +35,9 @@
                     class="btn btn-workflow-tile btn-success" 
                     data-bind="{
                         click: addOrUpdateTile,
-                        text: tileLoadedInEditor() ? 'Save' : 'Add'
-or                    }"
+                        text: tileLoadedInEditor() ? 'Save' : 'Add',
+                        css: {disabled: disableAdd() }
+                    }"
                 ></button>
             </div>
         <!-- /ko -->

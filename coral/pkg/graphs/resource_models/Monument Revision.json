@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "69201a00-4857-46d7-a74e-acafa98d9352",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Wards and District Type"
+                    },
+                    "nodegroup_id": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "01311991-6d44-4df2-8941-950bafb382be",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -14998,6 +15025,33 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
+                    "edgeid": "d7af2689-05eb-4d2f-a142-7bfc0ceef443",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "6ff05f1c-4dc2-11ef-8b61-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "edgeid": "4b86f2a2-137e-45de-bf87-f6a9256e7492",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "8f726ace-4dc2-11ef-8b61-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "edgeid": "39cdfc97-e898-4eb7-b327-47c3e027bfcb",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "42c2c4fc-4dc3-11ef-8b61-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "72f3eda8-0bc4-4e41-ba5c-3b3e7a1b7688",
                     "edgeid": "b7526642-57ff-478b-a8ad-007f051dc816",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -21290,6 +21344,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "010db21a-0eda-11ef-aa66-0242ac140006",
                     "parentnodegroup_id": null
                 },
@@ -21781,6 +21841,75 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "wards_and_district_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Wards and District Metatype",
+                    "nodegroup_id": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "nodeid": "8f726ace-4dc2-11ef-8b61-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "wards_and_district_type",
+                    "config": {
+                        "rdmCollection": "d1d32440-6819-4ecb-94e6-6997e3227ab6"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Wards and District Type",
+                    "nodegroup_id": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "nodeid": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "generated_hb",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Generated HB",
+                    "nodegroup_id": "6ff05f1c-4dc2-11ef-8b61-0242ac120006",
+                    "nodeid": "42c2c4fc-4dc3-11ef-8b61-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "county_selected",
                     "config": {

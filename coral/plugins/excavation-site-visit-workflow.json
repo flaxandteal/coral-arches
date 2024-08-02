@@ -38,6 +38,7 @@
         "name": "site-visit-step",
         "title": "Site Visit",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
@@ -104,7 +105,7 @@
                   "hiddenNodes": ["a4724977-9937-11ea-a11e-f875a44e0e11"],
                   "nodegroupid": "a472226f-9937-11ea-966a-f875a44e0e11"
                 },
-                "tilesManaged": "one",
+                "tilesManaged": "many",
                 "componentName": "default-card",
                 "uniqueInstanceName": "description"
               },

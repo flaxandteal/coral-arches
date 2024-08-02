@@ -121,7 +121,8 @@
                   "nodegroupid": "ba342e69-b554-11ea-a027-f875a44e0e11",
                   "semanticName": "Descriptions"
                 },
-                "tilesManaged": "one",
+                "manyTitle": "Descriptions",
+                "tilesManaged": "many",
                 "componentName": "default-card",
                 "uniqueInstanceName": "1b9b874c-313d-4b45-ae55-ba0440819507"
               }
@@ -259,6 +260,18 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "a14974e4-5fce-4322-96d3-1bcf739789d3"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "irish-grid-reference"
               }
             ]
           }
@@ -292,6 +305,7 @@
         "name": "finish-step",
         "title": "Finish",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [

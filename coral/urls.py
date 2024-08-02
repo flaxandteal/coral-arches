@@ -18,6 +18,7 @@ from coral.views.file_template import FileTemplateView
 from coral.views.ha_number import HaNumberView
 from coral.views.smr_number import SmrNumberView
 from coral.views.garden_number import GardenNumberView
+from coral.views.hb_number import HbNumberView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -76,6 +77,7 @@ urlpatterns = [
     re_path(r"^generate-ha-number", HaNumberView.as_view(), name="generate_ha_number"),
     re_path(r"^generate-smr-number", SmrNumberView.as_view(), name="generate_smr_number"),
     re_path(r"^generate-garden-number", GardenNumberView.as_view(), name="generate_garden_number"),
+    re_path(r"^generate-hb-number", HbNumberView.as_view(), name="generate_hb_number"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

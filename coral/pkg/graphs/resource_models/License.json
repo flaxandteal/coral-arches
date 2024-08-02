@@ -2984,14 +2984,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Excavation Reason Type",
+                        "label": "Excavation Reason",
                         "placeholder": {
                             "en": "Select an option"
                         }
                     },
                     "id": "8d4976f6-280b-4227-ac71-c2bb3173df36",
                     "label": {
-                        "en": "Excavation Reason Type"
+                        "en": "Excavation Reason"
                     },
                     "node_id": "ba8aab44-2d4d-11ef-bbfd-0242ac120006",
                     "sortorder": 4,
@@ -7160,6 +7160,16 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "6397b05c-c443-11ee-94bf-0242ac180006"
+                        ]
+                    },
+                    "function_id": "9b955a8d-64b0-4139-9470-1085d802475f",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "436d0e0c-f8b3-452c-8cfb-5d9ae684fa4d"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",
@@ -7335,7 +7345,7 @@
                     "parentnodegroup_id": "2749ea5a-48cb-11ee-be76-0242ac140007"
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "f060583a-6120-11ee-9fd1-0242ac120003",
                     "parentnodegroup_id": null
