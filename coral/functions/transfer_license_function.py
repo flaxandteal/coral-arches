@@ -14,16 +14,16 @@ LICENSEES_NODE_ID = "6d294784-5891-11ee-a624-0242ac120004"
 
 details = {
     "functionid": "9b955a8d-64b0-4139-9470-1085d802475f",
-    "name": "Transfer License",
+    "name": "Transfer License Function",
     "type": "node",
     "description": "Will handle re-assigning the licensees during a transfer of license ",
     "defaultconfig": {"triggering_nodegroups": [TRANSFER_OF_LICENSE_NODEGROUP_ID]},
-    "classname": "TransferOfLicense",
+    "classname": "TransferOfLicenseFunction",
     "component": "",
 }
 
 
-class TransferOfLicense(BaseFunction):
+class TransferOfLicenseFunction(BaseFunction):
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
