@@ -422,7 +422,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card-util',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'transfer-of-license',
                   tilesManaged: 'many',
                   parameters: {
