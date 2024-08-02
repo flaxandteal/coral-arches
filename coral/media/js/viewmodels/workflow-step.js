@@ -144,7 +144,7 @@ define([
               workflowComponentAbstractId: workflowComponentAbstractId,
               isValidComponentPath: config.workflow.isValidComponentPath,
               getDataFromComponentPath: config.workflow.getDataFromComponentPath,
-              title: config.title,
+              title: workflowComponentAbtractData?.manyTitle || config.title,
               isStepSaving: self.isStepSaving,
               locked: self.locked,
               lockExternalStep: self.lockExternalStep,
