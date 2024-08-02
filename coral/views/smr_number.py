@@ -34,7 +34,7 @@ class SmrNumberView(View):
                 return JSONResponse(
                     {
                         "message": "SMR Number has already been generated",
-                        "haNumber": id,
+                        "smrNumber": id,
                     }
                 )
 
