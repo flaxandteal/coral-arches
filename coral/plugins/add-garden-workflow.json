@@ -322,6 +322,7 @@
         "name": "finish-step",
         "title": "Finish",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
