@@ -30,7 +30,7 @@ details = {
     "functionid": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
     "name": "License Number",
     "type": "node",
-    "description": "Automatically generates a new license number after checking the database",
+    "description": "Automatically generates a new licence number after checking the database",
     "defaultconfig": {
         "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, STATUS_NODEGROUP, CUR_D_DECISION_NODEGROUP]
     },
@@ -39,113 +39,113 @@ details = {
 }
 
 
-def license_number_format(year, index):
+def licence_number_format(year, index):
     return f"{LICENSE_NUMBER_PREFIX}/{year}/{str(index).zfill(2)}"
 
 
-def get_latest_license_number(license_instance_id):
-    latest_license_number_tile = None
+def get_latest_licence_number(licence_instance_id):
+    latest_licence_number_tile = None
     try:
-        license_number_generated = {
+        licence_number_generated = {
             f"data__{LICENSE_NUMBER_NODE}__en__value__icontains": LICENSE_NUMBER_PREFIX,
         }
         query_result = Tile.objects.filter(
             nodegroup_id=LICENSE_NUMBER_NODEGROUP,
-            **license_number_generated,
-        ).exclude(resourceinstance_id=license_instance_id)
+            **licence_number_generated,
+        ).exclude(resourceinstance_id=licence_instance_id)
         query_result = query_result.annotate(
             most_recent=Max("resourceinstance__createdtime")
         )
         query_result = query_result.order_by("-most_recent")
-        latest_license_number_tile = query_result.first()
+        latest_licence_number_tile = query_result.first()
     except Exception as e:
-        print(f"Failed querying for previous license number tile: {e}")
+        print(f"Failed querying for previous licence number tile: {e}")
         raise e
 
-    if not latest_license_number_tile:
+    if not latest_licence_number_tile:
         return
 
-    latest_license_number = (
-        latest_license_number_tile.data.get(LICENSE_NUMBER_NODE)
+    latest_licence_number = (
+        latest_licence_number_tile.data.get(LICENSE_NUMBER_NODE)
         .get("en")
         .get("value")
     )
 
-    print(f"Previous license number: {latest_license_number}")
-    license_number_parts = latest_license_number.split("/")
-    return {"year": license_number_parts[1], "index": int(license_number_parts[2])}
+    print(f"Previous licence number: {latest_licence_number}")
+    licence_number_parts = latest_licence_number.split("/")
+    return {"year": licence_number_parts[1], "index": int(licence_number_parts[2])}
 
 
-def generate_license_number(license_instance_id, attempts=0):
+def generate_licence_number(licence_instance_id, attempts=0):
     if attempts >= 5:
         raise Exception(
-            "After 5 attempts, it wasn't possible to generate a license number that was unique!"
+            "After 5 attempts, it wasn't possible to generate a licence number that was unique!"
         )
 
     def retry():
-        nonlocal attempts, license_instance_id
+        nonlocal attempts, licence_instance_id
         attempts += 1
-        return generate_license_number(license_instance_id, attempts)
+        return generate_licence_number(licence_instance_id, attempts)
 
-    license_number_tile = None
+    licence_number_tile = None
     try:
-        license_number_generated = {
+        licence_number_generated = {
             f"data__{LICENSE_NUMBER_NODE}__en__value__icontains": LICENSE_NUMBER_PREFIX,
         }
-        license_number_tile = Tile.objects.filter(
-            resourceinstance_id=license_instance_id,
+        licence_number_tile = Tile.objects.filter(
+            resourceinstance_id=licence_instance_id,
             nodegroup_id=LICENSE_NUMBER_NODEGROUP,
-            **license_number_generated
+            **licence_number_generated
         ).first()
     except Exception as e:
-        print(f"Failed checking if license number tile already exists: {e}")
+        print(f"Failed checking if licence number tile already exists: {e}")
         return retry()
 
-    if license_number_tile:
-        print("A license number has already been created for this license")
+    if licence_number_tile:
+        print("A licence number has already been created for this licence")
         return
 
-    latest_license_number = None
+    latest_licence_number = None
     try:
-        latest_license_number = get_latest_license_number(license_instance_id)
+        latest_licence_number = get_latest_licence_number(licence_instance_id)
     except Exception as e:
-        print(f"Failed getting the previously used license number: {e}")
+        print(f"Failed getting the previously used licence number: {e}")
         return retry()
 
     year = str(datetime.datetime.now().year)
-    if latest_license_number:
-        if latest_license_number["year"] != year:
+    if latest_licence_number:
+        if latest_licence_number["year"] != year:
             # If we are on a new year then we reset back to 1
-            license_number = license_number_format(year, 1)
+            licence_number = licence_number_format(year, 1)
         else:
             # Otherwise we calculate the next number based on the latest
-            next_number = latest_license_number["index"] + 1
-            license_number = license_number_format(year, next_number)
+            next_number = latest_licence_number["index"] + 1
+            licence_number = licence_number_format(year, next_number)
     else:
-        # If there is no latest license to work from we know
+        # If there is no latest licence to work from we know
         # this is the first ever created
-        license_number = license_number_format(year, 1)
+        licence_number = licence_number_format(year, 1)
 
-    license_number_tile = None
+    licence_number_tile = None
     try:
-        # Runs a query searching for an external reference tile with the new license ID
-        license_number_tile = Tile.objects.filter(
+        # Runs a query searching for an external reference tile with the new licence ID
+        licence_number_tile = Tile.objects.filter(
             nodegroup_id=LICENSE_NUMBER_NODEGROUP,
             data__contains={
                 LICENSE_NUMBER_NODE: {
-                    "en": {"direction": "ltr", "value": license_number}
+                    "en": {"direction": "ltr", "value": licence_number}
                 }
             },
         ).first()
     except Exception as e:
-        print(f"Failed validating license number: {e}")
+        print(f"Failed validating licence number: {e}")
         return retry()
 
-    if license_number_tile:
+    if licence_number_tile:
         return retry()
 
-    print(f"License number is unique, license number: {license_number}")
-    return license_number
+    print(f"License number is unique, licence number: {licence_number}")
+    return licence_number
 
 
 class LicenseNumberFunction(BaseFunction):
@@ -208,33 +208,33 @@ class LicenseNumberFunction(BaseFunction):
             except Tile.DoesNotExist:
                 return
 
-        license_number = generate_license_number(resource_instance_id)
+        licence_number = generate_licence_number(resource_instance_id)
 
-        if not license_number:
+        if not licence_number:
             return
 
         try:
-            # Configure the license number
+            # Configure the licence number
             Tile.objects.get_or_create(
                 resourceinstance_id=resource_instance_id,
                 nodegroup_id=LICENSE_NUMBER_NODEGROUP,
                 data={
                     LICENSE_NUMBER_NODE: {
-                        "en": {"direction": "ltr", "value": license_number}
+                        "en": {"direction": "ltr", "value": licence_number}
                     },
                 },
             )
-            # Configure the license name with the license number included
-            license_name_tile = Tile.objects.get(
+            # Configure the licence name with the licence number included
+            licence_name_tile = Tile.objects.get(
                 resourceinstance_id=resource_instance_id,
                 nodegroup_id=LICENSE_NAME_NODEGROUP,
             )
-            license_name_tile.data[LICENSE_NAME_NODE]["en"][
+            licence_name_tile.data[LICENSE_NAME_NODE]["en"][
                 "value"
-            ] = f"Excavation License {license_number}"
-            license_name_tile.save()
+            ] = f"Excavation License {licence_number}"
+            licence_name_tile.save()
         except Exception as e:
-            print(f"Failed saving license number external ref or license name: {e}")
+            print(f"Failed saving licence number external ref or licence name: {e}")
             raise e
 
         return
