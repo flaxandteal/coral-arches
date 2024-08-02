@@ -40,7 +40,7 @@ details = {
 
 
 def license_number_format(year, index):
-    return f"{LICENSE_NUMBER_PREFIX}/{year}/{str(index).zfill(2)}"
+    return f"{LICENSE_NUMBER_PREFIX}/{year}/{str(index).zfill(3)}"
 
 
 def get_latest_license_number(license_instance_id):
