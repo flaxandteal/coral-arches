@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "d88af2ba-15c7-457d-9ea9-da14b8347282",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Wards and District Type"
+                    },
+                    "nodegroup_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "055b3e41-04c7-11eb-9c3f-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -2249,6 +2276,79 @@
                 }
             ],
             "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "d88af2ba-15c7-457d-9ea9-da14b8347282",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Wards and District Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "365cf685-9658-47e2-8f5a-024db6e2a8f1",
+                    "label": {
+                        "en": "Wards and District Type"
+                    },
+                    "node_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "d88af2ba-15c7-457d-9ea9-da14b8347282",
+                    "config": {
+                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Wards and Districts Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "43495f4c-e4c2-4677-838a-ca92c620a4c3",
+                    "label": {
+                        "en": "Wards and Districts Metatype"
+                    },
+                    "node_id": "fe7d67f8-44e3-11ef-9114-0242ac120006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "d88af2ba-15c7-457d-9ea9-da14b8347282",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Generated HB",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Auto-generated field"
+                        },
+                        "uneditable": true,
+                        "width": "100%"
+                    },
+                    "id": "c1d5a133-fce7-439f-afa8-cd63269f04d3",
+                    "label": {
+                        "en": "Generated HB"
+                    },
+                    "node_id": "19bd9ac4-44e4-11ef-9114-0242ac120006",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
                 {
                     "card_id": "87d39b27-f44f-11eb-a02c-a87eeabdefba",
                     "config": {
@@ -15064,6 +15164,51 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
+                    "edgeid": "3642ac0f-3893-497f-ba93-25b21dfca6e4",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P19i_was_made_for",
+                    "rangenode_id": "fa70c068-3ea5-11ef-9023-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "edgeid": "95a65ca1-7040-4cff-aacd-661af05c9c8a",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "19bd9ac4-44e4-11ef-9114-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "87d3ff2a-f44f-11eb-9951-a87eeabdefba",
+                    "edgeid": "b7526642-57ff-478b-a8ad-007f051dc816",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "8bfe714e-3ec2-11ef-9023-0242ac140007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "edgeid": "ba1fe25d-8a2f-439e-a853-7fb903255f96",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "fe7d67f8-44e3-11ef-9114-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "c0f26f08-bfc7-4bc1-a6ff-0b481f7a57e3",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "de6b6af0-44e3-11ef-9114-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "87d3ff2a-f44f-11eb-9951-a87eeabdefba",
                     "edgeid": "b7526642-57ff-478b-a8ad-007f051dc816",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -21294,6 +21439,16 @@
                 {
                     "config": {
                         "triggering_nodegroups": [
+                            "de6b6af0-44e3-11ef-9114-0242ac120006"
+                        ]
+                    },
+                    "function_id": "23d758a1-cc04-414d-bb4d-49f2d5c82930",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "id": "b0578f11-4681-4824-83cc-5366867766f9"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
                             "86c19e92-3ea7-11ef-818b-0242ac140006"
                         ]
                     },
@@ -21384,6 +21539,12 @@
                 "en": "Heritage Asset"
             },
             "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "parentnodegroup_id": null
+                },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
@@ -21872,6 +22033,75 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "generated_hb",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Generated HB",
+                    "nodegroup_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "nodeid": "19bd9ac4-44e4-11ef-9114-0242ac120006",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "wards_and_district_type",
+                    "config": {
+                        "rdmCollection": "d1d32440-6819-4ecb-94e6-6997e3227ab6"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Wards and District Type",
+                    "nodegroup_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "nodeid": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "wards_and_districts_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Wards and Districts Metatype",
+                    "nodegroup_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
+                    "nodeid": "fe7d67f8-44e3-11ef-9114-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "county_selected",
                     "config": {
