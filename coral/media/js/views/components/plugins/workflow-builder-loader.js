@@ -17,6 +17,7 @@ define([
   'views/components/workflows/fmw-workflow/calculate-composite-score',
   'views/components/workflows/generate-ha-number',
   'views/components/workflows/generate-smr-number',
+  'views/components/workflows/generate-garden-number',
   'views/components/workflows/generate-hb-number',
   'views/components/workflows/heritage-asset-designation-workflow/ha-summary',
   'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',

@@ -167,6 +167,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "10f14bcc-4307-422d-afdf-417f6b9eac38",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Generated Garden Reference"
+                    },
+                    "nodegroup_id": "9b884c9c-49a4-11ef-8345-0242ac120007",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "126bfd36-dbc3-11ee-8835-0242ac120006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -2370,6 +2397,35 @@
                     "sortorder": 27,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "10f14bcc-4307-422d-afdf-417f6b9eac38",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Generated Historic Parks and Garden",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Auto-generated field"
+                        },
+                        "uneditable": true,
+                        "width": "100%%"
+                    },
+                    "id": "9406facd-dca0-43d2-a705-0e96e42b245a",
+                    "label": {
+                        "en": "Generated Historic Parks and Garden"
+                    },
+                    "node_id": "bd85cca2-49a4-11ef-94a5-0242ac120007",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "346001be-d23e-11ee-9ae7-0242ac180006",
@@ -15217,6 +15273,24 @@
                     "rangenode_id": "8bfe714e-3ec2-11ef-9023-0242ac140007"
                 },
                 {
+                    "description": null,
+                    "domainnode_id": "9b884c9c-49a4-11ef-8345-0242ac120007",
+                    "edgeid": "fb0149c4-3113-420f-9439-8901b15cd785",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "bd85cca2-49a4-11ef-94a5-0242ac120007"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "92d61c2d-a534-4e00-b473-3473ab523cfb",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "9b884c9c-49a4-11ef-8345-0242ac120007"
+                },
+                {
                     "domainnode_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "edgeid": "3642ac0f-3893-497f-ba93-25b21dfca6e4",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -21458,6 +21532,16 @@
                 },
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "9b884c9c-49a4-11ef-8345-0242ac120007"
+                        ]
+                    },
+                    "function_id": "2d0a0e51-0a20-443f-85cf-7ddc333c0cdd",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "id": "bfcf28c3-90f6-49f6-8836-3f4351c714a5"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "ba342e69-b554-11ea-a027-f875a44e0e11",
@@ -21549,6 +21633,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "0532349a-1f5d-11ef-a340-0242ac150006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "9b884c9c-49a4-11ef-8345-0242ac120007",
                     "parentnodegroup_id": null
                 },
                 {
@@ -22122,6 +22212,52 @@
                     "nodeid": "8bfe714e-3ec2-11ef-9023-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E44_Place_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "generated_garden_reference",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Generated Garden Reference",
+                    "nodegroup_id": "9b884c9c-49a4-11ef-8345-0242ac120007",
+                    "nodeid": "9b884c9c-49a4-11ef-8345-0242ac120007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "generated_historic_parks_and_garden",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Generated Historic Parks and Garden",
+                    "nodegroup_id": "9b884c9c-49a4-11ef-8345-0242ac120007",
+                    "nodeid": "bd85cca2-49a4-11ef-94a5-0242ac120007",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
