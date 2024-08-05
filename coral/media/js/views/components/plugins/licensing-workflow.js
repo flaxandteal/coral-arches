@@ -414,15 +414,15 @@ define([
           workflowstepclass: "workflow-form-component"
         },
         {
-          title: 'Ammendments',
-          name: 'ammendments-step',
+          title: 'Amendments',
+          name: 'amendments-step',
           workflowstepclass: 'workflow-form-component',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card-util',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'transfer-of-license',
                   tilesManaged: 'many',
                   parameters: {
