@@ -252,18 +252,6 @@ class LicenceNumberFunction(BaseFunction):
             raise e
         
         try:
-            licence_name_tile.resourceinstanceid = resource_instance_id
-            licence_name_tile.graph_id = LICENCE_GRAPH_ID
-            # print(Resource.get_related_resources(licence_name_tile, resourceinstance_graphid = resource_instance_id))
-            
-            # print(Resource.displayname(self))
-            # print(Resource.get_node_values(self))
-            # print(Resource.load_tiles(self))
-            # print(Resource.to_json(self))
-            # query = Query(se, start=0, limit=100)
-            # query.add_query(f"http://localhost:8000/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=0&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22a9f53f00-48b6-11ee-85af-0242ac140007%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%5B%22{resource_instance_id}%22%5D%7D%7D%5D")
-            # results = query.search(index=RESOURCES_INDEX)
-
             site_name_tile = Tile.objects.get(
                 resourceinstance_id=resource_instance_id,
                 nodegroup_id=ASSOCIATED_ACTIVIY_NODEGROUP
