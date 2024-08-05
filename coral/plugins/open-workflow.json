@@ -87,7 +87,7 @@
         "name": "Excavation Site Visit",
         "graphIds": ["b9e0701e-5463-11e9-b5f5-000d3ab1e588"],
         "disableStartNew": true,
-        "searchString": "/search/resources?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=72&language=*&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22879fc326-02f6-11ef-927a-0242ac150006%22%3A%7B%22op%22%3A%22not_null%22%2C%22val%22%3A%22%22%7D%7D%5D"
+        "searchString": "/search/resources?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=0&advanced-search=[{%22op%22%3A%22and%22%2C%22e7d69603-9939-11ea-9e7f-f875a44e0e11%22%3A{%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22\\%22EL%2F\\%22%22}%2C%22e7d69604-9939-11ea-baef-f875a44e0e11%22%3A{%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22}%2C%22e7d69602-9939-11ea-b514-f875a44e0e11%22%3A{%22op%22%3A%22eq%22%2C%22val%22%3A%22%22}}]"
       },
       {
         "slug": "add-garden-workflow",
