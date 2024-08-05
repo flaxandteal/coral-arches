@@ -1,3 +1,6 @@
+from arches.app.search.elasticsearch_dsl_builder import Query
+from arches.app.search.search_engine_factory import SearchEngineInstance as se
+from arches.app.views.search import RESOURCES_INDEX
 from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
@@ -5,14 +8,13 @@ import datetime
 import json
 from django.db.models import Max
 
-print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=LICENCE FUNCTION UPDATE V1=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-LICENSE_GRAPH_ID = "cc5da227-24e7-4088-bb83-a564c4331efd"
+LICENCE_GRAPH_ID = "cc5da227-24e7-4088-bb83-a564c4331efd"
+ACTIVITY_GRAPH_ID = ""
+LICENCE_NAME_NODEGROUP = "59d65ec0-48b9-11ee-84da-0242ac140007"
+LICENCE_NAME_NODE = "59d6676c-48b9-11ee-84da-0242ac140007"
 
-LICENSE_NAME_NODEGROUP = "59d65ec0-48b9-11ee-84da-0242ac140007"
-LICENSE_NAME_NODE = "59d6676c-48b9-11ee-84da-0242ac140007"
-
-LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
-LICENSE_NUMBER_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
+LICENCE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+LICENCE_NUMBER_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
 
 SYSTEM_REF_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
 SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
@@ -28,33 +30,38 @@ CUR_D_DECISION_APPROVED_VALUE = "0c888ace-b068-470a-91cb-9e5f57c660b4"
 ASSOCIATED_ACTIVIY_NODEGROUP = "a9f53f00-48b6-11ee-85af-0242ac140007"
 ASSOCIATED_ACTIVIY_NODE = "a9f53f00-48b6-11ee-85af-0242ac140007"
 
-LICENSE_NUMBER_PREFIX = "AE"
+ASSOCIATED_LICENCE_NODEGROUP = "879fc326-02f6-11ef-927a-0242ac150006"
+ASSOCIATED_LICENCE_NODE = "879fc326-02f6-11ef-927a-0242ac150006"
+
+
+LICENCE_NUMBER_PREFIX = "AE"
 
 details = {
     "functionid": "e6bc8d3a-c0d6-434b-9a80-55ebb662dd0c",
-    "name": "License Number",
+    "name": "Licence Number",
     "type": "node",
     "description": "Automatically generates a new licence number after checking the database",
     "defaultconfig": {
         "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, STATUS_NODEGROUP, CUR_D_DECISION_NODEGROUP]
     },
-    "classname": "LicenseNumberFunction",
+    "classname": "LicenceNumberFunction",
     "component": "",
 }
 
 
 def licence_number_format(year, index):
-    return f"{LICENSE_NUMBER_PREFIX}/{year}/{str(index).zfill(2)}"
+    return f"{LICENCE_NUMBER_PREFIX}/{year}/{str(index).zfill(2)}"
 
 
 def get_latest_licence_number(licence_instance_id):
+
     latest_licence_number_tile = None
     try:
         licence_number_generated = {
-            f"data__{LICENSE_NUMBER_NODE}__en__value__icontains": LICENSE_NUMBER_PREFIX,
+            f"data__{LICENCE_NUMBER_NODE}__en__value__icontains": LICENCE_NUMBER_PREFIX,
         }
         query_result = Tile.objects.filter(
-            nodegroup_id=LICENSE_NUMBER_NODEGROUP,
+            nodegroup_id=LICENCE_NUMBER_NODEGROUP,
             **licence_number_generated,
         ).exclude(resourceinstance_id=licence_instance_id)
         query_result = query_result.annotate(
@@ -70,7 +77,7 @@ def get_latest_licence_number(licence_instance_id):
         return
 
     latest_licence_number = (
-        latest_licence_number_tile.data.get(LICENSE_NUMBER_NODE)
+        latest_licence_number_tile.data.get(LICENCE_NUMBER_NODE)
         .get("en")
         .get("value")
     )
@@ -81,6 +88,7 @@ def get_latest_licence_number(licence_instance_id):
 
 
 def generate_licence_number(licence_instance_id, attempts=0):
+
     if attempts >= 5:
         raise Exception(
             "After 5 attempts, it wasn't possible to generate a licence number that was unique!"
@@ -94,11 +102,11 @@ def generate_licence_number(licence_instance_id, attempts=0):
     licence_number_tile = None
     try:
         licence_number_generated = {
-            f"data__{LICENSE_NUMBER_NODE}__en__value__icontains": LICENSE_NUMBER_PREFIX,
+            f"data__{LICENCE_NUMBER_NODE}__en__value__icontains": LICENCE_NUMBER_PREFIX,
         }
         licence_number_tile = Tile.objects.filter(
             resourceinstance_id=licence_instance_id,
-            nodegroup_id=LICENSE_NUMBER_NODEGROUP,
+            nodegroup_id=LICENCE_NUMBER_NODEGROUP,
             **licence_number_generated
         ).first()
     except Exception as e:
@@ -134,9 +142,9 @@ def generate_licence_number(licence_instance_id, attempts=0):
     try:
         # Runs a query searching for an external reference tile with the new licence ID
         licence_number_tile = Tile.objects.filter(
-            nodegroup_id=LICENSE_NUMBER_NODEGROUP,
+            nodegroup_id=LICENCE_NUMBER_NODEGROUP,
             data__contains={
-                LICENSE_NUMBER_NODE: {
+                LICENCE_NUMBER_NODE: {
                     "en": {"direction": "ltr", "value": licence_number}
                 }
             },
@@ -148,20 +156,17 @@ def generate_licence_number(licence_instance_id, attempts=0):
     if licence_number_tile:
         return retry()
 
-    print(f"License number is unique, licence number: {licence_number}")
+    print(f"Licence number is unique, licence number: {licence_number}")
     return licence_number
 
 
-class LicenseNumberFunction(BaseFunction):
+class LicenceNumberFunction(BaseFunction):
+
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
 
-        if tile_nodegroup_id == ASSOCIATED_ACTIVIY_NODEGROUP:
-            print("HEY I FOUND ALL OF THE ASSOCIATED ACTIVITIES!")
-            print(tile)
-            print(json.dumps(vars(tile))
-)
+        
         if tile_nodegroup_id == SYSTEM_REF_NODEGROUP:
             status_tile = None
             try:
@@ -176,15 +181,15 @@ class LicenseNumberFunction(BaseFunction):
                 app_id = (
                     tile.data.get(SYSTEM_REF_RESOURCE_ID_NODE).get("en").get("value")
                 )
-                # Set the licese name to use the app id
+                # Set the licence name to use the app id
                 Tile.objects.get_or_create(
                     resourceinstance_id=resource_instance_id,
-                    nodegroup_id=LICENSE_NAME_NODEGROUP,
+                    nodegroup_id=LICENCE_NAME_NODEGROUP,
                     data={
-                        LICENSE_NAME_NODE: {
+                        LICENCE_NAME_NODE: {
                             "en": {
                                 "direction": "ltr",
-                                "value": f"Excavation License {app_id}",
+                                "value": f"Excavation Licence {app_id}",
                             }
                         }
                     },
@@ -226,9 +231,9 @@ class LicenseNumberFunction(BaseFunction):
             # Configure the licence number
             Tile.objects.get_or_create(
                 resourceinstance_id=resource_instance_id,
-                nodegroup_id=LICENSE_NUMBER_NODEGROUP,
+                nodegroup_id=LICENCE_NUMBER_NODEGROUP,
                 data={
-                    LICENSE_NUMBER_NODE: {
+                    LICENCE_NUMBER_NODE: {
                         "en": {"direction": "ltr", "value": licence_number}
                     },
                 },
@@ -236,14 +241,47 @@ class LicenseNumberFunction(BaseFunction):
             # Configure the licence name with the licence number included
             licence_name_tile = Tile.objects.get(
                 resourceinstance_id=resource_instance_id,
-                nodegroup_id=LICENSE_NAME_NODEGROUP,
+                nodegroup_id=LICENCE_NAME_NODEGROUP,
             )
-            licence_name_tile.data[LICENSE_NAME_NODE]["en"][
+            licence_name_tile.data[LICENCE_NAME_NODE]["en"][
                 "value"
-            ] = f"Excavation License {licence_number}"
+            ] = f"Excavation Licence {licence_number}"
             licence_name_tile.save()
         except Exception as e:
             print(f"Failed saving licence number external ref or licence name: {e}")
             raise e
+        
+        try:
+            licence_name_tile.resourceinstanceid = resource_instance_id
+            licence_name_tile.graph_id = LICENCE_GRAPH_ID
+            # print(Resource.get_related_resources(licence_name_tile, resourceinstance_graphid = resource_instance_id))
+            
+            # print(Resource.displayname(self))
+            # print(Resource.get_node_values(self))
+            # print(Resource.load_tiles(self))
+            # print(Resource.to_json(self))
+            # query = Query(se, start=0, limit=100)
+            # query.add_query(f"http://localhost:8000/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=0&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22a9f53f00-48b6-11ee-85af-0242ac140007%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%5B%22{resource_instance_id}%22%5D%7D%7D%5D")
+            # results = query.search(index=RESOURCES_INDEX)
 
+            site_name_tile = Tile.objects.get(
+                resourceinstance_id=resource_instance_id,
+                nodegroup_id=ASSOCIATED_ACTIVIY_NODEGROUP
+            )
+
+            Tile.objects.get_or_create(
+                resourceinstance_id=site_name_tile.get_tile_data()[ASSOCIATED_ACTIVIY_NODE][0]['resourceId'],
+                nodegroup_id=ASSOCIATED_LICENCE_NODEGROUP,
+                data={
+                    ASSOCIATED_LICENCE_NODE: [{
+                        "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                        "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                        "resourceId": resource_instance_id,
+                        "resourceXresourceId": ""
+                    }],
+                },
+            )
+
+        except Exception as e:
+            print(f"Error associating licence: {e}")
         return
