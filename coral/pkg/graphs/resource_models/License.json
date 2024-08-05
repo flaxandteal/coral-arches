@@ -7160,6 +7160,16 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "6397b05c-c443-11ee-94bf-0242ac180006"
+                        ]
+                    },
+                    "function_id": "9b955a8d-64b0-4139-9470-1085d802475f",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "436d0e0c-f8b3-452c-8cfb-5d9ae684fa4d"
+                },
+                {
+                    "config": {
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "",

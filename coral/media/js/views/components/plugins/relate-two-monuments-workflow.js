@@ -63,6 +63,7 @@ define([
           title: 'Complete',
           name: 'complete-step',
           workflowstepclass: 'workflow-form-component',
+          saveWithoutProgressing: true,
           layoutSections: [
             {
               componentConfigs: [
