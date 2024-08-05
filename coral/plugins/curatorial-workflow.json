@@ -200,6 +200,7 @@
         "name": "sign-off-step",
         "title": "Sign Off",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [

@@ -53,23 +53,6 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['51d184d9-269c-4562-a29b-3ef9a7aa3d3a'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "1de9abf0-3aae-11ef-91fd-0242ac120003",
-                    "2c2d02fc-3aae-11ef-91fd-0242ac120003",
-                    "158e1ed2-3aae-11ef-a2d0-0242ac120003"
-                  ],
-                  "nodegroupid": "e71df5cc-3aad-11ef-a2d0-0242ac120003",
-                  "semanticName": "Heritage Asset References"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "building-heritage-asset-references",
-                "disabled": true
-              },
-              {
-                "parameters": {
-                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['start-step']['51d184d9-269c-4562-a29b-3ef9a7aa3d3a'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
                     "676d47fc-9c1c-11ea-b5b0-f875a44e0e11",
                     "676d47fd-9c1c-11ea-9d73-f875a44e0e11"
                   ],
@@ -320,6 +303,7 @@
         "name": "finish-step",
         "title": "Finish",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
@@ -332,6 +316,16 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "fdbda47e-fbe4-4254-9df6-d619b7f984c6"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['51d184d9-269c-4562-a29b-3ef9a7aa3d3a'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "de6b6af0-44e3-11ef-9114-0242ac120006"
+                },
+                "tilesManaged": "one",
+                "componentName": "generate-hb-number",
+                "uniqueInstanceName": "abc038d0-f1dc-41a7-bd02-30cc110d8d67"
               }
             ]
           }
