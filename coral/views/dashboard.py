@@ -129,8 +129,10 @@ class PlanningTaskStrategy(TaskStrategy):
         TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
         TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
 
-        is_user = groupId in [HM_GROUP, HB_GROUP] 
-        is_manager = groupId in [HM_MANAGER, HB_MANAGER] 
+        is_hm_manager = groupId in [HM_MANAGER] 
+        is_hb_manager = groupId in [HB_MANAGER] 
+        is_hm_user = groupId in [HM_GROUP] 
+        is_hb_user = groupId in [HB_GROUP] 
         is_admin = groupId in [PLANNING_GROUP]
 
         resources = [] 
@@ -146,16 +148,27 @@ class PlanningTaskStrategy(TaskStrategy):
         for consultation in planning_consultations:
                 action_status = utilities.node_check(lambda: consultation.action[0].action_status )
                 action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
-                assigned_to_list = utilities.node_check(lambda: consultation.assignment[0].assignee.assigned_to, [])
-                reassigned_to_list = utilities.node_check(lambda: consultation.assignment[0].assignee.re_assignee[0].re_assigned_to, [])
+                assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1, [])
+                reassigned_to_list = utilities.node_check(lambda: consultation.assignment[0].re_assignee.re_assigned_to, [])
 
-                is_assigned_to_user = any(user.id == userResourceId for user in chain(assigned_to_list, reassigned_to_list))
+                user_assigned = any(assigned_to_list) or any(reassigned_to_list)
+
+                is_assigned_to_user = False
+
+                # first checks reassigned to as this overwrites the assigned to field if true
+                if reassigned_to_list:
+                    is_assigned_to_user = any(user.id == userResourceId for user in reassigned_to_list)
+                elif assigned_to_list:
+                    is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
+                
+                hm_status_conditions = [STATUS_OPEN, STATUS_HB_DONE, STATUS_EXTENSION_REQUESTED]
+                hb_status_conditions = [STATUS_OPEN, STATUS_HM_DONE, STATUS_EXTENSION_REQUESTED]
 
                 conditions_for_task = (
-                    (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                    (is_manager and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                    (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                    (is_user and is_assigned_to_user and action_status == STATUS_OPEN and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                    (is_hm_manager and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH] and not user_assigned) or
+                    (is_hb_manager and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH] and not user_assigned) or
+                    (is_hm_user and is_assigned_to_user and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                    (is_hb_user and is_assigned_to_user and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
                     (is_admin)
                 )
                 if conditions_for_task:                 
@@ -252,7 +265,7 @@ class Utilities:
             print(func)
             return func()
         except Exception as error:
-            logging.error(f'Node does not exist: {error}')
+            logging.warning(f'Node does not exist: {error}')
             return default
         
     def get_response_slug(self, groupId):
