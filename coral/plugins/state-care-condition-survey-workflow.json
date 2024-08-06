@@ -20,7 +20,7 @@
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
                   "nodegroupid": "07428674-5020-11ef-b77e-0242ac120006",
                   "semanticName": "Heritage Asset",
-                  "labels": [["Heritage Asset", "Heritage Asset V6"]]
+                  "labels": [["Heritage Asset", "Heritage Asset"]]
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
@@ -103,11 +103,10 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "graphid": "c0098070-d052-4449-982b-952507306c03",
-                  "nodegroupid": "4dde807e-532c-11ef-9d2a-0242ac120006",
-                  "semanticName": "Digital File(s)",
-                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
-
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
+                  "resourceModelDigitalObjectNodeGroupId": "4dde807e-532c-11ef-9d2a-0242ac120006"
                 },
                 "tilesManaged": "one",
                 "componentName": "related-document-upload",
