@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import defaultdict 
 from django.core.cache import cache
 import json
@@ -206,8 +206,12 @@ class PlanningTaskStrategy(TaskStrategy):
         
         if date_entered:
             date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+
+        deadline_message = None
         if deadline:
-            deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")           
+            deadline_date = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z")
+            deadline_message = utilities.create_deadline_message(deadline_date)
+            deadline = deadline_date.strftime("%d-%m-%Y")          
 
         resource_data = {
             'id': str(consultation.id),
@@ -217,6 +221,7 @@ class PlanningTaskStrategy(TaskStrategy):
             'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
             'date': date_entered,
             'deadline': deadline,
+            'deadlinemessage': deadline_message,
             'address': address,
             'responseslug': responseslug
         }
@@ -275,3 +280,21 @@ class Utilities:
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
+    
+    def create_deadline_message(self, date):
+        message = None
+        date_now = datetime.now(timezone.utc)
+        difference = (date.date() - date_now.date()).days
+
+        if difference < 0:
+            message = "Overdue"
+        elif difference == 0:
+            message = "Due Today"
+        elif difference <= 3:
+            day_word = "day" if difference == 1 else "days"
+            message = f"{difference} {day_word} until due"
+
+        return message
+
+
+        

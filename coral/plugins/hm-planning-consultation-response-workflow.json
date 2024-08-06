@@ -192,6 +192,7 @@
         "name": "upload-response",
         "title": "Upload Response",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
