@@ -1,13 +1,19 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.resource import Resource
+from arches.app.models.tile import Tile
 from arches_orm.adapter import admin
 from django.utils import timezone
 
 ACTION_NODEGROUP = "a5e15f5c-51a3-11eb-b240-f875a44e0e11"
 ACTION_STATUS = "19eef70c-69b8-11ee-8431-0242ac120002"
 ACTION_TYPE = "e2585f8a-51a3-11eb-a7be-f875a44e0e11"
-ACTION_BY = "8322f9f6-69b5-11ee-93a1-0242ac120002"
+ASSIGNED_TO = "8322f9f6-69b5-11ee-93a1-0242ac120002"
+
+EXTENSION_REQUESTED = '28112b3f-ef44-40b4-a215-931c0c88bc5e'
+
+ASSIGNMENT_NODEGROUP = "dc9bfb24-cfd9-11ee-8cc1-0242ac180006"
+REASSIGNED_TO = "fbdd2304-cfda-11ee-8cc1-0242ac180006"
 
 ASSIGN_HM = "94817212-3888-4b5c-90ad-a35ebd2445d5"
 ASSIGN_HB = "12041c21-6f30-4772-b3dc-9a9a745a7a3f"
@@ -32,7 +38,7 @@ details = {
     'type': 'node',
     'description': 'Will send a notification on creation or edit of certain nodes to a specified user or group',
     'defaultconfig': {
-        'triggering_nodegroups': [ACTION_NODEGROUP],
+        'triggering_nodegroups': [ACTION_NODEGROUP, ASSIGNMENT_NODEGROUP],
     },
     'classname': 'NotifyPlanning',
     'component': '',
@@ -43,6 +49,7 @@ class NotifyPlanning(BaseFunction):
         from arches_orm.models import Person
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
+        nodegroup_id = str(tile.nodegroup_id)
 
         existing_notification = models.Notification.objects.filter(
             context__resource_instance_id=resource_instance_id
@@ -69,36 +76,62 @@ class NotifyPlanning(BaseFunction):
 
         data = tile.data
 
+        # check if re-assigned triggered the function and send a notification
+        if nodegroup_id == ASSIGNMENT_NODEGROUP:
+            assigned_users_list = []
+
+            for user in tile.data[REASSIGNED_TO]:
+                assigned_users_list.append(user)
+            
+            self.notify_users(assigned_users_list, notification)
+            return
+
+        # fetch re-assigned to data from a seperate nodegroup
+        try:
+            assignment_tile = Tile.objects.get(
+                resourceinstance_id = resource_instance_id,
+                nodegroup_id = ASSIGNMENT_NODEGROUP
+            )
+        except Tile.DoesNotExist:
+            assignment_tile = None
+
+        if assignment_tile:
+            re_assignment_node = assignment_tile.data.get(REASSIGNED_TO, None) 
+        else:
+            re_assignment_node = None
+        
+        is_assigned_to_a_user = data[ASSIGNED_TO] != None or re_assignment_node != None
+
+        action_type_conditions = [STATUS_OPEN, EXTENSION_REQUESTED]
+
         if ACTION_STATUS in data and ACTION_TYPE in data:
-            if data[ACTION_TYPE] in [ASSIGN_HM, ASSIGN_BOTH] and data[ACTION_STATUS] == STATUS_OPEN and data[ACTION_BY] == None:
+            if data[ACTION_TYPE] is None and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+                if existing_notification and existing_notification.context["last_notified"] == PLANNING_ADMIN:
+                    return
+                self.notify_group(PLANNING_ADMIN, notification)
+
+            elif data[ACTION_TYPE] in [ASSIGN_HM, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
                 if existing_notification and existing_notification.context["last_notified"] == HM_MANAGERS:
                     return
-                
                 self.notify_group(HM_MANAGERS, notification)
 
-            elif data[ACTION_TYPE] in [ASSIGN_HB, ASSIGN_BOTH] and data[ACTION_STATUS] == STATUS_OPEN and data[ACTION_BY] == None:
+            elif data[ACTION_TYPE] in [ASSIGN_HB, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
                 if existing_notification and existing_notification.context["last_notified"] == HB_MANAGERS:
                     return
                 
                 self.notify_group(HB_MANAGERS, notification)
 
-            elif data[ACTION_STATUS] == STATUS_OPEN and data[ACTION_BY] != None:
+            elif data[ACTION_STATUS] in action_type_conditions and is_assigned_to_a_user:
                 with admin():
-                    selected_user = Person.find(data[ACTION_BY][0]['resourceId'])
-
-                    if not selected_user.user_account:
+                    assigned_users_list = []
+                    if re_assignment_node:
                         return
+                    else:
+                        for user in tile.data[ASSIGNED_TO]:
+                            assigned_users_list.append(user)
 
-                    if existing_notification and existing_notification.context["last_notified"] == str(selected_user.id):
-                        return
-                    
-                    notification.context["last_notified"] = selected_user.id
-                    notification.save()
-                    
-                    user_x_notification = models.UserXNotification(
-                        notif=notification, recipient=selected_user.user_account
-                    )
-                    user_x_notification.save()
+                    self.notify_users(assigned_users_list, notification)
+
 
             elif data[ACTION_STATUS] in [HB_DONE, HM_DONE]:
                 notification.message = f"{name} has been completed"
@@ -120,3 +153,27 @@ class NotifyPlanning(BaseFunction):
                     notif=notification, recipient=user
                 )
                 user_x_notification.save()
+
+    def notify_users(self, assigned_users_list, notification):
+        from arches_orm.models import Person
+
+        notified_users_list = notification.context.get("last_notified", []) if isinstance(notification.context.get("last_notified"), list) else []
+
+        for user in assigned_users_list:
+
+            selected_user = Person.find(user['resourceId'])
+
+            if not selected_user.user_account:
+                return
+            
+            if str(selected_user.id) in notified_users_list:
+                continue  # Skip already notified users
+
+            notified_users_list.append(selected_user.id)
+            notification.context["last_notified"] = notified_users_list
+            notification.save()
+            
+            user_x_notification = models.UserXNotification(
+                notif=notification, recipient=selected_user.user_account
+            )
+            user_x_notification.save()
