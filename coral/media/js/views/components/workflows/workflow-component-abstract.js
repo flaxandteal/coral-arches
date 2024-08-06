@@ -575,70 +575,101 @@ define([
             self.tiles(filteredTiles);
         };
 
-        this.saveMultiTiles = function() {
-            self.complete(false);
-            self.saving(true);
-            self.previouslyPersistedComponentData = [];
-            
-            var unorderedSavedData = ko.observableArray();
+        this.saveMultiTiles = function () {
+          /**
+           * This FIX was only implemented in default-card-util prior to us copying
+           * tte wca into the coral side. This implements all fixes need for updating
+           * the tiles shown in the sidebar.
+           */
+          self.complete(false);
+          self.saving(true);
+          self.previouslyPersistedComponentData = [];
 
-            self.tiles().forEach(function(tile) {
-                tile.save(
-                    function(response){
-                        self.alert(new AlertViewModel(
-                            'ep-alert-red', 
-                            response.responseJSON.title,
-                            response.responseJSON.message,
-                            null, 
-                            function(){ return; }
-                        ));
-                        self.saving(false);
-                    }, 
-                    function(savedTileData) {
-                        unorderedSavedData.push(savedTileData);
+          if (self.tiles().length === 0 && self.tilesToRemove().length === 0) {
+            self.complete(true);
+            self.loading(true);
+            self.saving(false);
+
+            return;
+          }
+
+          const unorderedSavedData = ko.observableArray();
+
+          self.tiles().forEach((tile) => {
+            tile.save(
+              (response) => {
+                self.alert(
+                  new AlertViewModel(
+                    'ep-alert-red',
+                    response.responseJSON.title,
+                    response.responseJSON.message,
+                    null,
+                    function () {
+                      return;
                     }
+                  )
                 );
-            });
+                self.saving(false);
+              },
+              (savedTileData) => {
+                unorderedSavedData.push(savedTileData);
+              }
+            );
+          });
 
-            self.tilesToRemove().forEach(function(tile) {
-                tile.deleteTile(
-                    function(response) {
-                        self.alert(new AlertViewModel(
-                            'ep-alert-red', 
-                            response.responseJSON.title,
-                            response.responseJSON.message,
-                            null, 
-                            function(){ return; }
-                        ));
-                    },
-                    function() {
-                        self.tilesToRemove.remove(tile);
-                        if ( self.tilesToRemove().length === 0 ) {
-                            self.complete(true);
-                            self.loading(true);
-                            self.saving(false);
-                        }
+          self.tilesToRemove().forEach((tile) => {
+            tile.deleteTile(
+              (response) => {
+                self.alert(
+                  new AlertViewModel(
+                    'ep-alert-red',
+                    response.responseJSON.title,
+                    response.responseJSON.message,
+                    null,
+                    () => {
+                      return;
                     }
+                  )
                 );
-            });
+              },
+              () => {
+                self.tilesToRemove.remove(tile);
+                /**
+                 * This functionality wasn't needed
+                 */
+                // if (this.tilesToRemove().length === 0) {
+                //   //   this.complete(true);
+                //   //   this.loading(true);
+                //   //   this.saving(false);
+                // }
+              }
+            );
+          });
 
-            var saveSubscription = unorderedSavedData.subscribe(function(savedData) {
-                if (savedData.length === self.tiles().length) {
-                    self.complete(true);
-                    self.loading(true);
-                    self.saving(false);
+          if (!self.tiles().length) {
+            self.complete(true);
+            self.loading(true);
+            self.saving(false);
+            self.savedData([]);
+          }
 
-                    var orderedSavedData = self.tiles().map(function(tile) {
-                        return savedData.find(function(datum) {
-                            return datum.tileid === tile.tileid;
-                        });
-                    });
+          const saveSubscription = unorderedSavedData.subscribe((savedData) => {
+            if (savedData.length === self.tiles().length) {
+              self.complete(true);
+              self.loading(true);
+              self.saving(false);
 
-                    self.savedData(orderedSavedData.reverse());
+              const orderedSavedData = self.tiles().map((tile) => {
+                return savedData.find((datum) => {
+                  return datum.tileid === tile.tileid;
+                });
+              });
 
-                    saveSubscription.dispose();  /* self-disposing subscription only runs once */ 
-                }
-            });
+              self.savedData(orderedSavedData.reverse());
+
+              saveSubscription.dispose(); /* this-disposing subscription only runs once */
+            }
+          });
         };
 
         this.clearEditor = function() {
