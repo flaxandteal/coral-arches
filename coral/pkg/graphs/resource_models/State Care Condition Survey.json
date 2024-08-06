@@ -194,7 +194,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Signed Off Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -214,7 +214,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Completed On",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -256,7 +256,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "ResourceID",
+                        "label": "Survey Reference",
                         "maxLength": null,
                         "placeholder": {
                             "en": null
@@ -266,7 +266,7 @@
                     },
                     "id": "3d2a4022-5329-11ef-9337-0242ac120006",
                     "label": {
-                        "en": "ResourceID"
+                        "en": "Survey Reference"
                     },
                     "node_id": "3d2a3ba4-5329-11ef-9337-0242ac120006",
                     "sortorder": 2,
