@@ -1,0 +1,158 @@
+{
+  "pluginid": "866b03d4-bd1d-43bb-bb45-54cff150db3f",
+  "name": "State Care Condition Survey",
+  "icon": "fa fa-search",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "c0098070-d052-4449-982b-952507306c03",
+    "stepConfig": [
+      {
+        "name": "initial-step-step",
+        "title": "Initial Step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "nodegroupid": "07428674-5020-11ef-b77e-0242ac120006",
+                  "semanticName": "Heritage Asset",
+                  "labels": [["Heritage Asset", "Heritage Asset V6"]]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "e769c1dc-f1ca-4982-bf7e-f7e2ee344dea"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "informationboxdata": {
+          "text": "Please select the Heritage Asset being surveyed",
+          "heading": "Associated Heritage Asset"
+        }
+      },
+      {
+        "name": "survey-reference-step",
+        "title": "Survey Reference",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "nodegroupid": "3d2a1138-5329-11ef-9337-0242ac120006",
+                  "semanticName": "System Reference Numbers",
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "144741d9-17d1-4746-90c6-48bd1efb8534"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "overall-scored-assessment-step",
+        "title": "Overall Scored Assessment",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "nodegroupid": "c43324d0-5329-11ef-9337-0242ac120006",
+                  "semanticName": "Assessments",
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
+
+                },
+                "tilesManaged": "many",
+                "componentName": "default-card",
+                "uniqueInstanceName": "24442da7-5a46-4906-86cf-24345e8167d7"
+              },
+              {
+                "parameters": {
+                  "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "nodegroupid": "ff232bf6-532b-11ef-9d2a-0242ac120006",
+                  "semanticName": "Notes",
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
+
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "adec15af-3a1f-4f29-b98f-d586e83d3c99"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "documentation-step",
+        "title": "Documentation",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "nodegroupid": "4dde807e-532c-11ef-9d2a-0242ac120006",
+                  "semanticName": "Digital File(s)",
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
+
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "e7b8807a-120f-421b-a466-035590682745"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "sign-off-step",
+        "title": "Sign Off",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "nodegroupid": "5a955770-532c-11ef-9d2a-0242ac120006",
+                  "semanticName": "Sign Off",
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
+
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "ce3107ea-63e2-486f-a5e8-7a4b753f9d26"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      }
+    ],
+    "initWorkflow": {
+      "desc": "Start a State Care Condition Survey",
+      "icon": "fa fa-search",
+      "name": "State Care Condition Survey",
+      "show": true,
+      "bgColor": "#4a5e94",
+      "slugPrefix": "open-workflow?workflow-slug=",
+      "circleColor": "#4a5e94"
+    }
+  },
+  "slug": "state-care-condition-survey-workflow",
+  "sortorder": 0
+}
