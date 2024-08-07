@@ -6112,19 +6112,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Assigned by",
+                        "label": "Assigned to",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "3cc0d495-d010-439f-858b-1fdf4f5b5ef0",
                     "label": {
-                        "en": "Assigned by"
+                        "en": "Assigned to"
                     },
                     "node_id": "8322f9f6-69b5-11ee-93a1-0242ac120002",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "9e53c362-1cf8-410f-b288-152d80d846a7",
@@ -27156,7 +27156,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "assigned_by",
+                    "alias": "assigned_to_n1",
                     "config": {
                         "graphs": [
                             {
@@ -27171,7 +27171,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -27181,7 +27181,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Assigned by",
+                    "name": "Assigned to",
                     "nodegroup_id": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
                     "nodeid": "8322f9f6-69b5-11ee-93a1-0242ac120002",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
