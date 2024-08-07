@@ -25,16 +25,16 @@ class GardenNumber:
             raise
 
     def id_number_format(self, index):
-        return f"{self.county_abbreviation}:{str(index).zfill(3)}"
+        return f"{self.county_abbreviation}-{str(index).zfill(3)}"
     
     def abbreviate_county(self, name):
         abbreviations = {
-            "Antrim": "ANT",
-            "Armagh": "ARM",
-            "Down": "DOW",
-            "Fermanagh": "FER",
-            "Londonderry": "LDY",
-            "Tyrone": "TYR"
+            "Antrim": "AN",
+            "Armagh": "A",
+            "Down": "D",
+            "Fermanagh": "F",
+            "Londonderry": "L",
+            "Tyrone": "T"
         }
         abbreviation = abbreviations.get(name, None)
         if abbreviation is None:
