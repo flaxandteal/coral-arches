@@ -15,6 +15,11 @@ EXTENSION_REQUESTED = '28112b3f-ef44-40b4-a215-931c0c88bc5e'
 ASSIGNMENT_NODEGROUP = "dc9bfb24-cfd9-11ee-8cc1-0242ac180006"
 REASSIGNED_TO = "fbdd2304-cfda-11ee-8cc1-0242ac180006"
 
+RESPONSE_NODEGROUP = "af7677ba-cfe2-11ee-8a4e-0242ac180006"
+RESPONSE_TEAM = "cd77b29c-2ef6-11ef-b1c4-0242ac140006"
+RESPONSE_HM = "2628d62f-c206-4c06-b26a-3511e38ea243"
+RESPONSE_HB = "70fddadb-8172-4029-b8fd-87f9101a3a2d"
+
 ASSIGN_HM = "94817212-3888-4b5c-90ad-a35ebd2445d5"
 ASSIGN_HB = "12041c21-6f30-4772-b3dc-9a9a745a7a3f"
 ASSIGN_BOTH = "7d2b266f-f76d-4d25-87f5-b67ff1e1350f"
@@ -38,7 +43,7 @@ details = {
     'type': 'node',
     'description': 'Will send a notification on creation or edit of certain nodes to a specified user or group',
     'defaultconfig': {
-        'triggering_nodegroups': [ACTION_NODEGROUP, ASSIGNMENT_NODEGROUP],
+        'triggering_nodegroups': [ACTION_NODEGROUP, ASSIGNMENT_NODEGROUP, RESPONSE_NODEGROUP],
     },
     'classname': 'NotifyPlanning',
     'component': '',
@@ -84,6 +89,16 @@ class NotifyPlanning(BaseFunction):
                 assigned_users_list.append(user)
             
             self.notify_users(assigned_users_list, notification)
+            return
+        
+        elif nodegroup_id == RESPONSE_NODEGROUP:
+            response_group_uuid = tile.data[RESPONSE_TEAM]
+            if response_group_uuid == RESPONSE_HM:
+                response_group = "HM"
+            elif response_group_uuid == RESPONSE_HB:
+                response_group = "HB"
+            notification.message = f"{name} response has been completed by {response_group}"
+            self.notify_group(PLANNING_ADMIN, notification)
             return
 
         # fetch re-assigned to data from a seperate nodegroup
@@ -131,11 +146,6 @@ class NotifyPlanning(BaseFunction):
                             assigned_users_list.append(user)
 
                     self.notify_users(assigned_users_list, notification)
-
-
-            elif data[ACTION_STATUS] in [HB_DONE, HM_DONE]:
-                notification.message = f"{name} has been completed"
-                self.notify_group(PLANNING_ADMIN, notification)
 
     def notify_group(self, group_id, notification):
         from arches_orm.models import Group, Person
