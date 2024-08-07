@@ -1200,7 +1200,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Associated License"
+                        "en": "Associated Licence"
                     },
                     "nodegroup_id": "879fc326-02f6-11ef-927a-0242ac150006",
                     "sortorder": null,
@@ -3623,11 +3623,11 @@
                     "card_id": "c59d428f-ce76-4298-82c2-14a13bae7934",
                     "config": {
                         "defaultValue": null,
-                        "label": "License Holder Present"
+                        "label": "Licence Holder Present"
                     },
                     "id": "7817ed19-feaa-46e2-bc91-ec4039944b9d",
                     "label": {
-                        "en": "License Holder Present"
+                        "en": "Licence Holder Present"
                     },
                     "node_id": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
                     "sortorder": 0,
@@ -7185,14 +7185,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Associated Licenses",
+                        "label": "Associated Licences",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "c05e3c87-494e-4170-9f35-613e314123cd",
                     "label": {
-                        "en": "Associated Licenses"
+                        "en": "Associated Licences"
                     },
                     "node_id": "879fc326-02f6-11ef-927a-0242ac150006",
                     "sortorder": 0,
@@ -12648,7 +12648,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "license_holder_present",
+                    "alias": "licence_holder_present",
                     "config": {
                         "falseLabel": {
                             "en": "No"
@@ -12674,7 +12674,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "License Holder Present",
+                    "name": "Licence Holder Present",
                     "nodegroup_id": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
                     "nodeid": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
@@ -14031,13 +14031,13 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "associated_license",
+                    "alias": "associated_licence",
                     "config": {
                         "graphs": [
                             {
                                 "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
                                 "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
-                                "name": "License",
+                                "name": "Licence",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": false
@@ -14056,7 +14056,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Associated License",
+                    "name": "Associated Licence",
                     "nodegroup_id": "879fc326-02f6-11ef-927a-0242ac150006",
                     "nodeid": "879fc326-02f6-11ef-927a-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
