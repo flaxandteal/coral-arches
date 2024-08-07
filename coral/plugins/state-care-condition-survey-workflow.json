@@ -20,7 +20,7 @@
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
                   "nodegroupid": "07428674-5020-11ef-b77e-0242ac120006",
                   "semanticName": "Heritage Asset",
-                  "labels": [["Heritage Asset", "Heritage Asset"]]
+                  "labels": [["Heritage Asset", "SMR Number"]]
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
@@ -47,10 +47,12 @@
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
                   "nodegroupid": "3d2a1138-5329-11ef-9337-0242ac120006",
                   "semanticName": "System Reference Numbers",
-                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
+                  "labels": [["ResourceID", "Survey Reference"]]
+
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "144741d9-17d1-4746-90c6-48bd1efb8534"
               }
             ]
