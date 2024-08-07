@@ -48,7 +48,7 @@ class SmrNumberFunction(BaseFunction):
             valueid=tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID, None)
         ).first()
 
-        sn = SmrNumber(map_sheet_id=map_sheet_id)
+        sn = SmrNumber(map_sheet_id=map_sheet_id.value)
 
         if sn.validate_id(id_number):
             print("SMR Number is valid: ", id_number)
