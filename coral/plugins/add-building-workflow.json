@@ -106,6 +106,16 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['51d184d9-269c-4562-a29b-3ef9a7aa3d3a'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba"
+                },
+                "tilesManaged": "many",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "e0da378f-ea20-44d7-8d8a-05b46f8d54c0"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['51d184d9-269c-4562-a29b-3ef9a7aa3d3a'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "aa629840-d23e-11ee-9ae7-0242ac180006",
                   "hiddenNodes": [
                     "aa62a736-d23e-11ee-9ae7-0242ac180006",
