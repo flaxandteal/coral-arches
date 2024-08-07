@@ -170,23 +170,23 @@ class OpenWorkflow(View):
                 self.nodegroups[nodegroup_id] = node.nodegroup
 
     def setup_licensing_workflow(self):
-        LICENSE_SYSTEM_REFERENCE_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
-        LICENSE_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
-        LICENSE_DECISION_NODEGROUP = "2749ea5a-48cb-11ee-be76-0242ac140007"
-        LICENSE_APPLICATION_DETAILS = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
-        LICENSE_CM_REFERENCE_NODEGROUP = "b84fa9c6-bad2-11ee-b3f2-0242ac180006"
+        LICENCE_SYSTEM_REFERENCE_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
+        LICENCE_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
+        LICENCE_DECISION_NODEGROUP = "2749ea5a-48cb-11ee-be76-0242ac140007"
+        LICENCE_APPLICATION_DETAILS = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
+        LICENCE_CM_REFERENCE_NODEGROUP = "b84fa9c6-bad2-11ee-b3f2-0242ac180006"
         ACTIVITY_SYSTEM_REFERENCE_NODEGROUP = "e7d695ff-9939-11ea-8fff-f875a44e0e11"
         ACTIVITY_RESOURCE_ID_NODE = "e7d69603-9939-11ea-9e7f-f875a44e0e11"
         ACTIVITY_LOCATION_DATA_NODEGROUP = "a5416b49-f121-11eb-8e2c-a87eeabdefba"
 
-        # Get the application id used for the license and activity
+        # Get the application id used for the licence and activity
 
-        license_system_reference_tile = Tile.objects.filter(
-            resourceinstance=self.resource, nodegroup=LICENSE_SYSTEM_REFERENCE_NODEGROUP
+        licence_system_reference_tile = Tile.objects.filter(
+            resourceinstance=self.resource, nodegroup=LICENCE_SYSTEM_REFERENCE_NODEGROUP
         ).first()
 
         app_id = (
-            license_system_reference_tile.data.get(LICENSE_RESOURCE_ID_NODE)
+            licence_system_reference_tile.data.get(LICENCE_RESOURCE_ID_NODE)
             .get("en")
             .get("value")
         )
@@ -215,20 +215,20 @@ class OpenWorkflow(View):
         )
         decision_tile, success = Tile.objects.get_or_create(
             resourceinstance=self.resource,
-            nodegroup=LICENSE_DECISION_NODEGROUP,
+            nodegroup=LICENCE_DECISION_NODEGROUP,
         )
         application_details_tile, success = Tile.objects.get_or_create(
             resourceinstance=self.resource,
-            nodegroup=LICENSE_APPLICATION_DETAILS,
+            nodegroup=LICENCE_APPLICATION_DETAILS,
         )
         cm_reference_tile, success = Tile.objects.get_or_create(
             resourceinstance=self.resource,
-            nodegroup=LICENSE_CM_REFERENCE_NODEGROUP,
+            nodegroup=LICENCE_CM_REFERENCE_NODEGROUP,
         )
 
         # Store the tile IDs in an object
 
-        self.additional_saved_values[LICENSE_SYSTEM_REFERENCE_NODEGROUP] = {
+        self.additional_saved_values[LICENCE_SYSTEM_REFERENCE_NODEGROUP] = {
             "activityResourceId": activity_resource_id,
             "activityLocationTileId": str(location_data_tile.tileid),
             "decisionTileId": str(decision_tile.tileid),
