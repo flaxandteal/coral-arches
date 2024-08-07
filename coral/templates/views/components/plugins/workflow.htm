@@ -152,7 +152,7 @@
                 <!-- /ko -->
                 <!-- ko if: activeStep().hasUnsavedData() -->
                     <!-- ko if: !$data.hiddenWorkflowButtons().includes('undo') && !activeStep().saveWithoutProgressing()  -->
-                    <button
+                    {% comment %} <button
                         class="btn btn-danger static-save-button"
                         data-bind="{
                             css: {
@@ -165,7 +165,7 @@
                         <span>
                             {% trans  "Undo" %}
                         </span>
-                    </button>
+                    </button> {% endcomment %}
                     <!-- /ko -->
                     <!-- ko if: !$data.hiddenWorkflowButtons().includes('save') -->
                         <!-- ko if: activeStep().saveWithoutProgressing() -->
