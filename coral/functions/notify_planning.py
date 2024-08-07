@@ -93,6 +93,7 @@ class NotifyPlanning(BaseFunction):
         
         elif nodegroup_id == RESPONSE_NODEGROUP:
             response_group_uuid = tile.data[RESPONSE_TEAM]
+            response_group = ""
             if response_group_uuid == RESPONSE_HM:
                 response_group = "HM"
             elif response_group_uuid == RESPONSE_HB:
