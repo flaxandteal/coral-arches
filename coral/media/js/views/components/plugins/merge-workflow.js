@@ -163,6 +163,7 @@ define([
           name: 'approval-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
+          saveWithoutProgressing: true,
           layoutSections: [
             {
               componentConfigs: [

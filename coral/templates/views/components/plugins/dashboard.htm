@@ -59,6 +59,12 @@
                     <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
                       <span data-bind="text: $data.displayname"></span>
                     </h3>
+                    <!-- ko if: $data.deadlinemessage -->
+                      <div class="flex-center title-info-margin">
+                        <div><strong data-bind="text: $data.deadlinemessage"></strong></div>
+                        <i style="color: rgb(197, 2, 2); margin-left: 1rem" class="fa fa-exclamation-circle"></i>
+                      </div>
+                    <!-- /ko -->
                   </div>
                   <div class="dashboard-card-columns">
                     <div>

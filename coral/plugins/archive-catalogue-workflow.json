@@ -181,6 +181,7 @@
         "name": "archive-loan-history-step",
         "title": "Archive Loan History",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [

@@ -282,6 +282,7 @@
         "name": "letters-step",
         "title": "Letters",
         "required": false,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": []

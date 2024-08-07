@@ -399,14 +399,14 @@ class OpenWorkflow(View):
                     resourceinstance_id=digital_object_resource_id,
                     nodegroup_id=DIGITAL_OBJECT_NODEGROUP_ID,
                 ).first()
-
-                component_data = {
-                    "nodegroupId": nodegroup_id,
-                    "resourceInstanceId": digital_object_resource_id,
-                    "tileId": str(digital_object_file_tile.tileid),
-                    "tileData": json.dumps(digital_object_file_tile.data),
-                }
-                self.workflow_component_data[data_lookup_id] = {"value": component_data}
+                if digital_object_file_tile:
+                    component_data = {
+                        "nodegroupId": nodegroup_id,
+                        "resourceInstanceId": digital_object_resource_id,
+                        "tileId": str(digital_object_file_tile.tileid),
+                        "tileData": json.dumps(digital_object_file_tile.data),
+                    }
+                    self.workflow_component_data[data_lookup_id] = {"value": component_data}
                 continue
 
             if not len(tiles):

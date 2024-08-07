@@ -14,16 +14,16 @@ LICENSEES_NODE_ID = "6d294784-5891-11ee-a624-0242ac120004"
 
 details = {
     "functionid": "9b955a8d-64b0-4139-9470-1085d802475f",
-    "name": "Transfer License",
+    "name": "Transfer License Function",
     "type": "node",
     "description": "Will handle re-assigning the licensees during a transfer of license ",
     "defaultconfig": {"triggering_nodegroups": [TRANSFER_OF_LICENSE_NODEGROUP_ID]},
-    "classname": "TransferOfLicense",
+    "classname": "TransferOfLicenseFunction",
     "component": "",
 }
 
 
-class TransferOfLicense(BaseFunction):
+class TransferOfLicenseFunction(BaseFunction):
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
@@ -33,21 +33,21 @@ class TransferOfLicense(BaseFunction):
         ).first()
 
         if not contacts_tile:
-            return
-            raise Exception("No original licensees provided to transfer a license from.")
+            raise Exception(
+                "No Nominated Excavation Directors found on the Application Details page."
+            )
 
-        original_licensee_resource_ids = [
-            x.get("resourceId") for x in contacts_tile.data.get(LICENSEES_NODE_ID, [])
-        ]
+        licensees = contacts_tile.data.get(LICENSEES_NODE_ID, []) or []
+        original_licensee_resource_ids = [x.get("resourceId") for x in licensees]
 
-        new_licensee_node_data = tile.data.get(NEW_LICENSEE_FIELD_ID, [])
+        new_licensee_node_data = tile.data.get(NEW_LICENSEE_FIELD_ID, []) or []
         new_licensee_resource_id = (
             new_licensee_node_data[0].get("resourceId", None)
             if len(new_licensee_node_data)
             else None
         )
 
-        former_licensee_node_data = tile.data.get(FORMER_LICENSEE_FIELD_ID, [])
+        former_licensee_node_data = tile.data.get(FORMER_LICENSEE_FIELD_ID, []) or []
         former_licensee_resource_id = (
             former_licensee_node_data[0].get("resourceId", None)
             if len(former_licensee_node_data)
@@ -55,22 +55,22 @@ class TransferOfLicense(BaseFunction):
         )
 
         if not len(original_licensee_resource_ids):
-            return
-            raise Exception("No original licensees found")
-
-        if not new_licensee_resource_id:
-            return
-            raise Exception("No new licensee provided.")
+            raise Exception(
+                "No Nominated Excavation Directors found on the Application Details page."
+            )
 
         if not former_licensee_resource_id:
-            return
-            raise Exception("No former licensee provided.")
-
+            raise Exception("You must provide a Former Licensee to transfer a license.")
+        
         if former_licensee_resource_id not in original_licensee_resource_ids:
-            return
-            raise Exception("Former licensee is not part of the orignal licensees.")
+            raise Exception("You provided a Former licensee who is not part of the Nominated Excavation Directors found on the Application Details page.")
 
-        related_persons = contacts_tile.data.get(LICENSEES_NODE_ID, [])
+        if not new_licensee_resource_id:
+            raise Exception("You must provide a new Nominated Excavation Director to transfer a license.")
+
+
+
+        related_persons = contacts_tile.data.get(LICENSEES_NODE_ID, []) or []
         # remove former
         related_persons = list(
             filter(
