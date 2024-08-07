@@ -119,6 +119,12 @@ define([
       }
     }
 
+    if (this.value()) {
+      const parsedDate = moment(this.value(), 'YYYY-MM-DD');
+      const formattedDate = parsedDate.format('DD-MM-YYYY');
+      this.dateValue(formattedDate);
+    }
+
     /**
      * Date format overriding logic
      */
@@ -126,10 +132,15 @@ define([
       const parsedDate = moment(value, 'DD-MM-YYYY');
       const formattedDate = parsedDate.format('YYYY-MM-DD');
       this.value(formattedDate);
-      const tileData = JSON.parse(self.tile._tileData());
-      tileData[this.node.id] = formattedDate;
-      self.tile._tileData(koMapping.toJSON(tileData));
     }, this);
+
+    this.value.subscribe((value) => {
+      const parsedDate = moment(this.dateValue(), 'DD-MM-YYYY');
+      const formattedDate = parsedDate.format('YYYY-MM-DD');
+      if (value !== formattedDate) {
+        this.value(formattedDate);
+      }
+    });
 
     this.disposables.push(this.getdefault);
   };
