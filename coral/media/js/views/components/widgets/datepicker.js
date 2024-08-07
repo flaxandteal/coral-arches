@@ -134,12 +134,10 @@ define([
       this.value(formattedDate);
     }, this);
 
-    this.value.subscribe((value) => {
-      const parsedDate = moment(this.dateValue(), 'DD-MM-YYYY');
-      const formattedDate = parsedDate.format('YYYY-MM-DD');
-      if (value !== formattedDate) {
-        this.value(formattedDate);
-      }
+    this.value?.subscribe((value) => {
+      const parsedDate = moment(value, 'YYYY-MM-DD');
+      const formattedDate = parsedDate.format('DD-MM-YYYY');
+      this.dateValue(formattedDate);
     });
 
     this.disposables.push(this.getdefault);
