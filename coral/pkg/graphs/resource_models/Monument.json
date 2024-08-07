@@ -267,7 +267,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Excavation License Reference"
+                        "en": "Excavation Licence Reference"
                     },
                     "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "sortorder": null,
@@ -14474,7 +14474,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Excavation License",
+                        "label": "Excavation Licence",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -14484,7 +14484,7 @@
                     },
                     "id": "ddd28394-1b65-4738-8707-db8980b49232",
                     "label": {
-                        "en": "Excavation License"
+                        "en": "Excavation Licence"
                     },
                     "node_id": "e29ba81e-1f4b-11ef-ac74-0242ac150006",
                     "sortorder": 0,
@@ -22347,7 +22347,7 @@
                             {
                                 "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
                                 "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
-                                "name": "License",
+                                "name": "Licence",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": false
@@ -35100,7 +35100,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "excavation_license_reference",
+                    "alias": "excavation_licence_reference",
                     "config": {
                         "en": ""
                     },
@@ -35114,7 +35114,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Excavation License Reference",
+                    "name": "Excavation Licence Reference",
                     "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "nodeid": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
@@ -38321,7 +38321,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "excavation_license_reference_number",
+                    "alias": "excavation_licence_reference_number",
                     "config": {
                         "en": ""
                     },
@@ -38335,7 +38335,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Excavation License Reference Number",
+                    "name": "Excavation Licence Reference Number",
                     "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "nodeid": "e29ba81e-1f4b-11ef-ac74-0242ac150006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
