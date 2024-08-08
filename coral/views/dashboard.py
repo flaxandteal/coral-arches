@@ -55,6 +55,8 @@ class Dashboard(View):
                 task_resources = data['task_resources']
                 counters = data['counters']
                 sort_options = data['sort_options']
+                utilities = Utilities()
+                task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
 
             else:
                 user_group_ids = self.get_groups(person_resource[0].id)
@@ -176,19 +178,14 @@ class PlanningTaskStrategy(TaskStrategy):
                     if task:
                         resources.append(task)
 
-        #sort by deadline date, nulls first
-        from datetime import datetime
 
         # Convert the 'deadline', 'date' field to a date and sort
-        resources.sort(key=lambda x: (
-            x[sort_by] is not None, datetime.strptime(x[sort_by], '%d-%m-%Y') 
-            if x[sort_by] else None
-        ), reverse=(sort_order == 'desc'))
+        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
 
         counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
         sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
 
-        return resources, counters, sort_options
+        return sorted_resources, counters, sort_options
     
     def build_data(self, consultation, groupId):
         utilities = Utilities()
@@ -295,6 +292,13 @@ class Utilities:
             message = f"{difference} {day_word} until due"
 
         return message
+
+    def sort_resources(self, resources, sort_by, sort_order):
+        resources.sort(key=lambda x: (
+            x[sort_by] is not None, datetime.strptime(x[sort_by], '%d-%m-%Y') 
+            if x[sort_by] else None
+        ), reverse=(sort_order == 'desc'))
+        return resources
 
 
         
