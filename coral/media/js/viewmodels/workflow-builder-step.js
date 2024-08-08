@@ -24,6 +24,8 @@ define([
     this.informationBoxHeading = ko.observable(params?.informationBox?.heading || '');
     this.informationBoxText = ko.observable(params?.informationBox?.text || '');
 
+    this.hiddenWorkflowButtons = ko.observable(params?.hiddenWorkflowButtons || []);
+
     this.addCard = (cardData) => {
       const card = new WorkflowBuilderCard({
         componentData: cardData,
@@ -94,6 +96,7 @@ define([
         workflowstepclass: 'workflow-form-component',
         required: this.required(),
         informationboxdata: this.informationBoxData(),
+        hiddenWorkflowButtons: this.hiddenWorkflowButtons(),
         layoutSections: [
           {
             componentConfigs: this.cards().map((card) => card.getComponentData())
