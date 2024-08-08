@@ -26,14 +26,18 @@ define([
   var DatePickerWidget = function (params) {
     var self = this;
     params.configKeys = ['minDate', 'maxDate', 'viewMode', 'dateFormat', 'defaultValue'];
-    if (params.config && typeof params.config === 'function' && params.config().maxDate === "today") {
+    if (
+      params.config &&
+      typeof params.config === 'function' &&
+      params.config().maxDate === 'today'
+    ) {
       const date = new Date();
       let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
       let currentDate = `${year}-${month}-${day}`;
-      params.config.maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
-      params.config().maxDate = moment(`${currentDate} 23:59:59`,"YYYY-MM-DD HH:mm:ss")
+      params.config.maxDate = moment(`${currentDate} 23:59:59`, 'YYYY-MM-DD HH:mm:ss');
+      params.config().maxDate = moment(`${currentDate} 23:59:59`, 'YYYY-MM-DD HH:mm:ss');
     }
     WidgetViewModel.apply(this, [params]);
 
@@ -43,7 +47,7 @@ define([
     if (!ko.unwrap(this.dateFormat)) {
       this.dateFormat = ko.observable(self.node.datatypeLookup.date.config);
     }
- 
+
     /**
      * Date format overriding logic
      */
@@ -106,28 +110,35 @@ define([
       if (this.value() === 'Date of Data Entry') {
         const today = new Date();
         this.value(today.toLocaleDateString('en-CA')); //"en-CA" formats the date in the desired format YYYY-MM-DD
+        const parsedDate = moment(this.value(), 'YYYY-MM-DD');
+        const formattedDate = parsedDate.format('DD-MM-YYYY');
+        this.dateValue(formattedDate);
+        const tileData = JSON.parse(self.tile._tileData());
+        tileData[this.node.id] = today.toLocaleDateString('en-CA');
+        self.tile._tileData(koMapping.toJSON(tileData));
       }
     }
-    
-    /**
-     * Date format overriding logic
-     */
+
     if (this.value()) {
       const parsedDate = moment(this.value(), 'YYYY-MM-DD');
       const formattedDate = parsedDate.format('DD-MM-YYYY');
       this.dateValue(formattedDate);
     }
-    this.value.subscribe((value) => {
-      const parsedDate = moment(this.value(), 'YYYY-MM-DD');
-      const formattedDate = parsedDate.format('DD-MM-YYYY');
-      this.dateValue(formattedDate);
-    })
+
+    /**
+     * Date format overriding logic
+     */
     this.dateValue.subscribe((value) => {
-      console.log("date Value updating", value)
       const parsedDate = moment(value, 'DD-MM-YYYY');
       const formattedDate = parsedDate.format('YYYY-MM-DD');
       this.value(formattedDate);
     }, this);
+
+    this.value?.subscribe((value) => {
+      const parsedDate = moment(value, 'YYYY-MM-DD');
+      const formattedDate = parsedDate.format('DD-MM-YYYY');
+      this.dateValue(formattedDate);
+    });
 
     this.disposables.push(this.getdefault);
   };
