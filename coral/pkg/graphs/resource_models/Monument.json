@@ -2991,7 +2991,7 @@
                     "node_id": "ce44532a-1f3c-11ef-ac74-0242ac150006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "0ba33641-3c04-4b34-a76f-a89722077790",
@@ -37480,9 +37480,9 @@
                 {
                     "alias": "historical_period_type",
                     "config": {
-                        "rdmCollection": "ce5a1ebb-f1ce-42ed-9c43-14cb8637241f"
+                        "rdmCollection": "5c94b56d-75ca-498f-9cf1-114eaff34bf6"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
