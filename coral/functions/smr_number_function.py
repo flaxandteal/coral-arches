@@ -33,6 +33,14 @@ class SmrNumberFunction(BaseFunction):
             references_tile = Tile.get_blank_tile_from_nodegroup_id(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID, resourceid=ri_id
             )
+        
+        if isinstance(id, str):
+            id = {
+                "en":{
+                    "direction": "ltr",
+                    "value": id
+                }
+            }
 
         references_tile.data[SMR_NUMBER_NODE_ID] = id
         references_tile.save()
@@ -48,7 +56,7 @@ class SmrNumberFunction(BaseFunction):
             valueid=tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID, None)
         ).first()
 
-        sn = SmrNumber(map_sheet_id=map_sheet_id)
+        sn = SmrNumber(map_sheet_id=map_sheet_id.value)
 
         if sn.validate_id(id_number):
             print("SMR Number is valid: ", id_number)
