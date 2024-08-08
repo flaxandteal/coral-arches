@@ -1,0 +1,20 @@
+{
+    "pluginid": "2d6c73fc-bde5-4f3a-9161-83b9671f85ec",
+    "name": "Open State Care Condition Survey Workflow",
+    "icon": "fa fa-edit",
+    "component": "views/components/plugins/open-state-care-condition-survey-workflow",
+    "componentname": "open-state-care-condition-survey-workflow",
+    "config": {
+      "show": false,
+      "openableWorkflows": [
+        {
+          "slug": "state-care-condition-survey-workflow",
+          "name": "State Care Condition Survey",
+          "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"],
+          "hideRecents": true
+        }
+      ]
+    },
+    "slug": "open-state-care-condition-survey-workflow",
+    "sortorder": 0
+  }
