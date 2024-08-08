@@ -23,6 +23,7 @@ details = {
 
 class IHRValidationFunction(BaseFunction):
     def save(self, tile, request, context):
+        resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         input_ihr_tile = tile.data.get(IHR_NUMBER_NODE_ID, None)
 
         if not input_ihr_tile:
@@ -42,7 +43,7 @@ class IHRValidationFunction(BaseFunction):
         existing_tile = Tile.objects.filter(
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
             **ihr_string_query,
-        ).first()
+        ).exclude(resourceinstance_id=resource_instance_id).first()
 
         if existing_tile:
             raise ValueError("This IHR number has already been saved, please check your input")       
