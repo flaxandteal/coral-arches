@@ -626,7 +626,7 @@ define([
             buildingNumberId: 'a541b925-f121-11eb-9264-a87eeabdefba',
             streetNameId: 'a541b927-f121-11eb-8377-a87eeabdefba',
             localityId: 'a541b930-f121-11eb-a30c-a87eeabdefba',
-            countyId: 'a541e034-f121-11eb-8803-a87eeabdefba'
+            countyId: 'a541e034-f121-11eb-8803-0242ac120003'
           });
         }
 
