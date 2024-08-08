@@ -8,6 +8,7 @@ from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from django.db import transaction
+from coral.utils.casbin import SetApplicator
 
 logging.basicConfig()
 
@@ -16,6 +17,10 @@ logging.basicConfig()
 def recalculate_permissions_table():
     framework = CasbinPermissionFramework()
     enforcer = framework._enforcer
+
+    set_applicator = SetApplicator(print_statistics=False, wait_for_completion=True)
+    set_applicator.apply_sets()
+
     framework.recalculate_table()
     enforcer.model.print_policy()
 
