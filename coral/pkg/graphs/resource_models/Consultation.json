@@ -1974,6 +1974,28 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "083e195c-ca61-11ee-afca-0242ac180006",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Townland",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "d033683a-aea5-4ff1-9d15-95911513ef66",
+                    "label": {
+                        "en": "Townland"
+                    },
+                    "node_id": "083fafe2-345c-11ef-a5b7-0242ac120003",
+                    "sortorder": 34,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "caf5bff3-a3d7-11e9-b521-00224800b26d",
                     "config": {
                         "defaultValue": {
@@ -4523,31 +4545,24 @@
                 {
                     "card_id": "083e195c-ca61-11ee-afca-0242ac180006",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
+                        "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "County ",
-                        "maxLength": null,
+                        "label": "County",
+                        "options": [],
                         "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%"
+                            "en": "Select an option"
+                        }
                     },
                     "id": "084032aa-ca61-11ee-afca-0242ac180006",
                     "label": {
                         "en": "County "
                     },
-                    "node_id": "083fafe2-ca61-11ee-afca-0242ac180006",
+                    "node_id": "083fafe2-ca61-11ee-afca-0242ac180009",
                     "sortorder": 24,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "083e195c-ca61-11ee-afca-0242ac180006",
@@ -12265,6 +12280,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "083e14f2-ca61-11ee-afca-0242ac180006",
+                    "edgeid": "d033683a-bb5a-45bc-bcc3-f56a0052f5cb",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "083fafe2-345c-11ef-a5b7-0242ac120003"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "93199292-fb24-11ee-838d-0242ac190006",
                     "edgeid": "f0050529-2876-4007-b31c-b788f21bf1c4",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -13160,8 +13184,8 @@
                     "edgeid": "084ff7da-ca61-11ee-afca-0242ac180006",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
                     "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "083fafe2-ca61-11ee-afca-0242ac180006"
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "083fafe2-ca61-11ee-afca-0242ac180009"
                 },
                 {
                     "description": null,
@@ -17658,6 +17682,33 @@
             ],
             "nodes": [
                 {
+                    "alias": "townland",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [],
+                        "rdmCollection": "c333cc6e-9abe-9782-bfe5-085f1389c2c7"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "Townland",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Townland",
+                    "nodegroup_id": "083e14f2-ca61-11ee-afca-0242ac180006",
+                    "nodeid": "083fafe2-345c-11ef-a5b7-0242ac120003",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "send_papers",
                     "config": {
                         "falseLabel": {
@@ -21864,8 +21915,10 @@
                 },
                 {
                     "alias": "county_value",
-                    "config": {},
-                    "datatype": "string",
+                    "config": {
+                        "rdmCollection": "763ba635-3800-324a-8d54-c1427bcaa5aa"
+                    },
+                    "datatype": "concept",
                     "description": null,
                     "exportable": true,
                     "fieldname": "County",
@@ -21877,9 +21930,9 @@
                     "istopnode": false,
                     "name": "County Value",
                     "nodegroup_id": "083e14f2-ca61-11ee-afca-0242ac180006",
-                    "nodeid": "083fafe2-ca61-11ee-afca-0242ac180006",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "nodeid": "083fafe2-ca61-11ee-afca-0242ac180009",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E44_Place_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": "9c503f1e-06d9-11ed-ad22-acde48001122"
                 },
