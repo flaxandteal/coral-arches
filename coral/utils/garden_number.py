@@ -70,7 +70,7 @@ class GardenNumber:
         )
 
         logger.info("Previous ID number: %s", latest_id_number)
-        id_number_parts = latest_id_number.split(":")
+        id_number_parts = latest_id_number.split("-")
         return {"index": int(id_number_parts[1])}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
