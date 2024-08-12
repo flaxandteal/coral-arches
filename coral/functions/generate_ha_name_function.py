@@ -214,6 +214,9 @@ class GenerateHertiageAssetNameFunction(BaseFunction):
             display_name.append(hb_number)
         if show_hpg_number:
             display_name.append(hpg_number)
+            self.update_display_name_tile(
+                    ha_display_name_tile, f"{hpg_number} {ha_name}"
+                )
         display_name.append(ha_name)
 
         self.update_display_name_tile(ha_display_name_tile, " ".join(display_name))
