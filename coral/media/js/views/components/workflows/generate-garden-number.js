@@ -74,12 +74,12 @@ define([
             }
           });
         } else {
-          this.tile.data[this.GENERATED_GARDEN_NODE_ID] = {
+          this.tile.data[this.GENERATED_GARDEN_NODE_ID] = ko.observable({
             en: {
               direction: "ltr",
               value: response.gardenNumber
             }
-          };
+          });
         }
         params.pageVm.loading(false);
       };
