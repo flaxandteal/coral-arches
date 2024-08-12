@@ -3,6 +3,7 @@ define([
   'views/components/workflows/final-step',
   'geojson-extent',
   'arches',
+  'moment',
   'views/components/map',
   'views/components/cards/select-feature-layers',
   'viewmodels/alert',
@@ -12,6 +13,7 @@ define([
   FinalStep,
   geojsonExtent,
   arches,
+  moment,
   MapComponentViewModel,
   selectFeatureLayersFactory,
   AlertViewModel
@@ -198,6 +200,12 @@ define([
           }
         }
         tile.display_values.forEach((display) => {
+          const dateRegex = /\d{4}-\d{2}-\d{2}/;
+          if (dateRegex.test(display.value)) {
+            const parsedDate = moment(display.value, 'YYYY-MM-DD');
+            const formattedDate = parsedDate.format('DD-MM-YYYY');
+            display.value = formattedDate;
+          }
           if (!cardinality) {
             formatted[tile.nodegroup]['data'][display.nodeid] = {
               nodeId: display.nodeid,
