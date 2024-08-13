@@ -12,6 +12,7 @@
         "name": "archive-reference-step",
         "title": "Archive Reference",
         "required": true,
+        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [
