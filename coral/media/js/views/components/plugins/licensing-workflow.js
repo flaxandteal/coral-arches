@@ -196,7 +196,7 @@ define([
                       'a541e02f-f121-11eb-8d6a-a87eeabdefba', // street_type,
                       'a541e030-f121-11eb-aaf7-a87eeabdefba', // postcode_type,
                       'a541e033-f121-11eb-9f81-a87eeabdefba', // full_address_metatype,
-                      //'a541e034-f121-11eb-8803-a87eeabdefba', // county_value,
+                      //'a541e034-f121-11eb-8803-0242ac120003', // county_value,
                       'a541e035-f121-11eb-a3d9-a87eeabdefba' // street_metatype
                     ]
                   }
@@ -414,15 +414,15 @@ define([
           workflowstepclass: "workflow-form-component"
         },
         {
-          title: 'Ammendments',
-          name: 'ammendments-step',
+          title: 'Amendments',
+          name: 'amendments-step',
           workflowstepclass: 'workflow-form-component',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card-util',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'transfer-of-license',
                   tilesManaged: 'many',
                   parameters: {

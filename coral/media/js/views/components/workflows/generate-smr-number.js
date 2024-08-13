@@ -16,10 +16,6 @@ define([
     this.NISMR_NUMBERING_TYPE_NODE_ID = '86c19e92-3ea7-11ef-818b-0242ac140006';
     this.GENERATED_SMR_NODE_ID = 'b46b5bba-3ec2-11ef-bb61-0242ac140006';
 
-    this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID].subscribe((value) => {
-      console.log('nismr number: ', value);
-    }, this);
-
     this.hasSelectedNismr = ko.computed(() => {
       return !!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
     }, this);
@@ -44,12 +40,14 @@ define([
       if (ko.isObservable(this.tile.data[this.GENERATED_SMR_NODE_ID])) {
         this.tile.data[this.GENERATED_SMR_NODE_ID]({
           en: {
+            direction: 'ltr',
             value: response.smrNumber
           }
         });
       } else {
         this.tile.data[this.GENERATED_SMR_NODE_ID] = {
           en: {
+            direction: 'ltr',
             value: response.smrNumber
           }
         };

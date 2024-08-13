@@ -1,25 +1,33 @@
 from arches.app.models.tile import Tile
 from django.db.models import Max
+import re
 
 
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
-SMR_NUMBER_NODE_ID = "158e1ed2-3aae-11ef-a2d0-0242ac120003"
+HB_NUMBER_NODE_ID = "250002fe-3aae-11ef-91fd-0242ac120003"
 
 
-class SmrNumber:
-    map_sheet_id = ""
+class HbNumber:
+    ward_distict_text = ""
 
-    def __init__(self, map_sheet_id):
-        self.map_sheet_id = map_sheet_id
+    def __init__(self, ward_distict_text):
+        self.ward_distict_text = ward_distict_text
 
     def id_number_format(self, index):
-        return f"{self.map_sheet_id}:{str(index).zfill(3)}"
+        pattern = r"\(\d+/\d+\)"
+        match = re.search(pattern, self.ward_distict_text)
+        if not match:
+            raise Exception(
+                f"Provided {self.ward_distict_text} does not contain district or ward ID."
+            )
+        district_number, ward_number = match.group(0)[1:-1].split("/")
+        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
 
     def get_latest_id_number(self, resource_instance_id=None):
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{SMR_NUMBER_NODE_ID}__icontains": self.map_sheet_id,
+                f"data__{HB_NUMBER_NODE_ID}__icontains": f"HB/",
             }
             query_result = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -40,12 +48,12 @@ class SmrNumber:
             return
 
         latest_id_number = (
-            latest_id_number_tile.data.get(SMR_NUMBER_NODE_ID).get("en").get("value")
+            latest_id_number_tile.data.get(HB_NUMBER_NODE_ID).get("en").get("value")
         )
 
         print(f"Previous ID number: {latest_id_number}")
-        id_number_parts = latest_id_number.split(":")
-        return {"index": int(id_number_parts[1])}
+        id_number_parts = latest_id_number.split("/")
+        return {"index": int(id_number_parts[3])}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
         if attempts >= 5:
@@ -62,7 +70,7 @@ class SmrNumber:
             id_number_tile = None
             try:
                 generated_id_query = {
-                    f"data__{SMR_NUMBER_NODE_ID}__icontains": self.map_sheet_id,
+                    f"data__{HB_NUMBER_NODE_ID}__icontains": self.ward_distict_text,
                 }
                 id_number_tile = Tile.objects.filter(
                     resourceinstance_id=resource_instance_id,
@@ -105,15 +113,15 @@ class SmrNumber:
                 id_number_tile = Tile.objects.filter(
                     nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
                     data__contains={
-                        SMR_NUMBER_NODE_ID: id_number
+                        HB_NUMBER_NODE_ID: id_number
                     },
                 ).first()
+            # Runs a query searching for an identical ID value
             else:
-                # Runs a query searching for an identical ID value
                 id_number_tile = Tile.objects.filter(
-                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
                     data__contains={
-                        SMR_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+                        HB_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
                     },
                 ).first()
             if id_number_tile:

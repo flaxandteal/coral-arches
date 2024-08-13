@@ -9,11 +9,24 @@ define([
   ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
     function viewModel(params) {
 
-    DATES_NODEGROUP_ID = "05f6b846-5d49-11ee-911e-0242ac130003"
-    ACTUAL_START_DATE_NODE = "97f6c776-5d4a-11ee-9b75-0242ac130003"
+    LICENSE_TIMESPAN_NODEGROUP_ID = "1887f678-c42d-11ee-bc4b-0242ac180006"
+    ISSUE_DATE_NODE = "1887faf6-c42d-11ee-bc4b-0242ac180006"
     VALID_UNTIL_NODE = "1887fc86-c42d-11ee-bc4b-0242ac180006"
+    
+    LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+    LICENSE_NUMBER_VALUE_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
 
     CardComponentViewModel.apply(this, [params]);
+
+      this.hasLicenseNumber = ko.observable(false)
+
+      if (this.tile.data[ISSUE_DATE_NODE] && ko.isObservable(this.tile.data[ISSUE_DATE_NODE])) {
+        this.tile.data[ISSUE_DATE_NODE].subscribe(issueDate => {
+          if (this.hasLicenseNumber()) return
+          const validUntilDate = this.addSixMonths(issueDate)
+          this.tile.data[VALID_UNTIL_NODE](validUntilDate)
+        })
+      }
 
       this.fetchTileData = async (resourceId, nodeId) => {
         const tilesResponse = await window.fetch(
@@ -25,39 +38,30 @@ define([
         return data.tiles;
       };
       
-      this.fetchDatesTile = async () => {
-        const tiles = await this.fetchTileData(this.tile.resourceinstance_id, DATES_NODEGROUP_ID);
+      this.fetchLicenseNumberTile = async () => {
+        const tiles = await this.fetchTileData(this.tile.resourceinstance_id, LICENSE_NUMBER_NODEGROUP);
 
         if (tiles.length === 1){
           return tiles[0];
         }
       };
       
-      this.getActualStartDate = async () => {
-        const validUntilTile = await this.fetchDatesTile()
+      this.checkForLicenseNumberValue = async () => {
+        const licenseNumberTile = await this.fetchLicenseNumberTile()
 
-        if (!validUntilTile) {
-          return
+        if (!licenseNumberTile) {
+          return false
         }
-        const validUntil = validUntilTile.data[ACTUAL_START_DATE_NODE];
-        return validUntil;
+        if (licenseNumberTile.data[LICENSE_NUMBER_VALUE_NODE]) {
+          return true;
+        }
+        return false
       }
 
-      this.updateValidUntilDate = async () => {
-        if(this.tile.data[VALID_UNTIL_NODE]()){
-          return
-        }
-        const validUntil = await this.getActualStartDate();
-        if (!validUntil) {
-          return
-        }
-        const futureDate = this.addSixMonths(validUntil);
-        if (ko.isObservable(this.tile.data[VALID_UNTIL_NODE])) {
-          this.tile.data[VALID_UNTIL_NODE](futureDate);
-        } else {
-          this.tile.data[VALID_UNTIL_NODE] = futureDate;
-        }
-      }
+      this.checkForLicenseNumberValue().then(result => {
+        this.hasLicenseNumber(result)
+        console.log(result)
+      })
 
       this.addSixMonths = (dateString) => {
         const date = new Date(dateString);
@@ -69,8 +73,6 @@ define([
         const day = date.getDate().toString().padStart(2, '0');
         return `${year}-${month}-${day}`;
       }
-
-      this.updateValidUntilDate()
     }
   
     ko.components.register('fetch-updated-dates', {

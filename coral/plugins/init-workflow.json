@@ -225,6 +225,15 @@
         "bgColor": "#86679c",
         "slug": "open-workflow?workflow-slug=curatorial-workflow",
         "circleColor": "#aa86c4"
+      },
+      {
+        "workflowid": "866b03d4-bd1d-43bb-bb45-54cff150db3f",
+        "desc": "Start a State Care Condition Survey",
+        "icon": "fa fa-file",
+        "name": "State Care Condition Survey",
+        "bgColor": "#86679c",
+        "slug": "open-state-care-condition-survey-workflow?workflow-slug=state-care-condition-survey-workflow",
+        "circleColor": "#aa86c4"
       }
     ],
     "show": true

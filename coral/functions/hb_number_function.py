@@ -3,26 +3,27 @@ from coral.utils.ha_number import HaNumber
 from arches.app.models.tile import Tile
 from arches.app.models import models
 from coral.utils.smr_number import SmrNumber
+from coral.utils.hb_number import HbNumber
 
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
-SMR_NUMBER_NODE_ID = "158e1ed2-3aae-11ef-a2d0-0242ac120003"
+HB_NUMBER_NODE_ID = "250002fe-3aae-11ef-91fd-0242ac120003"
 
-NISMR_NUMBERING_NODEGROUP_ID = "86c19e92-3ea7-11ef-818b-0242ac140006"
-NISMR_NUMBERING_TYPE_NODE_ID = "86c19e92-3ea7-11ef-818b-0242ac140006"
-GENERATED_SMR_NODE_ID = "b46b5bba-3ec2-11ef-bb61-0242ac140006"
+WARDS_AND_DISTRICTS_NODEGROUP_ID = "de6b6af0-44e3-11ef-9114-0242ac120006"
+WARDS_AND_DISTRICTS_TYPE_NODE_ID = WARDS_AND_DISTRICTS_NODEGROUP_ID
+GENERATED_HB_NODE_ID = "19bd9ac4-44e4-11ef-9114-0242ac120006"
 
 details = {
-    "functionid": "b80802e5-c176-4334-8d76-6a033579fd02",
-    "name": "SMR Number",
+    "functionid": "23d758a1-cc04-414d-bb4d-49f2d5c82930",
+    "name": "HB Number",
     "type": "node",
-    "description": "Will validate the generated SMR number. Upon failing it will attempt to generate a replacement.",
-    "defaultconfig": {"triggering_nodegroups": [NISMR_NUMBERING_NODEGROUP_ID]},
-    "classname": "SmrNumberFunction",
+    "description": "Will validate the generated HB number. Upon failing it will attempt to generate a replacement.",
+    "defaultconfig": {"triggering_nodegroups": [WARDS_AND_DISTRICTS_NODEGROUP_ID]},
+    "classname": "HbNumberFunction",
     "component": "",
 }
 
 
-class SmrNumberFunction(BaseFunction):
+class HbNumberFunction(BaseFunction):
     def update_ha_references(self, ri_id, id):
         references_tile = Tile.objects.filter(
             resourceinstance_id=ri_id,
@@ -33,7 +34,6 @@ class SmrNumberFunction(BaseFunction):
             references_tile = Tile.get_blank_tile_from_nodegroup_id(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID, resourceid=ri_id
             )
-        
         if isinstance(id, str):
             id = {
                 "en":{
@@ -41,29 +41,30 @@ class SmrNumberFunction(BaseFunction):
                     "value": id
                 }
             }
-
-        references_tile.data[SMR_NUMBER_NODE_ID] = id
+        references_tile.data[HB_NUMBER_NODE_ID] = id
         references_tile.save()
 
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
-        id_number = tile.data.get(GENERATED_SMR_NODE_ID, None)
+        id_number = tile.data.get(GENERATED_HB_NODE_ID, None)
 
         if not id_number:
             return
 
-        map_sheet_id = models.Value.objects.filter(
-            valueid=tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID, None)
+        ward_district_text = models.Value.objects.filter(
+            valueid=tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
         ).first()
 
-        sn = SmrNumber(map_sheet_id=map_sheet_id.value)
+        hn = HbNumber(ward_distict_text=ward_district_text.value)
 
-        if sn.validate_id(id_number):
-            print("SMR Number is valid: ", id_number)
+        if hn.validate_id(id_number):
+            print("HB Number is valid: ", id_number)
             self.update_ha_references(resource_instance_id, id_number)
             return
 
-        id_number = sn.generate_id_number(resource_instance_id)
+        id_number = hn.generate_id_number(resource_instance_id)
+        if not id_number:
+            return
         self.update_ha_references(resource_instance_id, id_number)
 
         return
