@@ -15,9 +15,19 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
         cy.wait(2000);
         cy.get('[aria-label="Case Reference"]').should('be.visible').type('Case Ref');
+        cy.type_ckeditor('editor2', 'test reason for enforcement');
         cy.contains('Flagged by').siblings('.row').click();
         // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a test person and we can find them by name
+        // TODO test with organisation as well
         cy.get('.select2-results__options li').first().click();
         cy.get('[aria-label="Flagged Date"]').should('be.visible').click();
+        cy.get('[aria-label="Flagged Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
+        cy.contains('Select resources').siblings('.row').click();
+        // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a Heritage Asset and uses that by name
+        cy.get('.select2-results__options li').first().click();
+        cy.contains('Save and Continue').click();
+        cy.wait(2000);
+        // TODO check that information that was entered corresponds
+        cy.contains('Save and Complete Workflow').click();
     })
 })
