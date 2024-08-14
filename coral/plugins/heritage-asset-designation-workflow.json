@@ -281,12 +281,20 @@
         "required": false,
         "saveWithoutProgressing": true,
         "informationboxdata": {
-          "heading": "Something about something",
-          "text": "The something"
+          "heading": "WARNING: Process Description",
+          "text": "To revise a Heritage Asset a copy is created. This copy needs to be reconciled back into the original Heritage Asset to apply the updates. Once the \"Apply Revision\" process has started it cannot be undone until it is complete. Clicking the button will exit the workflow and delete the Revision Heritage Asset."
         },
         "layoutSections": [
           {
             "componentConfigs": [
+              {
+                "parameters": {
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "approval-summary",
+                "uniqueInstanceName": "93354680-c0b9-43a5-8f74-8b5a1c00c06d"
+              },
               {
                 "tilesManaged": "none",
                 "componentName": "start-remap-and-merge",
