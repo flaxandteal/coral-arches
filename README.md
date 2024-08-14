@@ -82,8 +82,8 @@ Docker-compose standalone: v2.24.2 <br />
 Python3 venv  
 
 The installation guide for the dockers are here:
-* [Docker Engine](https://docs.docker.com/compose/install/linux/)
-* [Docker Compose](https://docs.docker.com/compose/install/standalone/)
+* [Docker Engine](https://docs.docker.com/engine/install/ubuntu/)
+* [Docker Compose](https://docs.docker.com/compose/install/linux/)
 
 Both docker and docker-compose must be able to be run without sudo. It is possible to check it by running this commands seperately
 ```
@@ -96,6 +96,8 @@ In case docker compose requires sudo, run this command (a restart is required af
 ```
 sudo chmod a+x /usr/local/bin/docker-compose
 ```
+In case dockers still requires sudo following this guide
+* [Post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/)
 
 If there is no python virtual environment installed in your machine, use this command to install python venv
 ```
