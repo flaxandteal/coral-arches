@@ -45,7 +45,7 @@ class GardenNumber:
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{GARDEN_NUMBER_NODE_ID}__icontains": self.county_abbreviation,
+                f"data__{GARDEN_NUMBER_NODE_ID}__icontains": self.county_abbreviation + '-',
             }
             query_result = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -100,8 +100,13 @@ class GardenNumber:
                 return retry()
 
             if id_number_tile:
-                logger.info("A ID number has already been created for this resource")
-                return
+                tile_garden_id = id_number_tile.data.get(GARDEN_NUMBER_NODE_ID).get("en").get("value")
+                if tile_garden_id:
+                    abbreviation = tile_garden_id.split("-")[0]
+
+                if abbreviation == self.county_abbreviation:
+                    logger.info("A ID number has already been created for this resource")
+                    return
 
         latest_id_number = None
         try:
@@ -111,7 +116,7 @@ class GardenNumber:
             return retry()
 
         if latest_id_number:
-            next_number = latest_id_number["index"] + attempts + 1
+            next_number = latest_id_number["index"] + attempts
             id_number = self.id_number_format(next_number)
         else:
             # If there is no latest resource to work from we know
