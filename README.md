@@ -96,7 +96,7 @@ In case docker compose requires sudo, run this command (a restart is required af
 ```
 sudo chmod a+x /usr/local/bin/docker-compose
 ```
-In case dockers still requires sudo following this guide
+In case docker still requires sudo following this guide
 * [Post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/)
 
 If there is no python virtual environment installed in your machine, use this command to install python venv
