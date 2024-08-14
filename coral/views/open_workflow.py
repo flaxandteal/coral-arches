@@ -54,8 +54,9 @@ class OpenWorkflow(View):
             for layout_section in step["layoutSections"]:
                 for component_config in layout_section["componentConfigs"]:
                     unique_instance_name = component_config.get("uniqueInstanceName")
-                    if unique_instance_name:
-                        required_parent_tiles = component_config["parameters"].get(
+                    parameters = component_config.get("parameters")
+                    if unique_instance_name and parameters:
+                        required_parent_tiles = parameters.get(
                             "requiredParentTiles", []
                         )
                         data_lookup_id = str(uuid.uuid4())
@@ -65,15 +66,13 @@ class OpenWorkflow(View):
                         step_mapping.append(
                             {
                                 "unique_instance_name": unique_instance_name,
-                                "nodegroup_id": component_config["parameters"].get(
+                                "nodegroup_id": parameters.get(
                                     "nodegroupid"
                                 ),
                                 "tiles_managed": component_config["tilesManaged"],
                                 "data_lookup_id": data_lookup_id,
                                 "required_parent_tiles": required_parent_tiles,
-                                "related_document_upload_id": component_config[
-                                    "parameters"
-                                ].get(
+                                "related_document_upload_id": parameters.get(
                                     "resourceModelDigitalObjectNodeGroupId", None
                                 ),  # Special case for the related-document-upload component
                             }
