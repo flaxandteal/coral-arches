@@ -9,6 +9,8 @@ define([
   'templates/views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge.htm'
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
+    this.resourceId = ko.observable(params.resourceid);
+
     this.configKeys = ko.observable({ placeholder: 0 });
 
     this.checkboxOptions = ko.observable([
@@ -26,7 +28,7 @@ define([
 
     this.applyRevision = async () => {
       const data = {
-        targetResourceId: this.tile.resourceinstance_id
+        targetResourceId: this.resourceId()
       };
       params.pageVm.alert(
         new AlertViewModel(
