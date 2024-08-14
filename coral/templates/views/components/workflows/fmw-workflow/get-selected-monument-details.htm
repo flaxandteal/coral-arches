@@ -1,6 +1,5 @@
 {% load i18n %}
 <!-- ko foreach: { data: [$data], as: 'self' } -->
-
 <!-- ko if: state === 'editor-tree' && self.card.model.visible() -->
 {% block editor_tree %}
 <li role="treeitem card-treeitem" class="jstree-node" data-bind="css: {'jstree-open': (card.tiles().length > 0 && card.expanded()), 'jstree-closed' : (card.tiles().length > 0 && !card.expanded()), 'jstree-leaf': card.tiles().length === 0, 'hide-background': !self.showGrid()}, scrollTo: card.scrollTo, container: '.resource-editor-tree'">
@@ -322,6 +321,8 @@
                             tile: self.tile,
                             form: self.form,
                             config: widget.configJSON,
+                            allowInstanceCreation: false,
+                            searchString: "/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=16472&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22158e1ed2-3aae-11ef-a2d0-0242ac120003%22%3A%7B%22op%22%3A%22not_null%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%221de9abf0-3aae-11ef-91fd-0242ac120003%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22250002fe-3aae-11ef-91fd-0242ac120003%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%222c2d02fc-3aae-11ef-91fd-0242ac120003%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%7D%5D",
                             label: widget.label(),
                             inResourceEditor: self.inResourceEditor,
                             value: self.tile.data[widget.node_id()],
@@ -356,6 +357,10 @@
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">Townland</span>
                         <span data-bind="text: townlandValue" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">B File</span>
+                        <span data-bind="text: bFile" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
                     </div>
                 </div>
                 <!-- /ko -->

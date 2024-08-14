@@ -26,6 +26,9 @@ define([
     this.TOWNLAND_NODEGROUP = '87d38725-f44f-11eb-8d4b-a87eeabdefba';
     this.TOWNLAND_NODE = '87d3c3ea-f44f-11eb-b532-a87eeabdefba';
 
+    this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
+    this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
+
     this.labels = params.labels || [];
 
     this.selectedMonument = ko.observable();
@@ -34,7 +37,10 @@ define([
     this.monumentName = ko.observable();
     this.cmNumber = ko.observable();
     this.smrNumber = ko.observable();
+    this.bFile = ko.observable();
     this.townlandValue = ko.observable();
+
+    const self = this
 
     this.form
       .card()
@@ -77,6 +83,35 @@ define([
 
         if (tile.nodegroup === this.CM_REFERENCE_NODEGROUP) {
           this.cmNumber(tile.data[this.CM_REFERENCE_NODE].en.value);
+        }
+
+        if (tile.nodegroup === this.BFILE_NODEGROUP) {
+          console.log("B FILE TILE", tile)
+          let bfileIds = tile.data[this.BFILE_NODE].map(t => t.resourceId)
+          let bfiles = []
+          bfileIds.forEach(async id => {
+            console.log("searching...", id)
+            console.log(arches.urls.api_resource_report(id))
+            const response = await $.ajax({
+              type: 'GET',
+              url: arches.urls.api_resource_report(id),
+              context: self,
+              success: async function (responseJSON, status, response) {
+                self.bFile(self.bFile() ? `${self.bFile()},\n${responseJSON.report_json["Display Name"]["Display Name Value"]}`: responseJSON.report_json["Display Name"]["Display Name Value"])
+              },
+              error: function (response, status, error) {
+                if (response.statusText !== 'abort') {
+                  this.viewModel.alert(
+                    new AlertViewModel(
+                      'ep-alert-red',
+                      arches.requestFailed.title,
+                      response.responseText
+                    )
+                  );
+                }
+              }
+            });
+          })
         }
 
         if (tile.nodegroup === this.DESIGNATIONS_NODEGROUP) {
