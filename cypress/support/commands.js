@@ -26,4 +26,13 @@ Cypress.Commands.add("login", () => {
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from failing the test temporary solution but we could log here and debug the uncaught issues
     return false
-})
+});
+
+Cypress.Commands.add("type_ckeditor", (element, content) => {
+    cy.window().then(win => {
+        // uncomment this to find the actual instance name you need
+        // console.log(win.CKEDITOR.instances);
+        win.CKEDITOR.instances[element].setData(content);
+    });
+});
+  
