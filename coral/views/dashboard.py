@@ -20,6 +20,9 @@ HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
 HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
+EXCAVATION_ADMIN_GROUP = "214900b1-1359-404d-bba0-7dbd5f8486ef"
+EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
 STATUS_HB_DONE = '71765587-0286-47de-96b4-4391aa6b99ef'
@@ -115,6 +118,8 @@ class Dashboard(View):
     def select_strategy(self, groupId):
         if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
             return PlanningTaskStrategy()
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP]:
+            return ExcavationTaskStrategy()
         return
 
 class TaskStrategy:
