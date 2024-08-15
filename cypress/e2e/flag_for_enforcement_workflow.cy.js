@@ -133,7 +133,6 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Complete Workflow').click();
     });
 
-
     it('Workflow with only Flagged Date', function () {
         cy.contains('Workflows');
         cy.contains('Flag for Enforcement').click();
@@ -157,7 +156,6 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Flagged Date Value:').siblings().should('contain', '17');
         cy.contains('Save and Complete Workflow').click();
     });
-
 
     it('Workflow with only Associated Resource', function () {
         cy.contains('Workflows');
