@@ -42,7 +42,11 @@ details = {
     "type": "node",
     "description": "Automatically generates a new licence number after checking the database",
     "defaultconfig": {
-        "triggering_nodegroups": [SYSTEM_REF_NODEGROUP, STATUS_NODEGROUP, CUR_D_DECISION_NODEGROUP]
+        "triggering_nodegroups": [
+            SYSTEM_REF_NODEGROUP,
+            STATUS_NODEGROUP,
+            CUR_D_DECISION_NODEGROUP,
+        ]
     },
     "classname": "LicenceNumberFunction",
     "component": "",
@@ -77,9 +81,7 @@ def get_latest_licence_number(licence_instance_id):
         return
 
     latest_licence_number = (
-        latest_licence_number_tile.data.get(LICENCE_NUMBER_NODE)
-        .get("en")
-        .get("value")
+        latest_licence_number_tile.data.get(LICENCE_NUMBER_NODE).get("en").get("value")
     )
 
     print(f"Previous licence number: {latest_licence_number}")
@@ -107,7 +109,7 @@ def generate_licence_number(licence_instance_id, attempts=0):
         licence_number_tile = Tile.objects.filter(
             resourceinstance_id=licence_instance_id,
             nodegroup_id=LICENCE_NUMBER_NODEGROUP,
-            **licence_number_generated
+            **licence_number_generated,
         ).first()
     except Exception as e:
         print(f"Failed checking if licence number tile already exists: {e}")
@@ -166,7 +168,6 @@ class LicenceNumberFunction(BaseFunction):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
 
-        
         if tile_nodegroup_id == SYSTEM_REF_NODEGROUP:
             status_tile = None
             try:
@@ -177,23 +178,28 @@ class LicenceNumberFunction(BaseFunction):
             except Resource.DoesNotExist:
                 status_tile = None
 
-            if not status_tile:
+            if not status_tile or (
+                status_tile and not status_tile.data.get(STATUS_NODE, None)
+            ):
                 app_id = (
                     tile.data.get(SYSTEM_REF_RESOURCE_ID_NODE).get("en").get("value")
                 )
                 # Set the licence name to use the app id
-                Tile.objects.get_or_create(
+                name_tile = Tile.objects.filter(
                     resourceinstance_id=resource_instance_id,
                     nodegroup_id=LICENCE_NAME_NODEGROUP,
-                    data={
-                        LICENCE_NAME_NODE: {
-                            "en": {
-                                "direction": "ltr",
-                                "value": f"Excavation Licence {app_id}",
-                            }
-                        }
-                    },
-                )
+                ).first()
+                if not name_tile:
+                    name_tile = Tile.get_blank_tile_from_nodegroup_id(
+                        LICENCE_NAME_NODEGROUP, resourceid=resource_instance_id
+                    )
+                name_tile.data[LICENCE_NAME_NODE] = {
+                    "en": {
+                        "direction": "ltr",
+                        "value": f"Excavation Licence {app_id}",
+                    }
+                }
+                name_tile.save()
                 return
 
         if tile_nodegroup_id == STATUS_NODEGROUP:
@@ -204,11 +210,14 @@ class LicenceNumberFunction(BaseFunction):
                     resourceinstance_id=resource_instance_id,
                     nodegroup_id=CUR_D_DECISION_NODEGROUP,
                 )
-                if cur_d_tile.data.get(CUR_D_DECISION_NODE) != CUR_D_DECISION_APPROVED_VALUE:
+                if (
+                    cur_d_tile.data.get(CUR_D_DECISION_NODE)
+                    != CUR_D_DECISION_APPROVED_VALUE
+                ):
                     return
             except Tile.DoesNotExist:
                 return
-            
+
         if tile_nodegroup_id == CUR_D_DECISION_NODEGROUP:
             if tile.data.get(CUR_D_DECISION_NODE) != CUR_D_DECISION_APPROVED_VALUE:
                 return
@@ -250,26 +259,32 @@ class LicenceNumberFunction(BaseFunction):
         except Exception as e:
             print(f"Failed saving licence number external ref or licence name: {e}")
             raise e
-        
+
         try:
             site_name_tile = Tile.objects.get(
                 resourceinstance_id=resource_instance_id,
-                nodegroup_id=ASSOCIATED_ACTIVIY_NODEGROUP
+                nodegroup_id=ASSOCIATED_ACTIVIY_NODEGROUP,
             )
-
-            Tile.objects.get_or_create(
-                resourceinstance_id=site_name_tile.get_tile_data()[ASSOCIATED_ACTIVIY_NODE][0]['resourceId'],
+            activity_resource_id = site_name_tile.get_tile_data()[
+                ASSOCIATED_ACTIVIY_NODE
+            ][0]["resourceId"]
+            ass_activity_tile = Tile.objects.filter(
+                resourceinstance_id=activity_resource_id,
                 nodegroup_id=ASSOCIATED_LICENCE_NODEGROUP,
-                data={
-                    ASSOCIATED_LICENCE_NODE: [{
-                        "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
-                        "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
-                        "resourceId": resource_instance_id,
-                        "resourceXresourceId": ""
-                    }],
-                },
-            )
-
+            ).first()
+            if not ass_activity_tile:
+                ass_activity_tile = Tile.get_blank_tile_from_nodegroup_id(
+                    ASSOCIATED_LICENCE_NODEGROUP, resourceid=resource_instance_id
+                )
+            ass_activity_tile.data[ASSOCIATED_LICENCE_NODE] = [
+                {
+                    "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                    "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                    "resourceId": resource_instance_id,
+                    "resourceXresourceId": "",
+                }
+            ]
+            ass_activity_tile.save()
         except Exception as e:
             print(f"Error associating licence: {e}")
         return
