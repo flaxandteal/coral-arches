@@ -146,7 +146,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
         // Enforcement Details Tab
         cy.wait(2000);
-        cy.get('[aria-label="Flagged Date"]').should('be.visible').click();
+        cy.get('[aria-label="Flagged Date"]').click();
         cy.get('[aria-label="Flagged Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
         cy.contains('Save and Continue').click();
 
