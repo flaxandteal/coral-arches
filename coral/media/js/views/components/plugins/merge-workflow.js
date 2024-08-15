@@ -85,7 +85,7 @@ define([
           informationboxdata: {
             displayed: true,
             heading: 'Geometry Locations',
-            text: "Red represents the base resource. Blue represents the merge resource."
+            text: 'Red represents the base resource. Blue represents the merge resource.'
           },
           layoutSections: [
             {
@@ -96,7 +96,7 @@ define([
                   tilesManaged: 'none',
                   parameters: {
                     baseResourceId: "['search-step']['base-record'][0]['selectedResourceId']",
-                    mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']",
+                    mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']"
                   }
                 }
               ]
@@ -163,7 +163,7 @@ define([
           name: 'approval-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
-          saveWithoutProgressing: true,
+          hiddenWorkflowButtons: ['undo'],
           layoutSections: [
             {
               componentConfigs: [
@@ -199,7 +199,24 @@ define([
                     resourceid:
                       "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
                   }
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Submit Merge',
+          name: 'submit-merge-step',
+          required: true,
+          workflowstepclass: 'workflow-form-component',
+          hiddenWorkflowButtons: ['save', 'undo'],
+          informationboxdata: {
+            heading: 'WARNING: Process Description',
+            text: 'The merge process involves taking the values from the Merge Resource and applying them to the Base Resource. Single values from the Base Resource won\'t be overwritten by the Merge Resource (Base Resource takes precedence). This process cannot easily be undone please confirm you are happy with your decision.'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
                 {
                   componentName: 'submit-merge',
                   uniqueInstanceName: 'approval',
