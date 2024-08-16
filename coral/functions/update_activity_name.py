@@ -22,6 +22,9 @@ details = {
 
 class UpdateActivityName(BaseFunction):
     def post_save(self, tile, request, context):
+        if context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         prefixed_id = tile.data[ACTIVITY_RESOURCE_ID_NODE].get("en").get("value")
 
