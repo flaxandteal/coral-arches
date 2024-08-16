@@ -93,7 +93,7 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
         rr = RemapResources(
             target_graph_id=MONUMENT_REVISION_GRAPH_ID,
             destination_graph_id=MONUMENT_GRAPH_ID,
-            excluded_aliases=["monument", "monument_revision", "parent_monument"],
+            excluded_aliases=["monument", "monument_revision", "parent_monument", "heritage_asset_references"],
             target_resource_id=target_resource_id,
         )
         result = rr.remap_resources(user)
