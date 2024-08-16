@@ -163,6 +163,9 @@ def generate_licence_number(licence_instance_id, attempts=0):
 class LicenceNumberFunction(BaseFunction):
 
     def post_save(self, tile, request, context):
+        if context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
 
