@@ -17,7 +17,7 @@ define([
 
     this.applicationData = ko.observable({});
     this.totalOpenApplications = ko.observable();
-    this.totalLicenses = ko.observable();
+    this.totalLicences = ko.observable();
     this.currentState = ko.observable();
 
     this.limit = ko.observable(params.config().limit);
@@ -73,12 +73,12 @@ define([
         }
       }, true);
 
-    this.totalLicensesMessage = (resourceId) =>
+    this.totalLicencesMessage = (resourceId) =>
       ko.computed(() => {
         if (!this.applicationData()?.[resourceId]) return '';
         return `This licensee has had ${
-          this.applicationData()[resourceId].totalLicenses
-        } licenses approved.`;
+          this.applicationData()[resourceId].totalLicences
+        } licences approved.`;
       }, true);
 
     this.colour = (state) =>
@@ -111,7 +111,7 @@ define([
           resourceId: ko.unwrap(resource.resourceId),
           state: null,
           totalOpenApplications: null,
-          totalLicenses: null,
+          totalLicences: null,
           name: null
         };
       });
@@ -121,7 +121,7 @@ define([
         await Promise.all([
           new Promise(async (resolve) => {
             const result = await this.checkTotalApplications(data.resourceId);
-            applicationData[data.resourceId].totalLicenses = result;
+            applicationData[data.resourceId].totalLicences = result;
             resolve();
           }),
           new Promise(async (resolve) => {
@@ -142,7 +142,7 @@ define([
     };
 
     this.openApplicationsRequest = null;
-    this.totalLicensesRequest = null;
+    this.totalLicencesRequest = null;
     this.getNameRequest = null;
 
     this.checkOpenApplications = async (personResourceId) => {
@@ -274,7 +274,7 @@ define([
     this.checkTotalApplications = async (personResourceId) => {
       let result = null;
 
-      this.totalLicensesRequest = await $.ajax({
+      this.totalLicencesRequest = await $.ajax({
         type: 'GET',
         url: arches.urls.search_results,
         data: {
@@ -379,7 +379,7 @@ define([
         error: function (response, status, error) {
           console.log('checkTotalApplications PROMISES error');
 
-          if (this.totalLicensesRequest.statusText !== 'abort') {
+          if (this.totalLicencesRequest.statusText !== 'abort') {
             console.log(response, status, error);
             params.pageVm.alert(
               new AlertViewModel(
@@ -392,7 +392,7 @@ define([
         },
         complete: function (request, status) {
           console.log('checkTotalApplications PROMISES complete');
-          this.totalLicensesRequest = undefined;
+          this.totalLicencesRequest = undefined;
         }
       });
 
@@ -414,7 +414,7 @@ define([
           result = response.results.hits.hits?.[0]?.['_source']['displayname'];
         },
         error: function (response, status, error) {
-          if (this.totalLicensesRequest.statusText !== 'abort') {
+          if (this.totalLicencesRequest.statusText !== 'abort') {
             console.log(response, status, error);
             params.pageVm.alert(
               new AlertViewModel(
