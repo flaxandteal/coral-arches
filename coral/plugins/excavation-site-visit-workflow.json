@@ -23,11 +23,24 @@
                     "e7d69602-9939-11ea-b514-f875a44e0e11",
                     "e7d69604-9939-11ea-baef-f875a44e0e11"
                   ],
-                  "nodegroupid": "e7d695ff-9939-11ea-8fff-f875a44e0e11"
+                  "nodegroupid": "e7d695ff-9939-11ea-8fff-f875a44e0e11",
+                  "resourceid": "['initial-step-step']['site-name'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "system-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                  "hiddenNodes": [
+                    "ea059ab7-83d7-11ea-a3c4-f875a44e0e11"
+                  ],
+                  "nodegroupid": "ea059ab7-83d7-11ea-a3c4-f875a44e0e11"
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
-                "uniqueInstanceName": "system-reference"
+                "uniqueInstanceName": "site-name"
               }
             ]
           }
