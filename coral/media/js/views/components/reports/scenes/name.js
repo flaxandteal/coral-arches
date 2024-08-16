@@ -37,6 +37,7 @@ define([
                 xref: 'external cross references',
                 systemRef: 'system reference numbers',
                 haRef: 'heritage asset references',
+                displayName: 'display name',
                 parent: undefined,
                 recordStatus: undefined
             }
@@ -51,6 +52,7 @@ define([
             self.crossReferences = ko.observableArray();
             self.systemReferenceNumbers = ko.observable();
             self.haReferences = ko.observable();
+            self.displayName = ko.observable();
             self.parentData = ko.observable();
             self.recordStatusData = ko.observable();
             self.summary = params.summary || false;
@@ -58,7 +60,8 @@ define([
                 names: ko.observable(true),
                 crossReferences: ko.observable(true),
                 systemReferenceNumbers: ko.observable(true),
-                haReferences: ko.observable(true)
+                haReferences: ko.observable(true),
+                displayName: ko.observable(true),
             }
             Object.assign(self.dataConfig, params.dataConfig || {});
 
@@ -68,6 +71,7 @@ define([
                 self.crossReferences(params.data.crossReferences);
                 self.systemReferenceNumbers(params.data.referenceNumbers);
                 self.haReferences(params.data.haReferences);
+                self.displayName(params.data.displayName);
             } else {
                 const rawNameData = self.getRawNodeValue(params.data(), {
                     testPaths: [
@@ -175,6 +179,23 @@ define([
                 haReferences.smrNumber = self.getNodeValue(haReferencesData, 'smr number');
                 haReferences.tileid = self.getTileId(haReferencesData);
                 self.haReferences(haReferences);
+            }
+
+            const displayNameData = self.getRawNodeValue(params.data(), {
+                testPaths: [
+                    ["display name"]
+                ]
+            });
+            
+            if(displayNameData) {
+                const displayName = {};
+                displayName.name = displayNameData['@display_value'];
+                displayName.showSmr = self.getNodeValue(displayNameData, 'show smr number');
+                displayName.showIhr = self.getNodeValue(displayNameData, 'show ihr number');
+                displayName.showHb = self.getNodeValue(displayNameData, 'show hb number');
+                displayName.showHpg = self.getNodeValue(displayNameData, 'show historic parks and gardens number');
+                displayName.tileid = self.getTileId(displayNameData);
+                self.displayName(displayName);
             }
 
             if(self.dataConfig.parent){

@@ -3,6 +3,56 @@
 {% block report %}
 
 {% block body %}
+
+<!-- Display Name section -->
+<!-- ko if: displayName() -->
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.displayName)}, css: {'fa-angle-double-right': visible.displayName(), 'fa-angle-double-up': !visible.displayName()}" class="fa toggle"></i> {% trans "Display Name" %}</h2>
+    <a data-bind="{if: cards.displayName, click: function(){ addNewTile(cards.displayName) }}" class="aher-report-a">
+        <i class="fa fa-mail-reply"></i>
+        <span data-bind="if: cards.displayName.tiles().length">{% trans "Edit Identifier" %}</span>
+        <span data-bind="ifnot: cards.displayName.tiles().length">{% trans "Add Identifier" %}</span>
+    </a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.displayName" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: displayName() -->
+        <div class="aher-nodata-note">No references for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: displayName() -->
+        <div class="aher-report-subsection" data-bind="with: displayName, as: 'srn'">
+
+            <div class="firstchild-container">
+                <div class="aher-report-subsection-ite">
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">Name: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.name"></div>
+                    </div>
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">Show SMR Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.showSmr"></div>
+                    </div>
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">Show IHR Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.showIhr"></div>
+                    </div>
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">Show HB Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.showHb"></div>
+                    </div>
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">Show Historic Parks and Gardens Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.showHpg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<!-- /ko -->
+
 <!-- ko ifnot: hideNames() -->
 <div data-bind="visible: !!dataConfig.name" class="aher-report-section">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.names)}, css: {'fa-angle-double-right': visible.names(), 'fa-angle-double-up': !visible.names()}" class="fa toggle"></i> {% trans "Names" %}</h2>
