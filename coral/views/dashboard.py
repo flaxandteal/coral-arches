@@ -20,7 +20,7 @@ HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
 HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
-EXCAVATION_ADMIN_GROUP = "214900b1-1359-404d-bba0-7dbd5f8486ef"
+EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
 EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
@@ -125,7 +125,7 @@ class Dashboard(View):
 class TaskStrategy:
     def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
         raise NotImplementedError("Subclasses must implement this method")
-    def build_data(self, consultation, groupId):
+    def build_data(self, resource, groupId):
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
@@ -228,6 +228,65 @@ class PlanningTaskStrategy(TaskStrategy):
             'responseslug': responseslug
         }
         return resource_data
+    
+class ExcavationTaskStrategy(TaskStrategy):
+    def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
+        from arches_orm.models import License
+
+        #states
+        is_admin = groupId == EXCAVATION_ADMIN_GROUP
+        is_user = groupId == EXCAVATION_USER_GROUP
+
+        resources = [] 
+
+        licences_all = License.all()
+
+        licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
+
+        for licence in licences:
+            task = self.build_data(licence, groupId)
+            if task:
+                resources.append(task)
+
+        return resources, 'counters', 'sort_options'
+
+    
+    def build_data(self, licence, groupId):
+
+        activity_list = licence.associated_activities
+        utilities = Utilities()
+        display_name = licence.license_names.name,
+        issue_date = licence.decision[0].license_valid_timespan.issue_date
+        valid_until_date = licence.decision[0].license_valid_timespan.valid_until_date
+        employing_body = licence.contacts.companies.employing_body
+        nominated_directors = licence.contacts.licensees.licensee
+        report_status = licence.application_details.application_stage_type
+        licence_number = licence.license_number.license_number_value
+
+        nominated_directors_name_list = [director.name[0].full_name for director in nominated_directors]
+        
+        employing_body_name_list = [body.names[0].organization_name for body in employing_body]
+
+        site_name = next(
+            (activity.activity_names[0].activity_name for activity in activity_list if activity and activity.activity_names),
+            None
+        )
+        
+        response_slug = utilities.get_response_slug(groupId) if groupId else None
+
+        resource_data = {
+            'id': str(licence.id),
+            'displayname': display_name,
+            'sitename': site_name,
+            'issuedate': issue_date,
+            'validuntildate': valid_until_date,
+            'employingbody': employing_body_name_list,
+            'nominateddirectors': nominated_directors_name_list,
+            'reportstatus': report_status,
+            'licencenumber': licence_number,
+            'responseslug': response_slug
+        }
+        return resource_data
 
 class Utilities:
     def convert_id_to_string(self, id):
@@ -282,6 +341,8 @@ class Utilities:
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP]:
+            return "licensing-workflow"
     
     def create_deadline_message(self, date):
         message = None
