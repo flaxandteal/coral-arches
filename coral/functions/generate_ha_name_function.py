@@ -94,6 +94,9 @@ class GenerateHertiageAssetNameFunction(BaseFunction):
         tile.save()
 
     def post_save(self, tile, request, context):
+        if context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         ha_ref_tile = self.get_ha_references_tile(resource_instance_id)
