@@ -154,6 +154,51 @@
     </div>
 </div>
 
+<!-- Heritage Asset References section -->
+<!-- ko if: haReferences() -->
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.haReferences)}, css: {'fa-angle-double-right': visible.haReferences(), 'fa-angle-double-up': !visible.haReferences()}" class="fa toggle"></i> {% trans "Heritage Asset References" %}</h2>
+    <a data-bind="{if: cards.haReferences, click: function(){ addNewTile(cards.haReferences) }}" class="aher-report-a">
+        <i class="fa fa-mail-reply"></i>
+        <span data-bind="if: cards.haReferences.tiles().length">{% trans "Edit Identifier" %}</span>
+        <span data-bind="ifnot: cards.haReferences.tiles().length">{% trans "Add Identifier" %}</span>
+    </a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.haReferences" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: haReferences() -->
+        <div class="aher-nodata-note">No references for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: haReferences() -->
+        <div class="aher-report-subsection" data-bind="with: haReferences, as: 'srn'">
+
+            <div class="firstchild-container">
+                <div class="aher-report-subsection-ite">
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">SMR Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.smrNumber"></div>
+                    </div>
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">IHR Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.ihrNumber"></div>
+                    </div>
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">HB Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.hbNumber"></div>
+                    </div>
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">Historic Parks and Gardens Number: </h4>
+                        <div class="aher-block-value" data-bind="text:srn.hpgNumber"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<!-- /ko -->
+
 <div data-bind="visible: !!dataConfig.parent, component: {
     name: 'views/components/reports/scenes/default',
     params: {
