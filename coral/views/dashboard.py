@@ -1,5 +1,6 @@
 from django.views.generic import View
 from django.http import JsonResponse
+from arches.app.models import models
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
@@ -252,26 +253,29 @@ class ExcavationTaskStrategy(TaskStrategy):
 
     
     def build_data(self, licence, groupId):
+        from arches_orm.models import License
 
-        activity_list = licence.associated_activities
         utilities = Utilities()
-        display_name = licence.license_names.name,
-        issue_date = licence.decision[0].license_valid_timespan.issue_date
-        valid_until_date = licence.decision[0].license_valid_timespan.valid_until_date
-        employing_body = licence.contacts.companies.employing_body
-        nominated_directors = licence.contacts.licensees.licensee
-        report_status = licence.application_details.application_stage_type
-        licence_number = licence.license_number.license_number_value
 
-        nominated_directors_name_list = [director.name[0].full_name for director in nominated_directors]
+        activity_list = utilities.node_check(lambda: licence.associated_activities)
         
-        employing_body_name_list = [body.names[0].organization_name for body in employing_body]
+        display_name = utilities.node_check(lambda:licence.license_names.name),
+        issue_date = utilities.node_check(lambda:licence.decision[0].license_valid_timespan.issue_date)
+        valid_until_date = utilities.node_check(lambda:licence.decision[0].license_valid_timespan.valid_until_date)
+        employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
+        nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
+        report_status = utilities.node_check(lambda:licence.report[0].classification_type)
+        licence_number = utilities.node_check(lambda:licence.license_number.license_number_value)
+
+        nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
+        
+        employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
 
         site_name = next(
-            (activity.activity_names[0].activity_name for activity in activity_list if activity and activity.activity_names),
+            (utilities.node_check(lambda:activity.activity_names[0].activity_name) for activity in activity_list if activity and activity.activity_names),
             None
         )
-        
+
         response_slug = utilities.get_response_slug(groupId) if groupId else None
 
         resource_data = {
@@ -282,7 +286,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
-            'reportstatus': report_status,
+            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status),
             'licencenumber': licence_number,
             'responseslug': response_slug
         }
@@ -307,6 +311,16 @@ class Utilities:
         elif id == None:
             return 'None'
         
+    def domain_value_string_lookup(self, resource, node_alias, value_id):
+        node = models.Node.objects.filter(
+            alias = node_alias,
+            graph_id = resource.graphid
+        ).first()
+        options = node.config.get("options")
+        for option in options:
+            if option.get("id") == value_id:
+                return option.get("text").get("en")
+        
     def get_count(self, resources, counter):
         counts = defaultdict(int)
         for resource in resources:
@@ -328,7 +342,6 @@ class Utilities:
     # Method to check if a node exists
     def node_check(self, func, default=None):
         try:
-            print(func)
             return func()
         except Exception as error:
             logging.warning(f'Node does not exist: {error}')
