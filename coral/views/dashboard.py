@@ -10,7 +10,7 @@ from django.core.cache import cache
 import json
 import logging
 from itertools import chain 
-import pdb
+import html
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -220,7 +220,7 @@ class PlanningTaskStrategy(TaskStrategy):
             'id': str(consultation.id),
             'tasktype': 'Planning',
             'displayname': consultation._._name,
-            'displaydescription': consultation._._description,
+            'displaydescription': html.unescape(consultation._._description),
             'status': utilities.convert_id_to_string(action_status),
             'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
             'date': date_entered,
