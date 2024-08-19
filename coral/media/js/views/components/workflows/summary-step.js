@@ -3,6 +3,7 @@ define([
   'views/components/workflows/final-step',
   'geojson-extent',
   'arches',
+  'moment',
   'views/components/map',
   'views/components/cards/select-feature-layers',
   'viewmodels/alert',
@@ -12,6 +13,7 @@ define([
   FinalStep,
   geojsonExtent,
   arches,
+  moment,
   MapComponentViewModel,
   selectFeatureLayersFactory,
   AlertViewModel
@@ -117,8 +119,13 @@ define([
              * This is the object notation path that allows you to
              * provide values such as: label, defaultValue, related
              */
-            if (!(nodeIdObject.nodeId in t.data)) continue;
-            const node = t.data[nodeIdObject.nodeId];
+            if (!(nodeIdObject.nodeId in t.data) && !nodeIdObject?.defaultValue) continue;
+            const node = t.data[nodeIdObject.nodeId] || {
+              displayValue: null,
+              label: null,
+              nodeId: nodeIdObject.nodeId,
+              value: null
+            };
             if (nodeIdObject.label) {
               node.label = nodeIdObject.label;
             }
@@ -198,6 +205,12 @@ define([
           }
         }
         tile.display_values.forEach((display) => {
+          const dateRegex = /\d{4}-\d{2}-\d{2}/;
+          if (dateRegex.test(display.value)) {
+            const parsedDate = moment(display.value, 'YYYY-MM-DD');
+            const formattedDate = parsedDate.format('DD-MM-YYYY');
+            display.value = formattedDate;
+          }
           if (!cardinality) {
             formatted[tile.nodegroup]['data'][display.nodeid] = {
               nodeId: display.nodeid,

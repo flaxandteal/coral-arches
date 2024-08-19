@@ -1,0 +1,69 @@
+  <div class="card-component" style="width: 100%">
+    <div class="row widget-wrapper">
+      <h4 data-bind="text: workflow().name"></h4>
+    </div>
+    <div class="row widget-wrapper">
+      <div
+        data-bind="component: {
+          name: 'resource-instance-select-widget',
+          params: {
+            graphids: ['b9e0701e-5463-11e9-b5f5-000d3ab1e588'],
+            config: {
+              label: 'Select Site',
+              placeholder: 'Please select the Site',
+            },
+            searchString: '/search/resources?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=72&language=*&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22879fc326-02f6-11ef-927a-0242ac150006%22%3A%7B%22op%22%3A%22not_null%22%2C%22val%22%3A%22%22%7D%7D%5D',
+            renderContext: 'workflow',
+            value: selectedActivity
+          }
+        }"
+      ></div>
+      <div  style="max-width: 620px !important">
+      <domain-select-widget
+        params="
+          node: {
+            config: {
+              options: parentTileOptions,
+              multiple: false
+            },
+            configKeys: configKeys
+          },
+          config: {
+            placeholder: 'Select a Site Visit or start new',
+            
+            label: 'Selected Site Visit',
+          },
+          value: selectedResource,
+          loading: false,
+          pageVm: $root
+        "
+      ></domain-select-widget>
+        </div>
+    </div>
+    <div class="row widget-wrapper" style="display: flex">
+      <!-- ko if: !workflow().disableStartNew -->
+      <button
+        class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
+        style="min-height: 40.56px"
+        data-bind="click: async () => {
+          await startNew().then(async () => {
+            await openWorkflow()
+          });
+        }, disable: !selectedActivity()"
+      >
+        <span>Start New</span>
+      </button>
+      <!-- /ko -->
+       
+      <button
+        class="btn btn-shim btn-labeled btn-lg btn-primary"
+        style="min-height: 40.56px"
+        data-bind="click: async () => {
+          await openWorkflow();
+        }, disable: !selectedResource()"
+      >
+        <span>Open Selected</span>
+      </button>
+    </div>
+  </div>
+  

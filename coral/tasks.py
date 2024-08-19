@@ -114,6 +114,7 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
                 merge_resource_id=result["destinationResourceId"],
                 merge_tracker_resource_id=merge_tracker_resource_id,
                 overwrite_multiple_tiles=True,
+                exclude_nodegroups_from_overwrite_multiple_tiles=['7e0533aa-37b7-11ef-9263-0242ac150006']
             )
             mr.merge_resource.delete(user=user)
 

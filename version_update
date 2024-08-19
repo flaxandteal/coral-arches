@@ -1,0 +1,88 @@
+#!/bin/bash
+
+# Make the file executable chmod +x ./version_update
+# Usage: ./version_update <major|minor|patch>
+
+FILE=coral/settings.py
+PART=$1
+
+if [[ -z "$FILE" || -z "$PART" ]]; then
+    echo "Usage: $0 <major|minor|patch>"
+    exit 1
+fi
+
+git fetch
+git merge origin/dev
+
+if [ $? -eq 0 ]; then
+    echo "Successfully completed merge."
+else
+    echo "Merge failed. There may be conflicts."
+    exit 1
+fi
+
+# Get current version numbers
+MAJOR=$(grep -oP '(?<=major=)\d+' "$FILE")
+MINOR=$(grep -oP '(?<=minor=)\d+' "$FILE")
+PATCH=$(grep -oP '(?<=patch=)\d+' "$FILE")
+
+# Update the version based on the input
+if [[ "$PART" == "major" ]]; then
+    MAJOR=$((MAJOR + 1))
+    MINOR=0
+    PATCH=0
+elif [[ "$PART" == "minor" ]]; then
+    MINOR=$((MINOR + 1))
+elif [[ "$PART" == "patch" ]]; then
+    PATCH=$((PATCH + 1))
+else
+    echo "Invalid part: $PART. Please use 'major', 'minor', or 'patch'."
+    exit 1
+fi
+
+# Set the version in the format v0.0.0
+NEW_VERSION=v$MAJOR.$MINOR.$PATCH
+
+echo "New version code is: $NEW_VERSION"
+
+# Check the tag dosen't already exist
+if git tag | grep -q "^$NEW_VERSION$"; then
+    echo "Tag already exists. Exiting."
+    exit 1
+fi
+
+# Replace the line in the file
+sed -i -E "s/APP_VERSION = semantic_version\.Version\(major=[0-9]+, minor=[0-9]+, patch=[0-9]+\)/APP_VERSION = semantic_version.Version(major=$MAJOR, minor=$MINOR, patch=$PATCH)/" "$FILE"
+
+# Stage the settings file and commit it with the version tag
+git add coral/settings.py
+git commit -m "version: $NEW_VERSION"
+
+# Tag and confirm it was successfully tagged
+git tag $NEW_VERSION
+if [ $? -eq 0 ]; then
+    echo "Successfully tagged version."
+else
+    echo "Failed tagging version. This version might already exist."
+    exit 1
+fi
+
+# Push the new tag and confirm it was successful
+git push --tags
+if [ $? -eq 0 ]; then
+    echo "Successfully pushed new tag."
+else
+    echo "Failed pushing new tag. This version might already exist."
+    exit 1
+fi
+
+# Push the commit and confirm it was successful
+git push
+if [ $? -eq 0 ]; then
+    echo "Successfully pushed new commit."
+else
+    echo "Failed pushing new commit."
+    exit 1
+fi
+
+echo "Successfully updated to: $NEW_VERSION"

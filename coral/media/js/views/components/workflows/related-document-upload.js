@@ -160,16 +160,25 @@ define([
        *
        * This can be found in datatypes.py on line 2080.
        */
+
+      prefilledKeys = {};
+      if (params.prefilledNodes) {
+        params.prefilledNodes.forEach(([nodeId, value]) => {
+          prefilledKeys[nodeId] = value;
+        });
+      }
+
       const fileTileTemplate = {
         tileid: '',
         data: {
-          [self.resourceModelDigitalObjectNodeGroupId]: [
+          [self.resourceModelDigitalObjectNodeId]: [
             {
               resourceId: self.resourceId(),
               ontologyProperty: '',
               inverseOntologyProperty: ''
             }
-          ]
+          ],
+          ...prefilledKeys
         },
         nodegroup_id: self.resourceModelDigitalObjectNodeGroupId,
         parenttile_id: null,

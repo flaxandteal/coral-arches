@@ -190,8 +190,12 @@
                   "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "fileObjectNamePrefix": "Response files for ",
-                  "resourceModelDigitalObjectNodeGroupId": "b3addca4-8882-11ea-acc1-f875a44e0e11"
+                  "fileObjectNamePrefix": "HB Response files for ",
+                  "resourceModelDigitalObjectNodeGroupId": "31e5ece6-5989-11ef-af2d-0242ac120006",
+                  "resourceModelDigitalObjectNodeId": "5d401df8-5989-11ef-9d18-0242ac120006",
+                  "prefilledNodes": [
+                    ["983d73b0-5989-11ef-af2d-0242ac120006", "b66e5025-7695-43b3-b931-e67f1222ec43"]
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "related-document-upload",

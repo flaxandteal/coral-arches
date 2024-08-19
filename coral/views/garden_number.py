@@ -29,19 +29,32 @@ class GardenNumberView(View):
                 nodegroup_id=ADDRESS_NODEGROUP_ID,
             ).first()
 
-            if references_tile and references_tile.data.get(GARDEN_NUMBER_NODE_ID, None):
-                id = (
+            if county_tile and references_tile:
+                county_name_tile = models.Value.objects.filter(
+                    valueid= county_tile.data.get(COUNTY_NODE_ID)
+                ).first()
+                county_name = county_name_tile.value
+                county_abbreviation = GardenNumber(county_name).abbreviate_county(county_name)
+                abbreviation = (
                     references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
                     .get("en")
                     .get("value")
+                    .split("-")[0]
                 )
-                print("Historic Parks and Garden Number has already been generated: ", id)
-                return JSONResponse(
-                    {
-                        "message": "Historic Parks and Garden has already been generated",
-                        "gardenNumber": id,
-                    }
-                )
+                if county_abbreviation == abbreviation:
+                    if references_tile.data.get(GARDEN_NUMBER_NODE_ID, None):
+                        id = (
+                            references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
+                            .get("en")
+                            .get("value")
+                        )
+                        print("Historic Parks and Garden Number has already been generated: ", id)
+                        return JSONResponse(
+                            {
+                                "message": "Historic Parks and Garden has already been generated",
+                                "gardenNumber": id,
+                            }
+                        )
             
         self.county_name = ""
 
