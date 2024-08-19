@@ -9,7 +9,6 @@ define([
         self = this
         self.data = params.data
         self.state = params.data.state
-        console.log(self.data.displaydescription)
 
         this.openFlagged = (resourceId, responseSlug) => {
                 localStorage.setItem('workflow-open-mode', JSON.stringify(true));
