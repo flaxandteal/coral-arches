@@ -24,7 +24,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         // TODO test with organisation as well
         // Commented out for now as search seems to be broken on local
         // cy.get('.select2-search__field').type('Test Person');
-        cy.get('.select2-results__options li').first().click();
+        cy.contains('Test Person').click();
+        // cy.get('.select2-results__options li').first().click();
         cy.get('[aria-label="Flagged Date"]').should('be.visible').click();
         cy.get('[aria-label="Flagged Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
         cy.contains('Select resources').siblings('.row').click();
@@ -125,8 +126,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         // TODO test with organisation as well
         // Commented out for now as search seems to be broken on local
         // cy.get('.select2-search__field').type('Test Person');
-        cy.wait(5000);
-        cy.get('.select2-results__options li').first().click();
+        cy.contains('Test Person').click();
+        // cy.get('.select2-results__options li').first().click();
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
