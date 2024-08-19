@@ -412,18 +412,18 @@ class OpenWorkflow(View):
             if map_data["related_document_upload"]:
                 # If this path is followed we're using a digital object tile instead of
                 # a tile from the resource we are actually accessing
-                nodegroup_id = map_data["related_document_upload"]['nodegroup_id']
-                node_id = map_data["related_document_upload"]['node_id']
-                tiles = self.grouped_tiles.get(nodegroup_id, [])
+                related_document_upload_nodegroup_id = map_data["related_document_upload"]['nodegroup_id']
+                related_document_upload_node_id = map_data["related_document_upload"]['node_id']
+                tiles = self.grouped_tiles.get(related_document_upload_nodegroup_id, [])
 
                 if not len(tiles):
                     continue
 
-                if not len(tiles[0].data.get(node_id)):
+                if not len(tiles[0].data.get(related_document_upload_node_id)):
                     continue
 
                 digital_object_resource_id = (
-                    tiles[0].data.get(node_id)[0].get("resourceId")
+                    tiles[0].data.get(related_document_upload_node_id)[0].get("resourceId")
                 )
 
                 DIGITAL_OBJECT_NODEGROUP_ID = "7db68c6c-8490-11ea-a543-f875a44e0e11"
