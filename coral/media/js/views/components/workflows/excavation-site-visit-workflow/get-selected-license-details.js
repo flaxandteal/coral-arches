@@ -51,7 +51,7 @@ define([
 
     this.tile.data[this.SELECTED_LICENSE_NODEGROUP_AND_NODE].subscribe((value) => {
       if (value && value.length) {
-        const resourceId = value[0].resourceId;
+        const resourceId = ko.unwrap(value[0].resourceId);
         this.selectedResource(resourceId);
         this.getDetails(resourceId);
       }
