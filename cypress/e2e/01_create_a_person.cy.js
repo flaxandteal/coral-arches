@@ -1,8 +1,7 @@
 describe('Creating a person named Test Person if one doesnt exist', function () {
     beforeEach(() => {
         cy.login();
-        cy.visit('http://localhost:8000/search?paging-filter=1&tiles=true&resource-type-filter=%5B%7B%22graphid%22%3A%2222477f01-1a44-11e9-b0a9-000d3ab1e588%22%2C%22name%22%3A%22Person%22%2C%22inverted%22%3Afalse%7D%5D');
-        // cy.visit('http://localhost:8000/search?paging-filter=1&tiles=true&resource-type-filter=%5B%7B%22graphid%22%3A%22b9e0701e-5463-11e9-b5f5-000d3ab1e588%22%2C%22name%22%3A%22Activity%22%2C%22inverted%22%3Afalse%7D%5D');
+        cy.visit('http://localhost:8000/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=125&language=*&term-filter=%5B%7B%22context%22%3A%22%22%2C%22context_label%22%3A%22Person%20-%20Name%22%2C%22id%22%3A%22termTest%20PersonPerson%20-%20Name%22%2C%22text%22%3A%22Test%20Person%22%2C%22type%22%3A%22term%22%2C%22value%22%3A%22Test%20Person%22%2C%22inverted%22%3Afalse%2C%22selected%22%3Atrue%7D%5D');
     });
 
     it('Create a person', function () {
