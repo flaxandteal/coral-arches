@@ -49,7 +49,7 @@ class Dashboard(View):
 
             task_resources = []
             counters = {}
-            sort_by = request.GET.get('sortBy', 'deadline')
+            sort_by = request.GET.get('sortBy')
             sort_order = request.GET.get('sortOrder', 'asc')
             sort_options = []
 
@@ -231,8 +231,10 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
+    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
         from arches_orm.models import License
+
+        utilities = Utilities()
 
         #states
         is_admin = groupId == EXCAVATION_ADMIN_GROUP
@@ -249,7 +251,12 @@ class ExcavationTaskStrategy(TaskStrategy):
             if task:
                 resources.append(task)
 
-        return resources, 'counters', 'sort_options'
+        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+
+        counters = []
+        sort_options = [{'id': 'issuedate', 'name': 'Issue Date'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
+
+        return sorted_resources, counters, sort_options
 
     
     def build_data(self, licence, groupId):
@@ -264,7 +271,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         valid_until_date = utilities.node_check(lambda:licence.decision[0].license_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
-        report_status = utilities.node_check(lambda:licence.report[0].classification_type)
+        report_status = utilities.node_check(lambda:licence.report[-1].classification_type) #takes the last report, assumes the newest
         licence_number = utilities.node_check(lambda:licence.license_number.license_number_value)
 
         nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
@@ -277,6 +284,10 @@ class ExcavationTaskStrategy(TaskStrategy):
         )
 
         response_slug = utilities.get_response_slug(groupId) if groupId else None
+
+        # convert date format
+        issue_date = datetime.strptime(issue_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+        valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
 
         resource_data = {
             'id': str(licence.id),
