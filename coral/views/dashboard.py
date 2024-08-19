@@ -49,8 +49,8 @@ class Dashboard(View):
 
             task_resources = []
             counters = {}
-            sort_by = request.GET.get('sortBy')
-            sort_order = request.GET.get('sortOrder', 'asc')
+            sort_by = request.GET.get('sortBy', None)
+            sort_order = request.GET.get('sortOrder', None)
             sort_options = []
 
             if not update and cache.get(cache_key):
@@ -70,7 +70,10 @@ class Dashboard(View):
                     if strategy:
                         strategies.add(self.select_strategy(groupId))
                 for strategy in strategies:
-                    resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
+                    if sort_by is not None and sort_order is not None:
+                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
+                    else:
+                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id)
                     task_resources.extend(resources)
 
                 cache_data = json.dumps({
@@ -279,6 +282,10 @@ class ExcavationTaskStrategy(TaskStrategy):
         
         employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
 
+        name = display_name[0]
+        if name.startswith("Excavation Licence"):
+            display_name = name[len("Excavation Licence"):].strip()
+
         site_name = next(
             (utilities.node_check(lambda:activity.activity_names[0].activity_name) for activity in activity_list if activity and activity.activity_names),
             None
@@ -292,7 +299,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         resource_data = {
             'id': str(licence.id),
-            'tasktype': 'Excavation',
+            'state': 'Excavation',
             'displayname': display_name,
             'sitename': site_name,
             'issuedate': issue_date,
