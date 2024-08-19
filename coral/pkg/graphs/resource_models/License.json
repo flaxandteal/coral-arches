@@ -9598,14 +9598,14 @@
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
-                                    "en": "Do not grant licensc"
+                                    "en": "Do not grant licence"
                                 }
                             },
                             {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Grant licensc"
+                                    "en": "Grant licence"
                                 }
                             }
                         ]
@@ -9820,7 +9820,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "licensc_names",
+                    "alias": "licence_names",
                     "config": {
                         "en": ""
                     },
@@ -9834,7 +9834,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Licensc Names",
+                    "name": "Licence Names",
                     "nodegroup_id": "59d65ec0-48b9-11ee-84da-0242ac140007",
                     "nodeid": "59d65ec0-48b9-11ee-84da-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
@@ -10025,7 +10025,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "transfer_of_licensc",
+                    "alias": "transfer_of_licence",
                     "config": {
                         "en": ""
                     },
@@ -10039,7 +10039,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Transfer of Licensc",
+                    "name": "Transfer of Licence",
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "nodeid": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E11_Modification",
