@@ -119,8 +119,13 @@ define([
              * This is the object notation path that allows you to
              * provide values such as: label, defaultValue, related
              */
-            if (!(nodeIdObject.nodeId in t.data)) continue;
-            const node = t.data[nodeIdObject.nodeId];
+            if (!(nodeIdObject.nodeId in t.data) && !nodeIdObject?.defaultValue) continue;
+            const node = t.data[nodeIdObject.nodeId] || {
+              displayValue: null,
+              label: null,
+              nodeId: nodeIdObject.nodeId,
+              value: null
+            };
             if (nodeIdObject.label) {
               node.label = nodeIdObject.label;
             }

@@ -48,6 +48,7 @@
         "name": "incident-reference-step",
         "title": "Incident Reference",
         "required": true,
+        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [

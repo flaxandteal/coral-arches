@@ -280,7 +280,7 @@ class MergeResources:
         associated_resources_tile.save()
 
     def merge_resources(
-        self, base_resource_id, merge_resource_id, merge_tracker_resource_id, overwrite_multiple_tiles=False
+        self, base_resource_id, merge_resource_id, merge_tracker_resource_id, overwrite_multiple_tiles=False, exclude_nodegroups_from_overwrite_multiple_tiles=[]
     ):
         # FIXME: HOW DO REQUESTS MAINTAIN STATE, move to __init__
         self.merge_map = {}
@@ -370,7 +370,7 @@ class MergeResources:
                     continue
             # Create the additional tiles for the base resource
             if merge_data["cardinality"] == "n":
-                if overwrite_multiple_tiles:
+                if overwrite_multiple_tiles and nodegroup_id not in exclude_nodegroups_from_overwrite_multiple_tiles:
                     for tile in merge_data["base_tiles"]:
                         if tile.tileid:
                             tile.delete()
