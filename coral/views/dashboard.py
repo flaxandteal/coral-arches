@@ -1,5 +1,6 @@
 from django.views.generic import View
 from django.http import JsonResponse
+from arches.app.models import models
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
@@ -19,6 +20,9 @@ HM_GROUP = '29a43158-5f50-495f-869c-f651adf3ea42'
 HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
 HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
+
+EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
+EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
@@ -45,7 +49,7 @@ class Dashboard(View):
 
             task_resources = []
             counters = {}
-            sort_by = request.GET.get('sortBy', 'deadline')
+            sort_by = request.GET.get('sortBy')
             sort_order = request.GET.get('sortOrder', 'asc')
             sort_options = []
 
@@ -115,12 +119,14 @@ class Dashboard(View):
     def select_strategy(self, groupId):
         if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
             return PlanningTaskStrategy()
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP]:
+            return ExcavationTaskStrategy()
         return
 
 class TaskStrategy:
     def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
         raise NotImplementedError("Subclasses must implement this method")
-    def build_data(self, consultation, groupId):
+    def build_data(self, resource, groupId):
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
@@ -223,6 +229,79 @@ class PlanningTaskStrategy(TaskStrategy):
             'responseslug': responseslug
         }
         return resource_data
+    
+class ExcavationTaskStrategy(TaskStrategy):
+    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
+        from arches_orm.models import License
+
+        utilities = Utilities()
+
+        #states
+        is_admin = groupId == EXCAVATION_ADMIN_GROUP
+        is_user = groupId == EXCAVATION_USER_GROUP
+
+        resources = [] 
+
+        licences_all = License.all()
+
+        licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
+
+        for licence in licences:
+            task = self.build_data(licence, groupId)
+            if task:
+                resources.append(task)
+
+        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+
+        counters = []
+        sort_options = [{'id': 'issuedate', 'name': 'Issue Date'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
+
+        return sorted_resources, counters, sort_options
+
+    
+    def build_data(self, licence, groupId):
+        from arches_orm.models import License
+
+        utilities = Utilities()
+
+        activity_list = utilities.node_check(lambda: licence.associated_activities)
+        
+        display_name = utilities.node_check(lambda:licence.license_names.name),
+        issue_date = utilities.node_check(lambda:licence.decision[0].license_valid_timespan.issue_date)
+        valid_until_date = utilities.node_check(lambda:licence.decision[0].license_valid_timespan.valid_until_date)
+        employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
+        nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
+        report_status = utilities.node_check(lambda:licence.report[-1].classification_type) #takes the last report, assumes the newest
+        licence_number = utilities.node_check(lambda:licence.license_number.license_number_value)
+
+        nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
+        
+        employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
+
+        site_name = next(
+            (utilities.node_check(lambda:activity.activity_names[0].activity_name) for activity in activity_list if activity and activity.activity_names),
+            None
+        )
+
+        response_slug = utilities.get_response_slug(groupId) if groupId else None
+
+        # convert date format
+        issue_date = datetime.strptime(issue_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+        valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+
+        resource_data = {
+            'id': str(licence.id),
+            'displayname': display_name,
+            'sitename': site_name,
+            'issuedate': issue_date,
+            'validuntildate': valid_until_date,
+            'employingbody': employing_body_name_list,
+            'nominateddirectors': nominated_directors_name_list,
+            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status),
+            'licencenumber': licence_number,
+            'responseslug': response_slug
+        }
+        return resource_data
 
 class Utilities:
     def convert_id_to_string(self, id):
@@ -242,6 +321,16 @@ class Utilities:
             return 'Non-statutory'
         elif id == None:
             return 'None'
+        
+    def domain_value_string_lookup(self, resource, node_alias, value_id):
+        node = models.Node.objects.filter(
+            alias = node_alias,
+            graph_id = resource.graphid
+        ).first()
+        options = node.config.get("options")
+        for option in options:
+            if option.get("id") == value_id:
+                return option.get("text").get("en")
         
     def get_count(self, resources, counter):
         counts = defaultdict(int)
@@ -264,7 +353,6 @@ class Utilities:
     # Method to check if a node exists
     def node_check(self, func, default=None):
         try:
-            print(func)
             return func()
         except Exception as error:
             logging.warning(f'Node does not exist: {error}')
@@ -277,6 +365,8 @@ class Utilities:
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP]:
+            return "licensing-workflow"
     
     def create_deadline_message(self, date):
         message = None
