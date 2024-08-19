@@ -22,6 +22,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Flagged by').siblings('.row').click();
         // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a test person and we can find them by name
         // TODO test with organisation as well
+        // Commented out for now as search seems to be broken on local
+        // cy.get('.select2-search__field').type('Test Person');
         cy.get('.select2-results__options li').first().click();
         cy.get('[aria-label="Flagged Date"]').should('be.visible').click();
         cy.get('[aria-label="Flagged Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
@@ -121,12 +123,16 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Flagged by').siblings('.row').click();
         // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a test person and we can find them by name
         // TODO test with organisation as well
+        // Commented out for now as search seems to be broken on local
+        // cy.get('.select2-search__field').type('Test Person');
+        cy.wait(5000);
         cy.get('.select2-results__options li').first().click();
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
+        // TODO test with multiple people
         cy.contains('Actor:').siblings().should('have.text', 'Test Person');
         cy.contains('Save and Complete Workflow').click();
     });
