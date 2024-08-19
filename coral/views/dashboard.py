@@ -218,6 +218,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
         resource_data = {
             'id': str(consultation.id),
+            'tasktype': 'Planning',
             'displayname': consultation._._name,
             'displaydescription': consultation._._description,
             'status': utilities.convert_id_to_string(action_status),
@@ -291,6 +292,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         resource_data = {
             'id': str(licence.id),
+            'tasktype': 'Excavation',
             'displayname': display_name,
             'sitename': site_name,
             'issuedate': issue_date,
