@@ -1,10 +1,33 @@
-<div class="card-component" style="width: 100%">
-  <div class="row widget-wrapper">
-    <button
-      data-bind="click: () => submitMerge()"
-      class="btn btn-success"
-    >
-      <span>Submit</span>
-    </button>
+<div class="card-component">
+  <div class="card">
+    <div class="widgets">
+      <div class="row widget-wrapper">
+        <domain-checkbox-widget
+          params="
+            node: {
+                config: {
+                    options: checkboxOptions,
+                },
+                configKeys: configKeys
+          },
+          config: {
+                label: 'By checking this box below you are acknowledging the process you are about to begin. At this point you should double check your work and confirm you are complete.',
+                options: checkboxOptions,
+            },
+            value: selectedCheckboxOptions,
+            loading: false,
+            pageVm: $root
+          "
+        ></domain-checkbox-widget>
+      </div>
+      <div class="row widget-wrapper">
+        <button
+          data-bind="click: () => submitMerge(), disable: !hasAcknowledgedProcess()"
+          class="btn btn-success"
+        >
+          <span>Submit</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
