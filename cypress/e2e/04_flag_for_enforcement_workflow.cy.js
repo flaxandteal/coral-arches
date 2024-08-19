@@ -20,12 +20,9 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('[aria-label="Case Reference"]').should('be.visible').type('Case Ref');
         cy.type_ckeditor('editor2', 'test reason for enforcement');
         cy.contains('Flagged by').siblings('.row').click();
-        // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a test person and we can find them by name
-        // TODO test with organisation as well
-        // Commented out for now as search seems to be broken on local
-        // cy.get('.select2-search__field').type('Test Person');
-        cy.contains('Test Person').click();
-        // cy.get('.select2-results__options li').first().click();
+        // TODO test with organisation as well as with multiple people/orgs
+        cy.get('.select2-search__field').type('Test Person');
+        cy.get('.select2-results__options li').first().click();
         cy.get('[aria-label="Flagged Date"]').should('be.visible').click();
         cy.get('[aria-label="Flagged Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
         cy.contains('Select resources').siblings('.row').click();
@@ -122,12 +119,9 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         // Enforcement Details Tab
         cy.wait(2000);
         cy.contains('Flagged by').siblings('.row').click();
-        // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a test person and we can find them by name
         // TODO test with organisation as well
-        // Commented out for now as search seems to be broken on local
-        // cy.get('.select2-search__field').type('Test Person');
-        cy.contains('Test Person').click();
-        // cy.get('.select2-results__options li').first().click();
+        cy.get('.select2-search__field').type('Test Person');
+        cy.get('.select2-results__options li').first().click();
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
