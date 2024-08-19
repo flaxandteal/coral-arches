@@ -53,7 +53,7 @@ define([
 
     this.tile.data['58a2b98f-a255-11e9-9a30-00224800b26d'].subscribe((value) => {
       if (value && value.length) {
-        currentResources = value.map(t => t.resourceId())
+        currentResources = value.map(t => ko.unwrap(t.resourceId))
         currentResources.forEach(id => {
           this.cards({...this.cards(), [id] : {
             designationType : "",
