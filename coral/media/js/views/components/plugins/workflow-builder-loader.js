@@ -20,6 +20,7 @@ define([
   'views/components/workflows/generate-garden-number',
   'views/components/workflows/generate-hb-number',
   'views/components/workflows/heritage-asset-designation-workflow/ha-summary',
+  'views/components/workflows/heritage-asset-designation-workflow/approval-summary',
   'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',
   'views/components/workflows/assign-consultation-workflow/pc-summary',
   'views/components/workflows/excavation-license-workflow/excavation-report-step'

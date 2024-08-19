@@ -9,33 +9,26 @@ define([
   'templates/views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge.htm'
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
-    CardComponentViewModel.apply(this, [params]);
+    this.resourceId = ko.observable(params.resourceid);
 
-    this.ASSESSMENT_DONE_BY = '3b267ffe-dbd1-11ee-b0db-0242ac120006';
-    this.LOCAL_AUTH_NOTE_DATE = 'cffa2fc8-3797-11ef-a167-0242ac150006';
-    this.DIRECTOR_SIGN_OFF_DATE = '59935456-379a-11ef-9263-0242ac150006';
-    this.OWNER_NOTIFIED_DATE = 'a20d4124-3795-11ef-9263-0242ac150006';
-    this.APPROVED_DATE = '0cd0998c-dbd6-11ee-b0db-0242ac120006';
-    this.STATUATORY_CONSULT_NOTE_DATE = 'd70da550-3798-11ef-a167-0242ac150006';
-    this.APPROVED_BY = 'ad22dad6-dbd0-11ee-b0db-0242ac120006';
-    this.ASSESSMENT_DATE = 'af5fd406-dbd1-11ee-b0db-0242ac120006';
+    this.configKeys = ko.observable({ placeholder: 0 });
 
-    this.hasAllFields = ko.computed(() => {
-      return (
-        this.tile.data[this.ASSESSMENT_DONE_BY]() &&
-        this.tile.data[this.LOCAL_AUTH_NOTE_DATE]() &&
-        this.tile.data[this.DIRECTOR_SIGN_OFF_DATE]() &&
-        this.tile.data[this.OWNER_NOTIFIED_DATE]() &&
-        this.tile.data[this.APPROVED_DATE]() &&
-        this.tile.data[this.STATUATORY_CONSULT_NOTE_DATE]() &&
-        this.tile.data[this.APPROVED_BY]() &&
-        this.tile.data[this.ASSESSMENT_DATE]()
-      );
+    this.checkboxOptions = ko.observable([
+      {
+        text: '',
+        id: 'acknowledged'
+      }
+    ]);
+
+    this.selectedCheckboxOptions = ko.observableArray();
+
+    this.hasAcknowledgedProcess = ko.computed(() => {
+      return !!this.selectedCheckboxOptions().includes('acknowledged');
     }, this);
 
     this.applyRevision = async () => {
       const data = {
-        targetResourceId: this.tile.resourceinstance_id
+        targetResourceId: this.resourceId()
       };
       params.pageVm.alert(
         new AlertViewModel(
