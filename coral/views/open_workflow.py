@@ -63,6 +63,26 @@ class OpenWorkflow(View):
                         workflow_step_data[step_name]["componentIdLookup"][
                             unique_instance_name
                         ] = data_lookup_id
+
+
+                        related_document_nodegroup_id = component_config[
+                            "parameters"
+                        ].get(
+                            "resourceModelDigitalObjectNodeGroupId", None
+                        )
+                        related_document_upload_node_id = component_config[
+                            "parameters"
+                        ].get(
+                            "resourceModelDigitalObjectNodeId", related_document_nodegroup_id
+                        )
+
+                        related_document_upload = None
+                        if related_document_nodegroup_id:
+                            related_document_upload = {
+                                "nodegroup_id": related_document_nodegroup_id,
+                                "node_id": related_document_upload_node_id
+                            }
+
                         step_mapping.append(
                             {
                                 "unique_instance_name": unique_instance_name,
@@ -72,9 +92,7 @@ class OpenWorkflow(View):
                                 "tiles_managed": component_config["tilesManaged"],
                                 "data_lookup_id": data_lookup_id,
                                 "required_parent_tiles": required_parent_tiles,
-                                "related_document_upload_id": parameters.get(
-                                    "resourceModelDigitalObjectNodeGroupId", None
-                                ),  # Special case for the related-document-upload component
+                                "related_document_upload": related_document_upload,  # Special case for the related-document-upload component
                             }
                         )
         return workflow_step_data, step_mapping
@@ -232,6 +250,11 @@ class OpenWorkflow(View):
         ASSIGNMENT_TEAM_HM = 'e377b8a9-ced0-4186-84ff-0b5c3ece9c78'
         ASSIGNMENT_TEAM_HB = '18b628c9-149f-4c37-bc27-e8e0d714a037'
 
+        RESPONSE_FILES_NODEGROUP = '31e5ece6-5989-11ef-af2d-0242ac120006'
+        RESPONSE_FILES_TEAM_NODE = '983d73b0-5989-11ef-af2d-0242ac120006'
+        RESPONSE_FILES_TEAM_HM = '761b9622-3c45-4e78-9f7b-241ffd0f5ec1'
+        RESPONSE_FILES_TEAM_HB = 'b66e5025-7695-43b3-b931-e67f1222ec43'
+
         response_tiles = self.grouped_tiles.get(RESPONSE_ACTION_NODEGROUP, [])
         remove_ids = []
         for tile in response_tiles:
@@ -253,6 +276,17 @@ class OpenWorkflow(View):
                 remove_ids.append(tile.tileid)
                 continue
         self.grouped_tiles[ASSIGNMENT_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, assignment_tiles))
+
+        response_files_tiles = self.grouped_tiles.get(RESPONSE_FILES_NODEGROUP, [])
+        remove_ids = []
+        for tile in response_files_tiles:
+            if tile.data[RESPONSE_FILES_TEAM_NODE] == RESPONSE_FILES_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+            if tile.data[RESPONSE_FILES_TEAM_NODE] == RESPONSE_FILES_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+        self.grouped_tiles[RESPONSE_FILES_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, response_files_tiles))
 
     def setup_designation(self):
         REVISION_APPROVALS_NODEGROUP_ID = "3c51740c-dbd0-11ee-8835-0242ac120006"
@@ -376,21 +410,21 @@ class OpenWorkflow(View):
             data_lookup_id = map_data["data_lookup_id"]
             tiles = self.grouped_tiles.get(nodegroup_id, [])
 
-            if map_data["related_document_upload_id"]:
-                nodegroup_id = map_data["related_document_upload_id"]
-                tiles = self.grouped_tiles.get(nodegroup_id, [])
+            if map_data["related_document_upload"]:
+                # If this path is followed we're using a digital object tile instead of
+                # a tile from the resource we are actually accessing
+                related_document_upload_nodegroup_id = map_data["related_document_upload"]['nodegroup_id']
+                related_document_upload_node_id = map_data["related_document_upload"]['node_id']
+                tiles = self.grouped_tiles.get(related_document_upload_nodegroup_id, [])
 
                 if not len(tiles):
                     continue
 
-                if not len(tiles[0].data.get(nodegroup_id)):
+                if not len(tiles[0].data.get(related_document_upload_node_id)):
                     continue
 
-                # This expects that you are using a digital object nodegroup with a single
-                # level nodegroup. It must not be nested within a nodegroup so that the nodegroup
-                # ids are identical.
                 digital_object_resource_id = (
-                    tiles[0].data.get(nodegroup_id)[0].get("resourceId")
+                    tiles[0].data.get(related_document_upload_node_id)[0].get("resourceId")
                 )
 
                 DIGITAL_OBJECT_NODEGROUP_ID = "7db68c6c-8490-11ea-a543-f875a44e0e11"

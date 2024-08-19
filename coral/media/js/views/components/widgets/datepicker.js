@@ -116,6 +116,7 @@ define([
         const tileData = JSON.parse(self.tile._tileData());
         tileData[this.node.id] = today.toLocaleDateString('en-CA');
         self.tile._tileData(koMapping.toJSON(tileData));
+        this.form.dirty(true);
       }
     }
 
