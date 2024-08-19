@@ -37,8 +37,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Description:').siblings().should('have.text', 'test reason for enforcement');
         // Only checks if the date we selected is present as the year and month could change
         cy.contains('Flagged Date Value:').siblings().should('contain', '17');
-        // TODO actually create the person and use the name in the check here
-        cy.contains('Actor:').siblings().should('have.text', 'test');
+        cy.contains('Actor:').siblings().should('have.text', 'Test Person');
         cy.contains('Associated Resources:').siblings().should('have.text', 'Undefined');
         cy.wait(2000);
         cy.contains('Save and Complete Workflow').click();
@@ -128,8 +127,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
-        // TODO actually create the person and use the name in the check here
-        cy.contains('Actor:').siblings().should('have.text', 'test');
+        cy.contains('Actor:').siblings().should('have.text', 'Test Person');
         cy.contains('Save and Complete Workflow').click();
     });
 
