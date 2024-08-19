@@ -83,13 +83,6 @@
         "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"EVM\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
       },
       {
-        "slug": "excavation-site-visit-workflow",
-        "name": "Excavation Site Visit",
-        "graphIds": ["b9e0701e-5463-11e9-b5f5-000d3ab1e588"],
-        "disableStartNew": true,
-        "searchString": "/search/resources?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=72&language=*&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22879fc326-02f6-11ef-927a-0242ac150006%22%3A%7B%22op%22%3A%22not_null%22%2C%22val%22%3A%22%22%7D%7D%5D"
-      },
-      {
         "slug": "add-garden-workflow",
         "name": "Add Garden",
         "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"]
