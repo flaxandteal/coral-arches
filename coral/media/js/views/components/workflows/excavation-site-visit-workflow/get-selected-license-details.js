@@ -69,7 +69,6 @@ define([
       const tiles = await this.fetchTileData(resourceId);
 
       for (const tile of tiles) {
-        console.log("tile here", tile)
         if (tile.nodegroup === this.LICENCE_NUMBER_NODEGROUP) {
           this.licenceNumber(tile.data[this.LICENCE_NUMBER_NODE]?.en?.value || 'N/A');
         }
