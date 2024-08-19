@@ -12,6 +12,7 @@
         "name": "start-step",
         "title": "Start",
         "required": true,
+        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [
