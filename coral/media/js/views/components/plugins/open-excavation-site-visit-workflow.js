@@ -33,19 +33,15 @@ define([
       };
   
       this.searchSiteVisits = async (resourceId) => {
-        console.log("searching", resourceId)
         const searchResponse = await window.fetch(
             arches.urls.search_results + `?advanced-search=[{"op"%3A"and"%2C"ea059ab7-83d7-11ea-a3c4-f875a44e0e11"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}%2C{"op"%3A"and"%2C"e7d69603-9939-11ea-9e7f-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A"ESV"}%2C"e7d69604-9939-11ea-baef-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A""}%2C"e7d69602-9939-11ea-b514-f875a44e0e11"%3A{"op"%3A"eq"%2C"val"%3A""}}]&format=json`
         )
-        console.log("response", searchResponse)
         const data = await searchResponse.json()
-        console.log("the data", data)
         return data.results.hits.hits;
       };
   
       this.getParentTileOptions = async (resourceId) => {
         const tiles = await this.searchSiteVisits(resourceId);
-        console.log("Site Visit tiles", tiles)
         this.parentTileOptions(
           tiles.map((tile, idx) => {
             return {
@@ -62,7 +58,6 @@ define([
       };
 
       this.startNew = async () => {
-        console.log("starting", JSON.stringify(this.addtionalConfigData().activityId))
         const associatedActivity = {
             data: {"ea059ab7-83d7-11ea-a3c4-f875a44e0e11":this.addtionalConfigData().activityId},
             nodegroup_id: 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11',
@@ -71,7 +66,6 @@ define([
             tileid: null,
             sortorder: 0
           };
-          console.log("about to send", associatedActivity)
           const associatedActivityTile = await window.fetch(arches.urls.api_tiles(uuid.generate()), {
             method: 'POST',
             credentials: 'include',
@@ -82,13 +76,10 @@ define([
           });
 
           const response = await associatedActivityTile.json()
-          console.log("here's response", JSON.stringify(response))
           this.selectedResource(response.resourceinstance_id)
-          console.log("selected", this.selectedResource())
       }
   
       this.selectedActivity.subscribe((resourceId) => {
-        console.log("selected the activity", resourceId)
         if (!resourceId) {
           this.parentTileOptions([]);
           this.selectedResource(null);
@@ -104,10 +95,8 @@ define([
         if (!resourceId){
             return
         }
-        console.log("selecting ", resourceId)
         this.addtionalConfigData()['resourceInstanceId'] = resourceId;
         const tileData = await this.fetchTileData(resourceId)
-        console.log("resource has tiles", tileData)
         this.incidentTiles(tileData)
         this.setAdditionalOpenConfigData();
       });
