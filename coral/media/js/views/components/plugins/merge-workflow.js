@@ -31,7 +31,7 @@ define([
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
                     ],
-                    label: 'Name/SMR of the Heritage Asset',
+                    label: 'Base Heritage Asset',
                     getTileIdFromNodegroup: [
                       {
                         nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
@@ -64,7 +64,7 @@ define([
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
                     ],
-                    label: 'Name/SMR of the Heritage Asset',
+                    label: 'Merge Heritage Asset',
                     getTileIdFromNodegroup: [
                       {
                         nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
