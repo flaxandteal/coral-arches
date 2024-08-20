@@ -24,11 +24,14 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('.select2-search__field').type('Test Person');
         cy.wait(400);
         cy.get('.select2-results__options li').first().click();
-        cy.get('[aria-label="Flagged Date"]').should('be.visible').click();
+        cy.contains('Flagged by').siblings('.row').click();
+        cy.get('.select2-search__field').type('John Doe');
+        cy.wait(600);
+        cy.get('.select2-results__options li').first().click();
+        cy.get('[aria-label="Flagged Date"]').scrollIntoView().should('be.visible').click();
         cy.get('[aria-label="Flagged Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
         cy.contains('Select resources').siblings('.row').click();
-        // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a Heritage Asset and uses that by name
-        cy.get('.select2-results__options li').first().click();
+        cy.get('.select2-results__options li').contains('TestAsset').click();
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
@@ -38,8 +41,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Description:').siblings().should('have.text', 'test reason for enforcement');
         // Only checks if the date we selected is present as the year and month could change
         cy.contains('Flagged Date Value:').siblings().should('contain', '17');
-        cy.contains('Actor:').siblings().should('have.text', 'Test Person');
-        cy.contains('Associated Resources:').siblings().should('have.text', 'Undefined');
+        cy.contains('Actor:').siblings().should('have.text', 'John Doe, Test Person');
+        cy.contains('Associated Resources:').siblings().should('have.text', 'None TestAsset');
         cy.wait(900);
         cy.contains('Save and Complete Workflow').click();
     });
@@ -178,14 +181,14 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Select resources').scrollIntoView();
         cy.wait(1000);
         cy.contains('Select resources').siblings('.row').click();
+        cy.get('.select2-results__options li').contains('TestAsset').click();
         // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a Heritage Asset and uses that by name
-        cy.get('.select2-results__options li').first().click();
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
-        cy.contains('Associated Resources:').siblings().should('have.text', 'Undefined');
+        cy.contains('Associated Resources:').siblings().should('have.text', 'None TestAsset');
         cy.contains('Save and Complete Workflow').click();
     });
 });
