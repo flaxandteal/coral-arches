@@ -294,8 +294,10 @@ class ExcavationTaskStrategy(TaskStrategy):
         response_slug = utilities.get_response_slug(groupId) if groupId else None
 
         # convert date format
-        issue_date = datetime.strptime(issue_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
-        valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+        if issue_date:
+            issue_date = datetime.strptime(issue_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+        if valid_until_date:
+            valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
 
         resource_data = {
             'id': str(licence.id),
