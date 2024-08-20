@@ -30,6 +30,9 @@
                       "lookupName": "locationData",
                       "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
                     }
+                  ],
+                  "labels": [
+                    ["Consultation ID", "Report ID"]
                   ]
                 },
                 "tilesManaged": "one",
@@ -119,7 +122,10 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "e26ffc04-fb16-11ee-b5d2-0242ac190006"
+                  "nodegroupid": "e26ffc04-fb16-11ee-b5d2-0242ac190006",
+                  "labels": [
+                    ["Description", "Recommendations"]
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
