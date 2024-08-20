@@ -2,6 +2,7 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.resource import Resource
 from arches_orm.adapter import admin
+import logging
 
 # tiles
 SYSTEM_REFERENCE = '991c3c74-48b6-11ee-85af-0242ac140007'
@@ -17,6 +18,8 @@ CUR_E_GROUP = '214900b1-1359-404d-bba0-7dbd5f8486ef'
 
 #nodes
 RESOURCE_ID = '991c49b2-48b6-11ee-85af-0242ac140007'
+GRADE_E_DECISION = 'a68fa38c-c430-11ee-bc4b-0242ac180006'
+GRADE_D_DECISION = '2a5151f0-c42e-11ee-94bf-0242ac180006'
 
 details = {
     "functionid": "e3ec9aa7-dad3-444a-bb44-9d71a8eaf017",
@@ -42,7 +45,15 @@ class NotifyExcavation(BaseFunction):
 
         notification_manager.notify()
 
-class SystemReferenceStrategy:
+class NotificationStrategy:
+    def send_notification(self, user, tile):
+        raise NotImplementedError("Subclasses should implement this method")
+    
+    def notify(self, user, groups_to_notify, message, resource_instance_id):
+        utils = Utilities()
+        utils.notify_groups(user, groups_to_notify, message, resource_instance_id)
+
+class SystemReferenceStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
         name = tile.data[RESOURCE_ID].get("en").get("value")
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
@@ -50,25 +61,48 @@ class SystemReferenceStrategy:
         message = f"A new excavation licence {name} has been started and requires attention"
         groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP, CUR_D_GROUP]
 
-        utils = Utilities()
+        self.notify(user, groups_to_notify, message, resource_instance_id)
 
-        for group_id in groups_to_notify:
-            utils.notify_group(group_id, message, resource_instance_id)
+class CurEDecisionStrategy(NotificationStrategy):
+    def send_notification(self, user, tile):
+        resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
+        name = Resource.objects.get(pk=resource_instance_id).displayname()
+
+        decision_id = tile.data[GRADE_E_DECISION]
+        decision_node = models.Node.objects.filter(
+            pk = GRADE_E_DECISION,   
+        ).first()
+        options = decision_node.config.get("options")
+        decision_string = next((option.get("text").get("en") for option in options if option.get("id") == decision_id), None)
+
+        message = f"The Cur Grade E Decision has been set to {decision_string} for {name}. This requires further attention"
+        groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
+
+        self.notify(user, groups_to_notify, message, resource_instance_id)
+
+class CurDDecisionStrategy(NotificationStrategy):
+    def send_notification(self, user, tile):
+        resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
+        name = Resource.objects.get(pk=resource_instance_id).displayname()
+
+        decision_id = tile.data[GRADE_D_DECISION]
+        decision_node = models.Node.objects.filter(
+            pk = GRADE_D_DECISION,   
+        ).first()
+        options = decision_node.config.get("options")
+        decision_string = next((option.get("text").get("en") for option in options if option.get("id") == decision_id), None)
+
+        message = f"The Cur Grade D Decision has been set to {decision_string} for {name}. This requires further attention"
+        groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP]
+
+        self.notify(user, groups_to_notify, message, resource_instance_id)
 
 class ReportStrategy:
-    def send_notification(self, user, resource_instance_id):
-        pass
-
-class CurDDecisionStrategy:
-    def send_notification(self, user, resource_instance_id):
-        pass
-
-class CurEDecisionStrategy:
-    def send_notification(self, user, resource_instance_id):
+    def send_notification(self, user, tile):
         pass
 
 class ApplicationDetailsStrategy:
-    def send_notification(self, user, resource_instance_id):
+    def send_notification(self, user, tile):
         pass
 
 class NotificationManager:
@@ -85,6 +119,7 @@ class NotificationManager:
         self.node_group_id = node_group_id
         self.tile = tile
         self.strategy = self._select_strategy(node_group_id)
+        Utilities().delete_existing_notification(tile)
 
     def _select_strategy(self, node_group_id):
         strategy_class = self.strategy_registry.get(node_group_id)
@@ -98,15 +133,17 @@ class NotificationManager:
 
 
 class Utilities:
-    def notify_group(self, group_id, message, resource_instance_id):
+    def notify_groups(self, user, group_list, message, resource_instance_id):
         from arches_orm.models import Group, Person
         
         with admin():
-            group = Group.find(group_id)
-            person_list = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
-
-            for person in person_list:
-                self.notify_user(person, message, resource_instance_id)
+            for group_id in group_list:
+                group = Group.find(group_id)
+                person_list = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
+                
+                for person in person_list:
+                    if user is None or person != user:
+                        self.notify_user(person, message, resource_instance_id)
         
     def notify_user(self, user, message, resource_instance_id):
         user = user.user_account
@@ -125,3 +162,13 @@ class Utilities:
             recipient = user
         )
         user_x_notification.save()
+
+    def delete_existing_notification(self, tile):
+        resourceinstanceid = str(tile.resourceinstance.resourceinstanceid)
+        existing_notification = models.Notification.objects.filter(
+            context__resource_instance_id=resourceinstanceid
+        ).first()
+
+        if existing_notification:
+            existing_notification.delete()
+            logging.info("Deleted Existing Notification")
