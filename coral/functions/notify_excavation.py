@@ -33,19 +33,20 @@ class NotifyExcavation(BaseFunction):
     def post_save(self, tile, request, context):
         from arches_orm.models import Person
 
-        resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         nodegroup_id = str(tile.nodegroup_id)
 
         user = request.user
         user_resource = Person.where(user_account=user.id)[0] if user and Person.where(user_account=user.id) else None
 
-        notification_manager = NotificationManager(nodegroup_id, user_resource, tile, resource_instance_id)
+        notification_manager = NotificationManager(nodegroup_id, user_resource, tile)
 
         notification_manager.notify()
 
 class SystemReferenceStrategy:
-    def send_notification(self, user, tile, resource_instance_id):
+    def send_notification(self, user, tile):
         name = tile.data[RESOURCE_ID].get("en").get("value")
+        resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
+
         message = f"A new excavation licence {name} has been started and requires attention"
         groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP, CUR_D_GROUP]
 
@@ -79,11 +80,10 @@ class NotificationManager:
         APPLICATION_DETAILS : ApplicationDetailsStrategy 
     }
 
-    def __init__(self, node_group_id, user, tile, resource_instance_id):
+    def __init__(self, node_group_id, user, tile):
         self.user = user
         self.node_group_id = node_group_id
         self.tile = tile
-        self.resource_instance_id = resource_instance_id
         self.strategy = self._select_strategy(node_group_id)
 
     def _select_strategy(self, node_group_id):
@@ -94,7 +94,7 @@ class NotificationManager:
             raise ValueError(f"No strategy found for node group id: {node_group_id}")
         
     def notify(self):
-        self.strategy.send_notification(self.user, self.tile, self.resource_instance_id)
+        self.strategy.send_notification(self.user, self.tile)
 
 
 class Utilities:
