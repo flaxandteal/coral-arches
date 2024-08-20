@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "280b2f9d-e879-4e5f-984e-157ae4f8ffbd",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "SMC Documentation File(s)"
+                    },
+                    "nodegroup_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "69201a00-4857-46d7-a74e-acafa98d9352",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -2276,6 +2303,27 @@
                 }
             ],
             "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "280b2f9d-e879-4e5f-984e-157ae4f8ffbd",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "SMC Documentation File(s)",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "1d2ab1dd-3a4d-469c-b58d-6dbf18ac92c3",
+                    "label": {
+                        "en": "SMC Documentation File(s)"
+                    },
+                    "node_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
                 {
                     "card_id": "c0895e0c-ff03-4d89-b333-f82197e113ec",
                     "config": {
@@ -15018,6 +15066,15 @@
                 {
                     "description": null,
                     "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
+                    "edgeid": "8fdcbc91-5e5e-4792-ac91-d42d9f37fc29",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "rangenode_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
                     "edgeid": "d7af2689-05eb-4d2f-a142-7bfc0ceef443",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "name": null,
@@ -21833,6 +21890,36 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "smc_documentation_file_s_",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                                "name": "Digital Object"
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "SMC Documentation File(s)",
+                    "nodegroup_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "nodeid": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "wards_and_district_metatype",
                     "config": {
