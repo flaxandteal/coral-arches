@@ -97,12 +97,12 @@
                     "cssclass": null,
                     "description": "",
                     "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
-                    "helpenabled": false,
+                    "helpenabled": true,
                     "helptext": {
-                        "en": ""
+                        "en": "<p><strong>Editor Name(s)</strong></p>\n\n<p>If you wish to add multiple Editor Names all you need to do is provide the names separated by a comma. For example:</p>\n\n<p>Simon Smith, Jill Alan</p>\n"
                     },
                     "helptitle": {
-                        "en": ""
+                        "en": "Archive Source Creation Help"
                     },
                     "instructions": {
                         "en": ""
@@ -1380,17 +1380,17 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Editor Name",
+                        "label": "Editor Name(s)",
                         "maxLength": null,
                         "placeholder": {
-                            "en": "Enter text"
+                            "en": "eg. Simon Smith, Jill Alan"
                         },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "3001d725-b46a-11ea-af16-f875a44e0e11",
                     "label": {
-                        "en": "Editor Name"
+                        "en": "Editor Name(s)"
                     },
                     "node_id": "3001aff0-b46a-11ea-b22f-f875a44e0e11",
                     "sortorder": 5,
@@ -10966,6 +10966,13 @@
                                 "selected": false,
                                 "text": {
                                     "en": "HERoNI Titanic Quarter"
+                                }
+                            },
+                            {
+                                "id": "16dccc6e-aac3-43fe-89f5-3fb1449c006c",
+                                "selected": false,
+                                "text": {
+                                    "en": "PRONI"
                                 }
                             }
                         ]
