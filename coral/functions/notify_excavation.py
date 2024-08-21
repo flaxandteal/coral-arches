@@ -5,12 +5,14 @@ from arches_orm.adapter import admin
 import logging
 import pdb
 
-# tiles
+# node groups
 SYSTEM_REFERENCE = '991c3c74-48b6-11ee-85af-0242ac140007'
 REPORT = 'f060583a-6120-11ee-9fd1-0242ac120003'
 CUR_E_DECISON = '69f2eb3c-c430-11ee-94bf-0242ac180006'
 CUR_D_DECISION = 'c9f504b4-c42d-11ee-94bf-0242ac180006'
 APPLICATION_DETAILS = '4f0f655c-48cf-11ee-8e4e-0242ac140007'
+TRANSFER_OF_LICENCE = '6397b05c-c443-11ee-94bf-0242ac180006'
+EXTENSION_OF_LICENCE = '69b2738e-c4d2-11ee-b171-0242ac180006'
 
 # groups
 ADMIN_GROUP = '4fbe3955-ccd3-4c5b-927e-71672c61f298'
@@ -23,6 +25,8 @@ GRADE_E_DECISION = 'a68fa38c-c430-11ee-bc4b-0242ac180006'
 GRADE_D_DECISION = '2a5151f0-c42e-11ee-94bf-0242ac180006'
 CLASSIFICATION_TYPE = '8d13575c-dc70-11ee-8def-0242ac120006'
 STAGE_OF_APPLICATION = 'a79fedae-bad5-11ee-900d-0242ac180006'
+TRANSFER_GRADE_E_DECISION = '058cd212-c44d-11ee-94bf-0242ac180006'
+TRANSFER_GRADE_D_DECISION = '6bc889fe-c44d-11ee-94bf-0242ac180006'
 
 #response slugs
 EXCAVATION_SLUG = 'licensing-workflow'
@@ -33,7 +37,15 @@ details = {
     'type': 'node',
     'description': 'Will send notifications to the Excavation team when certain nodes are changed',
     'defaultconfig': {
-        'triggering_nodegroups': [SYSTEM_REFERENCE, REPORT, CUR_E_DECISON, CUR_D_DECISION, APPLICATION_DETAILS ],
+        'triggering_nodegroups': [
+            SYSTEM_REFERENCE, 
+            REPORT, 
+            CUR_E_DECISON, 
+            CUR_D_DECISION, 
+            APPLICATION_DETAILS, 
+            TRANSFER_OF_LICENCE,
+            EXTENSION_OF_LICENCE 
+        ],
     },
     'classname': 'NotifyExcavation',
     'component': '',
@@ -207,13 +219,38 @@ class ApplicationDetailsStrategy(NotificationStrategy):
             groups_to_notify = [ADMIN_GROUP]
             self.notify_groups(user, groups_to_notify, notification)
 
+class TransferOfLicenceStrategy(NotificationStrategy):
+    def send_notification(self, user, tile):
+        name, resource_instance_id = self.get_resource_details(tile)
+        name = name.removeprefix('Excavation Licence').strip()
+
+        grade_e_decision = tile.data[TRANSFER_GRADE_E_DECISION]
+        grade_d_decision = tile.data[TRANSFER_GRADE_D_DECISION]
+
+        if not (grade_d_decision or grade_e_decision):
+            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
+            message = f"A Transfer of Licence has been created for {name}"
+        elif grade_e_decision:
+            decision_string = self.get_domain_value_string(grade_e_decision, TRANSFER_GRADE_E_DECISION)
+            message = f"The Transfer of Licence Cur Grade E Decision for {name} has been updated to {decision_string}"
+            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
+        elif grade_d_decision and not grade_e_decision:
+            decision_string = self.get_domain_value_string(grade_d_decision, TRANSFER_GRADE_D_DECISION)
+            message = f"The Transfer of Licence Cur Grade D Decision for {name} has been updated to {decision_string}"
+            groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP]
+            
+        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
+                                    
+        groups_to_notify = [ADMIN_GROUP]
+        self.notify_groups(user, groups_to_notify, notification)
 class NotificationManager():
     strategy_registry = {
         SYSTEM_REFERENCE : SystemReferenceStrategy, 
         REPORT : ReportStrategy, 
         CUR_D_DECISION : CurDDecisionStrategy, 
         CUR_E_DECISON : CurEDecisionStrategy, 
-        APPLICATION_DETAILS : ApplicationDetailsStrategy 
+        APPLICATION_DETAILS : ApplicationDetailsStrategy, 
+        TRANSFER_OF_LICENCE : TransferOfLicenceStrategy
     }
 
     def __init__(self, node_group_id, user, tile):
