@@ -21,6 +21,7 @@ CUR_E_GROUP = '214900b1-1359-404d-bba0-7dbd5f8486ef'
 RESOURCE_ID = '991c49b2-48b6-11ee-85af-0242ac140007'
 GRADE_E_DECISION = 'a68fa38c-c430-11ee-bc4b-0242ac180006'
 GRADE_D_DECISION = '2a5151f0-c42e-11ee-94bf-0242ac180006'
+CLASSIFICATION_TYPE = '8d13575c-dc70-11ee-8def-0242ac120006'
 
 #response slugs
 EXCAVATION_SLUG = 'licensing-workflow'
@@ -152,15 +153,48 @@ class CurDDecisionStrategy(NotificationStrategy):
                                 
         self.notify_groups(user, groups_to_notify, notification)
 
-class ReportStrategy:
+class ReportStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
-        pass
+        from arches_orm.models import Group
+        with admin():
+            name, resource_instance_id = self.get_resource_details(tile)
+            name = name.removeprefix('Excavation Licence').strip()
+
+            message = f"A new report has been added to {name}"
+
+            if user:
+                admin_group = Group.find(ADMIN_GROUP)
+                is_admin = any(member.id == user.id for member in admin_group.members)
+
+                cur_e_group = Group.find(CUR_E_GROUP)
+                is_cur_e = any(member.id == user.id for member in cur_e_group.members)
+
+                cur_d_group = Group.find(CUR_D_GROUP)
+                is_cur_d = any(member.id == user.id for member in cur_d_group.members)
+
+                classification_type = tile.data[CLASSIFICATION_TYPE]
+                classification_string = self.get_domain_value_string(classification_type, CLASSIFICATION_TYPE)
+    
+                if is_admin:
+                    groups_to_notify = [CUR_D_GROUP, CUR_E_GROUP]
+                elif is_cur_e and classification_type:
+                    groups_to_notify = [CUR_D_GROUP, ADMIN_GROUP]
+                    message = message + f" with classification type {classification_string}"
+                elif is_cur_d and classification_type:
+                    groups_to_notify = [CUR_E_GROUP, ADMIN_GROUP]
+                    message = message + f" with classification type {classification_string}"
+            else:
+                groups_to_notify = [CUR_D_GROUP, CUR_E_GROUP, ADMIN_GROUP]
+
+        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
+                                        
+        self.notify_groups(user, groups_to_notify, notification)
 
 class ApplicationDetailsStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
         pass
 
-class NotificationManager(NotificationStrategy):
+class NotificationManager():
     strategy_registry = {
         SYSTEM_REFERENCE : SystemReferenceStrategy, 
         REPORT : ReportStrategy, 
