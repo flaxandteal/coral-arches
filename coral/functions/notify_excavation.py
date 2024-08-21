@@ -27,6 +27,8 @@ CLASSIFICATION_TYPE = '8d13575c-dc70-11ee-8def-0242ac120006'
 STAGE_OF_APPLICATION = 'a79fedae-bad5-11ee-900d-0242ac180006'
 TRANSFER_GRADE_E_DECISION = '058cd212-c44d-11ee-94bf-0242ac180006'
 TRANSFER_GRADE_D_DECISION = '6bc889fe-c44d-11ee-94bf-0242ac180006'
+EXTENSION_GRADE_E_DECISION = '50970b20-c4d3-11ee-90c5-0242ac180006'
+EXTENSION_GRADE_D_DECISION = '2e7a81b0-c4d4-11ee-b171-0242ac180006'
 
 #response slugs
 EXCAVATION_SLUG = 'licensing-workflow'
@@ -68,9 +70,13 @@ class NotificationStrategy:
     def send_notification(self, user, tile):
         raise NotImplementedError("Subclasses should implement this method")
 
-    def get_resource_details(self, tile):
+    def get_resource_details(self, tile, remove_prefix=None, remove_suffix=None):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         name = Resource.objects.get(pk=resource_instance_id).displayname()
+        if remove_prefix:
+            name = name.removeprefix(remove_prefix).strip()
+        if remove_suffix:
+            name = name.removesuffix(remove_suffix).strip()
         return  name, resource_instance_id
     
     def create_notification(self, message, name, resource_instance_id, response_slug):
@@ -140,8 +146,7 @@ class SystemReferenceStrategy(NotificationStrategy):
 
 class CurEDecisionStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile)
-        name = name.removeprefix('Excavation Licence').strip()
+        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
         decision_id = tile.data[GRADE_E_DECISION]
         decision_string = self.get_domain_value_string(decision_id, GRADE_E_DECISION)
 
@@ -154,8 +159,7 @@ class CurEDecisionStrategy(NotificationStrategy):
 
 class CurDDecisionStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile)
-        name = name.removeprefix('Excavation Licence').strip()
+        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
         decision_id = tile.data[GRADE_D_DECISION]
         decision_string = self.get_domain_value_string(decision_id, GRADE_D_DECISION)
 
@@ -170,8 +174,7 @@ class ReportStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
         from arches_orm.models import Group
         with admin():
-            name, resource_instance_id = self.get_resource_details(tile)
-            name = name.removeprefix('Excavation Licence').strip()
+            name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
 
             message = f"A new report has been added to {name}"
 
@@ -205,8 +208,7 @@ class ReportStrategy(NotificationStrategy):
 
 class ApplicationDetailsStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile)
-        name = name.removeprefix('Excavation Licence').strip()
+        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
 
         soa_id = tile.data[STAGE_OF_APPLICATION]
 
@@ -221,8 +223,7 @@ class ApplicationDetailsStrategy(NotificationStrategy):
 
 class TransferOfLicenceStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile)
-        name = name.removeprefix('Excavation Licence').strip()
+        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
 
         grade_e_decision = tile.data[TRANSFER_GRADE_E_DECISION]
         grade_d_decision = tile.data[TRANSFER_GRADE_D_DECISION]
@@ -230,19 +231,44 @@ class TransferOfLicenceStrategy(NotificationStrategy):
         if not (grade_d_decision or grade_e_decision):
             groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
             message = f"A Transfer of Licence has been created for {name}"
-        elif grade_e_decision:
-            decision_string = self.get_domain_value_string(grade_e_decision, TRANSFER_GRADE_E_DECISION)
-            message = f"The Transfer of Licence Cur Grade E Decision for {name} has been updated to {decision_string}"
-            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
-        elif grade_d_decision and not grade_e_decision:
+        elif grade_d_decision:
             decision_string = self.get_domain_value_string(grade_d_decision, TRANSFER_GRADE_D_DECISION)
-            message = f"The Transfer of Licence Cur Grade D Decision for {name} has been updated to {decision_string}"
+            message = f"The Cur Grade D Decision for the Transfer of Licence {name} has been updated to {decision_string}"
             groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP]
+        elif grade_e_decision and not grade_d_decision:
+            decision_string = self.get_domain_value_string(grade_e_decision, TRANSFER_GRADE_E_DECISION)
+            message = f"The Cur Grade E Decision for the Transfer of Licence  {name} has been updated to {decision_string}"
+            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
             
         notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
                                     
         groups_to_notify = [ADMIN_GROUP]
         self.notify_groups(user, groups_to_notify, notification)
+
+class ExtensionOfLicenceStrategy(NotificationStrategy):
+    def send_notification(self, user, tile):
+        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
+
+        grade_e_decision = tile.data[EXTENSION_GRADE_E_DECISION]
+        grade_d_decision = tile.data[EXTENSION_GRADE_D_DECISION]
+
+        if not (grade_d_decision or grade_e_decision):
+            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
+            message = f"An Extension of Licence {name} has been created"
+        elif grade_d_decision:
+            decision_string = self.get_domain_value_string(grade_d_decision, EXTENSION_GRADE_D_DECISION)
+            message = f"The Cur Grade D Decision for the extension of licence {name} has been updated to {decision_string}"
+            groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP]
+        elif grade_e_decision and not grade_d_decision:
+            decision_string = self.get_domain_value_string(grade_e_decision, EXTENSION_GRADE_E_DECISION)
+            message = f"The Cur Grade E Decision for the extension of licence {name} has been updated to {decision_string}"
+            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
+            
+        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
+                                    
+        groups_to_notify = [ADMIN_GROUP]
+        self.notify_groups(user, groups_to_notify, notification)
+
 class NotificationManager():
     strategy_registry = {
         SYSTEM_REFERENCE : SystemReferenceStrategy, 
@@ -250,7 +276,8 @@ class NotificationManager():
         CUR_D_DECISION : CurDDecisionStrategy, 
         CUR_E_DECISON : CurEDecisionStrategy, 
         APPLICATION_DETAILS : ApplicationDetailsStrategy, 
-        TRANSFER_OF_LICENCE : TransferOfLicenceStrategy
+        TRANSFER_OF_LICENCE : TransferOfLicenceStrategy,
+        EXTENSION_OF_LICENCE: ExtensionOfLicenceStrategy
     }
 
     def __init__(self, node_group_id, user, tile):
