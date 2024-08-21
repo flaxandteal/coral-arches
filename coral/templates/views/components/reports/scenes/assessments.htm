@@ -3,6 +3,102 @@
 {% block report %}
 
 {% block body %}
+<!-- ko if: incidentReports().length -->
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.incidentReports)}, css: {'fa-angle-double-right': visible.incidentReports(), 'fa-angle-double-up': !visible.incidentReports()}" class="fa toggle"></i> {% trans "Display Name" %}</h2>
+    <a data-bind="{if: cards.incidentReports, click: function(){ addNewTile(cards.incidentReports) }}" class="aher-report-a">
+        <i class="fa fa-mail-reply"></i>
+        <span data-bind="if: cards.incidentReports.tiles().length">{% trans "Edit Identifier" %}</span>
+        <span data-bind="ifnot: cards.incidentReports.tiles().length">{% trans "Add Identifier" %}</span>
+    </a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.incidentReports" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: incidentReports() -->
+        <div class="aher-nodata-note">No references for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko foreach: { data: incidentReports(), as: 'report', noChildContext: true } -->
+        <div class="aher-report-subsection" data-bind="with: incidentReports, as: 'report'">
+
+            <div class="firstchild-container">
+                <div class="aher-report-subsection-ite">
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">Reference: </h4>
+                        <div class="aher-block-value" data-bind="text:report.reference"></div>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<!-- /ko -->
+
+<!-- Incident Report -->
+<div  class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.incidentReports)}, css: {'fa-angle-double-right': visible.incidentReports(), 'fa-angle-double-up': !visible.incidentReports()}" class="fa toggle"></i> {% trans "Incident Reports" %}</h2>
+    <a data-bind="{if: cards.incidentReports, click: function(){addNewTile(cards.incidentReports)}}" class="aher-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Reference" %}</a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.incidentReports" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: incidentReports().length -->
+        <div class="aher-nodata-note">No references for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: incidentReports().length -->
+        <div class="aher-report-subsection">
+            <div class="firstchild-container">
+                <div class="aher-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="aher-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Status" %}</th>
+                                <th>{% trans "Damage Type" %}</th>
+                                <th>{% trans "Action Type" %}</th>
+                                <th>{% trans "Sign Off Date" %}</th>
+                                <th class="none">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: {data: incidentReports, dataTableOptions: incidentReportsTableConfig}">
+                            <tr>
+                                <td data-bind="text: reference"></td>
+                                <td data-bind="text: statusType"></td>
+                                <td data-bind="text: damageType"></td>
+                                <td data-bind="text: proposalActionType"></td>
+                                <td data-bind="text: signOffDate"></td>
+                                {% comment %} <td data-bind="text: notes"></td> {% endcomment %}
+                                {% comment %} <td data-bind="text: source"></td>
+                                <td data-bind="html: description"></td> {% endcomment %}
+                                {% comment %} <td>
+                                    <!-- ko with: url -->
+                                    <!-- ko if: url -->
+                                    <a data-bind="text: url, attr: {href: url, target: '_blank'}"></a>
+                                    <!-- /ko -->
+                                    <!-- /ko -->
+                                </td> {% endcomment %}
+                                <td class="aher-table-control">
+                                    <div data-bind="if: $parent.cards.externalCrossReferences">
+                                        <a href="#" data-bind="click: function(){$parent.editTile(tileid, $parent.cards.externalCrossReferences)}" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }">
+                                            <i class="fa fa-mail-reply"></i>
+                                        </a>
+                                        <a href="#" data-bind="click: $parent.deleteTile.bind($data, tileid, $parent.cards.externalCrossReferences)" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
 <!-- Artefact condition section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.artefactCondition">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.artefactCondition)}, css: {'fa-angle-double-right': visible.artefactCondition(), 'fa-angle-double-up': !visible.artefactCondition()}"  class="fa toggle"></i> {% trans "Artefact Condition" %}</h2>
