@@ -5,7 +5,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.visit('http://localhost:8000/plugins/init-workflow');
     });
 
-    it('Go through the workflow and populate all fields', function () {
+    it('Start new and go through the workflow and populate all fields', function () {
         cy.contains('Workflows');
         cy.contains('Archive Cataloguing').click();
         cy.contains('Start New').click();
@@ -30,6 +30,42 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.type_ckeditor('editor1', 'test description');
         cy.wait(500);
         cy.contains('Save and Continue').click();
+
+        // Archive Source Creation
+        cy.wait(500);
+        cy.get('input[aria-label="Author Name"]').should('be.visible').type('Test Author Name');
+        cy.get('input[aria-label="Editor Name"]').should('be.visible').type('Test Editor Name');
+        cy.get('input[aria-label="Start Date"]').should('be.visible').type('2021-04-12');
+        cy.get('input[aria-label="End Date"]').should('be.visible').type('2021-05-12');
+        cy.type_ckeditor('editor3', 'test statement of responsibility');
+        cy.wait(500);
+        cy.contains('Save and Continue').click();
+
+        // Repository Storage Location
+        cy.wait(1000);
+        cy.get('span').contains('Responsible Team').should('be.visible').siblings('.row').click();
+        cy.get('.select2-search__field').type('Test Person');
+        cy.wait(500);
+        cy.get('.select2-results__options li').first().click();
+        cy.get('span').contains('Storage Building Name').should('be.visible').siblings('.col-xs-12').click();
+        cy.get('.select2-results__options li').first().click();
+        cy.get('input[aria-label="Storage Room Name"]').should('be.visible').type('Test Storage Room Name');
+        cy.get('input[aria-label="Storage Shelf Name"]').should('be.visible').type('Test Storage Shelf Name');
+        cy.get('input[aria-label="Storage Box Name"]').should('be.visible').type('Test Storage Box Name');
+        cy.contains('Save and Continue').click();
+
+        // Archive Loan History
+        cy.wait(500);
+        cy.get('span').contains('Person or Organization').should('be.visible').siblings('.row').click();
+        cy.get('.select2-search__field').type('Test Person');
+        cy.wait(500);
+        cy.get('.select2-results__options li').first().click();
+        cy.get('[aria-label="Start Date"]').scrollIntoView().should('be.visible').click();
+        cy.get('[aria-label="Start Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
+        cy.get('[aria-label="End Date"]').scrollIntoView().should('be.visible').click();
+        cy.get('[aria-label="End Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
+        cy.get('.workflow-component-element').get('.btn.btn-workflow-tile.btn-success').should('be.visible').contains('Add').click();
+        cy.contains('Save and Complete Workflow').click();
     });
 
 });
