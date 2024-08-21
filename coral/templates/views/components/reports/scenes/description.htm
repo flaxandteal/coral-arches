@@ -52,7 +52,7 @@
     </div>
 </div>
 
-
+<!-- ko if: designationDescriptions().length -->
 <div class="aher-report-section">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.designationDescriptions)}, css: {'fa-angle-double-right': visible.designationDescriptions(), 'fa-angle-double-up': !visible.designationDescriptions()}" class="fa toggle"></i> {% trans "Designation Descriptions" %}</h2>
     <span data-bind="if: cards.designationDescriptions && (!designationDescriptions().length || cards.designationDescriptions.cardinality == 'n')">
@@ -103,7 +103,7 @@
         <!-- /ko -->
     </div>
 </div>
-
+<!-- /ko -->
 
 <div class="aher-report-section" data-bind="visible: !!dataConfig.citation">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.citation)}, css: {'fa-angle-double-right': visible.citation(), 'fa-angle-double-up': !visible.citation()}" class="fa toggle"></i> {% trans "Citations" %}</h2>

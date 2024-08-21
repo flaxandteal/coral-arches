@@ -37,6 +37,7 @@
 <!-- /ko -->
 
 <!-- Incident Report -->
+<!-- ko if: incidentReports().length -->
 <div  class="aher-report-section">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.incidentReports)}, css: {'fa-angle-double-right': visible.incidentReports(), 'fa-angle-double-up': !visible.incidentReports()}" class="fa toggle"></i> {% trans "Incident Reports" %}</h2>
     <a data-bind="{if: cards.incidentReports, click: function(){addNewTile(cards.incidentReports)}}" class="aher-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Reference" %}</a>
@@ -98,6 +99,7 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
 <!-- Artefact condition section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.artefactCondition">
