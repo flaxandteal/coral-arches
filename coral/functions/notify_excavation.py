@@ -22,6 +22,7 @@ RESOURCE_ID = '991c49b2-48b6-11ee-85af-0242ac140007'
 GRADE_E_DECISION = 'a68fa38c-c430-11ee-bc4b-0242ac180006'
 GRADE_D_DECISION = '2a5151f0-c42e-11ee-94bf-0242ac180006'
 CLASSIFICATION_TYPE = '8d13575c-dc70-11ee-8def-0242ac120006'
+STAGE_OF_APPLICATION = 'a79fedae-bad5-11ee-900d-0242ac180006'
 
 #response slugs
 EXCAVATION_SLUG = 'licensing-workflow'
@@ -192,7 +193,19 @@ class ReportStrategy(NotificationStrategy):
 
 class ApplicationDetailsStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
-        pass
+        name, resource_instance_id = self.get_resource_details(tile)
+        name = name.removeprefix('Excavation Licence').strip()
+
+        soa_id = tile.data[STAGE_OF_APPLICATION]
+
+        if soa_id:
+            soa_string = self.get_domain_value_string(soa_id, STAGE_OF_APPLICATION)
+            message = f"The Stage of Application for {name} has been updated to {soa_string}"
+
+            notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
+                                        
+            groups_to_notify = [ADMIN_GROUP]
+            self.notify_groups(user, groups_to_notify, notification)
 
 class NotificationManager():
     strategy_registry = {
