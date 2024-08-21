@@ -116,13 +116,14 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'base-record-legacy-id',
                   tilesManaged: 'one',
                   parameters: {
                     resourceid: "['search-step']['base-record'][0]['selectedResourceId']",
                     nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
                     tileid: "['search-step']['base-record'][0]['systemRef']",
+                    labels: [["HA Number","Base HA Number"]],
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
                       '325a441c-efe4-11eb-9283-a87eeabdefba'
@@ -131,13 +132,14 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'merge-record-legacy-id',
                   tilesManaged: 'one',
                   parameters: {
                     resourceid: "['merging-step']['merge-record'][0]['selectedResourceId']",
                     nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
                     tileid: "['merging-step']['merge-record'][0]['systemRef']",
+                    labels: [["HA Number","Merged HA Number"]],
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
                       '325a441c-efe4-11eb-9283-a87eeabdefba'
