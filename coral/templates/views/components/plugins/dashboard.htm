@@ -51,7 +51,7 @@
           <div class='branch-list-loading-mask'></div>
         <!--/ko-->
         <!--ko if: !loadingCards()-->
-          <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; padding: 0 5rem">          
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; padding: 0 5rem">          
             <!-- ko foreach: resources()-->
               <div data-bind="component: { name: 'dashboard-card', params: { data: $data } }"></div>
             <!--/ko-->

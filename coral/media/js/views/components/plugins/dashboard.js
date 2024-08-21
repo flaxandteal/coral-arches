@@ -111,13 +111,11 @@ define([
         if (window.innerWidth < 1000){
             this.itemsPerPage(2);
         }
-        else if (window.innerWidth < 1400){
+        else if (window.innerWidth < 1600){
             this.itemsPerPage(4);
         }
-        else if (window.innerWidth < 1800){
+        else if (window.innerWidth < 2200){
             this.itemsPerPage(6);
-        } else {
-            this.itemsPerPage(8);
         }
       }
 
@@ -137,7 +135,7 @@ define([
 
       window.addEventListener('resize', debounce(async () => {
           const prevItemsPerPage = this.itemsPerPage();
-          updateItemsPerPage(this);
+          updateItemsPerPage();
           if (prevItemsPerPage === this.itemsPerPage()){
             return
           }
