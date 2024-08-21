@@ -83,9 +83,23 @@ class Dashboard(View):
                     })
                 cache.set(cache_key, cache_data, 60 * 15)
 
-            paginator = Paginator(task_resources, request.GET.get('itemsPerPage', 10))
-            page_number = request.GET.get('page', 1)
-            page_obj = paginator.get_page(page_number)
+            page = int(request.GET.get('page', 1))
+            items_per_page = int(request.GET.get('itemsPerPage', 10))
+            paginator = Paginator(task_resources, items_per_page)
+            pages = [page]
+            if paginator.num_pages > 1:
+                before = list(range(1, page))
+                after = list(range(page + 1, paginator.num_pages + 1))
+                default_ct = 2
+                ct_before = default_ct if len(after) > default_ct else default_ct * 2 - len(after)
+                ct_after = default_ct if len(before) > default_ct else default_ct * 2 - len(before)
+                if len(before) > ct_before:
+                    before = [1, None] + before[-1 * (ct_before - 1) :]
+                if len(after) > ct_after:
+                    after = after[0 : ct_after - 1] + [None, paginator.num_pages]
+                pages = before + pages + after
+            
+            page_obj = paginator.get_page(page)
 
             return JsonResponse({
                 'paginator': {
@@ -95,7 +109,7 @@ class Dashboard(View):
                     'has_other_pages': page_obj.has_other_pages(),
                     'has_previous': page_obj.has_previous(),
                     'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
-                    'pages': list(paginator.page_range),
+                    'pages': pages,
                     'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
                     'start_index': page_obj.start_index(),
                     'total': paginator.count,
