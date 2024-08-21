@@ -12,7 +12,6 @@ define([
     this.WORKFLOW_LABEL = 'workflow-slug';
     this.WORKFLOW_OPEN_MODE_LABEL = 'workflow-open-mode';
     this.WORKFLOW_COMPONENT_ABSTRACTS_LABEL = 'workflow-component-abstracts';
-    this.WORKFLOW_RECENTLY_OPENED_LABEL = 'workflow-recently-opened';
     this.RESOURCE_ID_LABEL = 'resource-id';
 
     this.openableWorkflows = params.openableWorkflows;
@@ -22,14 +21,7 @@ define([
     this.workflow = ko.observable();
     this.graphIds = ko.observable();
 
-    this.recentlyOpened = ko.observable();
-
     this.searchString = ko.observable();
-
-    this.recentlyOpenedResources = ko.computed(() => {
-      const items = this.recentlyOpened()?.[this.workflowSlug()];
-      return items ? Object.values(items) : [];
-    }, this);
 
     this.getWorkflowSlug = () => {
       let searchParams = new URLSearchParams(window.location.search);
@@ -51,12 +43,6 @@ define([
       );
       const data = await tilesResponse.json();
       return data.tiles;
-    };
-
-    this.openRecent = async (resourceId) => {
-      if (!resourceId) return;
-      this.selectedResource(resourceId);
-      this.openWorkflow();
     };
 
     this.setupWorkflow = async () => {
@@ -97,7 +83,6 @@ define([
       if (!this.selectedResource()) return;
       this.loading(true);
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
-      await this.updateRecentlyOpened(this.selectedResource());
       await this.setupWorkflow();
       if (!this.selectedResource()) {
         this.loading(false);
@@ -121,74 +106,6 @@ define([
       window.window.location = this.workflowUrl();
     };
 
-    this.updateRecentlyOpened = async (resourceId) => {
-      const slug = this.workflowSlug();
-      const response = await $.ajax({
-        type: 'GET',
-        url: arches.urls.resource_descriptors + resourceId,
-        dataType: 'json',
-        context: this,
-        error: (response, status, error) => {
-          console.log(response, status, error);
-        }
-      });
-      const newOpen = {
-        name: response.displayname,
-        resourceId: resourceId
-      };
-      if (!(slug in this.recentlyOpened())) {
-        this.recentlyOpened()[slug] = {
-          [resourceId]: newOpen
-        };
-      } else {
-        this.recentlyOpened()[slug][resourceId] = newOpen;
-      }
-      this.saveRecentlyOpened();
-    };
-
-    this.saveRecentlyOpened = () => {
-      localStorage.setItem(
-        this.WORKFLOW_RECENTLY_OPENED_LABEL,
-        JSON.stringify(this.recentlyOpened())
-      );
-    };
-
-    this.validateRecentlyOpened = async (workflows) => {
-      if (!workflows) return;
-
-      const removeWorkflows = [];
-
-      const validate = (resourceId) =>
-        new Promise(async (resolve, reject) => {
-          let tiles = [];
-          try {
-            tiles = await this.fetchTileData(resourceId);
-          } catch (error) {
-            console.error(error);
-          };
-          if (!tiles.length) {
-            removeWorkflows.push(resourceId);
-          }
-          resolve();
-        });
-
-      await Promise.all(Object.values(workflows).map(({ resourceId }) => validate(resourceId)));
-
-      const recentlyOpened = this.recentlyOpened();
-      removeWorkflows.forEach((resourceId) => {
-        delete recentlyOpened[this.workflowSlug()][resourceId];
-      });
-      this.recentlyOpened(recentlyOpened);
-      this.saveRecentlyOpened();
-    };
-
-    this.clearRecentlyOpened = () => {
-      const recentlyOpened = this.recentlyOpened();
-      recentlyOpened[this.workflowSlug()] = {};
-      this.recentlyOpened(recentlyOpened);
-      this.saveRecentlyOpened();
-    };
-
     this.init = async () => {
       this.loading(true);
       this.workflowSlug(this.getWorkflowSlug());
@@ -196,15 +113,11 @@ define([
       this.workflow(this.getWorkflowData());
       this.searchString(this.workflow().searchString);
       this.graphIds(this.workflow().graphIds);
-      this.recentlyOpened(
-        JSON.parse(localStorage.getItem(this.WORKFLOW_RECENTLY_OPENED_LABEL)) || {}
-      );
       if (this.workflow().checkForResourceId && this.getResourceIdFromUrl()) {
         this.selectedResource(this.getResourceIdFromUrl());
         this.openWorkflow();
         return;
       }
-      await this.validateRecentlyOpened(this.recentlyOpened()[this.workflowSlug()]);
       this.loading(false);
     };
 
