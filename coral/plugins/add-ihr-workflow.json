@@ -90,7 +90,7 @@
                   "labels": [["Heritage Asset Type", "Monument Type"]]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "c1861709-ff37-4ce8-bd62-60be197cb524"
               },
               {
@@ -314,10 +314,14 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "3897b87a-1902-11ef-aa9f-0242ac150006",
-                  "semanticName": "Garden Sign Off"
+                  "semanticName": "Garden Sign Off",
+                  "labels": [
+                    ["Input Date Value", "Input Date"],
+                    ["Approved Date Value", "Approved Date"]
+                  ]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "c9380a22-31a7-46eb-9730-1f06c86d6ca8"
               },
               {
