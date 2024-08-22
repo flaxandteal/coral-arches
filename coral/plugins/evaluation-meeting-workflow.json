@@ -12,6 +12,7 @@
         "name": "start-meeting-step",
         "title": "Start Meeting",
         "required": false,
+        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [

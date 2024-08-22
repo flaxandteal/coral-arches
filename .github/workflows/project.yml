@@ -1,6 +1,10 @@
 name: Build Arches project
 run-name: Build Arches project
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
 env:
   ARCHES_BASE: ghcr.io/flaxandteal/arches-base:coral-7.6
   ARCHES_PROJECT: coral
@@ -54,7 +58,7 @@ jobs:
           context: .
           push: true
           file: docker/Dockerfile
-          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             ARCHES_BASE=${{ env.ARCHES_BASE }}
@@ -63,7 +67,7 @@ jobs:
         id: extract_image_name
         run: |
           name=${{ fromJSON(steps.build.outputs.metadata)['image.name'] }}
-          echo "image_name=$name" >> $GITHUB_OUTPUT
+          echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
   Build-Arches-Static:
     runs-on: [self-hosted]
     needs: [Build-Arches]
@@ -114,7 +118,7 @@ jobs:
           file: docker/Dockerfile.static
           network: host
           allow: network.host
-          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             ARCHES_DYNAMIC_IMAGE=${{ needs['Build-Arches'].outputs.image }}
@@ -127,7 +131,7 @@ jobs:
         id: extract_image_name
         run: |
           name=${{ fromJSON(steps.buildx.outputs.metadata)['image.name'] }}
-          echo "image_name=$name" >> $GITHUB_OUTPUT
+          echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
     services:
       elasticsearch:
         image: elasticsearch:8.4.0
@@ -251,7 +255,7 @@ jobs:
           file: docker/Dockerfile.static-py
           network: host
           allow: network.host
-          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VERSION=${{ steps.meta.outputs.tags }}-${{ github.run_id }}
@@ -263,7 +267,7 @@ jobs:
         id: extract_image_name
         run: |
           name=${{ fromJSON(steps.buildx.outputs.metadata)['image.name'] }}
-          echo "image_name=$name" >> $GITHUB_OUTPUT
+          echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
   # Test-Arches:
   #   runs-on: [self-hosted]
   #   needs: [Build-Arches-Final]

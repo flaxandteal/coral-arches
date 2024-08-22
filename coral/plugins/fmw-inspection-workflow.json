@@ -12,6 +12,7 @@
         "name": "start-step",
         "title": "Start",
         "required": true,
+        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -29,6 +30,9 @@
                       "lookupName": "locationData",
                       "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
                     }
+                  ],
+                  "labels": [
+                    ["Consultation ID", "Report ID"]
                   ]
                 },
                 "tilesManaged": "one",
@@ -49,7 +53,7 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Monument or Area", "SMR Number"]],
+                  "labels": [["Monument or Area", "SMR Number(s)"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d"
@@ -57,16 +61,6 @@
                 "tilesManaged": "one",
                 "componentName": "get-selected-monument-details",
                 "uniqueInstanceName": "monument-select"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "e85f6714-24cc-11ef-a3a4-0242ac130006",
-                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "38e300d3-20d8-4b58-8b77-3bed76a28e29"
               },
               {
                 "parameters": {
@@ -128,10 +122,13 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "e26ffc04-fb16-11ee-b5d2-0242ac190006"
+                  "nodegroupid": "e26ffc04-fb16-11ee-b5d2-0242ac190006",
+                  "labels": [
+                    ["Description", "Recommendations"]
+                  ]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "recommendation-description"
               },
               {

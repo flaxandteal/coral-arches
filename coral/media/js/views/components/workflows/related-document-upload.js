@@ -20,6 +20,7 @@ define([
     this.resourceModelDigitalObjectNodeId =
       params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
     this.fileObjectNamePrefix = params?.fileObjectNamePrefix || 'Files for ';
+    this.resourceParentTile = params.resourceParentTile;
 
     /**
      * The group id refers to the Digital Object name group.
@@ -160,19 +161,28 @@ define([
        *
        * This can be found in datatypes.py on line 2080.
        */
+
+      prefilledKeys = {};
+      if (params.prefilledNodes) {
+        params.prefilledNodes.forEach(([nodeId, value]) => {
+          prefilledKeys[nodeId] = value;
+        });
+      }
+
       const fileTileTemplate = {
         tileid: '',
         data: {
-          [self.resourceModelDigitalObjectNodeGroupId]: [
+          [self.resourceModelDigitalObjectNodeId]: [
             {
               resourceId: self.resourceId(),
               ontologyProperty: '',
               inverseOntologyProperty: ''
             }
-          ]
+          ],
+          ...prefilledKeys
         },
         nodegroup_id: self.resourceModelDigitalObjectNodeGroupId,
-        parenttile_id: null,
+        parenttile_id: self.resourceParentTile,
         resourceinstance_id: ko.unwrap(self.resourceModelId),
         sortorder: 0
       };

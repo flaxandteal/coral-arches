@@ -48,6 +48,7 @@
         "name": "incident-reference-step",
         "title": "Incident Reference",
         "required": true,
+        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -302,7 +303,8 @@
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "fileObjectNamePrefix": "Documentation for ",
-                  "resourceModelDigitalObjectNodeGroupId": "58f177c8-d640-11ee-8b04-0242ac180006"
+                  "resourceModelDigitalObjectNodeGroupId": "58f177c8-d640-11ee-8b04-0242ac180006",
+                  "resourceParentTile": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']"
                 },
                 "tilesManaged": "one",
                 "componentName": "related-document-upload",

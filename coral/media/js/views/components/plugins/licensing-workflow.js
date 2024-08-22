@@ -21,6 +21,7 @@ define([
           name: 'init-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
+          hiddenWorkflowButtons: ['undo'],
           informationboxdata: {
             heading: 'Important Information',
             text: 'Please note that it could take up to a minute to complete the initialisation for the License application. If something goes wrong during the process an error will be displayed to you.'

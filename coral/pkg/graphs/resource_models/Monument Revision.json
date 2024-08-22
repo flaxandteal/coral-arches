@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "280b2f9d-e879-4e5f-984e-157ae4f8ffbd",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "SMC Documentation File(s)"
+                    },
+                    "nodegroup_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "69201a00-4857-46d7-a74e-acafa98d9352",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -2277,6 +2304,27 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "280b2f9d-e879-4e5f-984e-157ae4f8ffbd",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "SMC Documentation File(s)",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "1d2ab1dd-3a4d-469c-b58d-6dbf18ac92c3",
+                    "label": {
+                        "en": "SMC Documentation File(s)"
+                    },
+                    "node_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "c0895e0c-ff03-4d89-b333-f82197e113ec",
                     "config": {
                         "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
@@ -3864,7 +3912,7 @@
                     "node_id": "3c5103ba-cc63-4abb-afa1-f0008edf040b",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "3c111979-4d34-46a8-af55-95cc60dcada5",
@@ -6679,7 +6727,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Input Date value",
+                        "label": "Input Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -6687,7 +6735,7 @@
                     },
                     "id": "5e63e1ad-613b-49b8-80b0-fa33b3224c17",
                     "label": {
-                        "en": "Input Date value"
+                        "en": "Input Date"
                     },
                     "node_id": "229d12d0-1908-11ef-aa9f-0242ac150006",
                     "sortorder": 6,
@@ -6807,7 +6855,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Approved Date Value",
+                        "label": "Approved Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -6815,7 +6863,7 @@
                     },
                     "id": "61bd2f0e-9014-4302-806e-27958dfd0c69",
                     "label": {
-                        "en": "Approved Date Value"
+                        "en": "Approved Date"
                     },
                     "node_id": "7f932826-1908-11ef-aa9c-0242ac150006",
                     "sortorder": 8,
@@ -6895,14 +6943,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Approved By Value",
+                        "label": "Approved By",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "654584b5-1114-49f6-84cd-83c84b054287",
                     "label": {
-                        "en": "Approved By Value"
+                        "en": "Approved By"
                     },
                     "node_id": "f43e435e-1908-11ef-aa9f-0242ac150006",
                     "sortorder": 10,
@@ -11180,7 +11228,7 @@
                     "node_id": "71061c02-ce20-401d-941f-12f1cd3e92b9",
                     "sortorder": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "daf1d835-92df-4bd9-9732-966e26df170d",
@@ -14051,7 +14099,7 @@
                     "node_id": "12d7bf22-98b2-4d89-a50c-ae25ba5c55a7",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "cf9aa0f4-5e9f-4dd3-b24c-8d2500f41f09",
@@ -15015,6 +15063,15 @@
                 "en": ""
             },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
+                    "edgeid": "8fdcbc91-5e5e-4792-ac91-d42d9f37fc29",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "rangenode_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3"
+                },
                 {
                     "description": null,
                     "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
@@ -21834,6 +21891,36 @@
             ],
             "nodes": [
                 {
+                    "alias": "smc_documentation_file_s_",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                                "name": "Digital Object"
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "SMC Documentation File(s)",
+                    "nodegroup_id": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "nodeid": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "wards_and_district_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -23397,7 +23484,7 @@
                     "config": {
                         "rdmCollection": "1a161d2b-5887-4ad2-800e-ffa073f3b2bd"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -24435,7 +24522,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Input Date value",
+                    "name": "Input Date Value",
                     "nodegroup_id": "dc5ae88e-1906-11ef-aa9c-0242ac150006",
                     "nodeid": "229d12d0-1908-11ef-aa9f-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
@@ -26242,7 +26329,7 @@
                     "config": {
                         "rdmCollection": "e5babb70-bcfa-48aa-81df-79b11ce9b1ae"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -29826,7 +29913,7 @@
                     "config": {
                         "rdmCollection": "9881e48c-95f1-42da-bc55-76a6b6f34f22"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
