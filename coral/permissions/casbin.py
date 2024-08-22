@@ -730,7 +730,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     def get_restricted_instances(self, user, search_engine=None, allresources=False):
         logger.debug(f"Getting restricted instances: {user}")
 
-        if allresources is False and user.is_superuser is True:
+        if user.is_superuser is True:
             return []
         
         if allresources is True and not search_engine:
