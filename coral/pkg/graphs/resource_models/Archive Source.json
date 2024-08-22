@@ -2516,7 +2516,7 @@
                     "node_id": "602c8b40-1aba-11ec-9afc-a87eeabdefba",
                     "sortorder": 15,
                     "visible": true,
-                    "widget_id": "adfd15ce-dbab-11e7-86d1-0fcf08612b27"
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "3001afe1-b46a-11ea-b3a1-f875a44e0e11",
@@ -2537,7 +2537,7 @@
                     "node_id": "602c8b41-1aba-11ec-8495-a87eeabdefba",
                     "sortorder": 16,
                     "visible": true,
-                    "widget_id": "adfd15ce-dbab-11e7-86d1-0fcf08612b27"
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "93e7cdef-eeb7-11eb-bb0a-a87eeabdefba",
@@ -8274,7 +8274,7 @@
                         "multiplier_if_both": 1,
                         "multiplier_if_uncertain": 1
                     },
-                    "datatype": "edtf",
+                    "datatype": "date",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -8303,7 +8303,7 @@
                         "multiplier_if_both": 1,
                         "multiplier_if_uncertain": 1
                     },
-                    "datatype": "edtf",
+                    "datatype": "date",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
