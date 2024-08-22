@@ -6,7 +6,7 @@ define([
   'views/components/workflows/default-card-util',
   'views/components/workflows/licensing-workflow/license-initial-step',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/license-cover-letter',
+  'views/components/workflows/licensing-workflow/licence-cover-letter',
   'views/components/workflows/file-template',
   'views/components/workflows/licensing-workflow/licence-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-license-number',
