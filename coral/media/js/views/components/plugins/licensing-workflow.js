@@ -9,7 +9,7 @@ define([
   'views/components/workflows/licensing-workflow/licence-cover-letter',
   'views/components/workflows/file-template',
   'views/components/workflows/licensing-workflow/licence-final-step',
-  'views/components/workflows/licensing-workflow/fetch-generated-license-number',
+  'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
