@@ -31,7 +31,7 @@ ASSOCIATED_ACTIVIY_NODEGROUP = "a9f53f00-48b6-11ee-85af-0242ac140007"
 ASSOCIATED_ACTIVIY_NODE = "a9f53f00-48b6-11ee-85af-0242ac140007"
 
 ASSOCIATED_LICENCE_NODEGROUP = "879fc326-02f6-11ef-927a-0242ac150006"
-ASSOCIATED_LICENCE_NODE = "879fc326-02f6-11ef-927a-0242ac150006"
+ASSOCIATED_LICENCE_NODE = ASSOCIATED_LICENCE_NODEGROUP
 
 
 LICENCE_NUMBER_PREFIX = "AE"
@@ -274,7 +274,7 @@ class LicenceNumberFunction(BaseFunction):
             ).first()
             if not ass_activity_tile:
                 ass_activity_tile = Tile.get_blank_tile_from_nodegroup_id(
-                    ASSOCIATED_LICENCE_NODEGROUP, resourceid=resource_instance_id
+                    ASSOCIATED_LICENCE_NODEGROUP, resourceid=activity_resource_id
                 )
             ass_activity_tile.data[ASSOCIATED_LICENCE_NODE] = [
                 {
@@ -287,4 +287,5 @@ class LicenceNumberFunction(BaseFunction):
             ass_activity_tile.save()
         except Exception as e:
             print(f"Error associating licence: {e}")
+            raise e
         return
