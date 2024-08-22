@@ -3933,7 +3933,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Approved Date Value",
+                        "label": "Approved Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -3941,7 +3941,7 @@
                     },
                     "id": "373b0dab-101c-49af-9923-5c27c2bdc229",
                     "label": {
-                        "en": "Approved Date Value"
+                        "en": "Approved Date"
                     },
                     "node_id": "ac25af94-1903-11ef-aa9c-0242ac150006",
                     "sortorder": 11,
@@ -7045,7 +7045,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Input Date Value",
+                        "label": "Input Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -7053,7 +7053,7 @@
                     },
                     "id": "767b2ae4-831f-4911-b010-2f65930a3ee0",
                     "label": {
-                        "en": "Input Date Value"
+                        "en": "Input Date"
                     },
                     "node_id": "d9368892-1902-11ef-aa9c-0242ac150006",
                     "sortorder": 9,
@@ -11544,14 +11544,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Approved By Value",
+                        "label": "Approved By",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "8d53e3db-226e-4ad5-b9da-e71a120bf7be",
                     "label": {
-                        "en": "Approved By Value"
+                        "en": "Approved By"
                     },
                     "node_id": "9382b7b4-1905-11ef-aa9f-0242ac150006",
                     "sortorder": 12,

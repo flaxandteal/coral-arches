@@ -6727,7 +6727,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Input Date value",
+                        "label": "Input Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -6735,7 +6735,7 @@
                     },
                     "id": "5e63e1ad-613b-49b8-80b0-fa33b3224c17",
                     "label": {
-                        "en": "Input Date value"
+                        "en": "Input Date"
                     },
                     "node_id": "229d12d0-1908-11ef-aa9f-0242ac150006",
                     "sortorder": 6,
@@ -6855,7 +6855,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Approved Date Value",
+                        "label": "Approved Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -6863,7 +6863,7 @@
                     },
                     "id": "61bd2f0e-9014-4302-806e-27958dfd0c69",
                     "label": {
-                        "en": "Approved Date Value"
+                        "en": "Approved Date"
                     },
                     "node_id": "7f932826-1908-11ef-aa9c-0242ac150006",
                     "sortorder": 8,
@@ -6943,14 +6943,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Approved By Value",
+                        "label": "Approved By",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "654584b5-1114-49f6-84cd-83c84b054287",
                     "label": {
-                        "en": "Approved By Value"
+                        "en": "Approved By"
                     },
                     "node_id": "f43e435e-1908-11ef-aa9f-0242ac150006",
                     "sortorder": 10,
@@ -24522,7 +24522,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Input Date value",
+                    "name": "Input Date Value",
                     "nodegroup_id": "dc5ae88e-1906-11ef-aa9c-0242ac150006",
                     "nodeid": "229d12d0-1908-11ef-aa9f-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
