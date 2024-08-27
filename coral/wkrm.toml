@@ -90,6 +90,14 @@ graphid = "d9318eb6-f28d-427c-b061-6fe3021ce8aa"
 model_name = "Monument"
 graphid = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
 
+[Monument.remapping]
+nismr_numbering_type = "nismr_numbering_type"
+generated_smr = "generated_smr"
+show_ihr_number = "show_ihr_number"
+show_smr_number = "show_smr_number"
+show_historic_parks_and_gardens_number = "show_historic_parks_and_gardens_number"
+show_hb_number = "show_hb_number"
+
 ["Monument Revision"]
 model_name = "Monument Revision"
 graphid = "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
