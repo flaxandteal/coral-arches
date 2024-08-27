@@ -91,7 +91,12 @@ model_name = "Monument"
 graphid = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
 
 [Monument.remapping]
+nismr_numbering_type = "nismr_numbering_type"
 generated_smr = "generated_smr"
+show_ihr_number = "show_ihr_number"
+show_smr_number = "show_smr_number"
+show_historic_parks_and_gardens_number = "show_historic_parks_and_gardens_number"
+show_hb_number = "show_hb_number"
 
 ["Monument Revision"]
 model_name = "Monument Revision"
