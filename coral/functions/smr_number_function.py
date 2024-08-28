@@ -52,9 +52,6 @@ class SmrNumberFunction(BaseFunction):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(GENERATED_SMR_NODE_ID, None)
 
-        if not id_number:
-            return
-
         map_sheet_id = models.Value.objects.filter(
             valueid=tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID, None)
         ).first()

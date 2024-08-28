@@ -75,7 +75,10 @@ class SmrNumber:
 
             if id_number_tile:
                 print("A ID number has already been created for this resource")
-                return
+                id_number = id_number_tile.data.get(SMR_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
+                if not id_number:
+                    raise ValueError('No ID found but one has been created for the resource')
+                return id_number
 
         latest_id_number = None
         try:
@@ -100,21 +103,23 @@ class SmrNumber:
         return id_number
 
     def validate_id(self, id_number, resource_instance_id=None):
-        try:
-            data_query = {
-                SMR_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
-            }
-            if isinstance(id_number, dict):
-                data_query[SMR_NUMBER_NODE_ID] = id_number
+        data_query = {
+            SMR_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+        }
+        if isinstance(id_number, dict):
+            data_query[SMR_NUMBER_NODE_ID] = id_number
 
-            id_number_tile = Tile.objects.filter(
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                data__contains=data_query,
-            ).exclude(resourceinstance_id=resource_instance_id).first()
+        id_number_value = data_query.get(SMR_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
 
-            if id_number_tile:
-                return False
-        except Exception as e:
-            print(f"Failed validating ID number: {e}")
-            return False
-        return True
+        if not id_number_value:
+            raise ValueError('To generate a new SMR Number, select a NISMR Numbering and click "generate"')
+        
+        if not id_number_value.startswith(self.map_sheet_id):
+            raise ValueError('The generated SMR Number does not align with the selected NISMR Numbering.')
+
+        id_number_tile = Tile.objects.filter(
+            nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+            data__contains=data_query,
+        ).exclude(resourceinstance_id=resource_instance_id).first()
+
+        return not bool(id_number_tile)
