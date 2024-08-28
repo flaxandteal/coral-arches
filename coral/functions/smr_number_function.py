@@ -61,7 +61,7 @@ class SmrNumberFunction(BaseFunction):
 
         sn = SmrNumber(map_sheet_id=map_sheet_id.value)
 
-        if sn.validate_id(id_number):
+        if sn.validate_id(id_number, resource_instance_id):
             print("SMR Number is valid: ", id_number)
             self.update_ha_references(resource_instance_id, id_number)
             return

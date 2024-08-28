@@ -99,23 +99,19 @@ class SmrNumber:
         print(f"ID number is unique, ID number: {id_number}")
         return id_number
 
-    def validate_id(self, id_number):
+    def validate_id(self, id_number, resource_instance_id=None):
         try:
+            data_query = {
+                SMR_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+            }
             if isinstance(id_number, dict):
-                id_number_tile = Tile.objects.filter(
-                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={
-                        SMR_NUMBER_NODE_ID: id_number
-                    },
-                ).first()
-            else:
-                # Runs a query searching for an identical ID value
-                id_number_tile = Tile.objects.filter(
-                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={
-                        SMR_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
-                    },
-                ).first()
+                data_query[SMR_NUMBER_NODE_ID] = id_number
+
+            id_number_tile = Tile.objects.filter(
+                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                data__contains=data_query,
+            ).exclude(resourceinstance_id=resource_instance_id).first()
+
             if id_number_tile:
                 return False
         except Exception as e:
