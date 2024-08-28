@@ -9,15 +9,39 @@ define([
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
-    console.log('generate-smr-number: ', this);
-
-    this.smrNumber = ko.observable('');
-
     this.NISMR_NUMBERING_TYPE_NODE_ID = '86c19e92-3ea7-11ef-818b-0242ac140006';
     this.GENERATED_SMR_NODE_ID = 'b46b5bba-3ec2-11ef-bb61-0242ac140006';
 
+    this.smrNumber = ko.observable('');
+    this.nismrTypeValue = ko.observable();
+
+    this.initialSelectedNismr = this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
+
     this.hasSelectedNismr = ko.computed(() => {
       return !!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
+    }, this);
+
+    this.hasChangedNismrType = ko.computed(() => {
+      if (!this.initialSelectedNismr) return false;
+      return this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() !== this.initialSelectedNismr;
+    });
+
+    this.hasGeneratedNew = ko.computed(() => {
+      if (!this.smrNumber() || !this.nismrTypeValue()) return false;
+      return this.smrNumber().startsWith(this.nismrTypeValue());
+    }, this);
+
+    this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID].subscribe(async (value) => {
+      const response = await $.ajax({
+        type: 'GET',
+        url: arches.urls.concept_value + `?valueid=${value}`,
+        dataType: 'json',
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
+      this.nismrTypeValue(response.value);
     }, this);
 
     this.generateSmrNumber = async () => {
@@ -37,6 +61,7 @@ define([
           console.log(response, status, error);
         }
       });
+      this.smrNumber(response.smrNumber);
       if (ko.isObservable(this.tile.data[this.GENERATED_SMR_NODE_ID])) {
         this.tile.data[this.GENERATED_SMR_NODE_ID]({
           en: {
@@ -53,6 +78,11 @@ define([
         };
       }
       params.pageVm.loading(false);
+    };
+
+    this.resetNismrType = () => {
+      this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID](this.initialSelectedNismr);
+      this.generateSmrNumber();
     };
   }
 
