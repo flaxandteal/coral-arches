@@ -59,23 +59,32 @@ class HaNumber:
             return self.generate_id_number(resource_instance_id, attempts)
 
         if resource_instance_id:
-          id_number_tile = None
-          try:
-              generated_id_query = {
-                  f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__regex": ID_NUMBER_PATTERN,
-              }
-              id_number_tile = Tile.objects.filter(
-                  resourceinstance_id=resource_instance_id,
-                  nodegroup_id=SYSTEM_REFERENCE_NODEGROUP,
-                  **generated_id_query,
-              ).first()
-          except Exception as e:
-              print(f"Failed checking if ID number tile already exists: {e}")
-              return retry()
+            id_number_tile = None
+            try:
+                generated_id_query = {
+                    f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__regex": ID_NUMBER_PATTERN,
+                }
+                id_number_tile = Tile.objects.filter(
+                    resourceinstance_id=resource_instance_id,
+                    nodegroup_id=SYSTEM_REFERENCE_NODEGROUP,
+                    **generated_id_query,
+                ).first()
+            except Exception as e:
+                print(f"Failed checking if ID number tile already exists: {e}")
+                return retry()
 
-          if id_number_tile:
-              print("A ID number has already been created for this resource")
-              return
+            if id_number_tile:
+                print("A ID number has already been created for this resource")
+                id_number = (
+                    id_number_tile.data.get(SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, {})
+                    .get("en", {})
+                    .get("value", None)
+                )
+                if not id_number:
+                    raise ValueError(
+                        "No ID found but one has been created for the resource"
+                    )
+                return id_number
 
         latest_id_number = None
         try:
@@ -99,20 +108,22 @@ class HaNumber:
         print(f"ID number is unique, ID number: {id_number}")
         return id_number
 
-    def validate_id(self, id_number):
-        try:
-            # Runs a query searching for an identical ID value
-            id_number_tile = Tile.objects.filter(
+    def validate_id(self, id_number, resource_instance_id=None):
+        data_query = {
+            SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID: {
+                "en": {"direction": "ltr", "value": id_number}
+            }
+        }
+        if isinstance(id_number, dict):
+            data_query[SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID] = id_number
+
+        id_number_tile = (
+            Tile.objects.filter(
                 nodegroup_id=SYSTEM_REFERENCE_NODEGROUP,
-                data__contains={
-                    SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID: {
-                        "en": {"direction": "ltr", "value": id_number}
-                    }
-                },
-            ).first()
-            if id_number_tile:
-                return False
-        except Exception as e:
-            print(f"Failed validating ID number: {e}")
-            return False
-        return True
+                data__contains=data_query,
+            )
+            .exclude(resourceinstance_id=resource_instance_id)
+            .first()
+        )
+
+        return not bool(id_number_tile)
