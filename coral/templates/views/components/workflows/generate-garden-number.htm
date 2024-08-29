@@ -335,13 +335,18 @@
                 }, click: function(data, e) { if (!widget.selected() && self.preview) {widget.selected(true);}
             }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
-                <div style="color: #880000; margin-left:0.5rem" data-bind="text: errorMessage, visible: !hasSelectedCounty()"></div>
+                {% comment %} <div style="color: #880000; margin-left:0.5rem" data-bind="text: errorMessage, visible: !hasSelectedCounty()"></div> {% endcomment %}
                 <div class="row widget-wrapper">
+                    <div style="padding-bottom: 6px; display: flex; flex-direction: column">
+                        <span style="color: red" data-bind="visible: !hasSelectedCounty() && !hasRemovedCounty()">No county was selected on the Location Details step.</span>
+                        <span style="color: red" data-bind="visible: hasRemovedCounty()">County has been removed. Saving on this page will clear the previously configured Historic Parks and Gardens Number.</span>
+                        <span data-bind="visible: hasRemovedCounty()">HPG Number that will be cleared: <span data-bind="text: initialNumber"></span></span>
+                    </div>
                     <button
                         data-bind="click: () => generateGardenNumber(), disable: !hasSelectedCounty()"
                         class="btn btn-success"
                     >
-                        <span>Generate Historic Parks & Garden Number</span>
+                        <span>Generate</span>
                     </button>
                 </div>
             </form>
