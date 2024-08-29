@@ -12,6 +12,7 @@
         "name": "archive-reference-step",
         "title": "Archive Reference",
         "required": true,
+        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -56,10 +57,13 @@
                     "145f9619-9ad2-11ea-83ec-f875a44e0e11"
                   ],
                   "nodegroupid": "145f9615-9ad2-11ea-b4d3-f875a44e0e11",
-                  "semanticName": "Archive Source Names"
+                  "semanticName": "Archive Source Names",
+                  "labels": [
+                    ["Archive Source Name", "File Title"]
+                  ]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "8aafa01f-fa50-4a41-9564-47457e539684"
               },
               {

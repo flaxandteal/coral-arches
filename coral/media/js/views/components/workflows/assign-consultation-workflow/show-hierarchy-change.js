@@ -15,7 +15,8 @@ define([
 
     this.hierarchyOptions = ko.observableArray([
       { text: 'Statutory', id: 'd06d5de0-2881-4d71-89b1-522ebad3088d' },
-      { text: 'Non-statutory', id: 'be6eef20-8bd4-4c64-abb2-418e9024ac14' }
+      { text: 'Non-statutory', id: 'be6eef20-8bd4-4c64-abb2-418e9024ac14' },
+      { text: 'Please select an Application Type', id: '09646513-78ed-4f20-b9a9-11dc0fdca36b'}
     ]);
     this.selectedHierarchy = ko.observable();
 
@@ -30,17 +31,25 @@ define([
     ];
 
     this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11'].subscribe((value) => {
-      if (this.STATUTORY_VALUES.includes(value)) {
-        this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
+      if (value) {
+        if (this.STATUTORY_VALUES.includes(value)) {
+          this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
+        } else {
+          this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
+        }
       } else {
-        this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
+        this.selectedHierarchy('09646513-78ed-4f20-b9a9-11dc0fdca36b');
       }
     }, this);
 
     if (this.STATUTORY_VALUES.includes(this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']())) {
-      this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
+      if (this.STATUTORY_VALUES.includes(this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']())) {
+        this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
+      } else {
+        this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
+      }
     } else {
-      this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
+      this.selectedHierarchy('09646513-78ed-4f20-b9a9-11dc0fdca36b');
     }
   }
 

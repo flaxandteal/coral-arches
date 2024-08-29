@@ -32,15 +32,21 @@ details = {
 
 class ConsultationHierarchyFunction(BaseFunction):
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         application_type = (tile.data.get(APPLICATION_TYPE_NODE))
         hierarchy_value = ''
 
-        if application_type in STATUTORY_VALUES:
-            hierarchy_value = HIERARCHY_STATUATORY
+        if application_type:
+            if application_type in STATUTORY_VALUES:
+                hierarchy_value = HIERARCHY_STATUATORY
+            else:
+                hierarchy_value = HIERARCHY_NON_STATUATORY
         else:
-            hierarchy_value = HIERARCHY_NON_STATUATORY
+            hierarchy_value = None
 
         hierarchy_tile = None
         try:

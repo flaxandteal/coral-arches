@@ -1,0 +1,20 @@
+{
+    "pluginid": "ab85dfaf-0449-4295-a51f-6f61af17c239",
+    "name": "Open Excavation Site Visit Workflow",
+    "icon": "fa fa-edit",
+    "component": "views/components/plugins/open-excavation-site-visit-workflow",
+    "componentname": "open-excavation-site-visit-workflow",
+    "config": {
+      "show": false,
+      "openableWorkflows": [
+        {
+          "slug": "excavation-site-visit-workflow",
+          "name": "Excavation Site Visit",
+          "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"],
+          "hideRecents": true
+        }
+      ]
+    },
+    "slug": "open-excavation-site-visit-workflow",
+    "sortorder": 0
+  }
