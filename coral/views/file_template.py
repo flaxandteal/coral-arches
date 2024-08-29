@@ -1094,37 +1094,6 @@ class LicenceTemplateProvider:
         print(self.mapping)
         return self.mapping
 
-
-
-# class ExampleTemplateProvider:
-
-#     def __init__(self, resource_instance):
-#         self.resource_instance = resource_instance
-#         self.datatype_factory = DataTypeFactory()
-#         self.tiles = resource_instance.tiles
-#         self.mapping = {
-#             "Example Title": "",
-#         }
-#         self.node_ids = {}
-
-#     def get_value_from_tile(self, tile, node_id):
-#         current_node = models.Node.objects.get(nodeid=node_id)
-#         datatype = self.datatype_factory.get_instance(current_node.datatype)
-#         returnvalue = datatype.get_display_value(tile, current_node)
-#         return "" if returnvalue is None else returnvalue
-
-#     def get_mapping(self):
-#         for tile in self.tiles:
-#             nodegroup_id = str(tile.nodegroup_id)
-#             # if nodegroup_id == self.LICENSE_NUMBER_NODEGROUP:
-#             #     self.mapping["License Number"] = self.get_value_from_tile(
-#             #         tile, self.LICENSE_NUMBER_NODE
-#             #     )
-
-#         return self.mapping
-
-
-
 class DocumentHTMLParser(HTMLParser):
     def __init__(self, paragraph, document):
 

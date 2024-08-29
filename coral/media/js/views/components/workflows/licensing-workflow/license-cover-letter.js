@@ -5,7 +5,7 @@ define([
   'arches',
   'templates/views/components/workflows/licensing-workflow/license-cover-letter.htm',
   // 'plugins/knockout-select2'
-], function (ko, koMapping, _, arches, licenseCoverTemplate) {
+], function (ko, koMapping, _, arches, licenceCoverTemplate) {
   function viewModel(params) {
     const self = this;
 
@@ -82,7 +82,7 @@ define([
         seniorInspectorName: ko.observable(data?.seniorInspectorName || createTextObject()),
         signedName: ko.observable(data?.signedName || createTextObject()),
         hasAdditonalFiles: ko.observable(data?.hasAdditonalFiles || false),
-        licenseNumber: ko.observable(data?.licenseNumber || ''),
+        licenceNumber: ko.observable(data?.licenceNumber || ''),
         cmReference: ko.observable(data?.cmReference || ''),
         selectedAddress: ko.observable(data?.selectedAddress || 'applicant'),
         decisionBy: {
@@ -105,12 +105,12 @@ define([
     self.coverLetterData = self.loadCoverLetterData();
 
     this.activityResourceData = ko.observable();
-    this.licenseResourceData = ko.observable();
+    this.licenceResourceData = ko.observable();
     this.actorTileData = ko.observable();
     this.actorReportData = ko.observable([]);
     this.reportVals = {};
 
-    this.licenseNo = ko.observable(createTextObject(''));
+    this.licenceNo = ko.observable(createTextObject(''));
     this.bFileNumber = ko.observable(createTextObject(''));
 
     /**
@@ -144,7 +144,7 @@ define([
         createTextObject(
           `
           <div>Dear [recipient]</div>
-          <div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
+          <div>Further to your application on [Date], please find attached an Excavation Licence for the above mentioned location.</div>
           <br />
           <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
           <br />
@@ -190,7 +190,7 @@ define([
         .replace('[site]', self.getTextValue(self.coverLetterData.siteName) || '[site]')
         .replace('[site_address]', self.getTextValue(self.coverLetterData.addresses.site.fullAddress) || '')
         .replace('[site_county]', self.getTextValue(self.coverLetterData.addresses.site.county) || '[site_county]')
-        .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenseNumber) || '[licence_no]')
+        .replace('[licence_no]', self.getTextValue(self.coverLetterData.licenceNumber) || '[licence_no]')
         .replace('[send_date]',self.coverLetterData.dates.sendDate() || '[send_date]')
         .replace('[cmref]',self.getTextValue(self.coverLetterData.cmReference())|| '[cmref]')
         .replace('[decision_by]', self.getTextValue(self.coverLetterData.decisionBy) || '[decision_by]')
@@ -220,9 +220,9 @@ define([
       <div><span>Date: [send_date]</div></span>
       </div>`
     )
-    // if (self.getTextValue(self.coverLetterData.licenseNumber)) {
+    // if (self.getTextValue(self.coverLetterData.licenceNumber)) {
     //   result += `<span>Licence Number: ${self.getTextValue(
-    //     self.coverLetterData.licenseNumber
+    //     self.coverLetterData.licenceNumber
     //   )}</span>`;
     // }
     self.getAddressValue = (value) => {
@@ -487,10 +487,10 @@ define([
     self.loadData = async () => {
       self.loading(true);
       try {
-        const licenseTiles = await self.fetchTileData(self.resourceId());
+        const licenceTiles = await self.fetchTileData(self.resourceId());
 
-        const licenseNo = self.getValueFromTiles(
-          licenseTiles,
+        const licenceNo = self.getValueFromTiles(
+          licenceTiles,
           '280b75bc-4e4d-11ee-a340-0242ac140007',
           (tile) => {
             return (
@@ -499,12 +499,12 @@ define([
             );
           }
         );
-        if (licenseNo) {
-          self.coverLetterData.licenseNumber(licenseNo.value);
+        if (licenceNo) {
+          self.coverLetterData.licenceNumber(licenceNo.value);
         }
 
         const additionalFiles = self.getValueFromTiles(
-          licenseTiles,
+          licenceTiles,
           '8c5356f4-48ce-11ee-8e4e-0242ac140007'
         );
         if (additionalFiles?.value.length) {
@@ -513,8 +513,8 @@ define([
 
 
         const contacts = [
-          self.getValueFromTiles(licenseTiles, '6d2924b6-5891-11ee-a624-0242ac120004'),
-          self.getValueFromTiles(licenseTiles, '6d292f88-5891-11ee-a624-0242ac120004')
+          self.getValueFromTiles(licenceTiles, '6d2924b6-5891-11ee-a624-0242ac120004'),
+          self.getValueFromTiles(licenceTiles, '6d292f88-5891-11ee-a624-0242ac120004')
         ];
         if (contacts?.length) {
           for (const contact of contacts) {
@@ -569,7 +569,7 @@ define([
         }
 
         const decisionByDate = self.getValueFromTiles(
-          licenseTiles,
+          licenceTiles,
           '4c58921e-48cc-11ee-9081-0242ac140007'
         );
         if (decisionByDate) {
@@ -577,7 +577,7 @@ define([
         }
 
         const decisionBy = self.getValueFromTiles(
-          licenseTiles,
+          licenceTiles,
           'f3dcbf02-48cb-11ee-9081-0242ac140007'
         );
         if (decisionBy?.value.length) {
@@ -590,7 +590,7 @@ define([
         }
 
         const associatedActivitys = self.getValueFromTiles(
-          licenseTiles,
+          licenceTiles,
           'a9f53f00-48b6-11ee-85af-0242ac140007'
         );
         if (associatedActivitys?.value.length) {
@@ -631,7 +631,7 @@ define([
         }
 
         const acknowledgedDate = self.getValueFromTiles(
-          licenseTiles,
+          licenceTiles,
           '0a914884-48b4-11ee-90a8-0242ac140007'
         );
         if (acknowledgedDate) {
@@ -639,7 +639,7 @@ define([
         }
 
         const receivedDate = self.getValueFromTiles(
-          licenseTiles,
+          licenceTiles,
           '6b96c722-48c7-11ee-ba3a-0242ac140007'
         );
         if (receivedDate) {
@@ -693,7 +693,7 @@ define([
         self.textBody(
           createTextObject(
           `<div>Dear [recipient]</div>
-          <div>Further to your application on [Date], please find attached an Excavation License for the above mentioned location.</div>
+          <div>Further to your application on [Date], please find attached an Excavation Licence for the above mentioned location.</div>
           <br />
           <div>Please note that under the terms of the Licence you must, on completion of the excavation, furnish:</div>
           <br />
@@ -733,7 +733,7 @@ define([
           } else if (temp === 'licence-extension-letter') {
             self.textBody(
               createTextObject(
-              `<div>The Department for Communities for Northern Ireland (hereinafter referred to as “the Department”), in exercise of its power under Section 41 of the above-mentioned Order, hereby extends the license of <strong>[recipient]</strong>  (hereinafter referred to as “the Licensee”) to dig or excavate for purposes of archaeological evaluation in or under part of the Townland (town) of <strong>[town]</strong> in the County of <strong>[county]</strong> being the archaeological site or reputed site known as <strong>[site]</strong>  for a further period of <strong>[duration], commencing on [valid_from] and ceasing on [valid_to].</strong></div>
+              `<div>The Department for Communities for Northern Ireland (hereinafter referred to as “the Department”), in exercise of its power under Section 41 of the above-mentioned Order, hereby extends the licence of <strong>[recipient]</strong>  (hereinafter referred to as “the Licensee”) to dig or excavate for purposes of archaeological evaluation in or under part of the Townland (town) of <strong>[town]</strong> in the County of <strong>[county]</strong> being the archaeological site or reputed site known as <strong>[site]</strong>  for a further period of <strong>[duration], commencing on [valid_from] and ceasing on [valid_to].</strong></div>
               <br />
               <div><strong>All conditions stated in the original Licence are applicable to this Extension. In addition, the Department also requires that:</strong></div>
               <br />
@@ -767,9 +767,9 @@ define([
     }
   }
 
-  ko.components.register('license-cover-letter', {
+  ko.components.register('licence-cover-letter', {
     viewModel: viewModel,
-    template: licenseCoverTemplate
+    template: licenceCoverTemplate
   });
   return viewModel;
 });

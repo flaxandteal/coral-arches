@@ -151,7 +151,7 @@ define([
 
     const saveRelationship = async () => {
       /**
-       * In the example of excavation license the `Files (D1)` nodegroup
+       * In the example of excavation licence the `Files (D1)` nodegroup
        * has two identical uuids. One refers to the nodegroup and the other
        * to the node. This is used twice to provide the resource relationship.
        *

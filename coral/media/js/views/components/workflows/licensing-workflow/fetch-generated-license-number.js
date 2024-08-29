@@ -9,7 +9,7 @@ define([
   'js-cookie'
 ], function (_, ko, koMapping, uuid, arches, componentTemplate, AlertViewModel, Cookies) {
   function viewModel(params) {
-    this.LICENSE_NUMBER_NODE = '9a9e198c-c502-11ee-af34-0242ac180006';
+    this.LICENCE_NUMBER_NODE = '9a9e198c-c502-11ee-af34-0242ac180006';
 
     this.STATUS_NODEGROUP = '4f0f655c-48cf-11ee-8e4e-0242ac140007';
     this.STATUS_NODE = 'a79fedae-bad5-11ee-900d-0242ac180006';
@@ -35,8 +35,8 @@ define([
       return data.tiles;
     };
 
-    this.fetchLicenseNumberTile = async () => {
-      const tiles = await this.fetchTileData(this.resourceId(), this.LICENSE_NUMBER_NODE);
+    this.fetchLicenceNumberTile = async () => {
+      const tiles = await this.fetchTileData(this.resourceId(), this.LICENCE_NUMBER_NODE);
 
       if (tiles.length === 1) {
         return tiles[0];
@@ -103,14 +103,14 @@ define([
       });
     };
 
-    this.storeLicenseNumberTile = async (tile) => {
+    this.storeLicenceNumberTile = async (tile) => {
       const searchParams = new URLSearchParams(window.location.search);
       const workflowId = searchParams.get('workflow-id');
 
       const history = await this.getWorkflowHistoryData(workflowId);
 
       const componentId =
-        history.stepdata['record-decision-step']['componentIdLookup']['license-number'];
+        history.stepdata['record-decision-step']['componentIdLookup']['licence-number'];
 
       await this.setToWorkflowHistory(componentId, workflowId, 'value', {
         tileData: JSON.stringify(tile.data),
@@ -120,7 +120,7 @@ define([
       });
     };
 
-    this.processLicenseNumberTile = async () => {
+    this.processLicenceNumberTile = async () => {
       let tile = null;
       switch (self.tile().nodegroup_id) {
         case this.STATUS_NODEGROUP:
@@ -151,21 +151,21 @@ define([
           break;
       }
 
-      const licenseNumberTile = await this.fetchLicenseNumberTile();
-      if (!licenseNumberTile) {
+      const licenceNumberTile = await this.fetchLicenceNumberTile();
+      if (!licenceNumberTile) {
         params.form.complete(true);
         params.form.saving(false);
         return;
       }
-      await this.storeLicenseNumberTile(licenseNumberTile);
-      const licenseNumber =
-        licenseNumberTile.data[this.LICENSE_NUMBER_NODE][arches.activeLanguage].value;
+      await this.storeLicenceNumberTile(licenceNumberTile);
+      const licenceNumber =
+        licenceNumberTile.data[this.LICENCE_NUMBER_NODE][arches.activeLanguage].value;
 
       params.pageVm.alert(
         new AlertViewModel(
           'ep-alert-blue',
-          `Application status is "Granted". License Number: ${licenseNumber}. Click "Ok" to continue.`,
-          `This application's status has been moved to "Granted". With that a license number has been genereated that will now be used to identify this application. Example 'Excavation License ${licenseNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
+          `Application status is "Granted". Licence Number: ${licenceNumber}. Click "Ok" to continue.`,
+          `This application's status has been moved to "Granted". With that a licence number has been genereated that will now be used to identify this application. Example 'Excavation Licence ${licenceNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
           null,
           () => {
             params.form.complete(true);
@@ -183,11 +183,11 @@ define([
         resourceInstanceId: self.tile().resourceinstance_id,
         nodegroupId: self.tile().nodegroup_id
       });
-      await this.processLicenseNumberTile();
+      await this.processLicenceNumberTile();
     };
   }
 
-  ko.components.register('fetch-generated-license-number', {
+  ko.components.register('fetch-generated-licence-number', {
     viewModel: viewModel,
     template: componentTemplate
   });

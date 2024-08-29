@@ -9,20 +9,20 @@ define([
   ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
     function viewModel(params) {
 
-    LICENSE_TIMESPAN_NODEGROUP_ID = "1887f678-c42d-11ee-bc4b-0242ac180006"
+    LICENCE_TIMESPAN_NODEGROUP_ID = "1887f678-c42d-11ee-bc4b-0242ac180006"
     ISSUE_DATE_NODE = "1887faf6-c42d-11ee-bc4b-0242ac180006"
     VALID_UNTIL_NODE = "1887fc86-c42d-11ee-bc4b-0242ac180006"
     
-    LICENSE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
-    LICENSE_NUMBER_VALUE_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
+    LICENCE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+    LICENCE_NUMBER_VALUE_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
 
     CardComponentViewModel.apply(this, [params]);
 
-      this.hasLicenseNumber = ko.observable(false)
+      this.hasLicenceNumber = ko.observable(false)
 
       if (this.tile.data[ISSUE_DATE_NODE] && ko.isObservable(this.tile.data[ISSUE_DATE_NODE])) {
         this.tile.data[ISSUE_DATE_NODE].subscribe(issueDate => {
-          if (this.hasLicenseNumber()) return
+          if (this.hasLicenceNumber()) return
           const validUntilDate = this.addSixMonths(issueDate)
           this.tile.data[VALID_UNTIL_NODE](validUntilDate)
         })
@@ -38,28 +38,28 @@ define([
         return data.tiles;
       };
       
-      this.fetchLicenseNumberTile = async () => {
-        const tiles = await this.fetchTileData(this.tile.resourceinstance_id, LICENSE_NUMBER_NODEGROUP);
+      this.fetchLicenceNumberTile = async () => {
+        const tiles = await this.fetchTileData(this.tile.resourceinstance_id, LICENCE_NUMBER_NODEGROUP);
 
         if (tiles.length === 1){
           return tiles[0];
         }
       };
       
-      this.checkForLicenseNumberValue = async () => {
-        const licenseNumberTile = await this.fetchLicenseNumberTile()
+      this.checkForLicenceNumberValue = async () => {
+        const licenceNumberTile = await this.fetchLicenceNumberTile()
 
-        if (!licenseNumberTile) {
+        if (!licenceNumberTile) {
           return false
         }
-        if (licenseNumberTile.data[LICENSE_NUMBER_VALUE_NODE]) {
+        if (licenceNumberTile.data[LICENCE_NUMBER_VALUE_NODE]) {
           return true;
         }
         return false
       }
 
-      this.checkForLicenseNumberValue().then(result => {
-        this.hasLicenseNumber(result)
+      this.checkForLicenceNumberValue().then(result => {
+        this.hasLicenceNumber(result)
         console.log(result)
       })
 
