@@ -56,6 +56,14 @@ class SmrNumberFunction(BaseFunction):
             valueid=tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID, None)
         ).first()
 
+        if not map_sheet_id and not id_number:
+            # Clear SMR Number
+            self.update_ha_references(resource_instance_id, "")
+            return
+        
+        if not map_sheet_id and id_number:
+            raise ValueError('No selected NISMR Numbering selected but a generated ID was provided.')
+
         sn = SmrNumber(map_sheet_id=map_sheet_id.value)
 
         if sn.validate_id(id_number, resource_instance_id):
@@ -63,4 +71,4 @@ class SmrNumberFunction(BaseFunction):
             self.update_ha_references(resource_instance_id, id_number)
             return
         
-        raise ValueError('This SMR has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
+        raise ValueError('This SMR Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
