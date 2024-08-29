@@ -62,8 +62,5 @@ class SmrNumberFunction(BaseFunction):
             print("SMR Number is valid: ", id_number)
             self.update_ha_references(resource_instance_id, id_number)
             return
-
-        id_number = sn.generate_id_number(resource_instance_id)
-        self.update_ha_references(resource_instance_id, id_number)
-
-        return
+        
+        raise ValueError('This SMR has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
