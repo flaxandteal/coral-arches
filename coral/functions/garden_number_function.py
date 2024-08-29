@@ -29,45 +29,49 @@ class GardenNumberFunction(BaseFunction):
             resourceinstance_id=ri_id,
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
         ).first()
-        
+
         if not references_tile:
             references_tile = Tile.get_blank_tile_from_nodegroup_id(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID, resourceid=ri_id
             )
 
         if isinstance(id, str):
-            id = {
-                "en":{
-                    "direction": "ltr",
-                    "value": id
-                }
-            }
+            id = {"en": {"direction": "ltr", "value": id}}
         references_tile.data[GARDEN_NUMBER_NODE_ID] = id
         references_tile.save()
 
     def post_save(self, tile, request, context):
-        if context and context.get('escape_function', False):
+        if context and context.get("escape_function", False):
             return
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
-        id_number = Tile.objects.filter(
-            resourceinstance_id = resource_instance_id,
-            nodegroup_id = GENERATED_GARDEN_NODEGROUP
-        ).first().data.get(GENERATED_GARDEN_NODE_ID)
+        id_number = (
+            Tile.objects.filter(
+                resourceinstance_id=resource_instance_id,
+                nodegroup_id=GENERATED_GARDEN_NODEGROUP,
+            )
+            .first()
+            .data.get(GENERATED_GARDEN_NODE_ID)
+        )
 
-        if not id_number:
-            return
-        
         county_tile = Tile.objects.filter(
             resourceinstance_id=resource_instance_id,
             nodegroup_id=ADDRESS_NODEGROUP_ID,
         ).first()
 
         county_name = models.Value.objects.filter(
-                valueid= county_tile.data.get(COUNTY_NODE_ID)
-            ).first()
+            valueid=county_tile.data.get(COUNTY_NODE_ID)
+        ).first()
 
+        if not county_name and not id_number:
+            # Clear HPG Number
+            self.update_ha_references(resource_instance_id, "")
+            return
+        
+        if not county_name and id_number:
+            raise ValueError('No selected County selected but a generated ID was provided.')
+        
         gn = GardenNumber(county_name=county_name.value)
 
         if gn.validate_id(id_number):
@@ -75,9 +79,6 @@ class GardenNumberFunction(BaseFunction):
             self.update_ha_references(resource_instance_id, id_number)
             return
 
-        id_number = gn.generate_id_number(resource_instance_id)
-        if not id_number:
-            return
-        self.update_ha_references(resource_instance_id, id_number)
-
-        return
+        raise ValueError(
+            'This Historic Parks and Gardens Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.'
+        )
