@@ -28,10 +28,17 @@ define([
 
     this.hasGeneratedNew = ko.computed(() => {
       if (!this.smrNumber() || !this.nismrTypeValue()) return false;
-      return this.smrNumber().startsWith(this.nismrTypeValue());
+      return (
+        this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() &&
+        this.smrNumber().startsWith(this.nismrTypeValue())
+      );
     }, this);
 
     this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID].subscribe(async (value) => {
+      if (!value) {
+        this.setGeneratedSmrValue('');
+        return;
+      }
       const response = await $.ajax({
         type: 'GET',
         url: arches.urls.concept_value + `?valueid=${value}`,
@@ -62,22 +69,22 @@ define([
         }
       });
       this.smrNumber(response.smrNumber);
-      if (ko.isObservable(this.tile.data[this.GENERATED_SMR_NODE_ID])) {
-        this.tile.data[this.GENERATED_SMR_NODE_ID]({
-          en: {
-            direction: 'ltr',
-            value: response.smrNumber
-          }
-        });
-      } else {
-        this.tile.data[this.GENERATED_SMR_NODE_ID] = {
-          en: {
-            direction: 'ltr',
-            value: response.smrNumber
-          }
-        };
-      }
+      this.setGeneratedSmrValue(response.smrNumber);
       params.pageVm.loading(false);
+    };
+
+    this.setGeneratedSmrValue = (value) => {
+      const localisedValue = {
+        en: {
+          direction: 'ltr',
+          value: value
+        }
+      };
+      if (ko.isObservable(this.tile.data[this.GENERATED_SMR_NODE_ID])) {
+        this.tile.data[this.GENERATED_SMR_NODE_ID](localisedValue);
+      } else {
+        this.tile.data[this.GENERATED_SMR_NODE_ID] = localisedValue;
+      }
     };
 
     this.resetNismrType = () => {
