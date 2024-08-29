@@ -336,12 +336,22 @@
             }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
                 <div class="row widget-wrapper">
-         
+                    
+                    <div style="padding-bottom: 6px" data-bind="visible: hasChanged()">
+                        <span style="color: red" data-bind="visible: hasChanged() && !hasGeneratedNew()">You have selected a new Ward and District Numbering value. Revert it back to the original value or generate a new HB Number to avoid an error.</span>
+                        <span style="color: green" data-bind="visible: hasChanged() && hasGeneratedNew()">You are now ready to save the newly generated HB Number.</span>
+                    </div>
                     <button
-                        data-bind="click: () => generateHbNumber(), disable: !hasSelectedWard()"
+                        data-bind="click: () => generateHbNumber(), disable: !hasSelected()"
                         class="btn btn-success"
                     >
                         <span>Generate HB</span>
+                    </button>
+                    <button
+                        data-bind="click: () => resetChanges(), disable: !hasChanged()"
+                        class="btn btn-danger"
+                    >
+                        <span>Reset Changes</span>
                     </button>
                 </div>
             </form>

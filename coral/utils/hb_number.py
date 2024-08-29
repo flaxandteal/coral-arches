@@ -14,6 +14,10 @@ class HbNumber:
         self.ward_distict_text = ward_distict_text
 
     def id_number_format(self, index):
+        district_number, ward_number = self.parse_district_ward()
+        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
+    
+    def parse_district_ward(self):
         pattern = r"\(\d+/\d+\)"
         match = re.search(pattern, self.ward_distict_text)
         if not match:
@@ -21,7 +25,7 @@ class HbNumber:
                 f"Provided {self.ward_distict_text} does not contain district or ward ID."
             )
         district_number, ward_number = match.group(0)[1:-1].split("/")
-        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
+        return district_number, ward_number
 
     def get_latest_id_number(self, resource_instance_id=None):
         latest_id_number_tile = None
@@ -69,8 +73,9 @@ class HbNumber:
         if resource_instance_id:
             id_number_tile = None
             try:
+                district_number, ward_number = self.parse_district_ward()
                 generated_id_query = {
-                    f"data__{HB_NUMBER_NODE_ID}__icontains": self.ward_distict_text,
+                    f"data__{HB_NUMBER_NODE_ID}__icontains": f"{district_number}/{ward_number}",
                 }
                 id_number_tile = Tile.objects.filter(
                     resourceinstance_id=resource_instance_id,
@@ -120,10 +125,11 @@ class HbNumber:
         id_number_value = data_query.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
 
         if not id_number_value:
-            raise ValueError('To generate a new SMR Number, select a NISMR Numbering and click "generate"')
+            raise ValueError('To generate a new HB Number, select a Ward and District Numbering and click "generate"')
 
-        if not id_number_value.startswith(self.map_sheet_id):
-            raise ValueError('The generated SMR Number does not align with the selected NISMR Numbering.')
+        district_number, ward_number = self.parse_district_ward()
+        if f"{district_number}/{ward_number}" not in id_number_value:
+            raise ValueError('The generated HB Number does not align with the selected Ward and District Numbering.')
 
         id_number_tile = Tile.objects.filter(
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
