@@ -106,7 +106,6 @@ define([
     }, this);
 
     this.hasRemovedCounty = ko.computed(() => {
-      console.log('t1 ', this.selectedCounty(), this.initialNumber());
       return !this.selectedCounty() && this.initialNumber();
     }, this);
 
