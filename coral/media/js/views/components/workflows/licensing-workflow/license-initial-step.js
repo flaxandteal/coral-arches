@@ -21,16 +21,16 @@ define([
 
     self.actSysRefTileId = params.form.savedData()?.actSysRefTileId;
     self.activityLocationTileId = params.form.savedData()?.activityLocationTileId;
-    self.actLicenseRelationshipTileId = params.form.savedData()?.actLicenseRelationshipTileId;
+    self.actLicenceRelationshipTileId = params.form.savedData()?.actLicenceRelationshipTileId;
     self.actResourceId = params.form.savedData()?.activityResourceId;
-    self.licenseNameTileId = params.form.savedData()?.licenseNameTileId;
+    self.licenceNameTileId = params.form.savedData()?.licenceNameTileId;
     self.decisionTileId = params.form.savedData()?.decisionTileId;
     self.applicationDetailsTileId = params.form.savedData()?.applicationDetailsTileId;
     self.cmRefTileId = params.form.savedData()?.cmRefTileId;
-    // self.licenseNumberTileId = params.form.savedData()?.licenseNumberTileId;
+    // self.licenceNumberTileId = params.form.savedData()?.licenceNumberTileId;
     self.applicationId = '';
 
-    self.licenseSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
+    self.licenceSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
 
     params.form.save = async () => {
       await self.tile().save(); // Resource ID has now been created and is in self.resourceId()
@@ -41,11 +41,11 @@ define([
        */
       self.applicationId = self
         .tile()
-        ?.data[self.licenseSysRefNodeId][arches.activeLanguage]?.value();
+        ?.data[self.licenceSysRefNodeId][arches.activeLanguage]?.value();
 
       try {
         /**
-         * Configuring the name is no longer needed as the license number
+         * Configuring the name is no longer needed as the licence number
          * function will handle it. If we configured the name from here after
          * the function we would get a cardinality error.
          */
@@ -53,7 +53,7 @@ define([
         const activityResponse = await saveActivitySystemRef();
         if (activityResponse.ok) {
           responses = await Promise.all([
-            // getLicenseRefTileId(),
+            // getLicenceRefTileId(),
             saveActivityLocation(),
             saveRelationship(),
             saveDecisionTile(),
@@ -67,14 +67,14 @@ define([
               resourceInstanceId: self.tile().resourceinstance_id,
               nodegroupId: self.tile().nodegroup_id,
               actSysRefTileId: self.actSysRefTileId,
-              actLicenseRelationshipTileId: self.actLicenseRelationshipTileId,
+              actLicenceRelationshipTileId: self.actLicenceRelationshipTileId,
               activityResourceId: self.actResourceId,
               activityLocationTileId: self.activityLocationTileId,
               decisionTileId: self.decisionTileId,
               applicationDetailsTileId: self.applicationDetailsTileId,
               cmRefTileId: self.cmRefTileId,
 
-              // licenseNumberTileId: self.licenseNumberTileId
+              // licenceNumberTileId: self.licenceNumberTileId
             });
             params.form.complete(true);
             params.form.saving(false);
@@ -116,7 +116,7 @@ define([
       }
     };
 
-    // const getLicenseRefTileId = async () => {
+    // const getLicenceRefTileId = async () => {
     //   const response = await window.fetch(
     //     arches.urls.api_resources(self.resourceId() + '?format=json&compact=false')
     //   );
@@ -124,13 +124,13 @@ define([
     //   if (response.ok) {
     //     const data = await response.json();
     //     if (data.resource['External Cross References']) {
-    //       const licenseNumberRef = data.resource['External Cross References'].find((ref) => {
+    //       const licenceNumberRef = data.resource['External Cross References'].find((ref) => {
     //         if (ref['External Cross Reference Source']['@value'] === 'Excavation') {
     //           return ref;
     //         }
     //       });
-    //       self.licenseNumberTileId =
-    //         licenseNumberRef['External Cross Reference Number']['@tile_id'];
+    //       self.licenceNumberTileId =
+    //         licenceNumberRef['External Cross Reference Number']['@tile_id'];
     //     }
     //   }
     //   return response;
@@ -221,8 +221,8 @@ define([
       }
     };
 
-    const saveLicenseName = async () => {
-      const licenseNameNode = '59d6676c-48b9-11ee-84da-0242ac140007';
+    const saveLicenceName = async () => {
+      const licenceNameNode = '59d6676c-48b9-11ee-84da-0242ac140007';
       const nameTemplate = {
         tileid: '',
         data: {
@@ -232,7 +232,7 @@ define([
           '59d665c8-48b9-11ee-84da-0242ac140007': '8a96a261-cd79-48e2-9f12-74924c152b00',
           '59d6691a-48b9-11ee-84da-0242ac140007': 'a0e096e2-f5ae-4579-950d-3040714713b4',
           '59d66df2-48b9-11ee-84da-0242ac140007': '5a88136a-bf3a-4b48-a830-a7f42000dd24',
-          [licenseNameNode]: null
+          [licenceNameNode]: null
         },
         nodegroup_id: '59d65ec0-48b9-11ee-84da-0242ac140007',
         parenttile_id: null,
@@ -240,20 +240,20 @@ define([
         sortorder: 0
       };
 
-      nameTemplate.data[licenseNameNode] = {
+      nameTemplate.data[licenceNameNode] = {
         en: {
           direction: 'ltr',
-          value: 'Excavation License ' + self.applicationId
+          value: 'Excavation Licence ' + self.applicationId
         }
       };
 
-      if (!self.licenseNameTileId) {
-        self.licenseNameTileId = uuid.generate();
+      if (!self.licenceNameTileId) {
+        self.licenceNameTileId = uuid.generate();
       } else {
-        nameTemplate.tileid = self.licenseNameTileId;
+        nameTemplate.tileid = self.licenceNameTileId;
       }
 
-      const nameTile = await window.fetch(arches.urls.api_tiles(self.licenseNameTileId), {
+      const nameTile = await window.fetch(arches.urls.api_tiles(self.licenceNameTileId), {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(nameTemplate),
@@ -264,7 +264,7 @@ define([
 
       if (nameTile?.ok) {
         const nameTileResult = await nameTile.json();
-        self.licenseNameTileId = nameTileResult.tileid;
+        self.licenceNameTileId = nameTileResult.tileid;
         return nameTile;
       }
     };
@@ -380,7 +380,7 @@ define([
 
     const saveRelationship = async () => {
       const activityNodeNodeGroup = 'a9f53f00-48b6-11ee-85af-0242ac140007';
-      const licenseActivityTileTemplate = {
+      const licenceActivityTileTemplate = {
         tileid: '',
         data: {
           [activityNodeNodeGroup]: [
@@ -397,33 +397,33 @@ define([
         sortorder: 0
       };
 
-      if (!self.actLicenseRelationshipTileId) {
-        self.actLicenseRelationshipTileId = uuid.generate();
+      if (!self.actLicenceRelationshipTileId) {
+        self.actLicenceRelationshipTileId = uuid.generate();
       } else {
-        licenseActivityTileTemplate.tileid = self.actLicenseRelationshipTileId;
+        licenceActivityTileTemplate.tileid = self.actLicenceRelationshipTileId;
       }
 
-      const licenseTile = await window.fetch(
-        arches.urls.api_tiles(self.actLicenseRelationshipTileId),
+      const licenceTile = await window.fetch(
+        arches.urls.api_tiles(self.actLicenceRelationshipTileId),
         {
           method: 'POST',
           credentials: 'include',
-          body: JSON.stringify(licenseActivityTileTemplate),
+          body: JSON.stringify(licenceActivityTileTemplate),
           headers: {
             'Content-Type': 'application/json'
           }
         }
       );
 
-      if (licenseTile?.ok) {
-        const licenseTileResult = await licenseTile.json();
-        self.actLicenseRelationshipTileId = licenseTileResult.tileid;
-        return licenseTile;
+      if (licenceTile?.ok) {
+        const licenceTileResult = await licenceTile.json();
+        self.actLicenceRelationshipTileId = licenceTileResult.tileid;
+        return licenceTile;
       }
     };
   }
 
-  ko.components.register('license-initial-step', {
+  ko.components.register('licence-initial-step', {
     viewModel: viewModel,
     template: initialStep
   });
