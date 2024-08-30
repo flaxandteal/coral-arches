@@ -72,6 +72,29 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.get('#toggle-editor-panel-button').contains('Edit').click();
         cy.get('.chosen-single').scrollIntoView().click();
         cy.get('.chosen-results').contains('Add line').click();
+
+        // Documentation tab
+        cy.wait(2000);
+        cy.get('.bord-top > .btn').contains('Select Files')
+        //cy.get('.media-block').selectFile('cypress/e2e/04_curatorial_inspection_workflow/testFileForUpload.txt');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Sign Off tab
+        cy.wait(2000);
+        cy.get('.widget-input-label').contains('signed Off On');
+        cy.get('[aria-label="Signed Off On"]').click();
+        cy.get('.date-icon').click();
+
+        cy.get('.report_submitted_by_value').contains('Report Submitted By');
+        cy.contains('Report Submitted By').siblings('.row').click();
+
+        cy.get('.reviewed_by_value').contains('Reviewed By');
+        cy.contains('Reviewed By').siblings('.row').click();
+
+        cy.get('.send_papers').contains('Send Papers');
+        cy.contains('Send Papers').siblings('.row').click();
+
+        
     });
 
      it('SMR number field only', function () {
