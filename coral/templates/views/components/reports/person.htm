@@ -1,6 +1,5 @@
 {% extends "views/report-templates/default.htm" %}
 {% load i18n %}
-
 {% block report %}
     {% block report_title_bar %}
     <!-- Custom Template Report Title Bar -->
@@ -207,7 +206,24 @@
     <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span><span class="aher-report-name pad-lft-sm">{% trans "(Person)" %}</span></h1>
 </div>
 <div class="model-summary-report">
-    <div class="aher-report-page">
+    <!-- Contact Details Tab -->
+<!-- Location Tab -->
+        <br />
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/contact',
+            params: {
+                data: resource,
+                cards: contactCards,
+            }
+        }"></div>
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/location',
+            params: {
+                data: resource,
+                cards: locationCards,
+                dataConfig: locationDataConfig
+            }
+        }"></div>
         <!-- Names -->
         <div data-bind="component: {
             name: 'views/components/reports/scenes/name',
