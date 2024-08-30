@@ -10,8 +10,6 @@ define([
 ], function (_, ko, koMapping, uuid, arches, WorkflowBuilderInitialStep, CardComponentViewModel, template) {
   function viewModel(params) {
     WorkflowBuilderInitialStep.apply(this, [params]);
-    this.generateHaNumber = {};
-    CardComponentViewModel.apply(this.generateHaNumber, [params]);
 
     this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = '325a430a-efe4-11eb-810b-a87eeabdefba';
 
