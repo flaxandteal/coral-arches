@@ -14,6 +14,15 @@ define([
     this.COUNTY_NODE_ID = '8bfe714e-3ec2-11ef-9023-0242ac140007';
     this.GENERATED_GARDEN_NODE_ID = 'bd85cca2-49a4-11ef-94a5-0242ac120007';
 
+    this.ABBREIVIATIONS = {
+      Antrim: 'AN',
+      Armagh: 'A',
+      Down: 'D',
+      Fermanagh: 'F',
+      Londonderry: 'L',
+      Tyrone: 'T'
+    };
+
     this.setValue = (value) => {
       const localisedValue = {
         en: {
@@ -37,6 +46,7 @@ define([
 
     this.initialNumber = ko.observable(this.getValue());
     this.selectedCounty = ko.observable();
+    this.selectedAbbriviation = ko.observable('');
     this.errorMessage = 'No county has been selected';
 
     this.fetchCountyTile = async () => {
@@ -99,6 +109,32 @@ define([
       console.log('t1 ', this.selectedCounty(), this.initialNumber());
       return !this.selectedCounty() && this.initialNumber();
     }, this);
+
+    this.hasGeneratedNew = ko.computed(() => {
+      if (!this.getValue() || !this.selectedCounty() || !this.selectedAbbriviation()) return false;
+      return this.getValue().startsWith(this.selectedAbbriviation());
+    }, this);
+
+    this.hasDifferentCounty = ko.observable(false);
+    this.checkCounty = async (value) => {
+      if (!value) return;
+      const response = await $.ajax({
+        type: 'GET',
+        url: arches.urls.concept_value + `?valueid=${value}`,
+        dataType: 'json',
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
+
+      this.selectedAbbriviation(this.ABBREIVIATIONS[response.value]);
+      this.hasDifferentCounty(!this.getValue().startsWith(this.selectedAbbriviation()));
+    };
+
+    this.selectedCounty.subscribe((value) => {
+      this.checkCounty(value);
+    });
 
     this.getCountyID();
   }

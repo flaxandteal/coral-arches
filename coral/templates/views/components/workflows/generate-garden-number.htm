@@ -341,6 +341,7 @@
                         <span style="color: red" data-bind="visible: !hasSelectedCounty() && !hasRemovedCounty()">No county was selected on the Location Details step.</span>
                         <span style="color: red" data-bind="visible: hasRemovedCounty()">County has been removed. Saving on this page will clear the previously configured Historic Parks and Gardens Number.</span>
                         <span data-bind="visible: hasRemovedCounty()">HPG Number that will be cleared: <span data-bind="text: initialNumber"></span></span>
+                        <span style="color: green" data-bind="visible: hasDifferentCounty() && !hasGeneratedNew()">You are now ready to generate a new HPG Number using the new county selection.</span>
                     </div>
                     <button
                         data-bind="click: () => generateGardenNumber(), disable: !hasSelectedCounty()"
