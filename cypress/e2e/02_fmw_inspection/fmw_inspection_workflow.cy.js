@@ -44,21 +44,15 @@ describe('Going through the FWM Inspection Workflow', function () {
 
         // Owner dropdown
         cy.get('.card_component.owner').contains('Add new Relationship').scrollIntoView().click();
-        cy.get('.select2-dropdown').first().contains('Create a new Organization').click();
-        // Return from create organization screen
-        cy.get('.close-new-step').contains('Return').click();
+        cy.get('.select2-dropdown').first().click();
 
         // Occupier dropdown
         cy.get('.card_component.occupier').contains('Add new Relationship').scrollIntoView().click();
-        cy.get('.select2-dropdown').first().contains('Create a new Person').click();
-        // Return from create organization screen
-        cy.get('.close-new-step').contains('Return').click();
+        cy.get('.select2-dropdown').first().click();
 
         // fm warden dropdown
         cy.get('.card_component.fm_warden').contains('Add new Relationship').scrollIntoView().click();
-        cy.get('.select2-dropdown').first().contains('Create a new Person').click();
-        // Return from create organization screen
-        cy.get('.close-new-step').contains('Return').click();
+        cy.get('.select2-dropdown').first().click();
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click()
 
