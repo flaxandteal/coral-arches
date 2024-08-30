@@ -74,7 +74,7 @@ class GardenNumberFunction(BaseFunction):
         
         gn = GardenNumber(county_name=county_name.value)
 
-        if gn.validate_id(id_number):
+        if gn.validate_id(id_number, resource_instance_id):
             print("Garden Number is valid: ", id_number)
             self.update_ha_references(resource_instance_id, id_number)
             return
