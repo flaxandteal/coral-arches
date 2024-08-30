@@ -12,10 +12,6 @@ define([
     this.WARDS_AND_DISTRICTS_TYPE_NODE_ID = 'de6b6af0-44e3-11ef-9114-0242ac120006';
     this.GENERATED_HB_NODE_ID = '19bd9ac4-44e4-11ef-9114-0242ac120006';
 
-    this.generatedNumber = ko.observable();
-    this.wardDistrictTypeValue = ko.observable();
-    this.initialSelected = null;
-
     this.setValue = (value) => {
       const localisedValue = {
         en: {
@@ -37,15 +33,17 @@ define([
       );
     };
 
+    this.generatedNumber = ko.observable(this.getValue());
+    this.wardDistrictTypeValue = ko.observable();
+    this.initialSelected = null;
+
     this.resetChanges = () => {
       this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID](this.initialSelected);
       this.generateHbNumber();
     };
 
     this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID].subscribe(async (value) => {
-      console.log('changed: ', value)
       if (!value) {
-        console.log('hit path')
         this.setValue('');
         return;
       }
@@ -85,17 +83,12 @@ define([
           console.log(response, status, error);
         }
       });
-      this.generatedNumber(response.hbNumber);
       this.setValue(response.hbNumber);
       params.pageVm.loading(false);
     };
 
-    if (!ko.isObservable(this.tile.data[this.GENERATED_HB_NODE_ID])) {
-      this.setValue(this.getValue());
-    }
-
     this.initialSelected = this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]();
-    this.generatedNumber(this.getValue());
+    this.setValue(this.getValue());
 
     this.hasSelected = ko.computed(() => {
       return !!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]();
@@ -107,11 +100,11 @@ define([
     });
 
     this.hasGeneratedNew = ko.computed(() => {
-      if (!this.generatedNumber() || !this.wardDistrictTypeValue()) return false;
+      if (!this.getValue() || !this.wardDistrictTypeValue()) return false;
       const wardDistrictId = this.wardDistrictTypeValue().match(/\((\d+\/\d+)\)/)?.[1]; // Parse "Word (51/90)" = "51/90"
       return (
         this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]() &&
-        this.generatedNumber().includes(wardDistrictId)
+        this.getValue().includes(wardDistrictId)
       );
     }, this);
   }
