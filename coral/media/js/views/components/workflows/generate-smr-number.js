@@ -14,29 +14,35 @@ define([
 
     this.smrNumber = ko.observable('');
     this.nismrTypeValue = ko.observable();
+    this.initialSelectedNismr = null;
 
-    this.initialSelectedNismr = this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
+    this.setGeneratedSmrValue = (value) => {
+      const localisedValue = {
+        en: {
+          direction: 'ltr',
+          value: value
+        }
+      };
+      if (ko.isObservable(this.tile.data[this.GENERATED_SMR_NODE_ID])) {
+        this.tile.data[this.GENERATED_SMR_NODE_ID](localisedValue);
+      } else {
+        this.tile.data[this.GENERATED_SMR_NODE_ID] = ko.observable();
+        this.tile.data[this.GENERATED_SMR_NODE_ID](localisedValue);
+      }
+    };
 
-    this.hasSelectedNismr = ko.computed(() => {
-      return !!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
-    }, this);
-
-    this.hasChangedNismrType = ko.computed(() => {
-      if (!this.initialSelectedNismr) return false;
-      return this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() !== this.initialSelectedNismr;
-    });
-
-    this.hasGeneratedNew = ko.computed(() => {
-      if (!this.smrNumber() || !this.nismrTypeValue()) return false;
-      return (
-        this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() &&
-        this.smrNumber().startsWith(this.nismrTypeValue())
-      );
-    }, this);
+    this.resetNismrType = () => {
+      this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID](this.initialSelectedNismr);
+      this.generateSmrNumber();
+    };
 
     this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID].subscribe(async (value) => {
       if (!value) {
         this.setGeneratedSmrValue('');
+        return;
+      }
+      if (value === this.initialSelectedNismr) {
+        this.setGeneratedSmrValue(this.smrNumber());
         return;
       }
       const response = await $.ajax({
@@ -73,24 +79,28 @@ define([
       params.pageVm.loading(false);
     };
 
-    this.setGeneratedSmrValue = (value) => {
-      const localisedValue = {
-        en: {
-          direction: 'ltr',
-          value: value
-        }
-      };
-      if (ko.isObservable(this.tile.data[this.GENERATED_SMR_NODE_ID])) {
-        this.tile.data[this.GENERATED_SMR_NODE_ID](localisedValue);
-      } else {
-        this.tile.data[this.GENERATED_SMR_NODE_ID] = localisedValue;
-      }
-    };
+    if (!ko.isObservable(this.tile.data[this.GENERATED_SMR_NODE_ID])) {
+      this.setGeneratedSmrValue(this.tile.data[this.GENERATED_SMR_NODE_ID]['en']['value']);
+    }
 
-    this.resetNismrType = () => {
-      this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID](this.initialSelectedNismr);
-      this.generateSmrNumber();
-    };
+    this.initialSelectedNismr = this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
+
+    this.hasSelectedNismr = ko.computed(() => {
+      return !!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
+    }, this);
+
+    this.hasChangedNismrType = ko.computed(() => {
+      if (!this.initialSelectedNismr) return false;
+      return this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() !== this.initialSelectedNismr;
+    });
+
+    this.hasGeneratedNew = ko.computed(() => {
+      if (!this.smrNumber() || !this.nismrTypeValue()) return false;
+      return (
+        this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() &&
+        this.smrNumber().startsWith(this.nismrTypeValue())
+      );
+    }, this);
   }
 
   ko.components.register('generate-smr-number', {
