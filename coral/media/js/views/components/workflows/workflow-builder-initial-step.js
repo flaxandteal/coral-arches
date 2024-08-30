@@ -33,7 +33,9 @@ define([
       });
 
     params.form.save = async () => {
+      const txnId = uuid.generate();
       try {
+        self.tile().transactionId = txnId;
         await self.tile().save();
 
         if (!params.requiredParentTiles) {
@@ -75,7 +77,13 @@ define([
           }
         }
       } catch (err) {
-        console.log('caught error: ', err);
+        $.ajax({
+            type: "POST",
+            url: arches.urls.transaction_reverse(txnId)
+        }).then(function() {
+            params.loading(false);
+            window.location.href = quitUrl;
+        });
         params.pageVm.alert(new AlertViewModel(
           'ep-alert-red',
           err.responseJSON.title,
