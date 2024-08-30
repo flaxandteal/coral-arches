@@ -2,7 +2,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
     beforeEach(() => {
         cy.login();
-        cy.visit('http://localhost:8000/plugins/init-workflow');
+        cy.visit('/plugins/init-workflow');
     });
 
     it('Go through the workflow and populate all fields', function () {
@@ -67,7 +67,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Complete Workflow').click();
 
         console.log(this.enforcementId);
-        cy.visit('http://localhost:8000/search?paging-filter=1&tiles=true');
+        cy.visit('/search?paging-filter=1&tiles=true');
     });
 
     it('Workflow with only Case Reference', function () {
