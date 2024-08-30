@@ -84,6 +84,7 @@ define([
     }
 
     this.initialSelectedNismr = this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
+    this.smrNumber(ko.unwrap(this.tile.data[this.GENERATED_SMR_NODE_ID])['en']['value']);
 
     this.hasSelectedNismr = ko.computed(() => {
       return !!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
