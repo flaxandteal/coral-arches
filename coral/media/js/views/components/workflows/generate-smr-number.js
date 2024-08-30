@@ -31,6 +31,10 @@ define([
       }
     };
 
+    this.getValue = () => {
+      return ko.unwrap(ko.unwrap(this.tile.data[this.GENERATED_SMR_NODE_ID])?.['en']?.['value']) || '';
+    }
+
     this.resetNismrType = () => {
       this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID](this.initialSelectedNismr);
       this.generateSmrNumber();
@@ -44,6 +48,9 @@ define([
       if (value === this.initialSelectedNismr) {
         this.setGeneratedSmrValue(this.smrNumber());
         return;
+      }
+      if (value !== this.initialSelectedNismr) {
+        this.setGeneratedSmrValue('');
       }
       const response = await $.ajax({
         type: 'GET',
@@ -84,7 +91,7 @@ define([
     }
 
     this.initialSelectedNismr = this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
-    this.smrNumber(ko.unwrap(this.tile.data[this.GENERATED_SMR_NODE_ID])['en']['value']);
+    this.smrNumber(this.getValue());
 
     this.hasSelectedNismr = ko.computed(() => {
       return !!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
