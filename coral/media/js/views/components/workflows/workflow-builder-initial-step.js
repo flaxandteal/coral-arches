@@ -80,9 +80,6 @@ define([
         $.ajax({
             type: "POST",
             url: arches.urls.transaction_reverse(txnId)
-        }).then(function() {
-            params.loading(false);
-            window.location.href = quitUrl;
         });
         params.pageVm.alert(new AlertViewModel(
           'ep-alert-red',
