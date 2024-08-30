@@ -12,14 +12,49 @@ define([
     this.WARDS_AND_DISTRICTS_TYPE_NODE_ID = 'de6b6af0-44e3-11ef-9114-0242ac120006';
     this.GENERATED_HB_NODE_ID = '19bd9ac4-44e4-11ef-9114-0242ac120006';
 
-    this.initialSelected = this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]();
     this.generatedNumber = ko.observable();
     this.wardDistrictTypeValue = ko.observable();
+    this.initialSelected = null;
+
+    this.setValue = (value) => {
+      const localisedValue = {
+        en: {
+          direction: 'ltr',
+          value: value
+        }
+      };
+      if (ko.isObservable(this.tile.data[this.GENERATED_HB_NODE_ID])) {
+        this.tile.data[this.GENERATED_HB_NODE_ID](localisedValue);
+      } else {
+        this.tile.data[this.GENERATED_HB_NODE_ID] = ko.observable();
+        this.tile.data[this.GENERATED_HB_NODE_ID](localisedValue);
+      }
+    };
+
+    this.getValue = () => {
+      return (
+        ko.unwrap(ko.unwrap(this.tile.data[this.GENERATED_HB_NODE_ID])?.['en']?.['value']) || ''
+      );
+    };
+
+    this.resetChanges = () => {
+      this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID](this.initialSelected);
+      this.generateHbNumber();
+    };
 
     this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID].subscribe(async (value) => {
+      console.log('changed: ', value)
       if (!value) {
+        console.log('hit path')
         this.setValue('');
         return;
+      }
+      if (value === this.initialSelected) {
+        this.setValue(this.generatedNumber());
+        return;
+      }
+      if (value !== this.initialSelected) {
+        this.setValue('');
       }
       const response = await $.ajax({
         type: 'GET',
@@ -32,6 +67,35 @@ define([
       });
       this.wardDistrictTypeValue(response.value);
     }, this);
+
+    this.generateHbNumber = async () => {
+      if (!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()) return;
+      params.pageVm.loading(true);
+      const data = {
+        resourceInstanceId: this.tile.resourceinstance_id,
+        selectedWardDistrictId: this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()
+      };
+      const response = await $.ajax({
+        type: 'POST',
+        url: '/generate-hb-number',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
+      this.generatedNumber(response.hbNumber);
+      this.setValue(response.hbNumber);
+      params.pageVm.loading(false);
+    };
+
+    if (!ko.isObservable(this.tile.data[this.GENERATED_HB_NODE_ID])) {
+      this.setValue(this.getValue());
+    }
+
+    this.initialSelected = this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]();
+    this.generatedNumber(this.getValue());
 
     this.hasSelected = ko.computed(() => {
       return !!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]();
@@ -50,48 +114,6 @@ define([
         this.generatedNumber().includes(wardDistrictId)
       );
     }, this);
-
-    this.generategeneratedNumber = async () => {
-      if (!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()) return;
-      params.pageVm.loading(true);
-      const data = {
-        resourceInstanceId: this.tile.resourceinstance_id,
-        selectedWardDistrictId: this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()
-      };
-      const response = await $.ajax({
-        type: 'POST',
-        url: '/generate-hb-number',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        context: this,
-        error: (response, status, error) => {
-          console.log(response, status, error);
-        }
-      });
-      this.generatedNumber(response.generatedNumber);
-      this.setValue(response.generatedNumber);
-      params.pageVm.loading(false);
-    };
-
-    this.setValue = (value) => {
-      const localisedValue = {
-        en: {
-          direction: 'ltr',
-          value: value
-        }
-      };
-      if (ko.isObservable(this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID])) {
-        this.tile.data[this.GENERATED_HB_NODE_ID](localisedValue);
-      } else {
-        this.tile.data[this.GENERATED_HB_NODE_ID] = localisedValue;
-      }
-      params.pageVm.loading(false);
-    };
-
-    this.resetChanges = () => {
-      this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID](this.initialSelected);
-      this.generategeneratedNumber();
-    };
   }
 
   ko.components.register('generate-hb-number', {
