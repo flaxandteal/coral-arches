@@ -14,6 +14,10 @@ class HbNumber:
         self.ward_distict_text = ward_distict_text
 
     def id_number_format(self, index):
+        district_number, ward_number = self.parse_district_ward()
+        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
+    
+    def parse_district_ward(self):
         pattern = r"\(\d+/\d+\)"
         match = re.search(pattern, self.ward_distict_text)
         if not match:
@@ -21,7 +25,7 @@ class HbNumber:
                 f"Provided {self.ward_distict_text} does not contain district or ward ID."
             )
         district_number, ward_number = match.group(0)[1:-1].split("/")
-        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
+        return district_number, ward_number
 
     def get_latest_id_number(self, resource_instance_id=None):
         latest_id_number_tile = None
@@ -69,8 +73,9 @@ class HbNumber:
         if resource_instance_id:
             id_number_tile = None
             try:
+                district_number, ward_number = self.parse_district_ward()
                 generated_id_query = {
-                    f"data__{HB_NUMBER_NODE_ID}__icontains": self.ward_distict_text,
+                    f"data__{HB_NUMBER_NODE_ID}__icontains": f"{district_number}/{ward_number}",
                 }
                 id_number_tile = Tile.objects.filter(
                     resourceinstance_id=resource_instance_id,
@@ -83,7 +88,10 @@ class HbNumber:
 
             if id_number_tile:
                 print("A ID number has already been created for this resource")
-                return
+                id_number = id_number_tile.data.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
+                if not id_number:
+                    raise ValueError('No ID found but one has been created for the resource')
+                return id_number
 
         latest_id_number = None
         try:
@@ -107,26 +115,25 @@ class HbNumber:
         print(f"ID number is unique, ID number: {id_number}")
         return id_number
 
-    def validate_id(self, id_number):
-        try:
-            if isinstance(id_number, dict):
-                id_number_tile = Tile.objects.filter(
-                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={
-                        HB_NUMBER_NODE_ID: id_number
-                    },
-                ).first()
-            # Runs a query searching for an identical ID value
-            else:
-                id_number_tile = Tile.objects.filter(
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={
-                        HB_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
-                    },
-                ).first()
-            if id_number_tile:
-                return False
-        except Exception as e:
-            print(f"Failed validating ID number: {e}")
-            return False
-        return True
+    def validate_id(self, id_number, resource_instance_id=None):
+        data_query = {
+            HB_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+        }
+        if isinstance(id_number, dict):
+            data_query[HB_NUMBER_NODE_ID] = id_number
+
+        id_number_value = data_query.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
+
+        if not id_number_value:
+            raise ValueError('To generate a new HB Number, select a Ward and District Numbering and click "generate"')
+
+        district_number, ward_number = self.parse_district_ward()
+        if f"{district_number}/{ward_number}" not in id_number_value:
+            raise ValueError('The generated HB Number does not align with the selected Ward and District Numbering.')
+
+        id_number_tile = Tile.objects.filter(
+            nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+            data__contains=data_query,
+        ).exclude(resourceinstance_id=resource_instance_id).first()
+
+        return not bool(id_number_tile)

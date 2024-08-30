@@ -131,26 +131,21 @@ class GardenNumber:
         logger.info("ID number is unique, ID number: %s", id_number)
         return id_number
 
-    def validate_id(self, id_number):
-        try:
-            if isinstance(id_number, dict):
-                id_number_tile = Tile.objects.filter(
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                data__contains={
-                    GARDEN_NUMBER_NODE_ID: id_number
-                },
-            ).first()
-            else:
-            # Runs a query searching for an identical ID value
-                id_number_tile = Tile.objects.filter(
-                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={
-                        GARDEN_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
-                    },
-                ).first()
-            if id_number_tile:
-                return False
-        except Exception as e:
-            logger.error("Failed validating ID number: %s", e)
-            return False
-        return True
+    def validate_id(self, id_number, resource_instance_id=None):
+        data_query = {
+            GARDEN_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+        }
+        if isinstance(id_number, dict):
+            data_query[GARDEN_NUMBER_NODE_ID] = id_number
+
+        id_number_value = data_query.get(GARDEN_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
+
+        if not id_number_value:
+            raise ValueError('To generate a new Garden Number, click "generate"')
+
+        id_number_tile = Tile.objects.filter(
+            nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+            data__contains=data_query,
+        ).exclude(resourceinstance_id=resource_instance_id).first()
+
+        return not bool(id_number_tile)
