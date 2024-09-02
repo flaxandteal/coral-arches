@@ -251,12 +251,12 @@ class PlanningTaskStrategy(TaskStrategy):
 class ExcavationTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
         from arches_orm.models import License
-
         utilities = Utilities()
 
         #states
         is_admin = groupId == EXCAVATION_ADMIN_GROUP
         is_user = groupId == EXCAVATION_USER_GROUP
+
 
         resources = [] 
 
@@ -278,19 +278,17 @@ class ExcavationTaskStrategy(TaskStrategy):
 
     
     def build_data(self, licence, groupId):
-        from arches_orm.models import License
-
+        from arches_orm.models import License ## will need changed after Taiga #2199 is complete
         utilities = Utilities()
 
         activity_list = utilities.node_check(lambda: licence.associated_activities)
-        
-        display_name = utilities.node_check(lambda:licence.license_names.name),
-        issue_date = utilities.node_check(lambda:licence.decision[0].license_valid_timespan.issue_date)
-        valid_until_date = utilities.node_check(lambda:licence.decision[0].license_valid_timespan.valid_until_date)
+        display_name = utilities.node_check(lambda:licence.licence_names.name),
+        issue_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.issue_date)
+        valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
         report_status = utilities.node_check(lambda:licence.report[-1].classification_type) #takes the last report, assumes the newest
-        licence_number = utilities.node_check(lambda:licence.license_number.license_number_value)
+        licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
 
         nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
         
@@ -322,7 +320,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
-            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status),
+            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status), ## will need changed after Taiga #2199 is complete
             'licencenumber': licence_number,
             'responseslug': response_slug
         }
