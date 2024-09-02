@@ -8,3 +8,11 @@
 .title-info-margin {
     margin: 1rem 1rem 0 1rem
 }
+
+.dashboard-footer {
+    height: 53px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top:auto
+}
