@@ -15,7 +15,12 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
-
+            console.log("person print", params)
+            this.print = ko.observable(false)
+            if (window.location.href.indexOf("?print") > -1) {
+                console.log("its gunna print, it's gunna print!")
+                this.print(true)
+              }
             Object.assign(self, reportUtils);
             self.sections = [
                 {id: 'name', title: 'Names and Classifications'},
