@@ -38,7 +38,6 @@ class Dashboard(View):
 
     def get(self, request):
         from arches_orm.models import Person
-
         with admin():
             user_id = request.user.id                     
             person_resource = Person.where(user_account = user_id)
@@ -72,7 +71,7 @@ class Dashboard(View):
                     if strategy:
                         strategies.add(self.select_strategy(groupId))
                 for strategy in strategies:
-                    if sort_by is not None and sort_order is not None:
+                    if sort_by is not None and sort_order is not None and sort_by in sort_options:
                         resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
                     else:
                         resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id)
@@ -254,12 +253,12 @@ class ExcavationTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
         from arches_orm.models import License
         utilities = Utilities()
-
         #states
         is_admin = groupId == EXCAVATION_ADMIN_GROUP
         is_user = groupId == EXCAVATION_USER_GROUP
         is_cur_e = groupId == EXCAVATION_CUR_E
 
+        sort_options = ['issuedate', 'validuntil']
 
         resources = [] 
 
@@ -271,7 +270,6 @@ class ExcavationTaskStrategy(TaskStrategy):
             task = self.build_data(licence, groupId)
             if task:
                 resources.append(task)
-
         sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
 
         counters = []
@@ -391,7 +389,7 @@ class Utilities:
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
-        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP]:
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
             return "licensing-workflow"
     
     def create_deadline_message(self, date):
