@@ -23,6 +23,8 @@ HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
 EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
@@ -136,7 +138,7 @@ class Dashboard(View):
     def select_strategy(self, groupId):
         if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
             return PlanningTaskStrategy()
-        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP]:
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
             return ExcavationTaskStrategy()
         return
 
@@ -256,6 +258,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         #states
         is_admin = groupId == EXCAVATION_ADMIN_GROUP
         is_user = groupId == EXCAVATION_USER_GROUP
+        is_cur_e = groupId == EXCAVATION_CUR_E
 
 
         resources = [] 
