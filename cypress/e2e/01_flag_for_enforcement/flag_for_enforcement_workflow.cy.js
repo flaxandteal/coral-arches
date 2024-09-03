@@ -30,7 +30,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('[aria-label="Flagged Date"]').scrollIntoView().should('be.visible').click();
         cy.get('[aria-label="Flagged Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
         cy.contains('Select resources').siblings('.row').click();
-        cy.get('.select2-results__options li').contains('TestAsset').click();
+        cy.get('.select2-results__options li').contains('HA/01').click();
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
@@ -41,7 +41,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         // Only checks if the date we selected is present as the year and month could change
         cy.contains('Flagged Date Value:').siblings().should('contain', '17');
         cy.contains('Actor:').siblings().should('have.text', 'John Doe, Test Person');
-        cy.contains('Associated Resources:').siblings().should('have.text', 'None TestAsset');
+        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/01');
         cy.wait(900);
         cy.contains('Save and Complete Workflow').click();
     });
@@ -234,14 +234,14 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Select resources').scrollIntoView();
         cy.wait(1000);
         cy.contains('Select resources').siblings('.row').click();
-        cy.get('.select2-results__options li').contains('TestAsset').click();
+        cy.get('.select2-results__options li').contains('HA/01').click();
         // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a Heritage Asset and uses that by name
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
-        cy.contains('Associated Resources:').siblings().should('have.text', 'None TestAsset');
+        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/01');
         cy.contains('Save and Complete Workflow').click();
     });
 });
