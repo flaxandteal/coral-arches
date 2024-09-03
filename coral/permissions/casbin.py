@@ -1,8 +1,13 @@
 import logging
 import pika
+import uuid
 import time
+import threading
+from typing import Iterable
+from contextlib import contextmanager
 from guardian.core import ObjectPermissionChecker
 from dauthz.backends.casbin_backend import CasbinBackend
+
 # https://github.com/casbin/pycasbin/issues/323
 logging.disable(logging.NOTSET)
 logging.getLogger("casbin_adapter").setLevel(logging.ERROR)
@@ -20,7 +25,7 @@ from django.db import transaction
 from guardian.models import GroupObjectPermission
 
 from arches.app.models.models import *
-from arches.app.models.models import ResourceInstance, MapLayer
+from arches.app.models.models import ResourceInstance, MapLayer, Plugin
 from arches.app.models.graph import Graph
 from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
@@ -28,7 +33,7 @@ from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm, ArchesStandardPermissionFramework
 from arches.app.models.resource import UnindexedError
-from arches_orm.models import Person, Organization, Set, LogicalSet, Group
+from arches_orm.models import Person, Organization, Set, LogicalSet, Group, ArchesPlugin
 from arches_orm.view_models import ResourceInstanceViewModel
 from arches_orm.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
@@ -106,6 +111,10 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             obj = f"g2l:{obj.id}"
         elif isinstance(obj, Graph) or isinstance(obj, GraphModel):
             obj = f"gp:{obj.pk}"
+        elif isinstance(obj, ArchesPlugin):
+            obj = f"pl:{obj.plugin_identifier}"
+        elif isinstance(obj, Plugin):
+            obj = f"pl:{obj.pk}"
         elif isinstance(obj, ResourceInstanceViewModel):
             obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
@@ -191,6 +200,14 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             #         for act in perms:
             #             obj_key = self._obj_to_str(nodegroup)
             #             self._enforcer.add_policy(group_key, obj_key, str(act))
+            for arches_plugin in group.arches_plugins:
+                try:
+                    identifier = uuid.UUID(arches_plugin.plugin_identifier)
+                    plugin = Plugin.get(pk=identifier)
+                except ValueError:
+                    plugin = Plugin.get(slug=identifier)
+                for obj_key in (f"pl:{key}" for key in (plugin.pk, plugin.slug) if key):
+                    self._enforcer.add_policy(group_key, obj_key, "view_plugin")
             for permission in group.permissions:
                 for act in permission.action:
                     for obj in permission.object:
@@ -798,6 +815,44 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         return restricted_ids
 
     @context_free
+    def user_has_plugin_permissions(self, user: User, plugin: Plugin | uuid.UUID | str, perms: str | Iterable[str] = "view_plugin") -> bool:
+        """
+        Checks if a user has any explicit permissions to a model's nodegroups
+
+        Arguments:
+        user -- the user to check
+        plugin -- the plugin against which to confirm access, or 
+        perms -- one or a list of permissions to be checked
+
+        Returns:
+        A list of 0, 1 or more plugin IDs that match
+
+        """
+
+        # Only considers groups a user is assigned to.
+        if user.is_superuser:
+            return True
+
+        if isinstance(perms, str):
+            perms = (perms,)
+
+        plugin_id: str
+        if isinstance(plugin, Plugin):
+            plugin_id = str(plugin.pk)
+        else:
+            plugin_id = str(plugin) # we add both slug and ID above
+
+        # Only considers plugins a user is assigned to.
+        subj = self._subj_to_str(user)
+        found_plugins = self._enforcer.get_implicit_permissions_for_user(subj)
+        for _, plugin, act in found_plugins:
+            if plugin != f"pl:{plugin_id}":
+                continue
+            if not perms or act in perms:
+                return True
+        return False
+
+    @context_free
     def user_has_resource_model_permissions(self, user, perms, resource=None, graph_id=None):
         """
         Checks if a user has any explicit permissions to a model's nodegroups
@@ -968,13 +1023,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         roles = self._enforcer.get_implicit_roles_for_user(subj)
         return any(f"dgn:{name}" in roles for name in names)
 
-from contextlib import contextmanager
-from uuid import uuid4
-
-_PROCESS_KEY = str(uuid4())
-
-import time
-import threading
+_PROCESS_KEY = str(uuid.uuid4())
 
 class CasbinTrigger:
     wait_time = int(os.getenv("CASBIN_DEBOUNCE_SECONDS", 5))
