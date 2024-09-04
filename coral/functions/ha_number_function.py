@@ -18,6 +18,9 @@ details = {
 
 class HaNumberFunction(BaseFunction):
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None)
 

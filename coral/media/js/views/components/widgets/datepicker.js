@@ -120,6 +120,11 @@ define([
       }
     }
 
+    this.clearDate = () => {
+      this.value(null);
+      this.dateValue(null);
+    }
+
     if (this.value()) {
       const parsedDate = moment(this.value(), 'YYYY-MM-DD');
       const formattedDate = parsedDate.format('DD-MM-YYYY');
@@ -130,12 +135,14 @@ define([
      * Date format overriding logic
      */
     this.dateValue.subscribe((value) => {
+      if (!value) return;
       const parsedDate = moment(value, 'DD-MM-YYYY');
       const formattedDate = parsedDate.format('YYYY-MM-DD');
       this.value(formattedDate);
     }, this);
 
     this.value?.subscribe((value) => {
+      if (!value) return;
       const parsedDate = moment(value, 'YYYY-MM-DD');
       const formattedDate = parsedDate.format('DD-MM-YYYY');
       this.dateValue(formattedDate);
