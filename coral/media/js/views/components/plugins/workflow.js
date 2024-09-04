@@ -143,13 +143,19 @@ define([
           return step;
       };
 
+      this.disableSaveButton = ko.observable();
+
       this.saveActiveStep = function() {
+          this.disableSaveButton(true);
           self.activeStep().save()
               .then(async function(_data) {
                   await self.next();
               })
               .catch(function(error) {
                   console.error(error);
+              })
+              .finally(() => {
+                  this.disableSaveButton(false);
               });
       };
 
