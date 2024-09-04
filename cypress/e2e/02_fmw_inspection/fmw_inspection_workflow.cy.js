@@ -296,4 +296,128 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.get('.close-new-step').contains('Return').click();
         cy.wait(2000);
      })
+
+      it('Map feature tab', function () {
+        cy.contains('Workflows');
+        cy.contains('Incident Report').click();
+        cy.wait(2000);
+        cy.get('.card-component').contains('Please select a Monument').click();
+        cy.get('.select2-results__option');
+        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.card-component').contains('Select an Incident Report or start new').click();
+        cy.get('[style="display: flex"] > .fa').contains('Start New').click();
+        
+        // Inital Step tab
+        cy.get('.tabbed-workflow-footer-button-container > .btn').contains('Next Step').click();
+
+        // Incident Reference tab
+        cy.wait(2000);
+        cy.get('.tabbed-workflow-footer').scrollIntoView();
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Record of incident tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Locations details tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Maps tab
+        cy.wait(6000);
+        cy.get('.card_component.feature_shape').contains('Feature Shape');
+        cy.get('.select2-selection__rendered').contains('Select an option').click();
+
+        cy.get('.select2-results__option').contains('Approx').click();
+        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').contains('Archaeological Event').click();
+        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').contains('Area').click();
+        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').contains('Dispersed Event').click();
+        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').contains('Linear').click();
+        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').contains('Locality').click();
+        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').contains('Named Loc').scrollIntoView().click();
+        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').contains('Unknown').click();
+
+    });
+    
+    it('Document upload tab', function(){
+        cy.contains('Workflows');
+        cy.contains('Incident Report').click();
+        cy.wait(2000);
+        cy.get('.card-component').contains('Please select a Monument').click();
+        cy.get('.select2-results__option');
+        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.card-component').contains('Select an Incident Report or start new').click();
+        cy.get('[style="display: flex"] > .fa').contains('Start New').click();
+        
+        // Inital Step tab
+        cy.get('.tabbed-workflow-footer-button-container > .btn').contains('Next Step').click();
+
+        // Incident Reference tab
+        cy.wait(2000);
+        cy.get('.tabbed-workflow-footer').scrollIntoView();
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Record of incident tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Locations details tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Maps tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Documentation tab
+        cy.get('.bord-top > .btn').contains('Select Files').click();
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click()
+
+    });
+
+    it('Sign Off tab', function(){
+        cy.contains('Workflows');
+        cy.contains('Incident Report').click();
+        cy.wait(2000);
+        cy.get('.card-component').contains('Please select a Monument').click();
+        cy.get('.select2-results__option');
+        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.card-component').contains('Select an Incident Report or start new').click();
+        cy.get('[style="display: flex"] > .fa').contains('Start New').click();
+        
+        // Inital Step tab
+        cy.get('.tabbed-workflow-footer-button-container > .btn').contains('Next Step').click();
+
+        // Report tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Maps tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Documentation tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click()
+
+        // Sign Off tab
+        cy.wait(2000);
+        cy.get('.widget-input-label').contains('Signed Off On');
+        cy.get('[aria-label="Signed Off On"]').click();
+        cy.get('.date-icon').first().click();
+
+        cy.get('.report_submitted_by_value').contains('Report Submitted By');
+        cy.get('.report_submitted_by_value').contains('Add new Relationship').click();
+        cy.wait(2000);
+        cy.get('.fa-trash').first().click();
+
+        cy.get('.reviewed_by_value').contains('Reviewed By');
+        cy.get('.reviewed_by_value').contains('Add new Relationship').click();
+        cy.wait(2000);
+        cy.get('.select2-dropdown').contains('Test Person').click();
+        cy.get('.fa-trash').first().click();
+
+        cy.get('.send_papers').contains('Send Papers');
+        cy.get('.send_papers').contains('Yes').click();
+        cy.get('.send_papers').contains('No').click(); 
+    });
 });
