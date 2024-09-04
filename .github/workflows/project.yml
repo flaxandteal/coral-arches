@@ -369,6 +369,7 @@ jobs:
           STATIC_URL: "/static/"
           STATIC_ROOT: "/static_root"
           WEB_ROOT: "/web_root"
+          ARCHES_ROOT: "/web_root/arches"
           TZ: "PST"
         ports:
           - '8000:8000'
