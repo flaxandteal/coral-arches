@@ -2331,6 +2331,57 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "6af2a0cd-efc5-11eb-bfc2-a87eeabdefba",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Land Folio Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "f4c393ac-efc5-11eb-bfc2-a87eeabdefba",
+                    "label": {
+                        "en": "Land Folio Number"
+                    },
+                    "node_id": "f4c393ac-6aa6-11ef-b483-5e5ea193fa45",
+                    "sortorder": 21,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "bba34a38-37b4-11ef-9263-0242ac150006",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Land Use Site",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "2cedf759-e47f-48a8-b1e8-5ba91477d22d",
+                    "label": {
+                        "en": "Land Use Site"
+                    },
+                    "node_id": "5782bd48-6aa6-11ef-b483-5e5ea193fa45",
+                    "sortorder": 6,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
                     "card_id": "36560f39-fd37-4561-b483-05a6ae912642",
                     "config": {
                         "defaultResourceInstance": [],
@@ -2423,28 +2474,6 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "87d39b27-f44f-11eb-a02c-a87eeabdefba",
-                    "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "County",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "955107a5-e3a0-4077-8776-e7aa07fa068f",
-                    "label": {
-                        "en": "County"
-                    },
-                    "node_id": "8bfe714e-3ec2-11ef-9023-0242ac140007",
-                    "sortorder": 27,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "10f14bcc-4307-422d-afdf-417f6b9eac38",
@@ -2585,25 +2614,25 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "bba34a38-37b4-11ef-9263-0242ac150006",
+                    "card_id": "6af2a0cd-efc5-11eb-bfc2-a87eeabdefba",
                     "config": {
                         "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Recommended Designation Type",
+                        "label": "Recommended designation, identification and protection",
                         "placeholder": {
                             "en": "Select an option"
                         }
                     },
-                    "id": "05b8416c-d103-4503-a656-31e6c6c1dea2",
+                    "id": "6af2a0cd-efc5-11eb-bfc2-0242ac150006",
                     "label": {
-                        "en": "Recommended Designation Type"
+                        "en": "Recommended designation, identification and protection"
                     },
                     "node_id": "74ef37e0-37b5-11ef-9263-0242ac150006",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "7e303e62-7bd0-4d89-84c0-cb4782a228cc",
@@ -8959,8 +8988,8 @@
                     },
                     "node_id": "87d3ff32-f44f-11eb-aa82-a87eeabdefba",
                     "sortorder": 27,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "87d39b27-f44f-11eb-a02c-a87eeabdefba",
@@ -15260,6 +15289,24 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "bba34790-37b4-11ef-9263-0242ac150006",
+                    "edgeid": "076f9381-97b9-4f1a-ad91-3a8d4d61ae9c",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P15i_influenced",
+                    "rangenode_id": "5782bd48-6aa6-11ef-b483-5e5ea193fa45"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
+                    "edgeid": "076f9381-411e-4102-86f2-c499b972bd52",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "f4c393ac-6aa6-11ef-b483-5e5ea193fa45"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
                     "edgeid": "8f132774-85eb-427c-aa16-74123b677f86",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -15287,15 +15334,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "87d3ff2a-f44f-11eb-9951-a87eeabdefba",
-                    "edgeid": "b7526642-57ff-478b-a8ad-007f051dc816",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "8bfe714e-3ec2-11ef-9023-0242ac140007"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "de6b6af0-44e3-11ef-9114-0242ac120006",
                     "edgeid": "ba1fe25d-8a2f-439e-a853-7fb903255f96",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -15311,15 +15349,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "de6b6af0-44e3-11ef-9114-0242ac120006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "87d3ff2a-f44f-11eb-9951-a87eeabdefba",
-                    "edgeid": "b7526642-57ff-478b-a8ad-007f051dc816",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "8bfe714e-3ec2-11ef-9023-0242ac140007"
                 },
                 {
                     "description": null,
@@ -19115,7 +19144,7 @@
                     "edgeid": "87dc7391-f44f-11eb-8d12-a87eeabdefba",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "87d3ff32-f44f-11eb-aa82-a87eeabdefba"
                 },
                 {
@@ -22183,6 +22212,52 @@
             ],
             "nodes": [
                 {
+                    "alias": "land_use_site",
+                    "config": {
+                        "rdmCollection": "dcab7c77-02ab-4c21-9afd-ca5a5fcc1bad"
+                    },
+                    "datatype": "concept-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Land Use Site",
+                    "nodegroup_id": "bba34790-37b4-11ef-9263-0242ac150006",
+                    "nodeid": "5782bd48-6aa6-11ef-b483-5e5ea193fa45",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E15_Identifier_Assignment",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P15i_influenced",
+                    "sortorder": 9,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "land_folio_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Land Folio Number",
+                    "nodegroup_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
+                    "nodeid": "f4c393ac-6aa6-11ef-b483-5e5ea193fa45",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "smc_documentation_file_s_",
                     "config": {
                         "graphs": [
@@ -22278,29 +22353,6 @@
                     "nodeid": "fe7d67f8-44e3-11ef-9114-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "county_selected",
-                    "config": {
-                        "rdmCollection": "763ba635-3800-324a-8d54-c1427bcaa5aa"
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "County Selected",
-                    "nodegroup_id": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
-                    "nodeid": "8bfe714e-3ec2-11ef-9023-0242ac140007",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E44_Place_Appellation",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -28581,55 +28633,9 @@
                 {
                     "alias": "recommended_designation_type",
                     "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "13d95f40-e699-4ae1-86f0-38dae6269816",
-                                "selected": false,
-                                "text": {
-                                    "en": "Delist"
-                                }
-                            },
-                            {
-                                "id": "92cdabd1-7ae3-4086-a3bd-86dbd24018e7",
-                                "selected": false,
-                                "text": {
-                                    "en": "Record Only"
-                                }
-                            },
-                            {
-                                "id": "a7568640-f5a7-4643-9889-9a5e9ce0d53a",
-                                "selected": false,
-                                "text": {
-                                    "en": "B2"
-                                }
-                            },
-                            {
-                                "id": "0e6f2cfa-3ba7-4dfd-abdd-901923327d7e",
-                                "selected": false,
-                                "text": {
-                                    "en": "B1"
-                                }
-                            },
-                            {
-                                "id": "67b692ea-7c97-4562-95cd-e6444a8a7495",
-                                "selected": false,
-                                "text": {
-                                    "en": "A"
-                                }
-                            },
-                            {
-                                "id": "119d4ad2-5c68-49bf-ab57-9011f6c280f6",
-                                "selected": false,
-                                "text": {
-                                    "en": "Scheduled"
-                                }
-                            }
-                        ]
+                        "rdmCollection": "08224567-338c-406b-91ae-6ce4b4ee3608"
                     },
-                    "datatype": "domain-value",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -28639,7 +28645,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Recommended Designation Type",
+                    "name": "Recommended designation, identification and protection",
                     "nodegroup_id": "bba34790-37b4-11ef-9263-0242ac150006",
                     "nodeid": "74ef37e0-37b5-11ef-9263-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -33897,8 +33903,10 @@
                 },
                 {
                     "alias": "county_value",
-                    "config": {},
-                    "datatype": "string",
+                    "config": {
+                        "rdmCollection": "763ba635-3800-324a-8d54-c1427bcaa5aa"
+                    },
+                    "datatype": "concept",
                     "description": null,
                     "exportable": true,
                     "fieldname": "County",
@@ -33911,8 +33919,8 @@
                     "name": "County Value",
                     "nodegroup_id": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
                     "nodeid": "87d3ff32-f44f-11eb-aa82-a87eeabdefba",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E44_Place_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
