@@ -3458,19 +3458,13 @@
                 {
                     "card_id": "c225523c-a711-4088-9b11-89f31c2d1243",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "County ",
                         "maxLength": null,
                         "placeholder": {
-                            "en": "Enter text"
+                            "en": "Select an option"
                         },
                         "uneditable": false,
                         "width": "100%"

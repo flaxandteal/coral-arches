@@ -8965,26 +8965,20 @@
                 {
                     "card_id": "87d39b27-f44f-11eb-a02c-a87eeabdefba",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "County ",
+                        "label": "County",
                         "maxLength": null,
                         "placeholder": {
-                            "en": "Enter text"
+                            "en": "Select an option"
                         },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "87d3ff49-f44f-11eb-b010-a87eeabdefba",
                     "label": {
-                        "en": "County "
+                        "en": "County"
                     },
                     "node_id": "87d3ff32-f44f-11eb-aa82-a87eeabdefba",
                     "sortorder": 27,
