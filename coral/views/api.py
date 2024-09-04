@@ -1379,6 +1379,7 @@ class Tile(APIBase):
         if len(dict(request.POST.items())) == 0 and len(dict(request.FILES.items())) == 0:
             request.POST = request.POST.copy()
             request.POST["data"] = request.body
+            request.POST["transaction_id"] = request.GET.get("transaction_id", None)
         return tileview.post(request)
 
 
