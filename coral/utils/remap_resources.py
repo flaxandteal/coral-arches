@@ -153,7 +153,7 @@ class RemapResources:
             data={},
             nodegroup=destination_parent_nodegroup,
         )
-        parent_tile.save()
+        parent_tile.save(context={"escape_function": True})
         self.created_parent_tiles[target_parent_tile_id] = parent_tile
 
         return parent_tile
@@ -274,7 +274,7 @@ class RemapResources:
                         nodegroup=destination_nodegroup,
                     )
 
-                destination_tile.save()
+                destination_tile.save(context={"escape_function": True})
 
                 # If this is true, it means the parent tile had data and needed
                 # that data to be remapped. We then add into the created parent
