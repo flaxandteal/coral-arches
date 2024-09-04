@@ -172,7 +172,7 @@ define([
         actSystemRefTemplate.tileid = self.actSysRefTileId;
       }
 
-      const activityTile = await window.fetch(arches.urls.api_tiles(self.actSysRefTileId), {
+      const activityTile = await window.fetch(arches.urls.api_tiles(self.actSysRefTileId) + `?transaction_id=${this.workflowId}`, {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(actSystemRefTemplate),
