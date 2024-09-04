@@ -164,9 +164,13 @@ def generate_licence_number(licence_instance_id, attempts=0):
 
 class LicenceNumberFunction(BaseFunction):
 
-    def post_save(self, tile, request, context):
+    def post_save(self, tile, request, context={}):
         if context and context.get('escape_function', False):
             return
+        
+        txn_id = None
+        if context:
+            txn_id = context.get('transaction_id', None)
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
@@ -202,7 +206,7 @@ class LicenceNumberFunction(BaseFunction):
                         "value": f"Excavation Licence {app_id}",
                     }
                 }
-                name_tile.save()
+                name_tile.save(transaction_id=txn_id)
                 return
 
         if tile_nodegroup_id == STATUS_NODEGROUP:
@@ -240,16 +244,21 @@ class LicenceNumberFunction(BaseFunction):
             return
 
         try:
-            # Configure the licence number
-            Tile.objects.get_or_create(
+            licence_number_tile = asso_activity_tile = Tile.objects.filter(
                 resourceinstance_id=resource_instance_id,
                 nodegroup_id=LICENCE_NUMBER_NODEGROUP,
-                data={
-                    LICENCE_NUMBER_NODE: {
-                        "en": {"direction": "ltr", "value": licence_number}
-                    },
-                },
-            )
+            ).first()
+
+            if not licence_number_tile:
+                licence_number_tile = Tile.get_blank_tile_from_nodegroup_id(
+                    LICENCE_NUMBER_NODEGROUP, resourceid=resource_instance_id
+                )
+
+            licence_number_tile.data[LICENCE_NUMBER_NODE] = {
+                "en": {"direction": "ltr", "value": licence_number}
+            }
+            licence_number_tile.save(transaction_id=txn_id)
+
             # Configure the licence name with the licence number included
             licence_name_tile = Tile.objects.get(
                 resourceinstance_id=resource_instance_id,
@@ -258,7 +267,7 @@ class LicenceNumberFunction(BaseFunction):
             licence_name_tile.data[LICENCE_NAME_NODE]["en"][
                 "value"
             ] = f"Excavation Licence {licence_number}"
-            licence_name_tile.save()
+            licence_name_tile.save(transaction_id=txn_id)
         except Exception as e:
             print(f"Failed saving licence number external ref or licence name: {e}")
             raise e
@@ -271,15 +280,15 @@ class LicenceNumberFunction(BaseFunction):
             activity_resource_id = site_name_tile.get_tile_data()[
                 ASSOCIATED_ACTIVIY_NODE
             ][0]["resourceId"]
-            ass_activity_tile = Tile.objects.filter(
+            asso_activity_tile = Tile.objects.filter(
                 resourceinstance_id=activity_resource_id,
                 nodegroup_id=ASSOCIATED_LICENCE_NODEGROUP,
             ).first()
-            if not ass_activity_tile:
-                ass_activity_tile = Tile.get_blank_tile_from_nodegroup_id(
+            if not asso_activity_tile:
+                asso_activity_tile = Tile.get_blank_tile_from_nodegroup_id(
                     ASSOCIATED_LICENCE_NODEGROUP, resourceid=activity_resource_id
                 )
-            ass_activity_tile.data[ASSOCIATED_LICENCE_NODE] = [
+            asso_activity_tile.data[ASSOCIATED_LICENCE_NODE] = [
                 {
                     "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                     "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
@@ -287,7 +296,7 @@ class LicenceNumberFunction(BaseFunction):
                     "resourceXresourceId": "",
                 }
             ]
-            ass_activity_tile.save()
+            asso_activity_tile.save(transaction_id=txn_id)
         except Exception as e:
             print(f"Error associating licence: {e}")
             raise e
