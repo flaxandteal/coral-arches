@@ -2333,6 +2333,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "67712ce4-378e-11ef-9263-0242ac150006",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Land Use Site",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "67714256-378e-11ef-9263-0242ac120006",
+                    "label": {
+                        "en": "Land Use Site"
+                    },
+                    "node_id": "5782bd48-6aa6-11ef-b2e2-0242ac120006",
+                    "sortorder": 6,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
                     "card_id": "280b2f9d-e879-4e5f-984e-157ae4f8ffbd",
                     "config": {
                         "defaultResourceInstance": [],
@@ -21948,7 +21970,7 @@
                     "nodeid": "5782bd48-6aa6-11ef-b2e2-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E15_Identifier_Assignment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P15i_influenced",
-                    "sortorder": 3,
+                    "sortorder": 9,
                     "sourcebranchpublication_id": null
                 },
                 {
@@ -28858,7 +28880,7 @@
                 {
                     "alias": "county_value",
                     "config": {
-                        "rdmCollection": "02458080-9b7a-4a02-b298-f7ea61f60dbb"
+                        "rdmCollection": "763ba635-3800-324a-8d54-c1427bcaa5aa"
                     },
                     "datatype": "concept",
                     "description": null,
