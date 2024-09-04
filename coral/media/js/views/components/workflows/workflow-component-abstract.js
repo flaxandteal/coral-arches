@@ -163,7 +163,8 @@ define([
                         provisionalTileViewModel: self.provisionalTileViewModel,
                         cardwidgets: data.cardwidgets,
                         userisreviewer: data.userisreviewer,
-                        loading: self.loading
+                        loading: self.loading,
+                        transactionId: self.workflowId
                     });
                 });
 
