@@ -155,6 +155,7 @@ define([
               outerSaveOnQuit: self.outerSaveOnQuit,
               isStepActive: self.active,
               workflowHistory: config.workflowHistory,
+              transactionId: this.workflowId
           });
 
           workflowComponentAbstractLookup[workflowComponentAbtractData.uniqueInstanceName] = workflowComponentAbstract;
