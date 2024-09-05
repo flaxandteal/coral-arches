@@ -2,7 +2,7 @@ describe('Going through the FWM Inspection Workflow', function () {
 
     beforeEach(() => {
         cy.login();
-        cy.visit('http://localhost:8000/plugins/init-workflow');
+        cy.visit('/plugins/init-workflow');
     });
 
     it('Go through the workflow and populate all fields', function () {
