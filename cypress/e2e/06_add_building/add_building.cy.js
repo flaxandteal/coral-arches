@@ -183,7 +183,7 @@ describe('Going through the Add Building Workflow', function () {
 
     it('Heritage Asset Details tab specific tests', function () {
         cy.contains('Workflows');
-        cy.contains('Add Garden').click();
+        cy.contains('Add Building').click();
         cy.wait(2000);
 
         // Add Garden 1st page
@@ -312,7 +312,7 @@ describe('Going through the Add Building Workflow', function () {
 
     it('Location Details tab specific tests', function () {
         cy.contains('Workflows');
-        cy.contains('Add Garden').click();
+        cy.contains('Add Building').click();
         cy.wait(2000);
 
         // Add Garden 1st page
@@ -440,7 +440,7 @@ describe('Going through the Add Building Workflow', function () {
 
     it('Map tab', function () {
         cy.contains('Workflows');
-        cy.contains('Add Garden').click();
+        cy.contains('Add Building').click();
         cy.wait(2000);
 
         // Add Garden 1st page
@@ -519,7 +519,7 @@ describe('Going through the Add Building Workflow', function () {
     it('Finish tab specific tests', function () {
 
         cy.contains('Workflows');
-        cy.contains('Add Garden').click();
+        cy.contains('Add Building').click();
         cy.wait(2000);
 
         // Add Garden 1st page
