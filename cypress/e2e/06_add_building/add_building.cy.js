@@ -200,6 +200,8 @@ describe('Going through the Add Building Workflow', function () {
         cy.get('.btn-success').contains('Save and Continue').click();
 
         // Heritage Asset Details tab
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
         cy.contains('Site Name');
         cy.get('[aria-label="Site Name"]').click().type('Testing');
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
