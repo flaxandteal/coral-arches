@@ -24,6 +24,8 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.btn-success').contains('Save and Continue').click();
 
         // Heritage Asset Details tab
+        cy.get('.btn-primary').contains('Previous Step');
+        cy.get('.btn-primary').contains('Next Step');
         cy.contains('Site Name');
         cy.get('[aria-label="Site Name"]').click().type('Testing');
 
