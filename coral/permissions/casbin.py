@@ -749,8 +749,10 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         print('uncached user_sets: ', user_sets)
 
+        SEARCH_LIMIT = 3000 # settings.SEARCH_LIMIT = 10000
+
         # We assume all instances are (or can be) restricted instances
-        query = Query(search_engine, start=0, limit=settings.SEARCH_RESULT_LIMIT)
+        query = Query(search_engine, start=0, limit=SEARCH_LIMIT)
         # Exclude set IDs the user DOES have access to to gather a list of resource
         # IDs they do not have access to
         query.add_query({
@@ -772,12 +774,13 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         total = results["hits"]["total"]["value"]
 
         print('uncached get_restricted_instances initial total: ', total)
-        print('uncached get_restricted_instances settings.SEARCH_RESULT_LIMIT: ', settings.SEARCH_RESULT_LIMIT)
+        print('uncached get_restricted_instances settings.SEARCH_RESULT_LIMIT: ', settings.SEARCH_LIMIT)
+        print('uncached get_restricted_instances SEARCH_LIMIT: ', SEARCH_LIMIT)
         
         print('uncached get_restricted_instances hits length: ', len(results["hits"]["hits"]))
 
-        if total > settings.SEARCH_RESULT_LIMIT:
-            pages = total // settings.SEARCH_RESULT_LIMIT
+        if total > SEARCH_LIMIT:
+            pages = total // SEARCH_LIMIT
 
             print('uncached pages: ', pages)
 
@@ -786,7 +789,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 results["hits"]["hits"] += results_scrolled["hits"]["hits"]
 
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
-        cache.set("get_restricted_instances--restricted_ids", restricted_ids, 30)
+        cache.set("get_restricted_instances--restricted_ids", restricted_ids, 300)
         return restricted_ids
 
     @context_free
