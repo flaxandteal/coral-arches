@@ -343,7 +343,7 @@ jobs:
           ALLOW_BOOTSTRAP: "True"
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
           COMPRESS_OFFLINE: "False"
-          INSTALL_CORAL_PACKAGE: "True"
+          INSTALL_CORAL_PACKAGE: "False"
           INSTALL_DEFAULT_GRAPHS: "False"
           INSTALL_DEFAULT_CONCEPTS: "False"
           PGUSERNAME: "postgres"
