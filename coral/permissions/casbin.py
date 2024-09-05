@@ -32,6 +32,7 @@ from arches_orm.models import Person, Organization, Set, LogicalSet, Group
 from arches_orm.view_models import ResourceInstanceViewModel
 from arches_orm.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 REMAPPINGS = {
@@ -730,13 +731,23 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     def get_restricted_instances(self, user, search_engine=None, allresources=False):
         logger.debug(f"Getting restricted instances: {user}")
 
+        print('get_restricted_instances called')
+
         if user.is_superuser is True:
             return []
         
         if allresources is True and not search_engine:
             search_engine = se
 
+        restricted_ids = cache.get("get_restricted_instances--restricted_ids")
+        if restricted_ids:
+            print('get_restricted_instances using cache')
+            print('cached get_restricted_instances restricted ids len: ', len(restricted_ids))
+            return restricted_ids
+
         user_sets = self.get_sets_for_user(user, 'view_resourceinstance') or []
+
+        print('uncached user_sets: ', user_sets)
 
         # We assume all instances are (or can be) restricted instances
         query = Query(search_engine, start=0, limit=settings.SEARCH_RESULT_LIMIT)
@@ -759,13 +770,23 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         results = query.search(index=RESOURCES_INDEX, scroll="1m")
         scroll_id = results["_scroll_id"]
         total = results["hits"]["total"]["value"]
+
+        print('uncached get_restricted_instances initial total: ', total)
+        print('uncached get_restricted_instances settings.SEARCH_RESULT_LIMIT: ', settings.SEARCH_RESULT_LIMIT)
+        
+        print('uncached get_restricted_instances hits length: ', len(results["hits"]["hits"]))
+
         if total > settings.SEARCH_RESULT_LIMIT:
             pages = total // settings.SEARCH_RESULT_LIMIT
+
+            print('uncached pages: ', pages)
+
             for page in range(pages):
                 results_scrolled = query.se.es.scroll(scroll_id=scroll_id, scroll="1m")
                 results["hits"]["hits"] += results_scrolled["hits"]["hits"]
 
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
+        cache.set("get_restricted_instances--restricted_ids", restricted_ids, 30)
         return restricted_ids
 
     @context_free
