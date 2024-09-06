@@ -179,7 +179,7 @@ describe('Going through the Add IHR Workflow', function () {
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click()
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
-    })
+    // })
 
     it('Heritage Asset Details tab specific tests', function () {
         cy.contains('Workflows');
@@ -408,7 +408,7 @@ describe('Going through the Add IHR Workflow', function () {
         cy.wait(2000);
 
         // Unique Building ID
-        cy.get('[aria-label="Unique Building ID"]').click().type('01');
+        cy.get('[aria-label="Unique Building ID"]').click().type('01234567891011');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
@@ -418,7 +418,7 @@ describe('Going through the Add IHR Workflow', function () {
         // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
 
         // LP Fusion ID
-        cy.get('[aria-label="LP Fusion ID"]').scrollIntoView().click().type('02');
+        cy.get('[aria-label="LP Fusion ID"]').scrollIntoView().click().type('01234567891011121314151617181920212223');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
@@ -428,7 +428,7 @@ describe('Going through the Add IHR Workflow', function () {
         // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
 
         // BU Fusion ID
-        cy.get('[aria-label="BU Fusion ID"').click().type('03');
+        cy.get('[aria-label="BU Fusion ID"').click().type('01234567891011121314151617181920212223');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
