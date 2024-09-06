@@ -769,7 +769,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 }
             }
         })
-        results = query.search(index=RESOURCES_INDEX, scroll="1m")
+        results = query.search(index=RESOURCES_INDEX, scroll="1m", limit=SEARCH_LIMIT)
         scroll_id = results["_scroll_id"]
         total = results["hits"]["total"]["value"]
 
@@ -786,7 +786,10 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
             for page in range(pages):
                 results_scrolled = query.se.es.scroll(scroll_id=scroll_id, scroll="1m")
+                print('uncached results_scrolled total: ', results_scrolled["hits"]["hits"])
                 results["hits"]["hits"] += results_scrolled["hits"]["hits"]
+                print('uncached new results total: ', results_scrolled["hits"]["hits"])
+
 
         restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         cache.set("get_restricted_instances--restricted_ids", restricted_ids, 300)
