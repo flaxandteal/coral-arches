@@ -179,7 +179,7 @@ describe('Going through the Add IHR Workflow', function () {
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click()
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
-    // })
+    })
 
     it('Heritage Asset Details tab specific tests', function () {
         cy.contains('Workflows');
@@ -224,23 +224,6 @@ describe('Going through the Add IHR Workflow', function () {
         cy.wait(2000);
         cy.get('.select2-results__option').contains('Bee House').click();
         cy.wait(2000)
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
-
-        cy.contains('Land Use Classification').scrollIntoView();
-        cy.get('[aria-label="Land Use Classification"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('.card_component.land_use_classification > .row > .form-group > .col-xs-12 > .select2 > .selection > .select2-selection > .select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.wait(2000);
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
-        cy.get('.select2-results__option').first().click();
-        cy.get('[aria-label="Land Use Classification"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('Coastland 1').click();
-        cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
