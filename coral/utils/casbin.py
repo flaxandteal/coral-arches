@@ -59,10 +59,10 @@ class SetApplicator:
         """
 
         print("Confirming all plugins present")
-        for plugin in ArchesPlugin.all():
-            plugin.delete() # RMV
         known_plugins = set(str(plugin.plugin_identifier) for plugin in ArchesPlugin.all())
+        print(known_plugins)
         unknown_plugins = set(str(plugin.pk) for plugin in Plugin.objects.all()) - known_plugins
+        print(unknown_plugins, "UP")
         for plugin in unknown_plugins:
             plugin = Plugin.objects.get(pk=plugin)
             ap = ArchesPlugin()

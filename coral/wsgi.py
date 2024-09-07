@@ -20,6 +20,7 @@ import threading
 import os
 import sys
 import inspect
+import time
 path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 if path not in sys.path:
@@ -40,6 +41,7 @@ settings.update_from_db()
 
 from arches.app.models.resource import resource_indexed
 
+RUNNING = False
 @receiver(resource_indexed)
 def update_permissions(sender, instance, **kwargs):
     from coral.utils.casbin import SetApplicator
@@ -47,8 +49,18 @@ def update_permissions(sender, instance, **kwargs):
     # Instead, it should trigger a (debounced) recalc.
     # This may still require delays _between_ the upserts also.
     def _exec():
+        global RUNNING
         set_applicator = SetApplicator(print_statistics=True, wait_for_completion=True)
-        set_applicator.apply_sets(resourceinstanceid=instance.resourceinstanceid)
+        if RUNNING:
+            return
+        RUNNING = True
+        try:
+            set_applicator.apply_sets(resourceinstanceid=instance.resourceinstanceid)
+        except Exception as exc:
+            print("Apply sets failed with", exc)
+            time.sleep(3.0)
+        finally:
+            RUNNING = False
     threading.Timer(3.0, _exec).start()
 
 if os.getenv("CASBIN_LISTEN", False):

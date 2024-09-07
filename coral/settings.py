@@ -296,6 +296,13 @@ FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
 
+USER_SIGNUP_GROUP = "Crowdsource Editor"
+ALLOWED_SIGNUP_GROUPS = [
+    "Crowdsource Editor",
+    "Resource Editor",
+    "Resource Reviewer",
+]
+
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
 if USE_CASBIN:
     AUTHENTICATION_BACKENDS = (
