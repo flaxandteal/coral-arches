@@ -135,41 +135,53 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             self._recalculate_table_real()
 
     def _recalculate_table_real(self):
+        print("RECALC", 1)
         groups = settings.GROUPINGS["groups"]
         root_group = Group.find(groups["root_group"])
         self._enforcer.clear_policy()
 
         # We bank permissions for all Django groups for nodegroups,
         # (implicitly resource models) and map layers, but nothing else.
+        print("RECALC", 2)
         for django_group in DjangoGroup.objects.all():
+            print(django_group.name)
             group_key = self._subj_to_str(django_group)
             self._enforcer.add_named_grouping_policy("g", group_key, f"dgn:{django_group.name}")
             # The default permissions are (still) all perms, if the nodegroup perms set is empty
             nodegroups = {
-                nodegroup: set(perms) if perms else set(GRAPH_REMAPPINGS.values())
+                str(nodegroup.pk): set(perms) if perms else set(GRAPH_REMAPPINGS.values())
                 for nodegroup, perms in
                 get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True).items()
             }
+            print("RECALC", 2, 1)
             for nodegroup, perms in nodegroups.items():
-                nodegroup_key = self._obj_to_str(nodegroup)
+                nodegroup_key = f"ng:{nodegroup}"
                 for perm in perms:
                     self._enforcer.add_policy(group_key, nodegroup_key, str(perm))
+            print("RECALC", 2, 2)
             nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph")
+            print("RECALC", 2, 3)
+            graphs = {}
             graph_perms = {}
             for node in nodes:
-                graph_perms.setdefault(node.graph, set())
-                graph_perms[node.graph] |= set(nodegroups[node.nodegroup])
+                key = f"gp:{node.graph.pk}"
+                graph_perms.setdefault(key, set())
+                graph_perms[key] |= set(nodegroups[str(node.nodegroup_id)])
+                graphs[key] = node.graph
+            print("RECALC", 2, 4)
             for graph, perms in graph_perms.items():
-                if graph.isresource and str(graph.pk) != SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID:
-                    graph_key = self._obj_to_str(graph)
+                if graphs[graph].isresource and str(graph[3:]) != SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID:
                     for perm in perms:
-                        self._enforcer.add_policy(group_key, graph_key, str(perm))
+                        self._enforcer.add_policy(group_key, graph, str(perm))
+            print("RECALC", 2, 5)
             map_layer_perms = ObjectPermissionChecker(django_group)
             for map_layer in MapLayer.objects.all():
                 perms = set(map_layer_perms.get_perms(map_layer))
                 map_layer_key = self._obj_to_str(map_layer)
                 for perm in perms:
                     self._enforcer.add_policy(group_key, map_layer_key, str(perm))
+            print("RECALC", 2, 6)
+        print("RECALC", 3)
 
         sets = []
 
@@ -229,13 +241,16 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         sets = []
 
+        print("RECALC", 4)
         _fill_group(root_group)
+        print("RECALC", 5)
 
         for user in User.objects.all():
             user_key = self._subj_to_str(user)
             for group in user.groups.all():
                 group_key = self._subj_to_str(group)
                 self._enforcer.add_named_grouping_policy("g", user_key, group_key)
+        print("RECALC", 6)
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
@@ -260,12 +275,15 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             else:
                 root_set = Set.find(obj_key.split(":")[1])
             _fill_set(root_set)
+        print("RECALC", 7)
 
         self._enforcer.save_policy()
         self._enforcer.load_policy()
+        print("RECALC", 8)
 
         if os.getenv("CASBIN_LISTEN", False):
             trigger.request_reload()
+        print("RECALC", 9)
 
     @context_free
     def update_permissions_for_user(self, user):
@@ -293,7 +311,9 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def _ri_to_django_groups(group: Group):
         if not group.django_group:
-            group.django_group = [DjangoGroup.objects.get_or_create(name=str(group))]
+            django_group = DjangoGroup.objects.get_or_create(name=str(group))
+            django_group.save()
+            group.django_group = [django_group]
             group.save()
         return group.django_group
 

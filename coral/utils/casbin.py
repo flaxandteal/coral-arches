@@ -59,7 +59,11 @@ class SetApplicator:
         """
 
         print("Confirming all plugins present")
-        known_plugins = set(str(plugin.plugin_identifier) for plugin in ArchesPlugin.all())
+        plugins = {str(plugin.pk): plugin for plugin in Plugin.objects.all()}
+        plugins.update({str(plugin.slug): plugin for plugin in plugins.values()})
+        arches_plugins = ArchesPlugin.all()
+        known_plugins = set(str(plugins[str(plugin.plugin_identifier)].pk) for plugin in arches_plugins)
+        known_plugins |= set(str(plugins[str(plugin.plugin_identifier)].slug) for plugin in arches_plugins)
         print(known_plugins)
         unknown_plugins = set(str(plugin.pk) for plugin in Plugin.objects.all()) - known_plugins
         print(unknown_plugins, "UP")
