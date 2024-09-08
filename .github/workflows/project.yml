@@ -130,9 +130,7 @@ jobs:
       - name: Export DB SQL
         id: export_model_db
         run: |
-          apt-get update
-          apt-get install --yes --no-install-recommends postgresql-client
-          pg_dump -d postgresql://postgres:postgres@db:5432/arches > ~/coral-db.sql
+          docker run --rm --network host postgres pg_dump -d postgresql://postgres:postgres@db:5432/arches > ~/coral-db.sql
       - name: Cache DB
         id: cache_model_db
         uses: actions/cache@v3
