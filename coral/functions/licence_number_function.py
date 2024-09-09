@@ -91,9 +91,9 @@ def get_latest_licence_number(licence_instance_id):
 
 def generate_licence_number(licence_instance_id, attempts=0):
 
-    if attempts >= 5:
+    if attempts >= 20:
         raise Exception(
-            "After 5 attempts, it wasn't possible to generate a licence number that was unique!"
+            "After 20 attempts, it wasn't possible to generate a licence number that was unique!"
         )
 
     def retry():

@@ -60,9 +60,9 @@ class HbNumber:
         return {"index": int(id_number_parts[3])}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
-        if attempts >= 5:
+        if attempts >= 20:
             raise Exception(
-                "After 5 attempts, it wasn't possible to generate an ID that was unique!"
+                "After 20 attempts, it wasn't possible to generate an ID that was unique!"
             )
 
         def retry():
