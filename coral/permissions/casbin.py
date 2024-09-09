@@ -213,17 +213,21 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             #         for act in perms:
             #             obj_key = self._obj_to_str(nodegroup)
             #             self._enforcer.add_policy(group_key, obj_key, str(act))
-            print(group.arches_plugins, "GAP")
-            for arches_plugin in group.arches_plugins:
-                print(arches_plugin, "AP")
-                try:
-                    identifier = uuid.UUID(arches_plugin.plugin_identifier)
-                    plugin = Plugin.objects.get(pk=identifier)
-                except ValueError:
-                    plugin = Plugin.objects.get(slug=arches_plugin.plugin_identifier)
-                for obj_key in (f"pl:{key}" for key in (plugin.pk, plugin.slug) if key):
-                    self._enforcer.add_policy(group_key, obj_key, "view_plugin")
-                    print("AP", group_key, obj_key)
+            try:
+                arches_plugins = group.arches_plugins
+                print(arches_plugins, "GAP")
+                for arches_plugin in arches_plugins:
+                    print(arches_plugin, "AP")
+                    try:
+                        identifier = uuid.UUID(arches_plugin.plugin_identifier)
+                        plugin = Plugin.objects.get(pk=identifier)
+                    except ValueError:
+                        plugin = Plugin.objects.get(slug=arches_plugin.plugin_identifier)
+                    for obj_key in (f"pl:{key}" for key in (plugin.pk, plugin.slug) if key):
+                        self._enforcer.add_policy(group_key, obj_key, "view_plugin")
+                        print("AP", group_key, obj_key)
+            except Exception as exc:
+                print("Could not get Arches Plugins", exc)
             for permission in group.permissions:
                 for act in permission.action:
                     for obj in permission.object:
