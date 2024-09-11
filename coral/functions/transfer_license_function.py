@@ -12,6 +12,8 @@ NEW_LICENSEE_FIELD_ID = "ab2db0ec-c448-11ee-94bf-0242ac180006"
 CONTACTS_NODEGROUP_ID = "6d290832-5891-11ee-a624-0242ac120004"
 LICENSEES_NODE_ID = "6d294784-5891-11ee-a624-0242ac120004"
 
+TRANSFER_APPLIED_NODE_ID = "1938e0ac-703d-11ef-934d-0242ac120006"
+
 details = {
     "functionid": "9b955a8d-64b0-4139-9470-1085d802475f",
     "name": "Transfer Licence Function",
@@ -24,7 +26,14 @@ details = {
 
 
 class TransferOfLicenceFunction(BaseFunction):
-    def post_save(self, tile, request, context):
+    def save(self, tile, request, context=None):
+        # Many tiles save themselves again each time a new one saves to circumvent
+        # old transfer getting applied again and failed this node will be set to
+        # true after it has been used
+        if tile.data[TRANSFER_APPLIED_NODE_ID]:
+            return
+        tile.data[TRANSFER_APPLIED_NODE_ID] = True
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         contacts_tile = Tile.objects.filter(
@@ -61,14 +70,16 @@ class TransferOfLicenceFunction(BaseFunction):
 
         if not former_licensee_resource_id:
             raise Exception("You must provide a Former Licensee to transfer a licence.")
-        
+
         if former_licensee_resource_id not in original_licensee_resource_ids:
-            raise Exception("You provided a Former licensee who is not part of the Nominated Excavation Directors found on the Application Details page.")
+            raise Exception(
+                "You provided a Former licensee who is not part of the Nominated Excavation Directors found on the Application Details page."
+            )
 
         if not new_licensee_resource_id:
-            raise Exception("You must provide a new Nominated Excavation Director to transfer a licence.")
-
-
+            raise Exception(
+                "You must provide a new Nominated Excavation Director to transfer a licence."
+            )
 
         related_persons = contacts_tile.data.get(LICENSEES_NODE_ID, []) or []
         # remove former
