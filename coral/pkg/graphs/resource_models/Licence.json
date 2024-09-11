@@ -2542,7 +2542,7 @@
                     "node_id": "6d294784-5891-11ee-a624-0242ac120004",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "f3ff0ab8-c626-4bbf-88dd-420ce66c0724"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "6d290e9a-5891-11ee-a624-0242ac120004",
@@ -3033,7 +3033,7 @@
                     "node_id": "43ec68d6-c445-11ee-8be7-0242ac180006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "bd95d182-ee0e-4cf3-8175-936e815588b9",
@@ -4624,7 +4624,7 @@
                     "node_id": "29b2355e-c44a-11ee-94bf-0242ac180006",
                     "sortorder": 9,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
@@ -8826,7 +8826,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -9535,7 +9535,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -12807,7 +12807,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
