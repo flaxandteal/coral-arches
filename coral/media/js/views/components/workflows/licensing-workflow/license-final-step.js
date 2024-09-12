@@ -2,7 +2,7 @@ define([
   'knockout',
   'views/components/workflows/summary-step',
   'templates/views/components/workflows/licensing-workflow/license-final-step.htm'
-], function (ko, SummaryStep, licenseFinalStepTemplate) {
+], function (ko, SummaryStep, licenceFinalStepTemplate) {
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
 
@@ -19,9 +19,9 @@ define([
      * }
      */
 
-    this.licenseNodes = {
-      id: 'license',
-      label: 'License',
+    this.licenceNodes = {
+      id: 'licence',
+      label: 'Licence',
       contacts: {
         label: 'Contacts',
         nodegroupId: '6d290832-5891-11ee-a624-0242ac120004',
@@ -82,7 +82,7 @@ define([
       externalRef: {
         label: 'External Reference',
         nodegroupId: '280b6cfc-4e4d-11ee-a340-0242ac140007',
-        renderNodeIds: [{ nodeId: '280b75bc-4e4d-11ee-a340-0242ac140007', label: 'License Number' }]
+        renderNodeIds: [{ nodeId: '280b75bc-4e4d-11ee-a340-0242ac140007', label: 'Licence Number' }]
       },
       excavationType: {
         label: 'Excavation Type',
@@ -190,12 +190,12 @@ define([
     this.coverLetterHtml = ko.observable();
 
     this.getData = async () => {
-      await this.renderResourceIds(this.resourceid, this.licenseNodes);
+      await this.renderResourceIds(this.resourceid, this.licenceNodes);
 
-      let digitalFileResourceIds = this.getResourceIds(this.licenseNodes.id, 'digitalFiles');
+      let digitalFileResourceIds = this.getResourceIds(this.licenceNodes.id, 'digitalFiles');
 
       await this.renderResourceIds(
-        this.getResourceIds(this.licenseNodes.id, 'associatedActivities'),
+        this.getResourceIds(this.licenceNodes.id, 'associatedActivities'),
         this.activityNodes
       );
       await this.renderResourceIds(
@@ -212,21 +212,21 @@ define([
 
       this.coverLetterHtml(
         this.getDisplayValue(
-          this.licenseNodes.id,
+          this.licenceNodes.id,
           'coverLetter',
           '72e0fc96-53d5-11ee-844f-0242ac130008'
         )
       );
 
-      console.log('License Final Step: ', this.renderedNodegroups());
+      console.log('Licence Final Step: ', this.renderedNodegroups());
     };
 
     this.loadData();
   }
 
-  ko.components.register('license-final-step', {
+  ko.components.register('licence-final-step', {
     viewModel: viewModel,
-    template: licenseFinalStepTemplate
+    template: licenceFinalStepTemplate
   });
   return viewModel;
 });

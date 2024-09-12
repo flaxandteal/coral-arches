@@ -2,7 +2,7 @@ define([
   'knockout',
   'views/components/workflows/summary-step',
   'templates/views/components/workflows/heritage-asset-designation-workflow/ha-summary.htm'
-], function (ko, SummaryStep, licenseFinalStepTemplate) {
+], function (ko, SummaryStep, licenceFinalStepTemplate) {
   function viewModel(params) {
     SummaryStep.apply(this, [params]);
 
@@ -67,10 +67,10 @@ define([
     this.getData = async () => {
       await this.renderResourceIds(this.resourceid, this.heritageAssetNodes);
 
-      // let digitalFileResourceIds = this.getResourceIds(this.licenseNodes.id, 'digitalFiles');
+      // let digitalFileResourceIds = this.getResourceIds(this.licenceNodes.id, 'digitalFiles');
 
       // await this.renderResourceIds(
-      //   this.getResourceIds(this.licenseNodes.id, 'associatedActivities'),
+      //   this.getResourceIds(this.licenceNodes.id, 'associatedActivities'),
       //   this.activityNodes
       // );
       // await this.renderResourceIds(
@@ -87,7 +87,7 @@ define([
 
       // this.coverLetterHtml(
       //   this.getDisplayValue(
-      //     this.licenseNodes.id,
+      //     this.licenceNodes.id,
       //     'coverLetter',
       //     '72e0fc96-53d5-11ee-844f-0242ac130008'
       //   )
@@ -101,7 +101,7 @@ define([
 
   ko.components.register('ha-summary', {
     viewModel: viewModel,
-    template: licenseFinalStepTemplate
+    template: licenceFinalStepTemplate
   });
   return viewModel;
 });

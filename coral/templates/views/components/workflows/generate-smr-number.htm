@@ -336,12 +336,21 @@
             }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
                 <div class="row widget-wrapper">
-         
+                    <div style="padding-bottom: 6px" data-bind="visible: hasChangedNismrType()">
+                        <span style="color: red" data-bind="visible: hasChangedNismrType() && !hasGeneratedNew()">You have selected a new NISMR Numbering value. Revert it back to the original value or generate a new SMR Number to avoid an error.</span>
+                        <span style="color: green" data-bind="visible: hasChangedNismrType() && hasGeneratedNew()">You are now ready to save the newly generated SMR Number.</span>
+                    </div>
                     <button
                         data-bind="click: () => generateSmrNumber(), disable: !hasSelectedNismr()"
                         class="btn btn-success"
                     >
                         <span>Generate SMR</span>
+                    </button>
+                    <button
+                        data-bind="click: () => resetNismrType(), disable: !hasChangedNismrType()"
+                        class="btn btn-danger"
+                    >
+                        <span>Reset Changes</span>
                     </button>
                 </div>
             </form>
