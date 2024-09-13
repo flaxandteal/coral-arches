@@ -13,15 +13,10 @@ define([
     this.LICENCE_CONTACTS_NODEGROUP = '6d290832-5891-11ee-a624-0242ac120004';
     this.APPLICANT_NODE = '6d2924b6-5891-11ee-a624-0242ac120004';
     this.EXCAVATION_DIRECTOR_NODE = '6d294784-5891-11ee-a624-0242ac120004';
-
-
-    console.log('this: ', this);
+    this.EMPLOYING_BODY_NODE_ID = "07d3905c-d58b-11ee-a02f-0242ac180006";
 
     this.tileId = this.tile.tileid;
     this.resourceId = this.tile.resourceinstance_id;
-
-    console.log('tile id: ', this.tileId);
-    console.log('resource id: ', this.resourceId);
 
     this.fetchTileData = async (resourceId, nodeId) => {
       const tilesResponse = await window.fetch(
@@ -33,27 +28,16 @@ define([
     };
 
     this.getLatestTile = async () => {
-      console.log('called get latest tile');
-
       try {
         const tiles = await this.fetchTileData(this.resourceId, this.LICENCE_CONTACTS_NODEGROUP);
-        console.log('tiles: ', tiles);
 
         const contactsTile = tiles[0];
-        console.log('contacts: ', contactsTile);
 
         if (!contactsTile) return;
 
-        console.log('contactsTile.data[this.APPLICANT_NODE]: ', contactsTile.data[this.APPLICANT_NODE])
-        console.log('contactsTile.data[this.EXCAVATION_DIRECTOR_NODE]: ', contactsTile.data[this.EXCAVATION_DIRECTOR_NODE])
-
-        console.log('this.tile: ', this.tile)
-
         this.setValue(contactsTile.data[this.APPLICANT_NODE], this.APPLICANT_NODE);
         this.setValue(contactsTile.data[this.EXCAVATION_DIRECTOR_NODE], this.EXCAVATION_DIRECTOR_NODE);
-
-        console.log('this.tile.data[this.APPLICANT_NODE]: ', this.tile.data[this.APPLICANT_NODE]())
-        console.log('this.tile.data[this.EXCAVATION_DIRECTOR_NODE]: ', this.tile.data[this.EXCAVATION_DIRECTOR_NODE]())
+        this.setValue(contactsTile.data[this.EMPLOYING_BODY_NODE_ID], this.EMPLOYING_BODY_NODE_ID);
 
       } catch (err) {
         console.error('failed fetching tile: ', err);
@@ -61,12 +45,6 @@ define([
     };
 
     this.setValue = (value, nodeId) => {
-      // const localisedValue = {
-      //   en: {
-      //     direction: 'ltr',
-      //     value: value
-      //   }
-      // };
       if (ko.isObservable(this.tile.data[nodeId])) {
         this.tile.data[nodeId](value);
       } else {
