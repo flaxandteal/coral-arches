@@ -1,8 +1,5 @@
 from arches.app.functions.base import BaseFunction
-from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
-from arches.app.models import models
-from arches_orm.models import Person, Group
 import uuid
 
 TRANSFER_OF_LICENCE_NODEGROUP_ID = "6397b05c-c443-11ee-94bf-0242ac180006"
@@ -15,13 +12,13 @@ CUR_D_PERSON_NODE_ID = "6bc892c8-c44d-11ee-94bf-0242ac180006"
 CUR_D_DECISION_NODE_ID = "6bc889fe-c44d-11ee-94bf-0242ac180006"
 CUR_E_PERSON_NODE_ID = "058ccf60-c44d-11ee-94bf-0242ac180006"
 CUR_E_DECISION_NODE_ID = "058cd212-c44d-11ee-94bf-0242ac180006"
+TRANSFER_APPLIED_NODE_ID = "1938e0ac-703d-11ef-934d-0242ac120006"
 
 CONTACTS_NODEGROUP_ID = "6d290832-5891-11ee-a624-0242ac120004"
 CONTACTS_LICENSEES_NODE_ID = "6d294784-5891-11ee-a624-0242ac120004"
 CONTACTS_EMPLOYING_BODY_NODE_ID = "07d3905c-d58b-11ee-a02f-0242ac180006"
 CONTACTS_APPLICANT_NODE_ID = "6d2924b6-5891-11ee-a624-0242ac120004"
 
-TRANSFER_APPLIED_NODE_ID = "1938e0ac-703d-11ef-934d-0242ac120006"
 
 details = {
     "functionid": "9b955a8d-64b0-4139-9470-1085d802475f",
@@ -41,15 +38,29 @@ class TransferOfLicenceFunction(BaseFunction):
         # true after it has been used
         if tile.data[TRANSFER_APPLIED_NODE_ID]:
             return
-        # tile.data[TRANSFER_APPLIED_NODE_ID] = True
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
+        transfer_of_licence_tiles = Tile.objects.filter(
+            resourceinstance_id=resource_instance_id,
+            nodegroup_id=TRANSFER_OF_LICENCE_NODEGROUP_ID,
+        )
+
+        for tol_tile in transfer_of_licence_tiles:
+            applied = tol_tile.data.get(TRANSFER_APPLIED_NODE_ID, None)
+            print("applied type: ", type(applied))
+            if applied:
+                continue
+            if tol_tile.tileid != tile.tileid:
+                raise Exception(
+                    "You cannot start a new transfer of licence while there is still a transfer waiting to be closed out."
+                )
+
+        # If there is no contacts tile we can exit early
         contacts_tile = Tile.objects.filter(
             resourceinstance_id=resource_instance_id,
             nodegroup_id=CONTACTS_NODEGROUP_ID,
         ).first()
-
         if not contacts_tile:
             raise Exception(
                 "No Nominated Excavation Directors found on the Application Details page."
@@ -95,6 +106,28 @@ class TransferOfLicenceFunction(BaseFunction):
             else None
         )
 
+        # Get the Cur D Person resource id
+        cur_d_person_node_data = tile.data.get(CUR_D_PERSON_NODE_ID, []) or []
+        cur_d_person_resource_id = (
+            cur_d_person_node_data[0].get("resourceId", None)
+            if len(cur_d_person_node_data)
+            else None
+        )
+
+        # Get the Cur D Decision value uuid
+        cur_d_decision_value_id = tile.data.get(CUR_D_DECISION_NODE_ID, None) or None
+
+        # Get the Cur E Person resource id
+        cur_e_person_node_data = tile.data.get(CUR_E_PERSON_NODE_ID, []) or []
+        cur_e_person_resource_id = (
+            cur_e_person_node_data[0].get("resourceId", None)
+            if len(cur_e_person_node_data)
+            else None
+        )
+
+        # Get the Cur E Decision value uuid
+        cur_e_decision_value_id = tile.data.get(CUR_E_DECISION_NODE_ID, None) or None
+
         if not new_applicant_resource_id:
             raise Exception(
                 "You must provide the applicant that requested the transfer."
@@ -133,6 +166,18 @@ class TransferOfLicenceFunction(BaseFunction):
             raise Exception(
                 "You provided a Former Employing Body who is not part of the Employing Bodies found on the Application Details page."
             )
+
+        # If we don't have any of these values we can't mark the transfer as applied
+        if (
+            not cur_d_person_resource_id
+            or not cur_d_decision_value_id
+            or not cur_e_person_resource_id
+            or not cur_e_decision_value_id
+        ):
+            return
+
+        # Mark the transfer as applied
+        tile.data[TRANSFER_APPLIED_NODE_ID] = True
 
         # This process handles overwriting the applicant
         contacts_applicant = (
