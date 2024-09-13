@@ -12,6 +12,7 @@ define([
   'views/components/workflows/licensing-workflow/fetch-generated-license-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
   'views/components/workflows/licensing-workflow/fetch-latest-contacts',
+  'views/components/workflows/licensing-workflow/transfer-of-licence'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -427,16 +428,15 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
-                    hiddenNodes: [
-                      "1938e0ac-703d-11ef-934d-0242ac120006"
-                    ],
+                    hiddenNodes: ['1938e0ac-703d-11ef-934d-0242ac120006'],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 },
