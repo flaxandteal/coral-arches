@@ -65,9 +65,13 @@ class TransferOfLicenceFunction(BaseFunction):
                 "No Nominated Excavation Directors found on the Application Details page."
             )
 
-        # Get licensees current on the contacts tile
+        # Get licensees currently on the contacts tile
         licensees = contacts_tile.data.get(CONTACTS_LICENSEES_NODE_ID, []) or []
         original_licensee_resource_ids = [x.get("resourceId") for x in licensees]
+
+        # Get employing bodies currently on the contacts tile
+        employing_bodies = contacts_tile.data.get(CONTACTS_EMPLOYING_BODY_NODE_ID, []) or []
+        original_employing_bodies_resource_ids = [x.get("resourceId") for x in employing_bodies]
 
         # Get licensees that should be removed from the contacts tile
         former_licensee_node_data = tile.data.get(FORMER_LICENSEE_NODE_ID, []) or []
@@ -157,7 +161,7 @@ class TransferOfLicenceFunction(BaseFunction):
 
         former_new_employing_body_id_intersection = list(
             set(former_employing_body_resource_ids)
-            & set(new_employing_body_resource_ids)
+            & set(original_employing_bodies_resource_ids)
         )
         if len(former_new_employing_body_id_intersection) != len(
             former_employing_body_resource_ids
