@@ -48,10 +48,9 @@ class TransferOfLicenceFunction(BaseFunction):
 
         for tol_tile in transfer_of_licence_tiles:
             applied = tol_tile.data.get(TRANSFER_APPLIED_NODE_ID, None)
-            print("applied type: ", type(applied))
             if applied:
                 continue
-            if tol_tile.tileid != tile.tileid:
+            if str(tol_tile.tileid) != str(tile.tileid):
                 raise Exception(
                     "You cannot start a new transfer of licence while there is still a transfer waiting to be closed out."
                 )
