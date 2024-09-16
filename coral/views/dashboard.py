@@ -251,7 +251,7 @@ class PlanningTaskStrategy(TaskStrategy):
     
 class ExcavationTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
-        from arches_orm.models import Licence
+        from arches_orm.models import License
         utilities = Utilities()
         #states
         is_admin = groupId == EXCAVATION_ADMIN_GROUP
@@ -262,7 +262,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         resources = [] 
 
-        licences_all = Licence.all()
+        licences_all = License.all()
 
         licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
 
@@ -279,7 +279,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
     
     def build_data(self, licence, groupId):
-        from arches_orm.models import Licence
+        from arches_orm.models import License
         utilities = Utilities()
 
         activity_list = utilities.node_check(lambda: licence.associated_activities)
@@ -321,7 +321,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
-            'reportstatus': utilities.domain_value_string_lookup(Licence, 'classification_type', report_status),
+            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status), ## will need changed after Taiga #2199 is complete
             'licencenumber': licence_number,
             'responseslug': response_slug
         }
