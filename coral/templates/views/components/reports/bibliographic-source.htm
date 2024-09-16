@@ -244,6 +244,17 @@
                    }
                }"></div>
            </div>
+            <!-- All Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'all'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/all',
+                    params: {
+                        data: resource(),
+                        cards: nameCards,
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
              <!-- JSON Tab -->
             <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json'">
                 <div class="aher-flex-col" data-bind="component: {

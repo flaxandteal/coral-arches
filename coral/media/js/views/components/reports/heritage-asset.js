@@ -7,7 +7,8 @@ define([
     'utils/report',
     'templates/views/components/reports/heritage-asset.htm',
     'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
+    'views/components/reports/scenes/json',
+    'views/components/reports/scenes/all'
 ], function($, _, ko, arches, resourceUtils, reportUtils, heritageAssetReportTemplate) {
     return ko.components.register('heritage-asset-report', {
         viewModel: function(params) {
@@ -27,6 +28,7 @@ define([
                 {id: 'images', title: 'Images'},
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -68,10 +70,18 @@ define([
             self.summary = params.summary;
             self.cards = {};
 
+            self.resource = ko.observable(self.resource())
+            console.log(self.resource())
+
+            
+
             if(params.report.cards){
+                console.log("report cards")
                 const cards = params.report.cards;
 
                 self.cards = self.createCardDictionary(cards)
+                console.log("cards", cards)
+                console.log("card dict", self.cards)
 
                 self.nameCards = {
                     name: self.cards?.['heritage asset names'],
@@ -79,7 +89,7 @@ define([
                     systemReferenceNumbers: self.cards?.['system reference numbers'],
                     parent: self.cards?.['parent assets'],
                 };
-
+                console.log("Heres the cards", self.cards)
                 self.descriptionCards = {
                     descriptions: self.cards?.['descriptions'],
                     citation: self.cards?.['bibliographic source citation']
