@@ -19,10 +19,13 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "hiddenNodes": [
-                    "469af519-d78e-46e2-b0bb-281bcab211d0",
-                    "147187c1-3319-4f6c-9cec-0c295164df14"
+                    "e35da588-3f60-11ef-b90f-0242ac140006",
+                    "b892d1ca-3f60-11ef-b90f-0242ac140006",
+                    "161be232-3f61-11ef-b90f-0242ac140006",
+                    "7c87629a-3f60-11ef-b90f-0242ac140006"
                   ],
-                  "nodegroupid": "cbf55769-eaf1-4074-84d9-8a47310dfbc2",
+                  "labels": [["Display Name", "Heritage Asset"]],
+                  "nodegroupid": "423d8a10-3f60-11ef-b9b0-0242ac140006",
                   "semanticName": "System Reference Numbers",
                   "requiredParentTiles": [
                     {
@@ -34,6 +37,21 @@
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
                 "uniqueInstanceName": "d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "hiddenNodes": [
+                    "bcf507be-3ea8-11ef-8377-0242ac140006"
+                  ],
+                  "nodegroupid": "bcf507be-3ea8-11ef-8377-0242ac140006",
+                  "labels": [
+                    ["Generated SMR", "SMR Number"]
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "597b9423-7777-49fe-a5d6-b61edb4764e7"
               }
             ]
           }
