@@ -23,9 +23,15 @@ define([
       id: 'heritage-asset',
       label: 'Heritage Asset',
       systemRef: {
-        label: 'HA Reference',
-        nodegroupId: 'cbf55769-eaf1-4074-84d9-8a47310dfbc2',
-        renderNodeIds: [{nodeId: '52403903-9f4c-400f-81ce-09a5e8b9d925', label: 'Reference'}]
+        label: 'HA References',
+        nodegroupId: '2948f54a-3aaf-11ef-91fd-0242ac120003',
+        renderNodeIds: [
+          {nodeId: '7968e094-3aaf-11ef-91fd-0242ac120003', label: 'IHR Number'},
+          {nodeId: 'e7ee4eaa-3aaf-11ef-a2d0-0242ac120003', label: 'Historic Parks and Gardens Number'},
+          {nodeId: 'b6ec253e-3aaf-11ef-a2d0-0242ac120003', label: 'HB Number'},
+          {nodeId: '59a7f542-3aaf-11ef-a2d0-0242ac120003', label: 'SMR Number'}
+
+        ]
       },
       name: {
         label: 'Heritage Asset Name',
