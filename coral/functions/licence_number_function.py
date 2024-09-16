@@ -91,9 +91,9 @@ def get_latest_licence_number(licence_instance_id):
 
 def generate_licence_number(licence_instance_id, attempts=0):
 
-    if attempts >= 5:
+    if attempts >= 20:
         raise Exception(
-            "After 5 attempts, it wasn't possible to generate a licence number that was unique!"
+            "After 20 attempts, it wasn't possible to generate a licence number that was unique!"
         )
 
     def retry():
@@ -132,8 +132,11 @@ def generate_licence_number(licence_instance_id, attempts=0):
             # If we are on a new year then we reset back to 1
             licence_number = licence_number_format(year, 1)
         else:
-            # Otherwise we calculate the next number based on the latest
-            next_number = latest_licence_number["index"] + 1
+            # Otherwise we calculate the next number based on the latest. If we have
+            # went through an attempt already we will add one. Attempts starts at 0
+            # so the first run will attempt to create a number 1 increment higher, the 
+            # second attempt will be 2 increments higher.
+            next_number = latest_licence_number["index"] + (attempts + 1)
             licence_number = licence_number_format(year, next_number)
     else:
         # If there is no latest licence to work from we know
