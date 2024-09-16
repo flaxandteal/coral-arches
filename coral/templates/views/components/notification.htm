@@ -60,6 +60,19 @@
             </a>
         </div>
         <!-- /ko -->
+        <!-- ko if: state.fields_cache.notif.context.resource_id -->
+        <div class='entry'>
+            <a data-bind="click: () => {
+                openFlagged(state.fields_cache.notif.context.resource_instance_id, state.fields_cache.notif.context.response_slug)
+              } " 
+              target="_blank" style="color: steelblue"
+            >
+                <button class='btn btn-notifs-download btn-labeled btn-sm fa fa-link'>
+                    <span data-bind="text: 'Open ' + state.fields_cache.notif.context.resource_id"></span>
+                </button>
+            </a>
+        </div>
+        <!-- /ko -->
     </div>
 
     <div class='entry relative'>
