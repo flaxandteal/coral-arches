@@ -15,7 +15,10 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
-
+            this.print = ko.observable(false)
+            if (window.location.href.indexOf("?print") > -1) {
+                this.print(true)
+              }
             Object.assign(self, reportUtils);
             self.sections = [
                 {id: 'name', title: 'Names and Classifications'},
@@ -119,7 +122,6 @@ define([
                 self.userAccountCards = {
                     userAccount: self.cards?.['user account']
                 };
-                console.log(self.userAccountCards, "CARDS");
 
                 self.descriptionCards = {
                     descriptions: self.cards?.['descriptions'],
@@ -134,7 +136,6 @@ define([
                     contactPoints: self.cards?.['contact information for person'],
                 };
 
-                console.log(self.cards, "CARDS");
                 self.imagesCards = {
                     images: self.cards?.['images']
                 }
