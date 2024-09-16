@@ -17,20 +17,20 @@ define([
       this.componentName = 'licensing-workflow';
       this.stepConfig = [
         {
-          title: 'Initialise Excavation License',
+          title: 'Initialise Excavation Licence',
           name: 'init-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
           hiddenWorkflowButtons: ['undo'],
           informationboxdata: {
             heading: 'Important Information',
-            text: 'Please note that it could take up to a minute to complete the initialisation for the License application. If something goes wrong during the process an error will be displayed to you.'
+            text: 'Please note that it could take up to a minute to complete the initialisation for the Licence application. If something goes wrong during the process an error will be displayed to you.'
           },
           layoutSections: [
             {
               componentConfigs: [
                 {
-                  componentName: 'license-initial-step',
+                  componentName: 'licence-initial-step',
                   uniqueInstanceName: 'app-id',
                   tilesManaged: 'one',
                   parameters: {
@@ -108,7 +108,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'fetch-generated-license-number',
+                  componentName: 'fetch-generated-licence-number',
                   uniqueInstanceName: 'application-details',
                   tilesManaged: 'one',
                   parameters: {
@@ -314,7 +314,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'fetch-generated-license-number',
+                  componentName: 'fetch-generated-licence-number',
                   uniqueInstanceName: 'grade-d-decision',
                   tilesManaged: 'one',
                   parameters: {
@@ -326,7 +326,7 @@ define([
                 },
                 {
                   componentName: 'fetch-updated-dates',
-                  uniqueInstanceName: 'license-valid-timespan',
+                  uniqueInstanceName: 'licence-valid-timespan',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -336,7 +336,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'fetch-generated-license-number',
+                  componentName: 'fetch-generated-licence-number',
                   uniqueInstanceName: 'application-details',
                   tilesManaged: 'one',
                   parameters: {
@@ -353,7 +353,7 @@ define([
                 },
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'license-number',
+                  uniqueInstanceName: 'licence-number',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -424,10 +424,10 @@ define([
               componentConfigs: [
                 {
                   componentName: 'default-card',
-                  uniqueInstanceName: 'transfer-of-license',
+                  uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
                   parameters: {
-                    title: 'Transfer of License',
+                    title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
@@ -435,10 +435,10 @@ define([
                 },
                 {
                   componentName: 'default-card-util',
-                  uniqueInstanceName: 'extension-of-license',
+                  uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
                   parameters: {
-                    title: 'Extension of License',
+                    title: 'Extension of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
@@ -477,7 +477,7 @@ define([
                   /**
                    * Using custom component to handle the creation of Digital
                    * Objects that will then be automatically named and related
-                   * to the Excavation License model.
+                   * to the Excavation Licence model.
                    */
                   componentName: 'related-document-upload',
                   uniqueInstanceName: 'report-documents',
@@ -496,7 +496,7 @@ define([
         },
         {
           title: 'Summary',
-          name: 'license-complete',
+          name: 'licence-complete',
           required: false,
           informationboxdata: {
             heading: 'Workflow Complete: Review your work',
@@ -506,8 +506,8 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'license-final-step',
-                  uniqueInstanceName: 'license-final',
+                  componentName: 'licence-final-step',
+                  uniqueInstanceName: 'licence-final',
                   tilesManaged: 'none',
                   parameters: {
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"

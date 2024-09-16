@@ -51,7 +51,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "License Number"
+                        "en": "Licence Number"
                     },
                     "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
                     "sortorder": null,
@@ -78,7 +78,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "License Valid Timespan"
+                        "en": "Licence Valid Timespan"
                     },
                     "nodegroup_id": "1887f678-c42d-11ee-bc4b-0242ac180006",
                     "sortorder": null,
@@ -159,7 +159,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Extension of License"
+                        "en": "Extension of Licence"
                     },
                     "nodegroup_id": "69b2738e-c4d2-11ee-b171-0242ac180006",
                     "sortorder": null,
@@ -269,7 +269,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "License Names"
+                        "en": "Licence Names"
                     },
                     "nodegroup_id": "59d65ec0-48b9-11ee-84da-0242ac140007",
                     "sortorder": null,
@@ -622,7 +622,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "Transfer of License"
+                        "en": "Transfer of Licence"
                     },
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "sortorder": null,
@@ -4330,7 +4330,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "License Number Source",
+                        "label": "Licence Number Source",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -4338,7 +4338,7 @@
                     },
                     "id": "cbaad49c-8492-49a5-95da-0533c2a9736f",
                     "label": {
-                        "en": "License Number Source"
+                        "en": "Licence Number Source"
                     },
                     "node_id": "c57348bc-c502-11ee-86cf-0242ac180006",
                     "sortorder": 1,
@@ -4673,7 +4673,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "License Number",
+                        "label": "Licence Number",
                         "maxLength": "",
                         "placeholder": {
                             "en": ""
@@ -4683,7 +4683,7 @@
                     },
                     "id": "e8a07826-31a0-408e-a671-0bf0dab6ad38",
                     "label": {
-                        "en": "License Number"
+                        "en": "Licence Number"
                     },
                     "node_id": "9a9e198c-c502-11ee-af34-0242ac180006",
                     "sortorder": 0,
@@ -7209,7 +7209,7 @@
             "isresource": true,
             "jsonldcontext": null,
             "name": {
-                "en": "License"
+                "en": "Licence"
             },
             "nodegroups": [
                 {
@@ -7666,14 +7666,14 @@
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Grant license"
+                                    "en": "Grant licence"
                                 }
                             },
                             {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
-                                    "en": "Do not grant license"
+                                    "en": "Do not grant licence"
                                 }
                             }
                         ]
@@ -7784,7 +7784,7 @@
                     "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "LicenseCom",
+                    "fieldname": "LicenceCom",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -7961,7 +7961,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "license_valid_timespan",
+                    "alias": "licence_valid_timespan",
                     "config": {
                         "en": ""
                     },
@@ -7975,7 +7975,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "License Valid Timespan",
+                    "name": "Licence Valid Timespan",
                     "nodegroup_id": "1887f678-c42d-11ee-bc4b-0242ac180006",
                     "nodeid": "1887f678-c42d-11ee-bc4b-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
@@ -9129,7 +9129,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "license_valid_timespan_n1",
+                    "alias": "licence_valid_timespan_n1",
                     "config": {
                         "en": ""
                     },
@@ -9143,7 +9143,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "License Valid Timespan",
+                    "name": "Licence Valid Timespan",
                     "nodegroup_id": "69b2738e-c4d2-11ee-b171-0242ac180006",
                     "nodeid": "4128fca0-c4d5-11ee-90c5-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
@@ -9598,14 +9598,14 @@
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
-                                    "en": "Do not grant license"
+                                    "en": "Do not grant licence"
                                 }
                             },
                             {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Grant license"
+                                    "en": "Grant licence"
                                 }
                             }
                         ]
@@ -9820,7 +9820,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "license_names",
+                    "alias": "licence_names",
                     "config": {
                         "en": ""
                     },
@@ -9834,7 +9834,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "License Names",
+                    "name": "Licence Names",
                     "nodegroup_id": "59d65ec0-48b9-11ee-84da-0242ac140007",
                     "nodeid": "59d65ec0-48b9-11ee-84da-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
@@ -10025,7 +10025,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "transfer_of_license",
+                    "alias": "transfer_of_licence",
                     "config": {
                         "en": ""
                     },
@@ -10039,7 +10039,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Transfer of License",
+                    "name": "Transfer of Licence",
                     "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "nodeid": "6397b05c-c443-11ee-94bf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E11_Modification",
@@ -10600,7 +10600,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "extension_of_license",
+                    "alias": "extension_of_licence",
                     "config": {
                         "en": ""
                     },
@@ -10614,7 +10614,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Extension of License",
+                    "name": "Extension of Licence",
                     "nodegroup_id": "69b2738e-c4d2-11ee-b171-0242ac180006",
                     "nodeid": "69b2738e-c4d2-11ee-b171-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E11_Modification",
@@ -11427,7 +11427,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "license_number",
+                    "alias": "licence_number",
                     "config": {
                         "en": ""
                     },
@@ -11441,7 +11441,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "License Number",
+                    "name": "Licence Number",
                     "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
                     "nodeid": "6de3741e-c502-11ee-86cf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
@@ -12002,7 +12002,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
-                    "name": "License",
+                    "name": "Licence",
                     "nodegroup_id": null,
                     "nodeid": "957cf8ec-48b1-11ee-abd1-0242ac140007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
@@ -12321,21 +12321,21 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "license_number_value",
+                    "alias": "licence_number_value",
                     "config": {
                         "en": ""
                     },
                     "datatype": "string",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "LicenseNum",
+                    "fieldname": "LicenceNum",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "License Number Value",
+                    "name": "Licence Number Value",
                     "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
                     "nodeid": "9a9e198c-c502-11ee-af34-0242ac180006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
@@ -12377,14 +12377,14 @@
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
-                                    "en": "Do not grant license"
+                                    "en": "Do not grant licence"
                                 }
                             },
                             {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Grant license"
+                                    "en": "Grant licence"
                                 }
                             }
                         ]
@@ -13026,7 +13026,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "license_number_source",
+                    "alias": "licence_number_source",
                     "config": {
                         "rdmCollection": "06bbe5d2-93e8-43df-a4f4-5667648fd2ef"
                     },
@@ -13040,7 +13040,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "License Number Source",
+                    "name": "Licence Number Source",
                     "nodegroup_id": "6de3741e-c502-11ee-86cf-0242ac180006",
                     "nodeid": "c57348bc-c502-11ee-86cf-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E32_Authority_Document",
@@ -13933,7 +13933,7 @@
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
-                "name": "License",
+                "name": "Licence",
                 "nodegroup_id": null,
                 "nodeid": "957cf8ec-48b1-11ee-abd1-0242ac140007",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
@@ -13942,7 +13942,7 @@
             },
             "slug": null,
             "subtitle": {
-                "en": "Designed to support fields required to manage the creation of Licenses, including their dates, communications and people involved"
+                "en": "Designed to support fields required to manage the creation of Licences, including their dates, communications and people involved"
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
             "version": ""

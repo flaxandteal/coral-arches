@@ -1,0 +1,126 @@
+<!-- ko if: state === 'Planning'-->
+<div class="card-grid-item" style="margin: 2rem; width:375px">
+  <div class="panel mar-no dashboard-card-panel">
+    <div class="panel-heading" style="height: 38px">
+      <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
+        <span data-bind="text: data.displayname"></span>
+      </h3>
+      <!-- ko if: data.deadlinemessage -->
+        <div class="flex-center title-info-margin">
+          <div><strong data-bind="text: data.deadlinemessage"></strong></div>
+          <i style="color: rgb(197, 2, 2); margin-left: 1rem" class="fa fa-exclamation-circle"></i>
+        </div>
+      <!-- /ko -->
+    </div>
+    <div class="dashboard-card-columns">
+      <div>
+        <h5>Consultaiton Date</h5>
+        <p data-bind="text: data.date ?? 'Not Set'"></p>
+      </div>
+      <div>
+        <h5>Deadline</h5>
+        <p data-bind="text: data.deadline ?? 'Not Set'"></p>
+      </div>
+      <div>
+        <h5>Hierarchy</h5>
+        <p data-bind="text: data.hierarchy_type"></p>
+      </div>
+    </div>
+    <div class="dashboard-card-columns-alt">
+      <div style="max-height: 80px">
+        <h5>Description</h5> 
+        <div style="max-height: 50px; overflow: auto">
+          <p style="font-size: 1rem" data-bind="text: data.displaydescription"></p>
+        </div>
+        
+      </div>
+      <div style="min-height: 84px;">
+        <h5>Address</h5> 
+        <!-- ko foreach: data.address -->
+          <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+        <!-- /ko -->
+      </div>
+    </div>
+    <div class="panel-footer dashboard-footer">
+      <div style="height:100%; display:flex; align-items:center">
+        <h5>Status: <span style="font-weight: initial" data-bind="text: data.status"></span></h5>
+      </div>
+      <div>
+        <button
+          id="f1"
+          class="add-function-button btn btn-primary btn-labeled fa fa-link"
+          data-bind="click: () => {
+            openFlagged(data.id, data.responseslug)
+          } "
+        >
+          <span>Open</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: state === 'Excavation'-->
+<div class="card-grid-item" style="margin: 2rem; width:375px">
+<div class="panel mar-no dashboard-card-panel">
+<div class="panel-heading" style="height: 38px">
+  <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
+    <span data-bind="text: data.displayname"></span>
+  </h3>
+  <!-- ko if: data.deadlinemessage -->
+    <div class="flex-center title-info-margin">
+      <div><strong data-bind="text: data.deadlinemessage"></strong></div>
+      <i style="color: rgb(197, 2, 2); margin-left: 1rem" class="fa fa-exclamation-circle"></i>
+    </div>
+  <!-- /ko -->
+</div>
+<div class="dashboard-card-columns">
+  <div>
+    <h5>Site Name</h5>
+    <p data-bind="text: data.sitename ?? 'Not Set'"></p>
+  </div>
+  <div>
+    <h5>Issue Date</h5>
+    <p data-bind="text: data.issuedate ?? 'Not Set'"></p>
+  </div>
+  <div>
+    <h5>Valid Until</h5>
+    <p data-bind="text: data.validuntildate"></p>
+  </div>
+</div>
+<div class="dashboard-card-columns">
+  <div style="min-height: 84px;">
+    <h5>Employing Body</h5> 
+    <!-- ko foreach: data.employingbody -->
+      <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+    <!-- /ko -->
+  </div>
+  <div style="min-height: 84px;">
+    <h5>Nominated Directors</h5> 
+    <!-- ko foreach: data.nominateddirectors -->
+      <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+    <!-- /ko -->
+  </div>
+</div>
+<div class="panel-footer dashboard-footer">
+  <div style="height:100%; display:flex; align-items:center">
+    <h5>Report Status: <span style="font-weight: initial" data-bind="text: data.reportstatus"></span></h5>
+  </div>
+  <div>
+    <button
+      id="f1"
+      class="add-function-button btn btn-primary btn-labeled fa fa-link"
+      data-bind="click: () => {
+        openFlagged(data.id, data.responseslug)
+      } "
+    >
+      <span>Open</span>
+    </button>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<!-- /ko -->

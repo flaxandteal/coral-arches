@@ -45,26 +45,29 @@ class HbNumberFunction(BaseFunction):
         references_tile.save()
 
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(GENERATED_HB_NODE_ID, None)
-
-        if not id_number:
-            return
 
         ward_district_text = models.Value.objects.filter(
             valueid=tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
         ).first()
+        
+        if not ward_district_text and not id_number:
+            # Clear HB Number
+            self.update_ha_references(resource_instance_id, "")
+            return
+        
+        if not ward_district_text and id_number:
+            raise ValueError('No selected Ward and District Numbering selected but a generated ID was provided.')
 
         hn = HbNumber(ward_distict_text=ward_district_text.value)
 
-        if hn.validate_id(id_number):
+        if hn.validate_id(id_number, resource_instance_id=resource_instance_id):
             print("HB Number is valid: ", id_number)
             self.update_ha_references(resource_instance_id, id_number)
             return
 
-        id_number = hn.generate_id_number(resource_instance_id)
-        if not id_number:
-            return
-        self.update_ha_references(resource_instance_id, id_number)
-
-        return
+        raise ValueError('This HB Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')

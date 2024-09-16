@@ -31,7 +31,7 @@ ASSOCIATED_ACTIVIY_NODEGROUP = "a9f53f00-48b6-11ee-85af-0242ac140007"
 ASSOCIATED_ACTIVIY_NODE = "a9f53f00-48b6-11ee-85af-0242ac140007"
 
 ASSOCIATED_LICENCE_NODEGROUP = "879fc326-02f6-11ef-927a-0242ac150006"
-ASSOCIATED_LICENCE_NODE = "879fc326-02f6-11ef-927a-0242ac150006"
+ASSOCIATED_LICENCE_NODE = ASSOCIATED_LICENCE_NODEGROUP
 
 
 LICENCE_NUMBER_PREFIX = "AE"
@@ -91,9 +91,9 @@ def get_latest_licence_number(licence_instance_id):
 
 def generate_licence_number(licence_instance_id, attempts=0):
 
-    if attempts >= 5:
+    if attempts >= 20:
         raise Exception(
-            "After 5 attempts, it wasn't possible to generate a licence number that was unique!"
+            "After 20 attempts, it wasn't possible to generate a licence number that was unique!"
         )
 
     def retry():
@@ -132,8 +132,11 @@ def generate_licence_number(licence_instance_id, attempts=0):
             # If we are on a new year then we reset back to 1
             licence_number = licence_number_format(year, 1)
         else:
-            # Otherwise we calculate the next number based on the latest
-            next_number = latest_licence_number["index"] + 1
+            # Otherwise we calculate the next number based on the latest. If we have
+            # went through an attempt already we will add one. Attempts starts at 0
+            # so the first run will attempt to create a number 1 increment higher, the 
+            # second attempt will be 2 increments higher.
+            next_number = latest_licence_number["index"] + (attempts + 1)
             licence_number = licence_number_format(year, next_number)
     else:
         # If there is no latest licence to work from we know
@@ -165,6 +168,9 @@ def generate_licence_number(licence_instance_id, attempts=0):
 class LicenceNumberFunction(BaseFunction):
 
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
 
@@ -274,7 +280,7 @@ class LicenceNumberFunction(BaseFunction):
             ).first()
             if not ass_activity_tile:
                 ass_activity_tile = Tile.get_blank_tile_from_nodegroup_id(
-                    ASSOCIATED_LICENCE_NODEGROUP, resourceid=resource_instance_id
+                    ASSOCIATED_LICENCE_NODEGROUP, resourceid=activity_resource_id
                 )
             ass_activity_tile.data[ASSOCIATED_LICENCE_NODE] = [
                 {
@@ -287,4 +293,5 @@ class LicenceNumberFunction(BaseFunction):
             ass_activity_tile.save()
         except Exception as e:
             print(f"Error associating licence: {e}")
+            raise e
         return

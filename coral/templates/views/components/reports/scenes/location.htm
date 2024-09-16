@@ -306,6 +306,99 @@
     </div>
 </div>
 
+<!-- BU Fusion ID section -->
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.buFusionId)}, css: {'fa-angle-double-right': visible.buFusionId(), 'fa-angle-double-up': !visible.buFusionId()}" class="fa toggle"></i> {% trans "BU Fusion ID" %}</h2>
+    <a data-bind="{if: cards.buFusionId, click: function(){ addNewTile(cards.buFusionId) }}" class="aher-report-a">
+        <i class="fa fa-mail-reply"></i>
+        <span data-bind="if: cards.buFusionId.tiles().length">{% trans "Edit Identifier" %}</span>
+        <span data-bind="ifnot: cards.buFusionId.tiles().length">{% trans "Add Identifier" %}</span>
+    </a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.buFusionId" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: buFusionId() -->
+        <div class="aher-nodata-note">No references for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: buFusionId() -->
+        <div class="aher-report-subsection">
+
+            <div class="firstchild-container">
+                <div class="aher-report-subsection-ite">
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">ID: </h4>
+                        <div class="aher-block-value" data-bind="text: buFusionId"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<!-- Unique Building ID section -->
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.uniqueBuildingId)}, css: {'fa-angle-double-right': visible.uniqueBuildingId(), 'fa-angle-double-up': !visible.uniqueBuildingId()}" class="fa toggle"></i> {% trans "Unique Building ID" %}</h2>
+    <a data-bind="{if: cards.uniqueBuildingId, click: function(){ addNewTile(cards.uniqueBuildingId) }}" class="aher-report-a">
+        <i class="fa fa-mail-reply"></i>
+        <span data-bind="if: cards.uniqueBuildingId.tiles().length">{% trans "Edit Identifier" %}</span>
+        <span data-bind="ifnot: cards.uniqueBuildingId.tiles().length">{% trans "Add Identifier" %}</span>
+    </a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.uniqueBuildingId" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: uniqueBuildingId() -->
+        <div class="aher-nodata-note">No references for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: uniqueBuildingId() -->
+        <div class="aher-report-subsection">
+
+            <div class="firstchild-container">
+                <div class="aher-report-subsection-ite">
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">ID: </h4>
+                        <div class="aher-block-value" data-bind="text: uniqueBuildingId"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<!-- LP Fusion ID section -->
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.lpFusionId)}, css: {'fa-angle-double-right': visible.lpFusionId(), 'fa-angle-double-up': !visible.lpFusionId()}" class="fa toggle"></i> {% trans "LP Fusion ID" %}</h2>
+    <a data-bind="{if: cards.lpFusionId, click: function(){ addNewTile(cards.lpFusionId) }}" class="aher-report-a">
+        <i class="fa fa-mail-reply"></i>
+        <span data-bind="if: cards.lpFusionId.tiles().length">{% trans "Edit Identifier" %}</span>
+        <span data-bind="ifnot: cards.lpFusionId.tiles().length">{% trans "Add Identifier" %}</span>
+    </a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.lpFusionId" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: lpFusionId() -->
+        <div class="aher-nodata-note">No references for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: lpFusionId() -->
+        <div class="aher-report-subsection">
+
+            <div class="firstchild-container">
+                <div class="aher-report-subsection-ite">
+                    <div class="aher-block-attributes">
+                        <h4 class="aher-block-key">ID: </h4>
+                        <div class="aher-block-value" data-bind="text: lpFusionId"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
 <!-- National Grid References -->
 <div class="aher-report-section" data-bind="if: !!dataConfig.nationalGrid">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.nationalGrid)}, css: {'fa-angle-double-right': visible.nationalGrid(), 'fa-angle-double-up': !visible.nationalGrid()}" class="fa toggle"></i> {% trans "National Grid References" %}</h2>

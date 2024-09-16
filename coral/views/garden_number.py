@@ -35,12 +35,15 @@ class GardenNumberView(View):
                 ).first()
                 county_name = county_name_tile.value
                 county_abbreviation = GardenNumber(county_name).abbreviate_county(county_name)
-                abbreviation = (
-                    references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
-                    .get("en")
-                    .get("value")
-                    .split("-")[0]
-                )
+                garden_number = references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
+                abbreviation = None
+                if garden_number:
+                    abbreviation = (
+                        garden_number
+                        .get("en")
+                        .get("value")
+                        .split("-")[0]
+                    )
                 if county_abbreviation == abbreviation:
                     if references_tile.data.get(GARDEN_NUMBER_NODE_ID, None):
                         id = (

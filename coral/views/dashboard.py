@@ -1,5 +1,6 @@
 from django.views.generic import View
 from django.http import JsonResponse
+from arches.app.models import models
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
@@ -9,7 +10,7 @@ from django.core.cache import cache
 import json
 import logging
 from itertools import chain 
-import pdb
+import html
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -19,6 +20,11 @@ HM_GROUP = '29a43158-5f50-495f-869c-f651adf3ea42'
 HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
 HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
+
+EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
+EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
@@ -32,7 +38,6 @@ class Dashboard(View):
 
     def get(self, request):
         from arches_orm.models import Person
-
         with admin():
             user_id = request.user.id                     
             person_resource = Person.where(user_account = user_id)
@@ -45,8 +50,8 @@ class Dashboard(View):
 
             task_resources = []
             counters = {}
-            sort_by = request.GET.get('sortBy', 'deadline')
-            sort_order = request.GET.get('sortOrder', 'asc')
+            sort_by = request.GET.get('sortBy', None)
+            sort_order = request.GET.get('sortOrder', None)
             sort_options = []
 
             if not update and cache.get(cache_key):
@@ -66,7 +71,10 @@ class Dashboard(View):
                     if strategy:
                         strategies.add(self.select_strategy(groupId))
                 for strategy in strategies:
-                    resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
+                    if sort_by is not None and sort_order is not None and sort_by in sort_options:
+                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
+                    else:
+                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id)
                     task_resources.extend(resources)
 
                 cache_data = json.dumps({
@@ -76,9 +84,23 @@ class Dashboard(View):
                     })
                 cache.set(cache_key, cache_data, 60 * 15)
 
-            paginator = Paginator(task_resources, request.GET.get('itemsPerPage', 10))
-            page_number = request.GET.get('page', 1)
-            page_obj = paginator.get_page(page_number)
+            page = int(request.GET.get('page', 1))
+            items_per_page = int(request.GET.get('itemsPerPage', 10))
+            paginator = Paginator(task_resources, items_per_page)
+            pages = [page]
+            if paginator.num_pages > 1:
+                before = list(range(1, page))
+                after = list(range(page + 1, paginator.num_pages + 1))
+                default_ct = 2
+                ct_before = default_ct if len(after) > default_ct else default_ct * 2 - len(after)
+                ct_after = default_ct if len(before) > default_ct else default_ct * 2 - len(before)
+                if len(before) > ct_before:
+                    before = [1, None] + before[-1 * (ct_before - 1) :]
+                if len(after) > ct_after:
+                    after = after[0 : ct_after - 1] + [None, paginator.num_pages]
+                pages = before + pages + after
+            
+            page_obj = paginator.get_page(page)
 
             return JsonResponse({
                 'paginator': {
@@ -88,7 +110,7 @@ class Dashboard(View):
                     'has_other_pages': page_obj.has_other_pages(),
                     'has_previous': page_obj.has_previous(),
                     'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
-                    'pages': list(paginator.page_range),
+                    'pages': pages,
                     'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
                     'start_index': page_obj.start_index(),
                     'total': paginator.count,
@@ -115,12 +137,14 @@ class Dashboard(View):
     def select_strategy(self, groupId):
         if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
             return PlanningTaskStrategy()
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
+            return ExcavationTaskStrategy()
         return
 
 class TaskStrategy:
     def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
         raise NotImplementedError("Subclasses must implement this method")
-    def build_data(self, consultation, groupId):
+    def build_data(self, resource, groupId):
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
@@ -212,8 +236,9 @@ class PlanningTaskStrategy(TaskStrategy):
 
         resource_data = {
             'id': str(consultation.id),
+            'tasktype': 'Planning',
             'displayname': consultation._._name,
-            'displaydescription': consultation._._description,
+            'displaydescription': html.unescape(consultation._._description),
             'status': utilities.convert_id_to_string(action_status),
             'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
             'date': date_entered,
@@ -221,6 +246,84 @@ class PlanningTaskStrategy(TaskStrategy):
             'deadlinemessage': deadline_message,
             'address': address,
             'responseslug': responseslug
+        }
+        return resource_data
+    
+class ExcavationTaskStrategy(TaskStrategy):
+    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
+        from arches_orm.models import License
+        utilities = Utilities()
+        #states
+        is_admin = groupId == EXCAVATION_ADMIN_GROUP
+        is_user = groupId == EXCAVATION_USER_GROUP
+        is_cur_e = groupId == EXCAVATION_CUR_E
+
+        sort_options = ['issuedate', 'validuntil']
+
+        resources = [] 
+
+        licences_all = License.all()
+
+        licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
+
+        for licence in licences:
+            task = self.build_data(licence, groupId)
+            if task:
+                resources.append(task)
+        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+
+        counters = []
+        sort_options = [{'id': 'issuedate', 'name': 'Issue Date'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
+
+        return sorted_resources, counters, sort_options
+
+    
+    def build_data(self, licence, groupId):
+        from arches_orm.models import License ## will need changed after Taiga #2199 is complete
+        utilities = Utilities()
+
+        activity_list = utilities.node_check(lambda: licence.associated_activities)
+        display_name = utilities.node_check(lambda:licence.licence_names.name),
+        issue_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.issue_date)
+        valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
+        employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
+        nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
+        report_status = utilities.node_check(lambda:licence.report[-1].classification_type) #takes the last report, assumes the newest
+        licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
+
+        nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
+        
+        employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
+
+        name = display_name[0]
+        if name.startswith("Excavation Licence"):
+            display_name = name[len("Excavation Licence"):].strip()
+
+        site_name = next(
+            (utilities.node_check(lambda:activity.activity_names[0].activity_name) for activity in activity_list if activity and activity.activity_names),
+            None
+        )
+
+        response_slug = utilities.get_response_slug(groupId) if groupId else None
+
+        # convert date format
+        if issue_date:
+            issue_date = datetime.strptime(issue_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+        if valid_until_date:
+            valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+
+        resource_data = {
+            'id': str(licence.id),
+            'state': 'Excavation',
+            'displayname': display_name,
+            'sitename': site_name,
+            'issuedate': issue_date,
+            'validuntildate': valid_until_date,
+            'employingbody': employing_body_name_list,
+            'nominateddirectors': nominated_directors_name_list,
+            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status), ## will need changed after Taiga #2199 is complete
+            'licencenumber': licence_number,
+            'responseslug': response_slug
         }
         return resource_data
 
@@ -243,6 +346,16 @@ class Utilities:
         elif id == None:
             return 'None'
         
+    def domain_value_string_lookup(self, resource, node_alias, value_id):
+        node = models.Node.objects.filter(
+            alias = node_alias,
+            graph_id = resource.graphid
+        ).first()
+        options = node.config.get("options")
+        for option in options:
+            if option.get("id") == value_id:
+                return option.get("text").get("en")
+        
     def get_count(self, resources, counter):
         counts = defaultdict(int)
         for resource in resources:
@@ -264,7 +377,6 @@ class Utilities:
     # Method to check if a node exists
     def node_check(self, func, default=None):
         try:
-            print(func)
             return func()
         except Exception as error:
             logging.warning(f'Node does not exist: {error}')
@@ -277,6 +389,8 @@ class Utilities:
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
+            return "licensing-workflow"
     
     def create_deadline_message(self, date):
         message = None
