@@ -48,9 +48,9 @@ class SmrNumber:
         return {"index": int(id_number_parts[1])}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
-        if attempts >= 5:
+        if attempts >= 20:
             raise Exception(
-                "After 5 attempts, it wasn't possible to generate an ID that was unique!"
+                "After 20 attempts, it wasn't possible to generate an ID that was unique!"
             )
 
         def retry():
@@ -88,7 +88,9 @@ class SmrNumber:
             return retry()
 
         if latest_id_number:
-            next_number = latest_id_number["index"] + 1
+            # Offset attempts so it starts at 1 and will try to generate
+            # new increments for the total amount of allow attempts
+            next_number = latest_id_number["index"] + (attempts + 1)
             id_number = self.id_number_format(next_number)
         else:
             # If there is no latest resource to work from we know
