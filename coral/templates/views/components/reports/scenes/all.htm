@@ -1,0 +1,89 @@
+
+<!-- ko foreach: {data: Object.keys(sections), as: 'cardTitle', noChildContext: true}-->
+ <div data-bind="if: cardTitle.indexOf('@') === -1 && cardTitle.indexOf('_') === -1 && cardTitle !== cardTitle.toLowerCase()">
+  <div data-bind="class: margin() === 0 ? 'aher-report-section' : 'aher-report-subsection'">
+   <div data-bind="style: { 'margin-left': `${margin()}ch`}">
+   <!-- ko if: !table() -->
+   <h2 class="aher-report-section-title" data-bind="text: cardTitle, class: margin() === 0 ? 'aher-report-section-title' : 'aher-block-key', style: {'font-size': 20-margin()}"></h2>
+   <!-- /ko -->
+  <!-- ko if: table() -->
+    <strong data-bind="text: cardTitle"></strong>
+  <!-- /ko -->
+  </div>
+    <!-- ko if: sections[cardTitle].cardinality === "1" -->
+        <div>
+            <!-- ko if: typeof(sections[cardTitle].data) === 'string' -->
+            <span data-bind="text: sections[cardTitle].data, style: {'margin-left': `${margin()+1}ch`}"></span>
+            <!-- /ko -->
+            <!-- ko ifnot: typeof(sections[cardTitle].data) === 'string' || typeof(sections[cardTitle].data) === 'undefined' -->
+             <div data-bind="component: {
+                name: 'views/components/reports/scenes/all',
+                params: {
+                    data: resource[cardTitle],
+                    table: table(),
+                    margin: margin() + 2
+                }
+            }"></div>
+            <!-- /ko -->
+        </div>
+    <!-- /ko -->
+    <!-- ko if: sections[cardTitle].cardinality === "m" -->
+    <!-- ko if: isNaN(Object.keys(sections[cardTitle].data[0]))-->
+     <div style="width: 99vw; overflow: scroll;">
+
+     <table class="table table-striped" cellspacing="0">
+       <thead>
+         <tr class="aher-table-header" data-bind="foreach: Object.keys(sections[cardTitle].data[0]).filter(k => k.indexOf('@') === -1)">
+          <!-- ko if: isNaN($data)-->
+          <td data-bind="text: $data"></td>
+          <!-- /ko -->
+        </tr>
+      </thead>
+      <tbody data-bind="foreach: sections[cardTitle].data">
+            <!-- ko if: typeof($data) !== 'string' -->
+
+        <tr data-bind="foreach: Object.keys($data).map(k => {
+          return k.indexOf('@') === -1  && k !== '@display_value' ? $data[k] : 'toBeRemovedxx'
+        })">
+            <!-- ko if: typeof($data) === 'string' && $data !== 'toBeRemovedxx' -->
+            <td style="margin-left: 2ch" data-bind="text: $data"></td>
+            <!-- /ko -->
+            <!-- ko if: typeof($data) !== 'string' -->
+            <td class="">
+              <div data-bind="component: {
+                name: 'views/components/reports/scenes/all',
+                params: {
+                    data: $data,
+                    table: true
+                }
+            }"></div>
+            </td>
+            <!-- /ko -->
+            </tr>
+          <!-- /ko -->
+    </tbody>
+    </table>
+  </div>
+   <!-- /ko -->
+      <!-- ko if: typeof(Object.keys(sections[cardTitle].data[0])[0]) === 'string' -->
+      <!-- ko foreach: {data: Object.keys(sections[cardTitle].data), as: 'key', noChildContext: true}-->
+      <!-- ko if: typeof(sections[cardTitle].data[key]) === 'string'-->
+      <span data-bind="text:  `${+key + 1}: ${sections[cardTitle].data[key]}`"></span>
+      <!-- /ko -->
+      <!-- ko if: typeof(sections[cardTitle].data[key]) !== 'string'-->
+        <!-- <span data-bind="text: JSON.stringify(sections[cardTitle].data[key])"></span> -->
+        <div data-bind="component: {
+          name: 'views/components/reports/scenes/all',
+          params: {
+              data: sections[cardTitle].data[key],
+              table: table(),
+              margin: margin() + 2
+          }
+      }"></div>
+    <!-- /ko -->
+     <!-- /ko -->
+  <!-- /ko -->
+ <!-- /ko -->
+</div>
+</div>
+<!-- /ko -->
