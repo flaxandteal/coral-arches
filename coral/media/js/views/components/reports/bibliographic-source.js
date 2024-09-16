@@ -26,6 +26,7 @@ define([
                 {id: 'classifications', title: 'Source Type'},
                 {id: 'publication', title: 'Publication Details'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);

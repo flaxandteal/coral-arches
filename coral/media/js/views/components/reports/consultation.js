@@ -26,6 +26,7 @@ define([
                 {id: 'correspondence', title: 'Correspondence'},
                 {id: 'sitevisits', title: 'Site Visits'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
