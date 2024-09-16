@@ -65,7 +65,7 @@ class HbNumberFunction(BaseFunction):
 
         hn = HbNumber(ward_distict_text=ward_district_text.value)
 
-        if hn.validate_id(id_number):
+        if hn.validate_id(id_number, resource_instance_id=resource_instance_id):
             print("HB Number is valid: ", id_number)
             self.update_ha_references(resource_instance_id, id_number)
             return
