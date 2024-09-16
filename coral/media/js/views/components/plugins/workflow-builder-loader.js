@@ -13,7 +13,7 @@ define([
   'views/components/workflows/related-document-upload',
   'views/components/workflows/file-template',
   'views/components/workflows/fmw-workflow/get-selected-monument-details',
-  'views/components/workflows/excavation-site-visit-workflow/get-selected-license-details',
+  'views/components/workflows/excavation-site-visit-workflow/get-selected-licence-details',
   'views/components/workflows/fmw-workflow/calculate-composite-score',
   'views/components/workflows/generate-ha-number',
   'views/components/workflows/generate-smr-number',
