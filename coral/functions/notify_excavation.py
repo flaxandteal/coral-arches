@@ -52,11 +52,11 @@ details = {
     'classname': 'NotifyExcavation',
     'component': '',
 }
+
 class NotifyExcavation(BaseFunction):
     def post_save(self, tile, request, context):
         from arches_orm.models import Person
         with admin():
-
             nodegroup_id = str(tile.nodegroup_id)
 
             user = request.user
@@ -174,6 +174,7 @@ class ReportStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
         from arches_orm.models import Group
         with admin():
+
             name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
 
             message = f"A new report has been added to {name}"
@@ -212,6 +213,7 @@ class ApplicationDetailsStrategy(NotificationStrategy):
 
         soa_id = tile.data[STAGE_OF_APPLICATION]
 
+
         if soa_id:
             soa_string = self.get_domain_value_string(soa_id, STAGE_OF_APPLICATION)
             message = f"The Stage of Application for {name} has been updated to {soa_string}"
@@ -227,6 +229,7 @@ class TransferOfLicenceStrategy(NotificationStrategy):
 
         grade_e_decision = tile.data[TRANSFER_GRADE_E_DECISION]
         grade_d_decision = tile.data[TRANSFER_GRADE_D_DECISION]
+        groups_to_notify = [ADMIN_GROUP]
 
         if not (grade_d_decision or grade_e_decision):
             groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
@@ -239,10 +242,10 @@ class TransferOfLicenceStrategy(NotificationStrategy):
             decision_string = self.get_domain_value_string(grade_e_decision, TRANSFER_GRADE_E_DECISION)
             message = f"The Cur Grade E Decision for the Transfer of Licence  {name} has been updated to {decision_string}"
             groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
-            
+        
+
         notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
-                                    
-        groups_to_notify = [ADMIN_GROUP]
+        
         self.notify_groups(user, groups_to_notify, notification)
 
 class ExtensionOfLicenceStrategy(NotificationStrategy):
@@ -251,6 +254,7 @@ class ExtensionOfLicenceStrategy(NotificationStrategy):
 
         grade_e_decision = tile.data[EXTENSION_GRADE_E_DECISION]
         grade_d_decision = tile.data[EXTENSION_GRADE_D_DECISION]
+        groups_to_notify = [ADMIN_GROUP]
 
         if not (grade_d_decision or grade_e_decision):
             groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
@@ -266,7 +270,6 @@ class ExtensionOfLicenceStrategy(NotificationStrategy):
             
         notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
                                     
-        groups_to_notify = [ADMIN_GROUP]
         self.notify_groups(user, groups_to_notify, notification)
 
 class NotificationManager():
