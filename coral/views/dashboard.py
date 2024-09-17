@@ -279,7 +279,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
     
     def build_data(self, licence, groupId):
-        from arches_orm.models import License
+        from arches_orm.models import License ## will need changed after Taiga #2199 is complete
         utilities = Utilities()
 
         activity_list = utilities.node_check(lambda: licence.associated_activities)
