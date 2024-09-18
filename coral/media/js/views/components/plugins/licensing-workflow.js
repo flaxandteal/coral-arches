@@ -11,7 +11,6 @@ define([
   'views/components/workflows/licensing-workflow/licence-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
-  'views/components/workflows/licensing-workflow/fetch-latest-contacts',
   'views/components/workflows/licensing-workflow/transfer-of-licence',
   'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
@@ -91,7 +90,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'fetch-latest-contacts',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'contacts',
                   tilesManaged: 'one',
                   parameters: {
