@@ -254,6 +254,19 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
+                  "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                  "parenttileid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "fetch-latest-tile",
+                "uniqueInstanceName": "irish-grid-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["87d3d7c8-f44f-11eb-938d-a87eeabdefba"],
                   "nodegroupid": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
                   "parenttileid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['locationData']",
@@ -320,21 +333,8 @@
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "52fe09a3-72a3-4450-8364-82ff8d9336c2"
-              },
-              {
-                "parameters": {
-                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
-                  "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
-                  "parenttileid": "['start-step']['768652bb-5228-438f-8b98-31ed24f0315c'][0]['resourceid']['locationData']",
-                  "semanticName": "Irish Grid Reference"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "irish-grid-reference"
               }
             ]
           }
