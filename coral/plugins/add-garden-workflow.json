@@ -206,7 +206,7 @@
                   "semanticName": "Irish Grid Reference"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "irish-grid-reference"
               },
               {
@@ -281,7 +281,7 @@
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "a14974e4-5fce-4322-96d3-1bcf739789d3"
               }
             ]
@@ -352,7 +352,7 @@
       "icon": "fa fa-tree",
       "name": "Add Garden",
       "show": true,
-      "bgColor": "#619974",
+      "bgColor": "#32a8a8",
       "slugPrefix": "open-workflow?workflow-slug=",
       "circleColor": "#4a946d"
     }

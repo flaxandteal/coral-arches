@@ -10,7 +10,8 @@ define([
   'views/components/workflows/file-template',
   'views/components/workflows/licensing-workflow/license-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-license-number',
-  'views/components/workflows/licensing-workflow/fetch-updated-dates'
+  'views/components/workflows/licensing-workflow/fetch-updated-dates',
+  'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -201,7 +202,7 @@ define([
                     semanticName: 'Irish Grid Reference'
                   },
                   tilesManaged: 'one',
-                  componentName: 'default-card',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'irish-grid-reference'
                 },
                 {
@@ -230,7 +231,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'geometry-info',
                   tilesManaged: 'one',
                   parameters: {

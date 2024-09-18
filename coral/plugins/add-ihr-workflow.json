@@ -209,7 +209,7 @@
                   "semanticName": "Irish Grid Reference"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "irish-grid-reference"
               },
               {
@@ -283,7 +283,7 @@
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "d1ef59e0-ebe4-4db7-83d3-5e12b4661ab6"
               }
             ]

@@ -189,7 +189,7 @@
                   "semanticName": "Irish Grid Reference"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "irish-grid-reference"
               }
             ]
@@ -212,7 +212,7 @@
                   "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "map"
               }
             ]
