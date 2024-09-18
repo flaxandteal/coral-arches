@@ -304,11 +304,11 @@ jobs:
       #         network=host
       # - name: Build and push Docker image
       #   run: docker run --rm --network host willwill/wait-for-it -h arches -p 8000 -t 0
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ghcr.io/flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static
+      # - name: Extract metadata (tags, labels) for Docker
+      #   id: meta
+      #   uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+      #   with:
+      #     images: ghcr.io/flaxandteal/arches_${{ env.ARCHES_PROJECT }}_static
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
