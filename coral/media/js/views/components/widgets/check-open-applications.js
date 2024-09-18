@@ -10,6 +10,12 @@ define([
   const viewModel = function (params) {
     const ResourceInstanceSelectViewModel = require('viewmodels/resource-instance-select');
 
+    this.CONTACTS_NODEGROUP_ID = '6d290832-5891-11ee-a624-0242ac120004';
+    this.LICENCEES_NODE_ID = '6d294784-5891-11ee-a624-0242ac120004';
+    this.APPLICATION_DETAILS_NODEGROUP = '4f0f655c-48cf-11ee-8e4e-0242ac140007';
+    this.REPORT_CLASSIFICATION_TYPE_NODE_ID = 'ff3de496-7117-11ef-83a1-0242ac120006';
+    this.REPORT_CLASSIFICATION_NOT_RECEIVED_ID = 'd33327e8-2b9d-4bab-a07e-f0ded18ded3e';
+
     params.multiple = true;
     params.datatype = 'resource-instance';
 
@@ -70,7 +76,10 @@ define([
             this.applicationData()?.[resourceId].totalOpenApplications
           );
 
-          if (this.applicationData()?.[resourceId].includingThisOne) {
+          if (
+            this.applicationData()?.[resourceId].hasNotReceived &&
+            this.applicationData()?.[resourceId].existsInContacts
+          ) {
             message = message.replace('[includesThisOne]', ', including this one');
           } else {
             message = message.replace('[includesThisOne]', '');
@@ -89,7 +98,7 @@ define([
           this.applicationData()[resourceId].totalLicences
         } licences[includesThisOne].`;
 
-        if (this.applicationData()?.[resourceId].includingThisOne) {
+        if (this.applicationData()?.[resourceId].existsInContacts) {
           message = message.replace('[includesThisOne]', ', including this one');
         } else {
           message = message.replace('[includesThisOne]', '');
@@ -145,7 +154,8 @@ define([
             const result = await this.checkOpenApplications(data.resourceId);
             applicationData[data.resourceId].totalOpenApplications = result.total;
             applicationData[data.resourceId].state = result.state;
-            applicationData[data.resourceId].includingThisOne = result.includingThisOne;
+            applicationData[data.resourceId].hasNotReceived = result.hasNotReceived;
+            applicationData[data.resourceId].existsInContacts = result.existsInContacts;
             resolve();
           }),
           new Promise(async (resolve) => {
@@ -162,6 +172,42 @@ define([
     this.openApplicationsRequest = null;
     this.totalLicencesRequest = null;
     this.getNameRequest = null;
+
+    this.fetchTileData = async (resourceId, nodeId) => {
+      const tilesResponse = await window.fetch(
+        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+          (nodeId ? `?nodeid=${nodeId}` : '')
+      );
+      const data = await tilesResponse.json();
+      return data.tiles;
+    };
+
+    this.getIncludesOne = async (personResourceId) => {
+      const contactsTiles = await this.fetchTileData(
+        this.tile.resourceinstance_id,
+        this.CONTACTS_NODEGROUP_ID
+      );
+      const reportClassificationTiles = await this.fetchTileData(
+        this.tile.resourceinstance_id,
+        this.APPLICATION_DETAILS_NODEGROUP
+      );
+
+      let existsInContacts = false;
+      if (contactsTiles?.length) {
+        existsInContacts = !!contactsTiles[0].data[this.LICENCEES_NODE_ID].find(
+          (relatedPerson) => relatedPerson.resourceId === personResourceId
+        );
+      }
+
+      let hasNotReceived = false;
+      if (reportClassificationTiles?.length) {
+        hasNotReceived =
+          reportClassificationTiles[0].data[this.REPORT_CLASSIFICATION_TYPE_NODE_ID] ===
+          this.REPORT_CLASSIFICATION_NOT_RECEIVED_ID;
+      }
+
+      return [existsInContacts, hasNotReceived];
+    };
 
     this.checkOpenApplications = async (personResourceId) => {
       const result = {
@@ -212,11 +258,6 @@ define([
         context: this,
         success: function (response) {
           result.total = response.results.hits.total.value;
-          response.results.hits.hits.forEach((resource) => {
-            if (resource._id === ko.unwrap(this.tile.resourceinstance_id)) {
-              result.includingThisOne = true;
-            }
-          });
           let limit = parseInt(this.limit());
 
           switch (true) {
@@ -250,6 +291,11 @@ define([
           this.openApplicationsRequest = undefined;
         }
       });
+
+      const [existsInContacts, hasNotReceived] = await this.getIncludesOne(personResourceId);
+
+      result.existsInContacts = existsInContacts;
+      result.hasNotReceived = hasNotReceived;
 
       return result;
     };
