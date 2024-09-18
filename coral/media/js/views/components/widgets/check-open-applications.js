@@ -183,6 +183,7 @@ define([
     };
 
     this.getIncludesOne = async (personResourceId) => {
+      if (!this.tile?.resourceinstance_id) return [false, false];
       const contactsTiles = await this.fetchTileData(
         this.tile.resourceinstance_id,
         this.CONTACTS_NODEGROUP_ID
@@ -333,8 +334,6 @@ define([
           result = response.results.hits.total.value;
         },
         error: function (response, status, error) {
-          console.log('checkTotalApplications PROMISES error');
-
           if (this.totalLicencesRequest.statusText !== 'abort') {
             console.log(response, status, error);
             params.pageVm.alert(
@@ -347,7 +346,6 @@ define([
           }
         },
         complete: function (request, status) {
-          console.log('checkTotalApplications PROMISES complete');
           this.totalLicencesRequest = undefined;
         }
       });
