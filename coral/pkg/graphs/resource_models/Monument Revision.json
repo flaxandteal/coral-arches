@@ -2306,6 +2306,27 @@
                 {
                     "card_id": "0e47da02-80e7-4763-b036-5e5ea193fa45",
                     "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Listing Criteria",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "0c69ba9c-56ea-4bf4-8e67-a1a88c0bb289",
+                    "label": {
+                        "en": "Listing Criteria"
+                    },
+                    "node_id": "f4c393ac-6aa6-11ef-b1e8-a1a88c0bb289",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0e47da02-80e7-4763-b036-5e5ea193fa45",
+                    "config": {
                         "defaultValue": {
                             "en": {
                                 "direction": "ltr",
@@ -15111,6 +15132,15 @@
                 {
                     "description": null,
                     "domainnode_id": "2af35abc-9dee-4438-a127-c0fb69e63124",
+                    "edgeid": "448093b0-9df6-4e18-9c3d-3a8d4d61ae9c",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "f4c393ac-6aa6-11ef-b1e8-a1a88c0bb289"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "2af35abc-9dee-4438-a127-c0fb69e63124",
                     "edgeid": "5ffa0842-97b9-4f1a-ad91-3a8d4d61ae9c",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "name": null,
@@ -21944,6 +21974,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "listing_criteria",
+                    "config": {
+                        "rdmCollection": "ddb92162-2508-4900-a8d5-92c0ec7769af"
+                    },
+                    "datatype": "concept-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Listing Criteria",
+                    "nodegroup_id": "2af35abc-9dee-4438-a127-c0fb69e63124",
+                    "nodeid": "f4c393ac-6aa6-11ef-b1e8-a1a88c0bb289",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 4,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "land_use_site",
                     "config": {
