@@ -362,7 +362,7 @@ jobs:
           --health-retries 20
 
       arches:
-        image: "${{ needs['Build-Arches-final'].outputs.image }}"
+        image: "${{ needs['Build-Arches-Final'].outputs.image }}"
         env:
           ALLOW_BOOTSTRAP: "True"
           ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
