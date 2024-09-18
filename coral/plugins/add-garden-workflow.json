@@ -201,6 +201,18 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "irish-grid-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "87d3d7c8-f44f-11eb-938d-a87eeabdefba"
                   ],
@@ -271,18 +283,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "a14974e4-5fce-4322-96d3-1bcf739789d3"
-              },
-              {
-                "parameters": {
-                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
-                  "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
-                  "semanticName": "Irish Grid Reference"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "irish-grid-reference"
               }
             ]
           }
