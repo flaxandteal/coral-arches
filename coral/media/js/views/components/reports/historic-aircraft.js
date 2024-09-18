@@ -36,6 +36,8 @@ define([
             self.activeSection = ko.observable('name');
             self.flights = ko.observableArray();
             self.lastFlight = ko.observableArray();
+            self.print = ko.observable(window.location.href.indexOf("?print") > -1)
+
 
             self.flightsTableConfig = {
                 ...self.defaultTableConfig,

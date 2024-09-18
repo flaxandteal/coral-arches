@@ -5,7 +5,7 @@ define([
   'knockout-mapping',
   'uuid',
   'arches',
-  'templates/views/components/workflows/licensing-workflow/license-initial-step.htm',
+  'templates/views/components/workflows/licensing-workflow/licence-initial-step.htm',
   'viewmodels/alert',
   'bindings/select2-query'
 ], function ($, _, ko, koMapping, uuid, arches, initialStep, AlertViewModel) {

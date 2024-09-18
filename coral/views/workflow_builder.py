@@ -340,12 +340,12 @@ class WorkflowBuilderPluginExport(View):
         json_data = json.dumps(
             {
                 "pluginid": str(plugin.pluginid),
-                "name": plugin.name,
-                "icon": plugin.icon,
+                "name": str(plugin.name),
+                "icon": str(plugin.icon),
                 "component": plugin.component,
-                "componentname": plugin.componentname,
+                "componentname": str(plugin.componentname),
                 "config": dict(plugin.config),
-                "slug": plugin.slug,
+                "slug": str(plugin.slug),
                 "sortorder": plugin.sortorder,
             },
             indent=2,

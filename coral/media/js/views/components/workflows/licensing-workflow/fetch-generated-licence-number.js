@@ -4,7 +4,7 @@ define([
   'knockout-mapping',
   'uuid',
   'arches',
-  'templates/views/components/workflows/licensing-workflow/fetch-generated-license-number.htm',
+  'templates/views/components/workflows/licensing-workflow/fetch-generated-licence-number.htm',
   'viewmodels/alert',
   'js-cookie'
 ], function (_, ko, koMapping, uuid, arches, componentTemplate, AlertViewModel, Cookies) {
