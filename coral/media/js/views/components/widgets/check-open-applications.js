@@ -132,7 +132,7 @@ define([
     this.loadApplicationData = async (selectedResources) => {
       const applicationData = {};
 
-      selectedResources.forEach((resource) => {
+      selectedResources?.forEach((resource) => {
         applicationData[ko.unwrap(resource.resourceId)] = {
           resourceId: ko.unwrap(resource.resourceId),
           state: null,
