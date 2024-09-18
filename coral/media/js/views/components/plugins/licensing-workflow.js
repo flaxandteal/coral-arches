@@ -8,8 +8,8 @@ define([
   'views/components/workflows/related-document-upload',
   'views/components/workflows/licensing-workflow/licence-cover-letter',
   'views/components/workflows/file-template',
-  'views/components/workflows/licensing-workflow/license-final-step',
-  'views/components/workflows/licensing-workflow/fetch-generated-license-number',
+  'views/components/workflows/licensing-workflow/licence-final-step',
+  'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
   'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
