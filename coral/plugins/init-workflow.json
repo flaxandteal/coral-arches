@@ -153,6 +153,24 @@
         "desc": "Complete a FMW inspection"
       },
       {
+        "workflowid": "2d785399-83a7-4887-b73b-776f8006e7e6",
+        "desc": "Start a Curatorial Inspection",
+        "icon": "fa fa-file",
+        "name": "Curatorial Inspection",
+        "bgColor": "#86679c",
+        "slug": "open-workflow?workflow-slug=curatorial-workflow",
+        "circleColor": "#aa86c4"
+      },
+      {
+        "workflowid": "866b03d4-bd1d-43bb-bb45-54cff150db3f",
+        "desc": "Start a State Care Condition Survey",
+        "icon": "fa fa-file",
+        "name": "State Care Condition Survey",
+        "bgColor": "#86679c",
+        "slug": "open-state-care-condition-survey-workflow?workflow-slug=state-care-condition-survey-workflow",
+        "circleColor": "#aa86c4"
+      },
+      {
         "workflowid": "80b4f84e-5dca-4baa-9bfd-62e18a269e9c",
         "slug": "open-workflow?workflow-slug=assign-consultation-workflow",
         "name": "Planning Consultation",
@@ -184,18 +202,18 @@
         "desc": "Create a new Garden",
         "icon": "fa fa-tree",
         "name": "Add Garden",
-        "bgColor": "#619974",
+        "bgColor": "#4d898f",
         "slug": "open-workflow?workflow-slug=add-garden-workflow",
-        "circleColor": "#4a946d"
+        "circleColor": "#66acb3"
       },
       {
         "workflowid": "f139dc88-c4eb-4347-8203-324b01d168ef",
         "desc": "Create a new IHR",
         "icon": "fa fa-file-text",
         "name": "Add IHR",
-        "bgColor": "#978dd6",
+        "bgColor": "#4d898f",
         "slug": "open-workflow?workflow-slug=add-ihr-workflow",
-        "circleColor": "#867bc9"
+        "circleColor": "#66acb3"
       },
       {
         "workflowid": "753b37c2-ac8a-48e8-9828-d16a87563847",
@@ -203,9 +221,9 @@
         "icon": "fa fa-building",
         "name": "Add Monument",
         "show": true,
-        "bgColor": "#619974",
+        "bgColor": "#4d898f",
         "slug": "open-workflow?workflow-slug=add-monument-workflow",
-        "circleColor": "#4a946d"
+        "circleColor": "#66acb3"
       },
       {
         "workflowid": "47fe1619-6563-4460-87a5-e8ce9548c14b",
@@ -213,27 +231,9 @@
         "icon": "fa fa-building",
         "name": "Add Building",
         "show": true,
-        "bgColor": "#619974",
+        "bgColor": "#4d898f",
         "slug": "open-workflow?workflow-slug=add-building-workflow",
-        "circleColor": "#4a946d"
-      },
-      {
-        "workflowid": "2d785399-83a7-4887-b73b-776f8006e7e6",
-        "desc": "Start a Curatorial Inspection",
-        "icon": "fa fa-file",
-        "name": "Curatorial Inspection",
-        "bgColor": "#86679c",
-        "slug": "open-workflow?workflow-slug=curatorial-workflow",
-        "circleColor": "#aa86c4"
-      },
-      {
-        "workflowid": "866b03d4-bd1d-43bb-bb45-54cff150db3f",
-        "desc": "Start a State Care Condition Survey",
-        "icon": "fa fa-file",
-        "name": "State Care Condition Survey",
-        "bgColor": "#86679c",
-        "slug": "open-state-care-condition-survey-workflow?workflow-slug=state-care-condition-survey-workflow",
-        "circleColor": "#aa86c4"
+        "circleColor": "#66acb3"
       }
     ],
     "show": true

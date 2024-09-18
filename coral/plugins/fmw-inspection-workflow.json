@@ -173,6 +173,31 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
+        "name": "irish-grid-reference-step",
+        "title": "Irish Grid Reference",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
+                  "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "fetch-latest-tile",
+                "uniqueInstanceName": "irish-grid-reference"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
         "name": "map-step",
         "title": "Map",
         "required": false,
@@ -187,7 +212,7 @@
                   "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "map"
               }
             ]
