@@ -25,11 +25,17 @@ define([
       this.isSelected = ko.observable(false);
       this.errorMessage = ko.observable();
       this.messageVisible = ko.observable(false);
+
       if (this.value()) {
         this.tm65Val = ko.observable(this.value());
       } else {
         this.tm65Val = ko.observable();
       }
+
+      // If changed externally this will update it
+      this.value.subscribe((value) => {
+        this.tm65Val(value);
+      });
 
       this.finalGridNumber = function (numberIn) {
         // CS - This function adds zeros onto a number until the number's length is 5

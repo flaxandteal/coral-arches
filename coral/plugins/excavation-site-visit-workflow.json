@@ -74,14 +74,14 @@
               },
               {
                 "parameters": {
-                  "labels": [["Associated Licenses", "License Number"]],
+                  "labels": [["Associated Licences", "Licence Number"]],
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "879fc326-02f6-11ef-927a-0242ac150006"
                 },
                 "tilesManaged": "one",
-                "componentName": "get-selected-license-details",
-                "uniqueInstanceName": "license-resource"
+                "componentName": "get-selected-licence-details",
+                "uniqueInstanceName": "licence-resource"
               },
               {
                 "parameters": {
@@ -110,7 +110,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
-                "uniqueInstanceName": "license-holder-present"
+                "uniqueInstanceName": "licence-holder-present"
               },
               {
                 "parameters": {

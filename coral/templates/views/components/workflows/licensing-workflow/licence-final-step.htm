@@ -8,7 +8,7 @@
         <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
           <div
             class="summary-value"
-            data-bind="text: displayName() + ' ({% trans 'License Resource Instance' %})'"
+            data-bind="text: displayName() + ' ({% trans 'Licence Resource Instance' %})'"
           ></div>
         </a>
       </div>
@@ -19,7 +19,7 @@
       data-bind="component: {
         name: 'render-nodes',
         params: {
-          resourceNodes: renderedNodegroups()['license']
+          resourceNodes: renderedNodegroups()['licence']
         }
       }"
     ></div>

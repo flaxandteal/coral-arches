@@ -54,28 +54,45 @@ class OpenWorkflow(View):
             for layout_section in step["layoutSections"]:
                 for component_config in layout_section["componentConfigs"]:
                     unique_instance_name = component_config.get("uniqueInstanceName")
-                    if unique_instance_name:
-                        required_parent_tiles = component_config["parameters"].get(
+                    parameters = component_config.get("parameters")
+                    if unique_instance_name and parameters:
+                        required_parent_tiles = parameters.get(
                             "requiredParentTiles", []
                         )
                         data_lookup_id = str(uuid.uuid4())
                         workflow_step_data[step_name]["componentIdLookup"][
                             unique_instance_name
                         ] = data_lookup_id
+
+
+                        related_document_nodegroup_id = component_config[
+                            "parameters"
+                        ].get(
+                            "resourceModelDigitalObjectNodeGroupId", None
+                        )
+                        related_document_upload_node_id = component_config[
+                            "parameters"
+                        ].get(
+                            "resourceModelDigitalObjectNodeId", related_document_nodegroup_id
+                        )
+
+                        related_document_upload = None
+                        if related_document_nodegroup_id:
+                            related_document_upload = {
+                                "nodegroup_id": related_document_nodegroup_id,
+                                "node_id": related_document_upload_node_id
+                            }
+
                         step_mapping.append(
                             {
                                 "unique_instance_name": unique_instance_name,
-                                "nodegroup_id": component_config["parameters"].get(
+                                "nodegroup_id": parameters.get(
                                     "nodegroupid"
                                 ),
                                 "tiles_managed": component_config["tilesManaged"],
                                 "data_lookup_id": data_lookup_id,
                                 "required_parent_tiles": required_parent_tiles,
-                                "related_document_upload_id": component_config[
-                                    "parameters"
-                                ].get(
-                                    "resourceModelDigitalObjectNodeGroupId", None
-                                ),  # Special case for the related-document-upload component
+                                "related_document_upload": related_document_upload,  # Special case for the related-document-upload component
                             }
                         )
         return workflow_step_data, step_mapping
@@ -153,23 +170,23 @@ class OpenWorkflow(View):
                 self.nodegroups[nodegroup_id] = node.nodegroup
 
     def setup_licensing_workflow(self):
-        LICENSE_SYSTEM_REFERENCE_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
-        LICENSE_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
-        LICENSE_DECISION_NODEGROUP = "2749ea5a-48cb-11ee-be76-0242ac140007"
-        LICENSE_APPLICATION_DETAILS = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
-        LICENSE_CM_REFERENCE_NODEGROUP = "b84fa9c6-bad2-11ee-b3f2-0242ac180006"
+        LICENCE_SYSTEM_REFERENCE_NODEGROUP = "991c3c74-48b6-11ee-85af-0242ac140007"
+        LICENCE_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
+        LICENCE_DECISION_NODEGROUP = "2749ea5a-48cb-11ee-be76-0242ac140007"
+        LICENCE_APPLICATION_DETAILS = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
+        LICENCE_CM_REFERENCE_NODEGROUP = "b84fa9c6-bad2-11ee-b3f2-0242ac180006"
         ACTIVITY_SYSTEM_REFERENCE_NODEGROUP = "e7d695ff-9939-11ea-8fff-f875a44e0e11"
         ACTIVITY_RESOURCE_ID_NODE = "e7d69603-9939-11ea-9e7f-f875a44e0e11"
         ACTIVITY_LOCATION_DATA_NODEGROUP = "a5416b49-f121-11eb-8e2c-a87eeabdefba"
 
-        # Get the application id used for the license and activity
+        # Get the application id used for the licence and activity
 
-        license_system_reference_tile = Tile.objects.filter(
-            resourceinstance=self.resource, nodegroup=LICENSE_SYSTEM_REFERENCE_NODEGROUP
+        licence_system_reference_tile = Tile.objects.filter(
+            resourceinstance=self.resource, nodegroup=LICENCE_SYSTEM_REFERENCE_NODEGROUP
         ).first()
 
         app_id = (
-            license_system_reference_tile.data.get(LICENSE_RESOURCE_ID_NODE)
+            licence_system_reference_tile.data.get(LICENCE_RESOURCE_ID_NODE)
             .get("en")
             .get("value")
         )
@@ -198,20 +215,20 @@ class OpenWorkflow(View):
         )
         decision_tile, success = Tile.objects.get_or_create(
             resourceinstance=self.resource,
-            nodegroup=LICENSE_DECISION_NODEGROUP,
+            nodegroup=LICENCE_DECISION_NODEGROUP,
         )
         application_details_tile, success = Tile.objects.get_or_create(
             resourceinstance=self.resource,
-            nodegroup=LICENSE_APPLICATION_DETAILS,
+            nodegroup=LICENCE_APPLICATION_DETAILS,
         )
         cm_reference_tile, success = Tile.objects.get_or_create(
             resourceinstance=self.resource,
-            nodegroup=LICENSE_CM_REFERENCE_NODEGROUP,
+            nodegroup=LICENCE_CM_REFERENCE_NODEGROUP,
         )
 
         # Store the tile IDs in an object
 
-        self.additional_saved_values[LICENSE_SYSTEM_REFERENCE_NODEGROUP] = {
+        self.additional_saved_values[LICENCE_SYSTEM_REFERENCE_NODEGROUP] = {
             "activityResourceId": activity_resource_id,
             "activityLocationTileId": str(location_data_tile.tileid),
             "decisionTileId": str(decision_tile.tileid),
@@ -232,6 +249,11 @@ class OpenWorkflow(View):
         ASSIGNMENT_TEAM_NODE = '6b8f5866-2f0d-11ef-b37c-0242ac140006'
         ASSIGNMENT_TEAM_HM = 'e377b8a9-ced0-4186-84ff-0b5c3ece9c78'
         ASSIGNMENT_TEAM_HB = '18b628c9-149f-4c37-bc27-e8e0d714a037'
+
+        RESPONSE_FILES_NODEGROUP = '31e5ece6-5989-11ef-af2d-0242ac120006'
+        RESPONSE_FILES_TEAM_NODE = '983d73b0-5989-11ef-af2d-0242ac120006'
+        RESPONSE_FILES_TEAM_HM = '761b9622-3c45-4e78-9f7b-241ffd0f5ec1'
+        RESPONSE_FILES_TEAM_HB = 'b66e5025-7695-43b3-b931-e67f1222ec43'
 
         response_tiles = self.grouped_tiles.get(RESPONSE_ACTION_NODEGROUP, [])
         remove_ids = []
@@ -254,6 +276,17 @@ class OpenWorkflow(View):
                 remove_ids.append(tile.tileid)
                 continue
         self.grouped_tiles[ASSIGNMENT_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, assignment_tiles))
+
+        response_files_tiles = self.grouped_tiles.get(RESPONSE_FILES_NODEGROUP, [])
+        remove_ids = []
+        for tile in response_files_tiles:
+            if tile.data[RESPONSE_FILES_TEAM_NODE] == RESPONSE_FILES_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+            if tile.data[RESPONSE_FILES_TEAM_NODE] == RESPONSE_FILES_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
+                remove_ids.append(tile.tileid)
+                continue
+        self.grouped_tiles[RESPONSE_FILES_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, response_files_tiles))
 
     def setup_designation(self):
         REVISION_APPROVALS_NODEGROUP_ID = "3c51740c-dbd0-11ee-8835-0242ac120006"
@@ -377,21 +410,21 @@ class OpenWorkflow(View):
             data_lookup_id = map_data["data_lookup_id"]
             tiles = self.grouped_tiles.get(nodegroup_id, [])
 
-            if map_data["related_document_upload_id"]:
-                nodegroup_id = map_data["related_document_upload_id"]
-                tiles = self.grouped_tiles.get(nodegroup_id, [])
+            if map_data["related_document_upload"]:
+                # If this path is followed we're using a digital object tile instead of
+                # a tile from the resource we are actually accessing
+                related_document_upload_nodegroup_id = map_data["related_document_upload"]['nodegroup_id']
+                related_document_upload_node_id = map_data["related_document_upload"]['node_id']
+                tiles = self.grouped_tiles.get(related_document_upload_nodegroup_id, [])
 
                 if not len(tiles):
                     continue
 
-                if not len(tiles[0].data.get(nodegroup_id)):
+                if not len(tiles[0].data.get(related_document_upload_node_id)):
                     continue
 
-                # This expects that you are using a digital object nodegroup with a single
-                # level nodegroup. It must not be nested within a nodegroup so that the nodegroup
-                # ids are identical.
                 digital_object_resource_id = (
-                    tiles[0].data.get(nodegroup_id)[0].get("resourceId")
+                    tiles[0].data.get(related_document_upload_node_id)[0].get("resourceId")
                 )
 
                 DIGITAL_OBJECT_NODEGROUP_ID = "7db68c6c-8490-11ea-a543-f875a44e0e11"

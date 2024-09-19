@@ -228,6 +228,18 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "fetch-latest-tile",
+                "uniqueInstanceName": "irish-grid-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["87d3d7c8-f44f-11eb-938d-a87eeabdefba"],
                   "nodegroupid": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
@@ -258,7 +270,7 @@
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "1ef3df22-4ad9-4203-93e0-4445fd339acd"
               }
             ]
@@ -303,7 +315,8 @@
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "fileObjectNamePrefix": "Documentation for ",
-                  "resourceModelDigitalObjectNodeGroupId": "58f177c8-d640-11ee-8b04-0242ac180006"
+                  "resourceModelDigitalObjectNodeGroupId": "58f177c8-d640-11ee-8b04-0242ac180006",
+                  "resourceParentTile": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']"
                 },
                 "tilesManaged": "one",
                 "componentName": "related-document-upload",

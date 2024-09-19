@@ -19,10 +19,13 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "hiddenNodes": [
-                    "469af519-d78e-46e2-b0bb-281bcab211d0",
-                    "147187c1-3319-4f6c-9cec-0c295164df14"
+                    "e35da588-3f60-11ef-b90f-0242ac140006",
+                    "b892d1ca-3f60-11ef-b90f-0242ac140006",
+                    "161be232-3f61-11ef-b90f-0242ac140006",
+                    "7c87629a-3f60-11ef-b90f-0242ac140006"
                   ],
-                  "nodegroupid": "cbf55769-eaf1-4074-84d9-8a47310dfbc2",
+                  "labels": [["Display Name", "Heritage Asset"]],
+                  "nodegroupid": "423d8a10-3f60-11ef-b9b0-0242ac140006",
                   "semanticName": "System Reference Numbers",
                   "requiredParentTiles": [
                     {
@@ -34,6 +37,21 @@
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
                 "uniqueInstanceName": "d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "hiddenNodes": [
+                    "bcf507be-3ea8-11ef-8377-0242ac140006"
+                  ],
+                  "nodegroupid": "bcf507be-3ea8-11ef-8377-0242ac140006",
+                  "labels": [
+                    ["Generated SMR", "SMR Number"]
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "597b9423-7777-49fe-a5d6-b61edb4764e7"
               }
             ]
           }
@@ -188,8 +206,7 @@
                     "b850af26-7f33-4b26-a7e2-daa15308c56c",
                     "482d0935-2330-491a-aa41-d0cc3293b568",
                     "15b164d5-9509-4d4c-a0b7-e4b430ba5d31"
-
-                ]
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -264,14 +281,45 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "nodegroupid": "3c51740c-dbd0-11ee-8835-0242ac120006",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "99605e36-3924-11ef-82af-0242ac150006"
-                  ],
+                  "hiddenNodes": ["99605e36-3924-11ef-82af-0242ac150006"],
                   "semanticName": "Approvals"
                 },
                 "tilesManaged": "one",
-                "componentName": "start-remap-and-merge",
+                "componentName": "default-card",
                 "uniqueInstanceName": "78965eb2-7064-47aa-a65b-cecc9f05884f"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "apply-revision",
+        "title": "Apply Revision",
+        "required": false,
+        "saveWithoutProgressing": true,
+        "informationboxdata": {
+          "heading": "WARNING: Process Description",
+          "text": "To revise a Heritage Asset a copy is created. This copy needs to be reconciled back into the original Heritage Asset to apply the updates. Once the \"Apply Revision\" process has started it cannot be undone until it is complete. Clicking the button will exit the workflow and delete the Revision Heritage Asset."
+        },
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "approval-summary",
+                "uniqueInstanceName": "93354680-c0b9-43a5-8f74-8b5a1c00c06d"
+              },
+              {
+                "parameters": {
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "start-remap-and-merge",
+                "uniqueInstanceName": "ccd9d680-ed67-4981-89d9-064ee13ca19d"
               }
             ]
           }

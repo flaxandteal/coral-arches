@@ -6,12 +6,12 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/workflows/excavation-site-visit-workflow/get-selected-license-details.htm'
+  'templates/views/components/workflows/excavation-site-visit-workflow/get-selected-licence-details.htm'
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
-    this.SELECTED_LICENSE_NODEGROUP_AND_NODE = '879fc326-02f6-11ef-927a-0242ac150006';
+    this.SELECTED_LICENCE_NODEGROUP_AND_NODE = '879fc326-02f6-11ef-927a-0242ac150006';
 
     this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE = 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11';
     this.SITE_NAME_NODEGROUP_AND_NODE = 'a9f53f00-48b6-11ee-85af-0242ac140007';
@@ -49,9 +49,9 @@ define([
         });
       });
 
-    this.tile.data[this.SELECTED_LICENSE_NODEGROUP_AND_NODE].subscribe((value) => {
+    this.tile.data[this.SELECTED_LICENCE_NODEGROUP_AND_NODE].subscribe((value) => {
       if (value && value.length) {
-        const resourceId = value[0].resourceId;
+        const resourceId = ko.unwrap(value[0].resourceId);
         this.selectedResource(resourceId);
         this.getDetails(resourceId);
       }
@@ -113,7 +113,7 @@ define([
     this.prepareResource()
   }
 
-  ko.components.register('get-selected-license-details', {
+  ko.components.register('get-selected-licence-details', {
     viewModel: viewModel,
     template: template
   });

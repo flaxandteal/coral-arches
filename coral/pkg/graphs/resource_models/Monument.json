@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "36560f39-fd37-4561-b483-05a6ae912642",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "SMC Documentation File(s)"
+                    },
+                    "nodegroup_id": "355608a6-5edf-11ef-bca0-0242ac120006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "d88af2ba-15c7-457d-9ea9-da14b8347282",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -240,7 +267,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Excavation License Reference"
+                        "en": "Excavation Licence Reference"
                     },
                     "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "sortorder": null,
@@ -2304,6 +2331,27 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "36560f39-fd37-4561-b483-05a6ae912642",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "SMC Documentation File(s)",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "22a269bb-d7ba-4f7c-8f2b-fff812f1bbe2",
+                    "label": {
+                        "en": "SMC Documentation File(s)"
+                    },
+                    "node_id": "355608a6-5edf-11ef-bca0-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "d88af2ba-15c7-457d-9ea9-da14b8347282",
                     "config": {
                         "defaultValue": null,
@@ -3885,7 +3933,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Approved Date Value",
+                        "label": "Approved Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -3893,7 +3941,7 @@
                     },
                     "id": "373b0dab-101c-49af-9923-5c27c2bdc229",
                     "label": {
-                        "en": "Approved Date Value"
+                        "en": "Approved Date"
                     },
                     "node_id": "ac25af94-1903-11ef-aa9c-0242ac150006",
                     "sortorder": 11,
@@ -6997,7 +7045,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Input Date Value",
+                        "label": "Input Date",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -7005,7 +7053,7 @@
                     },
                     "id": "767b2ae4-831f-4911-b010-2f65930a3ee0",
                     "label": {
-                        "en": "Input Date Value"
+                        "en": "Input Date"
                     },
                     "node_id": "d9368892-1902-11ef-aa9c-0242ac150006",
                     "sortorder": 9,
@@ -11496,14 +11544,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Approved By Value",
+                        "label": "Approved By",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "8d53e3db-226e-4ad5-b9da-e71a120bf7be",
                     "label": {
-                        "en": "Approved By Value"
+                        "en": "Approved By"
                     },
                     "node_id": "9382b7b4-1905-11ef-aa9f-0242ac150006",
                     "sortorder": 12,
@@ -11843,7 +11891,7 @@
                     "node_id": "a0cb43ee-d62c-11ee-9454-0242ac180006",
                     "sortorder": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "96656adc-d646-11ee-8b04-0242ac180006",
@@ -12239,7 +12287,7 @@
                     "node_id": "2596ab22-d62d-11ee-8f7b-0242ac180006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "bba34a38-37b4-11ef-9263-0242ac150006",
@@ -14426,7 +14474,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Excavation License",
+                        "label": "Excavation Licence",
                         "maxLength": null,
                         "placeholder": {
                             "en": "Enter text"
@@ -14436,7 +14484,7 @@
                     },
                     "id": "ddd28394-1b65-4738-8707-db8980b49232",
                     "label": {
-                        "en": "Excavation License"
+                        "en": "Excavation Licence"
                     },
                     "node_id": "e29ba81e-1f4b-11ef-ac74-0242ac150006",
                     "sortorder": 0,
@@ -15164,7 +15212,7 @@
                     "node_id": "723aaf3c-d62d-11ee-8f7b-0242ac180006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 }
             ],
             "color": "rgba(59,84,33,1)",
@@ -15210,6 +15258,15 @@
                 "en": ""
             },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "8f132774-85eb-427c-aa16-74123b677f86",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "rangenode_id": "355608a6-5edf-11ef-bca0-0242ac120006"
+                },
                 {
                     "description": null,
                     "domainnode_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
@@ -21505,6 +21562,16 @@
                 {
                     "config": {
                         "triggering_nodegroups": [
+                            "325a2f2f-efe4-11eb-9b0c-a87eeabdefba"
+                        ]
+                    },
+                    "function_id": "9e34b9df-b098-4faf-a833-a84611e41009",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "id": "e05bfc40-4880-4e5d-9895-940aa5e98777"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
                             "de6b6af0-44e3-11ef-9114-0242ac120006"
                         ]
                     },
@@ -22116,6 +22183,36 @@
             ],
             "nodes": [
                 {
+                    "alias": "smc_documentation_file_s_",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                                "name": "Digital Object"
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "SMC Documentation File(s)",
+                    "nodegroup_id": "355608a6-5edf-11ef-bca0-0242ac120006",
+                    "nodeid": "355608a6-5edf-11ef-bca0-0242ac120006",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "generated_hb",
                     "config": {
                         "en": ""
@@ -22260,7 +22357,7 @@
                             {
                                 "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
                                 "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
-                                "name": "License",
+                                "name": "Licence",
                                 "relationshipCollection": "00000000-0000-0000-0000-000000000005",
                                 "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": false
@@ -23493,7 +23590,7 @@
                     "config": {
                         "rdmCollection": "e5babb70-bcfa-48aa-81df-79b11ce9b1ae"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -28463,7 +28560,7 @@
                     "config": {
                         "rdmCollection": "1a161d2b-5887-4ad2-800e-ffa073f3b2bd"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -35013,7 +35110,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "excavation_license_reference",
+                    "alias": "excavation_licence_reference",
                     "config": {
                         "en": ""
                     },
@@ -35027,7 +35124,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Excavation License Reference",
+                    "name": "Excavation Licence Reference",
                     "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "nodeid": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
@@ -35065,7 +35162,7 @@
                     "config": {
                         "rdmCollection": "9881e48c-95f1-42da-bc55-76a6b6f34f22"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -38234,7 +38331,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "excavation_license_reference_number",
+                    "alias": "excavation_licence_reference_number",
                     "config": {
                         "en": ""
                     },
@@ -38248,7 +38345,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Excavation License Reference Number",
+                    "name": "Excavation Licence Reference Number",
                     "nodegroup_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
                     "nodeid": "e29ba81e-1f4b-11ef-ac74-0242ac150006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",

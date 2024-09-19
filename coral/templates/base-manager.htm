@@ -1,0 +1,625 @@
+{% extends "base.htm" %}
+{% load static %}
+{% load template_tags %}
+{% load i18n %}
+
+{% block body %}
+
+    <!-- ko if: alert() -->
+    <div data-bind="visible: alert().active" style="display: none;" class="relative">
+        <div id="card-alert-panel" data-bind="css: 'ep-form-alert ' + (alert() ? alert().type() : '')">
+            <div style="display: flex;">
+                <h4 style="flex: 1" class="ep-form-alert-title" data-bind="text: alert().title"></h4>
+                <div class="ep-form-alert-default-dismiss">
+                    <i class="fa fa-times-circle" data-bind="click: alert().close"></i>
+                </div>
+            </div>
+            <p class="ep-form-alert-text" data-bind="html: alert().text"></p>
+
+            <div class="ep-form-alert-buttons">
+                <!-- ko if: alert().cancel -->
+                <button class="btn btn-sm btn-danger btn-labeled fa fa-times" data-bind="click: alert().cancel"><span>{% trans "Cancel" %}</span></button>
+                <!-- /ko -->
+                <!-- ko if: alert().ok -->
+                <button class="btn btn-sm btn-primary btn-labeled fa fa-check" data-bind="click: alert().ok"><span>{% trans "OK" %}</span></button>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <div id="skip-link-holder"><a id="skip-link" data-bind="text: $root.translations.skipToContent" href="#skiptocontent"></a></div>
+
+    <div id="container" class="base-manager-grid effect aside-left aside-bright navbar-fixed sidenav-sm"
+        data-bind="css: {'mainnav-in': tabsActive() && showTabs(), 'sidenav-sm': !navExpanded(), 'sidenav-lg': navExpanded()}">
+
+        <nav class="sidenav" role="navigation" id="arches-navigation">
+            {% block navheader %}
+            <a href="#" class="sidenav-brand" data-bind="onEnterkeyClick, onSpaceClick, click: function () { navExpanded(!navExpanded()) },
+                attr: {
+                    'aria-label': $root.translations.toggleNavigation, 
+                    'aria-description': $root.translations.toggleNavigationDescription, 
+                    'aria-expanded': navExpanded().toString()
+                }
+            ">
+                <img src="{{ STATIC_URL }}img/arches_logo_light.png" class="brand-icon" alt="">
+                <div class="brand-title">
+                    <h1 class="brand-text" style="margin-top: 15px;">{{ app_name }}</h1>
+                </div>
+            </a>
+            {% endblock navheader %}
+            {% block mainnav %}
+            <div class="mainnav-container">
+                <div class="sidenav-menu">
+                    {% block navbar %}
+                    <ul class="list-group" data-bind="attr: {'aria-label': $root.translations.mainMenu}">
+        
+                        <!-- Home. -->
+                        <li>
+                            <a href="{% url 'home' %}" aria-labelledby="index-link-label" data-bind="click:function () { navigate('{% url 'home' %}') }">
+                                <i class="ti-home"></i>
+                                <span class="menu-title">
+                                    <strong id="index-link-label">{% trans "Home" %}</strong>
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- Tools -->
+                        <div id="tools-header-label" class="list-header">{% trans "Tools" %}</div>
+
+                        <ul aria-labelledby="tools-header-label">
+                            <!-- System Settings list item -->
+                            {% if request.user|has_group:"System Administrator" %}
+                            <li {% if "views/resource" in main_script and is_system_settings is True %} class="active-sub" {% endif %} data-bind="click: navigate.bind(this, '{% url 'config' %}')">
+                                <a href="{% url 'config' %}" aria-labelledby="system-settings-link-label">
+                                    <i class="ti-alarm-clock"></i>
+                                    <span class="menu-title">
+                                        <strong id="system-settings-link-label">{% trans "Manage System Settings" %}</strong>
+                                    </span>
+                                </a>
+                                <ul class="collapse" data-bind="css:{'in': navExpanded()}" aria-labelledby="system-settings-link-label">
+                                    <li class="link-submenu-item">
+                                        <a class="link-submenu" href="{% url 'config' %}"
+                                            data-bind="click: navigate.bind(this, '{% url 'config' %}')">{% trans "System Settings" %}</a>
+                                    </li>
+                                    <li class="link-submenu-item">
+                                        <a class="link-submenu" href="{% url 'graph' system_settings_graphid %}"
+                                            data-bind="click: navigate.bind(this, '{% url 'graph_designer' system_settings_graphid %}'), clickBubble: false">{% trans "System Settings Graph" %}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                            <!-- Search -->
+                            <li {% if "views/search" in main_script %} class="active-sub" {% endif %}>
+                                <a href="{% url 'search_home' %}" aria-labelledby="search-link-label"
+                                    data-bind="click:function () { navigate('{% url 'search_home' %}') }">
+                                    <i class="fa fa-search"></i>
+                                    <span class="menu-title">
+                                        <strong id="search-link-label">{% trans "Search" %}</strong>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <!-- New Resource -->
+                            {% if user_can_edit %}
+                            <li
+                                {% if "views/resource" in main_script and is_system_settings is None %}
+                                    class="active-sub" 
+                                {% endif %}
+                            >
+                                <a href="{% url 'resource' %}" aria-labelledby="new-resource-link-label">
+                                    <i class="fa fa-building-o"></i>
+                                    <span class="menu-title">
+                                        <strong id="new-resource-link-label">{% trans "Add New Resource" %}</strong>
+                                    </span>
+                                </a>
+                                <ul class="collapse" data-bind="css:{'in': navExpanded()}" aria-labelledby="new-resource-link-label">
+                                    <!-- ko foreach: createableResources -->
+                                    <li class="link-submenu-item">
+                                        <a 
+                                            class="link-submenu" 
+                                            data-bind="
+                                                css: { 'arches-menu-item-disabled': disable_instance_creation },
+                                                attr: {
+                                                    href: disable_instance_creation ? '#' : ('{% url 'add_resource' 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' %}'.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', graphid))
+                                                }"
+                                        >
+                                            <i 
+                                                class="fa arches-menu-icon"
+                                                data-bind="css: iconclass || 'fa fa-question'"
+                                            ></i> 
+                                            <span data-bind="text:name"></span>
+                                        </a>
+                                    </li>
+                                    <!-- /ko -->
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                            <!-- Graph Designer -->
+                            {% if request.user|has_group:"Graph Editor" %}
+                            <li {% if "views/graph" in main_script %} class="active-sub" {% endif %}
+                                data-bind="click: navigate.bind(this, '{% url 'graph' '' %}')">
+                                <a href="#" aria-labelledby="designer-link-label">
+                                    <i class="fa fa-bookmark"></i>
+                                    <span class="menu-title">
+                                        <strong id="designer-link-label">{% trans "Arches Designer" %}</strong>
+                                    </span>
+                                </a>
+                                <ul class="collapse" data-bind="css:{'in': navExpanded()}" aria-labelledby="designer-link-label">
+                                    <li class="link-submenu-item">
+                                        <a class="link-submenu" href="{% url 'graph' '' %}"
+                                            data-bind="click: navigate.bind(this, '{% url 'graph' '' %}')">{% trans "Resource Models" %}</a>
+                                    </li>
+                                    <li class="link-submenu-item">
+                                        <a class="link-submenu" href="{% url 'graph' '' %}#branches"
+                                            data-bind="click: navigate.bind(this, '{% url 'graph' '' %}#branches')">{% trans "Branches" %}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                            <!-- Map Layer Manager -->
+                            {% if request.user|has_group:"Application Administrator" %}
+                            <li {% if "views/map-layer-manager" in main_script %} class="active-sub" {% endif %} data-bind="click: navigate.bind(this, '{% url 'map_layer_manager' %}')">
+                                <a href="{% url 'map_layer_manager' %}" aria-labelledby="map-layer-manager-link-label">
+                                    <i class="fa fa-server"></i>
+                                    <span class="menu-title">
+                                        <strong id="map-layer-manager-link-label">{% trans "Map Layer Manager" %}</strong>
+                                    </span>
+                                </a>
+                                <ul class="collapse"  data-bind="css:{'in': navExpanded()}" aria-labelledby="map-layer-manager-link-label">
+                                    <li class="link-submenu-item">
+                                        <a class="link-submenu" href="{% url 'map_layer_manager' %}"
+                                            data-bind="click: navigate.bind(this, '{% url 'map_layer_manager' %}')">{% trans "Resource Layers" %}</a>
+                                    </li>
+                                    <li class="link-submenu-item">
+                                        <a class="link-submenu"
+                                            href="{% url 'map_layer_manager' %}#basemaps"
+                                            data-bind="click: navigate.bind(this, '{% url 'map_layer_manager' %}#basemaps')">{% trans "Basemaps" %}</a>
+                                    </li>
+                                    <li class="link-submenu-item">
+                                        <a class="link-submenu"
+                                            href="{% url 'map_layer_manager' %}#overlays"
+                                            data-bind="click: navigate.bind(this, '{% url 'map_layer_manager' %}#overlays')">{% trans "Overlays" %}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% endif %}
+
+
+                            <!-- Recently Added -->
+                            {% if user_can_edit %}
+                            <li {% if 'edit-history' in main_script %} class="active-sub" {% endif %}>
+                                <a href="{% url 'edit_history' %}" aria-labelledby="recent-edits-link-label"
+                                    data-bind="click: navigate.bind(this, '{% url 'edit_history' %}') ">
+                                    <i class="ti-ticket"></i>
+                                    <span class="menu-title">
+                                        <strong id="recent-edits-link-label">{% trans "Recent Edits" %}</strong>
+                                    </span>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <!-- Profile Manager -->
+                            {% if user.is_authenticated and request.user.username != 'anonymous' %}
+                            <li {% if "user-profile-manager" in main_script %} class="active-sub" {% endif %}>
+                                <a href="{% url 'user_profile_manager' %}" aria-labelledby="profile-link-label"
+                                    data-bind="click: navigate.bind(this, '{% url 'user_profile_manager' %}') ">
+                                    <i class="fa fa-user"></i>
+                                    <span class="menu-title">
+                                        <strong id="profile-link-label">{% trans "Profile Manager" %}</strong>
+                                    </span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            <!-- Profile Manager -->
+                            {% if user.is_authenticated and request.user.username != 'anonymous' %}
+                            <li {% if "user-profile-manager" in main_script %} class="active-sub" {% endif %}>
+                                <a href="{% url 'user_profile_manager' %}" aria-labelledby="profile-link-label"
+                                    data-bind="click: navigate.bind(this, '{% url 'user_profile_manager' %}') ">
+                                    <i class="fa fa-user"></i>
+                                    <span class="menu-title">
+                                        <strong id="profile-link-label">{% trans "Profile Manager" %}</strong>
+                                    </span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+
+                        {% if request.user|has_group:"RDM Administrator" or plugins|length > 0 %}
+                        <hr class="list-divider-dark"></hr>
+
+                        <!-- Modules -->
+                        <div id="modules-header-label" class="list-header">{% trans "Modules" %}</div>
+
+                        <ul aria-labelledby="modules-header-label">
+
+                            {% if request.user|has_group:"RDM Administrator" %}
+                            <!-- Reference Data Manager -->
+                            <li {% if main_script == "rdm" %} class="active-sub" {% endif %} aria-labelledby="rdm-link-label">
+                                <a href="{% url 'rdm' '' %}"
+                                    data-bind="click: navigate.bind(this, '{% url 'rdm' '' %}') ">
+                                    <i class="fa fa-align-left"></i>
+                                    <span class="menu-title">
+                                        <strong id="rdm-link-label">{% trans "Reference Data Manager" %}</strong>
+                                    </span>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% for p in plugins %}
+                                {% if p.config is not None %}
+                                    {% if p.config.show is not False %}
+                                    <!-- ko let: {uid: Math.random().toString()} -->
+                                    <li {% if main_script == "views/plugin" and plugin.pluginid == p.pluginid %} class="active-sub" {% endif %}>
+                                        {% if p.slug is not None %}
+                                        <a href="{% url 'plugins' p.slug %}" data-bind="click: navigate.bind(this, '{% url 'plugins' p.slug %}'), attr: {'aria-labelledby': uid}">
+                                        {% else %}
+                                        <a href="{% url 'plugins' p.pluginid %}" data-bind="click: navigate.bind(this, '{% url 'plugins' p.pluginid %}'), attr: {'aria-labelledby': uid}">
+                                        {% endif %}
+                                            <i class="{{p.icon}}"></i>
+                                            <span class="menu-title">
+                                                <strong data-bind="attr: {id: uid}">{{p.name}}</strong>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <!-- /ko -->
+                                    {% endif %}
+                                {% else %}
+                                <!-- ko let: {uid: Math.random().toString()} -->
+                                <li {% if main_script == "views/plugin" and plugin.pluginid == p.pluginid %} class="active-sub" {% endif %}>
+                                    {% if p.slug is not None %}
+                                    <a href="{% url 'plugins' p.slug %}" data-bind="click: navigate.bind(this, '{% url 'plugins' p.slug %}'), attr: {'aria-labelledby': uid}">
+                                    {% else %}
+                                    <a href="{% url 'plugins' p.pluginid %}" data-bind="click: navigate.bind(this, '{% url 'plugins' p.pluginid %}'), attr: {'aria-labelledby': uid}">
+                                    {% endif %}
+                                        <i class="{{p.icon}}"></i>
+                                        <span class="menu-title">
+                                            <strong data-bind="attr: {id: uid}">{{p.name}}</strong>
+                                        </span>
+                                    </a>
+                                </li>
+                                <!-- /ko -->
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                    </ul>
+                    {% endblock navbar %}
+                </div>
+                {% if app_settings.DEBUG %}
+                <div class="debug-notice">
+                    <div>{% trans 'DEBUG' %}</div>
+                    <div>Arches</div>
+                    <div>{{ app_settings.VERSION }}</div>
+                    {% if app_settings.APP_VERSION %}
+                        <div>{% trans 'Project' %}</div>
+                        <div>{{ app_settings.APP_VERSION }}</div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            {% endblock mainnav %}
+        </nav>
+        
+        <header class="header">
+            
+            {% block header %}
+            <div class="ep-toolbar">
+
+                <div class="col-xs-12 col-sm-8 flex">
+
+                    <!-- Tools Menu -->
+                    {% if nav.menu %}
+                        <nav id="manage-top-left-nav" aria-label="{% trans 'Graph and Resource Management' %}">
+                            <button id="menu-control" class="ep-tools ep-tool-title"
+                                data-bind="click:function(data, event) { 
+                                        menuActive(!menuActive()); 
+                                        handleEscKey(event.currentTarget, '.ep-menu-list'); 
+                                    }, attr: {
+                                        'aria-expanded': menuActive().toString(),
+                                        'aria-controls': '#menu-panel'
+                                    }
+                                "
+                            >
+                                <div class="flex">{% trans "Manage" %}
+                                    <i class="ion-more" style="padding: 0px 5px;"></i>
+                                </div>
+                            </button>
+                        </nav>
+                        {% if main_script == 'views/resource/editor' %}
+                            {% include 'navbar/resource-manage-menu.htm' %}
+                        {% elif main_script == 'views/graph/function-manager' %}
+                            {% include 'navbar/function-manage-menu.htm' %}
+                        {% else %}
+                            {% include 'navbar/graph-designer-menu.htm' %}
+                        {% endif %}
+                    {% endif %}
+
+                    {% block graph_title %}
+                    <!-- Page Title and Icon -->
+                    <div class="ep-tools-title">
+                        <h1 class="page-header text-overflow ep-graph-title">
+                            <i class="fa {{graph.iconclass|default:nav.icon}} text-center icon-wrap bg-gray ep-graph-title-icon"></i>
+                            <span>{% trans nav.title %}</span>
+                        </h1>
+                    </div>
+                    {% endblock graph_title %}
+
+                </div>
+
+                <!-- Top Right Nav  -->
+                <nav class="col-xs-12 col-sm-4" id="user-actions-top-right-nav"> 
+
+                    <ul class="top-right-nav" aria-label="{% trans 'User and User Actions Navigation' %}">
+                        
+                        <!-- Welcome -->
+                        {% if nav.login and user.username != 'anonymous' %}
+                        <li class="hidden-xs">
+                            <a href="{% url 'user_profile_manager' %}"
+                                class="ep-tools ep-tools-login">
+                                <div data-placement="bottom"
+                                    data-toggle="tooltip"
+                                    data-original-title="{% trans 'Profile' %}">
+                                    <!-- ko let: {user: '{{ user.first_name|default:user.username }}' }  -->
+                                    <span class="hidden-xs h5" data-bind="attr: {'aria-label': $root.translations.welcomeUserEditProfile(user) }"
+                                    >{% trans "Welcome" %}, {{ user.first_name|default:user.username }}</span>
+                                    <!-- /ko -->
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if show_language_swtich %}
+                        {% get_current_language as LANGUAGE_CODE %}
+                        <li aria-label="{% trans 'Choose your language' %}">
+                            <div class="lang-switch ep-tools ep-tools-right" style="max-width: none;" data-bind='component: {
+                                name: "views/components/language-switcher",
+                                params: {
+                                    current_language: "{{LANGUAGE_CODE}}"
+                                }
+                            }'></div>
+                        </li>
+                        {% endif %}
+
+                        <!-- Notifications -->
+                        {% if nav.notifs %}
+                        <li>
+                            <button id="ep-notifs-button" class="ep-tools ep-notifs-toggle ep-tools-right" data-toggle="collapse" data-target="#ep-notifs-panel"
+                                aria-label="{% trans 'Show recent notifications' %}" aria-controls="ep-notifs-panel"
+                                data-bind="click: function(data, event) { 
+                                    openNotifs(event.currentTarget, '#ep-notifs-panel', '#ep-close-notifs-button'); 
+                                }, attr: {'aria-expanded': notifsOpen().toString()},
+                            ">
+                                <div data-placement="bottom" data-toggle="tooltip"
+                                    data-original-title="{% trans 'Notifications' %}">
+                                    <div>
+                                        <div data-bind="visible: unreadNotifs()" id="circle-outline"></div>
+                                        <div data-bind="visible: unreadNotifs()" id="circle"></div>
+                                        <i class="fa fa-bell"></i>
+                                    </div>
+                                </div>
+                            </button>
+                        </li>
+                        {% endif %}
+
+                        <!-- Search Bar -->
+                        {% if nav.search %}
+                        <li>
+                            <a href="{% url 'search_home' %}" class="ep-tools ep-tools-right" aria-label="{% trans 'Visit the Search page' %}"
+                                data-bind="click:function () { navigate('{% url 'search_home' %}') }">
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Search" %}">
+                                    <i class="ion-search"></i>
+
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <!-- Prov edit history-->
+                        {% if user_is_reviewer == False and user_can_edit %}
+                        <li>
+                            <button id="ep-edits-button" class="ep-edits-toggle ep-tools ep-tools-right" data-toggle="collapse" data-target="#ep-edits-panel"
+                                aria-label="{% trans 'Show my recent edits' %}" aria-controls="ep-edits-panel"
+                                data-bind="click:function (data, event) { 
+                                    openEdits(event.currentTarget, '#ep-edits-panel', '#ep-close-edits-button');
+                                }, attr: {'aria-expanded': editsOpen().toString()},
+                            ">
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "My Recent Edits" %}">
+                                    <i class="ion-clock"></i>
+                                </div>
+                            </button>
+                        </li>
+                        {% endif %}
+
+                        {% if nav.res_edit and user_can_edit %}
+                        <li>
+                            <a href="{% url 'resource_editor' resourceid %}" class="ep-tools ep-tools-right"
+                                data-bind="click:function () { navigate('{% url 'resource_editor' resourceid %}') }" aria-label="{% trans 'Edit Resource' %}">
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Edit Resource" %}">
+                                    <i class="ion-edit"></i>
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if nav.report_view %}
+                        <li>
+                            <a href="{% url 'resource_report' resourceid %}" class="ep-tools ep-tools-right"
+                                data-bind="click:function () { navigate('{% url 'resource_report' resourceid %}') }" aria-label="{% trans 'View Report' %}">
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "View Report" %}">
+                                    <i class="ion-android-document"></i>
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if nav.print %}
+                        <li>
+                            <button class="ep-tools ep-tools-right" data-bind="click: function() { location.href = location.href + '?print' }" aria-label="{% trans 'Print the page' %}">
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Print" %}">
+                                    <i class="ion-printer"></i>
+                                </div>
+                            </button>
+                        </li>
+                        {% endif %}
+
+                        {% if nav.help %}
+                        <li>
+                            <button id="ep-help-button" class="ep-help-toggle ep-tools ep-tools-right" data-toggle="collapse" data-target="#ep-help-panel"
+                                aria-label="{% trans 'Show help' %}" aria-controls="ep-help-panel"
+                                data-bind="click: function(data, event){ 
+                                    openHelp({{ nav.help.templates }}, event.currentTarget, '#ep-help-panel', '#ep-close-help-button');
+                                }, attr: { 'aria-expanded': helpOpen().toString()},
+                            ">
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Help" %}">
+                                    <i class="ion-help"></i>
+                                </div>
+                            </button>
+                        </li>
+                        {% endif %}
+
+                        <!-- Login / Logout -->
+                        <li>
+                            <!-- Login -->
+                            {% if user.username == 'anonymous' %}
+                            <a href="{% url 'auth' %}?next={{ request.get_full_path }}"
+                                class="ep-help-toggle ep-tools ep-tools-right"
+                                aria-label="{% trans 'Login' %}"
+                            >
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans 'Login' %}">
+                                    <i class="ion-log-in"></i>
+                                </div>
+                            </a>
+                            <!-- Logout -->
+                            {% else %}
+                            <a href="{% url 'auth' %}?next={{ request.get_full_path }}&logout=true"
+                                class="ep-help-toggle ep-tools ep-tools-right"
+                                aria-label="{% trans 'Logout' %}"
+                            >
+                                <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans 'Logout' %}">
+                                    <i class="ion-log-out"></i>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </li>
+
+                    </ul>
+
+                </nav>
+
+            <!-- Notifications Panel -->
+            <div id="ep-notifs-panel" tabindex="-1" class="ep-notifs" style="display:none;" aria-label="{% trans 'Notifications' %}"
+                data-bind="slide: notifsOpen, duration: 400, direction: {direction: 'right'}, easing: 'slide'"
+            >
+                <div class="ep-edits-header">
+                    <div class="ep-help-title">
+                        <span>{% trans 'Notifications' %}</span>
+                    </div>
+                    <a href="javascript:void(0);" id="ep-close-notifs-button" role="button" aria-label="{% trans 'Close Notifications' %}"
+                        class="ep-notifs-toggle ep-notifs-close ep-tools ep-tools-right" data-bind="click: closeNotifs"
+                    >
+                        <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Close" %}">
+                            <i class="fa fa-times-circle fa-lg"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="ep-edits-body provisional-edit-history" style="float:left"
+                    data-bind="css: {'loading-mask': helploading()}">
+                    <div class="ep-edits-content">
+                        {% include 'views/notifications-list.htm' %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edits Panel -->
+            <div id="ep-edits-panel" tabindex="-1" class="ep-edits" style="display:none;" aria-label="{% trans 'Edit History' %}"
+                data-bind="slide: editsOpen, duration: 400, direction: {direction: 'right'}, easing: 'slide'"
+            >
+                <div class="ep-edits-header">
+                    <div class="ep-edits-title">
+                        <span>{% trans 'My Edit History' %}</span>
+                    </div>
+                    <a href="javascript:void(0);" id="ep-close-edits-button" role="button" style="border:none;" aria-label="{% trans 'Close Edit History' %}"
+                        class="ep-edits-toggle ep-edits-close ep-tools ep-tools-right" data-bind="click: closeEdits"
+                    >
+                        <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Close" %}">
+                            <i class="fa fa-times-circle fa-lg"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="ep-edits-body provisional-edit-history" style="float:left"
+                    data-bind="css: {'loading-mask': helploading()}">
+                    <div class="ep-edits-content">
+                        {% include 'views/provisional-history-list.htm' %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Panel -->
+            <div id="ep-help-panel" tabindex="-1" class="ep-help" style="display: none" aria-label="{% trans 'Site Help' %}"
+                data-bind="slide: helpOpen, duration: 400, direction: {direction: 'right'}, easing: 'slide'">
+                <div class="ep-edits-header">
+                    <div class="ep-help-title">
+                        <span>{% trans nav.help.title %}</span>
+                    </div>
+                    <a href="javascript:void(0);" id="ep-close-help-button" role="button" style="border:none" aria-label="{% trans 'Close Help' %}"
+                        class="ep-help-toggle ep-help-close ep-tools ep-tools-right" data-bind="click: closeHelp"
+                    >
+                        <div data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Close Help" %}">
+                            <i class="fa fa-times-circle fa-lg"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- help content loaded from contextually referenced template -->
+                <div class="ep-help-body" data-bind="css: {'loading-mask': helploading()}">
+                    <!-- content gets inserted into this div -->
+                    <div class="ep-help-content"></div>
+                    <hr>
+                    <span class="h5">{% trans "for more documentation, visit" %} <a href="https://arches.readthedocs.io/"
+                            target="_blank">arches.readthedocs.io <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+                    </span>
+                </div>
+            </div>
+            {% endblock header %}
+
+        </header>
+        
+        <main id="main-content" role="main">
+            <p id="skip-target-holder">
+                <a id="skiptocontent" name="skiptocontent" class="skip" tabindex="-1" data-bind="attr:{
+                    'aria-label': $root.translations.skipToContent,
+                    innertext: $root.translations.skipToContent}"></a>
+            </p>
+            {% block main_content %}
+            {% endblock main_content %}
+        </main>
+
+    </div>
+
+    <button id="backToTopBtn" aria-hidden="true" data-bind="attr: {'aria-label': $root.translations.goToTop}, click: backToTopHandler, event:{keyup: backToTopHandler}">
+        <i class="fa fa-chevron-up"></i>
+    </button>
+
+{% endblock body %}
+
+
+{% block pre_require_js %}
+    <div 
+        id="viewData"
+        style="display: none;"
+        viewData='{
+            "graphs": {{graphs}},
+            "createableResources": {{createable_resources}},
+            "help": "{{nav.help.template}}",
+            "userCanEditResources": "{{ user_can_edit }}",
+            "userCanReadResources": "{{ user_can_read }}"
+        }'
+    ></div>
+{% endblock pre_require_js %}
