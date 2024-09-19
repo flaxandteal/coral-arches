@@ -86,15 +86,15 @@ define([
       }
     };
 
-    this.findLicense = async function (siteResourceId) {
+    this.findLicence = async function (siteResourceId) {
       const tiles = await this.fetchTileData(siteResourceId)
       for (const tile of tiles) {
         if (tile.nodegroup === this.ACTIVITY_NAME_NODEGROUP) {
           const siteName = tile.data[this.ACTIVITY_NAME_NODE].en.value;
           this.siteName(siteName);
         }
-        if (tile.nodegroup === this.SELECTED_LICENSE_NODEGROUP_AND_NODE) {
-          const preFilled = tile.data[this.SELECTED_LICENSE_NODEGROUP_AND_NODE]
+        if (tile.nodegroup === this.SELECTED_LICENCE_NODEGROUP_AND_NODE) {
+          const preFilled = tile.data[this.SELECTED_LICENCE_NODEGROUP_AND_NODE]
           this.selectedResource(preFilled[0].resourceId)
           this.getDetails(preFilled[0].resourceId);
         }
@@ -106,7 +106,7 @@ define([
       for (const tile of tiles) {
         if (tile.nodegroup === this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE) {
           const preFilled = tile.data[this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE]
-          this.findLicense(preFilled[0].resourceId)
+          this.findLicence(preFilled[0].resourceId)
         }
       }
     }
