@@ -86,13 +86,19 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.get('.select2-search__field').type('John Doe');
         cy.wait(500);
         cy.get('.select2-results__options li').first().click();
-        cy.get('[aria-label="Start Date"]').scrollIntoView().should('be.visible').click();
-        cy.get('[aria-label="Start Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
-        cy.get('[aria-label="End Date"]').scrollIntoView().should('be.visible').click();
-        cy.get('[aria-label="End Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
+        cy.get('[aria-label="Start Date"]').scrollIntoView().should('not.have.value');
+        cy.get('[aria-label="Start Date"]').scrollIntoView().should('not.have.value', '');
+        cy.get('[aria-label="End Date"]').scrollIntoView().should('not.have.value');
+        cy.get('[aria-label="End Date"]').scrollIntoView().should('not.have.value', '');
         cy.get('.workflow-component-element').get('.btn.btn-workflow-tile.btn-success').should('be.visible').contains('Add').click();
+
         // Verify data gets added
         cy.get('.wf-step-multi-tile-container').contains('Archive Loan History').siblings().children('div').children().contains('John Doe');
+        cy.get('.archive_holder_start_date').last().should('not.have.text');
+        cy.get('.archive_holder_start_date').last().should('not.have.text', '');
+        cy.get('.archive_holder_end_date').last().should('not.have.text');
+        cy.get('.archive_holder_end_date').last().should('not.have.text', '');
+
         cy.get('.ion-android-cloud-done').siblings().contains('Save').click();
         cy.wait(500);
         cy.contains('Save and Complete Workflow').click();
