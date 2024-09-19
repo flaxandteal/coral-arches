@@ -19,7 +19,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
 
         // Archive Source Details
         cy.wait(900);
-        cy.get('input[aria-label="Archive Source Name"]').should('be.visible').type('Test Source Name');
+        cy.get('input[aria-label="File Title"]').should('be.visible').type('Test Source Name');
         cy.get('[aria-label="Subtitle"]').should('be.visible').type('Test Subtitle');
         cy.get('[aria-label="File ID (key)"]').should('be.visible').type('TestId');
         cy.get('span').contains('Archive Source Type').should('be.visible').siblings('.archive_source_type').click();
@@ -39,9 +39,11 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         // Archive Source Creation
         cy.wait(500);
         cy.get('input[aria-label="Author Name"]').should('be.visible').type('Test Author Name');
-        cy.get('input[aria-label="Editor Name"]').should('be.visible').type('Test Editor Name');
-        cy.get('input[aria-label="Start Date"]').should('be.visible').type('2021-04-12');
-        cy.get('input[aria-label="End Date"]').should('be.visible').type('2021-05-12');
+        cy.get('input[aria-label="Editor Name(s)"]').should('be.visible').type('Test Editor Name');
+        cy.get('[aria-label="Start Date"]').scrollIntoView().should('be.visible').click();
+        cy.get('input[aria-label="Start Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
+        cy.get('[aria-label="End Date"]').scrollIntoView().should('be.visible').click();
+        cy.get('input[aria-label="End Date"]').siblings('.bootstrap-datetimepicker-widget').contains('17').click();
         cy.type_ckeditor('editor3', 'test statement of responsibility');
         cy.wait(500);
         cy.contains('Save and Continue').click();
