@@ -49,16 +49,16 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('[aria-label="Flagged Date"]').should('not.have.value', '');
 
         cy.contains('Select resources').siblings('.row').click();
-        cy.get('.select2-results__options li').contains('HA/01').click();
-        cy.get('[aria-label="Edit related resource HA/01"]').should('be.visible');
-        cy.get('[aria-label="Delete relationship to HA/01"]').should('be.visible');
-        cy.get('[aria-label="Expand resource report for HA/01"]').should('be.visible');
+        cy.get('.select2-results__options li').contains('HA/01 Building1').click();
+        cy.get('[aria-label="Edit related resource HA/01 Building1"]').should('be.visible');
+        cy.get('[aria-label="Delete relationship to HA/01 Building1"]').should('be.visible');
+        cy.get('[aria-label="Expand resource report for HA/01 Building1"]').should('be.visible');
 
         cy.contains('Select resources').siblings('.row').click();
-        cy.get('.select2-results__options li').contains('HA/02').click();
-        cy.get('[aria-label="Edit related resource HA/02"]').should('be.visible');
-        cy.get('[aria-label="Delete relationship to HA/02"]').should('be.visible');
-        cy.get('[aria-label="Expand resource report for HA/02"]').should('be.visible');
+        cy.get('.select2-results__options li').contains('HA/02 Building2').click();
+        cy.get('[aria-label="Edit related resource HA/02 Building2"]').should('be.visible');
+        cy.get('[aria-label="Delete relationship to HA/02 Building2"]').should('be.visible');
+        cy.get('[aria-label="Expand resource report for HA/02 Building2"]').should('be.visible');
 
         // cy.contains('Select resources').siblings('.row').click();
         // cy.get('.select2-search__field').type('XXXXXXX');
@@ -77,7 +77,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         // Only checks if the date we selected is present as the year and month could change
         cy.contains('Flagged Date Value:').siblings().should('contain', '17');
         cy.contains('Actor:').siblings().should('have.text', 'John Doe, Test Person');
-        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02, HA/01');
+        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Building2, HA/01 Building1');
         cy.wait(900);
         cy.contains('Save and Complete Workflow').click();
     });
@@ -95,7 +95,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         
         // Enforcement Details Tab
         cy.wait(900);
-        cy.contains('Next Step').click();
+        cy.contains('Save and Continue').click();
         
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
@@ -270,14 +270,14 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Select resources').scrollIntoView();
         cy.wait(1000);
         cy.contains('Select resources').siblings('.row').click();
-        cy.get('.select2-results__options li').contains('HA/01').click();
+        cy.get('.select2-results__options li').contains('HA/01 Building1').click();
         // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a Heritage Asset and uses that by name
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
-        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/01');
+        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/01 Building1');
         cy.contains('Save and Complete Workflow').click();
     });
 });
