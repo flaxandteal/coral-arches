@@ -215,11 +215,22 @@ define([
 
     this.getFileTiles();
 
-    this.downloadFile = (url, name) => {
-      var link = document.createElement('a');
-      link.href = url;
-      link.download = name; // Extracting file name from path
-      link.click();
+    this.downloadFile = async (e, url, name) => {
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      const handle = await window.showSaveFilePicker({
+        suggestedName: name,
+        types: [
+          {
+            description: 'Files'
+          }
+        ]
+      });
+
+      const writableStream = await handle.createWritable();
+      await writableStream.write(blob);
+      await writableStream.close();
     };
 
     this.form.saveMultiTiles = async (newTileId) => {
