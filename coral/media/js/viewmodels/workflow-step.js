@@ -140,6 +140,7 @@ define([
           }
 
           var workflowComponentAbstract = new WorkflowComponentAbstract({
+              workflow: config.workflow,
               componentData: workflowComponentAbtractData,
               workflowComponentAbstractId: workflowComponentAbstractId,
               isValidComponentPath: config.workflow.isValidComponentPath,
