@@ -15,6 +15,8 @@ define([
       this.selectedActivity = ko.observable();
   
       this.configKeys = ko.observable({ placeholder: 0 });
+
+      this.licenceString = `search/resources?advanced-search=[{"op":"and","879fc326-02f6-11ef-927a-0242ac150006":{"op":"not_null","val":""}}]`
   
       this.addtionalConfigData = ko.observable({
         parentTileIds: {},
