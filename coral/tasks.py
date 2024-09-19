@@ -60,24 +60,50 @@ def remap_monument_to_revision(user_id, target_resource_id):
         )
         result = rr.remap_resources(user)
 
-        if result['remapped']:
-            parent_target_nodegroup = models.NodeGroup.objects.filter(pk=REVISION_PARENT_MONUMENT_NODEGROUP_ID).first()
-            destination_resource = Resource.objects.filter(pk=result['destinationResourceId']).first()
-            parent_target_tile = Tile(
-                resourceinstance=destination_resource,
-                data={
-                    REVISION_PARENT_MONUMENT_NODEGROUP_ID: [
-                        {
-                            "resourceId": target_resource_id,
-                            "ontologyProperty": "",
-                            "inverseOntologyProperty": "",
-                        }
-                    ]
-                },
-                nodegroup=parent_target_nodegroup,
-            )
-            parent_target_tile.save()
-            return result
+        if not result['remapped']:
+            return
+        
+        REVISION_DISPLAY_NAME_NODEGROUP_ID = "423d8a10-3f60-11ef-b9b0-0242ac140006"
+        REVISION_DISPLAY_NAME_NODE_ID = REVISION_DISPLAY_NAME_NODEGROUP_ID
+
+        display_name_tile = Tile.objects.filter(
+            resourceinstance_id=result['destinationResourceId'],
+            nodegroup_id=REVISION_DISPLAY_NAME_NODEGROUP_ID,
+        ).first()
+
+        notification = models.Notification(
+            message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
+            context={
+                "resource_instance_id": result['destinationResourceId'],
+                "resource_id": f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+                "response_slug": "heritage-asset-designation-workflow"
+            },
+        )
+        notification.save()
+
+        parent_target_nodegroup = models.NodeGroup.objects.filter(pk=REVISION_PARENT_MONUMENT_NODEGROUP_ID).first()
+        destination_resource = Resource.objects.filter(pk=result['destinationResourceId']).first()
+        parent_target_tile = Tile(
+            resourceinstance=destination_resource,
+            data={
+                REVISION_PARENT_MONUMENT_NODEGROUP_ID: [
+                    {
+                        "resourceId": target_resource_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": "",
+                    }
+                ]
+            },
+            nodegroup=parent_target_nodegroup,
+        )
+        parent_target_tile.save()
+
+        user_x_notification = models.UserXNotification(
+            notif=notification, recipient=user
+        )
+        user_x_notification.save()
+
+        return result
         
 
 
