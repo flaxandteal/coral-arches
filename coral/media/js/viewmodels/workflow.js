@@ -145,18 +145,26 @@ define([
 
       this.disableSaveButton = ko.observable();
 
-      this.saveActiveStep = function() {
-          this.disableSaveButton(true);
-          self.activeStep().save()
-              .then(async function(_data) {
-                  await self.next();
-              })
-              .catch(function(error) {
-                  console.error(error);
-              })
-              .finally(() => {
-                  this.disableSaveButton(false);
-              });
+      this.saveActiveStep = function () {
+        this.disableSaveButton(true);
+
+        // Saving will go true and once it returns to false re-enable the save button
+        const disableSaveSubscription = self.activeStep().saving.subscribe((value) => {
+          if (!value) {
+            this.disableSaveButton(false);
+            disableSaveSubscription.dispose();
+          }
+        });
+
+        self
+          .activeStep()
+          .save()
+          .then(async function (_data) {
+            await self.next();
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
       };
 
       this.staticSaveActiveStep = function() {

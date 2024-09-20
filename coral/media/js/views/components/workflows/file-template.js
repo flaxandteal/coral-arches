@@ -170,12 +170,16 @@ define([
      */
     params.form.save = () => {};
 
+    this.form.workflow.finishWorkflow = () => {
+      window.location.assign(this.form.workflow.quitUrl);
+    };
+
     this.getFileTiles = async (resourceId) => {
       const fileTiles = [];
 
       await Promise.all(
         this.form.tiles().map((tile) => {
-          const digitalObjectResourceId = ko.toJS(tile.data)[this.LETTER_RESOURCE_NODE][0]
+          const digitalObjectResourceId = ko.toJS(tile.data)[this.LETTER_RESOURCE_NODE]?.[0]
             .resourceId;
           if (!digitalObjectResourceId) return;
           return $.ajax({
@@ -215,11 +219,22 @@ define([
 
     this.getFileTiles();
 
-    this.downloadFile = (url, name) => {
-      var link = document.createElement('a');
-      link.href = url;
-      link.download = name; // Extracting file name from path
-      link.click();
+    this.downloadFile = async (e, url, name) => {
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      const handle = await window.showSaveFilePicker({
+        suggestedName: name,
+        types: [
+          {
+            description: 'Files'
+          }
+        ]
+      });
+
+      const writableStream = await handle.createWritable();
+      await writableStream.write(blob);
+      await writableStream.close();
     };
 
     this.form.saveMultiTiles = async (newTileId) => {

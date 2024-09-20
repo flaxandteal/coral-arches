@@ -692,6 +692,7 @@ define([
 
         this.disableAdd = ko.observable(false);
 
+        this.workflow = params.workflow;
         this.workflowId = params.workflowId;
         this.workflowName = params.workflowName;
         this.componentData = params.componentData;

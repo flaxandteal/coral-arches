@@ -196,6 +196,7 @@
                   "nodegroupid": "2af35abc-9dee-4438-a127-c0fb69e63124",
                   "semanticName": "Designation and Protection Assignment",
                   "hiddenNodes": [
+                    "ba848524-c2ab-4d13-add0-2f1680391127",
                     "6f588050-8ead-4131-9ea5-495bf62f2443",
                     "d11ecd97-0a37-4e2b-90d3-35ec5bfcc8dc",
                     "2f1563f3-92a6-4985-8eb1-53b88e34f538",
@@ -209,8 +210,20 @@
                   ]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "default-card-util",
                 "uniqueInstanceName": "designation-protection-type"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "94c6fd66-19fa-4261-8728-35a67a88b96b",
+                  "labels": [["CM Reference", "Records NI"]],
+                  "semanticName": "Record NI"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "4ae2af75-3829-4633-9b69-0242ac180006"
               }
             ]
           }
