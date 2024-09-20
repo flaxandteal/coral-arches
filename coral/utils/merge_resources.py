@@ -214,12 +214,10 @@ class MergeResources:
     ):
         resource_exporter = ResourceExporter("json", configs=None, single_file=False)
         base_json_file = resource_exporter.export(
-            graph_id=self.graph.graphid,
             resourceinstanceids=[base_resource_id],
             languages=None,
         )
         merge_json_file = resource_exporter.export(
-            graph_id=self.graph.graphid,
             resourceinstanceids=[merge_resource_id],
             languages=None,
         )
