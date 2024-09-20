@@ -71,16 +71,6 @@ def remap_monument_to_revision(user_id, target_resource_id):
             nodegroup_id=REVISION_DISPLAY_NAME_NODEGROUP_ID,
         ).first()
 
-        notification = models.Notification(
-            message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
-            context={
-                "resource_instance_id": result['destinationResourceId'],
-                "resource_id": f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}",
-                "response_slug": "heritage-asset-designation-workflow"
-            },
-        )
-        notification.save()
-
         parent_target_nodegroup = models.NodeGroup.objects.filter(pk=REVISION_PARENT_MONUMENT_NODEGROUP_ID).first()
         destination_resource = Resource.objects.filter(pk=result['destinationResourceId']).first()
         parent_target_tile = Tile(
@@ -97,6 +87,16 @@ def remap_monument_to_revision(user_id, target_resource_id):
             nodegroup=parent_target_nodegroup,
         )
         parent_target_tile.save()
+
+        notification = models.Notification(
+            message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
+            context={
+                "resource_instance_id": result['destinationResourceId'],
+                "resource_id": f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+                "response_slug": "heritage-asset-designation-workflow"
+            },
+        )
+        notification.save()
 
         user_x_notification = models.UserXNotification(
             notif=notification, recipient=user
@@ -124,12 +124,30 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
         )
         result = rr.remap_resources(user)
 
+        DISPLAY_NAME_NODEGROUP_ID = "ce85b994-3f5f-11ef-b9b0-0242ac140006"
+        DISPLAY_NAME_NODE_ID = DISPLAY_NAME_NODEGROUP_ID
+
+        display_name_tile = Tile.objects.filter(
+            resourceinstance_id=result['destinationResourceId'],
+            nodegroup_id=DISPLAY_NAME_NODEGROUP_ID,
+        ).first()
+
         if result["remapped"]:
-            parent_monumnet_tile = Tile.objects.filter(
+            notification = models.Notification(
+                message=f"The Revision Heritage Asset has been remapped back to a Heritage Asset. The merge process has started and complete shortly. Heritage Asset: {display_name_tile.data.get(DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+            )
+            notification.save()
+
+            user_x_notification = models.UserXNotification(
+                notif=notification, recipient=user
+            )
+            user_x_notification.save()
+            
+            parent_monument_tile = Tile.objects.filter(
                 resourceinstance_id=target_resource_id,
                 nodegroup_id=PARENT_MONUMENT_NODEGROUP,
             ).first()
-            monument_node = parent_monumnet_tile.data[PARENT_MONUMENT_NODE]
+            monument_node = parent_monument_tile.data[PARENT_MONUMENT_NODE]
             monument_resource_id = monument_node[0].get("resourceId")
 
             merge_tracker_resource_id = setup_merge_resource_tracker(user)
@@ -147,6 +165,15 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
             target_resource = get_resource(target_resource_id)
             target_resource.delete(user=user)
 
+            notification = models.Notification(
+                message=f"The revision has completed. All changes made to the Revision Heritage Asset have been merged into the original Heritage Asset. You may begin using the Heritage Asset again. Heritage Asset: {display_name_tile.data.get(DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+            )
+            notification.save()
+
+            user_x_notification = models.UserXNotification(
+                notif=notification, recipient=user
+            )
+            user_x_notification.save()
 
 def get_resource(resource_id):
     resource = None
