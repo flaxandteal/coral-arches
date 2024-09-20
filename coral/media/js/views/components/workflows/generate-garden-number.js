@@ -11,7 +11,7 @@ define([
     CardComponentViewModel.apply(this, [params]);
 
     this.ADDRESS_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba';
-    this.COUNTY_NODE_ID = '8bfe714e-3ec2-11ef-9023-0242ac140007';
+    this.COUNTY_NODE_ID = '87d3ff32-f44f-11eb-aa82-a87eeabdefba';
     this.GENERATED_GARDEN_NODE_ID = 'bd85cca2-49a4-11ef-94a5-0242ac120007';
 
     this.ABBREIVIATIONS = {
