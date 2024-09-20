@@ -134,7 +134,7 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
 
         if result["remapped"]:
             notification = models.Notification(
-                message=f"The Revision Heritage Asset has been remapped back to a Heritage Asset. The merge process has started and complete shortly. Heritage Asset: {display_name_tile.data.get(DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+                message=f"The Revision Heritage Asset has been remapped back to a Heritage Asset. The merge process has started and will complete shortly. Heritage Asset: {display_name_tile.data.get(DISPLAY_NAME_NODE_ID).get('en').get('value')}",
             )
             notification.save()
 
