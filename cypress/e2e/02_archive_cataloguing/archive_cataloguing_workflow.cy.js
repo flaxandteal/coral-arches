@@ -186,7 +186,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
 
         // Archive Source Details
         cy.wait(900);
-        cy.get('input[aria-label="File Title"]').should('be.visible').type('Test Source Name');
+        cy.get('input[aria-label="File Title"]').should('be.visible').type('Test Just File Title');
         cy.contains('Save and Continue').click();
         cy.contains('Save and Complete Workflow').click();
     });
@@ -230,7 +230,6 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Complete Workflow').click();
     });
 
-
     it('Populate just Archive Source Type', function () {
         cy.contains('Workflows');
         cy.contains('Archive Cataloguing').click();
@@ -245,7 +244,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
 
         // Archive Source Details
         cy.wait(900);
-        cy.get('span').contains('Archive Source Type').should('be.visible').siblings('.archive_source_type').click();
+        cy.get('span').contains('Archive Source Type').scrollIntoView().should('be.visible').siblings('.archive_source_type').click();
         cy.wait(500);
         cy.get('.select2-results__options li').contains('Genre').click();
         cy.wait(500);
@@ -291,6 +290,8 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
+        cy.get('span').contains('File Status').scrollIntoView();
+        cy.wait(300);
         cy.type_ckeditor('editor1', 'test description');
         cy.wait(500);
         cy.contains('Save and Continue').click();
