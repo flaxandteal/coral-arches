@@ -315,8 +315,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def _ri_to_django_groups(group: Group):
         if not group.django_group:
-            django_group = DjangoGroup.objects.get_or_create(name=str(group))
-            django_group.save()
+            django_group, _ = DjangoGroup.objects.get_or_create(name=str(group))
             group.django_group = [django_group]
             group.save()
         return group.django_group
