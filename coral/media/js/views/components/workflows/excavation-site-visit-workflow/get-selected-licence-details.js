@@ -6,12 +6,12 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/workflows/excavation-site-visit-workflow/get-selected-license-details.htm'
+  'templates/views/components/workflows/excavation-site-visit-workflow/get-selected-licence-details.htm'
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
-    this.SELECTED_LICENSE_NODEGROUP_AND_NODE = '879fc326-02f6-11ef-927a-0242ac150006';
+    this.SELECTED_LICENCE_NODEGROUP_AND_NODE = '879fc326-02f6-11ef-927a-0242ac150006';
 
     this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE = 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11';
     this.SITE_NAME_NODEGROUP_AND_NODE = 'a9f53f00-48b6-11ee-85af-0242ac140007';
@@ -49,9 +49,9 @@ define([
         });
       });
 
-    this.tile.data[this.SELECTED_LICENSE_NODEGROUP_AND_NODE].subscribe((value) => {
+    this.tile.data[this.SELECTED_LICENCE_NODEGROUP_AND_NODE].subscribe((value) => {
       if (value && value.length) {
-        const resourceId = value[0].resourceId;
+        const resourceId = ko.unwrap(value[0].resourceId);
         this.selectedResource(resourceId);
         this.getDetails(resourceId);
       }
@@ -86,15 +86,15 @@ define([
       }
     };
 
-    this.findLicense = async function (siteResourceId) {
+    this.findLicence = async function (siteResourceId) {
       const tiles = await this.fetchTileData(siteResourceId)
       for (const tile of tiles) {
         if (tile.nodegroup === this.ACTIVITY_NAME_NODEGROUP) {
           const siteName = tile.data[this.ACTIVITY_NAME_NODE].en.value;
           this.siteName(siteName);
         }
-        if (tile.nodegroup === this.SELECTED_LICENSE_NODEGROUP_AND_NODE) {
-          const preFilled = tile.data[this.SELECTED_LICENSE_NODEGROUP_AND_NODE]
+        if (tile.nodegroup === this.SELECTED_LICENCE_NODEGROUP_AND_NODE) {
+          const preFilled = tile.data[this.SELECTED_LICENCE_NODEGROUP_AND_NODE]
           this.selectedResource(preFilled[0].resourceId)
           this.getDetails(preFilled[0].resourceId);
         }
@@ -106,14 +106,14 @@ define([
       for (const tile of tiles) {
         if (tile.nodegroup === this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE) {
           const preFilled = tile.data[this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE]
-          this.findLicense(preFilled[0].resourceId)
+          this.findLicence(preFilled[0].resourceId)
         }
       }
     }
     this.prepareResource()
   }
 
-  ko.components.register('get-selected-license-details', {
+  ko.components.register('get-selected-licence-details', {
     viewModel: viewModel,
     template: template
   });

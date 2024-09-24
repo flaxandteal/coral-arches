@@ -21,6 +21,9 @@ details = {
 
 class UpdateArchiveDisplayName(BaseFunction):
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         resource_id_name = tile.data.get(RESOURCE_ID_NODE, None)
         source_name = tile.data.get(ARCHIVE_SOURCE_NAME_NODE, None)

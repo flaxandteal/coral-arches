@@ -12,7 +12,6 @@
         "name": "start-step",
         "title": "Start",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -40,7 +39,8 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": ["undo"]
       },
       {
         "name": "asset-details-step",
@@ -51,6 +51,7 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "labels": [["Name", "Site Name"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -58,8 +59,7 @@
                     "676d47fd-9c1c-11ea-9d73-f875a44e0e11"
                   ],
                   "nodegroupid": "676d47f9-9c1c-11ea-9aa0-f875a44e0e11",
-                  "semanticName": "Heritage Asset Names",
-                  "labels": [["Name", "Site Name"]]
+                  "semanticName": "Heritage Asset Names"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -67,6 +67,7 @@
               },
               {
                 "parameters": {
+                  "labels": [["Heritage Asset Type", "Monument Type"]],
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -86,8 +87,7 @@
                     "77e8f28a-efdc-11eb-9600-a87eeabdefba"
                   ],
                   "nodegroupid": "77e8f287-efdc-11eb-a790-a87eeabdefba",
-                  "semanticName": "Construction Phases",
-                  "labels": [["Heritage Asset Type", "Monument Type"]]
+                  "semanticName": "Construction Phases"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -122,7 +122,8 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
       },
       {
         "name": "descriptions-step",
@@ -134,11 +135,9 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "hiddenNodes": [
-                    "ba345579-b554-11ea-9232-f875a44e0e11"
-                  ],
-                  "nodegroupid": "ba342e69-b554-11ea-a027-f875a44e0e11",
-                  "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']"
+                  "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["ba345579-b554-11ea-9232-f875a44e0e11"],
+                  "nodegroupid": "ba342e69-b554-11ea-a027-f875a44e0e11"
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
@@ -147,7 +146,8 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
       },
       {
         "name": "location-details-step",
@@ -192,13 +192,25 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": ["87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
-                  "parenttileid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['locationData']",
-                  "hiddenNodes": ["87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"]
+                  "parenttileid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['locationData']"
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
                 "uniqueInstanceName": "61214fc1-a33f-4c38-b79e-f1c6a1fa980d"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
+                  "parenttileid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "fetch-latest-tile",
+                "uniqueInstanceName": "irish-grid-reference"
               },
               {
                 "parameters": {
@@ -252,7 +264,8 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
       },
       {
         "name": "map-step",
@@ -270,13 +283,14 @@
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "d1ef59e0-ebe4-4db7-83d3-5e12b4661ab6"
               }
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
       },
       {
         "name": "digital-files-step",
@@ -299,13 +313,13 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
       },
       {
         "name": "finish-step",
         "title": "Finish",
         "required": false,
-        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
@@ -339,7 +353,8 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
       }
     ],
     "initWorkflow": {
