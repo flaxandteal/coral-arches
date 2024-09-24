@@ -8,7 +8,8 @@ define([
   'viewmodels/card-component',
   'viewmodels/alert',
   'templates/views/components/workflows/file-template.htm',
-  'docx-preview'
+  'docx-preview',
+  'native-file-system-adapter'
 ], function (
   _,
   $,
@@ -19,7 +20,8 @@ define([
   CardComponentViewModel,
   AlertViewModel,
   template,
-  docxPreview
+  docxPreview,
+  NativeFileSystemAdapter
 ) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
@@ -219,11 +221,11 @@ define([
 
     this.getFileTiles();
 
-    this.downloadFile = async (e, url, name) => {
+    this.downloadFile = async (url, name) => {
       const response = await fetch(url);
       const blob = await response.blob();
 
-      const handle = await window.showSaveFilePicker({
+      const handle = await NativeFileSystemAdapter.showSaveFilePicker({
         suggestedName: name,
         types: [
           {
