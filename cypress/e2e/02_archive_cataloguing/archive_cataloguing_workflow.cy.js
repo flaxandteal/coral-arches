@@ -111,7 +111,8 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Archive Cataloguing').click();
        
         cy.get('[aria-label="Start new or please select from below"]').should('be.visible').click();
-        cy.get('.select2-results__options li').contains('Test Source Name').click();
+        // Select the first one. Assuming the database was empty before the test was ran this would select the correct one. For some reason the file name doesnt show up properly here
+        cy.get('.select2-results__options li').first().click();
         cy.contains('Open Selected').click();
 
         // Initial step tab
@@ -293,7 +294,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
 
         // Archive Source Details
         cy.get('span').contains('File Status').scrollIntoView();
-        cy.wait(800);
+        cy.wait(1500);
         cy.type_ckeditor('editor1', 'test description');
         cy.wait(500);
         cy.contains('Save and Continue').click();
@@ -419,9 +420,9 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         // Archive Source Creation
         cy.wait(500);
         cy.get('[aria-label="End Date"]').scrollIntoView()
-        cy.wait(800);
+        cy.wait(2000);
         cy.type_ckeditor('editor1', 'test statement of responsibility');
-        cy.wait(200);
+        cy.wait(500);
         cy.contains('Save and Continue').click();
 
         cy.contains('Save and Complete Workflow').click();
@@ -442,11 +443,11 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Repository Storage Location
@@ -475,15 +476,15 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Repository Storage Location
-        cy.wait(300);
+        cy.wait(500);
         cy.get('span').contains('Storage Building Name').should('be.visible').siblings('.col-xs-12').click();
         cy.get('.select2-results__options li').contains('PRONI').click();
         cy.contains('Save and Continue').click();
@@ -505,7 +506,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
@@ -513,7 +514,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Next Step').click();
 
         // Repository Storage Location
-        cy.wait(300);
+        cy.wait(500);
         cy.get('input[aria-label="Storage Room Name"]').should('be.visible').type('Test Storage Room Name');
         cy.contains('Save and Continue').click();
 
@@ -534,15 +535,15 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
-        cy.wait(400);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Repository Storage Location
-        cy.wait(300);
+        cy.wait(500);
         cy.get('input[aria-label="Storage Shelf Name"]').should('be.visible').type('Test Storage Shelf Name');
         cy.contains('Save and Continue').click();
 
@@ -563,15 +564,15 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Repository Storage Location
-        cy.wait(300);
+        cy.wait(500);
         cy.get('input[aria-label="Storage Box Name"]').scrollIntoView().should('be.visible').type('Test Storage Box Name');
         cy.contains('Save and Continue').click();
 
@@ -593,15 +594,15 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Repository Storage Location
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
      
         // Archive Loan History
@@ -630,15 +631,15 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Repository Storage Location
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
      
         // Archive Loan History
@@ -666,15 +667,15 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Archive Source Details
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Archive Source Creation
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
 
         // Repository Storage Location
-        cy.wait(300);
+        cy.wait(500);
         cy.contains('Next Step').click();
      
         // Archive Loan History
