@@ -268,109 +268,113 @@ jobs:
         run: |
           name=${{ fromJSON(steps.buildx.outputs.metadata)['image.name'] }}
           echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
-  # Test-Arches:
-  #   runs-on: [self-hosted]
-  #   needs: [Build-Arches-Final]
-  #   container:
-  #     image: cypress/included:12.3.0
-  #   env:
-  #     HOME: ""
-  #     DEBUG: "cypress:*"
-  #     CYPRESS_BASE_URL: http://arches:8000
-  #   steps:
-  #     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-  #     - name: Check out repository code
-  #       uses: actions/checkout@v3
-  #       with:
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  #         submodules: 'true'
-  #     - name: Cypress run
-  #       uses: cypress-io/github-action@v4
-  #       with:
-  #         browser: firefox
-  #         install: false
-  #         wait-on: 'http://arches:8000'
-  #         wait-on-timeout: 6000
-  #     - uses: actions/upload-artifact@v3
-  #       if: failure()
-  #       with:
-  #         name: cypress-screenshots
-  #         path: cypress/screenshots
-  #     - uses: actions/upload-artifact@v3
-  #       if: always()
-  #       with:
-  #         name: cypress-videos
-  #         path: cypress/videos
-  #   services:
-  #     elasticsearch:
-  #       image: elasticsearch:8.4.0
-  #       ports:
-  #         - "9200:9200"
-  #         - "9300:9300"
-  #       env:
-  #         TZ: "PST"
-  #         discovery.type: "single-node"
-  #         discovery.seed_hosts: "[]"
-  #         xpack.security.enabled: "false"
-  #         ES_JAVA_OPTS: "-Xms400m -Xmx400m"
-  #       options: >-
-  #         --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 10
+  Test-Arches:
+    runs-on: [self-hosted]
+    needs: [Build-Arches-Final]
+    container:
+      image: cypress/included:12.3.0
+    env:
+      HOME: ""
+      DEBUG: "cypress:*"
+      CYPRESS_BASE_URL: http://arches:8000
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: firefox
+          install: false
+          wait-on: 'http://arches:8000'
+          wait-on-timeout: 6000
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+    services:
+      elasticsearch:
+        image: elasticsearch:8.4.0
+        ports:
+          - "9200:9200"
+          - "9300:9300"
+        env:
+          TZ: "PST"
+          discovery.type: "single-node"
+          discovery.seed_hosts: "[]"
+          xpack.security.enabled: "false"
+          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+        options: >-
+          --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
 
-  #     db:
-  #       image: flaxandteal/arches_coral_postgres
-  #       #volumes:
-  #       #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
-  #       ports:
-  #         - '5432:5432'
-  #       env:
-  #         POSTGRES_USER: postgres
-  #         POSTGRES_PASS: postgres
-  #         POSTGRES_DB: postgres
-  #         POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
-  #         TZ: PST
-  #       options: >-
-  #         --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d postgres"
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 20
+      db:
+        image: flaxandteal/arches_coral_postgres
+        #volumes:
+        #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+        ports:
+          - '5432:5432'
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASS: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
+          TZ: PST
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
 
-  #     arches:
-  #       image: "${{ needs['Build-Arches-Final'].outputs.image }}"
-  #       env:
-  #         ALLOW_BOOTSTRAP: "True"
-  #         ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
-  #         COMPRESS_OFFLINE: "False"
-  #         INSTALL_CORAL_PACKAGE: "True"
-  #         INSTALL_DEFAULT_GRAPHS: "False"
-  #         INSTALL_DEFAULT_CONCEPTS: "False"
-  #         PGUSERNAME: "postgres"
-  #         PGPASSWORD: "postgres"
-  #         PGDBNAME: "arches"
-  #         PGHOST: "db"
-  #         PGPORT: "5432"
-  #         RABBITMQ_USER: "rabbitmq"
-  #         RABBITMQ_PASS: "rabbitmq"
-  #         CANTALOUPE_HOST: "cantaloupe"
-  #         CANTALOUPE_PORT: "8182"
-  #         COUCHDB_HOST: "couchdb"
-  #         COUCHDB_PORT: "5984"
-  #         COUCHDB_USER: "admin"
-  #         COUCHDB_PASS: "password"
-  #         ESHOST: "elasticsearch"
-  #         ESPORT: "9200"
-  #         CELERY_BROKER_URL: "amqp://rabbitmq"
-  #         DJANGO_MODE: "PROD"
-  #         DJANGO_DEBUG: "False"
-  #         DOMAIN_NAMES: "arches"
-  #         PYTHONUNBUFFERED: "0"
-  #         TZ: "PST"
-  #       ports:
-  #         - '8000:8000'
-  #       options: >-
-  #         --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 1000
+      arches:
+        image: "${{ needs['Build-Arches-Final'].outputs.image }}"
+        env:
+          ALLOW_BOOTSTRAP: "True"
+          ARCHES_PROJECT: "${{ env.ARCHES_PROJECT }}"
+          COMPRESS_OFFLINE: "False"
+          INSTALL_CORAL_PACKAGE: "False"
+          INSTALL_DEFAULT_GRAPHS: "False"
+          INSTALL_DEFAULT_CONCEPTS: "False"
+          PGUSERNAME: "postgres"
+          PGPASSWORD: "postgres"
+          PGDBNAME: "arches"
+          PGHOST: "db"
+          PGPORT: "5432"
+          RABBITMQ_USER: "rabbitmq"
+          RABBITMQ_PASS: "rabbitmq"
+          CANTALOUPE_HOST: "cantaloupe"
+          CANTALOUPE_PORT: "8182"
+          COUCHDB_HOST: "couchdb"
+          COUCHDB_PORT: "5984"
+          COUCHDB_USER: "admin"
+          COUCHDB_PASS: "password"
+          ESHOST: "elasticsearch"
+          ESPORT: "9200"
+          CELERY_BROKER_URL: "amqp://rabbitmq"
+          DJANGO_MODE: "PROD"
+          DJANGO_DEBUG: "False"
+          DOMAIN_NAMES: "arches"
+          PYTHONUNBUFFERED: "0"
+          STATIC_URL: "/static/"
+          STATIC_ROOT: "/static_root"
+          WEB_ROOT: "/web_root"
+          ARCHES_ROOT: "/web_root/arches"
+          TZ: "PST"
+        ports:
+          - '8000:8000'
+        options: >-
+          --health-cmd "curl --fail http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 1000
