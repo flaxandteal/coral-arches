@@ -18,9 +18,10 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
-        cy.wait(900);
+        cy.wait(2500);
         cy.get('[aria-label="Case Reference"]').should('be.visible').type('Case Ref');
         cy.type_ckeditor('editor2', 'test reason for enforcement');
+        cy.wait(1500);
         cy.contains('Flagged by').siblings('.row').click();
         cy.get('.select2-search__field').type('Test Person');
         cy.wait(500);
@@ -139,8 +140,9 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
-        cy.wait(900);
+        cy.wait(2500);
         cy.type_ckeditor('editor2', 'test reason for enforcement');
+        cy.wait(900);
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
@@ -161,10 +163,10 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
-        cy.wait(900);
+        cy.wait(1500);
         cy.contains('Flagged by').siblings('.row').click();
         cy.get('.select2-search__field').type('Test Person');
-        cy.wait(500);
+        cy.wait(900);
         cy.get('.select2-results__options li').first().click();
         cy.contains('Save and Continue').click();
 
@@ -189,7 +191,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.wait(900);
         cy.contains('Flagged by').siblings('.row').click();
         cy.get('.select2-search__field').type('Test Organisation');
-        cy.wait(500);
+        cy.wait(900);
         cy.get('.select2-results__options li').first().click();
         cy.contains('Save and Continue').click();
 
@@ -211,15 +213,15 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
-        cy.wait(900);
+        cy.wait(1500);
         cy.contains('Flagged by').siblings('.row').click();
         cy.get('.select2-search__field').type('Test Organisation');
-        cy.wait(500);
+        cy.wait(1000);
         cy.get('.select2-results__options li').first().click();
-        cy.wait(500);
+        cy.wait(1000);
         cy.contains('Flagged by').siblings('.row').click();
         cy.get('.select2-search__field').type('Test Person');
-        cy.wait(500);
+        cy.wait(1000);
         cy.get('.select2-results__options li').first().click();
         cy.contains('Save and Continue').click();
 
@@ -268,7 +270,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
         // Enforcement Details Tab
         cy.contains('Select resources').scrollIntoView();
-        cy.wait(1000);
+        cy.wait(2000);
         cy.contains('Select resources').siblings('.row').click();
         cy.get('.select2-results__options li').contains('HA/01 Building1').click();
         // Selects the first value in the dropdown. Would be better if we have a pervious test that initates a Heritage Asset and uses that by name
