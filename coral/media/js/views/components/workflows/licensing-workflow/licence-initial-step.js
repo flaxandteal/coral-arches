@@ -39,9 +39,9 @@ define([
        * This is the ID generate by auto-generate-id. Not to
        * be confused with a resource instance id.
        */
-      self.applicationId = self
-        .tile()
-        ?.data[self.licenceSysRefNodeId][arches.activeLanguage]?.value();
+      const tile = ko.unwrap(self.tile);
+      const localisedValue = ko.unwrap(tile.data?.[self.licenceSysRefNodeId])
+      self.applicationId = ko.unwrap(localisedValue?.[arches.activeLanguage]?.value)
 
       try {
         /**
