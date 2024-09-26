@@ -37,6 +37,8 @@ define([
             self.activityArchive = ko.observableArray();
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+            self.print = ko.observable(window.location.href.indexOf("?print") > -1)
+
 
             self.activityArchiveConfig = {
                 ...self.defaultTableConfig,

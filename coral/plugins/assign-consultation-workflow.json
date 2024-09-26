@@ -184,30 +184,6 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "map-step",
-        "title": "Map",
-        "required": false,
-        "layoutSections": [
-          {
-            "componentConfigs": [
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Geometry"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "geometry"
-              }
-            ]
-          }
-        ],
-        "workflowstepclass": "workflow-form-component"
-      },
-      {
         "name": "location-details-step",
         "title": "Location Details",
         "required": false,
@@ -264,6 +240,18 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "fetch-latest-tile",
+                "uniqueInstanceName": "irish-grid-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
@@ -272,6 +260,30 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "location-descriptions"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "map-step",
+        "title": "Map",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
+                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
+                  "semanticName": "Geometry"
+                },
+                "tilesManaged": "one",
+                "componentName": "fetch-latest-tile",
+                "uniqueInstanceName": "geometry"
               }
             ]
           }

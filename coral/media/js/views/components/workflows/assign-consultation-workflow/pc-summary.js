@@ -102,6 +102,11 @@ define([
         nodegroupId: '69500360-d7c5-11ee-a011-0242ac120006',
         renderNodeIds: [{ nodeId: '69500360-d7c5-11ee-a011-0242ac120006', label: 'Selection' }]
       },
+      irishGridRef: {
+        label: 'Irish Grid Reference',
+        nodegroupId: '083e226c-ca61-11ee-afca-0242ac180006',
+        renderNodeIds: [{ nodeId: 'ac3eb490-1682-11ef-b68e-0242ac120006', label: 'Reference (TM65)' }]
+      },
       areaNames: {
         label: 'Localities/Administrative Areas',
         nodegroupId: '083dc93e-ca61-11ee-afca-0242ac180006',
@@ -110,7 +115,7 @@ define([
           { nodeId: '083ea3ae-ca61-11ee-afca-0242ac180006', label: 'Area Name' }
         ]
       },
-      locationDescrition: {
+      locationDescription: {
         label: 'Location Description',
         nodegroupId: '083e1bb4-ca61-11ee-afca-0242ac180006',
         renderNodeIds: [{ nodeId: '083eae58-ca61-11ee-afca-0242ac180006', label: 'Description' }]
