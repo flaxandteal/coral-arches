@@ -593,6 +593,8 @@ define([
             return;
           }
 
+          const startingTileLength = self.tiles().length;
+
           const unorderedSavedData = ko.observableArray();
 
           self.tiles().forEach((tile) => {
@@ -654,7 +656,7 @@ define([
           }
 
           const saveSubscription = unorderedSavedData.subscribe((savedData) => {
-            if (savedData.length === self.tiles().length) {
+            if (savedData.length === startingTileLength) {
               self.complete(true);
               self.loading(true);
               self.saving(false);
@@ -916,6 +918,8 @@ define([
             }
             else {
                 self.complete(true);
+                self.initialize();
+                self.loading(false);
             }
         };
 
