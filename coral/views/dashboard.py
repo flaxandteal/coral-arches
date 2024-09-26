@@ -250,7 +250,7 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
+    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc', filter=None):
         from arches_orm.models import License
         utilities = Utilities()
         #states
@@ -265,6 +265,10 @@ class ExcavationTaskStrategy(TaskStrategy):
         licences_all = License.all()
 
         licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
+        filter = 'Interim'
+        if filter:
+            # Checks the report status against the filter value
+            licences = [l for l in licences if self.is_valid_license(l, filter)]
 
         for licence in licences:
             task = self.build_data(licence, groupId)
@@ -326,6 +330,12 @@ class ExcavationTaskStrategy(TaskStrategy):
             'responseslug': response_slug
         }
         return resource_data
+    
+    def is_valid_license(self, licence, filter):
+        from arches_orm.models import License
+        utilities = Utilities()
+        classification_type = utilities.node_check(lambda: licence.report[-1].classification_type)
+        return utilities.domain_value_string_lookup(License, 'classification_type', classification_type) == filter
 
 class Utilities:
     def convert_id_to_string(self, id):
@@ -377,6 +387,7 @@ class Utilities:
     # Method to check if a node exists
     def node_check(self, func, default=None):
         try:
+            print(func())
             return func()
         except Exception as error:
             logging.warning(f'Node does not exist: {error}')
