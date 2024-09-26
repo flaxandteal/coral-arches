@@ -65,6 +65,9 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
 
+        cy.get('.control-label').contains('Description');
+        cy.type_ckeditor('editor8', 'test, Description');
+
         cy.get('.btn-success').contains('Add').click();
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
@@ -91,6 +94,8 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('.area_name').contains('Select an option').click();
         cy.wait(2000);
+        cy.get('.control-label').contains('Location Description');
+        cy.type_ckeditor('editor9', 'test, Location Description');
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
         cy.wait(2000);
         cy.get('[aria-label="LP Fusion ID"]').scrollIntoView().click().type('02');
@@ -290,6 +295,9 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
 
+        cy.get('.control-label').contains('Description');
+        cy.type_ckeditor('editor8', 'test, Description');
+
         cy.get('.btn-success').contains('Add').click();
     })
 
@@ -389,6 +397,10 @@ describe('Going through the Add Garden Workflow', function () {
         // Area name
         cy.get('.area_name').contains('Select an option').click();
         cy.wait(2000);
+
+        // Location Description
+        cy.get('.control-label').contains('Location Description');
+        cy.type_ckeditor('editor9', 'test, Location Description');
 
         // Unique Building ID
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
