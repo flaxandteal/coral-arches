@@ -285,6 +285,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         activity_list = utilities.node_check(lambda: licence.associated_activities)
         display_name = utilities.node_check(lambda:licence.licence_names.name),
         issue_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.issue_date)
+        cm_reference = utilities.node_check(lambda:licence.cm_references.cm_reference_number)
         valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
@@ -318,6 +319,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             'displayname': display_name,
             'sitename': site_name,
             'issuedate': issue_date,
+            'cmreference': cm_reference,
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
