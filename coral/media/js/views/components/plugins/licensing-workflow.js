@@ -454,6 +454,7 @@ define([
                   }
                 },
                 {
+                  componentName: 'default-card',
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
