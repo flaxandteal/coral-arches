@@ -19,7 +19,7 @@ define([
     */
 
     const viewModel = function(params) {
-        params.configKeys = ['placeholder', 'width', 'maxLength', 'defaultValue', 'uneditable'];
+        params.configKeys = [...(params?.configKeys || []), 'placeholder', 'width', 'maxLength', 'defaultValue', 'uneditable'];
 
         WidgetViewModel.apply(this, [params]);
         const self = this;
@@ -186,8 +186,10 @@ define([
 
     };
 
-    return ko.components.register('text-widget', {
+    ko.components.register('text-widget', {
         viewModel: viewModel,
         template: textWidgetTemplate,
     });
+
+    return viewModel;
 });
