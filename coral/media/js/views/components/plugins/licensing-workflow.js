@@ -367,12 +367,13 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'licence-number',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '6de3741e-c502-11ee-86cf-0242ac180006'
+                    nodegroupid: '6de3741e-c502-11ee-86cf-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
