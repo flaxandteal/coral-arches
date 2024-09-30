@@ -52,6 +52,7 @@ class Dashboard(View):
             counters = {}
             sort_by = request.GET.get('sortBy', None)
             sort_order = request.GET.get('sortOrder', None)
+            filter = request.GET.get('filterBy', None)
             sort_options = []
 
             if not update and cache.get(cache_key):
@@ -71,8 +72,8 @@ class Dashboard(View):
                     if strategy:
                         strategies.add(self.select_strategy(groupId))
                 for strategy in strategies:
-                    if sort_by is not None and sort_order is not None and sort_by in sort_options:
-                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
+                    if sort_by is not None and sort_order is not None:
+                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order, filter)
                     else:
                         resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id)
                     task_resources.extend(resources)
@@ -142,13 +143,13 @@ class Dashboard(View):
         return
 
 class TaskStrategy:
-    def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
+    def get_tasks(self, groupId, userResourceId, sort_by, sort_order, filter):
         raise NotImplementedError("Subclasses must implement this method")
     def build_data(self, resource, groupId):
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='asc'):
+    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='asc', filter='All'):
         from arches_orm.models import Consultation
     
         TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
@@ -250,7 +251,7 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc', filter=None):
+    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc', filter='all'):
         from arches_orm.models import License
         utilities = Utilities()
         #states
@@ -265,8 +266,8 @@ class ExcavationTaskStrategy(TaskStrategy):
         licences_all = License.all()
 
         licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
-        filter = 'Interim'
-        if filter:
+
+        if filter is not 'all':
             # Checks the report status against the filter value
             licences = [l for l in licences if self.is_valid_license(l, filter)]
 
@@ -335,7 +336,11 @@ class ExcavationTaskStrategy(TaskStrategy):
         from arches_orm.models import License
         utilities = Utilities()
         classification_type = utilities.node_check(lambda: licence.report[-1].classification_type)
-        return utilities.domain_value_string_lookup(License, 'classification_type', classification_type) == filter
+        if not classification_type:
+            return False
+        string_value = utilities.domain_value_string_lookup(License, 'classification_type', classification_type)
+        print(string_value, string_value.lower(), filter)
+        return string_value.lower() == filter
 
 class Utilities:
     def convert_id_to_string(self, id):
