@@ -160,10 +160,12 @@ define([
 
         // Saving will go true and once it returns to false re-enable the save button
         const disableSaveSubscription = self.activeStep().saving.subscribe((value) => {
-            setTimeout(() => {
-                this.disableSaveButton(false);
-                disableSaveSubscription.dispose();
-            }, 2000)
+            if (!value) {
+                setTimeout(() => {
+                    this.disableSaveButton(false);
+                    disableSaveSubscription.dispose();
+                }, 2000)
+            }
         });
 
         self
