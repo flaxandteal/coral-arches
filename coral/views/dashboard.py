@@ -267,7 +267,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
 
-        if filter is not 'all':
+        if filter != 'all':
             # Checks the report status against the filter value
             licences = [l for l in licences if self.is_valid_license(l, filter)]
 
@@ -339,7 +339,6 @@ class ExcavationTaskStrategy(TaskStrategy):
         if not classification_type:
             return False
         string_value = utilities.domain_value_string_lookup(License, 'classification_type', classification_type)
-        print(string_value, string_value.lower(), filter)
         return string_value.lower() == filter
 
 class Utilities:
