@@ -12,7 +12,7 @@ define([
 
       this.resources = ko.observableArray([]);
       this.counters = ko.observableArray([]);
-      this.total = ko.observable();
+      this.total = ko.observable(0);
       this.itemsPerPage = ko.observable(10);
       this.currentPage = ko.observable(1);
       this.sortBy = ko.observable();
@@ -149,7 +149,8 @@ define([
       });
 
       this.resources.subscribe(async () => {
-        if(this.resources()[0].state === 'Excavation') {
+        console.log("resources", this.resources())
+        if(this.resources().length > 0 && this.resources()[0].state === 'Excavation') {
           this.showFilter(true)
         }
       })
