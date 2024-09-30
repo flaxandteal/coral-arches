@@ -17,9 +17,13 @@ define([
       this.currentPage = ko.observable(1);
       this.sortBy = ko.observable();
       this.sortOrder = ko.observable();
+      this.filterBy = ko.observable();
       this.sortOptions = ko.observableArray([]);
+      this.filterOptions = ko.observableArray([ {id: 'all', name: 'All'},{id: 'final', name: 'Final'}, {id: 'preliminary', name: 'Preliminary'}, {id: 'interim', name: 'Interim'}, {id: 'unclassified', name: 'Unclassified'}, {id: 'summary', name: 'Summary'}])
       this.loading = ko.observable(true);
       this.loadingCards = ko.observable(false);
+
+      this.initialLoadCompleted = false;
 
       this.paginator = koMapping.fromJS({
           current_page: 1,
@@ -74,6 +78,9 @@ define([
           if(this.sortOrder()){
             url_params.sortOrder = this.sortOrder()
           }
+          if(this.filterBy()){
+            url_params.filterBy = this.filterBy()
+          }
 
           const params = new URLSearchParams(url_params);
   
@@ -120,14 +127,21 @@ define([
       }
 
       this.sortBy.subscribe(async () => {
-        if (this.sortBy()) {
+        if (this.initialLoadCompleted && this.sortBy()) {
           this.loadingCards(true);
           getTasks();
         }
       });
 
       this.sortOrder.subscribe(async () => {
-        if (this.sortOrder()) {
+        if (this.initialLoadCompleted && this.sortOrder()) {
+          this.loadingCards(true);
+          getTasks();
+        }
+      });
+
+      this.filterBy.subscribe(async () => {
+        if (this.initialLoadCompleted && this.filterBy()) {
           this.loadingCards(true);
           getTasks();
         }
@@ -150,6 +164,7 @@ define([
       this.init = async () => {
           updateItemsPerPage();
           await getTasks();  
+          this.initialLoadCompleted = true;
       }
 
       this.init();

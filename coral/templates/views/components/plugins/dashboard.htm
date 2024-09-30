@@ -24,7 +24,7 @@
       <!--/ko-->
     </div>
     <div style="display:flex; margin: 1rem 5rem; align-items: center;">
-      Sort By:
+      <p style="margin: 0">Sort By:</p>
       <select 
           style="text-align-last:unset; margin-left: 1rem" 
           data-bind="
@@ -42,6 +42,17 @@
             optionsText: 'name',
             optionsValue: 'id',
             value: sortOrder,
+          "
+      >
+      </select>
+      <p style="margin: 0 0 0 1rem">Filter By:</p>
+      <select 
+          style="text-align-last:unset; margin-left: 1rem" 
+          data-bind="
+            options: filterOptions,
+            optionsText: 'name',
+            optionsValue: 'id',
+            value: filterBy,
           "
       >
       </select>
