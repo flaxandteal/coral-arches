@@ -45,17 +45,19 @@
           "
       >
       </select>
-      <p style="margin: 0 0 0 1rem">Filter By:</p>
-      <select 
-          style="text-align-last:unset; margin-left: 1rem" 
-          data-bind="
-            options: filterOptions,
-            optionsText: 'name',
-            optionsValue: 'id',
-            value: filterBy,
-          "
-      >
-      </select>
+      <!--ko if: showFilter() -->
+        <p style="margin: 0 0 0 1rem">Filter By:</p>
+        <select 
+            style="text-align-last:unset; margin-left: 1rem" 
+            data-bind="
+              options: filterOptions,
+              optionsText: 'name',
+              optionsValue: 'id',
+              value: filterBy,
+            "
+        >
+        </select>
+      <!--/ko-->
     </div>
     <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
         <!--ko if: loadingCards() -->

@@ -22,6 +22,7 @@ define([
       this.filterOptions = ko.observableArray([ {id: 'all', name: 'All'},{id: 'final', name: 'Final'}, {id: 'preliminary', name: 'Preliminary'}, {id: 'interim', name: 'Interim'}, {id: 'unclassified', name: 'Unclassified'}, {id: 'summary', name: 'Summary'}])
       this.loading = ko.observable(true);
       this.loadingCards = ko.observable(false);
+      this.showFilter = ko.observable(false);
 
       this.initialLoadCompleted = false;
 
@@ -146,6 +147,12 @@ define([
           getTasks();
         }
       });
+
+      this.resources.subscribe(async () => {
+        if(this.resources()[0].state === 'Excavation') {
+          this.showFilter(true)
+        }
+      })
 
       window.addEventListener('resize', debounce(async () => {
           const prevItemsPerPage = this.itemsPerPage();
