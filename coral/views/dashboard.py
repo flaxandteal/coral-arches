@@ -237,7 +237,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
         resource_data = {
             'id': str(consultation.id),
-            'tasktype': 'Planning',
+            'state': 'Planning',
             'displayname': consultation._._name,
             'displaydescription': html.unescape(consultation._._description),
             'status': utilities.convert_id_to_string(action_status),
