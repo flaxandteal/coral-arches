@@ -10,7 +10,6 @@ define([
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
-
     this.SELECTED_LICENCE_NODEGROUP_AND_NODE = '879fc326-02f6-11ef-927a-0242ac150006';
 
     this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE = 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11';
@@ -42,6 +41,7 @@ define([
       .card()
       ?.widgets()
       .forEach((widget) => {
+
         this.labels?.forEach(([prevLabel, newLabel]) => {
           if (widget.label() === prevLabel) {
             widget.label(newLabel);
@@ -50,6 +50,7 @@ define([
       });
 
     this.tile.data[this.SELECTED_LICENCE_NODEGROUP_AND_NODE].subscribe((value) => {
+
       if (value && value.length) {
         const resourceId = ko.unwrap(value[0].resourceId);
         this.selectedResource(resourceId);
@@ -58,6 +59,7 @@ define([
     }, this);
 
     this.fetchTileData = async (resourceId) => {
+
       const tilesResponse = await window.fetch(
         arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
       );
@@ -87,6 +89,7 @@ define([
     };
 
     this.findLicence = async function (siteResourceId) {
+
       const tiles = await this.fetchTileData(siteResourceId)
       for (const tile of tiles) {
         if (tile.nodegroup === this.ACTIVITY_NAME_NODEGROUP) {
@@ -106,7 +109,8 @@ define([
       for (const tile of tiles) {
         if (tile.nodegroup === this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE) {
           const preFilled = tile.data[this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE]
-          this.findLicence(preFilled[0].resourceId)
+          this.selectedResource(preFilled[0].resourceId)
+          this.getDetails(preFilled[0].resourceId)
         }
       }
     }
