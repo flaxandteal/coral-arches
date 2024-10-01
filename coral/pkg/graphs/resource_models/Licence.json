@@ -780,7 +780,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Acknowledged Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -913,7 +913,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Issued Date Value",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -995,7 +995,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Classification Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -2203,7 +2203,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "Date of Data Entry",
                         "label": "Communication Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -2985,7 +2985,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Actual Start Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3047,7 +3047,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Request",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3592,7 +3592,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date Requested",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3721,7 +3721,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Received Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3762,7 +3762,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Report Submitted",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -4661,7 +4661,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date Reported",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"

@@ -2805,7 +2805,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Approved Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -2891,7 +2891,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Visit",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3964,7 +3964,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Issued Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3984,7 +3984,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Approved Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6183,7 +6183,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Last Update",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6327,7 +6327,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Creation Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6693,7 +6693,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Designation Amendment Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6734,7 +6734,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Designation Start Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6988,7 +6988,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Designation End Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -7096,7 +7096,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Input Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -8301,7 +8301,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Land Use Assessment Start Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -10235,7 +10235,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Date of Compilation",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -10495,7 +10495,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Date of Last Update",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -10806,7 +10806,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Authorization",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -11965,7 +11965,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "Date of Data Entry",
                         "label": "Sign Off Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -12167,7 +12167,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Association Start Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -13639,7 +13639,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Owner Notified Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -14406,7 +14406,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Work Finish Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -14722,7 +14722,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "Date of Data Entry",
                         "label": "Proposal Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -14830,7 +14830,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Received Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -15115,7 +15115,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Assessment Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -15179,7 +15179,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Director Sign Off Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"

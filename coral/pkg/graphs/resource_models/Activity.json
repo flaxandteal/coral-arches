@@ -2094,7 +2094,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Association Start Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3416,7 +3416,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Last Update",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3560,7 +3560,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Creation Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6270,7 +6270,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Date of Compilation",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6566,7 +6566,7 @@
                         "dateFormat": "YYYY-MM-DD HH:mm:ssZ",
                         "defaultValue": null,
                         "label": "Date of Last Update",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -6679,7 +6679,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Authorization",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"

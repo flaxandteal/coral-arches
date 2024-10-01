@@ -2155,7 +2155,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date Received from DIF",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -2673,7 +2673,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Land Use Assessment Start Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3097,7 +3097,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Authorization",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3858,7 +3858,7 @@
                         "dateFormat": "YYYY-MM-DD HH:mm:ssZ",
                         "defaultValue": null,
                         "label": "Date of Last Update",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -7846,7 +7846,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Date of Visit",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -8109,7 +8109,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Last Update",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -8253,7 +8253,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Creation Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -8929,7 +8929,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Date Entered",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -10337,7 +10337,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Uploaded On",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -11484,7 +11484,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Communication Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"

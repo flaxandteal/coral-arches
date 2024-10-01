@@ -2898,7 +2898,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Start Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3425,7 +3425,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Date of Last Update",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -3569,7 +3569,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": null,
                         "label": "Creation Date",
-                        "maxDate": null,
+                        "maxDate": "today",
                         "minDate": null,
                         "placeholder": "Enter date",
                         "viewMode": "days"
