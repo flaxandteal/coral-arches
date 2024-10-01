@@ -19,7 +19,7 @@ define([
       this.sortOrder = ko.observable();
       this.filterBy = ko.observable();
       this.sortOptions = ko.observableArray([]);
-      this.filterOptions = ko.observableArray([ {id: 'all', name: 'All'},{id: 'final', name: 'Final'}, {id: 'preliminary', name: 'Preliminary'}, {id: 'interim', name: 'Interim'}, {id: 'unclassified', name: 'Unclassified'}, {id: 'summary', name: 'Summary'}])
+      this.filterOptions = ko.observableArray([])
       this.loading = ko.observable(true);
       this.loadingCards = ko.observable(false);
       this.showFilter = ko.observable(false);
@@ -96,8 +96,9 @@ define([
           koMapping.fromJS(data.paginator, this.paginator)
           this.resources(data.paginator.response)
           this.total(data.paginator.total)
-          this.counters(convertToObservableArray(data.paginator.counters))
-          this.sortOptions(data.paginator.sort_options)
+          this.counters(convertToObservableArray(data.counters))
+          this.sortOptions(data.sort_options)
+          this.filterOptions(data.filter_options)
           this.loading(false)
           this.loadingCards(false)
         } catch (error) {
@@ -149,7 +150,6 @@ define([
       });
 
       this.resources.subscribe(async () => {
-        console.log("resources", this.resources())
         if(this.resources().length > 0 && this.resources()[0].state === 'Excavation') {
           this.showFilter(true)
         }
