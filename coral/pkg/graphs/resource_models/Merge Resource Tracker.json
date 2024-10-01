@@ -433,7 +433,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "Date of Data Entry",
                         "label": "Date of Submission",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"

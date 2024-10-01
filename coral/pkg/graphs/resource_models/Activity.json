@@ -1236,6 +1236,26 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
+                    "card_id": "4f5eeb25-993e-11ea-be61-f875a44e0e11",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Start Date",
+                        "maxDate": "today",
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "2a5bc0b2-fe48-11ea-9f08-0242ac140007",
+                    "label": {
+                        "en": "Start Date"
+                    },
+                    "node_id": "a64c82ae-3de4-11ef-8288-0242ac140007",
+                    "sortorder": 7,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
                     "card_id": "a5416b3f-f121-11eb-9d4a-a87eeabdefba",
                     "config": {
                         "defaultValue": "",
@@ -4248,7 +4268,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Land Use Assessment Start Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -11158,7 +11178,8 @@
                 {
                     "alias": "start_date",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "YYYY-MM-DD",
+                        "maxDate": "today"
                     },
                     "datatype": "date",
                     "description": null,

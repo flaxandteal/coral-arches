@@ -2500,14 +2500,13 @@
                 {
                     "card_id": "3001afe1-b46a-11ea-b3a1-f875a44e0e11",
                     "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
                         "label": "Start Date",
-                        "placeholder": {
-                            "en": ""
-                        }
+                        "maxDate": "today",
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
                     },
                     "id": "8ca120e9-1aba-11ec-920b-a87eeabdefba",
                     "label": {

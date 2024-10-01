@@ -3856,7 +3856,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "Date of Data Entry",
                         "label": "Association Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -4777,26 +4777,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
-                    "config": {
-                        "dateFormat": "DD-MM-YYYY",
-                        "defaultValue": "",
-                        "label": "Statutory Consultee Notification Date",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "4d19045a-2955-408f-9549-8fb595c24ea5",
-                    "label": {
-                        "en": "Statutory Consultee Notification Date"
-                    },
-                    "node_id": "85396d94-37bc-11ef-9263-0242ac150006",
-                    "sortorder": 11,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
                     "config": {
                         "defaultValue": "",
@@ -4824,7 +4804,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Local Authority Notification Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -29987,7 +29967,8 @@
                 {
                     "alias": "statutory_consultee_notification_date_value",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "YYYY-MM-DD",
+                        "maxDate": "today"
                     },
                     "datatype": "date",
                     "description": null,

@@ -7810,7 +7810,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Owner Notified Date Value",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -8131,7 +8131,7 @@
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
                         "label": "Local Authority Notification Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -8483,7 +8483,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "Date of Data Entry",
                         "label": "Association Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
@@ -13458,26 +13458,6 @@
                     "sortorder": 14,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "bd9292aa-4b19-4d57-ba07-8bb144bd507e",
-                    "config": {
-                        "dateFormat": "DD-MM-YYYY",
-                        "defaultValue": "",
-                        "label": "Statutory Consultee Notification Date",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "e0b48001-5bb9-404d-a928-3da9a2c37caf",
-                    "label": {
-                        "en": "Statutory Consultee Notification Date"
-                    },
-                    "node_id": "d70da550-3798-11ef-a167-0242ac150006",
-                    "sortorder": 22,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "2a2a03a9-8160-4bdf-9a9f-2e3ef1d3d0f6",
@@ -36590,7 +36570,8 @@
                 {
                     "alias": "statutory_consultee_notification_date_value",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD"
+                        "dateFormat": "YYYY-MM-DD",
+                        "maxDate": "today"
                     },
                     "datatype": "date",
                     "description": null,

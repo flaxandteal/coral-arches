@@ -851,7 +851,7 @@
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Issue Date",
-                        "maxDate": false,
+                        "maxDate": "today",
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
