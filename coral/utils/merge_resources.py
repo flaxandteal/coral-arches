@@ -80,7 +80,7 @@ class MergeResources:
                         data={},
                         nodegroup=tile.parenttile.nodegroup,
                     )
-                    parent_tile.save()
+                    parent_tile.save(context={"escape_function": True})
                     parent_merge_data["base_tiles"].append(parent_tile)
 
             # Check for an existing parent tile that was indexed aganist
@@ -95,7 +95,7 @@ class MergeResources:
                         data={},
                         nodegroup=tile.parenttile.nodegroup,
                     )
-                    parent_tile.save()
+                    parent_tile.save(context={"escape_function": True})
                     self.parent_tiles_map[merge_parent_tile_id] = parent_tile
                 else:
                     parent_tile = self.parent_tiles_map[merge_parent_tile_id]
@@ -214,12 +214,10 @@ class MergeResources:
     ):
         resource_exporter = ResourceExporter("json", configs=None, single_file=False)
         base_json_file = resource_exporter.export(
-            graph_id=self.graph.graphid,
             resourceinstanceids=[base_resource_id],
             languages=None,
         )
         merge_json_file = resource_exporter.export(
-            graph_id=self.graph.graphid,
             resourceinstanceids=[merge_resource_id],
             languages=None,
         )
@@ -356,7 +354,7 @@ class MergeResources:
                         data=merge_tile.data,
                         nodegroup=merge_tile.nodegroup,
                     )
-                    new_tile.save()
+                    new_tile.save(context={"escape_function": True})
                     continue
 
                 # Merge data from base tile over the merge tile and update
@@ -366,7 +364,7 @@ class MergeResources:
                         base_tile.data, merge_tile.data
                     )
                     base_tile.data = merged_tile_data
-                    base_tile.save()
+                    base_tile.save(context={"escape_function": True})
                     continue
             # Create the additional tiles for the base resource
             if merge_data["cardinality"] == "n":
@@ -383,7 +381,7 @@ class MergeResources:
                         data=tile.data,
                         nodegroup=tile.nodegroup,
                     )
-                    new_tile.save()
+                    new_tile.save(context={"escape_function": True})
 
         # Create a new tile for the merge tracker and
         # relate the two resources used in the merge

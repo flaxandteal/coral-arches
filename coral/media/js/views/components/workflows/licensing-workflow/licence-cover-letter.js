@@ -3,7 +3,7 @@ define([
   'knockout-mapping',
   'underscore',
   'arches',
-  'templates/views/components/workflows/licensing-workflow/license-cover-letter.htm',
+  'templates/views/components/workflows/licensing-workflow/licence-cover-letter.htm',
   // 'plugins/knockout-select2'
 ], function (ko, koMapping, _, arches, licenceCoverTemplate) {
   function viewModel(params) {

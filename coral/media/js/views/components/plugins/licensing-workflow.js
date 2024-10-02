@@ -4,13 +4,14 @@ define([
   'viewmodels/openable-workflow',
   'templates/views/components/plugins/default-workflow.htm',
   'views/components/workflows/default-card-util',
-  'views/components/workflows/licensing-workflow/license-initial-step',
+  'views/components/workflows/licensing-workflow/licence-initial-step',
   'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/license-cover-letter',
+  'views/components/workflows/licensing-workflow/licence-cover-letter',
   'views/components/workflows/file-template',
-  'views/components/workflows/licensing-workflow/license-final-step',
-  'views/components/workflows/licensing-workflow/fetch-generated-license-number',
-  'views/components/workflows/licensing-workflow/fetch-updated-dates'
+  'views/components/workflows/licensing-workflow/licence-final-step',
+  'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
+  'views/components/workflows/licensing-workflow/fetch-updated-dates',
+  'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -123,30 +124,6 @@ define([
           ]
         },
         {
-          title: 'Geospatial Details',
-          name: 'geospaital-step',
-          required: false,
-          workflowstepclass: 'workflow-form-component',
-          layoutSections: [
-            {
-              componentConfigs: [
-                {
-                  componentName: 'default-card',
-                  uniqueInstanceName: 'geometry-info',
-                  tilesManaged: 'one',
-                  parameters: {
-                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
-                    nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    parenttileid:
-                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
           title: 'Location Details',
           name: 'location-step',
           workflowstepclass: 'workflow-form-component',
@@ -216,6 +193,19 @@ define([
                   uniqueInstanceName: 'e0a60085-eeeb-44e0-83de-2dcb5ad38d95'
                 },
                 {
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
+                    nodegroupid: '33b4430a-16be-11ef-8633-0242ac180006',
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
+                    semanticName: 'Irish Grid Reference'
+                  },
+                  tilesManaged: 'one',
+                  componentName: 'fetch-latest-tile',
+                  uniqueInstanceName: 'irish-grid-reference'
+                },
+                {
                   componentName: 'default-card',
                   uniqueInstanceName: 'location-description',
                   tilesManaged: 'one',
@@ -226,6 +216,30 @@ define([
                     parenttileid:
                       "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     hiddenNodes: ['a5419231-f121-11eb-911a-a87eeabdefba']
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Geospatial Details',
+          name: 'geospaital-step',
+          required: false,
+          workflowstepclass: 'workflow-form-component',
+          layoutSections: [
+            {
+              componentConfigs: [
+                {
+                  componentName: 'fetch-latest-tile',
+                  uniqueInstanceName: 'geometry-info',
+                  tilesManaged: 'one',
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    nodegroupid: 'a541560c-f121-11eb-aa92-a87eeabdefba',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']"
                   }
                 }
               ]
@@ -470,7 +484,7 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 },
                 {
@@ -485,7 +499,8 @@ define([
                   parameters: {
                     graphid: 'a535a235-8481-11ea-a6b9-f875a44e0e11',
                     nodegroupid: '7db68c6c-8490-11ea-a543-f875a44e0e11',
-                    resourceModelId: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
+                    resourceModelId:
+                      "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
                     resourceModelDigitalObjectNodeGroupId: '316c7d1e-8554-11ea-aed7-f875a44e0e11',
                     fileObjectNamePrefix: 'Site report files for '
                   }

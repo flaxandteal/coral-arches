@@ -7,9 +7,14 @@
     <div class="relative">
 
         <!-- Title Block -->
+                  <!-- ko if: !print()-->
         <div class="aher-report-toolbar">
             <h1 class="aher-report-toolbar-title"><span class="aher-report-name">{% trans "Consultation" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
         </div>
+                <!-- /ko -->
+        <!-- ko else -->
+        <h1 class="aher-report-toolbar-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
+        <!-- /ko -->
 
     </div>
     {% endblock report_title_bar %}
@@ -17,7 +22,7 @@
 
     {% block body %}
     <!-- Link nav -->
-    <div class="aher-report-anchor-container">
+    <div class="aher-report-anchor-container" data-bind="if: !print()">
         <ol class="aher-report-anchors breadcrumb">
             <!-- ko foreach: {data: sections, as: 'section'} -->
             <li tabindex="0" data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="aher-report-a" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }"></li>
@@ -27,7 +32,7 @@
     <div class="aher-tabbed-report">
         <div class="aher-tabbed-report-content">
             <!-- Consultation Details Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'details'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'details' || print()">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/name',
                     params: {
@@ -59,7 +64,7 @@
                 }"></div>
             </div>
             <!-- Location Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'location'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'location' || print()">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
@@ -76,7 +81,7 @@
                 }"></div>
             </div>
             <!-- Planning Reference Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'references'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'references' || print()">
                 <div class="aher-report-section">
                     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.references)}, css: {'fa-angle-double-right': visible.references(), 'fa-angle-double-up': !visible.references()}"  class="fa toggle"></i> {% trans "External Cross References" %}</h2>
                     <a data-bind="{if: cards['external cross references'], click: function(){addNewTile(cards['external cross references'])}}" class="aher-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add external cross references" %}</a>
@@ -179,7 +184,7 @@
                 </div>
             </div>
             <!-- Contacts Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'contacts'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'contacts' || print()">
                 <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.contacts)}, css: {'fa-angle-double-right': visible.contacts(), 'fa-angle-double-up': !visible.contacts()}" class="fa toggle"></i> {% trans "Contacts" %}</h2>
                 <a data-bind="{if: cards.contacts, click: function(){ addNewTile(cards.contacts) }}" class="aher-report-a">
                     <i class="fa fa-mail-reply"></i>
@@ -260,7 +265,7 @@
             </div>
 
             <!-- Consultation Progression Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'progression'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'progression' || print()">
                 <div class="aher-report-section">
                     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.proposal)}, css: {'fa-angle-double-right': visible.proposal(), 'fa-angle-double-up': !visible.proposal()}"  class="fa toggle"></i> {% trans "Proposal" %}</h2>
                     <a data-bind="{if: cards.proposal, click: function(){addNewTile(cards.proposal)}}" class="aher-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add proposal" %}</a>
@@ -484,7 +489,7 @@
                 </div>
             </div>
             <!-- Correspondence Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'correspondence'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'correspondence' || print()">
                 <div class="aher-report-section">
                     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.correspondence)}, css: {'fa-angle-double-right': visible.correspondence(), 'fa-angle-double-up': !visible.correspondence()}"  class="fa toggle"></i> {% trans "Correspondence" %}</h2>
                     <a data-bind="{if: cards.correspondence, click: function(){addNewTile(cards.correspondence)}}" class="aher-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Correspondence" %}</a>
@@ -593,7 +598,7 @@
                 </div>
             </div>
             <!-- Site Visit Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'sitevisits'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'sitevisits' || print()">
                 <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.siteVisits)}, css: {'fa-angle-double-right': visible.siteVisits(), 'fa-angle-double-up': !visible.siteVisits()}" class="fa toggle"></i> {% trans "Site Visits" %}</h2>
                 <a data-bind="{if: cards['site visits'], click: function(){ addNewTile(cards['site visits']) }}" class="aher-report-a">
                     <i class="fa fa-mail-reply"></i>
@@ -787,7 +792,7 @@
                 </div>
             </div>
             <!-- Resources Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'resources'">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'resources' || print()">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/resources',
                     params: {
@@ -809,7 +814,7 @@
                 }"></div>
             </div>
              <!-- JSON Tab -->
-            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json'">
+            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json' || print()">
                 <div class="aher-flex-col" data-bind="component: {
                     name: 'views/components/reports/scenes/json',
                     params: {
@@ -824,7 +829,9 @@
 
 {% block summary %}
 <div class="aher-summary-report-header">
-    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span><span class="aher-report-name pad-lft-sm">{% trans "(Consultation)" %}</span></h1>
+    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span>
+        <!-- <span class="aher-report-name pad-lft-sm">{% trans "(Consultation)" %}</span> -->
+    </h1>
 </div>
 <div class="model-summary-report">
     <div class="aher-report-page">
