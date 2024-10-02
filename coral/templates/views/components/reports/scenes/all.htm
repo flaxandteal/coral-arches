@@ -1,4 +1,17 @@
+<!-- ko if: showStuff() -->
+<div style="display: flex; flex-wrap: wrap">
+  <div
+    data-bind="component: {
+      name: 'render-nodes',
+      params: {
+        resourceNodes: renderedNodegroups()['heritage-asset']
+      }
+    }"
+  ></div>
+</div>
+<!-- /ko -->
 
+{% comment %} 
 <!-- ko foreach: {data: Object.keys(sections), as: 'cardTitle', noChildContext: true}-->
  <div data-bind="if: cardTitle.indexOf('@') === -1 && cardTitle.indexOf('_') === -1 && cardTitle !== cardTitle.toLowerCase()">
   <div data-bind="class: margin() === 0 ? 'aher-report-section' : 'aher-report-subsection'">
@@ -86,4 +99,4 @@
  <!-- /ko -->
 </div>
 </div>
-<!-- /ko -->
+<!-- /ko --> {% endcomment %}

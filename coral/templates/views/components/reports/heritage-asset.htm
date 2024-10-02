@@ -130,6 +130,8 @@
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/all',
                     params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
+                        reportMetadata: reportMetadata(),
                         data: resource(),
                         cards: nameCards,
                         dataConfig: nameDataConfig
