@@ -46,6 +46,13 @@ define([
         };
 
         this.getNodeOptions = (nodeId) => {
+            if(params.nodeOptions){
+                nodeParams = params.nodeOptions[nodeId]
+                for(let key in nodeParams){
+                    nodeParams[key] = ko.observable(nodeParams[key]);
+                }
+                params.nodeOptions[nodeId] = nodeParams
+            }
             return params.nodeOptions?.[nodeId]
         }
     
