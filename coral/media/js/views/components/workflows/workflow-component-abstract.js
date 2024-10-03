@@ -691,7 +691,7 @@ define([
 
     function WorkflowComponentAbstract(params) {
         var self = this;
-
+ 
         this.disableAdd = ko.observable(false);
 
         this.workflow = params.workflow;
@@ -727,7 +727,7 @@ define([
          * @return boolean
          */
         this.checkShowManyTileControls = ko.observable((tileId) => {
-          return true;
+            return self.componentData.showManyTileControls ?? true
         });
 
         this.showManyTileControls = (tileId) => {
