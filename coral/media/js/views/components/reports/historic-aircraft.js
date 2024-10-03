@@ -28,6 +28,7 @@ define([
                 {id: 'journey', title: 'Journey Details'},
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -37,6 +38,12 @@ define([
             self.flights = ko.observableArray();
             self.lastFlight = ko.observableArray();
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
+
+            self.fullReportConfig = {
+                id: 'historic-aircraft',
+                label: 'Historic Aircraft',
+                ignoreNodes: []
+            }
 
 
             self.flightsTableConfig = {

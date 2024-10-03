@@ -30,6 +30,7 @@ define([
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'contact', title: 'Biography and Contact Details'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -38,6 +39,12 @@ define([
             self.activeSection = ko.observable('name');
             self.names = ko.observableArray();
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
+
+            self.fullReportConfig = {
+                id: 'person',
+                label: 'Person',
+                ignoreNodes: []
+            }
 
             self.contactPointsTable = {
                 ...self.defaultTableConfig,

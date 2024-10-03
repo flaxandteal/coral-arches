@@ -29,8 +29,15 @@ define([
                 {id: 'journey', title: 'Journey Details'},
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
+
+            self.fullReportConfig = {
+                id: 'maritime-vessel',
+                label: 'Maritime Vessel',
+                ignoreNodes: []
+            }
 
             self.nationalitiesTableConfig = {
                 ...self.defaultTableConfig,

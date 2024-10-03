@@ -32,6 +32,7 @@ define([
                 {id: 'images', title: 'Images'},
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -39,6 +40,13 @@ define([
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
+
+            self.fullReportConfig = {
+                id: 'heritage-area',
+                label: 'Heritage Area',
+                ignoreNodes: []
+            }
+
 
 
             self.nameDataConfig = {
