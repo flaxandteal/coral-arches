@@ -34,6 +34,12 @@ define([
             self.historicLandscapeClassificationPhase = ko.observableArray();
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
+            self.fullReportConfig = {
+                id: 'historic-landscape-characterization',
+                label: 'Historic Landscape Characterization',
+                ignoreNodes: []
+            }
+
 
             self.visible = {
                 historicLandscapeClassificationPhase: ko.observable(true)

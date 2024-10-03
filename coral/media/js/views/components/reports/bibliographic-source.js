@@ -35,6 +35,12 @@ define([
             self.activeSection = ko.observable('source');
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
+            self.fullReportConfig = {
+                id: 'bibliographic-source',
+                label: 'Bibliographic Source',
+                ignoreNodes: []
+            }
+
 
             self.publicationTableConfig = {
                 ...self.defaultTableConfig,

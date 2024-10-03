@@ -33,6 +33,13 @@ define([
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
 
+            self.fullReportConfig = {
+                id: 'archive-source',
+                label: 'Archive Source',
+                ignoreNodes: []
+            }
+
+
             self.nameDataConfig = {
                 name: 'archive source',
             };

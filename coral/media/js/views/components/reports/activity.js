@@ -20,6 +20,12 @@ define([
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
 
+            self.fullReportConfig = {
+                id: 'activity',
+                label: 'Activity',
+                ignoreNodes: []
+            }
+
             Object.assign(self, reportUtils);
             self.sections = [
                 {id: 'name', title: 'Names and Identifiers'},

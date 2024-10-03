@@ -43,6 +43,12 @@ define([
                 columns: Array(4).fill(null)
             };
 
+            self.fullReportConfig = {
+                id: 'artefact',
+                label: 'Artefact',
+                ignoreNodes: []
+            }
+
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);

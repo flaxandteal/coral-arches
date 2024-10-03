@@ -807,9 +807,9 @@
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/all',
                     params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
                         data: resource(),
-                        cards: nameCards,
-                        dataConfig: nameDataConfig
+                        fullReportConfig: fullReportConfig
                     }
                 }"></div>
             </div>

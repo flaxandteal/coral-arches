@@ -33,6 +33,12 @@ define([
             self.names = ko.observableArray();
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
+            self.fullReportConfig = {
+                id: 'period',
+                label: 'Period',
+                ignoreNodes: []
+            }
+
 
             self.nameTableConfig = {
                 ...self.defaultTableConfig,

@@ -32,7 +32,7 @@
     <div class="aher-tabbed-report">
         <div class="aher-tabbed-report-content">
             <!-- Names Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'name' print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'name' || print()">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/name',
                     params: {
@@ -43,7 +43,7 @@
                 }"></div>
             </div>
             <!-- Description Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'description' print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'description' || print()">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/description',
                     params: {
@@ -53,7 +53,7 @@
                 }"></div>
             </div>
             <!-- Publication Details Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'publication' print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'publication' || print()">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/copyright',
                     params: {
@@ -63,7 +63,7 @@
                 }"></div>
             </div>
             <!-- File Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'file' print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'file' || print()">
                 <div class="aher-report-section">
                     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.files)}, css: {'fa-angle-double-right': visible.files(), 'fa-angle-double-up': !visible.files()}"  class="fa toggle"></i> {% trans "Files" %}</h2>
                     <a data-bind="{if: cards['file'], click: function(){addNewTile(cards['file'])}}" class="aher-report-a">
@@ -113,14 +113,14 @@
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/all',
                     params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
                         data: resource(),
-                        cards: nameCards,
-                        dataConfig: nameDataConfig
+                        fullReportConfig: fullReportConfig
                     }
                 }"></div>
             </div>
              <!-- JSON Tab -->
-            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json' print()">
+            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json' || print()">
                 <div class="aher-flex-col" data-bind="component: {
                     name: 'views/components/reports/scenes/json',
                     params: {

@@ -41,6 +41,13 @@ define([
             self.activeSection = ko.observable('name');
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
+            self.fullReportConfig = {
+                id: 'heritage-area',
+                label: 'Heritage Area',
+                ignoreNodes: []
+            }
+
+
 
             self.nameDataConfig = {
                 name: 'heritage area',

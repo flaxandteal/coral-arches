@@ -31,6 +31,12 @@ define([
             self.activeSection = ko.observable('name');
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
+            self.fullReportConfig = {
+                id: 'heritage-story',
+                label: 'Heritage Story',
+                ignoreNodes: []
+            }
+
 
             self.nameDataConfig = {
                 parent: 'parent story'

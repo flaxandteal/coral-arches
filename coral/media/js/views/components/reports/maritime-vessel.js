@@ -33,6 +33,12 @@ define([
                 {id: 'json', title: 'JSON'},
             ];
 
+            self.fullReportConfig = {
+                id: 'maritime-vessel',
+                label: 'Maritime Vessel',
+                ignoreNodes: []
+            }
+
             self.nationalitiesTableConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(3).fill(null)

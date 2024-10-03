@@ -40,6 +40,12 @@ define([
             self.names = ko.observableArray();
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
+            self.fullReportConfig = {
+                id: 'person',
+                label: 'Person',
+                ignoreNodes: []
+            }
+
             self.contactPointsTable = {
                 ...self.defaultTableConfig,
                 columns: Array(3).fill(null)

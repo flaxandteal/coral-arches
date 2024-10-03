@@ -35,6 +35,12 @@ define([
             self.activeSection = ko.observable('name');
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 
+            self.fullReportConfig = {
+                id: 'organization',
+                label: 'Organization',
+                ignoreNodes: []
+            }
+
 
             self.nameDataConfig = {
                 name: 'names',
