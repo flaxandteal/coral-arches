@@ -7,7 +7,6 @@ define([
   'templates/views/components/reports/scenes/all.htm',
   'bindings/datatable',
   'views/components/workflows/render-nodes'
-  // 'views/components/reports/scenes/all'
 ], function (_, ko, arches, reportUtils, SummaryStep, allReportTemplate) {
   return ko.components.register('views/components/reports/scenes/all', {
     viewModel: function (params) {
@@ -60,8 +59,8 @@ define([
 
       this.getData = async () => {
         const nodeConfig = {
-          id: 'heritage-asset',
-          label: 'Heritage Asset'
+          id: params.fullReportConfig.id,
+          label: params.fullReportConfig.label
         };
 
         Object.entries(params.data).forEach(([key, value]) => {
@@ -70,7 +69,7 @@ define([
 
         await this.renderResourceIds(this.resourceid, nodeConfig);
 
-        console.log('HA Summary: ', this.renderedNodegroups());
+        console.log(`${params.fullReportConfig.label} summary config: `, this.renderedNodegroups());
         this.showReport(true);
       };
 

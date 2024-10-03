@@ -75,6 +75,12 @@ define([
             self.resource = ko.observable(self.resource())
             console.log(self.resource())
 
+            self.fullReportConfig = {
+                id: 'heritage-asset',
+                label: 'Heritage Asset',
+                ignoreNodes: []
+            }
+
             
 
             if(params.report.cards){
