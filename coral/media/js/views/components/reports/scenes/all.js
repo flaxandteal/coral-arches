@@ -16,6 +16,9 @@ define([
       };
       SummaryStep.apply(this, [params]);
 
+      this.reportId = ko.observable(params.fullReportConfig.id);
+      this.reportLabel = ko.observable(params.fullReportConfig.label);
+
       this.showReport = ko.observable(false);
 
       this.processGroup = (key, group, nodeConfig) => {
@@ -59,8 +62,8 @@ define([
 
       this.getData = async () => {
         const nodeConfig = {
-          id: params.fullReportConfig.id,
-          label: params.fullReportConfig.label
+          id: this.reportId(),
+          label: this.reportLabel()
         };
 
         Object.entries(params.data).forEach(([key, value]) => {
@@ -69,7 +72,7 @@ define([
 
         await this.renderResourceIds(this.resourceid, nodeConfig);
 
-        console.log(`${params.fullReportConfig.label} summary config: `, this.renderedNodegroups());
+        console.log(`${this.reportLabel()} summary config: `, this.renderedNodegroups());
         this.showReport(true);
       };
 
