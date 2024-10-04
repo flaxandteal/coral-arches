@@ -4989,19 +4989,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Area Archaeologist",
+                        "label": "Area Archaeologist(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "5a2cef3f-755b-4d2f-b230-45d3b9bbb885",
                     "label": {
-                        "en": "Area Archaeologist"
+                        "en": "Area Archaeologist(s)"
                     },
                     "node_id": "a53af708-d631-11ee-a5a3-0242ac180006",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "51ec4343-762a-4079-bbad-c065be7a7ee3",
@@ -12375,7 +12375,7 @@
                     "node_id": "6d65ffb8-d630-11ee-9454-0242ac180006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "9eceaff9-795b-497c-982b-cfb41e8f8ec0",
@@ -13040,19 +13040,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Occupier",
+                        "label": "Occupier(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "aa62c158-d23e-11ee-9ae7-0242ac180006",
                     "label": {
-                        "en": "Occupier"
+                        "en": "Occupier(s)"
                     },
                     "node_id": "aa62b10e-d23e-11ee-9ae7-0242ac180006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "aa629b2e-d23e-11ee-9ae7-0242ac180006",
@@ -13170,14 +13170,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Owner",
+                        "label": "Owner(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "aa62c7d4-d23e-11ee-9ae7-0242ac180006",
                     "label": {
-                        "en": "Owner"
+                        "en": "Owner(s)"
                     },
                     "node_id": "aa62ada8-d23e-11ee-9ae7-0242ac180006",
                     "sortorder": 6,
@@ -13300,14 +13300,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Field Worker",
+                        "label": "Field Worker(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "b1f68f4d-8a89-4776-add1-7d7b3e434758",
                     "label": {
-                        "en": "Field Worker"
+                        "en": "Field Worker(s)"
                     },
                     "node_id": "650bb092-07b8-11ef-a15f-0242ac140006",
                     "sortorder": null,
@@ -14637,19 +14637,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "CWT Area Supervisor",
+                        "label": "CWT Area Supervisor(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "e6553564-7cd8-45c6-a477-5c7b6a68c34a",
                     "label": {
-                        "en": "CWT Area Supervisor"
+                        "en": "CWT Area Supervisor(s)"
                     },
                     "node_id": "506dd6ae-d632-11ee-9454-0242ac180006",
                     "sortorder": 6,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
@@ -25683,7 +25683,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -28590,7 +28590,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -35931,7 +35931,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -36326,7 +36326,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Plan_Offic",
