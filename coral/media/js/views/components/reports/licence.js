@@ -15,6 +15,7 @@ define([
           params.configKeys = ['tabs', 'activeTabIndex'];
           this.configForm = params.configForm || false;
           this.configType = params.configType || 'header';
+          this.report = params.report;
 
           Object.assign(self, reportUtils);
           self.sections = [
@@ -23,7 +24,7 @@ define([
           self.reportMetadata = ko.observable(params.report?.report_json);
           self.resource = ko.observable(self.reportMetadata()?.resource);
           self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-          self.activeSection = ko.observable('name');
+          self.activeSection = ko.observable('all');
           self.historicLandscapeClassificationPhase = ko.observableArray();
           self.print = ko.observable(window.location.href.indexOf("?print") > -1)
 

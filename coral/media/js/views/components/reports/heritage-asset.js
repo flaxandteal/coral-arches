@@ -8,7 +8,7 @@ define([
     'templates/views/components/reports/heritage-asset.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json',
-    'views/components/reports/scenes/all'
+    'views/components/reports/scenes/all',
 ], function($, _, ko, arches, resourceUtils, reportUtils, heritageAssetReportTemplate) {
     return ko.components.register('heritage-asset-report', {
         viewModel: function(params) {
