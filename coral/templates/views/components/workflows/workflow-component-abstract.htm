@@ -79,6 +79,7 @@
                                     <!-- /ko -->
                                 </div>
                             </div>
+                            <!-- ko if: $parent.showManyTileControls(tile.tileid) -->
                             <div class="wf-multi-tile-step-card-controls">
                                 <div 
                                     data-bind="click: function(){$parent.removeTile(tile)}"
@@ -92,6 +93,7 @@
                                     <span data-bind="text: $root.translations.edit"></span>
                                 </div>
                             </div>
+                            <!-- /ko -->
                         </div>
                     <!-- /ko -->
                 </div>

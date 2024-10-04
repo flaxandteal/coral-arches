@@ -53,6 +53,10 @@ define([
     };
 
     this.getLatestTile();
+
+    this.getNodeOptions = (nodeId) => {
+        return params.nodeOptions?.[nodeId]
+    }
   }
 
   ko.components.register('fetch-latest-tile', {
