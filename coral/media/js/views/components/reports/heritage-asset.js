@@ -8,7 +8,7 @@ define([
     'templates/views/components/reports/heritage-asset.htm',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json',
-    'views/components/reports/scenes/all'
+    'views/components/reports/scenes/all',
 ], function($, _, ko, arches, resourceUtils, reportUtils, heritageAssetReportTemplate) {
     return ko.components.register('heritage-asset-report', {
         viewModel: function(params) {
@@ -16,6 +16,7 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
 
             Object.assign(self, reportUtils);
             self.sections = [

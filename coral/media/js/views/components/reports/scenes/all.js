@@ -4,79 +4,116 @@ define([
   'arches',
   'utils/report',
   'views/components/workflows/summary-step',
+  'views/components/resource-report-abstract',
+  'viewmodels/report', 
   'templates/views/components/reports/scenes/all.htm',
   'bindings/datatable',
-  'views/components/workflows/render-nodes'
-], function (_, ko, arches, reportUtils, SummaryStep, allReportTemplate) {
+  'views/components/workflows/render-nodes',
+], function (_, ko, arches, reportUtils, SummaryStep, resourceReportAbstract, ReportViewModel, allReportTemplate) {
   return ko.components.register('views/components/reports/scenes/all', {
     viewModel: function (params) {
-      params.resourceid = params.resourceInstanceId;
-      params.pageVm = {
-        plugin: { slug: 'ignore' }
-      };
-      SummaryStep.apply(this, [params]);
+      params.report.template = {
+        "component": "reports/default",
+        "componentname": "default-report",
+        "defaultconfig": {},
+        "defaultconfig_json": "{}",
+        "description": "Default Template",
+        "name": "No Header Template",
+        "preload_resource_data": true,
+        "templateid": "50000000-0000-0000-0000-000000000001"
+      }
 
-      this.reportId = ko.observable(params.fullReportConfig.id);
-      this.reportLabel = ko.observable(params.fullReportConfig.label);
+      params.report.hideEmptyNodes = true;
 
-      this.showReport = ko.observable(false);
+      ReportViewModel.apply(this, [params])
 
-      this.processGroup = (key, group, nodeConfig) => {
-        const lowerCaseKey = key.toLowerCase();
-        if (lowerCaseKey in nodeConfig) {
-          return;
-        }
-        if (Array.isArray(group)) {
-          nodeConfig[lowerCaseKey] = {
-            label: key,
-            nodegroupId: group[0]['@node_id'],
-            renderNodes: this.processNodes(group[0], nodeConfig)
-          };
-          return;
-        }
-        nodeConfig[lowerCaseKey] = {
-          label: key,
-          nodegroupId: group['@node_id'],
-          renderNodes: this.processNodes(group, nodeConfig)
-        };
-        return nodeConfig;
-      };
+      // this.report = ko.observable(params.report);
+      // this.configForm = params.configForm;
+      // this.configType = params.configType;
+      // this.summary = true;
 
-      this.processNodes = (nodes, nodeConfig) => {
-        const renderNodes = [];
-        Object.entries(nodes).forEach(([key, value]) => {
-          if (key.startsWith('@')) {
-            return;
-          }
-          if (
-            Object.prototype.toString.call(value) !== '[object Object]' ||
-            !('@parent_node_id' in value)
-          ) {
-            renderNodes.push(value['@node_id']);
-            return;
-          }
-          this.processGroup(key, value, nodeConfig);
-        });
-        return renderNodes;
-      };
+      // this.template = ko.observable({
+      //     "component": "reports/default",
+      //     "componentname": "default-report",
+      //     "defaultconfig": {},
+      //     "defaultconfig_json": "{}",
+      //     "description": "Default Template",
+      //     "name": "No Header Template",
+      //     "preload_resource_data": true,
+      //     "templateid": "50000000-0000-0000-0000-000000000001"
+      // })
 
-      this.getData = async () => {
-        const nodeConfig = {
-          id: this.reportId(),
-          label: this.reportLabel()
-        };
+      // this.report().template = this.template;
 
-        Object.entries(params.data).forEach(([key, value]) => {
-          this.processGroup(key, value, nodeConfig);
-        });
 
-        await this.renderResourceIds(this.resourceid, nodeConfig);
+      // params.resourceid = params.resourceInstanceId;
+      // params.pageVm = {
+      //   plugin: { slug: 'ignore' }
+      // };
+      // SummaryStep.apply(this, [params]);
 
-        console.log(`${this.reportLabel()} summary config: `, this.renderedNodegroups());
-        this.showReport(true);
-      };
+      // this.report = params.report;
+      // this.reportId = ko.observable(params.fullReportConfig.id);
+      // this.reportLabel = ko.observable(params.fullReportConfig.label);
 
-      this.loadData();
+      // this.showReport = ko.observable(false);
+
+      // this.processGroup = (key, group, nodeConfig) => {
+      //   const lowerCaseKey = key.toLowerCase();
+      //   if (lowerCaseKey in nodeConfig) {
+      //     return;
+      //   }
+      //   if (Array.isArray(group)) {
+      //     nodeConfig[lowerCaseKey] = {
+      //       label: key,
+      //       nodegroupId: group[0]['@node_id'],
+      //       renderNodes: this.processNodes(group[0], nodeConfig)
+      //     };
+      //     return;
+      //   }
+      //   nodeConfig[lowerCaseKey] = {
+      //     label: key,
+      //     nodegroupId: group['@node_id'],
+      //     renderNodes: this.processNodes(group, nodeConfig)
+      //   };
+      //   return nodeConfig;
+      // };
+
+      // this.processNodes = (nodes, nodeConfig) => {
+      //   const renderNodes = [];
+      //   Object.entries(nodes).forEach(([key, value]) => {
+      //     if (key.startsWith('@')) {
+      //       return;
+      //     }
+      //     if (
+      //       Object.prototype.toString.call(value) !== '[object Object]' ||
+      //       !('@parent_node_id' in value)
+      //     ) {
+      //       renderNodes.push(value['@node_id']);
+      //       return;
+      //     }
+      //     this.processGroup(key, value, nodeConfig);
+      //   });
+      //   return renderNodes;
+      // };
+
+      // this.getData = async () => {
+      //   const nodeConfig = {
+      //     id: this.reportId(),
+      //     label: this.reportLabel()
+      //   };
+
+      //   Object.entries(params.data).forEach(([key, value]) => {
+      //     this.processGroup(key, value, nodeConfig);
+      //   });
+
+      //   await this.renderResourceIds(this.resourceid, nodeConfig);
+
+      //   console.log(`${this.reportLabel()} summary config: `, this.renderedNodegroups());
+      //   this.showReport(true);
+      // };
+
+      // this.loadData();
 
       // var self = this;
       // self.table = ko.observable(params.table)

@@ -13,6 +13,7 @@ define([
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
+            this.report = params.report;
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
             this.print = ko.observable(false)

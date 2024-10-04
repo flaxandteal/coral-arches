@@ -20,6 +20,7 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
 
             Object.assign(self, reportUtils);
             self.sections = [
