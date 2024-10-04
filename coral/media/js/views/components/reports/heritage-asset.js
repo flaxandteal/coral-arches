@@ -78,9 +78,24 @@ define([
             self.fullReportConfig = {
                 id: 'heritage-asset',
                 label: 'Heritage Asset',
-                ignoreNodes: []
+                ignoreNodes: [
+                    "87d39b42-f44f-11eb-9a05-a87eeabdefba",
+                    "87d39b3f-f44f-11eb-be51-a87eeabdefba",
+                    "87d39b3e-f44f-11eb-bec5-a87eeabdefba",
+                    "77e8f297-efdc-11eb-a06e-a87eeabdefba",
+                    "77e8f28c-efdc-11eb-b5fc-a87eeabdefba",
+                    "77e8f28b-efdc-11eb-b757-a87eeabdefba",
+                    "87d3d7e3-f44f-11eb-a725-a87eeabdefba",
+                    "87d3d7df-f44f-11eb-8389-a87eeabdefba",
+                    "87d3ff33-f44f-11eb-94d4-a87eeabdefba",
+                    "87d3ff2c-f44f-11eb-b680-a87eeabdefba",
+                    "87d39b50-f44f-11eb-8284-a87eeabdefba",
+                    "87d3ff2d-f44f-11eb-b859-a87eeabdefba",
+                    "87d3ff2e-f44f-11eb-8319-a87eeabdefba",
+                    "87d39b40-f44f-11eb-9828-a87eeabdefba"
+                ]
             }
-
+            console.log("full repo", self.fullReportConfig)
             
 
             if(params.report.cards){
