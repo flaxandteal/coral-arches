@@ -56,7 +56,12 @@
                   "labels": [["Monument or Area", "SMR Number(s)"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d"
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "nodeOptions": {
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "get-selected-monument-details",
@@ -255,10 +260,18 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006"
+                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "nodeOptions": {
+                  "998d6728-fb26-11ee-838d-0242ac190006": {
+                    "allowInstanceCreation": false
+                  },
+                  "42ec3232-fb26-11ee-838d-0242ac190006": {
+                    "allowInstanceCreation": false
+                  }
+                }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "sign-off"
               }
             ]

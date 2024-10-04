@@ -324,7 +324,12 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69f2eb3c-c430-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
+                    nodeOptions: {
+                      "69f30298-c430-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 },
                 {
@@ -335,7 +340,12 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'c9f504b4-c42d-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
+                    nodeOptions: {
+                      "c9f51490-c42d-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 },
                 {
@@ -444,18 +454,37 @@ define([
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "058ccf60-c44d-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
+                      "43ec68d6-c445-11ee-8be7-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
+                      "6bc892c8-c44d-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 },
                 {
-                  componentName: 'default-card-util',
+                  componentName: 'default-card',
                   uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
                   parameters: {
                     title: 'Extension of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "2e7a876e-c4d4-11ee-b171-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
+                      "50970864-c4d3-11ee-90c5-0242ac180006": {
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 }
               ]
@@ -484,7 +513,12 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "5707d294-dc72-11ee-b70c-0242ac120006": {
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 },
                 {

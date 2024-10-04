@@ -295,7 +295,15 @@
                   "nodegroupid": "3c51740c-dbd0-11ee-8835-0242ac120006",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["99605e36-3924-11ef-82af-0242ac150006"],
-                  "semanticName": "Approvals"
+                  "semanticName": "Approvals",
+                  "nodeOptions": {
+                    "3b267ffe-dbd1-11ee-b0db-0242ac120006": {
+                      "allowInstanceCreation": false
+                    },
+                    "ad22dad6-dbd0-11ee-b0db-0242ac120006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

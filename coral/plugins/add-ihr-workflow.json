@@ -328,7 +328,15 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "3897b87a-1902-11ef-aa9f-0242ac150006",
-                  "semanticName": "Garden Sign Off"
+                  "semanticName": "Garden Sign Off",
+                  "nodeOptions": {
+                    "1200e850-1905-11ef-aa9f-0242ac150006": {
+                      "allowInstanceCreation": false
+                    },
+                    "9382b7b4-1905-11ef-aa9f-0242ac150006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

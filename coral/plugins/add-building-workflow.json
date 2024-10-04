@@ -335,7 +335,15 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['51d184d9-269c-4562-a29b-3ef9a7aa3d3a'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "3897b87a-1902-11ef-aa9f-0242ac150006"
+                  "nodegroupid": "3897b87a-1902-11ef-aa9f-0242ac150006",
+                  "nodeOptions": {
+                    "1200e850-1905-11ef-aa9f-0242ac150006": {
+                      "allowInstanceCreation": false
+                    },
+                    "9382b7b4-1905-11ef-aa9f-0242ac150006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
