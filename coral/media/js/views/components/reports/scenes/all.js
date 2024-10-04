@@ -23,6 +23,8 @@ define([
         "templateid": "50000000-0000-0000-0000-000000000001"
       }
 
+      params.report.hideEmptyNodes = true;
+
       ReportViewModel.apply(this, [params])
 
       // this.report = ko.observable(params.report);
