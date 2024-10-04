@@ -46,9 +46,15 @@ define([
         };
 
         this.getNodeOptions = (nodeId) => {
-            return params.nodeOptions?.[nodeId]
+            const options = params.nodeOptions?.[nodeId] || {};
+            if (options?.config) {
+                options?.config = {
+                    ...this.widget.configJSON,
+                    ...options?.config
+                }
+            }
+            return options
         }
-    
     }
 
     return ko.components.register('default-card', {
