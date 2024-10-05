@@ -148,12 +148,24 @@ define([
       this.saveActiveStep = function () {
         this.disableSaveButton(true);
 
+        // On successful save, completed will goto true after the page has changed. If
+        // an error appears then this will remain false. Which is why the timeout has
+        // been added to disableSaveSubscription as a fail safe
+        const completeSubscription = self.activeStep().complete.subscribe((value) => {
+          if (value) {
+            this.disableSaveButton(false);
+            completeSubscription.dispose();
+          }
+        });
+
         // Saving will go true and once it returns to false re-enable the save button
         const disableSaveSubscription = self.activeStep().saving.subscribe((value) => {
-          if (!value) {
-            this.disableSaveButton(false);
-            disableSaveSubscription.dispose();
-          }
+            if (!value) {
+                setTimeout(() => {
+                    this.disableSaveButton(false);
+                    disableSaveSubscription.dispose();
+                }, 2000)
+            }
         });
 
         self
