@@ -291,7 +291,10 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a1f0e104-d648-11ee-9a11-0242ac180006",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Incident Proposal"
+                  "semanticName": "Incident Proposal",
+                  "hiddenNodes": [
+                    "30d5defa-d64a-11ee-8b04-0242ac180006"
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
