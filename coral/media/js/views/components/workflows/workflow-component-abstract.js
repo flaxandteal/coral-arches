@@ -593,6 +593,8 @@ define([
             return;
           }
 
+          const startingTileLength = self.tiles().length;
+
           const unorderedSavedData = ko.observableArray();
 
           self.tiles().forEach((tile) => {
@@ -654,7 +656,7 @@ define([
           }
 
           const saveSubscription = unorderedSavedData.subscribe((savedData) => {
-            if (savedData.length === self.tiles().length) {
+            if (savedData.length === startingTileLength) {
               self.complete(true);
               self.loading(true);
               self.saving(false);
@@ -719,6 +721,18 @@ define([
 
         this.AlertViewModel = AlertViewModel;
         this.saveOnQuit = ko.observable();
+
+        /**
+         * Override this so that you can customize when the controls should be shown
+         * @return boolean
+         */
+        this.checkShowManyTileControls = ko.observable((tileId) => {
+          return true;
+        });
+
+        this.showManyTileControls = (tileId) => {
+            return this.checkShowManyTileControls()(tileId);
+        }
 
         this.isStepActive = params.isStepActive;
         this.isStepActive.subscribe(function(stepActive) {
@@ -904,6 +918,8 @@ define([
             }
             else {
                 self.complete(true);
+                self.initialize();
+                self.loading(false);
             }
         };
 
