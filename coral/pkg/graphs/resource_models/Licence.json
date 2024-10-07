@@ -676,6 +676,71 @@
                 {
                     "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
                     "config": {
+                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Former Company Role Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "49c4fff5-3c78-4750-a544-9fa88e4ccae5",
+                    "label": {
+                        "en": "Former Company Role Metatype"
+                    },
+                    "node_id": "7b11ad84-7044-11ef-831e-0242ac120006",
+                    "sortorder": 35,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Former Employing Body",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "6da2bd6b-6d68-4a80-bd2e-ff016ae966df",
+                    "label": {
+                        "en": "Former Employing Body"
+                    },
+                    "node_id": "477e4950-7044-11ef-831e-0242ac120006",
+                    "sortorder": 9,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
+                    "config": {
+                        "defaultValue": "6a08646f-a2d8-45f7-b2f5-bafa2200e1f8",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Former Company Role Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "7d60db18-dbb3-4d4c-a69a-c88bdf508b16",
+                    "label": {
+                        "en": "Former Company Role Type"
+                    },
+                    "node_id": "618d8126-7044-11ef-831e-0242ac120006",
+                    "sortorder": 34,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "e5ed8520-c562-48bd-be22-d3465060cfb0",
+                    "config": {
                         "defaultValue": null,
                         "label": "Applied"
                     },
@@ -4919,6 +4984,42 @@
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "27740e7c-7118-11ef-af33-0242ac120006"
                 },
+                {
+                    "description": null,
+                    "domainnode_id": "024eb956-c445-11ee-8be7-0242ac180006",
+                    "edgeid": "08a3bad2-e415-4e95-ba92-962133857fbf",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                    "rangenode_id": "29c225bc-7044-11ef-831e-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "29c225bc-7044-11ef-831e-0242ac120006",
+                    "edgeid": "18dd9096-b0bb-4015-ba03-da26376176a7",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "618d8126-7044-11ef-831e-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "618d8126-7044-11ef-831e-0242ac120006",
+                    "edgeid": "c0be3cf1-d24a-44f0-b66a-6d439c582408",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "7b11ad84-7044-11ef-831e-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "29c225bc-7044-11ef-831e-0242ac120006",
+                    "edgeid": "a0d1a0b3-4feb-415a-96dd-31119f3e277a",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                    "rangenode_id": "477e4950-7044-11ef-831e-0242ac120006"
+                },
                {
                    "description": null,
                    "domainnode_id": "6397b05c-c443-11ee-94bf-0242ac180006",
@@ -7547,6 +7648,109 @@
                     "nodeid": "ff3de496-7117-11ef-83a1-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "former_employing_body",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Organization",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Former Employing Body",
+                    "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
+                    "nodeid": "477e4950-7044-11ef-831e-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "former_company_role_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Former Company Role Metatype",
+                    "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
+                    "nodeid": "7b11ad84-7044-11ef-831e-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "former_company_role_type",
+                    "config": {
+                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Former Company Role Type",
+                    "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
+                    "nodeid": "618d8126-7044-11ef-831e-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "former_companies",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Former Companies",
+                    "nodegroup_id": "6397b05c-c443-11ee-94bf-0242ac180006",
+                    "nodeid": "29c225bc-7044-11ef-831e-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
