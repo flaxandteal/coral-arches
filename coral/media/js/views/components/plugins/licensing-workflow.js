@@ -11,12 +11,8 @@ define([
   'views/components/workflows/licensing-workflow/licence-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
-<<<<<<< HEAD
+  'views/components/workflows/licensing-workflow/transfer-of-licence',
   'views/components/workflows/fetch-latest-tile'
-=======
-  'views/components/workflows/licensing-workflow/fetch-latest-contacts',
-  'views/components/workflows/licensing-workflow/transfer-of-licence'
->>>>>>> a150e651 (feat(#2368): using new transfer of licence component to conditionally render the remove/edit controls on many tiles)
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -94,7 +90,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'fetch-latest-contacts',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'contacts',
                   tilesManaged: 'one',
                   parameters: {
