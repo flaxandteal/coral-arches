@@ -45,10 +45,23 @@ define([
             return (parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i]);
         };
 
-        this.getNodeOptions = (nodeId) => {
-            return params.nodeOptions?.[nodeId]
-        }
-    
+        this.getNodeOptions = (nodeId, widgetConfig = {}) => {
+          const options = params.nodeOptions?.[nodeId] || {};
+          if (options?.config) {
+            options.config = {
+              ...widgetConfig,
+              ...options.config
+            };
+          }
+          Object.keys(options).forEach((key) => {
+            // Should this be used a JS workflow maintain the users
+            // provided reactivity.
+            if (!ko.isObservable(options[key])) {
+              options[key] = ko.observable(options[key]);
+            }
+          });
+          return options;
+        };
     }
 
     return ko.components.register('default-card', {
