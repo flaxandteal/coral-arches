@@ -13817,23 +13817,8 @@
                 {
                     "card_id": "458dcc3f-5b44-4a08-852b-2dacb074f26d",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "en": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
                         "label": "Work Carried Out By",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%"
+                        "placeholder": "Select an option"
                     },
                     "id": "e43d604c-ad2d-4a0d-b99d-41683e87d22d",
                     "label": {
@@ -13842,7 +13827,7 @@
                     "node_id": "898cb31e-355a-45c3-a3a1-4396b7307c15",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "c225523c-a711-4088-9b11-89f31c2d1243",
@@ -31546,9 +31531,20 @@
                 {
                     "alias": "work_carried_out_by_value",
                     "config": {
-                        "en": ""
+                        "graphs": [
+                            {
+                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Organization",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
-                    "datatype": "string",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": "",
