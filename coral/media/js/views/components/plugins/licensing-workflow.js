@@ -11,7 +11,12 @@ define([
   'views/components/workflows/licensing-workflow/licence-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
+<<<<<<< HEAD
   'views/components/workflows/fetch-latest-tile'
+=======
+  'views/components/workflows/licensing-workflow/fetch-latest-contacts',
+  'views/components/workflows/licensing-workflow/transfer-of-licence'
+>>>>>>> a150e651 (feat(#2368): using new transfer of licence component to conditionally render the remove/edit controls on many tiles)
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
     viewModel: function (params) {
@@ -440,16 +445,15 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
-                    hiddenNodes: [
-                      "1938e0ac-703d-11ef-934d-0242ac120006"
-                    ],
+                    hiddenNodes: ['1938e0ac-703d-11ef-934d-0242ac120006'],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 },
