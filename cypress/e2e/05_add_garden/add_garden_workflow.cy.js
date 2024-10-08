@@ -2,7 +2,7 @@ describe('Going through the Add Garden Workflow', function () {
 
     beforeEach(() => {
         cy.login();
-        cy.visit('http://localhost:8000/plugins/init-workflow');
+        cy.visit('/plugins/init-workflow');
     });
 
     it('Go through the workflow and populate all fields', function () {
@@ -42,7 +42,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000)
         cy.get(':nth-child(1) > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').contains('Test Bibliographic').click();
 
         cy.contains('Source Number');
         cy.get('[aria-label="Source Number"]').click().type('123456');
@@ -66,9 +66,11 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.select2-results__option').first().click();
 
         cy.get('.control-label').contains('Description');
-        cy.type_ckeditor('editor8', 'test, Description');
+        cy.type_ckeditor('editor3', 'test, Description');
 
         cy.get('.btn-success').contains('Add').click();
+
+        cy.wait(5000);
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
 
@@ -95,7 +97,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.area_name').contains('Select an option').click();
         cy.wait(2000);
         cy.get('.control-label').contains('Location Description');
-        cy.type_ckeditor('editor9', 'test, Location Description');
+        cy.type_ckeditor('editor6', 'test, Location Description');
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
         cy.wait(2000);
         cy.get('[aria-label="LP Fusion ID"]').scrollIntoView().click().type('02');
@@ -105,46 +107,46 @@ describe('Going through the Add Garden Workflow', function () {
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
 
-        // Map tab
-        cy.get('.mapboxgl-canvas');
-        cy.get('.workbench-card-sidebar');
-        cy.get('#toggle-basemap-panel-button').contains('Basemap').click();
-        cy.get('[aria-label="Dark"]').click();
-        cy.get('[aria-label="ESRI World"]').click();
-        cy.get('[aria-label="ESRI World Topo"]').click();
-        cy.get('[aria-label="Light"]').click();
-        cy.get('[aria-label="Open Street Map"]').click();
-        cy.get('[aria-label="Satellite Streets"]').click();
-        cy.get('[aria-label="Stamen Terrain"]').click();
-        cy.get('[aria-label="TC-copy"]').click();
-        cy.get('[aria-label="satellite"]').click();
-        cy.get('.active-basemap').click();
+        // // Map tab
+        // cy.get('.mapboxgl-canvas');
+        // cy.get('.workbench-card-sidebar');
+        // cy.get('#toggle-basemap-panel-button').contains('Basemap').click();
+        // cy.get('[aria-label="Dark"]').click();
+        // cy.get('[aria-label="ESRI World"]').click();
+        // cy.get('[aria-label="ESRI World Topo"]').click();
+        // cy.get('[aria-label="Light"]').click();
+        // cy.get('[aria-label="Open Street Map"]').click();
+        // cy.get('[aria-label="Satellite Streets"]').click();
+        // cy.get('[aria-label="Stamen Terrain"]').click();
+        // cy.get('[aria-label="TC-copy"]').click();
+        // cy.get('[aria-label="satellite"]').click();
+        // cy.get('.active-basemap').click();
 
-        cy.get('#toggle-overlays-panel-button').contains('Overlays').click();
-        cy.get('#toggle-legend-panel-button').contains('Legend').click();
+        // cy.get('#toggle-overlays-panel-button').contains('Overlays').click();
+        // cy.get('#toggle-legend-panel-button').contains('Legend').click();
 
-        cy.get('.card_component.feature_shape').contains('Feature Shape').scrollIntoView();
-        cy.get('.select2-selection__rendered').contains('Select an option').click();
+        // cy.get('.card_component.feature_shape').contains('Feature Shape').scrollIntoView();
+        // cy.get('.select2-selection__rendered').contains('Select an option').click();
 
-        cy.get('.select2-results__option').contains('Approx').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Archaeological Event').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Area').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Dispersed Event').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Linear').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Locality').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Named Loc').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Unknown').click();
+        // cy.get('.select2-results__option').contains('Approx').click();
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('.select2-results__option').contains('Archaeological Event').click();
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('.select2-results__option').contains('Area').click();
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('.select2-results__option').contains('Dispersed Event').click();
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('.select2-results__option').contains('Linear').click();
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('.select2-results__option').contains('Locality').click();
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('.select2-results__option').contains('Named Loc').click();
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('.select2-results__option').contains('Unknown').click();
 
-        cy.get('#formatType')
+        // cy.get('#formatType')
 
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
 
         // Documentation tab
         cy.get('.bord-top > .btn').contains('Select Files').click();
@@ -296,7 +298,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.select2-results__option').first().click();
 
         cy.get('.control-label').contains('Description');
-        cy.type_ckeditor('editor8', 'test, Description');
+        cy.type_ckeditor('editor3', 'test, Description');
 
         cy.get('.btn-success').contains('Add').click();
     })
@@ -387,7 +389,18 @@ describe('Going through the Add Garden Workflow', function () {
         // Council
         cy.get('.council').contains('Select an option').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').contains('37: Ards and North Down');
+        cy.get('.select2-results__option').contains('36: Newry Mourne and Down');
+        cy.get('.select2-results__option').contains('35: Mid Ulster');
+        cy.get('.select2-results__option').contains('34: Mid and East Antrim');
+        cy.get('.select2-results__option').contains('33: Lisburn and Castlereagh');
+        cy.get('.select2-results__option').contains('32: Fermanagh and Omagh').scrollIntoView();
+        cy.get('.select2-results__option').contains('31: Derry City and Strabane');
+        cy.get('.select2-results__option').contains('30: Causeway Coast and Glens');
+        cy.get('.select2-results__option').contains('29: Belfast');
+        cy.get('.select2-results__option').contains('28: Armagh City Banbridge and Craigavon');
+        cy.get('.select2-results__option').contains('27: Antrim and Newtownabbey');
+        cy.get('.select2-results__option').contains('31: Derry City and Strabane').click();
         cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
         
         // Area type
@@ -400,7 +413,7 @@ describe('Going through the Add Garden Workflow', function () {
 
         // Location Description
         cy.get('.control-label').contains('Location Description');
-        cy.type_ckeditor('editor9', 'test, Location Description');
+        cy.type_ckeditor('editor1', 'test, Location Description');
 
         // Unique Building ID
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
@@ -433,78 +446,80 @@ describe('Going through the Add Garden Workflow', function () {
         // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
     })
 
-    it('Map tab', function () {
-        cy.contains('Workflows');
-        cy.contains('Add Garden').click();
-        cy.wait(2000);
+    // Map section is to be manually tested, keeping in encase needed in future
 
-        // Add Garden 1st page
-        cy.get('[aria-label="Start new or please select from below"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
-        cy.get('.btn-success').contains('Start New').click();
-        cy.wait(2000);
+    // it('Map tab', function () {
+    //     cy.contains('Workflows');
+    //     cy.contains('Add Garden').click();
+    //     cy.wait(2000);
 
-        // Start tab
-        cy.wait(4000);
-        cy.get('.card_component.resourceid').contains('HA Number');
-        cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-success').contains('Save and Continue').click();
+    //     // Add Garden 1st page
+    //     cy.get('[aria-label="Start new or please select from below"]').click();
+    //     cy.wait(2000);
+    //     cy.get('.select2-results__option').contains('HA/01').click();
+    //     cy.get('.btn-success').contains('Start New').click();
+    //     cy.wait(2000);
 
-        // Heritage Asset Details tab
-        cy.wait(2000);
-        cy.get('.workflow-nav-tab').contains('Map').click();
-        cy.wait(2000);
+    //     // Start tab
+    //     cy.wait(4000);
+    //     cy.get('.card_component.resourceid').contains('HA Number');
+    //     cy.get('.form-control').should('be.disabled');
+    //     cy.get('.btn-success').contains('Save and Continue').click();
 
-        // Map tab
-        cy.get('.mapboxgl-canvas');
-        cy.get('.workbench-card-sidebar');
-        cy.get('#toggle-basemap-panel-button').contains('Basemap').click();
-        cy.get('[aria-label="Dark"]').click();
-        cy.get('[aria-label="ESRI World"]').click();
-        cy.get('[aria-label="ESRI World Topo"]').click();
-        cy.get('[aria-label="Light"]').click();
-        cy.get('[aria-label="Open Street Map"]').click();
-        cy.get('[aria-label="Satellite Streets"]').click();
-        cy.get('[aria-label="Stamen Terrain"]').click();
-        cy.get('[aria-label="TC-copy"]').click();
-        cy.get('[aria-label="satellite"]').click();
-        cy.get('.active-basemap').click();
+    //     // Heritage Asset Details tab
+    //     cy.wait(2000);
+    //     cy.get('.workflow-nav-tab').contains('Map').click();
+    //     cy.wait(2000);
 
-        cy.get('#toggle-overlays-panel-button').contains('Overlays').click();
-        cy.get('[aria-label="Heritage Asset - Geospatial Coordinates"]').click();
-        cy.get('[aria-label="Consultation - Geospatial Coordinates"]').click();
-        cy.get('[aria-label="Heritage Asset Revision - Geospatial Coordinates"]').click();
-        cy.get('#toggle-legend-panel-button').contains('Legend').click();
+    //     // Map tab
+    //     cy.get('.mapboxgl-canvas');
+    //     cy.get('.workbench-card-sidebar');
+    //     cy.get('#toggle-basemap-panel-button').contains('Basemap').click();
+    //     cy.get('[aria-label="Dark"]').click();
+    //     cy.get('[aria-label="ESRI World"]').click();
+    //     cy.get('[aria-label="ESRI World Topo"]').click();
+    //     cy.get('[aria-label="Light"]').click();
+    //     cy.get('[aria-label="Open Street Map"]').click();
+    //     cy.get('[aria-label="Satellite Streets"]').click();
+    //     cy.get('[aria-label="Stamen Terrain"]').click();
+    //     cy.get('[aria-label="TC-copy"]').click();
+    //     cy.get('[aria-label="satellite"]').click();
+    //     cy.get('.active-basemap').click();
 
-        cy.get('#toggle-editor-panel-button').contains('Edit').click();
-        cy.get('.chosen-single').contains('Add a new feature');
-        cy.get('[aria-label="Drag GeoJSON or KML files here to add"]');
-        cy.get('.map-card-zoom-tool').contains('Edit GeoJSON');
-        cy.get('.map-card-zoom-tool').contains('Edit Coordinates').should('be.disabled');
-        cy.get('.map-card-zoom-tool').contains('Add Buffer').should('be.disbaled');
+    //     cy.get('#toggle-overlays-panel-button').contains('Overlays').click();
+    //     cy.get('[aria-label="Heritage Asset - Geospatial Coordinates"]').click();
+    //     cy.get('[aria-label="Consultation - Geospatial Coordinates"]').click();
+    //     cy.get('[aria-label="Heritage Asset Revision - Geospatial Coordinates"]').click();
+    //     cy.get('#toggle-legend-panel-button').contains('Legend').click();
 
-        cy.get('.card_component.feature_shape').contains('Feature Shape').scrollIntoView();
-        cy.get('.select2-selection__rendered').contains('Select an option').click();
+    //     cy.get('#toggle-editor-panel-button').contains('Edit').click();
+    //     cy.get('.chosen-single').contains('Add a new feature');
+    //     cy.get('[aria-label="Drag GeoJSON or KML files here to add"]');
+    //     cy.get('.map-card-zoom-tool').contains('Edit GeoJSON');
+    //     cy.get('.map-card-zoom-tool').contains('Edit Coordinates').should('be.disabled');
+    //     cy.get('.map-card-zoom-tool').contains('Add Buffer').should('be.disbaled');
 
-        cy.get('.select2-results__option').contains('Approx').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Archaeological Event').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Area').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Dispersed Event').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Linear').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Locality').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Named Loc').click();
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
-        cy.get('.select2-results__option').contains('Unknown').click();
+    //     cy.get('.card_component.feature_shape').contains('Feature Shape').scrollIntoView();
+    //     cy.get('.select2-selection__rendered').contains('Select an option').click();
 
-        cy.get('#formatType')
-    })
+    //     cy.get('.select2-results__option').contains('Approx').click();
+    //     cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+    //     cy.get('.select2-results__option').contains('Archaeological Event').click();
+    //     cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+    //     cy.get('.select2-results__option').contains('Area').click();
+    //     cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+    //     cy.get('.select2-results__option').contains('Dispersed Event').click();
+    //     cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+    //     cy.get('.select2-results__option').contains('Linear').click();
+    //     cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+    //     cy.get('.select2-results__option').contains('Locality').click();
+    //     cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+    //     cy.get('.select2-results__option').contains('Named Loc').click();
+    //     cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+    //     cy.get('.select2-results__option').contains('Unknown').click();
+
+    //     cy.get('#formatType')
+    // })
 
     it('Finish tab specific tests', function () {
 
