@@ -20,8 +20,10 @@ define([
     this.resourceModelDigitalObjectNodeId =
       params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
     this.fileObjectNamePrefix = params?.fileObjectNamePrefix || 'Files for ';
+    this.nodeSuffixId = params.nodeSuffixId ?? null
     this.resourceParentTile = params.resourceParentTile;
 
+    console.log("node prefix", this.additionalNodePrefixId)
     /**
      * The group id refers to the Digital Object name group.
      * The name node refers to the child node of the group that configures the name.
@@ -102,15 +104,35 @@ define([
         sortorder: 0
       };
 
+      const fetchTileData = async (resourceId, nodeId) => {
+        const tilesResponse = await window.fetch(
+          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+            (nodeId ? `?nodeid=${nodeId}` : '')
+        );
+        const data = await tilesResponse.json();
+        return data.tiles;
+      };
+
+      const fetchNodeData = async (resourceId, nodeId) => {
+        const tile = await fetchTileData(resourceId, nodeId);
+        const latestTile = tile[tile.length - 1]
+        suffixString = latestTile.data[this.nodeSuffixId].en?.value
+        return suffixString;
+      }
+
       const resource = await window.fetch(
         arches.urls.api_resources(ko.unwrap(self.resourceModelId)) + '?format=json'
       );
+      let suffixString = '';
+      if(self.nodeSuffixId){
+        suffixString = ' ' + await fetchNodeData(ko.unwrap(self.resourceModelId), self.nodeSuffixId)
+      }
       if (resource?.ok) {
         const resourceData = await resource.json();
         nameTemplate.data[self.digitalResourceNameNodeId] = {
           en: {
             direction: 'ltr',
-            value: self.fileObjectNamePrefix + resourceData.displayname
+            value: self.fileObjectNamePrefix + resourceData.displayname + suffixString
           }
         };
         /**
