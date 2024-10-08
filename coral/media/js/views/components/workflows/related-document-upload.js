@@ -23,7 +23,6 @@ define([
     this.nodeSuffixId = params.nodeSuffixId ?? null
     this.resourceParentTile = params.resourceParentTile;
 
-    console.log("node prefix", this.additionalNodePrefixId)
     /**
      * The group id refers to the Digital Object name group.
      * The name node refers to the child node of the group that configures the name.
@@ -116,6 +115,9 @@ define([
       const fetchNodeData = async (resourceId, nodeId) => {
         const tile = await fetchTileData(resourceId, nodeId);
         const latestTile = tile[tile.length - 1]
+        if(!latestTile) {
+          return console.error("No tile data available for suffix")
+        }
         suffixString = latestTile.data[this.nodeSuffixId].en?.value
         return suffixString;
       }
@@ -135,6 +137,7 @@ define([
             value: self.fileObjectNamePrefix + resourceData.displayname + suffixString
           }
         };
+
         /**
          * Check if the tile has already been saved and has a tile id assigned.
          */
