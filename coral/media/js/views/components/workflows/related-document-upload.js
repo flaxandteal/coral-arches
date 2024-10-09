@@ -10,7 +10,7 @@ define([
 ], function ($, _, ko, koMapping, uuid, arches, uploadDocumentStepTemplate) {
   function viewModel(params) {
     var self = this;
-
+    
     /**
      * Both of these values should come from the first card you initialized in
      * the workflow.
@@ -22,7 +22,6 @@ define([
     this.fileObjectNamePrefix = params?.fileObjectNamePrefix || 'Files for ';
     this.nodeSuffixId = params.nodeSuffixId ?? null
     this.resourceParentTile = params.resourceParentTile;
-
     /**
      * The group id refers to the Digital Object name group.
      * The name node refers to the child node of the group that configures the name.
@@ -113,12 +112,18 @@ define([
       };
 
       const fetchNodeData = async (resourceId, nodeId) => {
-        const tile = await fetchTileData(resourceId, nodeId);
-        const latestTile = tile[tile.length - 1]
-        if(!latestTile) {
+        const tiles = await fetchTileData(resourceId, nodeId);
+        let matchingTile = null
+        for(const tile of tiles) {
+          if(tile.parenttile === this.resourceParentTile) {
+            matchingTile = tile;
+            break;
+          }
+        }
+        if(!matchingTile) {
           return console.error("No tile data available for suffix")
         }
-        suffixString = latestTile.data[this.nodeSuffixId].en?.value
+        suffixString = matchingTile.data[this.nodeSuffixId].en?.value
         return suffixString;
       }
 
