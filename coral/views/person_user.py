@@ -57,7 +57,7 @@ class PersonUserSignupView(BaseManagerView):
         link = RegistrationLink()
         link.person = person._.resource
         link.metadata = {
-            "groups": groups
+            "groups": groups,
         }
         link.save()
         encrypted_person_id = AES.encrypt(f"{person.id}:{link.registrationlinkid}")

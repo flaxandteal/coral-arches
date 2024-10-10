@@ -154,17 +154,13 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True).items()
             }
             print("RECALC", 2, 1)
-            for nodegroup, perms in nodegroups.items():
-                nodegroup_key = f"ng:{nodegroup}"
-                for perm in perms:
-                    self._enforcer.add_policy(group_key, nodegroup_key, str(perm))
             print("RECALC", 2, 2)
-            nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph")
+            nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph").only("graph__graphid", "nodegroup_id")
             print("RECALC", 2, 3)
             graphs = {}
             graph_perms = {}
             for node in nodes:
-                key = f"gp:{node.graph.pk}"
+                key = f"gp:{node.graph.graphid}"
                 graph_perms.setdefault(key, set())
                 graph_perms[key] |= set(nodegroups[str(node.nodegroup_id)])
                 graphs[key] = node.graph
@@ -517,8 +513,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         return map_layers_with_write_permission
 
-    @context_free
-    def get_nodegroups_by_perm(self, user, perms, any_perm=True):
+    def get_nodegroups_by_perm(self, user: User, perms: str | Iterable[str], any_perm: bool=True) -> list[str]:
         """
         returns a list of node groups that a user has the given permission on
 
@@ -528,47 +523,11 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         any_perm -- True to check ANY perm in "perms" or False to check ALL perms
 
         """
-
-        logger.debug(f"Fetching node group permissions: {user} {perms}")
-
-        all_nodegroups = list(NodeGroup.objects.values_list("nodegroupid", flat=True))
-        if user and user.is_superuser:
-            return all_nodegroups
-        if not isinstance(perms, list):
-            perms = [perms]
-
-        formatted_perms = []
-        # in some cases, `perms` can have a `model.` prefix
-        for perm in perms:
-            if len(perm.split(".")) > 1:
-                formatted_perms.append(perm.split(".")[1])
-            else:
-                formatted_perms.append(perm)
-
-        permitted_nodegroups = set()
-        targets = {}
-        user = self._subj_to_str(user)
-        for _, obj, act in self._enforcer.get_implicit_permissions_for_user(user):
-            if obj.startswith("ng:"):
-                ng = obj[3:]
-                targets.setdefault(ng, set())
-                targets[ng].add(act)
-
-        for nodegroup, explicit_perms in targets.items():
-            if len(explicit_perms):
-                if any_perm:
-                    if len(set(formatted_perms) & set(explicit_perms)):
-                        permitted_nodegroups.add(nodegroup)
-                else:
-                    if set(formatted_perms) == set(explicit_perms):
-                        permitted_nodegroups.add(nodegroup)
-            else:  # if no explicit permissions, object is considered accessible by all with group permissions
-                permitted_nodegroups.add(nodegroup)
-        # If a nodegroup has no explicit permissions, not even appearing
-        # in the Casbin matrix, we add it here.
-        permitted_nodegroups |= set(all_nodegroups) - set(targets)
-
-        return list(permitted_nodegroups)
+        return list(set(
+            str(nodegroup.pk)
+            for group in user.groups
+            for nodegroup in get_nodegroups_by_perm_for_user_or_group(group, perms, any_perm=any_perm)
+        ))
 
     @context_free
     def check_resource_instance_permissions(self, user, resourceid, permission):
