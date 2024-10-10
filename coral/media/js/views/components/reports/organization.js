@@ -17,6 +17,7 @@ define([
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
             this.report = params.report;
+            this.summary = params.summary
 
             Object.assign(self, reportUtils);
             self.sections = [
@@ -39,9 +40,13 @@ define([
             self.fullReportConfig = {
                 id: 'organization',
                 label: 'Organization',
+                summaryNodeGroups: [
+                    "e8431c5d-8098-11ea-8348-f875a44e0e11",
+                    "af3b0116-29a9-11eb-8333-f875a44e0e11",
+                    "1b6f9cb4-51ae-11eb-a1fe-f875a44e0e11"
+                ],
                 ignoreNodes: []
             }
-
 
             self.nameDataConfig = {
                 name: 'names',

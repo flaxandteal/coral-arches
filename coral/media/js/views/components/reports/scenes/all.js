@@ -22,10 +22,19 @@ define([
         "preload_resource_data": true,
         "templateid": "50000000-0000-0000-0000-000000000001"
       }
+      this.nodeGroups = params.nodeGroups ?? null
+      this.showRelated = params.showRelated ?? true
 
       params.report.hideEmptyNodes = true;
 
-      ReportViewModel.apply(this, [params])
+      // nodeGroups controls what groups to show. If it is null it will render everything
+      if (this.nodeGroups?.length > 0) {
+        params.report.cards = params.report.cards.filter(card => {
+            return this.nodeGroups.includes(card.nodegroupid);
+        });
+    }
+
+      ReportViewModel.apply(this, [params])      
 
       // this.report = ko.observable(params.report);
       // this.configForm = params.configForm;
