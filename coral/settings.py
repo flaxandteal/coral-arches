@@ -201,7 +201,6 @@ INSTALLED_APPS = (
     "corsheaders",
     "oauth2_provider",
     "django_celery_results",
-    "compressor",
     "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",

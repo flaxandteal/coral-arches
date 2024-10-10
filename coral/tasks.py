@@ -15,9 +15,9 @@ from tempfile import NamedTemporaryFile
 
 from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
+from arches.management.commands.packages import Command as PackageCommand
 
 from coral.permissions.casbin import CasbinPermissionFramework
-from coral.management.commands.packages import Command as PackageCommand
 
 logging.basicConfig()
 
