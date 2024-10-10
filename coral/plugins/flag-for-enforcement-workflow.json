@@ -76,7 +76,14 @@
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "229501c2-b552-11ee-805b-0242ac120006",
-                  "semanticName": "Flagged Date"
+                  "semanticName": "Flagged Date",
+                  "nodeOptions": {
+                    "2295085c-b552-11ee-805b-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",

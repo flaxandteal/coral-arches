@@ -105,7 +105,69 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '05f6b846-5d49-11ee-911e-0242ac130003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                    "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1add78d0-c450-11ee-8be7-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "239c373a-c451-11ee-8be7-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1add78d0-c450-11ee-8be7-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                   }
                 },
                 {
@@ -301,7 +363,69 @@ define([
                       '684121d8-48ce-11ee-8e4e-0242ac140007',
                       '68412778-48ce-11ee-8e4e-0242ac140007'
                     ],
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 }
               ]
@@ -324,7 +448,69 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69f2eb3c-c430-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 },
                 {
@@ -335,7 +521,69 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'c9f504b4-c42d-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 },
                 {
@@ -346,7 +594,69 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '1887f678-c42d-11ee-bc4b-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 },
                 {
@@ -444,7 +754,69 @@ define([
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 },
                 {
@@ -455,7 +827,69 @@ define([
                     title: 'Extension of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 }
               ]
@@ -484,7 +918,69 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 },
                 {
