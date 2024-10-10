@@ -27,7 +27,6 @@ define([
         if (this.widgets === undefined) { // could be [], so checking specifically for undefined
             this.widgets = params.widgets || [];
         }
-        
         this.geojsonWidgets = this.widgets.filter(function(widget){ return widget.datatype.datatype === 'geojson-feature-collection'; });
         this.newNodeId = null;
         this.featureLookup = {};
@@ -43,8 +42,7 @@ define([
         this.bufferResult = ko.observable();
         this.bufferAddNew = ko.observable(false);
         this.allowAddNew = this.card && this.card.canAdd() && this.tile !== this.card.newTile;
-        this.disableEdit = ko.observable(params.disableEdit ?? true)
-        console.log("custom editor", this.disableEdit())
+        this.disableEdit = ko.observable(params.disableEdit ?? false)
         var selectSource = this.selectSource();
         var selectSourceLayer = this.selectSourceLayer();
         var selectFeatureLayers = selectFeatureLayersFactory(resourceId, selectSource, selectSourceLayer);
@@ -189,7 +187,7 @@ define([
             params.fitBoundsOptions = { padding: {top: padding, left: padding + 200, bottom: padding, right: padding + 200} };
         }
 
-        params.activeTab = 'editor';
+        params.activeTab = this.disableEdit() ? null : 'editor';
         params.sources = Object.assign({
             "geojson-editor-data": {
                 "type": "geojson",

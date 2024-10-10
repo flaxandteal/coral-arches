@@ -267,7 +267,12 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
-                  "semanticName": "Geometry"
+                  "semanticName": "Geometry",
+                  "nodeOptions": {
+                    "87d3d7dc-f44f-11eb-bee9-a87eeabdefba": {
+                      "disableEdit": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "fetch-latest-tile",
