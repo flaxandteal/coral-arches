@@ -25,7 +25,6 @@ define([
         });
       });
     }
-    console.log("util", this.graphid, this.title)
 
     this.form
       .card()
