@@ -6,7 +6,7 @@ on:
       - '**'
   workflow_dispatch:
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:coral-7.6
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:feature-plugin-permissions
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
@@ -127,6 +127,18 @@ jobs:
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/
             PUBLIC_SERVER_ADDRESS=http://localhost:8000/
+      - name: Export DB SQL
+        id: export_model_db
+        run: |
+          docker run --rm --network host postgres pg_dump -d postgresql://postgres:postgres@localhost:5432/arches > ~/coral-db.sql
+      - name: Cache DB
+        id: cache_model_db
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-model-db
+        with:
+          path: ~/coral-db.sql
+          key: db-${{ hashFiles('coral/pkg/**') }}
       - name: Extract image name
         id: extract_image_name
         run: |
