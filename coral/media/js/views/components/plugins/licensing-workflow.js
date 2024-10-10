@@ -815,6 +815,11 @@ define([
                         "config":{
                           "maxDate":"today"
                         }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
                       }
                     }
                   }
@@ -888,7 +893,13 @@ define([
                         "config":{
                           "maxDate":"today"
                         }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
                       }
+
                     }
                   }
                 }
