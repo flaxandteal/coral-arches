@@ -25,7 +25,6 @@ define([
         });
       });
     }
-    console.log("util", this.graphid, this.title)
 
     this.form
       .card()
@@ -133,24 +132,6 @@ define([
           saveSubscription.dispose(); /* this-disposing subscription only runs once */
         }
       });
-    };
-
-    this.getNodeOptions = (nodeId, widgetConfig = {}) => {
-      const options = params.nodeOptions?.[nodeId] || {};
-      if (options?.config) {
-          options.config = {
-          ...widgetConfig,
-          ...options.config
-          };
-      }
-      Object.keys(options).forEach((key) => {
-          // Should this be used a JS workflow maintain the users
-          // provided reactivity.
-          if (!ko.isObservable(options[key])) {
-          options[key] = ko.observable(options[key]);
-          }
-      });
-      return options;
     };
   }
 
