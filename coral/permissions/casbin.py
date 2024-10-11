@@ -525,8 +525,8 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         """
         return list(set(
             str(nodegroup.pk)
-            for group in user.groups
-            for nodegroup in get_nodegroups_by_perm_for_user_or_group(group, perms, any_perm=any_perm).items()
+            for group in user.groups.all()
+            for nodegroup in get_nodegroups_by_perm_for_user_or_group(group, perms, any_perm=any_perm)
         ))
 
     @context_free
