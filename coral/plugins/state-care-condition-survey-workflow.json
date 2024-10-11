@@ -21,12 +21,13 @@
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
                   "nodegroupid": "07428674-5020-11ef-b77e-0242ac120006",
                   "semanticName": "Heritage Asset",
-                  "labels": [["Heritage Asset", "SMR Number"]],
                   "nodeOptions": {
                     "07428674-5020-11ef-b77e-0242ac120006": {
                       "disabled": true,
+                      "allowInstanceCreation": false,
                       "config": {
-                        "disabled": true
+                        "disabled": true,
+                        "label": "SMR Number"
                       }
                     }
                   }
