@@ -86,7 +86,12 @@ define([
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
                     nodegroupid: '76fc577c-d7d7-11ee-ade0-0242ac120006',
                     resourceid: "['target-step']['target-record'][0]['selectedResourceId']",
-                    parenttileid: "['relating-step']['relating-record'][0]['tileId']"
+                    parenttileid: "['relating-step']['relating-record'][0]['tileId']",
+                    nodeOptions: {
+                      "e561be82-d7d7-11ee-ade0-0242ac120006": {
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 }
               ]

@@ -137,7 +137,15 @@
                   "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["346006e6-d23e-11ee-9ae7-0242ac180006"],
                   "nodegroupid": "345ffce6-d23e-11ee-9ae7-0242ac180006",
-                  "semanticName": "Proposal"
+                  "semanticName": "Proposal",
+                  "nodeOptions": {
+                    "5261762e-d23f-11ee-9ae7-0242ac180006": {
+                      "allowInstanceCreation": false
+                    },
+                    "656e16e0-d240-11ee-9373-0242ac180006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -207,7 +215,12 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "82c9eef6-2d5a-11ef-8722-0242ac120006"
+                  "nodegroupid": "82c9eef6-2d5a-11ef-8722-0242ac120006",
+                  "nodeOptions": {
+                    "a408358e-2d5d-11ef-8722-0242ac120006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

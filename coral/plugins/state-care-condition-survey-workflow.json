@@ -21,7 +21,15 @@
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
                   "nodegroupid": "07428674-5020-11ef-b77e-0242ac120006",
                   "semanticName": "Heritage Asset",
-                  "labels": [["Heritage Asset", "SMR Number"]]
+                  "labels": [["Heritage Asset", "SMR Number"]],
+                  "nodeOptions": {
+                    "07428674-5020-11ef-b77e-0242ac120006": {
+                      "disabled": true,
+                      "config": {
+                        "disabled": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
@@ -134,8 +142,12 @@
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
                   "nodegroupid": "5a955770-532c-11ef-9d2a-0242ac120006",
                   "semanticName": "Sign Off",
-                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
-
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
+                  "nodeOptions": {
+                    "af2087a6-532c-11ef-9d2a-0242ac120006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

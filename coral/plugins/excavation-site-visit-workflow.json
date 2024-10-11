@@ -96,7 +96,12 @@
                     "2a5b99ae-fe48-11ea-aa8a-f875a44e0e11",
                     "2a5bc0a2-fe48-11ea-ae9c-f875a44e0e11"
                   ],
-                  "nodegroupid": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11"
+                  "nodegroupid": "2a5b99a9-fe48-11ea-9deb-f875a44e0e11",
+                  "nodeOptions": {
+                    "2a5b99ad-fe48-11ea-84a1-f875a44e0e11": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
