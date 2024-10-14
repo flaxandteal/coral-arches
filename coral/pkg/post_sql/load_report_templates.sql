@@ -15,3 +15,5 @@ update graphs set templateid = '407019fd-69e4-4aa4-a054-1466acaf8687' where grap
 update graphs set templateid = '4c2ed0b0-c278-49e2-9ddf-ba44aa77a6f3' where graphid = 'f9045867-8861-11ea-b06f-f875a44e0e11'; -- Period
 update graphs set templateid = '9e9f8e55-3ea9-4bd3-8b11-c1a519fbcfcc' where graphid = '22477f01-1a44-11e9-b0a9-000d3ab1e588'; -- Person
 update graphs set templateid = '6b183add-a159-4d2b-a6b0-3f426d8c08a1' where graphid = '78b32d8c-b6f2-11ea-af42-f875a44e0e11'; -- Place
+update graphs set templateid = '7027c51b-0083-489f-80cf-b12d856b239f' where graphid = 'cc5da227-24e7-4088-bb83-a564c4331efd'; -- Licence
+update graphs set templateid = '60766385-68a0-4c63-b702-f5b30e4732fa' where graphid = 'c0098070-d052-4449-982b-952507306c03'; -- State Care
