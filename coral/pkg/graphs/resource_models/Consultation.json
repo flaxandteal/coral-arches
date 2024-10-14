@@ -1946,33 +1946,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "d07345b8-0c77-4fcf-a317-63e698cc07bd",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": null,
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
-                    "is_editable": true,
-                    "name": {
-                        "en": "B File Reference"
-                    },
-                    "nodegroup_id": "e85f6714-24cc-11ef-a3a4-0242ac130006",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "e26ffefc-fb16-11ee-b5d2-0242ac190006",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -11990,35 +11963,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d07345b8-0c77-4fcf-a317-63e698cc07bd",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "B File Reference",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%%"
-                    },
-                    "id": "f326b148-bc97-4957-8f9c-d4366cf5a2bb",
-                    "label": {
-                        "en": "B File Reference"
-                    },
-                    "node_id": "09ffd8c2-24cd-11ef-97ad-0242ac130006",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "cde07ceb-4018-4c4c-9810-3a61d36fe842",
                     "config": {
                         "defaultValue": {
@@ -15160,15 +15104,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
-                    "edgeid": "5bcc7241-604b-4d81-94e4-752086a44c79",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
-                    "rangenode_id": "e85f6714-24cc-11ef-a3a4-0242ac130006"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "caf5bff1-a3d7-11e9-aa28-00224800b26d",
                     "edgeid": "5d89cd19-51a5-11eb-9a3d-f875a44e0e11",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -15571,15 +15506,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.ics.forth.gr/isl/CRMsci/O24i_was_measured_by",
                     "rangenode_id": "a1daff8e-0c52-11ef-a9bf-0242ac140006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "e85f6714-24cc-11ef-a3a4-0242ac130006",
-                    "edgeid": "646dd41b-01e5-4781-ac5b-d2e6b19e38d7",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "09ffd8c2-24cd-11ef-97ad-0242ac130006"
                 },
                 {
                     "description": null,
@@ -17853,12 +17779,6 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "e26ffc04-fb16-11ee-b5d2-0242ac190006",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "e85f6714-24cc-11ef-a3a4-0242ac130006",
                     "parentnodegroup_id": null
                 },
                 {
@@ -22310,29 +22230,6 @@
                     "nodeid": "094eb7ce-0c52-11ef-8f48-0242ac140006",
                     "ontologyclass": "http://www.ics.forth.gr/isl/CRMsci/S21_Measurement",
                     "parentproperty": "http://www.ics.forth.gr/isl/CRMsci/O24i_was_measured_by",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "b_file_reference_number",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "B File Reference Number",
-                    "nodegroup_id": "e85f6714-24cc-11ef-a3a4-0242ac130006",
-                    "nodeid": "09ffd8c2-24cd-11ef-97ad-0242ac130006",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -30949,29 +30846,6 @@
                     "nodeid": "e4cd8a66-9377-11ea-b4d9-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "b_file_reference",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "hascustomalias": false,
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "B File Reference",
-                    "nodegroup_id": "e85f6714-24cc-11ef-a3a4-0242ac130006",
-                    "nodeid": "e85f6714-24cc-11ef-a3a4-0242ac130006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
-                    "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
