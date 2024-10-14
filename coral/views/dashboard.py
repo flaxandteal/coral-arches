@@ -1,6 +1,7 @@
 from django.views.generic import View
 from django.http import JsonResponse
 from arches.app.models import models
+from arches.app.models.tile import Resource
 from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
@@ -11,6 +12,7 @@ import json
 import logging
 from itertools import chain 
 import html
+
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -71,7 +73,7 @@ class Dashboard(View):
                     if strategy:
                         strategies.add(self.select_strategy(groupId))
                 for strategy in strategies:
-                    if sort_by is not None and sort_order is not None and sort_by in sort_options:
+                    if sort_by is not None and sort_order is not None and sort_by:
                         resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
                     else:
                         resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id)
@@ -250,7 +252,7 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='issuedate', sort_order='asc'):
+    def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='asc'):
         from arches_orm.models import License
         utilities = Utilities()
         #states
@@ -258,7 +260,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         is_user = groupId == EXCAVATION_USER_GROUP
         is_cur_e = groupId == EXCAVATION_CUR_E
 
-        sort_options = ['issuedate', 'validuntil']
+        sort_options = ['createdat', 'validuntil']
 
         resources = [] 
 
@@ -273,7 +275,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
 
         counters = []
-        sort_options = [{'id': 'issuedate', 'name': 'Issue Date'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
+        sort_options = [{'id': 'createdat', 'name': 'Created At'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
 
         return sorted_resources, counters, sort_options
 
@@ -282,17 +284,20 @@ class ExcavationTaskStrategy(TaskStrategy):
         from arches_orm.models import License
         utilities = Utilities()
 
+        resource_instance = Resource.objects.get(resourceinstanceid = licence.id)
+        created_at = resource_instance.createdtime
+
         activity_list = utilities.node_check(lambda: licence.associated_activities)
         display_name = utilities.node_check(lambda:licence.licence_names.name),
-        issue_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.issue_date)
+        # issue_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.issue_date)
+        cm_reference = utilities.node_check(lambda:licence.cm_references.cm_reference_number)
         valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
         report_status = utilities.node_check(lambda:licence.report[-1].classification_type) #takes the last report, assumes the newest
         licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
-
         nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
-        
+
         employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
 
         name = display_name[0]
@@ -307,8 +312,6 @@ class ExcavationTaskStrategy(TaskStrategy):
         response_slug = utilities.get_response_slug(groupId) if groupId else None
 
         # convert date format
-        if issue_date:
-            issue_date = datetime.strptime(issue_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
         if valid_until_date:
             valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
 
@@ -317,7 +320,8 @@ class ExcavationTaskStrategy(TaskStrategy):
             'state': 'Excavation',
             'displayname': display_name,
             'sitename': site_name,
-            'issuedate': issue_date,
+            'createdat': str(created_at),
+            'cmreference': cm_reference,
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
@@ -406,13 +410,26 @@ class Utilities:
             message = f"{difference} {day_word} until due"
 
         return message
+    
+    def _parse_date(self, date_str):
+        date_formats = ['%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f']
+        for date_format in date_formats:
+            try:
+                return datetime.strptime(date_str, date_format)
+            except ValueError:
+                continue
+        return None
 
     def sort_resources(self, resources, sort_by, sort_order):
+        
         resources.sort(key=lambda x: (
-            x[sort_by] is not None, datetime.strptime(x[sort_by], '%d-%m-%Y') 
-            if x[sort_by] else None
-        ), reverse=(sort_order == 'desc'))
+                    x[sort_by] is not None, 
+                    self._parse_date(x[sort_by]) if x[sort_by] is not None else None,
+                    x[sort_by]
+                ), reverse=(sort_order == 'desc'))
         return resources
+        
+    
 
 
         
