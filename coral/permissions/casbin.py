@@ -1070,6 +1070,7 @@ class CasbinTrigger:
 
     @context_free
     def listen(self):
+        print("Listening")
         from arches.app.utils.permission_backend import _get_permission_framework
         casbin_framework = _get_permission_framework()
 
@@ -1106,6 +1107,7 @@ class CasbinTrigger:
             except:
                 logger.exception("Casbin listener exception")
 
+        print("Attempting connect")
         with self.connect() as channel:
             print("Consuming")
             channel.basic_consume(

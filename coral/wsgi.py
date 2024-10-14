@@ -64,7 +64,9 @@ def update_permissions(sender, instance, **kwargs):
     threading.Timer(3.0, _exec).start()
 
 if os.getenv("CASBIN_LISTEN", False):
+    print("Casbin is listening")
     from coral.permissions.casbin import trigger
     t = threading.Thread(target=trigger.listen)
     t.setDaemon(True)
     t.start()
+    print("Thread started", t)
