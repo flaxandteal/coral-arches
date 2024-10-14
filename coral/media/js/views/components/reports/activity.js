@@ -19,6 +19,13 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
+
+            self.fullReportConfig = {
+                id: 'activity',
+                label: 'Activity',
+                ignoreNodes: []
+            }
 
             Object.assign(self, reportUtils);
             self.sections = [
@@ -30,6 +37,7 @@ define([
                 {id: 'archive', title: 'Archive Holding'},
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
