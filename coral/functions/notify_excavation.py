@@ -174,7 +174,7 @@ class ReportStrategy(NotificationStrategy):
     def send_notification(self, user, tile):
         from arches_orm.models import Group
         with admin():
-
+            groups_to_notify = [CUR_D_GROUP, CUR_E_GROUP, ADMIN_GROUP]
             name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
 
             message = f"A new report has been added to {name}"
@@ -200,8 +200,7 @@ class ReportStrategy(NotificationStrategy):
                 elif is_cur_d and classification_type:
                     groups_to_notify = [CUR_E_GROUP, ADMIN_GROUP]
                     message = message + f" with classification type {classification_string}"
-            else:
-                groups_to_notify = [CUR_D_GROUP, CUR_E_GROUP, ADMIN_GROUP]
+                
 
         notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
                                         
