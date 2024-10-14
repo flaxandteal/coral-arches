@@ -285,24 +285,22 @@ define([
             }
         };
 
-
         this.getNodeOptions = (nodeId, widgetConfig = {}) => {
             const options = params.nodeOptions?.[nodeId] || {};
             if (options?.config) {
-                options.config = {
+              options.config = ko.observable({
                 ...widgetConfig,
                 ...options.config
-                };
+              });
             }
-            Object.keys(options).forEach((key) => {
-                // Should this be used a JS workflow maintain the users
-                // provided reactivity.
-                if (!ko.isObservable(options[key])) {
-                options[key] = ko.observable(options[key]);
-                }
-            });
-            return options;
-        };
+            const nodeOptions = {...options}
+            if(options?.asObservable) {
+              Object.entries(options.asObservable).forEach((key, value) => {
+                  nodeOptions[key] = ko.observable(value);
+                });
+            } 
+            return nodeOptions;
+        }
 
         this.initialize();
     };
