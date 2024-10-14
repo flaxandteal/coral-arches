@@ -282,7 +282,9 @@
                   "semanticName": "Location Descriptions",
                   "nodeOptions" : {
                     "87d3c3ef-f44f-11eb-a23c-a87eeabdefba": {
-                      "disabled": true
+                      "asObservable":{
+                        "disabled": true
+                      }                      
                     }
                   }
                 },
