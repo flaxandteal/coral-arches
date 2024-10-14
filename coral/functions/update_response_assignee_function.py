@@ -39,28 +39,45 @@ details = {
                   
 
 class UpdateAssignedTo(BaseFunction): 
-    def update_matching_node(self, tile, nodegroup, existing_node, update_node, team):
+    def update_matching_node(self, tile, nodegroup, existing_node, update_node, team=None):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         assigned_to_value = tile.data[existing_node]
-        
         try:
-            existing_tile = Tile.objects.filter(
-                resourceinstance_id = resource_instance_id,
-                nodegroup_id = nodegroup,
-                data__contains = {ASSIGNMENT_TEAM:team}
-            ).first()
-            if existing_tile.data[update_node] == tile.data[existing_node]:
+            filter_params = {
+                'resourceinstance_id': resource_instance_id,
+                'nodegroup_id': nodegroup,
+            }
+            if team is not None:
+                filter_params['data__contains'] = {ASSIGNMENT_TEAM: team}
+
+            existing_tile = Tile.objects.filter(**filter_params).first()
+
+            if existing_tile is None:
+                Tile.objects.get_or_create(
+                    resourceinstance_id=resource_instance_id,
+                    nodegroup_id=nodegroup,
+                    data = { update_node: assigned_to_value, ASSIGNMENT_TEAM:team }
+                )
                 return
+            
+            if self.are_values_equal(existing_tile.data[update_node], tile.data[existing_node]):
+                return
+            
             existing_tile.data[update_node] = assigned_to_value
             existing_tile.save()
             return
-        except:
-            Tile.objects.get_or_create(
-            resourceinstance_id=resource_instance_id,
-            nodegroup_id=nodegroup,
-            data = { update_node: assigned_to_value, ASSIGNMENT_TEAM:team }
-        )
-        return      
+        except Exception as e:
+            print(e)    
+
+    def are_values_equal(self, array1, array2):
+        if len(array1) != len(array2):
+            return False
+        
+        for item1, item2 in zip(array1, array2):
+            if item1['resourceId'] != item2['resourceId']:
+                return False
+        
+        return True
 
     def post_save(self, tile, request, context):
         if context and context.get('escape_function', False):
@@ -76,6 +93,9 @@ class UpdateAssignedTo(BaseFunction):
             elif action_type == TYPE_ASSIGN_BOTH:
                 self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO, HM_TEAM)
                 self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO, HB_TEAM)
+
+        elif str(tile.nodegroup_id) == ASSIGNMENT:
+            self.update_matching_node(tile, ACTION, ASSIGNMENT_ASSIGNED_TO, ACTION_ASSIGNED_TO)
 
         
 
