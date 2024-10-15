@@ -492,7 +492,14 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        node: { 
+                          isrequired: true
+                        }
+                      }
+                    }
                   }
                 },
                 {

@@ -47,7 +47,7 @@ define([
                 widget?.widgetLookup[ko.unwrap(widget?.widget_id)].name].join(" ");
         };
 
-
+    
         this.initialize = function() {
             self.card.showForm(true);
 
@@ -292,6 +292,12 @@ define([
                 ...widgetConfig,
                 ...options.config
               });
+            }
+            if (options?.node) {
+                options.node = {
+                  ...params.form.nodeLookup[nodeId],
+                  ...options.node
+                };
             }
             const nodeOptions = {...options}
             if(options?.asObservable) {
