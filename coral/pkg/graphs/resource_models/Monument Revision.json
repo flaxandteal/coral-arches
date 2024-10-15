@@ -3237,19 +3237,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Area Archaeologist",
+                        "label": "Area Archaeologist(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "101b4709-d4e9-437d-9d71-6ac770e00a48",
                     "label": {
-                        "en": "Area Archaeologist"
+                        "en": "Area Archaeologist(s)"
                     },
                     "node_id": "d0b45457-d9a3-43fc-910b-0dc29c14315b",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "ae8b24f7-ed3f-49c1-8ace-03e52111d45e",
@@ -4446,19 +4446,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Occupier",
+                        "label": "Occupier(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "2a578f7a-112b-4ad2-9a3b-6c72522a39c2",
                     "label": {
-                        "en": "Occupier"
+                        "en": "Occupier(s)"
                     },
                     "node_id": "56c385ad-24be-42bf-bbbe-42104488dcfe",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "bd9292aa-4b19-4d57-ba07-8bb144bd507e",
@@ -5545,14 +5545,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Field Worker",
+                        "label": "Field Worker(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "44a87f76-e3fc-4f65-8862-e7cc07a8ee1b",
                     "label": {
-                        "en": "Field Worker"
+                        "en": "Field Worker(s)"
                     },
                     "node_id": "5fccac10-07ba-11ef-859d-0242ac140006",
                     "sortorder": 14,
@@ -5645,7 +5645,7 @@
                     "node_id": "995e311e-2f93-480d-9f1e-107bdf781bf3",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "90caa8ad-741d-420c-9cb4-7d20fbd00b61",
@@ -5736,19 +5736,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "CWT Area Supervisor",
+                        "label": "CWT Area Supervisor(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "4b630fa1-00ed-44b5-9d5a-fb08a2d1c5dd",
                     "label": {
-                        "en": "CWT Area Supervisor"
+                        "en": "CWT Area Supervisor(s)"
                     },
                     "node_id": "9dadc62b-ca39-4ca5-8255-444dac6dc89e",
                     "sortorder": 6,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "458dcc3f-5b44-4a08-852b-2dacb074f26d",
@@ -8744,14 +8744,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Owner",
+                        "label": "Owner(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "8c335782-34b7-4cc0-b72a-2104be4b5302",
                     "label": {
-                        "en": "Owner"
+                        "en": "Owner(s)"
                     },
                     "node_id": "7cee2524-c5e3-4a08-ac0a-a9032ad81c63",
                     "sortorder": 6,
@@ -32390,7 +32390,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -32667,7 +32667,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -36252,7 +36252,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,

@@ -44,11 +44,6 @@ define([
             var i = Math.floor(Math.log(bytes) / Math.log(k));
             return (parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i]);
         };
-
-        this.getNodeOptions = (nodeId) => {
-            return params.nodeOptions?.[nodeId]
-        }
-    
     }
 
     return ko.components.register('default-card', {
