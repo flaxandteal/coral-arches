@@ -7822,23 +7822,8 @@
                 {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "en": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
                         "label": "Work Carried Out By",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%"
+                        "placeholder": "Select an option"
                     },
                     "id": "7b96e6d9-d09d-4487-b14c-dce9384fc148",
                     "label": {
@@ -7847,7 +7832,7 @@
                     "node_id": "447c7fa0-d649-11ee-9a11-0242ac180006",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
@@ -25072,12 +25057,31 @@
                 {
                     "alias": "work_carried_out_by_value",
                     "config": {
-                        "en": ""
+                        "graphs": [
+                            {
+                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Person",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            },
+                            {
+                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Organization",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
-                    "datatype": "string",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
-                    "fieldname": "",
+                    "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "hascustomalias": false,
                     "is_collector": false,
