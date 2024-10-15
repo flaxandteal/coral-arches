@@ -288,16 +288,15 @@ define([
         this.getNodeOptions = (nodeId, widgetConfig = {}) => {
             const options = params.nodeOptions?.[nodeId] || {};
             if (options?.config) {
-              options.config = {
+              options.config = ko.observable({
                 ...widgetConfig,
                 ...options.config
-              };
+              });
             }
             const nodeOptions = {...options}
             if(options?.asObservable) {
-              observables = options.asObservable
-              Object.keys(observables).forEach((key) => {
-                  nodeOptions[key] = ko.observable(observables[key]);
+              Object.entries(options.asObservable).forEach((key, value) => {
+                  nodeOptions[key] = ko.observable(value);
                 });
             } 
             return nodeOptions;

@@ -337,7 +337,14 @@
                   "semanticName": "Incident Proposal",
                   "hiddenNodes": [
                     "30d5defa-d64a-11ee-8b04-0242ac180006"
-                  ]
+                  ],
+                  "nodeOptions": {
+                    "e8d511cc-d64c-11ee-8b04-0242ac180006": {
+                      "config": {
+                        "maxDate": "today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -399,7 +406,14 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d9bd0504-d643-11ee-8b04-0242ac180006",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Work Finish Date"
+                  "semanticName": "Work Finish Date",
+                  "nodeOptions": {
+                    "d9bd0b80-d643-11ee-8b04-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -423,7 +437,14 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9665660e-d646-11ee-8b04-0242ac180006",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Sign Off Date"
+                  "semanticName": "Sign Off Date",
+                  "nodeOptions": {
+                    "96656e9c-d646-11ee-8b04-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
