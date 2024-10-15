@@ -233,10 +233,12 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                         self._enforcer.add_policy(group_key, obj_key, str(act.conceptid))
             if len(group.django_group) == 0:
                 self._ri_to_django_groups(group)
-            for group in group.django_group:
-                if list(group.user_set.all()) != users:
-                    group.user_set.set(users)
-                    group.save()
+            for gp in group.django_group:
+                if not gp or gp.pk is None:
+                    continue
+                if list(gp.user_set.all()) != users:
+                    gp.user_set.set(users)
+                    gp.save()
             return users
 
         sets = []
