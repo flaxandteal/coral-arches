@@ -232,7 +232,7 @@
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
                 },
-                "tilesManaged": "one",
+                "tilesManaged": "many",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "localities"
               },
