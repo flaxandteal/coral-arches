@@ -54,6 +54,7 @@ class Dashboard(View):
             counters = {}
             sort_by = request.GET.get('sortBy', None)
             sort_order = request.GET.get('sortOrder', None)
+            filter = request.GET.get('filterBy', None)
             sort_options = []
 
             if not update and cache.get(cache_key):
@@ -74,15 +75,16 @@ class Dashboard(View):
                         strategies.add(self.select_strategy(groupId))
                 for strategy in strategies:
                     if sort_by is not None and sort_order is not None and sort_by:
-                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order)
+                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order, filter)
                     else:
-                        resources, counters, sort_options = strategy.get_tasks(groupId, person_resource[0].id)
+                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id)
                     task_resources.extend(resources)
 
                 cache_data = json.dumps({
                     'task_resources': task_resources,
                     'counters': counters,
-                    'sort_options': sort_options
+                    'sort_options': sort_options,
+                    'filter_options': filter_options
                     })
                 cache.set(cache_key, cache_data, 60 * 15)
 
@@ -116,10 +118,11 @@ class Dashboard(View):
                     'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
                     'start_index': page_obj.start_index(),
                     'total': paginator.count,
-                    'counters': counters,
-                    'sort_options': sort_options,
                     'response': page_obj.object_list
-                }
+                },
+                'counters': counters,
+                'sort_options': sort_options,
+                'filter_options': filter_options,
             })
     
     def get_groups(self, userId):
@@ -144,19 +147,19 @@ class Dashboard(View):
         return
 
 class TaskStrategy:
-    def get_tasks(self, groupId, userResourceId, sort_by, sort_order):
+    def get_tasks(self, groupId, userResourceId, sort_by, sort_order, filter):
         raise NotImplementedError("Subclasses must implement this method")
     def build_data(self, resource, groupId):
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='asc'):
+    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='asc', filter='All'):
         from arches_orm.models import Consultation
     
         TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
         TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
         TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
-
+        
         is_hm_manager = groupId in [HM_MANAGER] 
         is_hb_manager = groupId in [HB_MANAGER] 
         is_hm_user = groupId in [HM_GROUP] 
@@ -170,7 +173,7 @@ class PlanningTaskStrategy(TaskStrategy):
         consultations = Consultation.all()
 
         #filter out consultations that are not planning consultations
-        planning_consultations=[c for c in consultations if c._._name.startswith('CON/')]
+        planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
 
         #checks against type & status and assigns to user if in correct group
         for consultation in planning_consultations:
@@ -210,8 +213,9 @@ class PlanningTaskStrategy(TaskStrategy):
 
         counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
         sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
+        filter_options = []
 
-        return sorted_resources, counters, sort_options
+        return sorted_resources, counters, sort_options, filter_options
     
     def build_data(self, consultation, groupId):
         utilities = Utilities()
@@ -238,7 +242,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
         resource_data = {
             'id': str(consultation.id),
-            'tasktype': 'Planning',
+            'state': 'Planning',
             'displayname': consultation._._name,
             'displaydescription': html.unescape(consultation._._description),
             'status': utilities.convert_id_to_string(action_status),
@@ -252,7 +256,7 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='asc'):
+    def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='asc', filter='all'):
         from arches_orm.models import License
         utilities = Utilities()
         #states
@@ -268,6 +272,10 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
 
+        if filter != 'all':
+            # Checks the report status against the filter value
+            licences = [l for l in licences if self.is_valid_license(l, filter)]
+
         for licence in licences:
             task = self.build_data(licence, groupId)
             if task:
@@ -276,8 +284,9 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         counters = []
         sort_options = [{'id': 'createdat', 'name': 'Created At'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
+        filter_options = [{'id': 'all', 'name': 'All'},{'id': 'final', 'name': 'Final'}, {'id': 'preliminary', 'name': 'Preliminary'}, {'id': 'interim', 'name': 'Interim'}, {'id': 'unclassified', 'name': 'Unclassified'}, {'id': 'summary', 'name': 'Summary'}]
 
-        return sorted_resources, counters, sort_options
+        return sorted_resources, counters, sort_options, filter_options
 
     
     def build_data(self, licence, groupId):
@@ -330,6 +339,15 @@ class ExcavationTaskStrategy(TaskStrategy):
             'responseslug': response_slug
         }
         return resource_data
+    
+    def is_valid_license(self, licence, filter):
+        from arches_orm.models import License
+        utilities = Utilities()
+        classification_type = utilities.node_check(lambda: licence.report[-1].classification_type)
+        if not classification_type:
+            return False
+        string_value = utilities.domain_value_string_lookup(License, 'classification_type', classification_type)
+        return string_value.lower() == filter
 
 class Utilities:
     def convert_id_to_string(self, id):
@@ -381,6 +399,7 @@ class Utilities:
     # Method to check if a node exists
     def node_check(self, func, default=None):
         try:
+            print(func())
             return func()
         except Exception as error:
             logging.warning(f'Node does not exist: {error}')
