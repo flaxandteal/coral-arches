@@ -295,12 +295,22 @@ class ExcavationTaskStrategy(TaskStrategy):
         valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
-        report_status = utilities.node_check(lambda:licence.report[-1].classification_type) #takes the last report, assumes the newest
+        report_tiles = utilities.node_check(lambda:licence.report) #takes the last report, assumes the newest
         licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
 
         nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
         
         employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
+
+        report_status = None
+        if report_tiles:
+            sorted_report_tiles = sorted(
+                report_tiles,
+                key=lambda x: datetime.strptime(x.classification_date.classification_date_value, "%Y-%m-%dT%H:%M:%S.%f%z") if x.classification_date.classification_date_value else datetime.min
+            )
+            latest_report_tile = sorted_report_tiles[-1]
+            report_status = latest_report_tile.classification_type
+
 
         name = display_name[0]
         if name.startswith("Excavation Licence"):
