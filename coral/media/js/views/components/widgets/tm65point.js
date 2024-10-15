@@ -25,6 +25,7 @@ define([
       this.isSelected = ko.observable(false);
       this.errorMessage = ko.observable();
       this.messageVisible = ko.observable(false);
+      this.disabled = ko.observable(params.disabled)
 
       if (this.value()) {
         this.tm65Val = ko.observable(this.value());

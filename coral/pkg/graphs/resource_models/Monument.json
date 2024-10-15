@@ -1525,7 +1525,7 @@
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "helpenabled": true,
                     "helptext": {
-                        "en": "<p><strong>Full Address</strong></p>\n\n<p>Where it is convenient, this can be used to record the full address. This can be used to aid migration from legacy systems with less sophisticated recording practice</p>\n\n<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modelled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a building where known.</p>\n\n<p><strong>Building Number</strong></p>\n\n<p>Use to record the number(s) assigned to a building. This may be a single number (eg. 45) or a range separated by a &#39;-&#39;&nbsp;(eg. 13-21).</p>\n\n<p><strong>Building Number Sub-Street</strong></p>\n\n<p>&nbsp;</p>\n"
+                        "en": "<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modeled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a Heritage Asset where known.</p>\n<p><strong>Street</strong></p>\n\n<p>Use to record the name of the street where the Heritage Asset is located.</p>\n<p><strong>Town or City</strong></p>\n\n<p>Use to record the name of the town or city where the Heritage Asset is located.</p>\n<p><strong>Postcode</strong></p>\n\n<p>Use to record the postal code assigned to the Heritage Asset's location.</p>\n<p><strong>County</strong></p>\n\n<p>Use to record the name of the county where the Heritage Asset is located.</p>\n<p><strong>Townland</strong></p>\n\n<p>Use to record the name of the townland where the Heritage Asset is located.</p>\n<p><strong>Area Type</strong></p>\n\n<p>Use to specify the type of area (e.g., district, barony) where the Heritage Asset is located.</p>\n<p><strong>Area Name</strong></p>\n\n<p>Use to record the name of the area where the Heritage Asset is located.</p>\n<p><strong>Irish Grid Reference</strong></p>\n\n<p>Use to record the grid reference coordinates for the Heritage Asset's location using various formats, Alphanumeric TM65, Absolute TM65 or Long/Lat.</p>\n<p><strong>Location Description</strong></p>\n\n<p>Use to provide a detailed description of the Heritage Asset's location. This can include landmarks, nearby intersections, or other notable features.</p>"
                     },
                     "helptitle": {
                         "en": "Addresses"
@@ -4989,19 +4989,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Area Archaeologist",
+                        "label": "Area Archaeologist(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "5a2cef3f-755b-4d2f-b230-45d3b9bbb885",
                     "label": {
-                        "en": "Area Archaeologist"
+                        "en": "Area Archaeologist(s)"
                     },
                     "node_id": "a53af708-d631-11ee-a5a3-0242ac180006",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "51ec4343-762a-4079-bbad-c065be7a7ee3",
@@ -7822,23 +7822,8 @@
                 {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "en": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
                         "label": "Work Carried Out By",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%"
+                        "placeholder": "Select an option"
                     },
                     "id": "7b96e6d9-d09d-4487-b14c-dce9384fc148",
                     "label": {
@@ -7847,7 +7832,7 @@
                     "node_id": "447c7fa0-d649-11ee-9a11-0242ac180006",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "3111eec9-9b39-4378-95d7-0d16b45f83be",
@@ -12375,7 +12360,7 @@
                     "node_id": "6d65ffb8-d630-11ee-9454-0242ac180006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "9eceaff9-795b-497c-982b-cfb41e8f8ec0",
@@ -13040,19 +13025,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Occupier",
+                        "label": "Occupier(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "aa62c158-d23e-11ee-9ae7-0242ac180006",
                     "label": {
-                        "en": "Occupier"
+                        "en": "Occupier(s)"
                     },
                     "node_id": "aa62b10e-d23e-11ee-9ae7-0242ac180006",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "aa629b2e-d23e-11ee-9ae7-0242ac180006",
@@ -13170,14 +13155,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Owner",
+                        "label": "Owner(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "aa62c7d4-d23e-11ee-9ae7-0242ac180006",
                     "label": {
-                        "en": "Owner"
+                        "en": "Owner(s)"
                     },
                     "node_id": "aa62ada8-d23e-11ee-9ae7-0242ac180006",
                     "sortorder": 6,
@@ -13300,14 +13285,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Field Worker",
+                        "label": "Field Worker(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "b1f68f4d-8a89-4776-add1-7d7b3e434758",
                     "label": {
-                        "en": "Field Worker"
+                        "en": "Field Worker(s)"
                     },
                     "node_id": "650bb092-07b8-11ef-a15f-0242ac140006",
                     "sortorder": null,
@@ -14637,19 +14622,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "CWT Area Supervisor",
+                        "label": "CWT Area Supervisor(s)",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "e6553564-7cd8-45c6-a477-5c7b6a68c34a",
                     "label": {
-                        "en": "CWT Area Supervisor"
+                        "en": "CWT Area Supervisor(s)"
                     },
                     "node_id": "506dd6ae-d632-11ee-9454-0242ac180006",
                     "sortorder": 6,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
@@ -25072,12 +25057,31 @@
                 {
                     "alias": "work_carried_out_by_value",
                     "config": {
-                        "en": ""
+                        "graphs": [
+                            {
+                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Person",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            },
+                            {
+                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Organization",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
-                    "datatype": "string",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
-                    "fieldname": "",
+                    "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -25683,7 +25687,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -28590,7 +28594,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -35931,7 +35935,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -36326,7 +36330,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Plan_Offic",

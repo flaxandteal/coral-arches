@@ -11,6 +11,7 @@ define([
   'views/components/workflows/licensing-workflow/licence-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
+  'views/components/workflows/licensing-workflow/transfer-of-licence',
   'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -89,7 +90,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'contacts',
                   tilesManaged: 'one',
                   parameters: {
@@ -366,12 +367,13 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'licence-number',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '6de3741e-c502-11ee-86cf-0242ac180006'
+                    nodegroupid: '6de3741e-c502-11ee-86cf-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
@@ -401,32 +403,35 @@ define([
           ]
         },
         {
-          name: "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
-          title: "Letter",
+          name: 'ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf',
+          title: 'Letter',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
                 {
                   parameters: {
-                    graphid: "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: ["976e49fe-3928-11ef-ab34-0242ac140006", "21319570-3928-11ef-b242-0242ac140006"],
-                    nodegroupid: "87bdb8d8-3927-11ef-ab34-0242ac140006",
-                    semanticName: "Correspondence",
-                    letterMetatype: "976e49fe-3928-11ef-ab34-0242ac140006",
-                    letterTypeNode: "56364572-3928-11ef-b242-0242ac140006",
-                    letterResourceNode: "21319570-3928-11ef-b242-0242ac140006"
+                    hiddenNodes: [
+                      '976e49fe-3928-11ef-ab34-0242ac140006',
+                      '21319570-3928-11ef-b242-0242ac140006'
+                    ],
+                    nodegroupid: '87bdb8d8-3927-11ef-ab34-0242ac140006',
+                    semanticName: 'Correspondence',
+                    letterMetatype: '976e49fe-3928-11ef-ab34-0242ac140006',
+                    letterTypeNode: '56364572-3928-11ef-b242-0242ac140006',
+                    letterResourceNode: '21319570-3928-11ef-b242-0242ac140006'
                   },
                   noTileSidebar: true,
-                  tilesManaged: "many",
-                  componentName: "file-template",
-                  uniqueInstanceName: "letter-template"
+                  tilesManaged: 'many',
+                  componentName: 'file-template',
+                  uniqueInstanceName: 'letter-template'
                 }
               ]
             }
           ],
-          workflowstepclass: "workflow-form-component"
+          workflowstepclass: 'workflow-form-component'
         },
         {
           title: 'Amendments',
@@ -437,17 +442,20 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
+                    hiddenNodes: ['1938e0ac-703d-11ef-934d-0242ac120006'],
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
                   }
                 },
                 {
+                  componentName: 'default-card',
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
