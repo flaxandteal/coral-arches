@@ -175,15 +175,22 @@ class PlanningTaskStrategy(TaskStrategy):
                 action_status = utilities.node_check(lambda: consultation.action[0].action_status )
                 action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
                 assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1, [])
-                reassigned_to_list = utilities.node_check(lambda: consultation.assignment[0].re_assignee.re_assigned_to, [])
+                reassigned_to_tiles = utilities.node_check(lambda: consultation.assignment, [])
 
-                user_assigned = any(assigned_to_list) or any(reassigned_to_list)
+                user_assigned = any(assigned_to_list)
+
+                if not user_assigned:
+                    for tile in reassigned_to_tiles:
+                        if any(tile.re_assignee.re_assigned_to):
+                            user_assigned = True
+                            break 
 
                 is_assigned_to_user = False
 
                 # first checks reassigned to as this overwrites the assigned to field if true
-                if reassigned_to_list:
-                    is_assigned_to_user = any(user.id == userResourceId for user in reassigned_to_list)
+                if reassigned_to_tiles:
+                    for tile in reassigned_to_tiles:
+                        is_assigned_to_user = any(user.id == userResourceId for user in tile.re_assignee.re_assigned_to)
                 elif assigned_to_list:
                     is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
                 
