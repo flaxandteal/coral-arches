@@ -17,6 +17,7 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
 
             Object.assign(self, reportUtils);
             self.sections = [
@@ -26,6 +27,7 @@ define([
                 {id: 'classifications', title: 'Source Type'},
                 {id: 'publication', title: 'Publication Details'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -33,6 +35,12 @@ define([
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('source');
             self.print = ko.observable(window.location.href.indexOf("?print") > -1)
+
+            self.fullReportConfig = {
+                id: 'bibliographic-source',
+                label: 'Bibliographic Source',
+                ignoreNodes: []
+            }
 
 
             self.publicationTableConfig = {
