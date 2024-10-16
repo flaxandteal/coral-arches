@@ -11,6 +11,7 @@ define([
   'views/components/workflows/licensing-workflow/licence-final-step',
   'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
+  'views/components/workflows/licensing-workflow/transfer-of-licence',
   'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -89,7 +90,7 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'contacts',
                   tilesManaged: 'one',
                   parameters: {
@@ -105,7 +106,69 @@ define([
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '05f6b846-5d49-11ee-911e-0242ac130003',
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                    "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1add78d0-c450-11ee-8be7-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "239c373a-c451-11ee-8be7-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1add78d0-c450-11ee-8be7-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                   }
                 },
                 {
@@ -301,7 +364,69 @@ define([
                       '684121d8-48ce-11ee-8e4e-0242ac140007',
                       '68412778-48ce-11ee-8e4e-0242ac140007'
                     ],
-                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 }
               ]
@@ -328,6 +453,66 @@ define([
                     nodeOptions: {
                       "69f30298-c430-11ee-94bf-0242ac180006": {
                         "allowInstanceCreation": false
+                      },
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
                       }
                     }
                   }
@@ -344,6 +529,66 @@ define([
                     nodeOptions: {
                       "c9f51490-c42d-11ee-94bf-0242ac180006": {
                         "allowInstanceCreation": false
+                      },
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
                       }
                     }
                   }
@@ -356,7 +601,69 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '1887f678-c42d-11ee-bc4b-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']"
+                    parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
+                    nodeOptions: {
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      }
+                    }
                   }
                 },
                 {
@@ -376,12 +683,13 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'fetch-latest-tile',
                   uniqueInstanceName: 'licence-number',
                   tilesManaged: 'one',
                   parameters: {
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
-                    nodegroupid: '6de3741e-c502-11ee-86cf-0242ac180006'
+                    nodegroupid: '6de3741e-c502-11ee-86cf-0242ac180006',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                   }
                 },
                 {
@@ -411,32 +719,35 @@ define([
           ]
         },
         {
-          name: "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
-          title: "Letter",
+          name: 'ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf',
+          title: 'Letter',
           required: false,
           layoutSections: [
             {
               componentConfigs: [
                 {
                   parameters: {
-                    graphid: "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    hiddenNodes: ["976e49fe-3928-11ef-ab34-0242ac140006", "21319570-3928-11ef-b242-0242ac140006"],
-                    nodegroupid: "87bdb8d8-3927-11ef-ab34-0242ac140006",
-                    semanticName: "Correspondence",
-                    letterMetatype: "976e49fe-3928-11ef-ab34-0242ac140006",
-                    letterTypeNode: "56364572-3928-11ef-b242-0242ac140006",
-                    letterResourceNode: "21319570-3928-11ef-b242-0242ac140006"
+                    hiddenNodes: [
+                      '976e49fe-3928-11ef-ab34-0242ac140006',
+                      '21319570-3928-11ef-b242-0242ac140006'
+                    ],
+                    nodegroupid: '87bdb8d8-3927-11ef-ab34-0242ac140006',
+                    semanticName: 'Correspondence',
+                    letterMetatype: '976e49fe-3928-11ef-ab34-0242ac140006',
+                    letterTypeNode: '56364572-3928-11ef-b242-0242ac140006',
+                    letterResourceNode: '21319570-3928-11ef-b242-0242ac140006'
                   },
                   noTileSidebar: true,
-                  tilesManaged: "many",
-                  componentName: "file-template",
-                  uniqueInstanceName: "letter-template"
+                  tilesManaged: 'many',
+                  componentName: 'file-template',
+                  uniqueInstanceName: 'letter-template'
                 }
               ]
             }
           ],
-          workflowstepclass: "workflow-form-component"
+          workflowstepclass: 'workflow-form-component'
         },
         {
           title: 'Amendments',
@@ -447,9 +758,10 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -464,12 +776,72 @@ define([
                       },
                       "6bc892c8-c44d-11ee-94bf-0242ac180006": {
                         "allowInstanceCreation": false
+                      },
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
                       }
                     }
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
                   parameters: {
@@ -483,6 +855,66 @@ define([
                       },
                       "50970864-c4d3-11ee-90c5-0242ac180006": {
                         "allowInstanceCreation": false
+                      },
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
                       }
                     }
                   }
@@ -517,6 +949,66 @@ define([
                     nodeOptions: {
                       "5707d294-dc72-11ee-b70c-0242ac120006": {
                         "allowInstanceCreation": false
+                      },
+                      "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1887faf6-c42d-11ee-bc4b-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "239c373a-c451-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "97f6c776-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "684110e4-48ce-11ee-8e4e-0242ac140007": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "c6f09242-c4d2-11ee-b171-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "1add78d0-c450-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "58880bd6-5d4a-11ee-9b75-0242ac130003": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "59b77af6-dc6f-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
+                      },
+                      "0a089af2-dc7a-11ee-8def-0242ac120006": {
+                        "config":{
+                          "maxDate":"today"
+                        }
                       }
                     }
                   }

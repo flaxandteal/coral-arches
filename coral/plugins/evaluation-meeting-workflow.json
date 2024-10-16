@@ -11,7 +11,7 @@
       {
         "name": "start-meeting-step",
         "title": "Start Meeting",
-        "required": false,
+        "required": true,
         "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
@@ -253,7 +253,15 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "34959a52-03aa-11ef-948f-0242ac150003",
-                  "semanticName": "Evaluation"
+                  "semanticName": "Evaluation",
+                  "nodeOptions": {
+                    "5ffdc00e-03ad-11ef-948f-0242ac150003": {
+                      "config":{
+                        "maxDate":"today",
+                        "label": "Sign Off Date"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

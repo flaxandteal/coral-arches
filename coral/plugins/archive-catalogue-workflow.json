@@ -146,7 +146,29 @@
                   ],
                   "nodegroupid": "3001afdf-b46a-11ea-a528-f875a44e0e11",
                   "parenttileid": "['archive-reference-step']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['archiveHolding']",
-                  "semanticName": "Archive Source Creation"
+                  "semanticName": "Archive Source Creation",
+                  "nodeOptions": {
+                    "602c8b40-1aba-11ec-9afc-a87eeabdefba": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "98ac7e00-ba0a-11ee-987d-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "a919d111-ee15-11eb-9308-a87eeabdefba": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "a919d102-ee15-11eb-941c-a87eeabdefba": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -194,7 +216,29 @@
                   "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
                   "resourceid": "['archive-reference-step']['d7782f56-fe24-458e-9452-a734fc73d17c'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "98ac662c-ba0a-11ee-987d-0242ac180006",
-                  "semanticName": "Archive Loaning"
+                  "semanticName": "Archive Loaning",
+                  "nodeOptions": {
+                    "602c8b40-1aba-11ec-9afc-a87eeabdefba": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "98ac7e00-ba0a-11ee-987d-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "a919d111-ee15-11eb-9308-a87eeabdefba": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "a919d102-ee15-11eb-941c-a87eeabdefba": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",

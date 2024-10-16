@@ -43,7 +43,7 @@ define([
             var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
             var i = Math.floor(Math.log(bytes) / Math.log(k));
             return (parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i]);
-        };
+        };    
     }
 
     return ko.components.register('default-card', {
