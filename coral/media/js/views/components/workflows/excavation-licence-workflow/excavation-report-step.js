@@ -19,6 +19,7 @@ define([
     
 
     const checkBothNodes = (classificationDate, docReference) => {
+      params.disableAdd(true)
       if (classificationDate !== null && ko.unwrap(docReference) !== ''){
         params.disableAdd(false)
       }
