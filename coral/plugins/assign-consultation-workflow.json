@@ -83,6 +83,14 @@
                     }
                     }
                   }
+                  "semanticName": "DIF Received Date",
+                  "nodeOptions": {
+                    "04494bbe-c769-11ee-82c4-0242ac180006": {
+                    "config":{
+                      "maxDate":"today"
+                    }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

@@ -12,6 +12,7 @@ define([
   'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
   'views/components/workflows/licensing-workflow/transfer-of-licence',
+  'views/components/workflows/licensing-workflow/transfer-of-licence',
   'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -759,8 +760,10 @@ define([
               componentConfigs: [
                 {
                   componentName: 'transfer-of-licence',
+                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Transfers',
                   manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
