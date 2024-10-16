@@ -142,7 +142,12 @@
                     "4ea4a197-184f-11eb-9152-f875a44e0e11",
                     "4c00b292-fb2d-11ee-838d-0242ac190006",
                     "ecbda08c-fb2d-11ee-838d-0242ac190006"
-                  ]
+                  ],
+                  "nodeOptions": {
+                    "db45aa50-24ce-11ef-97ad-0242ac130006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -213,7 +218,15 @@
                   "hiddenNodes": [
                     "998d6728-fb26-11ee-838d-0242ac190006",
                     "ff42f8f2-3e93-11ef-9023-0242ac140007"
-                  ]
+                  ],
+                  "nodeOptions": {
+                    "42ec3232-fb26-11ee-838d-0242ac190006": {
+                      "allowInstanceCreation": false
+                    },
+                    "998d6728-fb26-11ee-838d-0242ac190006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
