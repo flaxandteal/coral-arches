@@ -164,6 +164,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "fetch-latest-tile",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "6a28726c-926b-44ab-b585-c41976899d23"
               }
             ]
@@ -297,6 +298,12 @@
                   "hiddenNodes": ["99605e36-3924-11ef-82af-0242ac150006"],
                   "semanticName": "Approvals",
                   "nodeOptions": {
+                    "3b267ffe-dbd1-11ee-b0db-0242ac120006": {
+                      "allowInstanceCreation": false
+                    },
+                    "ad22dad6-dbd0-11ee-b0db-0242ac120006": {
+                      "allowInstanceCreation": false
+                    },
                     "2cbc7bf7-ccbb-4ac2-bb29-bc3bc597c753": {
                       "config":{
                         "maxDate":"today"

@@ -12,6 +12,7 @@ define([
   'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
   'views/components/workflows/licensing-workflow/fetch-updated-dates',
   'views/components/workflows/licensing-workflow/transfer-of-licence',
+  'views/components/workflows/licensing-workflow/transfer-of-licence',
   'views/components/workflows/fetch-latest-tile'
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('licensing-workflow', {
@@ -451,6 +452,9 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
                     nodeOptions: {
+                      "69f30298-c430-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
                       "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
                         "config":{
                           "maxDate":"today"
@@ -524,6 +528,9 @@ define([
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     parenttileid: "['init-step']['app-id'][0]['resourceid']['decisionTileId']",
                     nodeOptions: {
+                      "c9f51490-c42d-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
                       "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
                         "config":{
                           "maxDate":"today"
@@ -753,8 +760,10 @@ define([
               componentConfigs: [
                 {
                   componentName: 'transfer-of-licence',
+                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Transfers',
                   manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
@@ -762,6 +771,15 @@ define([
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     nodeOptions: {
+                      "058ccf60-c44d-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
+                      "43ec68d6-c445-11ee-8be7-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
+                      "6bc892c8-c44d-11ee-94bf-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
                       "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
                         "config":{
                           "maxDate":"today"
@@ -826,7 +844,6 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
@@ -836,6 +853,12 @@ define([
                     nodegroupid: '69b2738e-c4d2-11ee-b171-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     nodeOptions: {
+                      "2e7a876e-c4d4-11ee-b171-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
+                      "50970864-c4d3-11ee-90c5-0242ac180006": {
+                        "allowInstanceCreation": false
+                      },
                       "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
                         "config":{
                           "maxDate":"today"
@@ -927,6 +950,9 @@ define([
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     nodeOptions: {
+                      "5707d294-dc72-11ee-b70c-0242ac120006": {
+                        "allowInstanceCreation": false
+                      },
                       "ed16bb80-5d4a-11ee-9b75-0242ac130003": {
                         "config":{
                           "maxDate":"today"

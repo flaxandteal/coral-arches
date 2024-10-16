@@ -83,6 +83,14 @@
                     }
                     }
                   }
+                  "semanticName": "DIF Received Date",
+                  "nodeOptions": {
+                    "04494bbe-c769-11ee-82c4-0242ac180006": {
+                    "config":{
+                      "maxDate":"today"
+                    }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -319,10 +327,16 @@
                   "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
                   "semanticName": "Action",
                   "nodeOptions": {
+                    "8322f9f6-69b5-11ee-93a1-0242ac120002": {
+                      "allowInstanceCreation": false
+                    },
+                    "fbdd2304-cfda-11ee-8cc1-0242ac180006": {
+                      "allowInstanceCreation": false
+                    },
                     "ac905d54-ca65-11ee-b83c-0242ac180006": {
-                    "config":{
-                      "maxDate":"today"
-                    }
+                      "config":{
+                        "maxDate":"today"
+                      }
                     },
                     "c4413ac8-69b6-11ee-908a-0242ac120002": {
                       "config":{
