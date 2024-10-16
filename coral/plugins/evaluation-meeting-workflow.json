@@ -11,7 +11,7 @@
       {
         "name": "start-meeting-step",
         "title": "Start Meeting",
-        "required": false,
+        "required": true,
         "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
           {
