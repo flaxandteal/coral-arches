@@ -56,7 +56,12 @@
                   "hiddenNodes": ["6b8f5866-2f0d-11ef-b37c-0242ac140006"],
                   "prefilledNodes": [
                     ["6b8f5866-2f0d-11ef-b37c-0242ac140006", "18b628c9-149f-4c37-bc27-e8e0d714a037"]
-                  ]
+                  ],
+                  "nodeOptions": {
+                    "50d15bec-cfda-11ee-8cc1-0242ac180006": {
+                      "disabled": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
