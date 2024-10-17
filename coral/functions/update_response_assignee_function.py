@@ -1,6 +1,7 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
-import pdb
+from arches_orm.models import Group, Person
+import uuid
 
 # node groups
 ASSIGNMENT = "dc9bfb24-cfd9-11ee-8cc1-0242ac180006"
@@ -16,6 +17,12 @@ ASSIGNMENT_TEAM = "6b8f5866-2f0d-11ef-b37c-0242ac140006"
 # team
 HB_TEAM = "18b628c9-149f-4c37-bc27-e8e0d714a037"
 HM_TEAM = "e377b8a9-ced0-4186-84ff-0b5c3ece9c78"
+
+# groups
+HM_MANAGER_GROUP = "905c40e1-430b-4ced-94b8-0cbdab04bc33"
+HM_USER_GROUP = "29a43158-5f50-495f-869c-f651adf3ea42"
+HB_MANAGER_GROUP = "9a88b67b-cb12-4137-a100-01a977335298"
+HB_USER_GROUP = "f240895c-edae-4b18-9c3b-875b0bf5b235"
 
 # status
 TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
@@ -39,35 +46,76 @@ details = {
                   
 
 class UpdateAssignedTo(BaseFunction): 
+    def is_user_in_team(self, user, team=None):
+        hm_teams = [HM_MANAGER_GROUP, HM_USER_GROUP]
+        hb_teams = [HB_MANAGER_GROUP, HB_USER_GROUP]
+
+        hb_groups = [Group.find(id) for id in hb_teams]
+        hm_groups = [Group.find(id) for id in hm_teams]
+
+        person = Person.find(user)
+
+        def find_users_in_teams(groups):
+            for group in groups:
+                for member in group.members:
+                    if member.id == person.id:
+                        return True
+            return False
+
+        user_team = []
+        if team == HM_TEAM:
+            if find_users_in_teams(hm_groups):
+                user_team = HM_TEAM
+            else:
+                raise Exception(f"User '{person}' is not part of the HM team groups")
+        elif team == HB_TEAM:
+            if find_users_in_teams(hb_groups):
+                user_team = HB_TEAM
+            else:
+                raise Exception(f"User '{person}' is not part of the HB team groups")
+        elif team is None:
+            if find_users_in_teams(hm_groups):
+                user_team = HM_TEAM
+            elif find_users_in_teams(hb_groups):
+                user_team = HB_TEAM
+            else:
+                raise Exception(f"User '{person}' is not part of any Planning Team groups")
+
+        return user_team
+                    
     def update_matching_node(self, tile, nodegroup, existing_node, update_node, team=None):
+        assigned_users = tile.data[existing_node]
+        team_users = {HM_TEAM: [], HB_TEAM: []}
+        for user in assigned_users:
+            user_team = self.is_user_in_team(user['resourceId'], team)
+            if user_team:
+                team_users[user_team].append(user)
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
-        assigned_to_value = tile.data[existing_node]
-        try:
-            filter_params = {
-                'resourceinstance_id': resource_instance_id,
-                'nodegroup_id': nodegroup,
-            }
-            if team is not None:
-                filter_params['data__contains'] = {ASSIGNMENT_TEAM: team}
+        
+        for team, users in team_users.items():
+            if users:
+                try:
+                    filter_params = {
+                        'resourceinstance_id': resource_instance_id,
+                        'nodegroup_id': nodegroup,
+                        'data__contains': {ASSIGNMENT_TEAM: team}
+                    }
 
-            existing_tile = Tile.objects.filter(**filter_params).first()
+                    existing_tile = Tile.objects.filter(**filter_params).first()
 
-            if existing_tile is None:
-                Tile.objects.get_or_create(
-                    resourceinstance_id=resource_instance_id,
-                    nodegroup_id=nodegroup,
-                    data = { update_node: assigned_to_value, ASSIGNMENT_TEAM:team }
-                )
-                return
-            
-            if self.are_values_equal(existing_tile.data[update_node], tile.data[existing_node]):
-                return
-            
-            existing_tile.data[update_node] = assigned_to_value
-            existing_tile.save()
-            return
-        except Exception as e:
-            print(e)    
+                    if existing_tile is None:
+                        Tile.objects.get_or_create(
+                            resourceinstance_id=resource_instance_id,
+                            nodegroup_id=nodegroup,
+                            data = { update_node: users, ASSIGNMENT_TEAM:team }
+                        )
+                        continue
+                    
+                    existing_tile.data[update_node] = users
+                    existing_tile.save()
+                except Exception as e:
+                    print(e) 
 
     def are_values_equal(self, array1, array2):
         if len(array1) != len(array2):
@@ -91,11 +139,10 @@ class UpdateAssignedTo(BaseFunction):
             elif action_type == TYPE_ASSIGN_HB:
                 self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO, HB_TEAM)
             elif action_type == TYPE_ASSIGN_BOTH:
-                self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO, HM_TEAM)
-                self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO, HB_TEAM)
+                self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO)
 
-        elif str(tile.nodegroup_id) == ASSIGNMENT:
-            self.update_matching_node(tile, ACTION, ASSIGNMENT_ASSIGNED_TO, ACTION_ASSIGNED_TO)
+        # elif str(tile.nodegroup_id) == ASSIGNMENT:
+        #     self.update_matching_node(tile, ACTION, ASSIGNMENT_ASSIGNED_TO, ACTION_ASSIGNED_TO)
 
         
 
