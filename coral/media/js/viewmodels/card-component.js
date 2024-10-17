@@ -293,6 +293,12 @@ define([
                 ...options.config
               });
             }
+            if (options?.node) {
+                options.node = {
+                  ...params.form.nodeLookup[nodeId],
+                  ...options.node
+                };
+            }
             const nodeOptions = {...options}
             if(options?.asObservable) {
               Object.entries(options.asObservable).forEach((key, value) => {
