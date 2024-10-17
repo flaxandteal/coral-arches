@@ -1,7 +1,7 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
 from arches_orm.models import Group, Person
-import uuid
+import logging
 
 # node groups
 ASSIGNMENT = "dc9bfb24-cfd9-11ee-8cc1-0242ac180006"
@@ -44,8 +44,9 @@ details = {
     'component': '',
 }
                   
+logger = logging.getLogger(__name__)
 
-class UpdateAssignedTo(BaseFunction): 
+class UpdateAssignedTo(BaseFunction):
     def is_user_in_team(self, user, team=None):
         hm_teams = [HM_MANAGER_GROUP, HM_USER_GROUP]
         hb_teams = [HB_MANAGER_GROUP, HB_USER_GROUP]
@@ -92,30 +93,31 @@ class UpdateAssignedTo(BaseFunction):
                 team_users[user_team].append(user)
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
-        
+
+        try:
+            filter_params = {
+                'resourceinstance_id': resource_instance_id,
+                'nodegroup_id': nodegroup,
+            }
+
+            existing_tiles = Tile.objects.filter(**filter_params)
+            for tile in existing_tiles:
+                tile.delete()
+        except:
+            logger.log("No tiles currently exist")
+
         for team, users in team_users.items():
             if users:
                 try:
-                    filter_params = {
-                        'resourceinstance_id': resource_instance_id,
-                        'nodegroup_id': nodegroup,
-                        'data__contains': {ASSIGNMENT_TEAM: team}
-                    }
-
-                    existing_tile = Tile.objects.filter(**filter_params).first()
-
-                    if existing_tile is None:
-                        Tile.objects.get_or_create(
-                            resourceinstance_id=resource_instance_id,
-                            nodegroup_id=nodegroup,
-                            data = { update_node: users, ASSIGNMENT_TEAM:team }
-                        )
-                        continue
+                    Tile.objects.get_or_create(
+                        resourceinstance_id=resource_instance_id,
+                        nodegroup_id=nodegroup,
+                        data = { update_node: users, ASSIGNMENT_TEAM:team }
+                    )
+                    continue
                     
-                    existing_tile.data[update_node] = users
-                    existing_tile.save()
                 except Exception as e:
-                    print(e) 
+                    logger.error(e)
 
     def are_values_equal(self, array1, array2):
         if len(array1) != len(array2):
