@@ -12,6 +12,7 @@ ACTION_ASSIGNED_TO = "8322f9f6-69b5-11ee-93a1-0242ac120002"
 ACTION_TYPE = "e2585f8a-51a3-11eb-a7be-f875a44e0e11"
 ASSIGNMENT_ASSIGNED_TO = "50d15bec-cfda-11ee-8cc1-0242ac180006"
 ASSIGNMENT_TEAM = "6b8f5866-2f0d-11ef-b37c-0242ac140006"
+REASSIGNED_TO = "fbdd2304-cfda-11ee-8cc1-0242ac180006"
 
 
 # team
@@ -37,7 +38,7 @@ details = {
     'defaultconfig': {
         'triggering_nodegroups': [
             ACTION,
-            ASSIGNMENT
+            
         ],
     },
     'classname': 'UpdateAssignedTo',
@@ -132,6 +133,32 @@ class UpdateAssignedTo(BaseFunction):
     def post_save(self, tile, request, context):
         if context and context.get('escape_function', False):
             return
+        
+        if tile.nodegroup_id == ASSIGNMENT:
+            if not tile.data[REASSIGNED_TO]:
+                return
+            current_assigned = tile.data[ASSIGNMENT_ASSIGNED_TO]
+            reassigned_users = tile.data[REASSIGNED_TO]
+            team = tile.data[ASSIGNMENT_TEAM]
+
+            for person in reassigned_users:
+                self.is_user_in_team(person['resourceId'], team)
+
+            try:
+                filter_params = {
+                    'resourceinstance_id': str(tile.resourceinstance.resourceinstanceid),
+                    'nodegroup_id': ACTION,
+                }
+                action_tile = Tile.objects.filter(**filter_params).first()
+            except:
+                raise Exception("Users could not be re-assigned as no users are currently assigned")
+
+            assigned_node = action_tile.data[ACTION_ASSIGNED_TO]
+            for person in current_assigned:
+                assigned_node = [user for user in assigned_node if user['resourceId'] != person['resourceId']]
+
+            action_tile.data[ACTION_ASSIGNED_TO] = assigned_node + reassigned_users
+            action_tile.save()            
 
         if str(tile.nodegroup_id) == ACTION:
             action_type = tile.data[ACTION_TYPE]
