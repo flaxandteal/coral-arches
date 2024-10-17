@@ -67,16 +67,6 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "nodegroupid": "e85f6714-24cc-11ef-a3a4-0242ac130006",
-                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "38e300d3-20d8-4b58-8b77-3bed76a28e29"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "0ecfd47a-24cc-11ef-97ad-0242ac130006",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
                 },
@@ -147,7 +137,12 @@
                     "4ea4a197-184f-11eb-9152-f875a44e0e11",
                     "4c00b292-fb2d-11ee-838d-0242ac190006",
                     "ecbda08c-fb2d-11ee-838d-0242ac190006"
-                  ]
+                  ],
+                  "nodeOptions": {
+                    "db45aa50-24ce-11ef-97ad-0242ac130006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -218,7 +213,65 @@
                   "hiddenNodes": [
                     "998d6728-fb26-11ee-838d-0242ac190006",
                     "ff42f8f2-3e93-11ef-9023-0242ac140007"
-                  ]
+                  ],
+                  "nodeOptions": {
+                    "42ec3232-fb26-11ee-838d-0242ac190006": {
+                      "allowInstanceCreation": false
+                    },
+                    "998d6728-fb26-11ee-838d-0242ac190006": {
+                      "allowInstanceCreation": false
+                    },
+                    "04494bbe-c769-11ee-82c4-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083e9df0-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083eed32-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083ef872-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1cf746f6-1853-11eb-a9df-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463959-3ee4-11eb-9488-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463948-3ee4-11eb-9c38-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "c4413ac8-69b6-11ee-908a-0242ac120002": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "ac905d54-ca65-11ee-b83c-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "caf5bff5-a3d7-11e9-8c7e-00224800b26d": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

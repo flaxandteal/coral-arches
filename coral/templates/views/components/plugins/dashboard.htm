@@ -2,63 +2,75 @@
   <!--ko if: loading() -->
     <div class='loading-mask'></div>
   <!--/ko-->
-  <!--ko ifnot: resources().length -->
-    <h2>No tasks available</h2>
-  <!--/ko -->
-  <!--ko if: resources().length -->
-    <div style="display: flex;">
+  <div style="display: flex;">
+    <div class="panel dashboard-counter-card">
+      <h4>Total</h4>
+      <span style="font-size: 1.6rem" data-bind="text: total"></span>
+    </div>
+    <!--ko foreach: {data: counters(), as: '_counter'}-->
       <div class="panel dashboard-counter-card">
-        <h4>Total</h4>
-        <span style="font-size: 1.6rem" data-bind="text: total"></span>
+        <h4 data-bind="text: _counter.key"></h4>
+        <!--ko foreach: {data: _counter.value(), as: '_nestedPair'}-->
+          <div style="display: flex; justify-content: space-between; width:100%">
+            <div style="font-size:1.2rem" data-bind="text: _nestedPair.key"></div>
+            <div style="font-size:1.2rem" data-bind="text: _nestedPair.value"></div>
+          </div>
+        <!--/ko-->
       </div>
-      <!--ko foreach: {data: counters(), as: '_counter'}-->
-        <div class="panel dashboard-counter-card">
-          <h4 data-bind="text: _counter.key"></h4>
-          <!--ko foreach: {data: _counter.value(), as: '_nestedPair'}-->
-            <div style="display: flex; justify-content: space-between; width:100%">
-              <div style="font-size:1.2rem" data-bind="text: _nestedPair.key"></div>
-              <div style="font-size:1.2rem" data-bind="text: _nestedPair.value"></div>
-            </div>
+    <!--/ko-->
+  </div>
+  <div style="display:flex; margin: 1rem 5rem; align-items: center;">
+    <p style="margin: 0">Sort By:</p>
+    <select 
+        style="text-align-last:unset; margin-left: 1rem" 
+        data-bind="
+          options: sortOptions,
+          optionsText: 'name',
+          optionsValue: 'id',
+          value: sortBy,
+        "
+    >
+    </select>
+    <select 
+        style="text-align-last:unset; margin-left: 1rem" 
+        data-bind="
+          options: [ {id: 'asc', name: 'Asc'}, {id: 'desc', name: 'Desc'} ],
+          optionsText: 'name',
+          optionsValue: 'id',
+          value: sortOrder,
+        "
+    >
+    </select>
+    <!--ko if: showFilter() -->
+      <p style="margin: 0 0 0 1rem">Filter By:</p>
+      <select 
+          style="text-align-last:unset; margin-left: 1rem" 
+          data-bind="
+            options: filterOptions,
+            optionsText: 'name',
+            optionsValue: 'id',
+            value: filterBy,
+          "
+      >
+      </select>
+    <!--/ko-->
+  </div>
+  <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
+      <!--ko if: loadingCards() -->
+        <div class='branch-list-loading-mask'></div>
+      <!--/ko-->
+      <!--ko if: !loadingCards()-->
+        <!--ko ifnot: resources().length -->
+          <h2>No tasks available</h2>
+        <!--/ko -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; padding: 0 5rem">          
+          <!-- ko foreach: resources()-->
+            <div data-bind="component: { name: 'dashboard-card', params: { data: $data } }"></div>
           <!--/ko-->
         </div>
       <!--/ko-->
-    </div>
-    <div style="display:flex; margin: 1rem 5rem; align-items: center;">
-      Sort By:
-      <select 
-          style="text-align-last:unset; margin-left: 1rem" 
-          data-bind="
-            options: sortOptions,
-            optionsText: 'name',
-            optionsValue: 'id',
-            value: sortBy,
-          "
-      >
-      </select>
-      <select 
-          style="text-align-last:unset; margin-left: 1rem" 
-          data-bind="
-            options: [ {id: 'asc', name: 'Asc'}, {id: 'desc', name: 'Desc'} ],
-            optionsText: 'name',
-            optionsValue: 'id',
-            value: sortOrder,
-          "
-      >
-      </select>
-    </div>
-    <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
-        <!--ko if: loadingCards() -->
-          <div class='branch-list-loading-mask'></div>
-        <!--/ko-->
-        <!--ko if: !loadingCards()-->
-          <div style="display: flex; flex-wrap: wrap; justify-content: center; padding: 0 5rem">          
-            <!-- ko foreach: resources()-->
-              <div data-bind="component: { name: 'dashboard-card', params: { data: $data } }"></div>
-            <!--/ko-->
-          </div>
-        <!--/ko-->
-    </div>
-  <!--/ko-->
+  </div>
+  
   <!--ko if: resources().length -->
     <div id="paginator" data-bind="with: paginator" style="position: absolute; bottom: 0px; width: 100%">
       <nav class="text-center" aria-label="paginator">
