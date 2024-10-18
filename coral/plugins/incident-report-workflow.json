@@ -201,8 +201,29 @@
                     "87d3d7e0-f44f-11eb-9594-a87eeabdefba",
                     "87d3ff25-f44f-11eb-a4eb-a87eeabdefba",
                     "87d39b43-f44f-11eb-8b0b-a87eeabdefba",
-                    "87d3ff27-f44f-11eb-a92b-a87eeabdefba"
+                    "87d3d7b9-f44f-11eb-a91d-a87eeabdefba",
+                    "87d39b36-f44f-11eb-a905-a87eeabdefba"
                   ],
+                  "nodeOptions": {
+                    "87d3ff27-f44f-11eb-a92b-a87eeabdefba": {
+                      "disabled": true
+                    },
+                    "87d3ff21-f44f-11eb-9ce9-a87eeabdefba": {
+                      "disabled": true
+                    },
+                    "87d3ff23-f44f-11eb-ad2f-a87eeabdefba": {
+                      "disabled": true
+                    },
+                    "87d3ff32-f44f-11eb-aa82-a87eeabdefba": {
+                      "disabled": true
+                    },
+                    "d033683a-345c-11ef-a5b7-0242ac120003": {
+                      "disabled": true
+                    },
+                    "87d39b4b-f44f-11eb-80ef-a87eeabdefba": {
+                      "disabled": true
+                    }
+                  },
                   "nodegroupid": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
                   "semanticName": "Addresses"
@@ -218,9 +239,18 @@
                   "hiddenNodes": ["87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions" : {
+                    "87d3d7c5-f44f-11eb-8459-a87eeabdefba": {
+                      "disabled": true
+                    },
+                    "87d3c3ea-f44f-11eb-b532-a87eeabdefba": {
+                      "disabled": true
+                    }
+                  }
                 },
-                "tilesManaged": "one",
+                "tilesManaged": "many",
+                "showManyTileControls":false,
                 "componentName": "default-card",
                 "uniqueInstanceName": "166c1d50-7276-4a77-b6de-62f591ef2a1d"
               },
@@ -230,7 +260,12 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
-                  "semanticName": "Irish Grid Reference"
+                  "semanticName": "Irish Grid Reference",
+                  "nodeOptions" : {
+                    "2fdedbd0-1459-11ef-8cdd-0242ac120006": {
+                      "disabled": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "fetch-latest-tile",
@@ -243,7 +278,14 @@
                   "hiddenNodes": ["87d3d7c8-f44f-11eb-938d-a87eeabdefba"],
                   "nodegroupid": "87d39b28-f44f-11eb-a8b6-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
-                  "semanticName": "Location Descriptions"
+                  "semanticName": "Location Descriptions",
+                  "nodeOptions" : {
+                    "87d3c3ef-f44f-11eb-a23c-a87eeabdefba": {
+                      "asObservable":{
+                        "disabled": true
+                      }                      
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -267,7 +309,12 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
-                  "semanticName": "Geometry"
+                  "semanticName": "Geometry",
+                  "nodeOptions": {
+                    "87d3d7dc-f44f-11eb-bee9-a87eeabdefba": {
+                      "disableEdit": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "fetch-latest-tile",
@@ -291,7 +338,20 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a1f0e104-d648-11ee-9a11-0242ac180006",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Incident Proposal"
+                  "semanticName": "Incident Proposal",
+                  "hiddenNodes": [
+                    "30d5defa-d64a-11ee-8b04-0242ac180006"
+                  ],
+                  "nodeOptions": {
+                    "a1a755d0-d64c-11ee-8b04-0242ac180006": {
+                      "allowInstanceCreation": false
+                    },
+                    "e8d511cc-d64c-11ee-8b04-0242ac180006": {
+                      "config": {
+                        "maxDate": "today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -315,6 +375,7 @@
                   "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
                   "resourceModelId": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "fileObjectNamePrefix": "Documentation for ",
+                  "nodeSuffixId": "2001a33a-d711-11ee-9dd0-0242ac120006",
                   "resourceModelDigitalObjectNodeGroupId": "58f177c8-d640-11ee-8b04-0242ac180006",
                   "resourceParentTile": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']"
                 },
@@ -353,7 +414,14 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d9bd0504-d643-11ee-8b04-0242ac180006",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Work Finish Date"
+                  "semanticName": "Work Finish Date",
+                  "nodeOptions": {
+                    "d9bd0b80-d643-11ee-8b04-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -365,7 +433,12 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d0f45bbe-d645-11ee-8b04-0242ac180006",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Signed Off"
+                  "semanticName": "Signed Off",
+                  "nodeOptions": {
+                    "6037c630-d646-11ee-8b04-0242ac180006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -377,7 +450,14 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9665660e-d646-11ee-8b04-0242ac180006",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Sign Off Date"
+                  "semanticName": "Sign Off Date",
+                  "nodeOptions": {
+                    "96656e9c-d646-11ee-8b04-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

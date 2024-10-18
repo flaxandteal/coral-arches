@@ -75,10 +75,17 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
-                  "semanticName": "DIF Received Date"
+                  "semanticName": "DIF Received Date",
+                  "nodeOptions": {
+                    "04494bbe-c769-11ee-82c4-0242ac180006": {
+                    "config":{
+                      "maxDate":"today"
+                    }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "dif-received-date"
               },
               {
@@ -136,7 +143,7 @@
                   "semanticName": "Contacts"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "contacts"
               },
               {
@@ -148,10 +155,17 @@
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
                   ],
                   "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
-                  "semanticName": "Consultation Dates"
+                  "semanticName": "Consultation Dates",
+                  "nodeOptions": {
+                    "40eff4cd-893a-11ea-b0cc-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "consultation-dates"
               },
               {
@@ -201,7 +215,7 @@
                     "083f935e-ca61-11ee-afca-0242ac180006",
                     "083e825c-ca61-11ee-afca-0242ac180006",
                     "083e8c16-ca61-11ee-afca-0242ac180006",
-                    "083f97a0-ca61-11ee-afca-0242ac180006"
+                    "083e6c90-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
@@ -232,7 +246,7 @@
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas"
                 },
-                "tilesManaged": "one",
+                "tilesManaged": "many",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "localities"
               },
@@ -303,10 +317,28 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
-                  "semanticName": "Action"
+                  "semanticName": "Action",
+                  "nodeOptions": {
+                    "8322f9f6-69b5-11ee-93a1-0242ac120002": {
+                      "allowInstanceCreation": false
+                    },
+                    "fbdd2304-cfda-11ee-8cc1-0242ac180006": {
+                      "allowInstanceCreation": false
+                    },
+                    "ac905d54-ca65-11ee-b83c-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "c4413ac8-69b6-11ee-908a-0242ac120002": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "action"
               }
             ]
