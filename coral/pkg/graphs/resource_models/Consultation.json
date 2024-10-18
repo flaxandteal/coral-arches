@@ -17249,6 +17249,17 @@
                 {
                     "config": {
                         "triggering_nodegroups": [
+                            "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
+                            "dc9bfb24-cfd9-11ee-8cc1-0242ac180006"
+                        ]
+                    },
+                    "function_id": "9a4760fc-9a00-4ba1-b35c-18dbe26f1beb",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "e38aab96-a637-4360-b423-1f967c57937b"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
                             "b37552ba-9527-11ea-96b5-f875a44e0e11",
                             "b4974044-c768-11ee-a945-0242ac180006"
                         ]
