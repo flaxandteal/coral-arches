@@ -301,10 +301,11 @@ define([
             }
             const nodeOptions = {...options}
             if(options?.asObservable) {
-              Object.entries(options.asObservable).forEach((key, value) => {
+              Object.entries(options.asObservable).forEach(([key, value]) => {
                   nodeOptions[key] = ko.observable(value);
                 });
             } 
+            delete nodeOptions.asObservable
             return nodeOptions;
         }
 
