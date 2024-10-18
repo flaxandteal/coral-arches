@@ -176,8 +176,12 @@ define([
                   parameters: {
                     graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
                     nodegroupid: '3ff60eda-cce2-11ee-9264-0242ac180006',
-                    resourceid:
-                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['information-step']['notes'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "3ff6232a-cce2-11ee-9264-0242ac180006": {
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 },
                 {
@@ -198,8 +202,14 @@ define([
                   parameters: {
                     graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
                     nodegroupid: '726951a8-cce0-11ee-af2a-0242ac180006',
-                    resourceid:
-                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['information-step']['notes'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "726956bc-cce0-11ee-af2a-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                   }
                 }
               ]

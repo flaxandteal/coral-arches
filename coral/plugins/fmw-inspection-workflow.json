@@ -56,7 +56,12 @@
                   "labels": [["Monument or Area", "SMR Number(s)"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d"
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "nodeOptions": {
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "get-selected-monument-details",
@@ -75,7 +80,59 @@
                     "083e9df0-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083df90e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']"
+                  "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']",
+                  "nodeOptions": {
+                    "04494bbe-c769-11ee-82c4-0242ac180006": {
+                    "config":{
+                      "maxDate":"today"
+                    }
+                    },
+                    "083e9df0-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083eed32-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083ef872-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1cf746f6-1853-11eb-a9df-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463959-3ee4-11eb-9488-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463948-3ee4-11eb-9c38-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "c4413ac8-69b6-11ee-908a-0242ac120002": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "ac905d54-ca65-11ee-b83c-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "caf5bff5-a3d7-11e9-8c7e-00224800b26d": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -90,7 +147,59 @@
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11",
                     "7224417b-893a-11ea-b383-f875a44e0e11"
                   ],
-                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11"
+                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
+                  "nodeOptions": {
+                    "04494bbe-c769-11ee-82c4-0242ac180006": {
+                    "config":{
+                      "maxDate":"today"
+                    }
+                    },
+                    "083e9df0-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083eed32-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083ef872-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1cf746f6-1853-11eb-a9df-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463959-3ee4-11eb-9488-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463948-3ee4-11eb-9c38-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "c4413ac8-69b6-11ee-908a-0242ac120002": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "ac905d54-ca65-11ee-b83c-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "caf5bff5-a3d7-11e9-8c7e-00224800b26d": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -255,10 +364,69 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006"
+                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "nodeOptions": {
+                    "998d6728-fb26-11ee-838d-0242ac190006": {
+                      "allowInstanceCreation": false
+                    },
+                    "42ec3232-fb26-11ee-838d-0242ac190006": {
+                      "allowInstanceCreation": false
+                    },
+                
+                    "04494bbe-c769-11ee-82c4-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083e9df0-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083eed32-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "083ef872-ca61-11ee-afca-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "1cf746f6-1853-11eb-a9df-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463959-3ee4-11eb-9488-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "62463948-3ee4-11eb-9c38-f875a44e0e11": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "c4413ac8-69b6-11ee-908a-0242ac120002": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "ac905d54-ca65-11ee-b83c-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "caf5bff5-a3d7-11e9-8c7e-00224800b26d": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "sign-off"
               }
             ]

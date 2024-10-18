@@ -47,7 +47,7 @@ define([
                 widget?.widgetLookup[ko.unwrap(widget?.widget_id)].name].join(" ");
         };
 
-
+    
         this.initialize = function() {
             self.card.showForm(true);
 

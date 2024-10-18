@@ -56,18 +56,21 @@
                   "hiddenNodes": [
                     "6b8f5866-2f0d-11ef-b37c-0242ac140006"
                   ],
+                  "nodeOptions": {
+                    "fbdd2304-cfda-11ee-8cc1-0242ac180006": {
+                      "allowInstanceCreation": false
+                    },
+                    "50d15bec-cfda-11ee-8cc1-0242ac180006": {
+                      "disabled": true,
+                      "disableDelete": true
+                    }
+                  },
                   "prefilledNodes": [
                     [
                       "6b8f5866-2f0d-11ef-b37c-0242ac140006",
                       "e377b8a9-ced0-4186-84ff-0b5c3ece9c78"
                     ]
-                  ],
-                  "nodeOptions": {
-                    "50d15bec-cfda-11ee-8cc1-0242ac180006": {
-                      "disabled": true,
-                      "disableDelete": true
-                    }
-                  }
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
