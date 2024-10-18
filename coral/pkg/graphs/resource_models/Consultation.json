@@ -17339,6 +17339,17 @@
                 },
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
+                            "dc9bfb24-cfd9-11ee-8cc1-0242ac180006"
+                        ]
+                    },
+                    "function_id": "9a4760fc-9a00-4ba1-b35c-18dbe26f1beb",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "e38aab96-a637-4360-b423-1f967c57937b"
+                },
+                {
+                    "config": {
                         "geojson_input_node": "083f3c7e-ca61-11ee-afca-0242ac180006",
                         "geojson_input_nodegroup": "083e003e-ca61-11ee-afca-0242ac180006",
                         "tm65_output_node": "ac3eb490-1682-11ef-b68e-0242ac120006",
