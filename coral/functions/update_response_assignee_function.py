@@ -137,9 +137,10 @@ class UpdateAssignedTo(BaseFunction):
             current_assigned = tile.data[ASSIGNMENT_ASSIGNED_TO]
             reassigned_users = tile.data[REASSIGNED_TO]
             team = tile.data[ASSIGNMENT_TEAM]
+            tile.data[ASSIGNMENT_ASSIGNED_TO] = reassigned_users
             tile.data[REASSIGNED_TO] = None
             tile.save()    
-            
+
             for person in reassigned_users:
                 self.is_user_in_team(person['resourceId'], team)
 
