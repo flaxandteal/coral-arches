@@ -3,10 +3,22 @@
 {% load i18n %}
 
 {% block form %}
+<!-- ko ifnot: isUserAlreadyAdded() -->
+    <!-- ko component: {
+        name: 'default-card-util',
+        hiddenNodes: params.hiddenNodes,
+        params: params
+    } --><!-- /ko -->
+<!-- /ko -->
 <!--ko let: {self: $data} -->
 <!-- ko ifnot: self.displayOntologyTable -->
 <div class="row" style="margin: 0px;" data-bind="class: nodeCssClasses">
-    <div class="col-xs-12 resource-instance-wrapper">
+    <div class="pad-hor" data-bind="attr:{'aria-label': label}" aria-label="Confirmation of Sign Off">
+        <label data-bind="css: { 'active': value() === true, 'disabled': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {'aria-checked': value() === true}" tabindex="0" role="checkbox">
+            <input type="checkbox" name="stat-w-label" data-bind="checked: value() === true"><span>Sign Off</span>
+        </label>
+    </div>
+    <!-- <div class="col-xs-12 resource-instance-wrapper">
         <select style="width:30%; display:inline-block;"
             data-bind="
                 select2Query: {
@@ -15,7 +27,7 @@
                 attr: {'data-label': label, 'aria-label': label}
             "></select>
             <div>T1</div>
-    </div>
+    </div> -->
 </div>
 <!-- /ko -->
 <!-- ko if: self.displayOntologyTable -->
