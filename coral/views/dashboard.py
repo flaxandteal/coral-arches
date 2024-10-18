@@ -180,15 +180,22 @@ class PlanningTaskStrategy(TaskStrategy):
                 action_status = utilities.node_check(lambda: consultation.action[0].action_status )
                 action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
                 assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1, [])
-                reassigned_to_list = utilities.node_check(lambda: consultation.assignment[0].re_assignee.re_assigned_to, [])
+                reassigned_to_tiles = utilities.node_check(lambda: consultation.assignment, [])
 
-                user_assigned = any(assigned_to_list) or any(reassigned_to_list)
+                user_assigned = any(assigned_to_list)
+
+                if not user_assigned:
+                    for tile in reassigned_to_tiles:
+                        if any(tile.re_assignee.re_assigned_to):
+                            user_assigned = True
+                            break 
 
                 is_assigned_to_user = False
 
                 # first checks reassigned to as this overwrites the assigned to field if true
-                if reassigned_to_list:
-                    is_assigned_to_user = any(user.id == userResourceId for user in reassigned_to_list)
+                if reassigned_to_tiles:
+                    for tile in reassigned_to_tiles:
+                        is_assigned_to_user = any(user.id == userResourceId for user in tile.re_assignee.re_assigned_to)
                 elif assigned_to_list:
                     is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
                 
@@ -303,11 +310,21 @@ class ExcavationTaskStrategy(TaskStrategy):
         valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
-        report_status = utilities.node_check(lambda:licence.report[-1].classification_type) #takes the last report, assumes the newest
+        report_tiles = utilities.node_check(lambda:licence.report) #takes the last report, assumes the newest
         licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
         nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
 
         employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
+
+        report_status = None
+        if report_tiles:
+            sorted_report_tiles = sorted(
+                report_tiles,
+                key=lambda x: datetime.strptime(x.classification_date.classification_date_value, "%Y-%m-%dT%H:%M:%S.%f%z") if x.classification_date.classification_date_value else datetime.min
+            )
+            latest_report_tile = sorted_report_tiles[-1]
+            report_status = latest_report_tile.classification_type
+
 
         name = display_name[0]
         if name.startswith("Excavation Licence"):

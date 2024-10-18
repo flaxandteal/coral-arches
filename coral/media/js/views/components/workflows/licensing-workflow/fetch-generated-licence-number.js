@@ -20,7 +20,7 @@ define([
     this.CUR_D_DECISION_APPROVED_VALUE = '0c888ace-b068-470a-91cb-9e5f57c660b4';
 
     const self = this;
-
+    self.params = params
     _.extend(this, params.form);
     self.tile()?.dirty.subscribe(function (val) {
       self.dirty(val);

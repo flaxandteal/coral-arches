@@ -143,7 +143,12 @@
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba"
                   ],
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
-                  "semanticName": "Contacts"
+                  "semanticName": "Contacts",
+                  "nodeOptions": {
+                    "db45aa50-24ce-11ef-97ad-0242ac130006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -248,7 +253,15 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "34959a52-03aa-11ef-948f-0242ac150003",
-                  "semanticName": "Evaluation"
+                  "semanticName": "Evaluation",
+                  "nodeOptions": {
+                    "5ffdc00e-03ad-11ef-948f-0242ac150003": {
+                      "config":{
+                        "maxDate":"today",
+                        "label": "Sign Off Date"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
