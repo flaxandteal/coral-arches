@@ -87,10 +87,12 @@ class UpdateAssignedTo(BaseFunction):
                     
     def update_matching_node(self, tile, nodegroup, existing_node, update_node, team=None):
         assigned_users = tile.data[existing_node]
-        team_users = {HM_TEAM: [], HB_TEAM: []}
+        team_users = {}
         for user in assigned_users:
             user_team = self.is_user_in_team(user['resourceId'], team)
             if user_team:
+                if user_team not in team_users:
+                    team_users[user_team] = []
                 team_users[user_team].append(user)
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
@@ -102,33 +104,28 @@ class UpdateAssignedTo(BaseFunction):
             }
 
             existing_tiles = Tile.objects.filter(**filter_params)
-            for tile in existing_tiles:
-                tile.delete()
-        except:
-            logger.log("No tiles currently exist")
-
-        for team, users in team_users.items():
-            if users:
-                try:
-                    Tile.objects.get_or_create(
-                        resourceinstance_id=resource_instance_id,
-                        nodegroup_id=nodegroup,
-                        data = { update_node: users, ASSIGNMENT_TEAM:team }
-                    )
-                    continue
+            if existing_tiles:
+                for tile in existing_tiles:
+                    team = tile.data[ASSIGNMENT_TEAM]
+                    if team in team_users:
+                        tile.data[ASSIGNMENT_ASSIGNED_TO] = team_users[team]
+                        tile.save()  
+                        del team_users[team]
+                    else:
+                        tile.delete()
+            for team, users in team_users.items():
+                if users:
+                    try:
+                        Tile.objects.get_or_create(
+                            resourceinstance_id=resource_instance_id,
+                            nodegroup_id=nodegroup,
+                            data={update_node: users, ASSIGNMENT_TEAM: team}
+                        )
+                    except Exception as e:
+                        logger.error(e)
                     
-                except Exception as e:
-                    logger.error(e)
-
-    def are_values_equal(self, array1, array2):
-        if len(array1) != len(array2):
-            return False
-        
-        for item1, item2 in zip(array1, array2):
-            if item1['resourceId'] != item2['resourceId']:
-                return False
-        
-        return True
+        except Exception as e:
+            logger.error(f"No tiles currently exist: {e}")
 
     def post_save(self, tile, request, context):
         if context and context.get('escape_function', False):
@@ -140,7 +137,9 @@ class UpdateAssignedTo(BaseFunction):
             current_assigned = tile.data[ASSIGNMENT_ASSIGNED_TO]
             reassigned_users = tile.data[REASSIGNED_TO]
             team = tile.data[ASSIGNMENT_TEAM]
-
+            tile.data[REASSIGNED_TO] = None
+            tile.save()    
+            
             for person in reassigned_users:
                 self.is_user_in_team(person['resourceId'], team)
 
@@ -169,9 +168,6 @@ class UpdateAssignedTo(BaseFunction):
                 self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO, HB_TEAM)
             elif action_type == TYPE_ASSIGN_BOTH:
                 self.update_matching_node(tile, ASSIGNMENT, ACTION_ASSIGNED_TO, ASSIGNMENT_ASSIGNED_TO)
-
-        # elif str(tile.nodegroup_id) == ASSIGNMENT:
-        #     self.update_matching_node(tile, ACTION, ASSIGNMENT_ASSIGNED_TO, ACTION_ASSIGNED_TO)
 
         
 
