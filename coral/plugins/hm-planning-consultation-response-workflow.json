@@ -61,7 +61,12 @@
                     "19eef70c-69b8-11ee-8431-0242ac120002",
                     "22c1c800-51a4-11eb-8254-f875a44e0e11",
                     "bfd39106-51a3-11eb-9104-f875a44e0e11"
-                  ]
+                  ],
+                  "nodeOptions": {
+                    "8322f9f6-69b5-11ee-93a1-0242ac120002": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -77,6 +82,11 @@
                     "6b8f5866-2f0d-11ef-b37c-0242ac140006",
                     "50d15bec-cfda-11ee-8cc1-0242ac180006"
                   ],
+                  "nodeOptions": {
+                    "fbdd2304-cfda-11ee-8cc1-0242ac180006": {
+                      "allowInstanceCreation": false
+                    }
+                  },
                   "prefilledNodes": [
                     [
                       "6b8f5866-2f0d-11ef-b37c-0242ac140006",

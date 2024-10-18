@@ -19,7 +19,7 @@ define([
     self.tile().dirty.subscribe(function (val) {
       self.dirty(val);
     });
-
+    self.params = params
     this.labels = params.labels || [];
     params.form
       .card()
