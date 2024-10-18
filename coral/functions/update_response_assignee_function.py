@@ -38,7 +38,7 @@ details = {
     'defaultconfig': {
         'triggering_nodegroups': [
             ACTION,
-            
+            ASSIGNMENT
         ],
     },
     'classname': 'UpdateAssignedTo',
