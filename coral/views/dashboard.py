@@ -195,7 +195,9 @@ class PlanningTaskStrategy(TaskStrategy):
                 # first checks reassigned to as this overwrites the assigned to field if true
                 if reassigned_to_tiles:
                     for tile in reassigned_to_tiles:
-                        is_assigned_to_user = any(user.id == userResourceId for user in tile.re_assignee.re_assigned_to)
+                        if any(user.id == userResourceId for user in tile.re_assignee.re_assigned_to):
+                            is_assigned_to_user = True
+                            break
                 elif assigned_to_list:
                     is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
                 
