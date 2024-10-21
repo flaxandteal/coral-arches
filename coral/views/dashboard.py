@@ -56,6 +56,7 @@ class Dashboard(View):
             sort_order = request.GET.get('sortOrder', None)
             filter = request.GET.get('filterBy', None)
             sort_options = []
+            filter_options = []
 
             if not update and cache.get(cache_key):
                 cache_data = cache.get(cache_key)
