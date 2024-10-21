@@ -104,10 +104,10 @@ class NotifyPlanning(BaseFunction):
 
         # fetch re-assigned to data from a seperate nodegroup
         try:
-            assignment_tile = Tile.objects.get(
+            assignment_tile = Tile.objects.filter(
                 resourceinstance_id = resource_instance_id,
                 nodegroup_id = ASSIGNMENT_NODEGROUP
-            )
+            ).first()
         except Tile.DoesNotExist:
             assignment_tile = None
 

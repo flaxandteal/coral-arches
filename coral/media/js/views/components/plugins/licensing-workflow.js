@@ -976,6 +976,9 @@ define([
                       "ea6ea7a8-dc70-11ee-b70c-0242ac120006": {
                         "config":{
                           "maxDate":"today"
+                        },
+                        "node": { 
+                          "isrequired": true
                         }
                       },
                       "97f6c776-5d4a-11ee-9b75-0242ac130003": {
