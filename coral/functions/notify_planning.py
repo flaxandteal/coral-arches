@@ -52,10 +52,9 @@ class NotifyPlanning(BaseFunction):
 
     def post_save(self, tile, request, context):
         from arches_orm.models import Person
-
+    
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         nodegroup_id = str(tile.nodegroup_id)
-
         existing_notification = models.Notification.objects.filter(
             context__resource_instance_id=resource_instance_id
         ).first()
@@ -100,8 +99,8 @@ class NotifyPlanning(BaseFunction):
             elif response_group_uuid == RESPONSE_HB:
                 response_group = "HB"
             notification.message = f"{name} response has been completed by {response_group}"
-            notification.context['response_slug'] = 'assign-consultation-workflow'
-            self.notify_group(PLANNING_ADMIN, notification)
+            response_slug = 'assign-consultation-workflow'
+            self.notify_group(PLANNING_ADMIN, notification, response_slug)
             return
 
         # fetch re-assigned to data from a seperate nodegroup
@@ -179,7 +178,6 @@ class NotifyPlanning(BaseFunction):
         notified_users_list = notification.context.get("last_notified", []) if isinstance(notification.context.get("last_notified"), list) else []
 
         for user in assigned_users_list:
-            print(user)
             selected_user = Person.find(user['user']['resourceId'])
 
             if not selected_user.user_account:
