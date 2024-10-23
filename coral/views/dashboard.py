@@ -64,6 +64,7 @@ class Dashboard(View):
                 task_resources = data['task_resources']
                 counters = data['counters']
                 sort_options = data['sort_options']
+                filter_options = data['filter_options']
                 utilities = Utilities()
                 task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
 
