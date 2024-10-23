@@ -15,6 +15,23 @@ define([
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
 
+    this.signOffNodes = {
+      "42ec3232-fb26-11ee-838d-0242ac190006": {
+        "groupsRequired" : [
+
+        ],
+        "value": ko.observable(false)
+      },
+      "998d6728-fb26-11ee-838d-0242ac190006": {
+        "groupsRequired" : [
+
+        ],
+        "value": ko.observable(false)
+      }
+    }
+
+    this.params = params
+
     console.log('user-to-model-select: ', this);
 
     this.isUserAlreadyAdded = ko.computed(() => {

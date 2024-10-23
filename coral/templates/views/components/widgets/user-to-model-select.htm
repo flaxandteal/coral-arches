@@ -12,12 +12,14 @@
 <!-- /ko -->
 <!--ko let: {self: $data} -->
 <!-- ko ifnot: self.displayOntologyTable -->
-<div class="row" style="margin: 0px;" data-bind="class: nodeCssClasses">
+<!-- ko foreach: {data: 'Object.keys(signOffNodes)', as: 'signatureNode'} -->
+<div class="row" style="margin: 0px;" data-bind="class: $parent.nodeCssClasses">
     <div class="pad-hor" data-bind="attr:{'aria-label': label}" aria-label="Confirmation of Sign Off">
-        <label data-bind="css: { 'active': value() === true, 'disabled': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {'aria-checked': value() === true}" tabindex="0" role="checkbox">
-            <input type="checkbox" name="stat-w-label" data-bind="checked: value() === true"><span>Sign Off</span>
+        <label data-bind="css: { 'active': signOffNodes[signatureNode].value() === true, 'disabled': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {'aria-checked': signOffNodes[signatureNode].value() === true}" tabindex="0" role="checkbox">
+            <input type="checkbox" name="stat-w-label" data-bind="checked: signOffNodes[signatureNode].value() === true"><span>Sign Off</span>
         </label>
     </div>
+
     <!-- <div class="col-xs-12 resource-instance-wrapper">
         <select style="width:30%; display:inline-block;"
             data-bind="
@@ -29,6 +31,7 @@
             <div>T1</div>
     </div> -->
 </div>
+<!-- /ko -->
 <!-- /ko -->
 <!-- ko if: self.displayOntologyTable -->
 <div class="row widget-wrapper" data-bind="visible: !newResourceInstance(), class: nodeCssClasses">
