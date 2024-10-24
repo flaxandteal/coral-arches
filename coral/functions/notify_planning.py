@@ -52,6 +52,9 @@ class NotifyPlanning(BaseFunction):
 
     def post_save(self, tile, request, context):
         from arches_orm.models import Person
+
+        if context and context.get('escape_function', False):
+            return
     
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         nodegroup_id = str(tile.nodegroup_id)
@@ -212,7 +215,7 @@ class NotifyPlanning(BaseFunction):
                     if member.id == person.id:
                         return True
             return False
-
+        user_team = None
         if find_users_in_teams(hm_groups):
             user_team = 'hm'
         elif find_users_in_teams(hb_groups):
