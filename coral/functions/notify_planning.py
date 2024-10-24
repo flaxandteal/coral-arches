@@ -52,10 +52,9 @@ class NotifyPlanning(BaseFunction):
 
     def post_save(self, tile, request, context):
         from arches_orm.models import Person
-
+    
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         nodegroup_id = str(tile.nodegroup_id)
-
         existing_notification = models.Notification.objects.filter(
             context__resource_instance_id=resource_instance_id
         ).first()
@@ -70,6 +69,7 @@ class NotifyPlanning(BaseFunction):
                     "resource_instance_id": resource_instance_id,
                     "consultation_id": name,
                     "last_notified": None,
+                    "response_slug": 'assign-consultation-workflow'
                 },
             )
         
@@ -99,15 +99,16 @@ class NotifyPlanning(BaseFunction):
             elif response_group_uuid == RESPONSE_HB:
                 response_group = "HB"
             notification.message = f"{name} response has been completed by {response_group}"
-            self.notify_group(PLANNING_ADMIN, notification)
+            response_slug = 'assign-consultation-workflow'
+            self.notify_group(PLANNING_ADMIN, notification, response_slug)
             return
 
         # fetch re-assigned to data from a seperate nodegroup
         try:
-            assignment_tile = Tile.objects.get(
+            assignment_tile = Tile.objects.filter(
                 resourceinstance_id = resource_instance_id,
                 nodegroup_id = ASSIGNMENT_NODEGROUP
-            )
+            ).first()
         except Tile.DoesNotExist:
             assignment_tile = None
 
@@ -124,31 +125,36 @@ class NotifyPlanning(BaseFunction):
             if data[ACTION_TYPE] is None and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
                 if existing_notification and existing_notification.context["last_notified"] == PLANNING_ADMIN:
                     return
-                self.notify_group(PLANNING_ADMIN, notification)
+                self.notify_group(PLANNING_ADMIN, notification, 'assign-consultation-workflow')
 
             elif data[ACTION_TYPE] in [ASSIGN_HM, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
                 if existing_notification and existing_notification.context["last_notified"] == HM_MANAGERS:
                     return
-                self.notify_group(HM_MANAGERS, notification)
+                self.notify_group(HM_MANAGERS, notification, 'hm-planning-consultation-response-workflow')
 
             elif data[ACTION_TYPE] in [ASSIGN_HB, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
                 if existing_notification and existing_notification.context["last_notified"] == HB_MANAGERS:
                     return
                 
-                self.notify_group(HB_MANAGERS, notification)
+                self.notify_group(HB_MANAGERS, notification, 'hb-planning-consultation-response-workflow')
 
             elif data[ACTION_STATUS] in action_type_conditions and is_assigned_to_a_user:
                 with admin():
                     assigned_users_list = []
+                    
                     if re_assignment_node:
                         return
                     else:
                         for user in tile.data[ASSIGNED_TO]:
-                            assigned_users_list.append(user)
+                            team = self.find_user_team(user)
+                            assigned_users_list.append({
+                                'user': user,
+                                'team': team
+                            })
 
                     self.notify_users(assigned_users_list, notification)
 
-    def notify_group(self, group_id, notification):
+    def notify_group(self, group_id, notification, response_slug):
         from arches_orm.models import Group, Person
         
         with admin():
@@ -156,6 +162,7 @@ class NotifyPlanning(BaseFunction):
             persons = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
 
             notification.context["last_notified"] = group_id
+            notification.context["response_slug"] = response_slug
             notification.save()
             for person in persons:
                 user = person.user_account
@@ -171,8 +178,7 @@ class NotifyPlanning(BaseFunction):
         notified_users_list = notification.context.get("last_notified", []) if isinstance(notification.context.get("last_notified"), list) else []
 
         for user in assigned_users_list:
-
-            selected_user = Person.find(user['resourceId'])
+            selected_user = Person.find(user['user']['resourceId'])
 
             if not selected_user.user_account:
                 return
@@ -182,9 +188,34 @@ class NotifyPlanning(BaseFunction):
 
             notified_users_list.append(selected_user.id)
             notification.context["last_notified"] = notified_users_list
+            notification.context["response_slug"] = f"{user['team']}-planning-consultation-response-workflow"
             notification.save()
             
             user_x_notification = models.UserXNotification(
                 notif=notification, recipient=selected_user.user_account
             )
             user_x_notification.save()
+
+    def find_user_team(self, user):
+        from arches_orm.models import Group, Person
+        hm_teams = [HM_MANAGERS, HM_USER]
+        hb_teams = [HB_MANAGERS, HB_USER]
+
+        hb_groups = [Group.find(id) for id in hb_teams]
+        hm_groups = [Group.find(id) for id in hm_teams]
+
+        person = Person.find(user['resourceId'])
+
+        def find_users_in_teams(groups):
+            for group in groups:
+                for member in group.members:
+                    if member.id == person.id:
+                        return True
+            return False
+
+        if find_users_in_teams(hm_groups):
+            user_team = 'hm'
+        elif find_users_in_teams(hb_groups):
+            user_team = 'hb'
+
+        return user_team

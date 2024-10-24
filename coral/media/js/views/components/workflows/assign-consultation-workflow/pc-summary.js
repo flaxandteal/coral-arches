@@ -125,7 +125,7 @@ define([
         nodegroupId: 'dc9bfb24-cfd9-11ee-8cc1-0242ac180006',
         renderNodeIds: [
           { nodeId: '6b8f5866-2f0d-11ef-b37c-0242ac140006', label: 'Team' },
-          { nodeId: 'fbdd2304-cfda-11ee-8cc1-0242ac180006', label: 'Re-Assigned To' },
+          // { nodeId: 'fbdd2304-cfda-11ee-8cc1-0242ac180006', label: 'Re-Assigned To' },
           { nodeId: '50d15bec-cfda-11ee-8cc1-0242ac180006', label: 'Assigned To' }
         ]
       }

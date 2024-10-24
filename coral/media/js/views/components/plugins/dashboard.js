@@ -12,14 +12,19 @@ define([
 
       this.resources = ko.observableArray([]);
       this.counters = ko.observableArray([]);
-      this.total = ko.observable();
+      this.total = ko.observable(0);
       this.itemsPerPage = ko.observable(10);
       this.currentPage = ko.observable(1);
       this.sortBy = ko.observable();
       this.sortOrder = ko.observable();
+      this.filterBy = ko.observable();
       this.sortOptions = ko.observableArray([]);
+      this.filterOptions = ko.observableArray([])
       this.loading = ko.observable(true);
       this.loadingCards = ko.observable(false);
+      this.showFilter = ko.observable(false);
+
+      this.initialLoadCompleted = false;
 
       this.paginator = koMapping.fromJS({
           current_page: 1,
@@ -74,6 +79,9 @@ define([
           if(this.sortOrder()){
             url_params.sortOrder = this.sortOrder()
           }
+          if(this.filterBy()){
+            url_params.filterBy = this.filterBy()
+          }
 
           const params = new URLSearchParams(url_params);
   
@@ -88,8 +96,9 @@ define([
           koMapping.fromJS(data.paginator, this.paginator)
           this.resources(data.paginator.response)
           this.total(data.paginator.total)
-          this.counters(convertToObservableArray(data.paginator.counters))
-          this.sortOptions(data.paginator.sort_options)
+          this.counters(convertToObservableArray(data.counters))
+          this.sortOptions(data.sort_options)
+          this.filterOptions(data.filter_options)
           this.loading(false)
           this.loadingCards(false)
         } catch (error) {
@@ -108,30 +117,47 @@ define([
 
       //reduces the number of items per page based on the window width
       const updateItemsPerPage = () => {
+        console.log('width', window.innerWidth)
         if (window.innerWidth < 1000){
             this.itemsPerPage(2);
         }
-        else if (window.innerWidth < 1600){
+        else if (window.innerWidth < 1360){
             this.itemsPerPage(4);
         }
-        else if (window.innerWidth < 2200){
+        else if (window.innerWidth < 1760){
             this.itemsPerPage(6);
+        }
+        else{
+            this.itemsPerPage(8)
         }
       }
 
       this.sortBy.subscribe(async () => {
-        if (this.sortBy()) {
+        if (this.initialLoadCompleted && this.sortBy()) {
           this.loadingCards(true);
           getTasks();
         }
       });
 
       this.sortOrder.subscribe(async () => {
-        if (this.sortOrder()) {
+        if (this.initialLoadCompleted && this.sortOrder()) {
           this.loadingCards(true);
           getTasks();
         }
       });
+
+      this.filterBy.subscribe(async () => {
+        if (this.initialLoadCompleted && this.filterBy()) {
+          this.loadingCards(true);
+          getTasks();
+        }
+      });
+
+      this.resources.subscribe(async () => {
+        if(this.resources().length > 0 && this.resources()[0].state === 'Excavation') {
+          this.showFilter(true)
+        }
+      })
 
       window.addEventListener('resize', debounce(async () => {
           const prevItemsPerPage = this.itemsPerPage();
@@ -150,6 +176,7 @@ define([
       this.init = async () => {
           updateItemsPerPage();
           await getTasks();  
+          this.initialLoadCompleted = true;
       }
 
       this.init();

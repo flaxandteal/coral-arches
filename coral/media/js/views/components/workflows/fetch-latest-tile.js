@@ -26,6 +26,8 @@ define([
       try {
         const tiles = await this.fetchTileData(this.resourceId, params.nodegroupid);
 
+        if (!tiles?.length) return;
+
         const tile = tiles[0];
 
         if (!tile) return;
@@ -53,6 +55,10 @@ define([
     };
 
     this.getLatestTile();
+
+    this.getNodeOptions = (nodeId) => {
+        return params.nodeOptions?.[nodeId]
+    }
   }
 
   ko.components.register('fetch-latest-tile', {
