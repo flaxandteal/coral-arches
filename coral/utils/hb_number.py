@@ -15,7 +15,7 @@ class HbNumber:
 
     def id_number_format(self, index):
         district_number, ward_number = self.parse_district_ward()
-        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
+        return f"HB{district_number}/{ward_number}/{str(index).zfill(3)}"
     
     def parse_district_ward(self):
         pattern = r"\(\d+/\d+\)"
@@ -31,7 +31,7 @@ class HbNumber:
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{HB_NUMBER_NODE_ID}__icontains": f"HB/",
+                f"data__{HB_NUMBER_NODE_ID}__iregex": r"HB\d+"
             }
             query_result = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -57,7 +57,7 @@ class HbNumber:
 
         print(f"Previous ID number: {latest_id_number}")
         id_number_parts = latest_id_number.split("/")
-        return {"index": int(id_number_parts[3])}
+        return {"index": int(id_number_parts[2])}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
         if attempts >= 20:
