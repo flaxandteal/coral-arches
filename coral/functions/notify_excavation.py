@@ -57,6 +57,9 @@ class NotifyExcavation(BaseFunction):
     def post_save(self, tile, request, context):
         from arches_orm.models import Person
         with admin():
+            if context and context.get('escape_function', False):
+                return
+
             nodegroup_id = str(tile.nodegroup_id)
 
             user = request.user

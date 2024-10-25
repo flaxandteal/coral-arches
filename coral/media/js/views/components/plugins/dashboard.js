@@ -117,14 +117,18 @@ define([
 
       //reduces the number of items per page based on the window width
       const updateItemsPerPage = () => {
+        console.log('width', window.innerWidth)
         if (window.innerWidth < 1000){
             this.itemsPerPage(2);
         }
-        else if (window.innerWidth < 1600){
+        else if (window.innerWidth < 1360){
             this.itemsPerPage(4);
         }
-        else if (window.innerWidth < 2200){
+        else if (window.innerWidth < 1760){
             this.itemsPerPage(6);
+        }
+        else{
+            this.itemsPerPage(8)
         }
       }
 
