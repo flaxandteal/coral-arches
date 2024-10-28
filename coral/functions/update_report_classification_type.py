@@ -71,43 +71,46 @@ class UpdateReportClassificationType(BaseFunction):
         except:
             return
 
-        if reportValue != None:
 
-            reportTiles = list(Tile.objects.filter(
-                    nodegroup_id=self.config["report_nodegroup"], resourceinstance_id=tile.resourceinstance_id
-                ))
+        reportTiles = list(Tile.objects.filter(
+                nodegroup_id=self.config["report_nodegroup"], resourceinstance_id=tile.resourceinstance_id
+            ).exclude(tileid=tile.tileid))
+        if not context['delete']:
             reportTiles.append(tile)
-            applicationDetailsTile = Tile.objects.filter(
-                    nodegroup_id=self.config["application_details_nodegroup"], resourceinstance_id=tile.resourceinstance_id
-                )
-
-            def tileReportClassNode(tile):
-                return tile.data[report_classification_date_node]
-
-            reportTiles.sort(key=tileReportClassNode, reverse=True)
+        applicationDetailsTile = Tile.objects.filter(
+                nodegroup_id=self.config["application_details_nodegroup"], resourceinstance_id=tile.resourceinstance_id
+            )
+        def tileReportClassNode(tile):
+            return tile.data[report_classification_date_node]
+        reportTiles.sort(key=tileReportClassNode, reverse=True)
+        if not len(reportTiles) > 0:
+            new_value = str(classification_map["application_details"]["not_received"])
+        else:
             mostRecent = reportTiles[0]
-
-            applicationDetailsTile[0].update_node_value(
-                application_details_report_classification_node, 
-                classification_map["application_details"][classification_map["report_classification"][mostRecent.data[report_classification_type_node]]],
-                applicationDetailsTile[0].tileid,
-                applicationDetailsTile[0].nodegroup_id,
-                request,
-                applicationDetailsTile[0].resourceinstance_id
-                )
-
-
-
+            new_value = str(classification_map["application_details"][classification_map["report_classification"][mostRecent.data[report_classification_type_node]]])
+            if str(mostRecent.tileid) == str(tile.tileid):
+                new_value = str(classification_map["application_details"][classification_map["report_classification"][tile.data[report_classification_type_node]]])
+            else:
+                new_value = str(classification_map["application_details"][classification_map["report_classification"][mostRecent.data[report_classification_type_node]]])
+        applicationDetailsTile[0].update_node_value(
+            application_details_report_classification_node, 
+            new_value,
+            applicationDetailsTile[0].tileid,
+            applicationDetailsTile[0].nodegroup_id,
+            request,
+            applicationDetailsTile[0].resourceinstance_id
+            )
 
     def save(self, tile, request, context=None):
-        self.save_report(tile=tile, request=request, context={'escape_function': True})
+        self.save_report(tile=tile, request=request, context={'escape_function': True, 'delete': False})
         return
 
     def post_save(self, *args, **kwargs):
         raise NotImplementedError
 
     def delete(self, tile, request):
-        raise NotImplementedError
+        self.save_report(tile=tile, request=request, context={'escape_function': True, 'delete': True})
+        return
 
     def on_import(self, tile):
         self.save_report(tile=tile, request=None, context={'escape_function': False})
