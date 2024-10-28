@@ -42,7 +42,7 @@ class Dashboard(View):
         from arches_orm.models import Person
         with admin():
             user_id = request.user.id                     
-            person_resource = Person.where(user_account = user_id)
+            person_resource = Person.where(user_account=user_id)
             
             if not person_resource:
                 return JsonResponse({"error": "User not found"}, status=404)
@@ -61,13 +61,11 @@ class Dashboard(View):
             if not update and cache.get(cache_key):
                 cache_data = cache.get(cache_key)
                 data = json.loads(cache_data)
-                task_resources = data['task_resources']
                 counters = data['counters']
                 sort_options = data['sort_options']
                 filter_options = data['filter_options']
                 utilities = Utilities()
-                task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
-
+                task_resources = utilities.sort_resources(data['task_resources'], sort_by, sort_order)
             else:
                 user_group_ids = self.get_groups(person_resource[0].id)
                 strategies = set()
@@ -87,8 +85,8 @@ class Dashboard(View):
                     'counters': counters,
                     'sort_options': sort_options,
                     'filter_options': filter_options
-                    })
-                cache.set(cache_key, cache_data, 60 * 15)
+                })
+                cache.set(cache_key, cache_data, 60 * 3)
 
             page = int(request.GET.get('page', 1))
             items_per_page = int(request.GET.get('itemsPerPage', 10))
@@ -281,7 +279,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         resources = [] 
 
-        licences_all = License.all()
+        licences_all = License.all(lazy = True)
 
         licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
 
@@ -318,9 +316,18 @@ class ExcavationTaskStrategy(TaskStrategy):
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
         report_tiles = utilities.node_check(lambda:licence.report) #takes the last report, assumes the newest
         licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
-        nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
+        
+        nominated_directors_name_list = (
+            [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
+            if nominated_directors is not None
+            else []
+        )
 
-        employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
+        employing_body_name_list = (
+            [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
+            if employing_body is not None
+            else []
+        )
 
         report_status = None
         if report_tiles:
@@ -336,9 +343,12 @@ class ExcavationTaskStrategy(TaskStrategy):
         if name.startswith("Excavation Licence"):
             display_name = name[len("Excavation Licence"):].strip()
 
-        site_name = next(
-            (utilities.node_check(lambda:activity.activity_names[0].activity_name) for activity in activity_list if activity and activity.activity_names),
-            None
+        site_name = (
+            next(
+                (utilities.node_check(lambda:activity.activity_names[0].activity_name) for activity in activity_list if activity and activity.activity_names),
+                None)
+            if activity_list is not None
+            else []
         )
 
         response_slug = utilities.get_response_slug(groupId) if groupId else None
