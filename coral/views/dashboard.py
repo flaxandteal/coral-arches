@@ -57,9 +57,9 @@ class Dashboard(View):
             filter = request.GET.get('filterBy', None)
             sort_options = []
             filter_options = []
+            cache_data = cache.get(cache_key)
 
-            if not update and cache.get(cache_key):
-                cache_data = cache.get(cache_key)
+            if not update and cache_data is not None:
                 data = json.loads(cache_data)
                 counters = data['counters']
                 sort_options = data['sort_options']
@@ -86,7 +86,7 @@ class Dashboard(View):
                     'sort_options': sort_options,
                     'filter_options': filter_options
                 })
-                cache.set(cache_key, cache_data, 60 * 3)
+                cache.set(cache_key, cache_data, 60 * 15)
 
             page = int(request.GET.get('page', 1))
             items_per_page = int(request.GET.get('itemsPerPage', 10))
@@ -288,9 +288,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             licences = [l for l in licences if self.is_valid_license(l, filter)]
 
         for licence in licences:
-            task = self.build_data(licence, groupId)
-            if task:
-                resources.append(task)
+            resources.append(licence)
         sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
 
         counters = []
