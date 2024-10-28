@@ -10,8 +10,8 @@ from collections import defaultdict
 from django.core.cache import cache
 import json
 import logging
-from itertools import chain 
 import html
+import pickle
 
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
@@ -48,7 +48,8 @@ class Dashboard(View):
                 return JsonResponse({"error": "User not found"}, status=404)
             
             update = request.GET.get('update', 'true') == 'true'
-            cache_key = f'dashboard_{user_id}'
+            page = int(request.GET.get('page', 1))
+            cache_key = f'dashboard_{user_id}_{page}'
 
             task_resources = []
             counters = {}
@@ -59,71 +60,61 @@ class Dashboard(View):
             filter_options = []
             cache_data = cache.get(cache_key)
 
+            if update:
+                cache.clear()
             if not update and cache_data is not None:
-                data = json.loads(cache_data)
-                counters = data['counters']
-                sort_options = data['sort_options']
-                filter_options = data['filter_options']
-                utilities = Utilities()
-                task_resources = utilities.sort_resources(data['task_resources'], sort_by, sort_order)
+                response_data = json.loads(cache_data)
             else:
                 user_group_ids = self.get_groups(person_resource[0].id)
-                strategies = set()
                 for groupId in user_group_ids:
                     strategy = self.select_strategy(groupId)
                     if strategy:
-                        strategies.add(self.select_strategy(groupId))
-                for strategy in strategies:
-                    if sort_by is not None and sort_order is not None and sort_by:
-                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order, filter)
-                    else:
-                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id)
-                    task_resources.extend(resources)
+                        if sort_by is not None and sort_order is not None and sort_by:
+                            resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order, filter)
+                        else:
+                            resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id)
+                        task_resources.extend(resources)
 
-                cache_data = json.dumps({
-                    'task_resources': task_resources,
+            
+                items_per_page = int(request.GET.get('itemsPerPage', 10))
+                paginator = Paginator(task_resources, items_per_page)
+                pages = [page]
+                if paginator.num_pages > 1:
+                    before = list(range(1, page))
+                    after = list(range(page + 1, paginator.num_pages + 1))
+                    default_ct = 2
+                    ct_before = default_ct if len(after) > default_ct else default_ct * 2 - len(after)
+                    ct_after = default_ct if len(before) > default_ct else default_ct * 2 - len(before)
+                    if len(before) > ct_before:
+                        before = [1, None] + before[-1 * (ct_before - 1) :]
+                    if len(after) > ct_after:
+                        after = after[0 : ct_after - 1] + [None, paginator.num_pages]
+                    pages = before + pages + after
+
+                page_obj = paginator.get_page(page)
+                page_resources = [strategy.build_data(resource, groupId) for resource in page_obj.object_list]
+
+                response_data = {
+                    'paginator': {
+                        'current_page': page_obj.number,
+                        'end_index': page_obj.end_index(),
+                        'has_next': page_obj.has_next(),
+                        'has_other_pages': page_obj.has_other_pages(),
+                        'has_previous': page_obj.has_previous(),
+                        'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
+                        'pages': pages,
+                        'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
+                        'start_index': page_obj.start_index(),
+                        'total': paginator.count,
+                        'response': page_resources
+                    },
                     'counters': counters,
                     'sort_options': sort_options,
-                    'filter_options': filter_options
-                })
-                cache.set(cache_key, cache_data, 60 * 15)
+                    'filter_options': filter_options,
+                }
+                cache.set(cache_key, json.dumps(response_data), 60 * 15)
 
-            page = int(request.GET.get('page', 1))
-            items_per_page = int(request.GET.get('itemsPerPage', 10))
-            paginator = Paginator(task_resources, items_per_page)
-            pages = [page]
-            if paginator.num_pages > 1:
-                before = list(range(1, page))
-                after = list(range(page + 1, paginator.num_pages + 1))
-                default_ct = 2
-                ct_before = default_ct if len(after) > default_ct else default_ct * 2 - len(after)
-                ct_after = default_ct if len(before) > default_ct else default_ct * 2 - len(before)
-                if len(before) > ct_before:
-                    before = [1, None] + before[-1 * (ct_before - 1) :]
-                if len(after) > ct_after:
-                    after = after[0 : ct_after - 1] + [None, paginator.num_pages]
-                pages = before + pages + after
-            
-            page_obj = paginator.get_page(page)
-
-            return JsonResponse({
-                'paginator': {
-                    'current_page': page_obj.number,
-                    'end_index': page_obj.end_index(),
-                    'has_next': page_obj.has_next(),
-                    'has_other_pages': page_obj.has_other_pages(),
-                    'has_previous': page_obj.has_previous(),
-                    'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
-                    'pages': pages,
-                    'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
-                    'start_index': page_obj.start_index(),
-                    'total': paginator.count,
-                    'response': page_obj.object_list
-                },
-                'counters': counters,
-                'sort_options': sort_options,
-                'filter_options': filter_options,
-            })
+            return JsonResponse(response_data)
     
     def get_groups(self, userId):
         from arches_orm.models import Group
@@ -214,13 +205,15 @@ class PlanningTaskStrategy(TaskStrategy):
                         (is_admin)
                     )
                     if conditions_for_task:                 
-                        task = self.build_data(consultation, groupId)
-                        if task:
-                            resources.append(task)
+                        resources.append(consultation)
 
+            sort_nodes = {
+                'deadline': lambda consultation: consultation.action[0].action_dates.target_date_n1,
+                'date': lambda consultation: consultation.consultation_dates.log_date
+            }
 
             # Convert the 'deadline', 'date' field to a date and sort
-            sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+            sorted_resources = utilities.sort_resources(resources, sort_by, sort_order, sort_nodes)
 
             counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
             sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
@@ -267,6 +260,7 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
 class ExcavationTaskStrategy(TaskStrategy):
+    
     def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='asc', filter='all'):
         from arches_orm.models import License
         utilities = Utilities()
@@ -275,7 +269,10 @@ class ExcavationTaskStrategy(TaskStrategy):
         is_user = groupId == EXCAVATION_USER_GROUP
         is_cur_e = groupId == EXCAVATION_CUR_E
 
-        sort_options = ['createdat', 'validuntil']
+        sort_nodes = {
+            'createdat': lambda licence: licence._.resource.createdtime,
+            'validuntildate': lambda licence: licence.decision[0].licence_valid_timespan.valid_until_date
+        }
 
         resources = [] 
 
@@ -289,7 +286,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         for licence in licences:
             resources.append(licence)
-        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order, sort_nodes)
 
         counters = []
         sort_options = [{'id': 'createdat', 'name': 'Created At'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
@@ -461,21 +458,24 @@ class Utilities:
 
         return message
     
-    def _parse_date(self, date_str):
-        date_formats = ['%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f']
-        for date_format in date_formats:
-            try:
-                return datetime.strptime(date_str, date_format)
-            except ValueError:
-                continue
+    def _parse_date(self, date_value):
+        if isinstance(date_value, datetime):
+            return date_value
+        elif isinstance(date_value, str):
+            date_formats = ['%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f']
+            for date_format in date_formats:
+                try:
+                    return datetime.strptime(date_value, date_format)
+                except ValueError:
+                    continue
         return None
 
-    def sort_resources(self, resources, sort_by, sort_order):
-        
+    def sort_resources(self, resources, sort_by, sort_order, sort_nodes):
+        sort_function = sort_nodes[sort_by]
         resources.sort(key=lambda x: (
-                    x[sort_by] is not None, 
-                    self._parse_date(x[sort_by]) if x[sort_by] is not None else None,
-                    x[sort_by]
+                    sort_function(x) is not None, 
+                    self._parse_date(sort_function(x)) if sort_function(x) is not None else None,
+                    sort_function(x)
                 ), reverse=(sort_order == 'desc'))
         return resources
         
