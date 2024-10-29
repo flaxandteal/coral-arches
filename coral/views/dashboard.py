@@ -316,21 +316,12 @@ class ExcavationTaskStrategy(TaskStrategy):
         valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
-        report_tiles = utilities.node_check(lambda:licence.report) #takes the last report, assumes the newest
         licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
         nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
 
         employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
 
-        report_status = None
-        if report_tiles:
-            sorted_report_tiles = sorted(
-                report_tiles,
-                key=lambda x: datetime.strptime(x.classification_date.classification_date_value, "%Y-%m-%dT%H:%M:%S.%f%z") if x.classification_date.classification_date_value else datetime.min
-            )
-            latest_report_tile = sorted_report_tiles[-1]
-            report_status = latest_report_tile.classification_type
-
+        report_status = utilities.node_check(lambda:licence.application_details.report_classification_type)
 
         name = display_name[0]
         if name.startswith("Excavation Licence"):
@@ -357,7 +348,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
-            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status), ## will need changed after Taiga #2199 is complete
+            'reportstatus': utilities.domain_value_string_lookup(License, 'report_classification_type', report_status), ## will need changed after Taiga #2199 is complete
             'licencenumber': licence_number,
             'responseslug': response_slug
         }
@@ -366,10 +357,10 @@ class ExcavationTaskStrategy(TaskStrategy):
     def is_valid_license(self, licence, filter):
         from arches_orm.models import License
         utilities = Utilities()
-        classification_type = utilities.node_check(lambda: licence.report[-1].classification_type)
+        classification_type = utilities.node_check(lambda:licence.application_details.report_classification_type)
         if not classification_type:
             return False
-        string_value = utilities.domain_value_string_lookup(License, 'classification_type', classification_type)
+        string_value = utilities.domain_value_string_lookup(License, 'report_classification_type', classification_type)
         return string_value.lower() == filter
 
 class Utilities:
