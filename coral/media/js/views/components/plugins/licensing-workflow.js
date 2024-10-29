@@ -230,7 +230,6 @@ define([
                       //'a541e023-f121-11eb-b770-a87eeabdefba', // town_or_city_value,
                       //'a541e025-f121-11eb-8212-a87eeabdefba', // postcode_value,
                       'a541e027-f121-11eb-ba26-a87eeabdefba', // sub_street_value,
-                      'a541e029-f121-11eb-802c-a87eeabdefba', // building_name_value,
                       'a541e02a-f121-11eb-83b2-a87eeabdefba', // building_name_type,
                       'a541e02b-f121-11eb-9462-a87eeabdefba', // building_number_metatype,
                       'a541e02d-f121-11eb-b36f-a87eeabdefba', // address_currency,
@@ -255,6 +254,22 @@ define([
                   tilesManaged: 'one',
                   componentName: 'default-card',
                   uniqueInstanceName: 'e0a60085-eeeb-44e0-83de-2dcb5ad38d95'
+                },
+                {
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
+                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
+                    semanticName: 'Localities/Administrative Areas',
+                    hiddenNodes: [
+                      "a541922b-f121-11eb-a081-a87eeabdefba"
+                    ]
+                  },
+                  tilesManaged: 'many',
+                  componentName: 'default-card',
+                  uniqueInstanceName: '904b4950-e762-4163-8393-48b0ee2aa91d'
                 },
                 {
                   parameters: {
