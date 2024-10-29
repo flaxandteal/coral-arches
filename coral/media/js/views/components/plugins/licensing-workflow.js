@@ -180,7 +180,8 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']"
+                    tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']",
+                    hiddenNodes: ["ff3de496-7117-11ef-83a1-0242ac120006"]
                   }
                 }
               ]
