@@ -46,7 +46,7 @@ define([
         };  
 
         //if multi tile check mandatory fields and disable add
-        if(params.form.componentData.tilesManaged === 'many'){
+        if(params.form?.componentData?.tilesManaged === 'many'){
             this.mandatoryNodes = ko.observableArray([])
             this.currentValues = ko.observable({})
 
