@@ -43,7 +43,56 @@ define([
             var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
             var i = Math.floor(Math.log(bytes) / Math.log(k));
             return (parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i]);
-        };    
+        };  
+
+        //if multi tile check mandatory fields and disable add
+        if(params.form.componentData.tilesManaged === 'many'){
+            this.mandatoryNodes = ko.observableArray([])
+            this.currentValues = ko.observable({})
+
+            // gets isrequired status from the config nodeOptions
+            if(params.nodeOptions){
+                for(const [key, node] of Object.entries(params.nodeOptions)){
+                    for(const value of Object.values(node)){
+                        if(value?.isrequired === true){
+                            this.mandatoryNodes.push(key)
+                        }
+                    }   
+                }
+            }
+
+            if(this.mandatoryNodes().length > 0){
+                params.form.disableAdd(true)
+            }
+
+            this.mandatoryNodes().forEach((node) => {
+                // set null values for mandatory nodes
+                this.currentValues()[node] = null
+                // subscribe to changes for each node and update the values
+                this.tile.data[node].subscribe((newValue) => {
+                    const currentValues = this.currentValues();
+                    currentValues[node] = newValue;
+                    this.currentValues(currentValues);
+                })
+            })
+            
+            this.hasNullValue = (obj) => {
+                // recursively check values, allows for strings but not currently arrays
+                if (obj === null || obj === ""){
+                    return true;
+                }
+                if (typeof obj === 'object'){
+                    return Object.values(obj).some(value => this.hasNullValue(value));
+                }
+                return false
+            }
+
+            this.checkNullValues = ko.computed(() => {
+                const values = this.currentValues();
+                params.form.disableAdd(this.hasNullValue(values))
+            });
+            
+        }        
     }
 
     return ko.components.register('default-card', {
