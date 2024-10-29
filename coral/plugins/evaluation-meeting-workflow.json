@@ -203,6 +203,18 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "69500360-d7c5-11ee-a011-0242ac120006",
+                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "semanticName": "Council"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "e0a60085-eeeb-44e0-83de-2dcb5ad38d95"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "083f0650-ca61-11ee-afca-0242ac180006"
                   ],
