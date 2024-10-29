@@ -77,12 +77,18 @@ class UpdateReportClassificationType(BaseFunction):
             ).exclude(tileid=tile.tileid))
         if not context['delete']:
             reportTiles.append(tile)
+        else:
+            print("UPDATE CLASSIFICATION xxxx", len(reportTiles))
+            
         applicationDetailsTile = Tile.objects.filter(
                 nodegroup_id=self.config["application_details_nodegroup"], resourceinstance_id=tile.resourceinstance_id
             )
+
         def tileReportClassNode(tile):
             return tile.data[report_classification_date_node]
+
         reportTiles.sort(key=tileReportClassNode, reverse=True)
+
         if not len(reportTiles) > 0:
             new_value = str(classification_map["application_details"]["not_received"])
         else:
@@ -92,6 +98,7 @@ class UpdateReportClassificationType(BaseFunction):
                 new_value = str(classification_map["application_details"][classification_map["report_classification"][tile.data[report_classification_type_node]]])
             else:
                 new_value = str(classification_map["application_details"][classification_map["report_classification"][mostRecent.data[report_classification_type_node]]])
+        
         applicationDetailsTile[0].update_node_value(
             application_details_report_classification_node, 
             new_value,
