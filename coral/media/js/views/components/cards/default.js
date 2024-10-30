@@ -47,19 +47,38 @@ define([
 
         //if multi tile check mandatory fields and disable add
         if(params.form?.componentData?.tilesManaged === 'many'){
+            console.log("params", params)
             this.mandatoryNodes = ko.observableArray([])
             this.currentValues = ko.observable({})
 
-            // gets isrequired status from the config nodeOptions
-            if(params.nodeOptions){
-                for(const [key, node] of Object.entries(params.nodeOptions)){
-                    for(const value of Object.values(node)){
-                        if(value?.isrequired === true){
-                            this.mandatoryNodes.push(key)
+            // do a node lookup to check for isrequired on the model config
+            if(params.form.nodeLookup){
+                for(const [key, node] of Object.entries(params.form.nodeLookup)){
+                    console.log("node", key, node)
+                    if(node?.isrequired() === true){
+                        console.log("here", node, this.tile.data[node], this.tile.data)
+                        if(!this.tile.data[key]){
+                            continue
                         }
-                    }   
+                        console.log("running", key, typeof(key))
+                        this.mandatoryNodes.push(key)
+                    }
+                }   
+            }
+
+            //if nodelookup returns nothing check workflow config for is required
+            if(this.mandatoryNodes().length === 0){
+                if(params.nodeOptions){
+                    for(const [key, node] of Object.entries(params.nodeOptions)){
+                        for(const value of Object.values(node)){
+                            if(value?.isrequired === true){
+                                this.mandatoryNodes.push(key)
+                            }
+                        }   
+                    }
                 }
             }
+        
 
             if(this.mandatoryNodes().length > 0){
                 params.form.disableAdd(true)
