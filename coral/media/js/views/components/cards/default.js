@@ -47,20 +47,16 @@ define([
 
         //if multi tile check mandatory fields and disable add
         if(params.form?.componentData?.tilesManaged === 'many'){
-            console.log("params", params)
             this.mandatoryNodes = ko.observableArray([])
             this.currentValues = ko.observable({})
 
             // do a node lookup to check for isrequired on the model config
             if(params.form.nodeLookup){
                 for(const [key, node] of Object.entries(params.form.nodeLookup)){
-                    console.log("node", key, node)
                     if(node?.isrequired() === true){
-                        console.log("here", node, this.tile.data[node], this.tile.data)
                         if(!this.tile.data[key]){
                             continue
                         }
-                        console.log("running", key, typeof(key))
                         this.mandatoryNodes.push(key)
                     }
                 }   
@@ -78,7 +74,6 @@ define([
                     }
                 }
             }
-        
 
             if(this.mandatoryNodes().length > 0){
                 params.form.disableAdd(true)
@@ -110,7 +105,6 @@ define([
                 const values = this.currentValues();
                 params.form.disableAdd(this.hasNullValue(values))
             });
-            
         }        
     }
 
