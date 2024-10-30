@@ -62,18 +62,17 @@ define([
                 }   
             }
 
-            //if nodelookup returns nothing check workflow config for is required
-            if(this.mandatoryNodes().length === 0){
-                if(params.nodeOptions){
-                    for(const [key, node] of Object.entries(params.nodeOptions)){
-                        for(const value of Object.values(node)){
-                            if(value?.isrequired === true){
-                                this.mandatoryNodes.push(key)
-                            }
-                        }   
-                    }
+            // check workflow config for isrequired attributes also
+            if(params.nodeOptions){
+                for(const [key, node] of Object.entries(params.nodeOptions)){
+                    for(const value of Object.values(node)){
+                        if(value?.isrequired === true){
+                            this.mandatoryNodes.push(key)
+                        }
+                    }   
                 }
             }
+
 
             if(this.mandatoryNodes().length > 0){
                 params.form.disableAdd(true)
