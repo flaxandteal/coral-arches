@@ -1,4 +1,5 @@
 from arches.app.models.tile import Tile
+from arches.app.models.models import EditLog 
 from django.db.models import Max
 import re
 
@@ -31,18 +32,16 @@ class HbNumber:
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{HB_NUMBER_NODE_ID}__icontains": f"HB{district_number}/{ward_number}",
+                f"newvalue__{HB_NUMBER_NODE_ID}__icontains": f"HB{district_number}/{ward_number}",
             }
-            query_result = Tile.objects.filter(
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                **id_number_generated,
-            )
+            query_result = EditLog.objects.filter(
+                nodegroupid=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                edittype='tile create',
+                **id_number_generated
+            ).order_by("-timestamp")            
+
             if resource_instance_id:
-                query_result.exclude(resourceinstance_id=resource_instance_id)
-            query_result = query_result.annotate(
-                most_recent=Max("resourceinstance__createdtime")
-            )
-            query_result = query_result.order_by("-most_recent")
+                query_result.exclude(resourceinstanceid=resource_instance_id)
             latest_id_number_tile = query_result.first()
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
@@ -52,7 +51,7 @@ class HbNumber:
             return
 
         latest_id_number = (
-            latest_id_number_tile.data.get(HB_NUMBER_NODE_ID).get("en").get("value")
+            latest_id_number_tile.newvalue.get(HB_NUMBER_NODE_ID).get("en").get("value")
         )
 
         print(f"Previous ID number: {latest_id_number}")
@@ -84,7 +83,7 @@ class HbNumber:
                 ).first()
             except Exception as e:
                 print(f"Failed checking if ID number tile already exists: {e}")
-                return retry()
+                return 
 
             if id_number_tile:
                 print("A ID number has already been created for this resource")
