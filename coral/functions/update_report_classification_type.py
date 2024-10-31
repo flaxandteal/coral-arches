@@ -8,6 +8,8 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.db import connection, transaction
 import json
 from datetime import datetime
+from celery import shared_task
+
 
 
 details = {
