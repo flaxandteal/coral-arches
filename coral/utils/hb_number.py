@@ -27,11 +27,11 @@ class HbNumber:
         district_number, ward_number = match.group(0)[1:-1].split("/")
         return district_number, ward_number
 
-    def get_latest_id_number(self, resource_instance_id=None):
+    def get_latest_id_number(self, district_number, ward_number, resource_instance_id=None):
         latest_id_number_tile = None
         try:
             id_number_generated = {
-                f"data__{HB_NUMBER_NODE_ID}__iregex": r"HB\d+"
+                f"data__{HB_NUMBER_NODE_ID}__icontains": f"HB{district_number}/{ward_number}",
             }
             query_result = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -72,8 +72,8 @@ class HbNumber:
 
         if resource_instance_id:
             id_number_tile = None
+            district_number, ward_number = self.parse_district_ward()
             try:
-                district_number, ward_number = self.parse_district_ward()
                 generated_id_query = {
                     f"data__{HB_NUMBER_NODE_ID}__icontains": f"{district_number}/{ward_number}",
                 }
@@ -95,7 +95,7 @@ class HbNumber:
 
         latest_id_number = None
         try:
-            latest_id_number = self.get_latest_id_number(resource_instance_id)
+            latest_id_number = self.get_latest_id_number(district_number, ward_number, resource_instance_id)
         except Exception as e:
             print(f"Failed getting the previously used ID number: {e}")
             return retry()
