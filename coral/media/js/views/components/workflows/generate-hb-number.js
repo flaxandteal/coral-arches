@@ -96,12 +96,35 @@ define([
       this.wardDistrictTypeValue(response.value);
     }, this);
 
-    this.generateHbNumber = async () => {
+    this.newHbNumber = async () => {
       if (!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()) return;
       params.pageVm.loading(true);
       const data = {
         resourceInstanceId: this.tile.resourceinstance_id,
-        selectedWardDistrictId: this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()
+        selectedWardDistrictId: this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID](),
+        method: 'new'
+      };
+      const response = await $.ajax({
+        type: 'POST',
+        url: '/generate-hb-number',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
+      this.setValue(response.hbNumber);
+      params.pageVm.loading(false);
+    };
+
+    this.appendHbNumber = async () => {
+      if (!this.selectedHB()) return;
+      params.pageVm.loading(true);
+      const data = {
+        resourceInstanceId: this.tile.resourceinstance_id,
+        selectedHBNumber: this.selectedHB(),
+        method: 'append'
       };
       const response = await $.ajax({
         type: 'POST',

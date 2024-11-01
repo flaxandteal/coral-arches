@@ -415,7 +415,7 @@
                         <span style="color: green" data-bind="visible: hasChanged() && hasGeneratedNew()">You are now ready to save the newly generated HB Number.</span>
                     </div>
                     <button
-                        data-bind="click: () => generateHbNumber(), disable: !hasSelected()"
+                        data-bind="click: generateOption() ? () => newHbNumber() : () => appendHbNumber(), disable: !hasSelected()"
                         class="btn btn-success"
                     >
                         <span>Generate HB</span>
