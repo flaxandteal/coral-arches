@@ -12,6 +12,39 @@ define([
     this.WARDS_AND_DISTRICTS_TYPE_NODE_ID = 'de6b6af0-44e3-11ef-9114-0242ac120006';
     this.GENERATED_HB_NODE_ID = '19bd9ac4-44e4-11ef-9114-0242ac120006';
 
+    this.generateOption = ko.observable(true)
+    console.log(self.form)
+    this.configKeys = ko.observable({ placeholder: 0 });
+    this.loading = ko.observable(false);
+    this.existingHBNumbers = ko.observableArray([
+      { text: 'No HB numbers available', id: null },
+    ]);
+    this.selectedHB = ko.observable();
+    
+    this.generateOption.subscribe(async (newValue) => {
+      console.log("here", newValue)
+      if(!newValue){
+        const hbNumbers = await this.getHBNumbers();
+        this.existingHBNumbers(hbNumbers)
+      }
+    })
+
+    this.getHBNumbers = async () => {
+      console.log("firing")
+      try {
+        const response = await $.ajax({
+          type: 'GET',
+          url: '/generate-hb-number',
+          dataType: 'json'
+        });
+        console.log(response.hbNumbers)
+        return response.hbNumbers
+      }
+      catch (error) {
+        console.error('Error fetching HB numbers: ', error)
+      }
+    }
+
     this.setValue = (value) => {
       const localisedValue = {
         en: {
