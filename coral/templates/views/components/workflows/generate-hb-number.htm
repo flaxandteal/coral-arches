@@ -336,19 +336,20 @@
                 <!-- ko if: !generateOption() -->
                 <div
                     data-bind="component: {
-                    name: 'domain-select-widget',
+                    name: 'custom-select-widget',
                     params: {
                         node: {
                             config: {
                             options: existingHBNumbers,
                             multiple: false
                             },
-                            configKeys: configKeys
+                            configKeys: configKeys,
                         },
                         config: {
                             placeholder: 'Select a HB number',
-                            
+                            options: existingHBNumbers,
                             label: 'HB Numbers',
+                            multiple: false
                         },
                         value: selectedHB,
                         loading: false,

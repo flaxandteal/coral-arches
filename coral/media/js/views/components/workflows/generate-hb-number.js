@@ -13,7 +13,6 @@ define([
     this.GENERATED_HB_NODE_ID = '19bd9ac4-44e4-11ef-9114-0242ac120006';
 
     this.generateOption = ko.observable(true)
-    console.log(self.form)
     this.configKeys = ko.observable({ placeholder: 0 });
     this.loading = ko.observable(false);
     this.existingHBNumbers = ko.observableArray([
@@ -22,7 +21,6 @@ define([
     this.selectedHB = ko.observable();
     
     this.generateOption.subscribe(async (newValue) => {
-      console.log("here", newValue)
       if(!newValue){
         const hbNumbers = await this.getHBNumbers();
         this.existingHBNumbers(hbNumbers)
@@ -30,7 +28,6 @@ define([
     })
 
     this.getHBNumbers = async () => {
-      console.log("firing")
       try {
         const response = await $.ajax({
           type: 'GET',
