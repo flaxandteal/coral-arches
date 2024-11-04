@@ -56,6 +56,7 @@ class Dashboard(View):
             sort_order = request.GET.get('sortOrder', None)
             filter = request.GET.get('filterBy', None)
             sort_options = []
+            filter_options = []
 
             if not update and cache.get(cache_key):
                 cache_data = cache.get(cache_key)
@@ -63,6 +64,7 @@ class Dashboard(View):
                 task_resources = data['task_resources']
                 counters = data['counters']
                 sort_options = data['sort_options']
+                filter_options = data['filter_options']
                 utilities = Utilities()
                 task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
 
@@ -155,74 +157,78 @@ class TaskStrategy:
 class PlanningTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='asc', filter='All'):
         from arches_orm.models import Consultation
-    
-        TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
-        TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
-        TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
-        
-        is_hm_manager = groupId in [HM_MANAGER] 
-        is_hb_manager = groupId in [HB_MANAGER] 
-        is_hm_user = groupId in [HM_GROUP] 
-        is_hb_user = groupId in [HB_GROUP] 
-        is_admin = groupId in [PLANNING_GROUP]
+        with admin():
+            TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
+            TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
+            TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
+            
+            is_hm_manager = groupId in [HM_MANAGER] 
+            is_hb_manager = groupId in [HB_MANAGER] 
+            is_hm_user = groupId in [HM_GROUP] 
+            is_hb_user = groupId in [HB_GROUP] 
+            is_admin = groupId in [PLANNING_GROUP]
 
-        resources = [] 
+            resources = [] 
 
-        utilities = Utilities()
+            utilities = Utilities()
 
-        consultations = Consultation.all()
+            consultations = Consultation.all()
 
-        #filter out consultations that are not planning consultations
-        planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
+            #filter out consultations that are not planning consultations
+            planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
 
-        #checks against type & status and assigns to user if in correct group
-        for consultation in planning_consultations:
-                action_status = utilities.node_check(lambda: consultation.action[0].action_status )
-                action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
-                assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1, [])
-                reassigned_to_tiles = utilities.node_check(lambda: consultation.assignment, [])
+            #checks against type & status and assigns to user if in correct group
+            for consultation in planning_consultations:
+                    action_status = utilities.node_check(lambda: consultation.action[0].action_status )
+                    action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
+                    assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1, [])
+                    reassigned_to_tiles = utilities.node_check(lambda: consultation.assignment, [])
 
-                user_assigned = any(assigned_to_list)
+                    user_assigned = any(assigned_to_list)
 
-                if not user_assigned:
-                    for tile in reassigned_to_tiles:
-                        if any(tile.re_assignee.re_assigned_to):
-                            user_assigned = True
-                            break 
+                    if not user_assigned:
+                        for tile in reassigned_to_tiles:
+                            if any(tile.re_assignee.re_assigned_to):
+                                user_assigned = True
+                                break 
 
-                is_assigned_to_user = False
+                    is_assigned_to_user = False
 
-                # first checks reassigned to as this overwrites the assigned to field if true
-                if reassigned_to_tiles:
-                    for tile in reassigned_to_tiles:
-                        is_assigned_to_user = any(user.id == userResourceId for user in tile.re_assignee.re_assigned_to)
-                elif assigned_to_list:
-                    is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
-                
-                hm_status_conditions = [STATUS_OPEN, STATUS_HB_DONE, STATUS_EXTENSION_REQUESTED]
-                hb_status_conditions = [STATUS_OPEN, STATUS_HM_DONE, STATUS_EXTENSION_REQUESTED]
+                    # first checks reassigned to as this overwrites the assigned to field if true
+                    if reassigned_to_tiles:
+                        for tile in reassigned_to_tiles:
+                            if any(user.id == userResourceId for user in tile.re_assignee.re_assigned_to):
+                                is_assigned_to_user = True
+                                break
+                    elif assigned_to_list:
+                        for user in assigned_to_list:
+                            print("USER ID", user.id, userResourceId)
+                        is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
+                    
+                    hm_status_conditions = [STATUS_OPEN, STATUS_HB_DONE, STATUS_EXTENSION_REQUESTED]
+                    hb_status_conditions = [STATUS_OPEN, STATUS_HM_DONE, STATUS_EXTENSION_REQUESTED]
 
-                conditions_for_task = (
-                    (is_hm_manager and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
-                    (is_hb_manager and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
-                    (is_hm_user and is_assigned_to_user and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                    (is_hb_user and is_assigned_to_user and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                    (is_admin)
-                )
-                if conditions_for_task:                 
-                    task = self.build_data(consultation, groupId)
-                    if task:
-                        resources.append(task)
+                    conditions_for_task = (
+                        (is_hm_manager and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
+                        (is_hb_manager and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
+                        (is_hm_user and is_assigned_to_user and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
+                        (is_hb_user and is_assigned_to_user and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
+                        (is_admin)
+                    )
+                    if conditions_for_task:                 
+                        task = self.build_data(consultation, groupId)
+                        if task:
+                            resources.append(task)
 
 
-        # Convert the 'deadline', 'date' field to a date and sort
-        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+            # Convert the 'deadline', 'date' field to a date and sort
+            sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
 
-        counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
-        sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
-        filter_options = []
+            counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
+            sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
+            filter_options = []
 
-        return sorted_resources, counters, sort_options, filter_options
+            return sorted_resources, counters, sort_options, filter_options
     
     def build_data(self, consultation, groupId):
         utilities = Utilities()
@@ -310,21 +316,12 @@ class ExcavationTaskStrategy(TaskStrategy):
         valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
         employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
         nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
-        report_tiles = utilities.node_check(lambda:licence.report) #takes the last report, assumes the newest
         licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
         nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
 
         employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
 
-        report_status = None
-        if report_tiles:
-            sorted_report_tiles = sorted(
-                report_tiles,
-                key=lambda x: datetime.strptime(x.classification_date.classification_date_value, "%Y-%m-%dT%H:%M:%S.%f%z") if x.classification_date.classification_date_value else datetime.min
-            )
-            latest_report_tile = sorted_report_tiles[-1]
-            report_status = latest_report_tile.classification_type
-
+        report_status = utilities.node_check(lambda:licence.application_details.report_classification_type)
 
         name = display_name[0]
         if name.startswith("Excavation Licence"):
@@ -351,7 +348,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
-            'reportstatus': utilities.domain_value_string_lookup(License, 'classification_type', report_status), ## will need changed after Taiga #2199 is complete
+            'reportstatus': utilities.domain_value_string_lookup(License, 'report_classification_type', report_status), ## will need changed after Taiga #2199 is complete
             'licencenumber': licence_number,
             'responseslug': response_slug
         }
@@ -360,10 +357,10 @@ class ExcavationTaskStrategy(TaskStrategy):
     def is_valid_license(self, licence, filter):
         from arches_orm.models import License
         utilities = Utilities()
-        classification_type = utilities.node_check(lambda: licence.report[-1].classification_type)
+        classification_type = utilities.node_check(lambda:licence.application_details.report_classification_type)
         if not classification_type:
             return False
-        string_value = utilities.domain_value_string_lookup(License, 'classification_type', classification_type)
+        string_value = utilities.domain_value_string_lookup(License, 'report_classification_type', classification_type)
         return string_value.lower() == filter
 
 class Utilities:

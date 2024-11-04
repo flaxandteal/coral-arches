@@ -6,7 +6,7 @@ TOOLKIT_RELEASE = main
 ARCHES_PROJECT ?= $(shell ls -1 */__init__.py | head -n 1 | sed 's/\/.*//g')
 ARCHES_BASE = ghcr.io/flaxandteal/arches-base:coral-7.6
 ARCHES_PROJECT_ROOT = $(shell pwd)/
-DOCKER_COMPOSE_COMMAND = ARCHES_PROJECT_ROOT=$(ARCHES_PROJECT_ROOT) ARCHES_BASE=$(ARCHES_BASE) ARCHES_PROJECT=$(ARCHES_PROJECT) docker-compose -p $(ARCHES_PROJECT) -f docker/docker-compose.yml
+DOCKER_COMPOSE_COMMAND = ARCHES_PROJECT_ROOT=$(ARCHES_PROJECT_ROOT) ARCHES_BASE=$(ARCHES_BASE) ARCHES_PROJECT=$(ARCHES_PROJECT) docker compose --profile api -p $(ARCHES_PROJECT) -f docker/docker-compose.yml
 CMD ?=
 
 create: docker
@@ -94,7 +94,7 @@ run: docker
 .PHONY: web
 web: docker
 	$(DOCKER_COMPOSE_COMMAND) stop arches
-	$(DOCKER_COMPOSE_COMMAND) run --service-ports arches
+	$(DOCKER_COMPOSE_COMMAND) run --service-ports --remove-orphans arches
 
 .PHONY: yarn-development
 yarn-development: docker

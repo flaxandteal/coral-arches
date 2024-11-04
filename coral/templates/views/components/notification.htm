@@ -50,7 +50,7 @@
         <!-- ko if: state.fields_cache.notif.context.consultation_id -->
         <div class='entry'>
             <a data-bind="click: () => {
-                openFlagged(state.fields_cache.notif.context.resource_instance_id, 'assign-consultation-workflow')
+                openFlagged(state.fields_cache.notif.context.resource_instance_id, state.fields_cache.notif.context.response_slug)
               } " 
               target="_blank" style="color: steelblue"
             >

@@ -31,6 +31,7 @@ define([
     self.applicationId = '';
 
     self.licenceSysRefNodeId = '991c49b2-48b6-11ee-85af-0242ac140007';
+    self.applicationDetailsNodeGroup = '4f0f655c-48cf-11ee-8e4e-0242ac140007'
 
     params.form.save = async () => {
       await self.tile().save(); // Resource ID has now been created and is in self.resourceId()
@@ -304,13 +305,19 @@ define([
     const saveApplicationDetailsTile = async () => {
       const tileTemplate = {
         tileid: '',
-        data: {
-          '777596ba-48cf-11ee-8e4e-0242ac140007': 'daa4cddc-8636-4842-b836-eb2e10aabe18',
-          '916b5e7e-48cf-11ee-8e4e-0242ac140007': '6fbe3775-e51d-4f90-af53-5695dd204c9a',
-          'a79fedae-bad5-11ee-900d-0242ac180006': null,
-          'aec103a2-48cf-11ee-8e4e-0242ac140007': null,
-          'b407df02-bad5-11ee-900d-0242ac180006': 'c9bc15cc-46fe-4d34-a530-a228854845c8',
-          'c2f40174-5dd5-11ee-ae2c-0242ac120008': null
+        data	: {
+          '27740e7c-7118-11ef-af33-0242ac120006':	null,
+          '777596ba-48cf-11ee-8e4e-0242ac140007':	"daa4cddc-8636-4842-b836-eb2e10aabe18",
+          '8f87fdae-2d50-11ef-bbfd-0242ac120006':	null,
+          '916b5e7e-48cf-11ee-8e4e-0242ac140007':	"6fbe3775-e51d-4f90-af53-5695dd204c9a",
+          'a08ed94c-2d50-11ef-bbfd-0242ac120006':	null,
+          'a79fedae-bad5-11ee-900d-0242ac180006':	"2e2703e4-4f19-47ca-842d-a45c8502a547",
+          'aec103a2-48cf-11ee-8e4e-0242ac140007':	null,
+          'b407df02-bad5-11ee-900d-0242ac180006':	"c9bc15cc-46fe-4d34-a530-a228854845c8",
+          'ba8aab44-2d4d-11ef-bbfd-0242ac120006':	null,
+          'c2f40174-5dd5-11ee-ae2c-0242ac120008':	null,
+          'fd9b98a8-2d4d-11ef-bbfd-0242ac120006':	null,
+          'ff3de496-7117-11ef-83a1-0242ac120006':	"d33327e8-2b9d-4bab-a07e-f0ded18ded3e"
         },
         nodegroup_id: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
         parenttile_id: null,

@@ -1,6 +1,7 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
 from arches_orm.models import Group, Person
+from arches_orm.adapter import admin
 import logging
 
 # node groups
@@ -49,41 +50,42 @@ logger = logging.getLogger(__name__)
 
 class UpdateAssignedTo(BaseFunction):
     def is_user_in_team(self, user, team=None):
-        hm_teams = [HM_MANAGER_GROUP, HM_USER_GROUP]
-        hb_teams = [HB_MANAGER_GROUP, HB_USER_GROUP]
+        with admin():
+            hm_teams = [HM_MANAGER_GROUP, HM_USER_GROUP]
+            hb_teams = [HB_MANAGER_GROUP, HB_USER_GROUP]
 
-        hb_groups = [Group.find(id) for id in hb_teams]
-        hm_groups = [Group.find(id) for id in hm_teams]
+            hb_groups = [Group.find(id) for id in hb_teams]
+            hm_groups = [Group.find(id) for id in hm_teams]
 
-        person = Person.find(user)
+            person = Person.find(user)
 
-        def find_users_in_teams(groups):
-            for group in groups:
-                for member in group.members:
-                    if member.id == person.id:
-                        return True
-            return False
+            def find_users_in_teams(groups):
+                for group in groups:
+                    for member in group.members:
+                        if member.id == person.id:
+                            return True
+                return False
 
-        user_team = []
-        if team == HM_TEAM:
-            if find_users_in_teams(hm_groups):
-                user_team = HM_TEAM
-            else:
-                raise Exception(f"User '{person}' is not part of the HM team groups")
-        elif team == HB_TEAM:
-            if find_users_in_teams(hb_groups):
-                user_team = HB_TEAM
-            else:
-                raise Exception(f"User '{person}' is not part of the HB team groups")
-        elif team is None:
-            if find_users_in_teams(hm_groups):
-                user_team = HM_TEAM
-            elif find_users_in_teams(hb_groups):
-                user_team = HB_TEAM
-            else:
-                raise Exception(f"User '{person}' is not part of any Planning Team groups")
+            user_team = []
+            if team == HM_TEAM:
+                if find_users_in_teams(hm_groups):
+                    user_team = HM_TEAM
+                else:
+                    raise Exception(f"User '{person}' is not part of the HM team groups")
+            elif team == HB_TEAM:
+                if find_users_in_teams(hb_groups):
+                    user_team = HB_TEAM
+                else:
+                    raise Exception(f"User '{person}' is not part of the HB team groups")
+            elif team is None:
+                if find_users_in_teams(hm_groups):
+                    user_team = HM_TEAM
+                elif find_users_in_teams(hb_groups):
+                    user_team = HB_TEAM
+                else:
+                    raise Exception(f"User '{person}' is not part of any Planning Team groups")
 
-        return user_team
+            return user_team
                     
     def update_matching_node(self, tile, nodegroup, existing_node, update_node, team=None):
         assigned_users = tile.data[existing_node]

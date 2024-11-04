@@ -19,7 +19,8 @@ define([
 
             self.dataConfig = {
                 userAccount: 'user account',
-                userSignupLink: 'user signup link'
+                canIssueUserSignupLink: 'can issue user signup link',
+                issueUserSignupLink: 'issue user signup link'
             };
 
             self.cards = Object.assign({}, params.cards);
@@ -27,7 +28,8 @@ define([
             self.delete = params.deleteTile || self.deleteTile;
             self.add = params.addTile || self.addNewTile;
             self.userAccount = ko.observable();
-            self.userSignupLink = ko.observable(false);
+            self.canIssueUserSignupLink = ko.observable(false);
+            self.issueUserSignupLink = params.dataConfig.issueUserSignupLink;
             self.visible = {
                 userAccount: ko.observable(true),
             };
@@ -43,9 +45,10 @@ define([
                 });
             }
 
-            if(params.dataConfig.userSignupLink){
-                params.dataConfig.userSignupLink().done((link) => {
-                    self.userSignupLink(link.userSignupLink);
+            if(params.dataConfig.canIssueUserSignupLink){
+                params.dataConfig.canIssueUserSignupLink().done((allowed) => {
+                    console.log("Allowed to sign up a user to this person.");
+                    self.canIssueUserSignupLink(allowed);
                 });
             }
 

@@ -249,6 +249,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "7c29a5df-ccd0-438e-b537-f617249bcf09",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "Arches Plugins (e.g. workflows) to which members of this group have access.",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Arches Plugins"
+                    },
+                    "nodegroup_id": "160d28c8-6789-11ef-baee-0242ac120006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "97f352eb-b323-11e9-a625-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -320,6 +347,27 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "7c29a5df-ccd0-438e-b537-f617249bcf09",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Arches Plugins",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "4d172ccf-808a-4d0e-8473-22f2f61e9a96",
+                    "label": {
+                        "en": "Arches Plugins"
+                    },
+                    "node_id": "160d28c8-6789-11ef-baee-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "79f14677-1839-4546-b00f-a62804e99597",
@@ -399,7 +447,8 @@
                 {
                     "card_id": "59059dba-b69f-44d2-ae6c-1cbee1f222ec",
                     "config": {
-                        "label": "Django Group"
+                        "label": "Django Group",
+                        "placeholder": "Requires a Django Group ID."
                     },
                     "id": "b9e9022e-48c2-4912-82c9-d1f27023d2a2",
                     "label": {
@@ -735,6 +784,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+                    "edgeid": "c25f7e5d-992e-4bf8-aeff-7fe04e8eb1a2",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P105i_has_right_on",
+                    "rangenode_id": "160d28c8-6789-11ef-baee-0242ac120006"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
                     "edgeid": "ca299657-bd48-4601-a693-c1c24f5c8c5c",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -798,6 +856,12 @@
                     "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "12707705-c05e-11e9-8177-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "160d28c8-6789-11ef-baee-0242ac120006",
                     "parentnodegroup_id": null
                 },
                 {
@@ -910,6 +974,31 @@
                     "nodeid": "127095f5-c05e-11e9-bb57-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "arches_plugins",
+                    "config": {
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "Arches Plugins (e.g. workflows) to which members of this group have access.",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Arches Plugins",
+                    "nodegroup_id": "160d28c8-6789-11ef-baee-0242ac120006",
+                    "nodeid": "160d28c8-6789-11ef-baee-0242ac120006",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P105i_has_right_on",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
