@@ -244,10 +244,22 @@
                   "hiddenNodes": ["083f0650-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions": {
+                    "083f0db2-ca61-11ee-afca-0242ac180006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "083ea3ae-ca61-11ee-afca-0242ac180006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "localities"
               },
               {
