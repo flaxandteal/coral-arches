@@ -27,7 +27,6 @@ define([
           url: '/generate-hb-number',
           dataType: 'json'
         });
-        console.log(response.hbNumbers)
         return response.hbNumbers
       }
       catch (error) {

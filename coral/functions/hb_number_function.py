@@ -43,7 +43,6 @@ class HbNumberFunction(BaseFunction):
                     "value": id
                 }
             }
-        print('yyyyyyyyyyyyyyy', id)
         references_tile.data[HB_NUMBER_NODE_ID] = id
         references_tile.save()
     
@@ -60,11 +59,9 @@ class HbNumberFunction(BaseFunction):
         if isinstance(id_number, dict):
             id_number = id_number.get('en', {}).get('value', None)
         match = re.match(r"(HB\d{2}/\d{2}/\d{3})\s([A-Z]*)$", id_number)
-        print("ID NUMBER:", id_number)
         if match:
             number = match.group(1)
             suffix = match.group(2)
-            print("NUMBER", number, len(suffix))
 
             if len(suffix) < 2 and suffix == 'B':
                 references_tile = Tile.objects.filter(
@@ -100,7 +97,6 @@ class HbNumberFunction(BaseFunction):
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(GENERATED_HB_NODE_ID, None)
-        print('33333333333333333', id_number)
         if self.is_last_char_letter(id_number):
             hns = HbNumberSuffix(id_number)
             if hns.validate_id(id_number, resource_instance_id=resource_instance_id):
