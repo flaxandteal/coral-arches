@@ -22,6 +22,7 @@
         <i class="fa fa-plus-circle add-new-tile" role="presentation" data-bind="css:{'jstree-clicked': self.card.selected}, click: function(){self.card.showForm(true);}, clickBubble: false" data-toggle="tooltip" data-original-title="$root.translations.addGnu"></i>
         <!-- /ko -->
     </a>
+    
     <ul class="jstree-children" aria-expanded="true">
         <div data-bind="sortable: {
             data: self.card.tiles,
@@ -309,8 +310,79 @@
             {% endblock form_header %}
             <!-- ko if: card.showSummary() === false -->
             <!-- ko if: card.widgets().length > 0 -->
+            <div
+                data-bind="component: {
+                name: 'radio-boolean-widget',
+                params: {
+                    node: {
+                        config: {
+                            trueLabel: 'Generate New HB Number',
+                            falseLabel: 'Generate New Suffix for HB Number',
+                        },
+                    },
+                    config: {
+                        label: 'HB Generation',
+                    },
+                    value: generateOption,
+                    loading: false,
+                    pageVm: $root
+                }
+            }"
+            ></div>
+            
             {% block form_widgets %}
+            
             <form class="widgets" style="margin-bottom: 20px;">
+                <!-- ko if: !generateOption() -->
+                <div
+                    data-bind="component: {
+                    name: 'custom-select-widget',
+                    params: {
+                        node: {
+                            config: {
+                            options: existingHBNumbers,
+                            multiple: false
+                            },
+                            configKeys: configKeys,
+                        },
+                        config: {
+                            placeholder: 'Select a HB number',
+                            options: existingHBNumbers,
+                            label: 'HB Numbers',
+                            multiple: false
+                        },
+                        value: selectedHB,
+                        loading: false,
+                        pageVm: $root
+                    }
+                }"
+                ></div>
+                <!-- ko foreach: { data: card.widgets, as: 'widget' } -->
+                    <!-- ko if: widget.label() !== 'Wards and District Type' -->
+                    <div data-bind='component: {
+                        name: self.form.widgetLookup[widget.widget_id()].name,
+                        params: {
+                            widget: widget,
+                            formData: self.tile.formData,
+                            tile: self.tile,
+                            form: self.form,
+                            config: widget.configJSON,
+                            label: widget.label(),
+                            inResourceEditor: self.inResourceEditor,
+                            value: self.tile.data[widget.node_id()],
+                            node: self.form.nodeLookup[widget.node_id()],
+                            expanded: self.expanded,
+                            graph: self.form.graph,
+                            type: "resource-editor",
+                            disabled: !self.card.isWritable && !self.preview
+                        }
+                    }, css:{ "active": widget.selected, "hover": widget.hovered, "widget-preview": self.preview
+                    }, click: function(data, e) { if (!widget.selected() && self.preview) {widget.selected(true);}
+                    }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
+                    <!-- /ko -->
+                <!-- /ko -->   
+                <!-- /ko -->
+                <!-- ko if: generateOption()-->
                 <div data-bind="foreach: {
                         data:card.widgets, as: 'widget'
                     }">
@@ -335,6 +407,7 @@
                 }, click: function(data, e) { if (!widget.selected() && self.preview) {widget.selected(true);}
             }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
+                <!-- /ko -->
                 <div class="row widget-wrapper">
                     
                     <div style="padding-bottom: 6px" data-bind="visible: hasChanged()">
@@ -342,7 +415,7 @@
                         <span style="color: green" data-bind="visible: hasChanged() && hasGeneratedNew()">You are now ready to save the newly generated HB Number.</span>
                     </div>
                     <button
-                        data-bind="click: () => generateHbNumber(), disable: !hasSelected()"
+                        data-bind="click: generateOption() ? () => newHbNumber() : () => appendHbNumber(), disable: !hasSelected()"
                         class="btn btn-success"
                     >
                         <span>Generate HB</span>
