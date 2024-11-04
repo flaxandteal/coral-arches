@@ -347,17 +347,15 @@ define([
       const descriptionTile = consultation.tiles.find((tile) => {
         return tile.nodegroup === '89bf628e-b552-11ee-805b-0242ac120006';
       });
+      return descriptionTile?.data['89bf6c48-b552-11ee-805b-0242ac120006'][arches.activeLanguage]['value']
+    };
+
+    this.getStatus = (consultation) => {
       const statusTile = consultation.tiles.find((tile) => {
         return tile.nodegroup === 'ac823b90-b555-11ee-805b-0242ac120006';
       });
-      return {
-        status: statusTile?.data['c9711ef6-b555-11ee-baf6-0242ac120006'],
-        description:
-          descriptionTile?.data['89bf6c48-b552-11ee-805b-0242ac120006'][arches.activeLanguage][
-            'value'
-          ]
-      };
-    };
+      return statusTile?.data['c9711ef6-b555-11ee-baf6-0242ac120006']
+    }
 
     this.getStatusText = (nodeValueId) => {
       switch (nodeValueId) {

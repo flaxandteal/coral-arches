@@ -1822,7 +1822,7 @@
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "helpenabled": true,
                     "helptext": {
-                        "en": "<p><strong>Full Address</strong></p>\n\n<p>Where it is convenient, this can be used to record the full address. This can be used to aid migration from legacy systems with less sophisticated recording practice</p>\n\n<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modelled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a building where known.</p>\n\n<p><strong>Building Number</strong></p>\n\n<p>Use to record the number(s) assigned to a building. This may be a single number (eg. 45) or a range separated by a &#39;-&#39;&nbsp;(eg. 13-21).</p>\n\n<p><strong>Building Number Sub-Street</strong></p>\n\n<p>&nbsp;</p>\n"
+                        "en": "<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modeled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a Heritage Asset where known.</p>\n<p><strong>Street</strong></p>\n\n<p>Use to record the name of the street where the Heritage Asset is located.</p>\n<p><strong>Town or City</strong></p>\n\n<p>Use to record the name of the town or city where the Heritage Asset is located.</p>\n<p><strong>County</strong></p>\n\n<p>Use to record the name of the county where the Heritage Asset is located.</p>\n<p><strong>Postcode</strong></p>\n\n<p>Use to record the postal code assigned to the Heritage Asset's location.</p>\n<p><strong>Townland</strong></p>\n\n<p>Use to record the name of the townland where the Heritage Asset is located.</p>\n<p><strong>Council</strong></p>\n\n<p>Use to record the name of the council responsible for the Heritage Asset.</p>\n<p><strong>Area Name</strong></p>\n\n<p>Use to record the name of the area where the Heritage Asset is located.</p>\n<p><strong>Area Type</strong></p>\n\n<p>Use to specify the type of area (e.g., district, barony) where the Heritage Asset is located.</p>\n<p><strong>Irish Grid Reference</strong></p>\n\n<p>Use to record the grid reference coordinates for the Heritage Asset's location using various formats, Alphanumeric TM65, Absolute TM65 or Long/Lat.</p>\n<p><strong>Location Description</strong></p>\n\n<p>Use to provide a detailed description of the Heritage Asset's location. This can include landmarks, nearby intersections, or other notable features.</p>"
                     },
                     "helptitle": {
                         "en": "Addresses"
@@ -8431,7 +8431,7 @@
                         "en": "Area Name Type"
                     },
                     "node_id": "420b71dc-c21f-45a3-9230-d51d69e7368c",
-                    "sortorder": 1,
+                    "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10019,7 +10019,7 @@
                         "en": "Area Type"
                     },
                     "node_id": "1bdbf596-4f86-4494-9ba9-f82f5de54180",
-                    "sortorder": 3,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10250,7 +10250,7 @@
                         "en": "Area Name"
                     },
                     "node_id": "c2d5cbeb-ef24-4526-9bcf-520d17b85bce",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -14357,7 +14357,7 @@
                         "en": "Area Name Metatype"
                     },
                     "node_id": "e3b334e3-c58f-4f27-8770-fc0718e45a5c",
-                    "sortorder": 2,
+                    "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
