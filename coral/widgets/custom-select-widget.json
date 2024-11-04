@@ -3,6 +3,9 @@
     "name": "custom-select-widget",
     "component": "views/components/widgets/custom-select-widget",
     "defaultconfig": {
+      "placeholder": "",
+      "label": "Select an Option",
+      "defaultValue": { "en": { "value": "<strong>Renders HTML</strong>" } }
     },
     "helptext": null,
     "datatype": "string"
