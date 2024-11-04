@@ -220,7 +220,19 @@
                   ],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions": {
+                    "083f0db2-ca61-11ee-afca-0242ac180006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "083ea3ae-ca61-11ee-afca-0242ac180006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
