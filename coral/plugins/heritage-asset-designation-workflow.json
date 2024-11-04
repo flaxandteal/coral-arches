@@ -124,7 +124,19 @@
                   "hiddenNodes": ["425b6c5f-7b32-4cd6-8597-0f605cc8992b"],
                   "nodegroupid": "cc176b79-d9d3-4aab-bbd5-f604a73cae34",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions": {
+                    "1bdbf596-4f86-4494-9ba9-f82f5de54180": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "c2d5cbeb-ef24-4526-9bcf-520d17b85bce": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
@@ -196,7 +208,19 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "67712762-378e-11ef-9263-0242ac150006",
-                  "semanticName": "Designation Descriptions"
+                  "semanticName": "Designation Descriptions",
+                  "nodeOptions": {
+                    "677133f6-378e-11ef-9263-0242ac150006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "b2d6a190-378f-11ef-a167-0242ac150006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",

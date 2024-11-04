@@ -958,7 +958,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'excavation-report-step', // Has fix for many tiles
+                  componentName: 'default-card', // Has fix for many tiles
                   uniqueInstanceName: 'report-info',
                   tilesManaged: 'many',
                   parameters: {
@@ -966,6 +966,11 @@ define([
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     nodeOptions: {
+                      "d8f74d42-dc6e-11ee-8def-0242ac120006": {
+                        "node": {
+                          "isrequired": true
+                        }
+                      },
                       "5707d294-dc72-11ee-b70c-0242ac120006": {
                         "allowInstanceCreation": false
                       },

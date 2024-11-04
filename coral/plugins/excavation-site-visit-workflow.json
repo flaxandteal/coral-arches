@@ -166,7 +166,19 @@
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["a4724977-9937-11ea-a11e-f875a44e0e11"],
-                  "nodegroupid": "a472226f-9937-11ea-966a-f875a44e0e11"
+                  "nodegroupid": "a472226f-9937-11ea-966a-f875a44e0e11",
+                  "nodeOptions": {
+                    "347f6f46-434e-11ef-a83a-0242ac140007": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "a4724976-9937-11ea-89af-f875a44e0e11": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
