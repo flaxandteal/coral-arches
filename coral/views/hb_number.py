@@ -3,6 +3,7 @@ import json
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from coral.utils.hb_number import HbNumber
+from coral.utils.hb_number_suffix import HbNumberSuffix
 from arches.app.models import models
 import re
 
@@ -40,12 +41,21 @@ class HbNumberView(View):
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         resource_instance_id = data.get("resourceInstanceId")
-        selected_ward_district_id = data.get("selectedWardDistrictId")
+        
+        method = data.get("method")
+        print('1111111111111', method, data.get("selectedWardDistrictId"))
+        if method == "append":
+            hb_number = data.get("selectedHBNumber")
+            hns = HbNumberSuffix(hb_number=hb_number)
+            hb_number = hns.append_id_suffix(resource_instance_id)
 
-        ward_district_text = models.Value.objects.filter(
-            valueid=selected_ward_district_id
-        ).first()
-        hn = HbNumber(ward_distict_text=ward_district_text.value)
-        hb_number = hn.generate_id_number(resource_instance_id)
+        else:
+            selected_ward_district_id = data.get("selectedWardDistrictId")
+            ward_district_text = models.Value.objects.filter(
+                valueid=selected_ward_district_id
+            ).first()
+            hn = HbNumber(ward_distict_text=ward_district_text.value)
+            print('22222222222')
+            hb_number = hn.generate_id_number(resource_instance_id)
 
         return JSONResponse({"message": "Generated ID", "hbNumber": hb_number})
