@@ -20,13 +20,6 @@ define([
     ]);
     this.selectedHB = ko.observable();
     
-    this.generateOption.subscribe(async (newValue) => {
-      if(!newValue){
-        const hbNumbers = await this.getHBNumbers();
-        this.existingHBNumbers(hbNumbers)
-      }
-    })
-
     this.getHBNumbers = async () => {
       try {
         const response = await $.ajax({
@@ -41,6 +34,13 @@ define([
         console.error('Error fetching HB numbers: ', error)
       }
     }
+
+    this.fetchHBNumbers = async() => {
+        const hbNumbers = await this.getHBNumbers();
+        this.existingHBNumbers(hbNumbers)
+    }
+
+    this.fetchHBNumbers()
 
     this.setValue = (value) => {
       const localisedValue = {
