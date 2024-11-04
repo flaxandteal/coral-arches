@@ -13,12 +13,12 @@
       </div>
       <div
         class="panel-body library-card-body"
-        data-bind="html: getDescription(consultation).description"
+        data-bind="html: getDescription(consultation)"
       ></div>
       <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between">
         <div>
           <span>
-            Status: <span data-bind="text: getStatusText(getDescription(consultation).status)"></span>
+            Status: <span data-bind="text: getStatusText(getStatus(consultation))"></span>
           </span>
         </div>
         <div>
