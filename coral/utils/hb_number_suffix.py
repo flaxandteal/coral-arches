@@ -42,7 +42,7 @@ class HbNumberSuffix:
         if suffix == 'Z':
             return 'AA'
         if len(suffix) > 1:
-            increment = chr(ord(suffix) + attempts)
+            increment = chr(ord(suffix[0]) + attempts)
             return increment + increment
         print('yyyyyyyyyyyyyooooooooooooo', "1" + chr(ord(suffix) + attempts) + "1")
         return chr(ord(suffix) + attempts)
@@ -86,7 +86,7 @@ class HbNumberSuffix:
         def retry():
             nonlocal attempts, resource_instance_id
             attempts += 1
-            return self.generate_id_number(resource_instance_id, attempts)
+            return self.append_id_suffix(resource_instance_id, attempts)
 
         if resource_instance_id:
             id_number_tile = None
