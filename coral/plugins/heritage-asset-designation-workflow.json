@@ -79,7 +79,7 @@
       },
       {
         "name": "address-step",
-        "title": "Address",
+        "title": "Location Details",
         "required": false,
         "layoutSections": [
           {
@@ -94,7 +94,8 @@
                     "f6d2d1c3-77aa-472e-8f3d-225e2ed8641c",
                     "64cafd35-77a6-4c49-af74-d8221964f0c9",
                     "2fa946b5-5127-4bd2-b571-33515ef17788",
-                    "23dd50e9-e9ff-4717-8a34-86862513b8ba"
+                    "23dd50e9-e9ff-4717-8a34-86862513b8ba",
+                    "d16a913e-63fd-4361-ae9b-25965c731f82"
                   ],
                   "nodegroupid": "38dad285-9014-4c7b-ad81-b0562038ebf2",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
@@ -103,6 +104,18 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "55246a11-2bd5-4a70-90ca-3b4382272676"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "02003ed4-b2b5-4fcc-847b-bc34e7c72ee3",
+                  "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
+                  "semanticName": "Council"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "73639516-ee29-4e81-8d45-d2349d4e02d4"
               },
               {
                 "parameters": {
@@ -163,7 +176,6 @@
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
-                "componentName": "fetch-latest-tile",
                 "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "6a28726c-926b-44ab-b585-c41976899d23"
               }
