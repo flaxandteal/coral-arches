@@ -15,37 +15,25 @@ class HbNumberSuffix:
 
     def __init__(self, hb_number):
         self.hb_number = hb_number
-        print('4444444444444', self.hb_number)
-
-    # def id_number_format(self, index):
-    #     district_number, ward_number = self.parse_district_ward()
-    #     return f"HB{district_number}/{ward_number}/{str(index).zfill(3)}"
     
     def parse_suffix(self, hb_number):
         pattern = r"(HB\d{2}/\d{2}/\d{3})\s?([A-Z]*)$"
         match = re.match(pattern, hb_number)
-        print("PARSDED HB NUMBER", hb_number)
+
         if not match:
             if self.hb_number == hb_number:
                 return None
             else:
                 raise Exception(f"Provided {hb_number} does not match the expected format.")
         base_number, suffix = match.groups()
-        print(base_number)
-        print("1" + suffix + "1")
         return base_number.strip() , suffix.strip()
     
     def increment_letter(self, suffix, attempts):
-        print('11111111111111', suffix, attempts)
         if not suffix:
             return 'B'
-        if suffix == 'Z':
-            return 'AA'
-        if len(suffix) > 1:
-            increment = chr(ord(suffix[0]) + attempts)
-            return increment + increment
-        print('yyyyyyyyyyyyyooooooooooooo', "1" + chr(ord(suffix) + attempts) + "1")
-        return chr(ord(suffix) + attempts)
+        if 'Z' in suffix:
+            return 'A' * (len(suffix[0]) + 1)   
+        return chr(ord(suffix[0]) + attempts) * len(suffix)
 
     def get_latest_suffix(self, resource_instance_id=None):
         latest_id_number_tile = None
@@ -58,7 +46,7 @@ class HbNumberSuffix:
                 edittype='tile create',
                 **id_number_generated
             ).order_by("-timestamp")            
-            print('22222222222222222', query_result)
+
             if resource_instance_id:
                 query_result.exclude(resourceinstanceid=resource_instance_id)
             latest_id_number_tile = query_result.first()
@@ -124,7 +112,6 @@ class HbNumberSuffix:
         else:
             #return the suffix
             next_suffix = self.increment_letter(latest_suffix['suffix'], attempts)
-        print("HERE", latest_suffix, next_suffix)
 
         if len(next_suffix) > 1:
             new_id_number = self.hb_number.strip() + next_suffix
@@ -145,7 +132,7 @@ class HbNumberSuffix:
             data_query[HB_NUMBER_NODE_ID] = id_number
 
         id_number_value = data_query.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
-        print('iiiiiiiiiiiiiiii', id_number_value)
+
         if not id_number_value:
             raise ValueError('To generate a new HB Number, select an existing HB Number and click "generate"')
 
@@ -159,5 +146,4 @@ class HbNumberSuffix:
             ).exclude(resourceinstance_id=resource_instance_id).first()
         except Exception as e:
             print(f"Failed fetching existing tile")
-        print('ttttttttttttttt', id_number_tile)
         return not bool(id_number_tile)
