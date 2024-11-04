@@ -266,7 +266,19 @@ define([
                     semanticName: 'Localities/Administrative Areas',
                     hiddenNodes: [
                       "a541922b-f121-11eb-a081-a87eeabdefba"
-                    ]
+                    ],
+                    nodeOptions: {
+                      "a541922e-f121-11eb-b2f6-a87eeabdefba": {
+                        "node": {
+                          "isrequired": true
+                        }
+                      },
+                      "a5416b53-f121-11eb-a507-a87eeabdefba": {
+                        "node": {
+                          "isrequired": true
+                        }
+                      }
+                  }
                   },
                   tilesManaged: 'many',
                   componentName: 'default-card',
