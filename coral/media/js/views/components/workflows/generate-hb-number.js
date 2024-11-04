@@ -144,7 +144,15 @@ define([
     this.setValue(this.getValue());
 
     this.hasSelected = ko.computed(() => {
-      return !!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]();
+      if(this.generateOption()){
+        return!!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()
+      }
+      else{
+        if(!this.selectedHB()){
+          return false;
+        }
+      }
+      return true;
     }, this);
 
     this.hasChanged = ko.computed(() => {
