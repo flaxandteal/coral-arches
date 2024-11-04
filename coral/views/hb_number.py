@@ -24,15 +24,18 @@ class HbNumberView(View):
             print(f"Failed to find any existing HB numbers: {e}")
             return 
         
-        hb_numbers = [
+        original_hb_numbers = [
             tile.data.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
             for tile in hb_number_tile
             if tile.data.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None) is not None
         ]
 
-        hb_numbers = [re.sub(r'[a-zA-Z]+$', '', num) for num in hb_numbers]
+        hb_numbers = []
+        for num in original_hb_numbers:
+            id = re.sub(r'[a-zA-Z]+$', '', num) 
+            hb_numbers.append(id.strip())
 
-        hb_numbers = list(set(hb_numbers))
+        hb_numbers = sorted(set(hb_numbers))
 
         response = [{'text': num, 'id': num} for num in hb_numbers]
 
@@ -43,7 +46,6 @@ class HbNumberView(View):
         resource_instance_id = data.get("resourceInstanceId")
         
         method = data.get("method")
-        print('1111111111111', method, data.get("selectedWardDistrictId"))
         if method == "append":
             hb_number = data.get("selectedHBNumber")
             hns = HbNumberSuffix(hb_number=hb_number)
@@ -55,7 +57,6 @@ class HbNumberView(View):
                 valueid=selected_ward_district_id
             ).first()
             hn = HbNumber(ward_distict_text=ward_district_text.value)
-            print('22222222222')
             hb_number = hn.generate_id_number(resource_instance_id)
 
         return JSONResponse({"message": "Generated ID", "hbNumber": hb_number})
