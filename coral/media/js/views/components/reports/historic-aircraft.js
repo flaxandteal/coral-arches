@@ -38,14 +38,6 @@ define([
             self.activeSection = ko.observable('name');
             self.flights = ko.observableArray();
             self.lastFlight = ko.observableArray();
-            self.print = ko.observable(window.location.href.indexOf("?print") > -1)
-
-            self.fullReportConfig = {
-                id: 'historic-aircraft',
-                label: 'Historic Aircraft',
-                ignoreNodes: []
-            }
-
 
             self.flightsTableConfig = {
                 ...self.defaultTableConfig,
