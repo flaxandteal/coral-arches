@@ -7,11 +7,11 @@
     <div class="relative">
 
         <!-- Title Block -->
-        <!-- ko if: !print()-->
+                  <!-- ko if: !print()-->
         <div class="aher-report-toolbar">
             <h1 class="aher-report-toolbar-title"><span class="aher-report-name">{% trans "Heritage Asset" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
         </div>
-        <!-- /ko -->
+                <!-- /ko -->
         <!-- ko else -->
         <h1 class="aher-report-toolbar-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
         <!-- /ko -->
@@ -162,9 +162,7 @@
 
 {% block summary %}
 <div class="aher-summary-report-header">
-    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span>
-        <!-- <span class="aher-report-name pad-lft-sm">{% trans "(Heritage Asset)" %}</span> -->
-    </h1>
+    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span><span class="aher-report-name pad-lft-sm">{% trans "(Heritage Asset)" %}</span></h1>
 </div>
 <div class="model-summary-report">
     <div class="aher-report-page">

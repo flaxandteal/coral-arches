@@ -9,7 +9,7 @@
         <!-- Title Block -->
                   <!-- ko if: !print()-->
         <div class="aher-report-toolbar">
-            <h1 class="aher-report-toolbar-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
+            <h1 class="aher-report-toolbar-title"><span class="aher-report-name">{% trans "Maritime Vessel" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
         </div>
                 <!-- /ko -->
         <!-- ko else -->
@@ -356,7 +356,7 @@
 
 {% block summary %}
 <div class="aher-summary-report-header">
-    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
+    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span><span class="aher-report-name pad-lft-sm">{% trans "(Maritime Vessel)" %}</span></h1>
 </div>
 <div class="model-summary-report">
     <div class="aher-report-page">
