@@ -15,8 +15,6 @@ define([
     function NonTileBasedComponent() {
         var self = this;
          
-        this.disableAdd = ko.observable(false);
-
         this.initialize = function() {
             self.loading(false);
         };
@@ -42,8 +40,6 @@ define([
 
     function TileBasedComponent() {
         var self = this;
-         
-        this.disableAdd = ko.observable(false);
 
         this.tile = ko.observable();
         this.tiles = ko.observable();
@@ -288,8 +284,6 @@ define([
         var self = this;
         this.cardinality = ko.observable();
 
-        this.disableAdd = ko.observable(false);
-
         this.initialize = function() {
             self.loading(true);
             
@@ -381,7 +375,6 @@ define([
     function MultipleTileBasedComponent(title) {
         var self = this;
          
-
         TileBasedComponent.apply(this);
 
         this.tileLoadedInEditor = ko.observable();

@@ -223,7 +223,6 @@
                     "87d39b4b-f44f-11eb-80ef-a87eeabdefba": {
                       "disabled": true
                     }
-                    
                   },
                   "nodegroupid": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
@@ -232,6 +231,23 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "5cb60409-1bbf-4f2b-a90d-697db312f3cd"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "447973ce-d7e2-11ee-a4a1-0242ac120006",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
+                  "semanticName": "Council",
+                  "nodeOptions" : {
+                    "447973ce-d7e2-11ee-a4a1-0242ac120006": {
+                      "disabled": true
+                    }
+                  }
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "73639516-ee29-4e81-8d45-d2349d4e02d4"
               },
               {
                 "parameters": {

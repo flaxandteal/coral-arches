@@ -1,0 +1,13 @@
+To migrate:
+
+* reload Group
+* reload Enforment Permissions and Planning Team Permissions, and Root Group (Global Group)
+* load Arches Plugin
+* add Enforcement Team Admin and Planning Team Superadmin Groups to Global Group
+>>> for group in Group.all():
+...     if not group.django_group: continue
+...     group.django_group[0]._parent_pseudo_node.value = DjangoGroupViewModel.objects.get(name=group.basic_info[0].name)
+...     group.save()
+* apply_sets
+* create a Basic group and add init-workflows to init, add the Basic group to the Global Group
+* when adding a new user, _also_ add them to the Basic group

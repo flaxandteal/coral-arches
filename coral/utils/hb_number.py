@@ -1,4 +1,5 @@
 from arches.app.models.tile import Tile
+from arches.app.models.models import EditLog 
 from django.db.models import Max
 import re
 
@@ -14,8 +15,9 @@ class HbNumber:
         self.ward_distict_text = ward_distict_text
 
     def id_number_format(self, index):
+        
         district_number, ward_number = self.parse_district_ward()
-        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
+        return f"HB{district_number}/{ward_number}/{str(index).zfill(3)}"
     
     def parse_district_ward(self):
         pattern = r"\(\d+/\d+\)"
@@ -27,37 +29,34 @@ class HbNumber:
         district_number, ward_number = match.group(0)[1:-1].split("/")
         return district_number, ward_number
 
-    def get_latest_id_number(self, resource_instance_id=None):
-        latest_id_number_tile = None
+    def get_latest_id_number(self, district_number, ward_number, resource_instance_id=None):
+        latest_id_number = None
         try:
             id_number_generated = {
-                f"data__{HB_NUMBER_NODE_ID}__icontains": f"HB/",
+                f"newvalue__{HB_NUMBER_NODE_ID}__icontains": f"HB{district_number}/{ward_number}",
             }
-            query_result = Tile.objects.filter(
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                **id_number_generated,
-            )
+            query_result = EditLog.objects.filter(
+                nodegroupid=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                edittype='tile create',
+                **id_number_generated
+            ).order_by("-timestamp")     
             if resource_instance_id:
-                query_result.exclude(resourceinstance_id=resource_instance_id)
-            query_result = query_result.annotate(
-                most_recent=Max("resourceinstance__createdtime")
-            )
-            query_result = query_result.order_by("-most_recent")
-            latest_id_number_tile = query_result.first()
+                query_result = query_result.exclude(resourceinstanceid=resource_instance_id)
+            for tile in query_result:
+                latest_id_number = tile.newvalue.get(HB_NUMBER_NODE_ID, {}).get("en", {}).get("value", "")
+                if latest_id_number[-1].isalpha():
+                    continue
+                break
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
             raise e
-
-        if not latest_id_number_tile:
-            return
-
-        latest_id_number = (
-            latest_id_number_tile.data.get(HB_NUMBER_NODE_ID).get("en").get("value")
-        )
+        
+        if latest_id_number is None:
+            return None
 
         print(f"Previous ID number: {latest_id_number}")
         id_number_parts = latest_id_number.split("/")
-        return {"index": int(id_number_parts[3])}
+        return {"index": int(id_number_parts[2])}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
         if attempts >= 20:
@@ -72,8 +71,8 @@ class HbNumber:
 
         if resource_instance_id:
             id_number_tile = None
+            district_number, ward_number = self.parse_district_ward()
             try:
-                district_number, ward_number = self.parse_district_ward()
                 generated_id_query = {
                     f"data__{HB_NUMBER_NODE_ID}__icontains": f"{district_number}/{ward_number}",
                 }
@@ -84,7 +83,7 @@ class HbNumber:
                 ).first()
             except Exception as e:
                 print(f"Failed checking if ID number tile already exists: {e}")
-                return retry()
+                return 
 
             if id_number_tile:
                 print("A ID number has already been created for this resource")
@@ -95,11 +94,10 @@ class HbNumber:
 
         latest_id_number = None
         try:
-            latest_id_number = self.get_latest_id_number(resource_instance_id)
+            latest_id_number = self.get_latest_id_number(district_number, ward_number, resource_instance_id)
         except Exception as e:
             print(f"Failed getting the previously used ID number: {e}")
-            return retry()
-
+            return 
         if latest_id_number:
             # Offset attempts so it starts at 1 and will try to generate
             # new increments for the total amount of allow attempts
@@ -112,7 +110,7 @@ class HbNumber:
 
         passed = self.validate_id(id_number)
         if not passed:
-            return retry()
+            return
 
         print(f"ID number is unique, ID number: {id_number}")
         return id_number
@@ -137,5 +135,4 @@ class HbNumber:
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
             data__contains=data_query,
         ).exclude(resourceinstance_id=resource_instance_id).first()
-
         return not bool(id_number_tile)

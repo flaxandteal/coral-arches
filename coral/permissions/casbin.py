@@ -1,8 +1,13 @@
 import logging
 import pika
+import uuid
 import time
+import threading
+from typing import Iterable
+from contextlib import contextmanager
 from guardian.core import ObjectPermissionChecker
 from dauthz.backends.casbin_backend import CasbinBackend
+
 # https://github.com/casbin/pycasbin/issues/323
 logging.disable(logging.NOTSET)
 logging.getLogger("casbin_adapter").setLevel(logging.ERROR)
@@ -20,7 +25,7 @@ from django.db import transaction
 from guardian.models import GroupObjectPermission
 
 from arches.app.models.models import *
-from arches.app.models.models import ResourceInstance, MapLayer
+from arches.app.models.models import ResourceInstance, MapLayer, Plugin
 from arches.app.models.graph import Graph
 from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
@@ -28,7 +33,7 @@ from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
 from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm, ArchesStandardPermissionFramework
 from arches.app.models.resource import UnindexedError
-from arches_orm.models import Person, Organization, Set, LogicalSet, Group
+from arches_orm.models import Person, Organization, Set, LogicalSet, Group, ArchesPlugin
 from arches_orm.view_models import ResourceInstanceViewModel
 from arches_orm.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
@@ -106,6 +111,10 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             obj = f"g2l:{obj.id}"
         elif isinstance(obj, Graph) or isinstance(obj, GraphModel):
             obj = f"gp:{obj.pk}"
+        elif isinstance(obj, ArchesPlugin):
+            obj = f"pl:{obj.plugin_identifier}"
+        elif isinstance(obj, Plugin):
+            obj = f"pl:{obj.pk}"
         elif isinstance(obj, ResourceInstanceViewModel):
             obj = f"ri:{obj.id}"
         elif isinstance(obj, ResourceInstance) or isinstance(obj, Resource):
@@ -126,40 +135,49 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             self._recalculate_table_real()
 
     def _recalculate_table_real(self):
+        print("RECALC", 1)
         groups = settings.GROUPINGS["groups"]
         root_group = Group.find(groups["root_group"])
         self._enforcer.clear_policy()
 
         # We bank permissions for all Django groups for nodegroups,
         # (implicitly resource models) and map layers, but nothing else.
+        print("RECALC", 2)
         for django_group in DjangoGroup.objects.all():
+            print(django_group.name)
             group_key = self._subj_to_str(django_group)
             self._enforcer.add_named_grouping_policy("g", group_key, f"dgn:{django_group.name}")
+            # The default permissions are (still) all perms, if the nodegroup perms set is empty
             nodegroups = {
-                nodegroup: set(perms)
+                str(nodegroup.pk): set(perms) if perms else set(GRAPH_REMAPPINGS.values())
                 for nodegroup, perms in
                 get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True).items()
             }
-            for nodegroup, perms in nodegroups.items():
-                nodegroup_key = self._obj_to_str(nodegroup)
-                for perm in perms:
-                    self._enforcer.add_policy(group_key, nodegroup_key, str(perm))
-            nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph")
+            print("RECALC", 2, 1)
+            print("RECALC", 2, 2)
+            nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph").only("graph__graphid", "nodegroup_id")
+            print("RECALC", 2, 3)
+            graphs = {}
             graph_perms = {}
             for node in nodes:
-                graph_perms.setdefault(node.graph, set())
-                graph_perms[node.graph] |= set(nodegroups[node.nodegroup])
+                key = f"gp:{node.graph.graphid}"
+                graph_perms.setdefault(key, set())
+                graph_perms[key] |= set(nodegroups[str(node.nodegroup_id)])
+                graphs[key] = node.graph
+            print("RECALC", 2, 4)
             for graph, perms in graph_perms.items():
-                if graph.isresource and str(graph.pk) != SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID:
-                    graph_key = self._obj_to_str(graph)
+                if graphs[graph].isresource and str(graph[3:]) != SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID:
                     for perm in perms:
-                        self._enforcer.add_policy(group_key, graph_key, str(perm))
+                        self._enforcer.add_policy(group_key, graph, str(perm))
+            print("RECALC", 2, 5)
             map_layer_perms = ObjectPermissionChecker(django_group)
             for map_layer in MapLayer.objects.all():
                 perms = set(map_layer_perms.get_perms(map_layer))
                 map_layer_key = self._obj_to_str(map_layer)
                 for perm in perms:
                     self._enforcer.add_policy(group_key, map_layer_key, str(perm))
+            print("RECALC", 2, 6)
+        print("RECALC", 3)
 
         sets = []
 
@@ -191,6 +209,21 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             #         for act in perms:
             #             obj_key = self._obj_to_str(nodegroup)
             #             self._enforcer.add_policy(group_key, obj_key, str(act))
+            try:
+                arches_plugins = group.arches_plugins
+                print(arches_plugins, "GAP")
+                for arches_plugin in arches_plugins:
+                    print(arches_plugin, "AP")
+                    try:
+                        identifier = uuid.UUID(arches_plugin.plugin_identifier)
+                        plugin = Plugin.objects.get(pk=identifier)
+                    except ValueError:
+                        plugin = Plugin.objects.get(slug=arches_plugin.plugin_identifier)
+                    for obj_key in (f"pl:{key}" for key in (plugin.pk, plugin.slug) if key):
+                        self._enforcer.add_policy(group_key, obj_key, "view_plugin")
+                        print("AP", group_key, obj_key)
+            except Exception as exc:
+                print("Could not get Arches Plugins", exc)
             for permission in group.permissions:
                 for act in permission.action:
                     for obj in permission.object:
@@ -200,21 +233,26 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                         self._enforcer.add_policy(group_key, obj_key, str(act.conceptid))
             if len(group.django_group) == 0:
                 self._ri_to_django_groups(group)
-            for group in group.django_group:
-                if list(group.user_set.all()) != users:
-                    group.user_set.set(users)
-                    group.save()
+            for gp in group.django_group:
+                if not gp or gp.pk is None:
+                    continue
+                if list(gp.user_set.all()) != users:
+                    gp.user_set.set(users)
+                    gp.save()
             return users
 
         sets = []
 
+        print("RECALC", 4)
         _fill_group(root_group)
+        print("RECALC", 5)
 
         for user in User.objects.all():
             user_key = self._subj_to_str(user)
             for group in user.groups.all():
                 group_key = self._subj_to_str(group)
                 self._enforcer.add_named_grouping_policy("g", user_key, group_key)
+        print("RECALC", 6)
 
         def _fill_set(st):
             set_key = self._obj_to_str(st)
@@ -239,12 +277,15 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             else:
                 root_set = Set.find(obj_key.split(":")[1])
             _fill_set(root_set)
+        print("RECALC", 7)
 
         self._enforcer.save_policy()
         self._enforcer.load_policy()
+        print("RECALC", 8)
 
         if os.getenv("CASBIN_LISTEN", False):
             trigger.request_reload()
+        print("RECALC", 9)
 
     @context_free
     def update_permissions_for_user(self, user):
@@ -272,7 +313,8 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def _ri_to_django_groups(group: Group):
         if not group.django_group:
-            group.django_group = [DjangoGroup.objects.get_or_create(name=str(group))]
+            django_group, _ = DjangoGroup.objects.get_or_create(name=str(group))
+            group.django_group = [django_group]
             group.save()
         return group.django_group
 
@@ -473,8 +515,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         return map_layers_with_write_permission
 
-    @context_free
-    def get_nodegroups_by_perm(self, user, perms, any_perm=True):
+    def get_nodegroups_by_perm(self, user: User, perms: str | Iterable[str], any_perm: bool=True) -> list[str]:
         """
         returns a list of node groups that a user has the given permission on
 
@@ -484,47 +525,11 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         any_perm -- True to check ANY perm in "perms" or False to check ALL perms
 
         """
-
-        logger.debug(f"Fetching node group permissions: {user} {perms}")
-
-        all_nodegroups = list(NodeGroup.objects.values_list("nodegroupid", flat=True))
-        if user and user.is_superuser:
-            return all_nodegroups
-        if not isinstance(perms, list):
-            perms = [perms]
-
-        formatted_perms = []
-        # in some cases, `perms` can have a `model.` prefix
-        for perm in perms:
-            if len(perm.split(".")) > 1:
-                formatted_perms.append(perm.split(".")[1])
-            else:
-                formatted_perms.append(perm)
-
-        permitted_nodegroups = set()
-        targets = {}
-        user = self._subj_to_str(user)
-        for _, obj, act in self._enforcer.get_implicit_permissions_for_user(user):
-            if obj.startswith("ng:"):
-                ng = obj[3:]
-                targets.setdefault(ng, set())
-                targets[ng].add(act)
-
-        for nodegroup, explicit_perms in targets.items():
-            if len(explicit_perms):
-                if any_perm:
-                    if len(set(formatted_perms) & set(explicit_perms)):
-                        permitted_nodegroups.add(nodegroup)
-                else:
-                    if set(formatted_perms) == set(explicit_perms):
-                        permitted_nodegroups.add(nodegroup)
-            else:  # if no explicit permissions, object is considered accessible by all with group permissions
-                permitted_nodegroups.add(nodegroup)
-        # If a nodegroup has no explicit permissions, not even appearing
-        # in the Casbin matrix, we add it here.
-        permitted_nodegroups |= set(all_nodegroups) - set(targets)
-
-        return list(permitted_nodegroups)
+        return list(set(
+            str(nodegroup.pk)
+            for group in user.groups.all()
+            for nodegroup in get_nodegroups_by_perm_for_user_or_group(group, perms, any_perm=any_perm)
+        ))
 
     @context_free
     def check_resource_instance_permissions(self, user, resourceid, permission):
@@ -797,6 +802,62 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         cache.set("get_restricted_instances--restricted_ids", restricted_ids, 300)
         return restricted_ids
 
+    def get_plugins_by_permission(self, user: User, perms: str | Iterable[str] = "view_plugin") -> list[Plugin | str]:
+        """
+        Checks which plugins a user has any explicit permissions
+
+        Arguments:
+        user -- the user to check
+        plugins -- the plugins against which to confirm access
+        perms -- one or a list of permissions to be checked
+
+        Returns:
+        A list of plugins that match
+
+        """
+        plugin_objs = list(Plugin.objects.all().order_by("sortorder"))
+        if isinstance(perms, str):
+            perms = (perms,)
+        return [plugin for plugin in plugin_objs if self.user_has_plugin_permissions(user, plugin, perms)]
+
+    @context_free
+    def user_has_plugin_permissions(self, user: User, plugin: Plugin | uuid.UUID | str, perms: str | Iterable[str] = "view_plugin") -> bool:
+        """
+        Checks if a user has any explicit permissions to a model's nodegroups
+
+        Arguments:
+        user -- the user to check
+        plugin -- the plugin against which to confirm access, or 
+        perms -- one or a list of permissions to be checked
+
+        Returns:
+        A list of 0, 1 or more plugin IDs that match
+
+        """
+
+        # Only considers groups a user is assigned to.
+        if user.is_superuser:
+            return True
+
+        if isinstance(perms, str):
+            perms = (perms,)
+
+        plugin_id: str
+        if isinstance(plugin, Plugin):
+            plugin_id = str(plugin.pk)
+        else:
+            plugin_id = str(plugin) # we add both slug and ID above
+
+        # Only considers plugins a user is assigned to.
+        subj = self._subj_to_str(user)
+        found_plugins = self._enforcer.get_implicit_permissions_for_user(subj)
+        for _, plugin, act in found_plugins:
+            if plugin != f"pl:{plugin_id}":
+                continue
+            if not perms or act in perms:
+                return True
+        return False
+
     @context_free
     def user_has_resource_model_permissions(self, user, perms, resource=None, graph_id=None):
         """
@@ -804,7 +865,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
         Arguments:
         user -- the user to check
-        perms -- the permssion string eg: "read_nodegroup" or list of strings
+        perms -- the permission string eg: "read_nodegroup" or list of strings
         resource -- a resource instance to check if a user has permissions to that resource's type specifically
         graph_id -- a graph id to check if a user has permissions to that graph's type specifically
 
@@ -821,7 +882,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         group_ids = {
             group[3:] for group, _, act in groups
             if group.startswith("dg:") and
-            (not perms or act in perms)
+            (not perms or act in perms or act == "__all__")
         }
         return bool(group_ids & {str(group.pk) for group in user.groups.all()})
 
@@ -865,7 +926,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             if not graph.startswith("gp:"):
                 continue
             permissioned_graphs.add(graph[3:])
-            if not perms or act in perms:
+            if not perms or act in perms or act == "__all__":
                 allowed.add(graph[3:])
         allowed |= set(all_graphs) - set(permissioned_graphs)
         return list(allowed)
@@ -941,8 +1002,12 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         Single test for whether a user is in the Resource Editor group
         """
 
-        is_resource_editor = self.user_in_group_by_name(user, ["Resource Editor"])
-        return is_resource_editor
+        if user.is_authenticated:
+            if user.is_superuser:
+                return True
+
+            return self.user_in_group_by_name(user, ["Resource Editor"])
+        return False
 
 
     @context_free
@@ -951,7 +1016,12 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         Single test for whether a user is in the Resource Reviewer group
         """
 
-        return self.user_in_group_by_name(user, ["Resource Reviewer"])
+        if user.is_authenticated:
+            if user.is_superuser:
+                return True
+
+            return self.user_in_group_by_name(user, ["Resource Reviewer"])
+        return False
 
 
     @context_free
@@ -959,6 +1029,9 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         """
         Single test for whether a user is in the Resource Exporter group
         """
+
+        if user.is_authenticated and user.is_superuser:
+            return True
 
         return self.user_in_group_by_name(user, ["Resource Exporter"])
 
@@ -968,13 +1041,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         roles = self._enforcer.get_implicit_roles_for_user(subj)
         return any(f"dgn:{name}" in roles for name in names)
 
-from contextlib import contextmanager
-from uuid import uuid4
-
-_PROCESS_KEY = str(uuid4())
-
-import time
-import threading
+_PROCESS_KEY = str(uuid.uuid4())
 
 class CasbinTrigger:
     wait_time = int(os.getenv("CASBIN_DEBOUNCE_SECONDS", 5))
@@ -1005,6 +1072,7 @@ class CasbinTrigger:
 
     @context_free
     def listen(self):
+        print("Listening")
         from arches.app.utils.permission_backend import _get_permission_framework
         casbin_framework = _get_permission_framework()
 
@@ -1041,6 +1109,7 @@ class CasbinTrigger:
             except:
                 logger.exception("Casbin listener exception")
 
+        print("Attempting connect")
         with self.connect() as channel:
             print("Consuming")
             channel.basic_consume(

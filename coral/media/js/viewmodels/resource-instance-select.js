@@ -59,6 +59,8 @@ define([
       this.resourceTypesToDisplayInDropDown = ko.observableArray(!!params.graphids ? ko.toJS(params.graphids) : []);
       this.graphIds = ko.observableArray();
       this.searchString = params.searchString || ko.unwrap(params.node?.config.searchString);
+      this.showEdit = ko.observable(params.showEdit ?? false);
+      this.disableDelete = ko.observable(params.disableDelete ?? false);
       
       if (!!params.configForm) {
           this.allowInstanceCreation = false;

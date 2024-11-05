@@ -53,7 +53,12 @@
                   "labels": [["Monument or Area", "SMR Number"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d"
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "nodeOptions": {
+                    "58a2b98f-a255-11e9-9a30-00224800b26d" : {
+                      "searchString": "search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "get-selected-monument-details",
@@ -159,7 +164,19 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "75d950a6-24d6-11ef-bb69-0242ac130006",
-                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
+                  "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodeOptions": {
+                    "08064f9c-24d7-11ef-a3a4-0242ac130006":{
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "bcf243ee-24d6-11ef-a3a4-0242ac130006":{
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",

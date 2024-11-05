@@ -16,14 +16,18 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
+import time
 import logging
 import readline
+import psycopg2
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User, Group as DjangoGroup
 
 from coral import settings
 
 logging.basicConfig()
+
+COOLOFF_S = 10
 
 class Command(BaseCommand):
     """Recalculate ES resource->set mapping.
@@ -50,7 +54,10 @@ class Command(BaseCommand):
         print_statistics = True if options["print_statistics"] else False
 
         set_applicator = SetApplicator(print_statistics=print_statistics, wait_for_completion=True)
-        set_applicator.apply_sets()
+        try:
+            set_applicator.apply_sets()
+        except psycopg2.OperationalError:
+            time.sleep(COOLOFF_S)
 
         framework = CasbinPermissionFramework()
         framework.recalculate_table()

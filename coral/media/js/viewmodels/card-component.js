@@ -47,7 +47,7 @@ define([
                 widget?.widgetLookup[ko.unwrap(widget?.widget_id)].name].join(" ");
         };
 
-
+    
         this.initialize = function() {
             self.card.showForm(true);
 
@@ -293,12 +293,19 @@ define([
                 ...options.config
               });
             }
+            if (options?.node) {
+                options.node = {
+                  ...params.form.nodeLookup[nodeId],
+                  ...options.node
+                };
+            }
             const nodeOptions = {...options}
             if(options?.asObservable) {
-              Object.entries(options.asObservable).forEach((key, value) => {
+              Object.entries(options.asObservable).forEach(([key, value]) => {
                   nodeOptions[key] = ko.observable(value);
                 });
             } 
+            delete nodeOptions.asObservable
             return nodeOptions;
         }
 

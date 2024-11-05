@@ -270,7 +270,7 @@
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
                     "helpenabled": true,
                     "helptext": {
-                        "en": "<p><strong>Full Address</strong></p>\n\n<p>Where it is convenient, this can be used to record the full address. This can be used to aid migration from legacy systems with less sophisticated recording practice</p>\n\n<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modelled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a building where known.</p>\n\n<p><strong>Building Number</strong></p>\n\n<p>Use to record the number(s) assigned to a building. This may be a single number (eg. 45) or a range separated by a &#39;-&#39;&nbsp;(eg. 13-21).</p>\n\n<p><strong>Building Number Sub-Street</strong></p>\n\n<p>&nbsp;</p>\n"
+                        "en": "<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modeled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a Heritage Asset where known.</p>\n<p><strong>Street</strong></p>\n\n<p>Use to record the name of the street where the Heritage Asset is located.</p>\n<p><strong>Town or City</strong></p>\n\n<p>Use to record the name of the town or city where the Heritage Asset is located.</p>\n<p><strong>County</strong></p>\n\n<p>Use to record the name of the county where the Heritage Asset is located.</p>\n<p><strong>Postcode</strong></p>\n\n<p>Use to record the postal code assigned to the Heritage Asset's location.</p>\n<p><strong>Townland</strong></p>\n\n<p>Use to record the name of the townland where the Heritage Asset is located.</p>\n<p><strong>Council</strong></p>\n\n<p>Use to record the name of the council responsible for the Heritage Asset.</p>\n<p><strong>Area Name</strong></p>\n\n<p>Use to record the name of the area where the Heritage Asset is located.</p>\n<p><strong>Area Type</strong></p>\n\n<p>Use to specify the type of area (e.g., district, barony) where the Heritage Asset is located.</p>\n<p><strong>Irish Grid Reference</strong></p>\n\n<p>Use to record the grid reference coordinates for the Heritage Asset's location using various formats, Alphanumeric TM65, Absolute TM65 or Long/Lat.</p>\n<p><strong>Location Description</strong></p>\n\n<p>Use to provide a detailed description of the Heritage Asset's location. This can include landmarks, nearby intersections, or other notable features.</p>"
                     },
                     "helptitle": {
                         "en": "Addresses"
@@ -2387,7 +2387,7 @@
                         "en": "Area Name"
                     },
                     "node_id": "083ea3ae-ca61-11ee-afca-0242ac180006",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2409,7 +2409,7 @@
                         "en": "Area Type"
                     },
                     "node_id": "083f0db2-ca61-11ee-afca-0242ac180006",
-                    "sortorder": 3,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2431,7 +2431,7 @@
                         "en": "Area Name Type"
                     },
                     "node_id": "083ea5c0-ca61-11ee-afca-0242ac180006",
-                    "sortorder": 1,
+                    "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2453,7 +2453,7 @@
                         "en": "Area Name Metatype"
                     },
                     "node_id": "083ea124-ca61-11ee-afca-0242ac180006",
-                    "sortorder": 2,
+                    "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -17249,6 +17249,17 @@
                 {
                     "config": {
                         "triggering_nodegroups": [
+                            "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
+                            "dc9bfb24-cfd9-11ee-8cc1-0242ac180006"
+                        ]
+                    },
+                    "function_id": "9a4760fc-9a00-4ba1-b35c-18dbe26f1beb",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "e38aab96-a637-4360-b423-1f967c57937b"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
                             "b37552ba-9527-11ea-96b5-f875a44e0e11",
                             "b4974044-c768-11ee-a945-0242ac180006"
                         ]
@@ -19360,7 +19371,7 @@
                 {
                     "alias": "area_name",
                     "config": {
-                        "rdmCollection": "acb5feaf-e491-4e53-bff2-2801167fd65a"
+                        "rdmCollection": "dabd4def-631e-e295-acec-136522543ea0"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -20400,7 +20411,7 @@
                 {
                     "alias": "area_type",
                     "config": {
-                        "rdmCollection": "59a0a035-bbd0-4e5e-9528-862790edc610"
+                        "rdmCollection": "eda531bb-050b-4f12-2421-1c50fcdcf11a"
                     },
                     "datatype": "concept",
                     "description": null,
