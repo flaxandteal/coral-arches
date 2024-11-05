@@ -35,18 +35,6 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
-            self.print = ko.observable(window.location.href.indexOf("?print") > -1)
-
-            self.fullReportConfig = {
-                id: 'organization',
-                label: 'Organization',
-                summaryNodeGroups: [
-                    "e8431c5d-8098-11ea-8348-f875a44e0e11",
-                    "af3b0116-29a9-11eb-8333-f875a44e0e11",
-                    "1b6f9cb4-51ae-11eb-a1fe-f875a44e0e11"
-                ],
-                ignoreNodes: []
-            }
 
             self.nameDataConfig = {
                 name: 'names',

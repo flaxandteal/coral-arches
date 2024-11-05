@@ -62,8 +62,6 @@ define([
             self.nationalities = ko.observableArray();
             self.owners = ko.observableArray();
             self.voyages = ko.observableArray();
-            self.print = ko.observable(window.location.href.indexOf("?print") > -1)
-
 
             self.classificationDataConfig = {
                 maritimeProduction: 'construction phases',

@@ -7,14 +7,9 @@
     <div class="relative">
 
         <!-- Title Block -->
-                  <!-- ko if: !print()-->
         <div class="aher-report-toolbar">
             <h1 class="aher-report-toolbar-title"><span class="aher-report-name">{% trans "Heritage Area" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
         </div>
-                <!-- /ko -->
-        <!-- ko else -->
-        <h1 class="aher-report-toolbar-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
-        <!-- /ko -->
 
     </div>
     {% endblock report_title_bar %}
@@ -22,7 +17,7 @@
     
     {% block body %}
     <!-- Link nav -->
-    <div class="aher-report-anchor-container" data-bind="if: !print()">
+    <div class="aher-report-anchor-container">
         <ol class="aher-report-anchors breadcrumb">
             <!-- ko foreach: {data: sections, as: 'section'} -->
             <li data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="aher-report-a"></li>
@@ -32,7 +27,7 @@
     <div class="aher-tabbed-report">
         <div class="aher-tabbed-report-content">
             <!-- Names Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'name' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'name'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/name',
                     params: {
@@ -43,7 +38,7 @@
                 }"></div>
             </div>
             <!-- Description Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'description' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'description'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/description',
                     params: {
@@ -54,7 +49,7 @@
                 }"></div>
             </div>
             <!-- Classification Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'classifications' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'classifications'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/classifications',
                     params: {
@@ -65,7 +60,7 @@
                 }"></div>
             </div>
             <!-- Location Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'location' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'location'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/location',
                     params: {
@@ -76,7 +71,7 @@
                 }"></div>
             </div>
             <!-- Designation/Protection Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'protection' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'protection'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/protection',
                     params: {
@@ -86,7 +81,7 @@
                 }"></div>
             </div>
             <!-- Assessments Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'assessments' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'assessments'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/assessments',
                     params: {
@@ -96,7 +91,7 @@
                 }"></div>
             </div>
             <!-- Images Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'images' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'images'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/images',
                     params: {
@@ -106,7 +101,7 @@
                 }"></div>
             </div>
             <!-- People Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'people' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'people'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/people',
                     params: {
@@ -116,7 +111,7 @@
                 }"></div>
             </div>
             <!-- Resources Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'resources' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'resources'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/resources',
                     params: {
@@ -136,7 +131,7 @@
                 }"></div>
             </div>
              <!-- JSON Tab -->
-            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json' || print()">
+            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json'">
                 <div class="aher-flex-col" data-bind="component: {
                     name: 'views/components/reports/scenes/json',
                     params: {

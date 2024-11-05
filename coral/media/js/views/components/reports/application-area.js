@@ -44,14 +44,6 @@ define([
             }
 
             self.applicationAreas = ko.observableArray();
-            self.print = ko.observable(window.location.href.indexOf("?print") > -1)
-
-            self.fullReportConfig = {
-                id: 'application-area',
-                label: 'Application Area',
-                ignoreNodes: []
-            }
-
 
             self.nameDataConfig = {
                 name: 'application area',
