@@ -50,17 +50,18 @@ define([
             this.mandatoryNodes = ko.observableArray([])
             this.currentValues = ko.observable({})
 
+            // this has been removed as it was causing issues with hidden nodes
             // do a node lookup to check for isrequired on the model config
-            if(params.form.nodeLookup){
-                for(const [key, node] of Object.entries(params.form.nodeLookup)){
-                    if(node?.isrequired() === true){
-                        if(!this.tile.data[key]){
-                            continue
-                        }
-                        this.mandatoryNodes.push(key)
-                    }
-                }   
-            }
+            // if(params.form.nodeLookup){
+            //     for(const [key, node] of Object.entries(params.form.nodeLookup)){
+            //         if(node?.isrequired() === true){
+            //             if(!this.tile.data[key]){
+            //                 continue
+            //             }
+            //             this.mandatoryNodes.push(key)
+            //         }
+            //     }   
+            // }
 
             // check workflow config for isrequired attributes also
             if(params.nodeOptions){
