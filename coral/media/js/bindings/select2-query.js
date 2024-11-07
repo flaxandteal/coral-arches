@@ -21,7 +21,12 @@ define([
               el.setAttribute('aria-label', attr['data-label']);
           }
 
+          let dataSubscription = undefined;
+
           ko.utils.domNodeDisposal.addDisposeCallback(el, function() {
+              if (dataSubscription) {
+                  dataSubscription.dispose()
+              }
               try{
                   $(el).selectWoo('destroy');
               }
@@ -53,7 +58,8 @@ define([
 
           var data = select2Config.data;
           if (ko.isObservable(data)) {
-              data.subscribe(function(data) {
+              dataSubscription = data.subscribe(function(data) {
+                  console.log('logging el: ', el)
                   var currentSelection = $(el).select2('data').map(selected => selected.id);
                   $(el).find("option").remove();
                   data.forEach(data => {
