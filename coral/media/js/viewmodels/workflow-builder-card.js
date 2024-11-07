@@ -127,11 +127,10 @@ define([
 
     this.loadComponent = () => {
       if (!this.currentComponentData()) return;
-      this.selectedNodegroup(
-        this.nodegroupOptions().findIndex(
-          (option) => option.nodegroupId === this.currentComponentData().parameters.nodegroupid
-        )
-      );
+      const nodegroupIdx = this.nodegroupOptions().findIndex(
+        (option) => option.nodegroupId === this.currentComponentData().parameters.nodegroupid
+      )
+      this.selectedNodegroup(nodegroupIdx !== -1 ? nodegroupIdx : 0);
       this.selectedTileManaged('tile_' + this.currentComponentData().tilesManaged);
       this.selectedHiddenNodes(this.currentComponentData().parameters.hiddenNodes);
       const resourceIdPathIdx = this.workflowResourceIdPathOptions().findIndex(
@@ -230,7 +229,7 @@ define([
       this.selectedHiddenNodes.subscribe((value) => {
         this.currentComponentData().parameters.hiddenNodes = value;
         this.cardHasLoaded(false);
-        if (this.pushBackTimeout) {
+        if (this.pushBackTimeout()) {
           clearTimeout(this.pushBackTimeout());
         }
         this.pushBackTimeout(setTimeout(() => {
