@@ -59,7 +59,6 @@ define([
           var data = select2Config.data;
           if (ko.isObservable(data)) {
               dataSubscription = data.subscribe(function(data) {
-                  console.log('logging el: ', el)
                   var currentSelection = $(el).select2('data').map(selected => selected.id);
                   $(el).find("option").remove();
                   data.forEach(data => {
