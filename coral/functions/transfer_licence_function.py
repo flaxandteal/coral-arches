@@ -33,6 +33,8 @@ details = {
 
 class TransferOfLicenceFunction(BaseFunction):
     def save(self, tile, request, context=None):
+        if context and context.get('escape_function', False):
+            return
         # Many tiles save themselves again each time a new one saves to circumvent
         # old transfer getting applied again and failed this node will be set to
         # true after it has been used
