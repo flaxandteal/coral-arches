@@ -150,28 +150,6 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "7224417b-893a-11ea-b383-f875a44e0e11",
-                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
-                  ],
-                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
-                  "semanticName": "Consultation Dates",
-                  "nodeOptions": {
-                    "40eff4cd-893a-11ea-b0cc-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    }
-                  }
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "consultation-dates"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [],
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
                   "semanticName": "Consultation Descriptions"
