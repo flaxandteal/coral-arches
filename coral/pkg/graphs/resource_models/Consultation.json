@@ -78,7 +78,7 @@
                     },
                     "is_editable": true,
                     "name": {
-                        "en": "DIF Received Date"
+                        "en": "DfI Received Date"
                     },
                     "nodegroup_id": "04492152-c769-11ee-82c4-0242ac180006",
                     "sortorder": null,
@@ -2127,7 +2127,7 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Date Received from DIF",
+                        "label": "Date Received from DfI",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
@@ -2135,7 +2135,7 @@
                     },
                     "id": "04495456-c769-11ee-82c4-0242ac180006",
                     "label": {
-                        "en": "Date Received from DIF"
+                        "en": "Date Received from DfI"
                     },
                     "node_id": "04494bbe-c769-11ee-82c4-0242ac180006",
                     "sortorder": 0,
@@ -17988,7 +17988,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "dif_received_date",
+                    "alias": "dfi_received_date",
                     "config": {
                         "en": ""
                     },
@@ -18002,7 +18002,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "DIF Received Date",
+                    "name": "DfI Received Date",
                     "nodegroup_id": "04492152-c769-11ee-82c4-0242ac180006",
                     "nodeid": "04492152-c769-11ee-82c4-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
@@ -18011,7 +18011,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "dif_received_date_value",
+                    "alias": "dfi_received_date_value",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
                     },
@@ -18025,7 +18025,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "DIF Received Date Value",
+                    "name": "DfI Received Date Value",
                     "nodegroup_id": "04492152-c769-11ee-82c4-0242ac180006",
                     "nodeid": "04494bbe-c769-11ee-82c4-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
@@ -18034,7 +18034,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "dif_date_qualifier",
+                    "alias": "dfi_date_qualifier",
                     "config": {
                         "rdmCollection": "366686d6-deb0-4245-81a3-f94d791a388c"
                     },
@@ -18048,7 +18048,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "DIF Date Qualifier",
+                    "name": "DfI Date Qualifier",
                     "nodegroup_id": "04492152-c769-11ee-82c4-0242ac180006",
                     "nodeid": "04494ede-c769-11ee-82c4-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
