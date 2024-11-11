@@ -261,6 +261,17 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "4ae2af75-3829-4633-9b69-0242ac180006"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "010db21a-0eda-11ef-aa66-0242ac140006",
+                  "semanticName": "HMC Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "4ae2af75-3829-4633-aa66-0242ac140006"
               }
             ]
           }
