@@ -368,10 +368,21 @@
                   "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
                   "nodeOptions": {
                     "998d6728-fb26-11ee-838d-0242ac190006": {
-                      "allowInstanceCreation": false
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select"
                     },
                     "42ec3232-fb26-11ee-838d-0242ac190006": {
-                      "allowInstanceCreation": false
+                      "allowInstanceCreation": false,
+                      "widget_id": "493a99d7-c06e-4c83-aa1e-3251f606850c",
+                      "component": "user-to-model-select",
+                      "config": {
+                        "widget_id": "493a99d7-c06e-4c83-aa1e-3251f606850c"
+                      },
+                      "form": {
+                        "componentData": {
+                          "componentName": "user-to-model-select"
+                        }
+                      }
                     },
                 
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
@@ -427,7 +438,7 @@
                   }
                 },
                 "tilesManaged": "one",
-                "componentName": "user-to-model-select",
+                "componentName": "default-card",
                 "uniqueInstanceName": "sign-off"
               }
             ]

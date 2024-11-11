@@ -4,10 +4,12 @@ define([
   'arches',
   'uuid',
   'underscore',
-  'viewmodels/alert',
+    'viewmodels/card-component',
   'templates/views/components/widgets/user-to-model-select.htm'
-], function ($, ko, arches, uuid, _, AlertViewModel, template) {
+], function ($, ko, arches, uuid, _, CardViewModel, template) {
   const viewModel = function (params) {
+    CardViewModel.apply(this, [params]);
+
     const ResourceInstanceSelectViewModel = require('viewmodels/resource-instance-select');
 
     params.multiple = true;
@@ -15,7 +17,7 @@ define([
 
     ResourceInstanceSelectViewModel.apply(this, [params]);
 
-    this.signOffNodes = {
+    this.signOffNodes = ko.observable({
       "42ec3232-fb26-11ee-838d-0242ac190006": {
         "groupsRequired" : [
 
@@ -28,17 +30,31 @@ define([
         ],
         "value": ko.observable(false)
       }
-    }
+    })
 
     this.params = params
+    console.log("yolo")
+    console.dir(this)
 
-    console.log('user-to-model-select: ', this);
+    this.setValue = () => {
+      console.log("triggered")
+      this.tile.data[this.nodeid]([{resourceId: '555ff689-1957-4ae7-a772-fc49bc49b76f'}])
+    }
 
     this.isUserAlreadyAdded = ko.computed(() => {
-      return false;
+      const userAddedDict = {}
+      Object.keys(this.signOffNodes())
+      .forEach(signatureNode => {
+        userAddedDict[signatureNode] = this.tile.data[signatureNode]() ? true : false
+      })
+      return userAddedDict;
     }, this);
 
-    this.addUserToResourceSelect = async () => {
+    this.confirmSignature = (nodeid, person) => {
+      console.log(nodeid, person)
+    }
+
+    this.addUserToResourceSelect = async (nodeid) => {
       console.log('adding user to resource select');
 
       const response = await $.ajax({
@@ -51,13 +67,7 @@ define([
         }
       });
 
-      this.makeObject({
-        
-      }, {
-        graph_id: ""
-      })
-
-      console.log('response: ', response);
+      this.confirmSignature(nodeid, response.person)
     };
   };
 
