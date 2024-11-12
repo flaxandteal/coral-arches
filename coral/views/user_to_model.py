@@ -25,17 +25,6 @@ class UserToModel(View):
                 }
             )
 
-        print("utm", list(person.keys()))
-
-        if person.name:
-            print("utm: i have a name!", str(person.name.data))
-            # name = person.name.data
-        else:
-            print("utm: nameless =(")
-            # name = "nameless"
-
-
         return JSONResponse({"message": "Found users person model", "person": {
-            # "name": name,
             "resource_id": person.id
         }})
