@@ -3,31 +3,28 @@
 {% load i18n %}
 
 {% block form %}
-    <div class="row" style="margin: 0px;">
-        <div class="pad-hor" aria-label="Confirmation of Sign Off">
-            <label data-bind="css: {}, onEnterkeyClick, onSpacekeyClick, click: function(e){$setValue()}" tabindex="0" role="checkbox">
-                <input type="checkbox" name="stat-w-label" data-bind="attr: {'aria-checked': isUserAlreadyAdded()}, checked: isUserAlreadyAdded() ? true : false"><span>Sign Off</span>
-            </label>
+    <div class="row">
+        <span class="control-labx mesel widget-input-label" data-bind="text:label()"></span>
+    </div>
+    <div class="rr-table">
+        <div class="rr-table-row" data-bind="click: permittedToSign() && !isUserAlreadyAdded ? function(e){setValue()} : function(e) { }">
+            <div class="rr-table-row-initial">
+                <div class="rr-table-column" style="flex-grow: 1; cursor: pointer;">
+                    <div class="rr-table-instance-label">
+                        <i data-bind="class: permittedToSign() ? 'sm-icon-wrap fa fa-user' : 'sm-icon-wrap fa fa-code'"></i><span data-bind="class: textClass(), text: valueString()"></span>
+                    </div>
+                </div>
+                <!-- ko if: !isUserAlreadyAdded -->
+                <div class="rr-table-column icon-column">
+                    <div class=".tabbed-workflow-footer-button-container">
+                        <button data-bind="class: permittedToSign() ? 'btn btn-success' : 'btn btn-danger'">
+                            <i data-bind="class: iconClass()"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
         </div>
     </div>
 {% endblock form %}
-
-{% block old %}
-    <!-- ko component: {
-        name: 'default-card',
-        params: params
-    } --><!-- /ko -->
-    <!-- ko ifnot: self.displayOntologyTable -->
-        <!-- ko foreach: {data: Object.keys(signOffNodes()), as: 'signatureNode'} -->
-            <!-- <div class="row" style="margin: 0px;" data-bind="class: $parent.nodeCssClasses">
-                <div class="pad-hor" aria-label="Confirmation of Sign Off">
-                    <label data-bind="css: {}, onEnterkeyClick, onSpacekeyClick, click: function(e){$parent.setValue(signatureNode)}" tabindex="0" role="checkbox">
-                        <input type="checkbox" name="stat-w-label" data-bind="attr: {'aria-checked': $parent.isUserAlreadyAdded()[signatureNode]}, checked: $parent.tile.data[signatureNode]() ? true : false"><span>Sign Off</span>
-                    </label>
-                </div>
-            </div> -->
-        <!-- /ko -->
-    <!-- /ko -->
-
-{% endblock old %}
 
