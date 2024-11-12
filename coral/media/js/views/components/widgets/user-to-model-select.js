@@ -105,6 +105,7 @@ define([
       }
     }
     if (!this.isUserAlreadyAdded) {
+      this.iconClass('fa fa-plus-circle')
       this.initialize()
     } else {
       this.valueString(this.tile.data[this.node.id]()[0].resourceName())
