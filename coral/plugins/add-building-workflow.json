@@ -353,7 +353,10 @@
                   "nodeOptions": {
                     "1200e850-1905-11ef-aa9f-0242ac150006": {
                       "component": "user-to-model-select",
-                      "signOffGroups": ["f240895c-edae-4b18-9c3b-875b0bf5b235"],
+                      "signOffGroups": [
+                        "f240895c-edae-4b18-9c3b-875b0bf5b235",
+                        "9a88b67b-cb12-4137-a100-01a977335298"
+                      ],
                       "allowInstanceCreation": false
                     },
                     "9382b7b4-1905-11ef-aa9f-0242ac150006": {
