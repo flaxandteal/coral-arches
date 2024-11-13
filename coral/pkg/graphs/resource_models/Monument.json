@@ -4845,6 +4845,26 @@
                     "config": {
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
+                        "label": "Council Consulted Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "1b3561f6-380f-4620-a3f1-c8486cbf457d",
+                    "label": {
+                        "en": "Council Consulted Date"
+                    },
+                    "node_id": "1b3561f6-7ad7-4c11-822e-57d6685cc89d",
+                    "sortorder": 12,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
                         "label": "Local Authority Notification Date",
                         "maxDate": false,
                         "minDate": false,
@@ -20099,6 +20119,15 @@
                 {
                     "description": null,
                     "domainnode_id": "98c4287a-37be-11ef-a167-0242ac150006",
+                    "edgeid": "1b3561f6-37be-11ef-a167-0242ac150006",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "rangenode_id": "1b3561f6-7ad7-4c11-822e-57d6685cc89d"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "98c4287a-37be-11ef-a167-0242ac150006",
                     "edgeid": "98c4584a-37be-11ef-a167-0242ac150006",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "name": null,
@@ -35060,6 +35089,29 @@
                     "nodeid": "98a851e2-d62d-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "council_consulted_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Council Consulted Date",
+                    "nodegroup_id": "7e0533aa-37b7-11ef-9263-0242ac150006",
+                    "nodeid": "1b3561f6-7ad7-4c11-822e-57d6685cc89d",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
