@@ -4819,6 +4819,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000016"
                 },
                 {
+                    "card_id": "a1f10404-d648-11ee-9a11-0242ac180006",
+                    "config": {
+                        "defaultValue": "",
+                        "en": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Priority Rating",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "4dc5897b-7105-4850-a826-65fe7bb4195e",
+                    "label": {
+                        "en": "Priority Rating"
+                    },
+                    "node_id": "dff3a4d2-b4f6-4850-a826-65fe7bb4195e",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000016"
+                },
+                {
                     "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
                     "config": {
                         "dateFormat": "DD-MM-YYYY",
@@ -20865,6 +20887,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "dff3a4d2-d648-11ee-8b04-0242ac180006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
+                    "edgeid": "b792595f-b4f6-4850-a826-64d47cb0761b",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "dff3a4d2-b4f6-4850-a826-65fe7bb4195e"
                 },
                 {
                     "description": null,
@@ -38262,6 +38293,68 @@
                     "name": "Action Type",
                     "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "dff3a4d2-d648-11ee-8b04-0242ac180006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "priority_rating",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "73cb47c8-b4f6-4850-a826-65fe7bb4195e",
+                                "selected": false,
+                                "text": {
+                                    "en": "1"
+                                }
+                            },
+                            {
+                                "id": "73cb47c8-b4f6-4850-a826-477ab973cbb6",
+                                "selected": false,
+                                "text": {
+                                    "en": "2"
+                                }
+                            },
+                            {
+                                "id": "73cb47c8-b4f6-4850-a826-eaac04a18d88",
+                                "selected": false,
+                                "text": {
+                                    "en": "3"
+                                }
+                            },
+                            {
+                                "id": "73cb47c8-b4f6-4850-a826-e94a1b298cfe",
+                                "selected": false,
+                                "text": {
+                                    "en": "4"
+                                }
+                            },
+                            {
+                                "id": "73cb47c8-b4f6-4850-a826-e94a1b24195e",
+                                "selected": false,
+                                "text": {
+                                    "en": "5"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Priority Rating",
+                    "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
+                    "nodeid": "dff3a4d2-b4f6-4850-a826-65fe7bb4195e",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
