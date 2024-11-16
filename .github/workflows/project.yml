@@ -134,6 +134,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
+            ARCHES_PRESEEDED=${{ steps.cache.outputs.cache-hit != 'true' ? "" : "TRUE" }}
             ARCHES_DYNAMIC_IMAGE=${{ needs['Build-Arches'].outputs.image }}
             ARCHES_ENVIRONMENT=development
             ARCHES_BASE=${{ env.ARCHES_BASE }}
@@ -146,7 +147,7 @@ jobs:
           docker run --rm --network host postgres pg_dump -d postgresql://postgres:postgres@localhost:5432/arches > ~/coral-db.sql
       - name: Cache DB
         id: cache_model_db
-        uses: actions/cache@v3
+        uses: actions/cache/save@v4
         env:
           cache-name: cache-model-db
         with:
