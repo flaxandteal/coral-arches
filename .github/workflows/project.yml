@@ -134,7 +134,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            ARCHES_PRESEEDED=${{ steps.cache.outputs.cache-hit != 'true' ? "" : "TRUE" }}
+            ARCHES_PRESEEDED=${{ steps.cache.outputs.cache-hit != 'true' && "TRUE" | "" }}
             ARCHES_DYNAMIC_IMAGE=${{ needs['Build-Arches'].outputs.image }}
             ARCHES_ENVIRONMENT=development
             ARCHES_BASE=${{ env.ARCHES_BASE }}
