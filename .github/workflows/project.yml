@@ -84,6 +84,12 @@ jobs:
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
+      - name: Restore cached DB
+        id: cache-db-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/coral-db.sql
+          key: db-${{ hashFiles('coral/pkg/**') }}
       - name: Log in to Github
         uses: docker/login-action@v2
         with:
@@ -102,6 +108,11 @@ jobs:
           buildkitd-flags: '--allow-insecure-entitlement network.host'
           driver-opts: |
               network=host
+      - name: Build and push Docker image
+        run: |
+          docker run --rm --network host willwill/wait-for-it -h localhost -p 5432 -t 0
+          #RMV
+          cat ~/coral-db.sql | docker run --rm --network host -e POSTGRES_PASSWORD=postgres postgres psql -f - -h localhost -U postgres arches
       - name: Build and push Docker image
         run: docker run --rm --network host willwill/wait-for-it -h localhost -p 8000 -t 0
       - name: Extract metadata (tags, labels) for Docker
