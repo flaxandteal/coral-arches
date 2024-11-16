@@ -112,7 +112,8 @@ jobs:
         run: |
           docker run --rm --network host willwill/wait-for-it -h localhost -p 5432 -t 0
           #RMV
-          docker run --rm --network host -e PGPASSWORD=postgres postgres psql -c "DROP DATABASE arches; CREATE DATABASE arches" -h localhost -U postgres postgres
+          docker run --rm --network host -e PGPASSWORD=postgres postgres psql -c "DROP DATABASE arches" -h localhost -U postgres postgres
+          docker run --rm --network host -e PGPASSWORD=postgres postgres psql -c "CREATE DATABASE arches" -h localhost -U postgres postgres
           cat ~/coral-db.sql | docker run -i --rm --network host -e PGPASSWORD=postgres postgres psql -f - -h localhost -U postgres arches
       - name: Build and push Docker image
         run: docker run --rm --network host willwill/wait-for-it -h localhost -p 8000 -t 0
