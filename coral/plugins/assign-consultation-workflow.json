@@ -75,7 +75,7 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
-                  "semanticName": "DIF Received Date",
+                  "semanticName": "DfI Received Date",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
                     "config":{
@@ -86,7 +86,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
-                "uniqueInstanceName": "dif-received-date"
+                "uniqueInstanceName": "dfi-received-date"
               },
               {
                 "parameters": {
