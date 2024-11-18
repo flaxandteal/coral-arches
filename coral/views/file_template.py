@@ -24,6 +24,7 @@ import uuid
 from datetime import datetime
 import docx
 import textwrap
+import pprint
 from docx import Document
 from docx.text.paragraph import Paragraph
 from docx.oxml.parser import OxmlElement
@@ -41,17 +42,23 @@ from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
+import arches_orm.models as model
 import pytz
 from django.core.files.storage import  default_storage
 
-
-class FileTemplateView(View):
+class GraphTemplateView(View):
     def __init__(self):
         self.doc = None
         self.resource = None
 
     def get(self, request):
-
+        """
+            @params
+            request: {
+                parenttile_id: UUID
+            }
+            Checks the parenttile for Digital Object files then creates a download url for the file.
+        """
         parenttile_id = request.GET.get("parenttile_id")
         parent_tile = Tile.objects.get(tileid=parenttile_id)
         letter_tiles = Tile.objects.filter(parenttile=parent_tile)
@@ -70,7 +77,176 @@ class FileTemplateView(View):
         return HttpResponseNotFound("No letters tile matching query by parent tile")
 
     def post(self, request):
+        """
+            @params
+            request: {
+                body: {
+                    
+                }
+                POST: {
+                    template_id: UUID
+                    resourceinstance_id: UUID
+                }
+            }
+        """
+        print("TEMPLATE-DEBUG---------", request.__dict__, file=sys.stderr)
+        data = json.loads(request.body.decode("utf-8"))
+        parenttile_id = request.POST.get("parenttile_id")
+        transaction_id = request.POST.get("transaction_id", uuid.uuid1())
+        template_id = request.POST.get("template_id", data.get("template_id", None))
+        resourceinstance_id = request.POST.get("resourceinstance_id", data.get("resourceinstance_id", None))
 
+        self.resource = Resource.objects.get(resourceinstanceid=resourceinstance_id)
+        self.resource.load_tiles()
+
+        if (os.path.exists(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx")) is False):
+            os.mkdir(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx"))
+
+        fs = default_storage
+        template_dict = self.get_template_path(template_id)
+        template_path = None
+        filesystem_class = default_storage.__class__.__name__
+        if filesystem_class == 'S3Boto3Storage':
+            template_path = os.path.join(
+                "docx", template_dict["filename"]
+            )
+        elif filesystem_class == 'FileSystemStorage':
+            template_path = os.path.join(
+                settings.APP_ROOT, "docx", template_dict["filename"]
+            )
+
+        try:
+            self.doc = Document(fs.open(template_path))
+        except:
+            return HttpResponseNotFound("No Template Found")
+
+        self.edit_letter(self.resource, template_dict["provider"])
+
+        timezone = pytz.timezone("Europe/London") 
+        current_datetime = datetime.now(timezone)
+        # Date and time as "DD-MM-YYYY-HH-MM"
+        formatted_datetime = current_datetime.strftime("%d-%m-%Y-%H-%M")
+
+        new_file_name = formatted_datetime + "_" + template_dict["filename"]
+        new_file_path = os.path.join(
+            settings.APP_ROOT, "uploadedfiles/docx", new_file_name
+        )
+
+        new_req = HttpRequest()
+        new_req.method = "POST"
+        new_req.user = request.user
+        new_req.POST["data"] = None
+        host = request.get_host()
+
+        self.doc.save(new_file_path)
+        saved_file = open(new_file_path, "rb")
+        stat = os.stat(new_file_path)
+        file_data = UploadedFile(saved_file)
+
+        file_list_node_id = "96f8830a-8490-11ea-9aba-f875a44e0e11"  # Digital Object
+
+        tile = json.dumps(
+            {
+                "tileid": None,
+                "data": {
+                    file_list_node_id: [
+                        {
+                            "name": new_file_name,
+                            "accepted": True,
+                            "height": 0,
+                            "lastModified": stat.st_mtime,
+                            "size": stat.st_size,
+                            "status": "queued",
+                            "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                            "width": 0,
+                            "url": None,
+                            "file_id": None,
+                            "index": 0,
+                            "content": "blob:" + host + "/{0}".format(uuid.uuid4()),
+                        }
+                    ]
+                },
+                "nodegroup_id": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                "parenttile_id": None,
+                "resourceinstance_id": "",
+                "sortorder": 0,
+                "tiles": {},
+            }
+        )
+
+        new_req = HttpRequest()
+        new_req.method = "POST"
+        new_req.user = request.user
+        new_req.POST["data"] = tile
+        new_req.POST["transaction_id"] = transaction_id
+        new_req.FILES["file-list_" + file_list_node_id] = file_data
+        new_tile = TileData()
+        new_tile.action = "update_tile"
+
+        response = TileData.post(new_tile, new_req)
+        if response.status_code == 200:
+            tile = json.loads(response.content)
+            return JSONResponse({"tile": tile, "status": "success"})
+
+        return HttpResponseNotFound(response.status_code)
+
+
+
+    def edit_letter(self, resource, provider):
+        mapping_dict = provider(resource).get_mapping()
+        self.apply_mapping(mapping_dict)
+
+    def apply_mapping(self, mapping):
+        htmlTags = re.compile(r"<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
+        for key in mapping:
+            html = False
+            if htmlTags.search(mapping[key] if mapping[key] is not None else ""):
+                html = True
+            self.replace_string(self.doc, key, mapping[key], html)
+
+
+    def save(self, tile, request, context=None):
+        raise NotImplementedError
+
+
+    def post_save(self, *args, **kwargs):
+        raise NotImplementedError
+
+    def delete(self, tile, request):
+        raise NotImplementedError
+
+    def on_import(self, tile):
+        raise NotImplementedError
+
+
+    def after_function_save(self, tile, request):
+        raise NotImplementedError
+
+    
+class FileTemplateView(View):
+    def __init__(self):
+        self.doc = None
+        self.resource = None
+
+    def get(self, request):
+        parenttile_id = request.GET.get("parenttile_id")
+        parent_tile = Tile.objects.get(tileid=parenttile_id)
+        letter_tiles = Tile.objects.filter(parenttile=parent_tile)
+        file_list_node_id = "96f8830a-8490-11ea-9aba-f875a44e0e11"  # Digital Object
+        url = None
+        for tile in letter_tiles:
+            if url is not None:
+                break
+            for data_obj in tile.data[file_list_node_id]:
+                if data_obj["status"] == "uploaded":
+                    url = data_obj["url"]
+                    break
+
+        if url is not None:
+            return JSONResponse({"msg": "success", "download": url})
+        return HttpResponseNotFound("No letters tile matching query by parent tile")
+
+    def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
         print("temple id", template_id)
@@ -180,31 +356,31 @@ class FileTemplateView(View):
         template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
             "7f1e7061-8bb0-4338-9342-118f1e9214aa": {
                 "filename": "smc-addendum-template.docx",
-                "provider": MonumentTemplateProvider
+                "provider": GenericTemplateProvider
             },
             "e14bd058-e9f2-48f8-8ef5-337310c3420f": {
                 "filename": "smc-provisional-template.docx",
-                "provider": MonumentTemplateProvider
+                "provider": GenericTemplateProvider
             },
             "8d605e5c-d0da-4b72-9ce3-2f7dac3381d1": {
                 "filename": "smc-refusal-template.docx",
-                "provider": MonumentTemplateProvider
+                "provider": GenericTemplateProvider
             },
             "b777ebb6-7ab6-4de3-9825-f8564928eee8" : {
                 "filename": "licence-covering-letter.docx",
-                "provider": LicenceTemplateProvider
+                "provider": GenericTemplateProvider
             },
             "f86784f0-0c94-4427-bcba-4dd222461e30": {
                 "filename": "final-report-letter.docx",
-                "provider": LicenceTemplateProvider,
+                "provider": GenericTemplateProvider,
             },
             "c9b643bd-2d28-4c91-9d2e-7e861ed34f0f": {
                 "filename": "extra-name-on-letter.docx",
-                "provider": LicenceTemplateProvider,
+                "provider": GenericTemplateProvider,
             },
             "78533d33-e712-48ee-ab4c-6bdc9f0ca51d": {
                 "filename": "extension-of-licence-letter.docx",
-                "provider": LicenceTemplateProvider,
+                "provider": GenericTemplateProvider,
             }
         }
         for key, value in list(template_dict.items()):
@@ -288,7 +464,39 @@ class FileTemplateView(View):
         # perhaps replaces {{custom_object}} with pre-determined text structure with custom style/format
 
         return True
+
+class GenericTemplateProvider:
+    def __init__(self, resource_instance):
+        self.resource_instance = resource_instance
+        self.datatype_factory = DataTypeFactory()
+        self.tiles = resource_instance.tiles
+
+    def get_value_from_tile(self, tile, node_id):
+        current_node = models.Node.objects.get(nodeid=node_id)
+        datatype = self.datatype_factory.get_instance(current_node.datatype)
+        returnvalue = datatype.get_display_value(tile, current_node)
+        return "" if returnvalue is None else returnvalue
     
+    def get_resource(self, resource_id):
+        print("GENERIC LETTERS: RESOURCE")
+        resource = None
+        try:
+            resource = Resource.objects.filter(pk=resource_id).first()
+            print(resource)
+            pprint(vars(resource))
+            
+        except Resource.DoesNotExist:
+            raise f"Resource ID ({resource_id}) does not exist"
+        return resource
+
+    def get_mapping(self):
+        print("GENERIC LETTERS: GET_MAPPING")
+        inner_self = vars(self)
+        pprint("inner_self", inner_self)
+        inner_inner_self = vars(inner_self)
+        pprint("inner_inner_self", inner_inner_self)
+
+
 class MonumentTemplateProvider:
     MONUMENT_NAME_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11'
     MONUMENT_NAME_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11'
