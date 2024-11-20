@@ -262,12 +262,12 @@ define([
           let limit = parseInt(this.limit());
 
           switch (true) {
-            case result.total <= limit - 2:
+            case result.total <= limit - 1:
               result.state = this.OK;
               break;
-            case result.total === limit - 1:
-              result.state = this.WARNING;
-              break;
+            // case result.total === limit - 1:
+            //   result.state = this.WARNING;
+            //   break;
             case result.total === limit:
               result.state = this.MAX;
               break;
