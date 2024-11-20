@@ -261,6 +261,17 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "4ae2af75-3829-4633-9b69-0242ac180006"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "010db21a-0eda-11ef-aa66-0242ac140006",
+                  "semanticName": "HMC Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "4ae2af75-3829-4633-aa66-0242ac140006"
               }
             ]
           }
@@ -340,52 +351,22 @@
                     "ad22dad6-dbd0-11ee-b0db-0242ac120006": {
                       "allowInstanceCreation": false
                     },
-                    "2cbc7bf7-ccbb-4ac2-bb29-bc3bc597c753": {
+                    "36b51a2b-baf3-4dc4-b714-08bc58fcaac8": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
-                    "0ccb08ee-dbc4-11ee-b0db-0242ac120006": {
+                    "36b51a2b-2fad-45fb-9e93-088016aa0fc9": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
-                    "8623e2d5-5407-4b57-b769-89c934941ac5": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "e1d85f71-85d2-4357-951f-9318f1df36b5": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "1f1d69ee-99c8-4808-b2b2-2b33b1364dda": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "a54ab030-d2c9-4e1f-bde9-7e234f3f3e58": {
+                    "cffa2fc8-3797-11ef-a167-0242ac150006": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
                     "0cd0998c-dbd6-11ee-b0db-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "229d12d0-1908-11ef-aa9f-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "257efb18-2d61-11ef-8722-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "7f932826-1908-11ef-aa9c-0242ac150006": {
                       "config":{
                         "maxDate":"today"
                       }
@@ -396,57 +377,8 @@
                         "label": "Owner Notified Date"
                       }
                     },
-                    "cffa2fc8-3797-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "603015fe-3afe-4475-87e7-771a9d625503": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "1752059c-1e67-4876-94a1-605dbbb4a03d": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "379e65bc-555b-4dd9-bd6d-cf7b6de20527": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "7e1a19c8-676d-4382-a039-0cd28a9a1c28": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "f98b388c-db09-4519-bbd2-0d7bc339c805": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "6b901bcd-724a-48b8-9ff7-8ec917dbfec7": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "577bd652-c9dc-4954-9765-7546ba0cabac": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "c2736493-9ba2-4d59-a358-45eef0086a16": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "af5fd406-dbd1-11ee-b0db-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
                     "59935456-379a-11ef-9263-0242ac150006": {
+                      "label": "Director Sign Off Date",
                       "config":{
                         "maxDate":"today",
                         "label": "Director Sign Off Date"
