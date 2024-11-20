@@ -11,10 +11,21 @@ define([
   return ko.components.register('views/components/reports/scenes/all', {
     viewModel: function (params) {
       params.resourceid = params.resourceInstanceId;
+
+      // TODO: Tidy-up
+      if (params.resourceid === undefined) {
+        params.resourceid = params.report ? params.report.attributes.resourceid : undefined;
+      }
+
       params.pageVm = {
         plugin: { slug: 'ignore' }
       };
       SummaryStep.apply(this, [params]);
+
+      // TODO: Tidy-up
+      if (this.resourceid === undefined) {
+        this.resourceid = params.resourceid
+      }
 
       this.reportId = ko.observable(params.fullReportConfig.id);
       this.reportLabel = ko.observable(params.fullReportConfig.label);
