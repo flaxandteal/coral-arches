@@ -361,6 +361,7 @@
                   ],
                   "nodeOptions": {
                     "a1a755d0-d64c-11ee-8b04-0242ac180006": {
+                      "component": "user-to-model-select",
                       "allowInstanceCreation": false
                     },
                     "e8d511cc-d64c-11ee-8b04-0242ac180006": {
@@ -453,6 +454,7 @@
                   "semanticName": "Signed Off",
                   "nodeOptions": {
                     "6037c630-d646-11ee-8b04-0242ac180006": {
+                      "component": "user-to-model-select",
                       "allowInstanceCreation": false
                     }
                   }

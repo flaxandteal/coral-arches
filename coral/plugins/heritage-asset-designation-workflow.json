@@ -346,17 +346,39 @@
                   "semanticName": "Approvals",
                   "nodeOptions": {
                     "3b267ffe-dbd1-11ee-b0db-0242ac120006": {
-                      "allowInstanceCreation": false
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "f3f6ef61-9f63-4e11-b643-ee59390d08e7",
+                        "38161a54-6c5d-46e1-820c-f736c00f78bd",
+                        "5ff98b6a-526f-41ce-83d0-b93188d5b265"
+                      ]
                     },
                     "ad22dad6-dbd0-11ee-b0db-0242ac120006": {
-                      "allowInstanceCreation": false
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "f3f6ef61-9f63-4e11-b643-ee59390d08e7",
+                        "38161a54-6c5d-46e1-820c-f736c00f78bd",
+                        "5ff98b6a-526f-41ce-83d0-b93188d5b265"
+                      ]
                     },
                     "36b51a2b-baf3-4dc4-b714-08bc58fcaac8": {
+                       "config":{
+                         "maxDate":"today"
+                       }
+                     },
+                    "36b51a2b-2fad-45fb-9e93-088016aa0fc9": {
+                       "config":{
+                         "maxDate":"today"
+                       }
+                     },
+                    "0cd0998c-dbd6-11ee-b0db-0242ac120006": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
-                    "36b51a2b-2fad-45fb-9e93-088016aa0fc9": {
+                    "af5fd406-dbd1-11ee-b0db-0242ac120006": {
                       "config":{
                         "maxDate":"today"
                       }
@@ -366,7 +388,7 @@
                         "maxDate":"today"
                       }
                     },
-                    "0cd0998c-dbd6-11ee-b0db-0242ac120006": {
+                    "d70da550-3798-11ef-a167-0242ac150006": {
                       "config":{
                         "maxDate":"today"
                       }
@@ -383,16 +405,6 @@
                         "maxDate":"today",
                         "label": "Director Sign Off Date"
                       }
-                    },
-                    "17d822a9-4ef7-4ecd-8100-05c6ea9b41b2": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "d70da550-3798-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
                     }
                   }
                 },
@@ -401,6 +413,18 @@
                 "uniqueInstanceName": "78965eb2-7064-47aa-a65b-cecc9f05884f"
               }
             ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "letters-step",
+        "title": "Letters",
+        "required": false,
+        "saveWithoutProgressing": true,
+        "layoutSections": [
+          {
+            "componentConfigs": []
           }
         ],
         "workflowstepclass": "workflow-form-component"
@@ -434,18 +458,6 @@
                 "uniqueInstanceName": "ccd9d680-ed67-4981-89d9-064ee13ca19d"
               }
             ]
-          }
-        ],
-        "workflowstepclass": "workflow-form-component"
-      },
-      {
-        "name": "letters-step",
-        "title": "Letters",
-        "required": false,
-        "saveWithoutProgressing": true,
-        "layoutSections": [
-          {
-            "componentConfigs": []
           }
         ],
         "workflowstepclass": "workflow-form-component"
