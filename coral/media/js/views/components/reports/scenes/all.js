@@ -12,18 +12,25 @@ define([
 ], function (_, ko, arches, reportUtils, SummaryStep, resourceReportAbstract, ReportViewModel, allReportTemplate) {
   return ko.components.register('views/components/reports/scenes/all', {
     viewModel: function (params) {
-      params.report.template = {
-        "component": "reports/default",
-        "componentname": "default-report",
-        "defaultconfig": {},
-        "defaultconfig_json": "{}",
-        "description": "Default Template",
-        "name": "No Header Template",
-        "preload_resource_data": true,
-        "templateid": "50000000-0000-0000-0000-000000000001"
+      params.resourceid = params.resourceInstanceId;
+
+      // TODO: Tidy-up
+      if (params.resourceid === undefined) {
+        params.resourceid = params.report ? params.report.attributes.resourceid : undefined;
       }
 
-      ReportViewModel.apply(this, [params])
+      params.pageVm = {
+        plugin: { slug: 'ignore' }
+      };
+      SummaryStep.apply(this, [params]);
+
+      // TODO: Tidy-up
+      if (this.resourceid === undefined) {
+        this.resourceid = params.resourceid
+      }
+
+      this.reportId = ko.observable(params.fullReportConfig.id);
+      this.reportLabel = ko.observable(params.fullReportConfig.label);
 
       // this.report = ko.observable(params.report);
       // this.configForm = params.configForm;

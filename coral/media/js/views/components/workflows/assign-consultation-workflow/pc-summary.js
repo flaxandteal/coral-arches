@@ -33,7 +33,7 @@ define([
         renderNodeIds: [{ nodeId: '9d15ac44-c768-11ee-a945-0242ac180006', label: 'Reference' }]
       },
       difReceivedDate: {
-        label: 'DIF Received Date',
+        label: 'DfI Received Date',
         nodegroupId: '04492152-c769-11ee-82c4-0242ac180006',
         renderNodeIds: [{ nodeId: '04494bbe-c769-11ee-82c4-0242ac180006', label: 'Date' }]
       },

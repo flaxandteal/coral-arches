@@ -110,7 +110,7 @@
                   "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba"
                 },
                 "tilesManaged": "many",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "e0da378f-ea20-44d7-8d8a-05b46f8d54c0"
               },
               {
@@ -147,10 +147,22 @@
                   "hiddenNodes": [
                     "ba345579-b554-11ea-9232-f875a44e0e11"
                   ],
-                  "nodegroupid": "ba342e69-b554-11ea-a027-f875a44e0e11"
+                  "nodegroupid": "ba342e69-b554-11ea-a027-f875a44e0e11",
+                  "nodeOptions": {
+                    "ba345577-b554-11ea-a9ee-f875a44e0e11": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "ba34557b-b554-11ea-ab95-f875a44e0e11": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "cf509aa4-8caa-4362-bce4-444d434be934"
               }
             ]

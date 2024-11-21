@@ -83,8 +83,29 @@
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
                   "nodegroupid": "c43324d0-5329-11ef-9337-0242ac120006",
                   "semanticName": "Assessments",
-                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
-
+                  "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
+                  "nodeOptions":{
+                    "e5c8e976-532a-11ef-9d2a-0242ac120006": {
+                      "node":{
+                        "isrequired": true
+                      }
+                    },
+                    "918ac3e8-532a-11ef-9337-0242ac120006": {
+                      "node":{
+                        "isrequired": true
+                      }
+                    },
+                    "8ef1921e-532b-11ef-9d2a-0242ac120006": {
+                      "node":{
+                        "isrequired": true
+                      }
+                    },
+                    "e5d079bc-5329-11ef-9d2a-0242ac120006": {
+                      "node":{
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
