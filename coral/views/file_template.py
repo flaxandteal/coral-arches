@@ -226,6 +226,14 @@ class FileTemplateView(View):
             "78533d33-e712-48ee-ab4c-6bdc9f0ca51d": {
                 "filename": "extension-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
+            },
+            "bb6e23cf-0331-ea39-7164-a3af1607a958": {
+                "filename": "advance-listing-letter-to-owner-occupier.docx",
+                "provider": GenericTemplateProvider,
+            },
+            "95456a6b-30e0-b727-91f9-ccc0acfcac87": {
+                "filename": "advance-listing-letter-to-council.docx",
+                "provider": GenericTemplateProvider,
             }
         }
         for key, value in list(template_dict.items()):
