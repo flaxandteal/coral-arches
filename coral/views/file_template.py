@@ -47,182 +47,7 @@ from arches_orm.wkrm import get_well_known_resource_model_by_graph_id
 import pytz
 from django.core.files.storage import  default_storage
 
-class GraphTemplateView(View):
-    def __init__(self):
-        self.doc = None
-        self.resource = None
-
-    def get(self, request):
-        """
-            @params
-            request: {
-                parenttile_id: UUID
-            }
-            Checks the parenttile for Digital Object files then creates a download url for the file.
-        """
-        parenttile_id = request.GET.get("parenttile_id")
-        parent_tile = Tile.objects.get(tileid=parenttile_id)
-        letter_tiles = Tile.objects.filter(parenttile=parent_tile)
-        file_list_node_id = "96f8830a-8490-11ea-9aba-f875a44e0e11"  # Digital Object
-        url = None
-        for tile in letter_tiles:
-            if url is not None:
-                break
-            for data_obj in tile.data[file_list_node_id]:
-                if data_obj["status"] == "uploaded":
-                    url = data_obj["url"]
-                    break
-
-        if url is not None:
-            return JSONResponse({"msg": "success", "download": url})
-        return HttpResponseNotFound("No letters tile matching query by parent tile")
-
-    def post(self, request):
-        """
-            @params
-            request: {
-                body: {
-                    
-                }
-                POST: {
-                    template_id: UUID
-                    resourceinstance_id: UUID
-                }
-            }
-        """
-        data = json.loads(request.body.decode("utf-8"))
-        parenttile_id = request.POST.get("parenttile_id")
-        transaction_id = request.POST.get("transaction_id", uuid.uuid1())
-        template_id = request.POST.get("template_id", data.get("template_id", None))
-        resourceinstance_id = request.POST.get("resourceinstance_id", data.get("resourceinstance_id", None))
-
-        self.resource = Resource.objects.get(resourceinstanceid=resourceinstance_id)
-        self.resource.load_tiles()
-
-        if (os.path.exists(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx")) is False):
-            os.mkdir(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx"))
-
-        fs = default_storage
-        template_dict = self.get_template_path(template_id)
-        template_path = None
-        filesystem_class = default_storage.__class__.__name__
-        if filesystem_class == 'S3Boto3Storage':
-            template_path = os.path.join(
-                "docx", template_dict["filename"]
-            )
-        elif filesystem_class == 'FileSystemStorage':
-            template_path = os.path.join(
-                settings.APP_ROOT, "docx", template_dict["filename"]
-            )
-
-        try:
-            self.doc = Document(fs.open(template_path))
-        except:
-            return HttpResponseNotFound("No Template Found")
-
-        self.edit_letter(self.resource, template_dict["provider"])
-
-        timezone = pytz.timezone("Europe/London") 
-        current_datetime = datetime.now(timezone)
-        # Date and time as "DD-MM-YYYY-HH-MM"
-        formatted_datetime = current_datetime.strftime("%d-%m-%Y-%H-%M")
-
-        new_file_name = formatted_datetime + "_" + template_dict["filename"]
-        new_file_path = os.path.join(
-            settings.APP_ROOT, "uploadedfiles/docx", new_file_name
-        )
-
-        new_req = HttpRequest()
-        new_req.method = "POST"
-        new_req.user = request.user
-        new_req.POST["data"] = None
-        host = request.get_host()
-
-        self.doc.save(new_file_path)
-        saved_file = open(new_file_path, "rb")
-        stat = os.stat(new_file_path)
-        file_data = UploadedFile(saved_file)
-
-        file_list_node_id = "96f8830a-8490-11ea-9aba-f875a44e0e11"  # Digital Object
-
-        tile = json.dumps(
-            {
-                "tileid": None,
-                "data": {
-                    file_list_node_id: [
-                        {
-                            "name": new_file_name,
-                            "accepted": True,
-                            "height": 0,
-                            "lastModified": stat.st_mtime,
-                            "size": stat.st_size,
-                            "status": "queued",
-                            "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                            "width": 0,
-                            "url": None,
-                            "file_id": None,
-                            "index": 0,
-                            "content": "blob:" + host + "/{0}".format(uuid.uuid4()),
-                        }
-                    ]
-                },
-                "nodegroup_id": "7db68c6c-8490-11ea-a543-f875a44e0e11",
-                "parenttile_id": None,
-                "resourceinstance_id": "",
-                "sortorder": 0,
-                "tiles": {},
-            }
-        )
-
-        new_req = HttpRequest()
-        new_req.method = "POST"
-        new_req.user = request.user
-        new_req.POST["data"] = tile
-        new_req.POST["transaction_id"] = transaction_id
-        new_req.FILES["file-list_" + file_list_node_id] = file_data
-        new_tile = TileData()
-        new_tile.action = "update_tile"
-
-        response = TileData.post(new_tile, new_req)
-        if response.status_code == 200:
-            tile = json.loads(response.content)
-            return JSONResponse({"tile": tile, "status": "success"})
-
-        return HttpResponseNotFound(response.status_code)
-
-
-
-    def edit_letter(self, resource, provider):
-        mapping_dict = provider(resource).get_mapping()
-        self.apply_mapping(mapping_dict)
-
-    def apply_mapping(self, mapping):
-        htmlTags = re.compile(r"<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
-        for key in mapping:
-            html = False
-            if htmlTags.search(mapping[key] if mapping[key] is not None else ""):
-                html = True
-            self.replace_string(self.doc, key, mapping[key], html)
-
-
-    def save(self, tile, request, context=None):
-        raise NotImplementedError
-
-
-    def post_save(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def delete(self, tile, request):
-        raise NotImplementedError
-
-    def on_import(self, tile):
-        raise NotImplementedError
-
-
-    def after_function_save(self, tile, request):
-        raise NotImplementedError
-
-    
+   
 class FileTemplateView(View):
     def __init__(self):
         self.doc = None
@@ -249,6 +74,7 @@ class FileTemplateView(View):
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
+        config = request.POST.get("config", data.get("config", None))
         parenttile_id = request.POST.get("parenttile_id")
         resourceinstance_id = request.POST.get(
             "resourceinstance_id", data.get("resourceinstance_id", None)
@@ -281,7 +107,7 @@ class FileTemplateView(View):
         except:
             return HttpResponseNotFound("No Template Found")
 
-        self.edit_letter(self.resource, template_dict["provider"])
+        self.edit_letter(self.resource, template_dict["provider"], config)
 
         timezone = pytz.timezone("Europe/London") 
         current_datetime = datetime.now(timezone)
@@ -349,6 +175,23 @@ class FileTemplateView(View):
             return JSONResponse({"tile": tile, "status": "success"})
 
         return HttpResponseNotFound(response.status_code)
+
+    def save(self, tile, request, context=None):
+        raise NotImplementedError
+
+
+    def post_save(self, *args, **kwargs):
+        raise NotImplementedError
+
+    def delete(self, tile, request):
+        raise NotImplementedError
+
+    def on_import(self, tile):
+        raise NotImplementedError
+
+
+    def after_function_save(self, tile, request):
+        raise NotImplementedError
 
     def get_template_path(self, template_id):
         template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
@@ -387,8 +230,8 @@ class FileTemplateView(View):
 
         return None
 
-    def edit_letter(self, resource, provider):
-        mapping_dict = provider(resource).get_mapping()
+    def edit_letter(self, resource, provider, config):
+        mapping_dict = provider(resource).get_mapping(config)
         self.apply_mapping(mapping_dict)
 
     def apply_mapping(self, mapping):
@@ -488,8 +331,8 @@ class GenericTemplateProvider:
             raise f"Resource ID ({resource_id}) does not exist"
         return resource
 
-    def get_mapping(self):
-        inner_self = vars(self)
+    def get_mapping(self, config):
+        # inner_self = vars(self)
         """
         inner_self {'resource_instance': <Resource: Resource object (4c1ba629-208f-4e79-8b0a-b2948b5fc7d5)>,
          'datatype_factory': <arches.app.datatypes.datatypes.DataTypeFactory object at 0x7f8b0b468490>,
@@ -500,17 +343,30 @@ class GenericTemplateProvider:
          <TileModel: TileModel object (2fd0794f-95ce-4b97-85a8-63f0c4181190)>,
          <TileModel: TileModel object (e4eeec38-1a17-431f-bf31-ef3feb9ab66c)>]}
         """
-
+        if config:
+        
         # wkrm
         wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
 
         # wkri
         resource = wkrm.find(self.resource_instance.resourceinstanceid)
 
+        def extract_from_related_resource(prefix, datum):
+            # TODO related instance logic
+            mapping = extract(list(datum.items()))
+            processed_mapping = processDatatypes(mapping)
+            processed_items = {}
+            for processed_item in processed_mapping.items():
+                processed_items[f"{prefix}__{processed_item[0]}"] = processed_item[1]
+            return processed_items
+
         def processDatatypes(mapping):
             for item in mapping.items():
+                # if not isinstance(item[0], str):
+                #     continue
+
                 value = item[1]
-                print("ITEM CHECK", item[0], item[1])
+
                 if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
                     for node in value:
                         mapping = mapping | extract(list(node.items()))
@@ -520,11 +376,15 @@ class GenericTemplateProvider:
                     mapping[item[0]] = None
 
                 if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
-                    # TODO related instance logic
-                    resource_list = []
-                    for datum in item[1].data:
-                        resource_list.append(str(datum))
-                    mapping[item[0]] = resource_list
+                    if item[0] in config["expand"]:
+                        for datum in item[1]:
+                            mapping = mapping | extract_from_related_resource(item[0], datum)
+                            mapping[item[0]] = str(datum)
+                    else:
+                        resource_list = []
+                        for datum in item[1].data:
+                            resource_list.append(str(datum))
+                        mapping[item[0]] = resource_list
 
                 if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
                     concept_list = []
@@ -533,11 +393,18 @@ class GenericTemplateProvider:
                     mapping[item[0]] = concept_list
 
                 if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
-                    print(item[0], value, str(value))
-                    print("hello")
                     mapping[item[0]] = str(value)
-            return mapping
 
+                if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
+                    # mapping = mapping | extract([item])
+                    dicted_value = {}
+                    for key in list(value.keys()):
+                        if key:
+                            dicted_value[key] = value[key]
+
+                    mapping = mapping | extract(list(dicted_value.items()))
+                    mapping[item[0]] = None
+            return mapping
 
         def extract(loop_list):
             children_present = True
@@ -546,52 +413,19 @@ class GenericTemplateProvider:
                 newloop = []
                 found_semantic = False
                 for item in loop_list:
-                    print("LOOP CHECK", item[0], item[1], type(item[1]))
-                    try:
-                        newloop += item[1].items()
-                        found_semantic = True
-                    except:
-                        segment = {item[0] : item[1]}
-                        value_map = value_map | processDatatypes(segment)
-                    loop_list = newloop
-                    children_present = found_semantic
+                    if isinstance(item[0], str):
+                        try:
+                            newloop += item[1].items()
+                            found_semantic = True
+                        except:
+                            segment = {item[0] : item[1]}
+                            value_map = value_map | processDatatypes(segment)
+                        loop_list = newloop
+                        children_present = found_semantic
             return value_map
 
         # resource.items() is Semantic Node List
-        mapping = extract(list(resource.items()))
-
-
-
-        # for item in mapping.items():
-        #     value = item[1]
-        #     print("ITEM CHECK", item[0], item[1])
-        #     if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
-        #         for node in value:
-        #             mapping = mapping | extract(list(node.items()))
-        #         mapping[item[0]] = None
-
-        #     if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel)):
-        #         mapping[item[0]] = None
-
-        #     if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
-        #         # TODO related instance logic
-        #         resource_list = []
-        #         for datum in item[1].data:
-        #             resource_list.append(str(datum))
-        #         mapping[item[0]] = resource_list
-
-        #     if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
-        #         concept_list = []
-        #         for datum in item[1].data:
-        #             concept_list.append(str(datum))
-        #         mapping[item[0]] = concept_list
-            
-        #     if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
-        #         print(item[0], value, str(value))
-        #         print("hello")
-        #         mapping[item[0]] = str(value)
-
-            
+        mapping = extract(list(resource.items()))            
 
         return processDatatypes(mapping)
 
