@@ -344,7 +344,7 @@ class GenericTemplateProvider:
          <TileModel: TileModel object (e4eeec38-1a17-431f-bf31-ef3feb9ab66c)>]}
         """
         if not config:
-            config = {"expand": []}
+            config = {}
         
         # wkrm
         wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
@@ -374,7 +374,7 @@ class GenericTemplateProvider:
                     mapping[item[0]] = None
 
                 if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
-                    if item[0] in config["expand"]:
+                    if "expand" in config and item[0] in config["expand"]:
                         for datum in item[1]:
                             mapping = mapping | extract_from_related_resource(item[0], datum)
                             mapping[item[0]] = str(datum)
@@ -400,6 +400,12 @@ class GenericTemplateProvider:
                             dicted_value[key] = value[key]
                     mapping = mapping | extract(list(dicted_value.items()))
                     mapping[item[0]] = None
+
+                if isinstance(value, str) and not isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel, arches_orm.view_models.concepts.ConceptValueViewModel, arches_orm.view_models.string.StringViewModel)):
+                    try:
+                        mapping[item[0]] = datetime.fromisoformat(item[1]).strftime("%d/%m/%Y")
+                    except Exception as e:
+                        pass
             return mapping
 
         def extract(loop_list):
@@ -421,7 +427,13 @@ class GenericTemplateProvider:
             return value_map
 
         # resource.items() is Semantic Node List
-        mapping = extract(list(resource.items()))            
+        mapping = extract(list(resource.items()))     
+        
+        if "special" in config:
+            for special_case in config["special"].items():
+                if special_case[1] == 'today':
+                    mapping[special_case[0]] = datetime.today().strftime("%d/%m/%Y")
+
 
         return processDatatypes(mapping)
 
@@ -488,7 +500,6 @@ class MonumentTemplateProvider:
         }
 
     def get_value_from_tile(self, tile, node_id):
-
         current_node = models.Node.objects.get(nodeid=node_id)
         datatype = self.datatype_factory.get_instance(current_node.datatype)
         returnvalue = datatype.get_display_value(tile, current_node)
