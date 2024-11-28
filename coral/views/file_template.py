@@ -343,7 +343,8 @@ class GenericTemplateProvider:
          <TileModel: TileModel object (2fd0794f-95ce-4b97-85a8-63f0c4181190)>,
          <TileModel: TileModel object (e4eeec38-1a17-431f-bf31-ef3feb9ab66c)>]}
         """
-        if config:
+        if not config:
+            config = {"expand": []}
         
         # wkrm
         wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
@@ -362,14 +363,11 @@ class GenericTemplateProvider:
 
         def processDatatypes(mapping):
             for item in mapping.items():
-                # if not isinstance(item[0], str):
-                #     continue
-
                 value = item[1]
-
                 if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
                     for node in value:
-                        mapping = mapping | extract(list(node.items()))
+                        if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
+                            mapping = mapping | extract(list(node.items()))
                     mapping[item[0]] = None
 
                 if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel)):
@@ -396,12 +394,10 @@ class GenericTemplateProvider:
                     mapping[item[0]] = str(value)
 
                 if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
-                    # mapping = mapping | extract([item])
                     dicted_value = {}
                     for key in list(value.keys()):
                         if key:
                             dicted_value[key] = value[key]
-
                     mapping = mapping | extract(list(dicted_value.items()))
                     mapping[item[0]] = None
             return mapping
