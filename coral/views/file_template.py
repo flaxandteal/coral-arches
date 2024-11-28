@@ -42,7 +42,8 @@ from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
-import arches_orm.models as model
+import arches_orm
+from arches_orm.wkrm import get_well_known_resource_model_by_graph_id
 import pytz
 from django.core.files.storage import  default_storage
 
@@ -89,7 +90,6 @@ class GraphTemplateView(View):
                 }
             }
         """
-        print("TEMPLATE-DEBUG---------", request.__dict__, file=sys.stderr)
         data = json.loads(request.body.decode("utf-8"))
         parenttile_id = request.POST.get("parenttile_id")
         transaction_id = request.POST.get("transaction_id", uuid.uuid1())
@@ -249,7 +249,6 @@ class FileTemplateView(View):
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
-        print("temple id", template_id)
         parenttile_id = request.POST.get("parenttile_id")
         resourceinstance_id = request.POST.get(
             "resourceinstance_id", data.get("resourceinstance_id", None)
@@ -266,7 +265,6 @@ class FileTemplateView(View):
 
         fs = default_storage
         template_dict = self.get_template_path(template_id)
-        print("temple dict", template_dict)
         template_path = None
         filesystem_class = default_storage.__class__.__name__
         if filesystem_class == 'S3Boto3Storage':
@@ -367,7 +365,7 @@ class FileTemplateView(View):
                 "provider": GenericTemplateProvider
             },
             "b777ebb6-7ab6-4de3-9825-f8564928eee8" : {
-                "filename": "licence-covering-letter.docx",
+                "filename": "licence-test-letter.docx", # previously licence covering letter
                 "provider": GenericTemplateProvider
             },
             "f86784f0-0c94-4427-bcba-4dd222461e30": {
@@ -396,6 +394,10 @@ class FileTemplateView(View):
     def apply_mapping(self, mapping):
         htmlTags = re.compile(r"<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
         for key in mapping:
+            if (isinstance(mapping[key], (arches_orm.view_models.concepts.EmptyConceptValueViewModel))):
+                mapping[key] = None
+            if (isinstance(mapping[key], (list, bool))):
+                mapping[key] = str(mapping[key])
             html = False
             if htmlTags.search(mapping[key] if mapping[key] is not None else ""):
                 html = True
@@ -478,23 +480,121 @@ class GenericTemplateProvider:
         return "" if returnvalue is None else returnvalue
     
     def get_resource(self, resource_id):
-        print("GENERIC LETTERS: RESOURCE")
         resource = None
         try:
             resource = Resource.objects.filter(pk=resource_id).first()
-            print(resource)
-            pprint(vars(resource))
             
         except Resource.DoesNotExist:
             raise f"Resource ID ({resource_id}) does not exist"
         return resource
 
     def get_mapping(self):
-        print("GENERIC LETTERS: GET_MAPPING")
         inner_self = vars(self)
-        pprint("inner_self", inner_self)
-        inner_inner_self = vars(inner_self)
-        pprint("inner_inner_self", inner_inner_self)
+        """
+        inner_self {'resource_instance': <Resource: Resource object (4c1ba629-208f-4e79-8b0a-b2948b5fc7d5)>,
+         'datatype_factory': <arches.app.datatypes.datatypes.DataTypeFactory object at 0x7f8b0b468490>,
+         'tiles': [<TileModel: TileModel object (1bf4e268-273d-43b9-8798-59a1ed8b3a4d)>,
+         <TileModel: TileModel object (4f15dd28-1adf-49ee-b637-606fd2629702)>,
+         <TileModel: TileModel object (12ee433f-a4a0-4754-9637-c1ffa98e8346)>,
+         <TileModel: TileModel object (e17f7ac3-7ece-4010-b8b6-2586f574ad15)>,
+         <TileModel: TileModel object (2fd0794f-95ce-4b97-85a8-63f0c4181190)>,
+         <TileModel: TileModel object (e4eeec38-1a17-431f-bf31-ef3feb9ab66c)>]}
+        """
+
+        # wkrm
+        wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
+
+        # wkri
+        resource = wkrm.find(self.resource_instance.resourceinstanceid)
+
+        def processDatatypes(mapping):
+            for item in mapping.items():
+                value = item[1]
+                print("ITEM CHECK", item[0], item[1])
+                if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
+                    for node in value:
+                        mapping = mapping | extract(list(node.items()))
+                    mapping[item[0]] = None
+
+                if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel)):
+                    mapping[item[0]] = None
+
+                if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
+                    # TODO related instance logic
+                    resource_list = []
+                    for datum in item[1].data:
+                        resource_list.append(str(datum))
+                    mapping[item[0]] = resource_list
+
+                if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
+                    concept_list = []
+                    for datum in item[1].data:
+                        concept_list.append(str(datum))
+                    mapping[item[0]] = concept_list
+
+                if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
+                    print(item[0], value, str(value))
+                    print("hello")
+                    mapping[item[0]] = str(value)
+            return mapping
+
+
+        def extract(loop_list):
+            children_present = True
+            value_map = {}
+            while children_present:
+                newloop = []
+                found_semantic = False
+                for item in loop_list:
+                    print("LOOP CHECK", item[0], item[1], type(item[1]))
+                    try:
+                        newloop += item[1].items()
+                        found_semantic = True
+                    except:
+                        segment = {item[0] : item[1]}
+                        value_map = value_map | processDatatypes(segment)
+                    loop_list = newloop
+                    children_present = found_semantic
+            return value_map
+
+        # resource.items() is Semantic Node List
+        mapping = extract(list(resource.items()))
+
+
+
+        # for item in mapping.items():
+        #     value = item[1]
+        #     print("ITEM CHECK", item[0], item[1])
+        #     if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
+        #         for node in value:
+        #             mapping = mapping | extract(list(node.items()))
+        #         mapping[item[0]] = None
+
+        #     if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel)):
+        #         mapping[item[0]] = None
+
+        #     if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
+        #         # TODO related instance logic
+        #         resource_list = []
+        #         for datum in item[1].data:
+        #             resource_list.append(str(datum))
+        #         mapping[item[0]] = resource_list
+
+        #     if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
+        #         concept_list = []
+        #         for datum in item[1].data:
+        #             concept_list.append(str(datum))
+        #         mapping[item[0]] = concept_list
+            
+        #     if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
+        #         print(item[0], value, str(value))
+        #         print("hello")
+        #         mapping[item[0]] = str(value)
+
+            
+
+        return processDatatypes(mapping)
+
 
 
 class MonumentTemplateProvider:
@@ -1299,7 +1399,6 @@ class LicenceTemplateProvider:
                        self.mapping["Location Description"] = self.get_value_from_tile(
                            activity_tile, self.ACTIVITY_LOCATION_DESCRIPTION_NODE
                        )
-        print(self.mapping)
         return self.mapping
 
 class DocumentHTMLParser(HTMLParser):
