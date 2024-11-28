@@ -41,6 +41,9 @@ define([
     this.selectedLetterType = ko.observable();
     this.uploadedFiles = ko.observableArray();
 
+    if(!ko.isObservable(this.tile.data[this.LETTER_TYPE_NODE])){
+      this.tile.data[this.LETTER_TYPE_NODE] = ko.observable(this.tile.data[this.LETTER_TYPE_NODE]);
+    }
     this.tile.data[this.LETTER_TYPE_NODE].subscribe((value) => {
       this.selectedLetterType(value);
     }, this);
