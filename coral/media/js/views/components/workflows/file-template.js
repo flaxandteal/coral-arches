@@ -53,7 +53,8 @@ define([
           url: arches.urls.root + 'filetemplate',
           data: JSON.stringify({
             resourceinstance_id: params.resourceid,
-            template_id: this.selectedLetterType()
+            template_id: this.selectedLetterType(),
+            config: params.config
           }),
           context: this,
           success: async (responseText, status, response) => {
