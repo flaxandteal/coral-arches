@@ -208,7 +208,7 @@ class FileTemplateView(View):
                 "provider": GenericTemplateProvider
             },
             "b777ebb6-7ab6-4de3-9825-f8564928eee8" : {
-                "filename": "licence-test-letter.docx", # previously licence covering letter
+                "filename": "licence-test-letter.docx",
                 "provider": GenericTemplateProvider
             },
             "f86784f0-0c94-4427-bcba-4dd222461e30": {
