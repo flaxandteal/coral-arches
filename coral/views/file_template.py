@@ -320,6 +320,7 @@ def validate_uuid_string(uuid_string: str) -> UUIDString:
     except ValueError:
         return False
     return str(uuid_obj) == uuid_string
+RelatedResource = NewType("RelatedResource", arches_orm.view_models.node_list.NodeListViewModel)
 
 class GenericTemplateProvider:
     def __init__(self, resource_instance: Resource):
@@ -329,18 +330,29 @@ class GenericTemplateProvider:
         # self.tiles not currently used and might need removed
         self.tiles = resource_instance.tiles
 
-    def get_value_from_tile(self, tile:Tile, node_id:UUIDString):
-        """
+    # Legacy, not in use
+    def get_value_from_tile(self, tile:Tile, node_id:UUIDString) -> Any:
+        """Obtain tile values (Legacy, not in use)
+
             @param Tile: any tile object
+
             @param node_id: the target node
-            @return value or empty string
+
+            @return Any: tile value or empty string
         """
         current_node = models.Node.objects.get(nodeid=node_id)
         datatype = self.datatype_factory.get_instance(current_node.datatype)
         returnvalue = datatype.get_display_value(tile, current_node)
         return "" if returnvalue is None else returnvalue
     
-    def get_resource(self, resource_id):
+    # Legacy, not in use
+    def get_resource(self, resource_id:UUIDString) -> Resource:
+        """ Obtain resource from id
+
+            @param resourceinstanceid: uuid for the resource instance
+
+            @return Resource: an instance of arches.app.models.resource.Resource
+        """
         resource = None
         try:
             resource = Resource.objects.filter(pk=resource_id).first()
@@ -349,30 +361,40 @@ class GenericTemplateProvider:
             raise f"Resource ID ({resource_id}) does not exist"
         return resource
     
-    def extract(self, loop_list):
+    def extract(self, node_list) -> Mapping:
+        """Drill down a Semantic Node List to obtain actual values
+
+            @param node_list: 
+            
+            @return Mapping: a mapping with actual values
+        """
         children_present = True
-        value_map = {}
+        mapping = {}
         while children_present:
             newloop = []
             found_semantic = False
-            for item in loop_list:
+            for item in node_list:
                 if isinstance(item[0], str):
                     try:
                         newloop += item[1].items()
                         found_semantic = True
                     except:
                         segment = {item[0] : item[1]}
-                        value_map = value_map | self.processDatatypes(segment)
-                    loop_list = newloop
+                        mapping = mapping | self.processDatatypes(segment)
+                    node_list = newloop
                     children_present = found_semantic
-        return value_map
+        return mapping
     
-    def extract_from_related_resource(self, prefix:Alias, datum):
-        """
+    def extract_from_related_resource(self, prefix:Alias, related_resource:RelatedResource) -> Mapping:
+        """Process values from a related resource's node list
+        
             @param prefix: the alias for the related resource will be prefixed
-            @paran datum:
+
+            @param related_resource: a node_list from a related resource
+
+            @return processed_items: a partially processed Mapping
         """
-        mapping = self.extract(list(datum.items()))
+        mapping = self.extract(list(related_resource.items()))
         processed_mapping = self.processDatatypes(mapping)
         processed_items = {}
         for processed_item in processed_mapping.items():
@@ -380,14 +402,22 @@ class GenericTemplateProvider:
         return processed_items
 
     def get_mapping(self, config={}) -> Mapping:
-        """
+        """Creates a mapping for the template engine from the resource instance.
+
             @param self: must contain resource_instance:Resource
+
             @param config?: Dict[str:str]
-            common config options include
+
+            common config options:
+
             'include': List[Alias] # if present only specified aliases will have their values mapped
+
             'exclude': List[Alias] # if present all nodes apart from listed aliases will have their values mapped
+
             'expand': List[Alias(related resource)] # related resources which should have their values included to the mapping
+
             'special': Dict[str: List[str]] # The key will be added as an alias, the value determines the mapping value. value[0] determines the function to be used additional strings are paramaters. 
+
                 @example special: {'todays_date': ['make_date', 'today']} # adds 'todays_date' as an alias and uses the make_date function to create today's date
         """
         self.config = config
@@ -398,8 +428,16 @@ class GenericTemplateProvider:
         # wkri
         resource = wkrm.find(self.resource_instance.resourceinstanceid)
 
-        # resource.items() is Semantic Node List
-        mapping = self.extract(list(resource.items()))   
+        # Semantic Node List
+        semantic_node_list = list(resource.items())
+        
+        if "include" in self.config:
+             semantic_node_list = [item for item in semantic_node_list if item[0] in self.config['include']]
+            
+        if "exclude" in self.config:
+             semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
+
+        mapping = self.extract(semantic_node_list)  
         if "special" in self.config:
             for special_case in self.config["special"].items():
                 if special_case[1] == 'today':
@@ -407,59 +445,79 @@ class GenericTemplateProvider:
 
         return self.processDatatypes(mapping)
 
+    def processDatatypes(self, mapping:Mapping) -> Mapping:
+        """Provides the logic for extracting a node lists's values for different datatypes.
 
+            @param mapping: An unprocessed Mapping
 
-    def processDatatypes(self, mapping):
+            @return mapping: A processed Mapping with values stringified
+        """
         for item in mapping.items():
-            value = item[1]
+            alias, value = item
+
             if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
                 for node in value:
                     if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
                         mapping = mapping | self.extract(list(node.items()))
-                mapping[item[0]] = None
-            if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel)):
-                mapping[item[0]] = None
+                # TODO handle node lists that are not semantic e.g bibligraphic source is a resource-instance but has children. Currently we ignore the children 
+                mapping[alias] = None
+                continue
+            if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel, arches_orm.arches_django.datatypes.user.UserViewModel)):
+                mapping[alias] = None
+                continue
             if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
-                if "expand" in self.config and item[0] in self.config["expand"]:
-                    for datum in item[1]:
-                        mapping = mapping | self.extract_from_related_resource(item[0], datum)
-                        mapping[item[0]] = str(datum)
+                if "expand" in self.config and alias in self.config["expand"] and len(value) > 0:
+                    for related_resource in value:
+                        mapping = mapping | self.extract_from_related_resource(alias, related_resource)
+                        mapping[alias] = str(related_resource)
                 else:
                     resource_list = []
-                    for datum in item[1].data:
-                        resource_list.append(str(datum))
-                    mapping[item[0]] = resource_list
+                    for related_resource in value.data:
+                        resource_list.append(str(related_resource))
+                    mapping[alias] = resource_list
+                continue
             if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
                 concept_list = []
-                for datum in item[1].data:
+                for datum in value.data:
                     concept_list.append(str(datum))
-                mapping[item[0]] = concept_list
+                mapping[alias] = concept_list
+                continue
             if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
-                mapping[item[0]] = str(value)
-            
-            if isinstance(value, arches_orm.arches_django.datatypes.user.UserViewModel):
-                 mapping[item[0]] = None
-
+                mapping[alias] = str(value)
+                continue
             if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
                 dicted_value = {}
                 for key in list(value.keys()):
                     if key:
                         dicted_value[key] = value[key]
                 mapping = mapping | self.extract(list(dicted_value.items()))
-                mapping[item[0]] = None
+                mapping[alias] = None
+                continue
             if isinstance(value, str) and not isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel, arches_orm.view_models.concepts.ConceptValueViewModel, arches_orm.view_models.string.StringViewModel)):
+                # Arches ORM doesn't seem to have date datatype
                 try:
-                    mapping[item[0]] = datetime.fromisoformat(item[1]).strftime("%d/%m/%Y")
+                    mapping[alias] = datetime.fromisoformat(value).strftime("%d/%m/%Y")
                 except Exception as e:
                     pass
+
+                # Arches ORM doesn't seem to have domain-value datatype
+                if validate_uuid_string(value):
+                     #TODO check only domain-value datatypes are present and make domain logic
+                     pass
+                continue
+                
         return mapping
+    
+    # not in use but probably a more reusable way of creating special cases
+    def make_date(self, operator:str, mapping:Mapping, alias:Alias, vars=None):
+         if operator == 'today':
+              mapping[alias] = datetime.today().strftime("%d/%m/%Y")
+         elif operator == 'delta':
+              delta = datetime.timedelta(days=vars.days, months=vars.months, years=vars.years)
+              mapping[alias] = datetime.today()+delta.strftime("%d/%m/%Y")
+         pass
 
             
-        
-        
-
-
-
 class MonumentTemplateProvider:
     MONUMENT_NAME_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11'
     MONUMENT_NAME_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11'
