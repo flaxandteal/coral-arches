@@ -68,10 +68,21 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
-                  "semanticName": "Related Monuments and Areas"
+                  "semanticName": "Related Monuments and Areas",
+                  "nodeOptions": {
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
+                      "allowInstanceCreation": false,
+                      "searchString": "advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]",
+                      "config": {
+                        "label": "HB",
+                        "searchString": "advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
+                      }
+
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "f15ca0ea-0878-4ab6-a80c-b6a570b1b380"
               },
               {
