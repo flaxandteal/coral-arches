@@ -350,7 +350,12 @@
                   "semanticName": "Correspondence",
                   "letterMetatype": "d17bbda2-ad90-11ef-a1bd-0242ac140006",
                   "letterTypeNode": "51f2fcd0-ad90-11ef-a1bd-0242ac140006",
-                  "letterResourceNode": "25f41196-ad90-11ef-a1bd-0242ac140006"
+                  "letterResourceNode": "25f41196-ad90-11ef-a1bd-0242ac140006",
+                  "config": {
+                    "special": {
+                      "today": "today"
+                    }
+                  }
                 },
                 "noTileSidebar": true,
                 "tilesManaged": "many",
