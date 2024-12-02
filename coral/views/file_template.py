@@ -210,22 +210,31 @@ class FileTemplateView(View):
                 "filename": "smc-refusal-template.docx",
                 "provider": GenericTemplateProvider
             },
-            "b777ebb6-7ab6-4de3-9825-f8564928eee8" : {
-                "filename": "licence-test-letter.docx",
+            "64865b40-1ab8-d59e-aacf-668b077f0e9a" : {
+                "filename": "licence-cover-letter.docx",
                 "provider": GenericTemplateProvider
             },
-            "f86784f0-0c94-4427-bcba-4dd222461e30": {
+            "e3a1469c-ae0e-7a59-2e25-09c036647e89": {
                 "filename": "final-report-letter.docx",
                 "provider": GenericTemplateProvider,
             },
-            "c9b643bd-2d28-4c91-9d2e-7e861ed34f0f": {
+            "a346c0f8-7be6-4a7c-da2c-aef42b02ee26": {
                 "filename": "extra-name-on-letter.docx",
                 "provider": GenericTemplateProvider,
             },
-            "78533d33-e712-48ee-ab4c-6bdc9f0ca51d": {
+            "28e3fbdd-8dc8-4fb9-e378-91df6776e065": {
                 "filename": "extension-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
-            }
+            },
+            "28faad65-2403-b0b9-3ba8-bbbc99efd175": {
+                "filename": "overdue-excavations-report-letter.docx",
+                "provider": GenericTemplateProvider,
+            },
+            "f08c5baf-4434-ac59-a02c-e692ae79d455": {
+                "filename": "transfer-of-licence-letter.docx",
+                "provider": GenericTemplateProvider,
+            },
+
         }
         for key, value in list(template_dict.items()):
             if key == template_id:

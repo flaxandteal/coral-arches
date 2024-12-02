@@ -7834,41 +7834,9 @@
                 {
                     "alias": "letter_type",
                     "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "b777ebb6-7ab6-4de3-9825-f8564928eee8",
-                                "selected": false,
-                                "text": {
-                                    "en": "Licence Cover Letter"
-                                }
-                            },
-                            {
-                                "id": "f86784f0-0c94-4427-bcba-4dd222461e30",
-                                "selected": false,
-                                "text": {
-                                    "en": "Final Report Letter"
-                                }
-                            },
-                            {
-                                "id": "c9b643bd-2d28-4c91-9d2e-7e861ed34f0f",
-                                "selected": false,
-                                "text": {
-                                    "en": "Extra Name on Licence Letter"
-                                }
-                            },
-                            {
-                                "id": "78533d33-e712-48ee-ab4c-6bdc9f0ca51d",
-                                "selected": false,
-                                "text": {
-                                    "en": "Extension of Licence Letter"
-                                }
-                            }
-                        ]
+                        "rdmCollection": "75ba554a-9a0b-10fd-73d2-24c89b821e57"
                     },
-                    "datatype": "domain-value",
+                    "datatype": "concept",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
