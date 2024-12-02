@@ -211,7 +211,7 @@ class FileTemplateView(View):
                 "provider": GenericTemplateProvider
             },
             "64865b40-1ab8-d59e-aacf-668b077f0e9a" : {
-                "filename": "licence-cover-letter.docx",
+                "filename": "licence-covering-letter.docx",
                 "provider": GenericTemplateProvider
             },
             "e3a1469c-ae0e-7a59-2e25-09c036647e89": {
