@@ -236,6 +236,23 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "447973ce-d7e2-11ee-a4a1-0242ac120006",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
+                  "semanticName": "Council",
+                  "nodeOptions" : {
+                    "447973ce-d7e2-11ee-a4a1-0242ac120006": {
+                      "disabled": true
+                    }
+                  }
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "73639516-ee29-4e81-8d45-d2349d4e02d4"
+              },
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["87d3d7c2-f44f-11eb-8ddc-a87eeabdefba"],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['locationData']",
@@ -344,6 +361,7 @@
                   ],
                   "nodeOptions": {
                     "a1a755d0-d64c-11ee-8b04-0242ac180006": {
+                      "component": "user-to-model-select",
                       "allowInstanceCreation": false
                     },
                     "e8d511cc-d64c-11ee-8b04-0242ac180006": {
@@ -436,6 +454,7 @@
                   "semanticName": "Signed Off",
                   "nodeOptions": {
                     "6037c630-d646-11ee-8b04-0242ac180006": {
+                      "component": "user-to-model-select",
                       "allowInstanceCreation": false
                     }
                   }

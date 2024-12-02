@@ -14,9 +14,9 @@
 
         <!-- ko ifnot: userAccount() -->
         <div class="aher-nodata-note">No user account details for this resource</div>
-        <!-- ko if: userSignupLink() -->
+        <!-- ko if: canIssueUserSignupLink() -->
         <div class="aher-nodata-note">
-            [<a href="#" data-bind="click: (data, event) => { navigator.clipboard.writeText(userSignupLink()); event.target.textContent = 'Copied signup link'; }" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }">Copy signup link for this Person</a>]
+            [<a href="#" data-bind="click: (data, event) => { issueUserSignupLink().done(link => { console.log(link); navigator.clipboard.writeText(link.userSignupLink); event.target.textContent = 'Copied signup link'; }) }" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }">Copy signup link for this Person</a>]
         </div>
         <!-- /ko -->
         <!-- /ko -->

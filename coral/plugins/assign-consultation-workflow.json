@@ -75,7 +75,7 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
-                  "semanticName": "DIF Received Date",
+                  "semanticName": "DfI Received Date",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
                     "config":{
@@ -86,7 +86,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
-                "uniqueInstanceName": "dif-received-date"
+                "uniqueInstanceName": "dfi-received-date"
               },
               {
                 "parameters": {
@@ -145,28 +145,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "contacts"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "7224417b-893a-11ea-b383-f875a44e0e11",
-                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
-                  ],
-                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
-                  "semanticName": "Consultation Dates",
-                  "nodeOptions": {
-                    "40eff4cd-893a-11ea-b0cc-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    }
-                  }
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "consultation-dates"
               },
               {
                 "parameters": {
@@ -244,10 +222,22 @@
                   "hiddenNodes": ["083f0650-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions": {
+                    "083f0db2-ca61-11ee-afca-0242ac180006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "083ea3ae-ca61-11ee-afca-0242ac180006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "localities"
               },
               {

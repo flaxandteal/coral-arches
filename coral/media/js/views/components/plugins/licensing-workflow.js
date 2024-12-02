@@ -180,7 +180,8 @@ define([
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
-                    tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']"
+                    tileid: "['init-step']['app-id'][0]['resourceid']['applicationDetailsTileId']",
+                    hiddenNodes: ["ff3de496-7117-11ef-83a1-0242ac120006"]
                   }
                 }
               ]
@@ -230,7 +231,6 @@ define([
                       //'a541e023-f121-11eb-b770-a87eeabdefba', // town_or_city_value,
                       //'a541e025-f121-11eb-8212-a87eeabdefba', // postcode_value,
                       'a541e027-f121-11eb-ba26-a87eeabdefba', // sub_street_value,
-                      'a541e029-f121-11eb-802c-a87eeabdefba', // building_name_value,
                       'a541e02a-f121-11eb-83b2-a87eeabdefba', // building_name_type,
                       'a541e02b-f121-11eb-9462-a87eeabdefba', // building_number_metatype,
                       'a541e02d-f121-11eb-b36f-a87eeabdefba', // address_currency,
@@ -255,6 +255,34 @@ define([
                   tilesManaged: 'one',
                   componentName: 'default-card',
                   uniqueInstanceName: 'e0a60085-eeeb-44e0-83de-2dcb5ad38d95'
+                },
+                {
+                  parameters: {
+                    graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
+                    resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
+                    nodegroupid: 'a5416b46-f121-11eb-8f2d-a87eeabdefba',
+                    parenttileid:
+                      "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
+                    semanticName: 'Localities/Administrative Areas',
+                    hiddenNodes: [
+                      "a541922b-f121-11eb-a081-a87eeabdefba"
+                    ],
+                    nodeOptions: {
+                      "a541922e-f121-11eb-b2f6-a87eeabdefba": {
+                        "node": {
+                          "isrequired": true
+                        }
+                      },
+                      "a5416b53-f121-11eb-a507-a87eeabdefba": {
+                        "node": {
+                          "isrequired": true
+                        }
+                      }
+                  }
+                  },
+                  tilesManaged: 'many',
+                  componentName: 'default-card',
+                  uniqueInstanceName: '904b4950-e762-4163-8393-48b0ee2aa91d'
                 },
                 {
                   parameters: {
@@ -760,17 +788,21 @@ define([
               componentConfigs: [
                 {
                   componentName: 'transfer-of-licence',
-                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
-                  manyTitle: 'Transfers',
                   manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: ["1938e0ac-703d-11ef-934d-0242ac120006"],
                     nodeOptions: {
+                      "1938e0ac-703d-11ef-934d-0242ac120006": {
+                        "node": {
+                          "visible": false
+                        }
+                      },
                       "058ccf60-c44d-11ee-94bf-0242ac180006": {
                         "allowInstanceCreation": false
                       },
@@ -942,7 +974,7 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'excavation-report-step', // Has fix for many tiles
+                  componentName: 'default-card', // Has fix for many tiles
                   uniqueInstanceName: 'report-info',
                   tilesManaged: 'many',
                   parameters: {
@@ -950,6 +982,11 @@ define([
                     nodegroupid: 'f060583a-6120-11ee-9fd1-0242ac120003',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
                     nodeOptions: {
+                      "d8f74d42-dc6e-11ee-8def-0242ac120006": {
+                        "node": {
+                          "isrequired": true
+                        }
+                      },
                       "5707d294-dc72-11ee-b70c-0242ac120006": {
                         "allowInstanceCreation": false
                       },

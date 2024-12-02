@@ -1822,7 +1822,7 @@
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "helpenabled": true,
                     "helptext": {
-                        "en": "<p><strong>Full Address</strong></p>\n\n<p>Where it is convenient, this can be used to record the full address. This can be used to aid migration from legacy systems with less sophisticated recording practice</p>\n\n<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modelled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a building where known.</p>\n\n<p><strong>Building Number</strong></p>\n\n<p>Use to record the number(s) assigned to a building. This may be a single number (eg. 45) or a range separated by a &#39;-&#39;&nbsp;(eg. 13-21).</p>\n\n<p><strong>Building Number Sub-Street</strong></p>\n\n<p>&nbsp;</p>\n"
+                        "en": "<p><strong>Address Parts</strong></p>\n\n<p>To better represent the complexity of addresses each constituent part has been modeled.</p>\n\n<p><strong>Building Name</strong></p>\n\n<p>Use to record the actual name of a Heritage Asset where known.</p>\n<p><strong>Street</strong></p>\n\n<p>Use to record the name of the street where the Heritage Asset is located.</p>\n<p><strong>Town or City</strong></p>\n\n<p>Use to record the name of the town or city where the Heritage Asset is located.</p>\n<p><strong>County</strong></p>\n\n<p>Use to record the name of the county where the Heritage Asset is located.</p>\n<p><strong>Postcode</strong></p>\n\n<p>Use to record the postal code assigned to the Heritage Asset's location.</p>\n<p><strong>Townland</strong></p>\n\n<p>Use to record the name of the townland where the Heritage Asset is located.</p>\n<p><strong>Council</strong></p>\n\n<p>Use to record the name of the council responsible for the Heritage Asset.</p>\n<p><strong>Area Name</strong></p>\n\n<p>Use to record the name of the area where the Heritage Asset is located.</p>\n<p><strong>Area Type</strong></p>\n\n<p>Use to specify the type of area (e.g., district, barony) where the Heritage Asset is located.</p>\n<p><strong>Irish Grid Reference</strong></p>\n\n<p>Use to record the grid reference coordinates for the Heritage Asset's location using various formats, Alphanumeric TM65, Absolute TM65 or Long/Lat.</p>\n<p><strong>Location Description</strong></p>\n\n<p>Use to provide a detailed description of the Heritage Asset's location. This can include landmarks, nearby intersections, or other notable features.</p>"
                     },
                     "helptitle": {
                         "en": "Addresses"
@@ -4393,6 +4393,28 @@
                         "en": "Action Type"
                     },
                     "node_id": "8cb405ca-ac9f-427d-9be4-92639b3641a0",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000016"
+                },
+                {
+                    "card_id": "458dcc3f-5b44-4a08-852b-2dacb074f26d",
+                    "config": {
+                        "defaultValue": "",
+                        "en": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Priority Rating",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "273d24c8-d196-43b6-ad10-9216a6e9c2b0",
+                    "label": {
+                        "en": "Priority Rating"
+                    },
+                    "node_id": "42a68087-ff73-442b-8831-9216a6e9c2b0",
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000016"
@@ -8130,6 +8152,75 @@
                     "config": {
                         "dateFormat": "DD-MM-YYYY",
                         "defaultValue": "",
+                        "label": "Council Consulted Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "7cf58377-a742-4607-ae80-088016aa0fc9",
+                    "label": {
+                        "en": "Council Consulted Date"
+                    },
+                    "node_id": "36b51a2b-2fad-45fb-9e93-088016aa0fc9",
+                    "sortorder": 21,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "bd9292aa-4b19-4d57-ba07-8bb144bd507e",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
+                        "label": "Council Response Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "7cf58377-a742-4607-ae80-08bc58fcaac8",
+                    "label": {
+                        "en": "Council Response Date"
+                    },
+                    "node_id": "36b51a2b-baf3-4dc4-b714-08bc58fcaac8",
+                    "sortorder": 21,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "bd9292aa-4b19-4d57-ba07-8bb144bd507e",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Council Response",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "395b20aa-0a71-4137-9476-35070cd3d2a5",
+                    "label": {
+                        "en": "Council Response"
+                    },
+                    "node_id": "395b20aa-3851-4799-b179-90d31e5ca214",
+                    "sortorder": 21,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000005"
+                },
+                {
+                    "card_id": "bd9292aa-4b19-4d57-ba07-8bb144bd507e",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
                         "label": "Local Authority Notification Date",
                         "maxDate": false,
                         "minDate": false,
@@ -8431,7 +8522,7 @@
                         "en": "Area Name Type"
                     },
                     "node_id": "420b71dc-c21f-45a3-9230-d51d69e7368c",
-                    "sortorder": 1,
+                    "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10019,7 +10110,7 @@
                         "en": "Area Type"
                     },
                     "node_id": "1bdbf596-4f86-4494-9ba9-f82f5de54180",
-                    "sortorder": 3,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -10250,7 +10341,7 @@
                         "en": "Area Name"
                     },
                     "node_id": "c2d5cbeb-ef24-4526-9bcf-520d17b85bce",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -14357,7 +14448,7 @@
                         "en": "Area Name Metatype"
                     },
                     "node_id": "e3b334e3-c58f-4f27-8770-fc0718e45a5c",
-                    "sortorder": 2,
+                    "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -17057,6 +17148,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "8cb405ca-ac9f-427d-9be4-92639b3641a0"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "e28fe749-c298-449b-b6ab-5e2ccf17bcd1",
+                    "edgeid": "48a4942b-ff73-442b-8831-4b1a175d527d",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "42a68087-ff73-442b-8831-9216a6e9c2b0"
                 },
                 {
                     "description": null,
@@ -20363,6 +20463,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "edgeid": "395b20aa-5d9b-4112-b0b0-fed308d2bda8",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "395b20aa-3851-4799-b179-90d31e5ca214"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "889116a6-c94c-44c3-96e5-a8442b1e00f8",
                     "edgeid": "ce9a4cc2-f002-41b7-9a1e-85d7a47ef495",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -20396,6 +20505,24 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "3bebbbfd-327f-43ec-8e4e-30f67181b1e8"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "cffa2b86-3797-11ef-a167-0242ac150006",
+                    "edgeid": "cffa606a-3797-11ef-a167-088016aa0fc9",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "rangenode_id": "36b51a2b-2fad-45fb-9e93-088016aa0fc9"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "cffa2b86-3797-11ef-a167-0242ac150006",
+                    "edgeid": "cffa606a-3797-11ef-a167-08bc58fcaac8",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "rangenode_id": "36b51a2b-baf3-4dc4-b714-08bc58fcaac8"
                 },
                 {
                     "description": null,
@@ -26292,17 +26419,10 @@
                         },
                         "options": [
                             {
-                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
                                 "selected": false,
                                 "text": {
-                                    "en": "Standing Buildings"
-                                }
-                            },
-                            {
-                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
-                                "selected": false,
-                                "text": {
-                                    "en": "Field Monuments"
+                                    "en": "Lacustrine"
                                 }
                             },
                             {
@@ -26313,10 +26433,31 @@
                                 }
                             },
                             {
-                                "id": "86177acb-d727-49b8-b79c-8633530d8704",
+                                "id": "9145aaa1-db58-461d-a2fe-83dfea3e5f21",
                                 "selected": false,
                                 "text": {
-                                    "en": "Aquatic Monuments"
+                                    "en": "Field Monuments"
+                                }
+                            },
+                            {
+                                "id": "52353731-b0ac-48b6-b1e7-2ccb98833397",
+                                "selected": false,
+                                "text": {
+                                    "en": "Standing Buildings"
+                                }
+                            },
+                            {
+                                "id": "1d58ba52-8c8a-4923-9459-642a5ee9a45c",
+                                "selected": false,
+                                "text": {
+                                    "en": "Riverine"
+                                }
+                            },
+                            {
+                                "id": "bb968650-d1c2-4e6e-87ca-cc9c26f432b1",
+                                "selected": false,
+                                "text": {
+                                    "en": "Marine"
                                 }
                             }
                         ]
@@ -31741,6 +31882,68 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "priority_rating",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "803f79ba-ff73-442b-8831-9216a6e9c2b0",
+                                "selected": false,
+                                "text": {
+                                    "en": "1"
+                                }
+                            },
+                            {
+                                "id": "42a68087-982f-442b-8831-9216a6e9c2b0",
+                                "selected": false,
+                                "text": {
+                                    "en": "2"
+                                }
+                            },
+                            {
+                                "id": "42a68087-8d96-49a2-84de-477ab973cbb6",
+                                "selected": false,
+                                "text": {
+                                    "en": "3"
+                                }
+                            },
+                            {
+                                "id": "42a68087-9f46-426b-83e3-eee965818a5f",
+                                "selected": false,
+                                "text": {
+                                    "en": "4"
+                                }
+                            },
+                            {
+                                "id": "42a68087-ff73-426b-83e3-eee965818a5f",
+                                "selected": false,
+                                "text": {
+                                    "en": "5"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Priority Rating",
+                    "nodegroup_id": "e28fe749-c298-449b-b6ab-5e2ccf17bcd1",
+                    "nodeid": "42a68087-ff73-442b-8831-9216a6e9c2b0",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "creator_name_use_type",
                     "config": {
                         "rdmCollection": "1e4df896-992b-475e-bb5a-78817d3066d7"
@@ -34080,6 +34283,27 @@
                                 "text": {
                                     "en": "Statutory"
                                 }
+                            },
+                            {
+                                "id": "4e1d3498-da5d-4e9f-aed5-23261e2a863f",
+                                "selected": false,
+                                "text": {
+                                    "en": "Statement of significance"
+                                }
+                            },
+                            {
+                                "id": "712f6a11-8dea-486a-b713-b558812f676d",
+                                "selected": false,
+                                "text": {
+                                    "en": "Architects comments"
+                                }
+                            },
+                            {
+                                "id": "4d893caf-61eb-410a-9587-8f43af1cd897",
+                                "selected": false,
+                                "text": {
+                                    "en": "Evaluation"
+                                }
                             }
                         ]
                     },
@@ -36011,6 +36235,73 @@
                     "nodeid": "cffa2b86-3797-11ef-a167-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "council_consulted_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Council Consulted Date",
+                    "nodegroup_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "nodeid": "36b51a2b-2fad-45fb-9e93-088016aa0fc9",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "council_response_date",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
+                    "datatype": "date",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Council Response Date",
+                    "nodegroup_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "nodeid": "36b51a2b-baf3-4dc4-b714-08bc58fcaac8",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "council_response",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Council Response",
+                    "nodegroup_id": "3c51740c-dbd0-11ee-8835-0242ac120006",
+                    "nodeid": "395b20aa-3851-4799-b179-90d31e5ca214",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },

@@ -90,7 +90,8 @@ define([
             };
 
             self.userAccountDataConfig = {
-                userSignupLink: 'user signup link'
+                canIssueUserSignupLink: 'can issue user signup link',
+                issueUserSignupLink: 'issue user signup link'
             };
 
             self.descriptionDataConfig = {
@@ -190,7 +191,23 @@ define([
                 }));
             }
 
-            self.getUserAccountSignupURL = function(){
+            self.issueUserAccountSignupURL = function(){
+                return $.ajax({
+                    url: arches.urls.root + 'person/signup-link',
+                    context: this,
+                    method: 'POST',
+                    data: { personId: self.reportMetadata()?.resourceinstanceid },
+                    dataType: 'json'
+                })
+                    .done(function(data) {
+                        console.log('User signup link request succeeded', data);
+                        return data.userSignupLink;
+                    })
+                    .fail(function(data) {
+                        console.log('User signup link request failed', data);
+                    });
+            };
+            self.canIssueUserAccountSignupURL = function(){
                 return $.ajax({
                     url: arches.urls.root + 'person/signup-link',
                     context: this,
@@ -199,13 +216,17 @@ define([
                     dataType: 'json'
                 })
                     .done(function(data) {
-                        console.log('User signup link request succeeded');
+                        if (data.success) {
+                            console.log('Can request signup links for this person');
+                        }
+                        return data.success;
                     })
                     .fail(function(data) {
-                        console.log('User signup link request failed', data);
+                        console.log('User signup link check failed', data);
                     });
             };
-            self.userAccountDataConfig.userSignupLink = self.getUserAccountSignupURL;
+            self.userAccountDataConfig.canIssueUserSignupLink = self.canIssueUserAccountSignupURL;
+            self.userAccountDataConfig.issueUserSignupLink = self.issueUserAccountSignupURL;
 
 
             self.lifeData = ko.observable({

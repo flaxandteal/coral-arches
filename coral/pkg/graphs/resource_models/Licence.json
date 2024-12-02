@@ -7346,6 +7346,21 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "application_details_nodegroup": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
+                        "application_details_report_classification_node": "ff3de496-7117-11ef-83a1-0242ac120006",
+                        "report_classification_date_node": "ea6ea7a8-dc70-11ee-b70c-0242ac120006",
+                        "report_classification_type_node": "8d13575c-dc70-11ee-8def-0242ac120006",
+                        "report_nodegroup": "f060583a-6120-11ee-9fd1-0242ac120003",
+                        "triggering_nodegroups": [
+                            "f060583a-6120-11ee-9fd1-0242ac120003"
+                        ]
+                    },
+                    "function_id": "4c18f609-fe0d-4f4a-ba8c-70877f7ff3bc",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "f70709be-50f2-475e-8655-0e2800294138"
+                },
+                {
+                    "config": {
                         "triggering_nodegroups": [
                             "6397b05c-c443-11ee-94bf-0242ac180006"
                         ]
@@ -12146,6 +12161,20 @@
                                 "selected": false,
                                 "text": {
                                     "en": "Summary"
+                                }
+                            },
+                            {
+                                "id": "c911706e-9015-4a4b-9e99-dd97ee04975d",
+                                "selected": false,
+                                "text": {
+                                    "en": "Not Received"
+                                }
+                            },
+                            {
+                                "id": "5ba75505-e195-4625-bfb4-4e9a8615b61b",
+                                "selected": false,
+                                "text": {
+                                    "en": "Received"
                                 }
                             }
                         ]

@@ -79,7 +79,7 @@
       },
       {
         "name": "address-step",
-        "title": "Address",
+        "title": "Location Details",
         "required": false,
         "layoutSections": [
           {
@@ -94,7 +94,8 @@
                     "f6d2d1c3-77aa-472e-8f3d-225e2ed8641c",
                     "64cafd35-77a6-4c49-af74-d8221964f0c9",
                     "2fa946b5-5127-4bd2-b571-33515ef17788",
-                    "23dd50e9-e9ff-4717-8a34-86862513b8ba"
+                    "23dd50e9-e9ff-4717-8a34-86862513b8ba",
+                    "d16a913e-63fd-4361-ae9b-25965c731f82"
                   ],
                   "nodegroupid": "38dad285-9014-4c7b-ad81-b0562038ebf2",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
@@ -108,10 +109,34 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "02003ed4-b2b5-4fcc-847b-bc34e7c72ee3",
+                  "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
+                  "semanticName": "Council"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "73639516-ee29-4e81-8d45-d2349d4e02d4"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["425b6c5f-7b32-4cd6-8597-0f605cc8992b"],
                   "nodegroupid": "cc176b79-d9d3-4aab-bbd5-f604a73cae34",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions": {
+                    "1bdbf596-4f86-4494-9ba9-f82f5de54180": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "c2d5cbeb-ef24-4526-9bcf-520d17b85bce": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
@@ -164,7 +189,6 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "fetch-latest-tile",
-                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "6a28726c-926b-44ab-b585-c41976899d23"
               }
             ]
@@ -184,7 +208,19 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "67712762-378e-11ef-9263-0242ac150006",
-                  "semanticName": "Designation Descriptions"
+                  "semanticName": "Designation Descriptions",
+                  "nodeOptions": {
+                    "677133f6-378e-11ef-9263-0242ac150006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "b2d6a190-378f-11ef-a167-0242ac150006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
@@ -225,6 +261,17 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "4ae2af75-3829-4633-9b69-0242ac180006"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "010db21a-0eda-11ef-aa66-0242ac140006",
+                  "semanticName": "HMC Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "4ae2af75-3829-4633-aa66-0242ac140006"
               }
             ]
           }
@@ -299,57 +346,49 @@
                   "semanticName": "Approvals",
                   "nodeOptions": {
                     "3b267ffe-dbd1-11ee-b0db-0242ac120006": {
-                      "allowInstanceCreation": false
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "f3f6ef61-9f63-4e11-b643-ee59390d08e7",
+                        "38161a54-6c5d-46e1-820c-f736c00f78bd",
+                        "5ff98b6a-526f-41ce-83d0-b93188d5b265"
+                      ]
                     },
                     "ad22dad6-dbd0-11ee-b0db-0242ac120006": {
-                      "allowInstanceCreation": false
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "f3f6ef61-9f63-4e11-b643-ee59390d08e7",
+                        "38161a54-6c5d-46e1-820c-f736c00f78bd",
+                        "5ff98b6a-526f-41ce-83d0-b93188d5b265"
+                      ]
                     },
-                    "2cbc7bf7-ccbb-4ac2-bb29-bc3bc597c753": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "0ccb08ee-dbc4-11ee-b0db-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "8623e2d5-5407-4b57-b769-89c934941ac5": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "e1d85f71-85d2-4357-951f-9318f1df36b5": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "1f1d69ee-99c8-4808-b2b2-2b33b1364dda": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "a54ab030-d2c9-4e1f-bde9-7e234f3f3e58": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
+                    "36b51a2b-baf3-4dc4-b714-08bc58fcaac8": {
+                       "config":{
+                         "maxDate":"today"
+                       }
+                     },
+                    "36b51a2b-2fad-45fb-9e93-088016aa0fc9": {
+                       "config":{
+                         "maxDate":"today"
+                       }
+                     },
                     "0cd0998c-dbd6-11ee-b0db-0242ac120006": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
-                    "229d12d0-1908-11ef-aa9f-0242ac150006": {
+                    "af5fd406-dbd1-11ee-b0db-0242ac120006": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
-                    "257efb18-2d61-11ef-8722-0242ac120006": {
+                    "cffa2fc8-3797-11ef-a167-0242ac150006": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
-                    "7f932826-1908-11ef-aa9c-0242ac150006": {
+                    "d70da550-3798-11ef-a167-0242ac150006": {
                       "config":{
                         "maxDate":"today"
                       }
@@ -360,70 +399,11 @@
                         "label": "Owner Notified Date"
                       }
                     },
-                    "cffa2fc8-3797-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "603015fe-3afe-4475-87e7-771a9d625503": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "1752059c-1e67-4876-94a1-605dbbb4a03d": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "379e65bc-555b-4dd9-bd6d-cf7b6de20527": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "7e1a19c8-676d-4382-a039-0cd28a9a1c28": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "f98b388c-db09-4519-bbd2-0d7bc339c805": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "6b901bcd-724a-48b8-9ff7-8ec917dbfec7": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "577bd652-c9dc-4954-9765-7546ba0cabac": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "c2736493-9ba2-4d59-a358-45eef0086a16": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "af5fd406-dbd1-11ee-b0db-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
                     "59935456-379a-11ef-9263-0242ac150006": {
+                      "label": "Director Sign Off Date",
                       "config":{
                         "maxDate":"today",
                         "label": "Director Sign Off Date"
-                      }
-                    },
-                    "17d822a9-4ef7-4ecd-8100-05c6ea9b41b2": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "d70da550-3798-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
                       }
                     }
                   }
@@ -433,6 +413,18 @@
                 "uniqueInstanceName": "78965eb2-7064-47aa-a65b-cecc9f05884f"
               }
             ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "letters-step",
+        "title": "Letters",
+        "required": false,
+        "saveWithoutProgressing": true,
+        "layoutSections": [
+          {
+            "componentConfigs": []
           }
         ],
         "workflowstepclass": "workflow-form-component"
@@ -466,18 +458,6 @@
                 "uniqueInstanceName": "ccd9d680-ed67-4981-89d9-064ee13ca19d"
               }
             ]
-          }
-        ],
-        "workflowstepclass": "workflow-form-component"
-      },
-      {
-        "name": "letters-step",
-        "title": "Letters",
-        "required": false,
-        "saveWithoutProgressing": true,
-        "layoutSections": [
-          {
-            "componentConfigs": []
           }
         ],
         "workflowstepclass": "workflow-form-component"

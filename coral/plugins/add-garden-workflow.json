@@ -119,7 +119,7 @@
                   "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba"
                 },
                 "tilesManaged": "many",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "e0da378f-ea20-44d7-8d8a-05b46f8d54c0"
               },
               {
@@ -130,7 +130,19 @@
                     "ba345579-b554-11ea-9232-f875a44e0e11"
                   ],
                   "nodegroupid": "ba342e69-b554-11ea-a027-f875a44e0e11",
-                  "semanticName": "Descriptions"
+                  "semanticName": "Descriptions",
+                  "nodeOptions": {
+                    "ba345577-b554-11ea-a9ee-f875a44e0e11": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "ba34557b-b554-11ea-ab95-f875a44e0e11": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "manyTitle": "Descriptions",
                 "tilesManaged": "many",
@@ -159,7 +171,8 @@
                     "87d3d7ba-f44f-11eb-a2dd-a87eeabdefba",
                     "87d39b43-f44f-11eb-8b0b-a87eeabdefba",
                     "87d39b36-f44f-11eb-a905-a87eeabdefba",
-                    "87d3ff25-f44f-11eb-a4eb-a87eeabdefba"
+                    "87d3ff25-f44f-11eb-a4eb-a87eeabdefba",
+                    "87d39b49-f44f-11eb-a564-a87eeabdefba"
 
                   ],
                   "nodegroupid": "87d39b25-f44f-11eb-95e5-a87eeabdefba",
@@ -191,10 +204,22 @@
                   ],
                   "nodegroupid": "87d38725-f44f-11eb-8d4b-a87eeabdefba",
                   "parenttileid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions": {
+                    "87d3d7c5-f44f-11eb-8459-a87eeabdefba": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "87d3c3ea-f44f-11eb-b532-a87eeabdefba": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
-                "componentName": "default-card-util",
+                "componentName": "default-card",
                 "uniqueInstanceName": "e50063d8-9771-476c-8666-4468c44ca88e"
               },
               {
@@ -328,132 +353,21 @@
                   "semanticName": "Garden Sign Off",
                   "nodeOptions": {
                     "1200e850-1905-11ef-aa9f-0242ac150006": {
+                      "component": "user-to-model-select",
+                      "signOffGroups": ["38161a54-6c5d-46e1-820c-f736c00f78bd"],
                       "allowInstanceCreation": false
                     },
                     "9382b7b4-1905-11ef-aa9f-0242ac150006": {
+                      "component": "user-to-model-select",
+                      "signOffGroups": ["38161a54-6c5d-46e1-820c-f736c00f78bd"],
                       "allowInstanceCreation": false
-                    },
-                    "6694d802-37c0-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "126c0042-dbc3-11ee-8835-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "35d84fea-d7d6-11ee-9916-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "ca07b860-2d5b-11ef-bbfd-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
                     },
                     "ac25af94-1903-11ef-aa9c-0242ac150006": {
                       "config":{
                         "maxDate":"today"
                       }
                     },
-                    "98c42ca8-37be-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "6522916e-efc8-11eb-8a9b-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "65227d22-efc8-11eb-b78e-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "6af2a0cf-efc5-11eb-806d-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "6af2b69b-efc5-11eb-8d5a-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "6af2b6a0-efc5-11eb-985a-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
                     "d9368892-1902-11ef-aa9c-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "87d3c2a4-f44f-11eb-a170-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "87d3d7b6-f44f-11eb-a60d-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "87d3d7bc-f44f-11eb-b884-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "87d3d7b7-f44f-11eb-acd2-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "96656e9c-d646-11ee-8b04-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "96826227-0262-11eb-a1c0-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "e2815e0c-37bd-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "d9bd0b80-d643-11ee-8b04-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "e8d511cc-d64c-11ee-8b04-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "eeec9e68-d23c-11ee-9373-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "82731030-37bf-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "5253a3a8-37bd-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
-                      }
-                    },
-                    "85396d94-37bc-11ef-9263-0242ac150006": {
                       "config":{
                         "maxDate":"today"
                       }

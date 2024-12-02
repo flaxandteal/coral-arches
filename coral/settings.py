@@ -22,7 +22,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=5, minor=21, patch=64)
+APP_VERSION = semantic_version.Version(major=6, minor=6, patch=14)
 
 GROUPINGS = {
     "groups": {
@@ -55,6 +55,8 @@ WEBPACK_LOADER = {
 
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
 CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
+
+CORAL_UPGRADE_WINDOW_FILE = os.getenv("CORAL_UPGRADE_WINDOW_FILE", "")
 
 DAUTHZ = {
     # DEFAULT Dauthz enforcer
@@ -199,7 +201,6 @@ INSTALLED_APPS = (
     "corsheaders",
     "oauth2_provider",
     "django_celery_results",
-    "compressor",
     "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",
@@ -295,6 +296,13 @@ FORCE_SCRIPT_NAME = None
 FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
+
+USER_SIGNUP_GROUP = "Crowdsource Editor"
+ALLOWED_SIGNUP_GROUPS = [
+    "Crowdsource Editor",
+    "Resource Editor",
+    "Resource Reviewer",
+]
 
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
 if USE_CASBIN:
@@ -408,12 +416,12 @@ if DEBUG is True:
     SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  #<-- Only need to uncomment this for testing without an actual email server
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  #<-- Only need to uncomment this for testing without an actual email server
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = "xxxx@xxx.com"
-# EMAIL_HOST_PASSWORD = 'xxxxxxx'
-# EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'xxxxxxx'
+EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
