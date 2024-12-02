@@ -22,6 +22,7 @@ import os
 import re
 import uuid
 from datetime import datetime
+from typing import Dict, Any, List, NewType
 import docx
 import textwrap
 import pprint
@@ -318,13 +319,30 @@ class FileTemplateView(View):
 
         return True
 
+Alias = str
+Mapping = Dict[Alias, Any]
+UUIDString = NewType('UUIDString', str)
+def validate_uuid_string(uuid_string: str) -> UUIDString:
+    try:
+        uuid_obj = uuid.UUID(uuid_string)
+    except ValueError:
+        return False
+    return str(uuid_obj) == uuid_string
+
 class GenericTemplateProvider:
-    def __init__(self, resource_instance):
+    def __init__(self, resource_instance: Resource):
         self.resource_instance = resource_instance
         self.datatype_factory = DataTypeFactory()
+        self.config = {}
+        # self.tiles not currently used and might need removed
         self.tiles = resource_instance.tiles
 
-    def get_value_from_tile(self, tile, node_id):
+    def get_value_from_tile(self, tile:Tile, node_id:UUIDString):
+        """
+            @param Tile: any tile object
+            @param node_id: the target node
+            @return value or empty string
+        """
         current_node = models.Node.objects.get(nodeid=node_id)
         datatype = self.datatype_factory.get_instance(current_node.datatype)
         returnvalue = datatype.get_display_value(tile, current_node)
@@ -338,112 +356,115 @@ class GenericTemplateProvider:
         except Resource.DoesNotExist:
             raise f"Resource ID ({resource_id}) does not exist"
         return resource
+    
+    def extract(self, loop_list):
+        children_present = True
+        value_map = {}
+        while children_present:
+            newloop = []
+            found_semantic = False
+            for item in loop_list:
+                if isinstance(item[0], str):
+                    try:
+                        newloop += item[1].items()
+                        found_semantic = True
+                    except:
+                        segment = {item[0] : item[1]}
+                        value_map = value_map | self.processDatatypes(segment)
+                    loop_list = newloop
+                    children_present = found_semantic
+        return value_map
+    
+    def extract_from_related_resource(self, prefix:Alias, datum):
+        """
+            @param prefix: the alias for the related resource will be prefixed
+            @paran datum:
+        """
+        mapping = self.extract(list(datum.items()))
+        processed_mapping = self.processDatatypes(mapping)
+        processed_items = {}
+        for processed_item in processed_mapping.items():
+            processed_items[f"{prefix}__{processed_item[0]}"] = processed_item[1]
+        return processed_items
 
-    def get_mapping(self, config):
-        # inner_self = vars(self)
+    def get_mapping(self, config={}) -> Mapping:
         """
-        inner_self {'resource_instance': <Resource: Resource object (4c1ba629-208f-4e79-8b0a-b2948b5fc7d5)>,
-         'datatype_factory': <arches.app.datatypes.datatypes.DataTypeFactory object at 0x7f8b0b468490>,
-         'tiles': [<TileModel: TileModel object (1bf4e268-273d-43b9-8798-59a1ed8b3a4d)>,
-         <TileModel: TileModel object (4f15dd28-1adf-49ee-b637-606fd2629702)>,
-         <TileModel: TileModel object (12ee433f-a4a0-4754-9637-c1ffa98e8346)>,
-         <TileModel: TileModel object (e17f7ac3-7ece-4010-b8b6-2586f574ad15)>,
-         <TileModel: TileModel object (2fd0794f-95ce-4b97-85a8-63f0c4181190)>,
-         <TileModel: TileModel object (e4eeec38-1a17-431f-bf31-ef3feb9ab66c)>]}
+            @param self: must contain resource_instance:Resource
+            @param config?: Dict[str:str]
+            common config options include
+            'include': List[Alias] # if present only specified aliases will have their values mapped
+            'exclude': List[Alias] # if present all nodes apart from listed aliases will have their values mapped
+            'expand': List[Alias(related resource)] # related resources which should have their values included to the mapping
+            'special': Dict[str: List[str]] # The key will be added as an alias, the value determines the mapping value. value[0] determines the function to be used additional strings are paramaters. 
+                @example special: {'todays_date': ['make_date', 'today']} # adds 'todays_date' as an alias and uses the make_date function to create today's date
         """
-        if not config:
-            config = {}
-        
+        self.config = config
+
         # wkrm
         wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
 
         # wkri
         resource = wkrm.find(self.resource_instance.resourceinstanceid)
 
-        def extract_from_related_resource(prefix, datum):
-            # TODO related instance logic
-            mapping = extract(list(datum.items()))
-            processed_mapping = processDatatypes(mapping)
-            processed_items = {}
-            for processed_item in processed_mapping.items():
-                processed_items[f"{prefix}__{processed_item[0]}"] = processed_item[1]
-            return processed_items
-
-        def processDatatypes(mapping):
-            for item in mapping.items():
-                value = item[1]
-                if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
-                    for node in value:
-                        if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
-                            mapping = mapping | extract(list(node.items()))
-                    mapping[item[0]] = None
-
-                if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel)):
-                    mapping[item[0]] = None
-
-                if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
-                    if "expand" in config and item[0] in config["expand"]:
-                        for datum in item[1]:
-                            mapping = mapping | extract_from_related_resource(item[0], datum)
-                            mapping[item[0]] = str(datum)
-                    else:
-                        resource_list = []
-                        for datum in item[1].data:
-                            resource_list.append(str(datum))
-                        mapping[item[0]] = resource_list
-
-                if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
-                    concept_list = []
-                    for datum in item[1].data:
-                        concept_list.append(str(datum))
-                    mapping[item[0]] = concept_list
-
-                if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
-                    mapping[item[0]] = str(value)
-
-                if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
-                    dicted_value = {}
-                    for key in list(value.keys()):
-                        if key:
-                            dicted_value[key] = value[key]
-                    mapping = mapping | extract(list(dicted_value.items()))
-                    mapping[item[0]] = None
-
-                if isinstance(value, str) and not isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel, arches_orm.view_models.concepts.ConceptValueViewModel, arches_orm.view_models.string.StringViewModel)):
-                    try:
-                        mapping[item[0]] = datetime.fromisoformat(item[1]).strftime("%d/%m/%Y")
-                    except Exception as e:
-                        pass
-            return mapping
-
-        def extract(loop_list):
-            children_present = True
-            value_map = {}
-            while children_present:
-                newloop = []
-                found_semantic = False
-                for item in loop_list:
-                    if isinstance(item[0], str):
-                        try:
-                            newloop += item[1].items()
-                            found_semantic = True
-                        except:
-                            segment = {item[0] : item[1]}
-                            value_map = value_map | processDatatypes(segment)
-                        loop_list = newloop
-                        children_present = found_semantic
-            return value_map
-
         # resource.items() is Semantic Node List
-        mapping = extract(list(resource.items()))     
-        
-        if "special" in config:
-            for special_case in config["special"].items():
+        mapping = self.extract(list(resource.items()))   
+        if "special" in self.config:
+            for special_case in self.config["special"].items():
                 if special_case[1] == 'today':
                     mapping[special_case[0]] = datetime.today().strftime("%d/%m/%Y")
 
+        return self.processDatatypes(mapping)
 
-        return processDatatypes(mapping)
+
+
+    def processDatatypes(self, mapping):
+        for item in mapping.items():
+            value = item[1]
+            if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
+                for node in value:
+                    if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
+                        mapping = mapping | self.extract(list(node.items()))
+                mapping[item[0]] = None
+            if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel)):
+                mapping[item[0]] = None
+            if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
+                if "expand" in self.config and item[0] in self.config["expand"]:
+                    for datum in item[1]:
+                        mapping = mapping | self.extract_from_related_resource(item[0], datum)
+                        mapping[item[0]] = str(datum)
+                else:
+                    resource_list = []
+                    for datum in item[1].data:
+                        resource_list.append(str(datum))
+                    mapping[item[0]] = resource_list
+            if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
+                concept_list = []
+                for datum in item[1].data:
+                    concept_list.append(str(datum))
+                mapping[item[0]] = concept_list
+            if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
+                mapping[item[0]] = str(value)
+            
+            if isinstance(value, arches_orm.arches_django.datatypes.user.UserViewModel):
+                 mapping[item[0]] = None
+
+            if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
+                dicted_value = {}
+                for key in list(value.keys()):
+                    if key:
+                        dicted_value[key] = value[key]
+                mapping = mapping | self.extract(list(dicted_value.items()))
+                mapping[item[0]] = None
+            if isinstance(value, str) and not isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel, arches_orm.view_models.concepts.ConceptValueViewModel, arches_orm.view_models.string.StringViewModel)):
+                try:
+                    mapping[item[0]] = datetime.fromisoformat(item[1]).strftime("%d/%m/%Y")
+                except Exception as e:
+                    pass
+        return mapping
+
+            
+        
+        
 
 
 
