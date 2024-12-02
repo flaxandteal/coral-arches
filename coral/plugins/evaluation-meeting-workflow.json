@@ -77,24 +77,12 @@
                         "label": "HB",
                         "searchString": "advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
                       }
-
                     }
                   }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "f15ca0ea-0878-4ab6-a80c-b6a570b1b380"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "7eb29fb6-031b-11ef-8ec2-0242ac150006",
-                  "semanticName": "Existing Grade Type"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
               },
               {
                 "parameters": {
@@ -287,6 +275,17 @@
         "layoutSections": [
           {
             "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "resourceid": "['9185bf0e-9ba7-48d0-a333-d697777b3eee']['f15ca0ea-0878-4ab6-a80c-b6a570b1b380'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "7eb29fb6-031b-11ef-8ec2-0242ac150006",
+                  "semanticName": "Existing Grade Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
+              },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
