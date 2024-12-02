@@ -72,10 +72,10 @@
                   "nodeOptions": {
                     "58a2b98f-a255-11e9-9a30-00224800b26d": {
                       "allowInstanceCreation": false,
-                      "searchString": "advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]",
+                      "searchString": "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]",
                       "config": {
                         "label": "HB",
-                        "searchString": "advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
+                        "searchString": "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
                       }
                     }
                   }
@@ -278,9 +278,14 @@
               {
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['9185bf0e-9ba7-48d0-a333-d697777b3eee']['f15ca0ea-0878-4ab6-a80c-b6a570b1b380'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "7eb29fb6-031b-11ef-8ec2-0242ac150006",
-                  "semanticName": "Existing Grade Type"
+                  "resourceid": "['9185bf0e-9ba7-48d0-a333-d697777b3eee']['f15ca0ea-0878-4ab6-a80c-b6a570b1b380'][0]['data'][0]['58a2b98f-a255-11e9-9a30-00224800b26d']['resourceId']",
+                  "nodegroupid": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
+                  "semanticName": "Existing Grade Type",
+                  "nodeOptions": {
+                    "6af2b696-efc5-11eb-b0b5-a87eeabdefba": {
+                      "disabled": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
