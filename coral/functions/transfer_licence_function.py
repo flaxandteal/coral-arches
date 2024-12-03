@@ -40,13 +40,13 @@ class TransferOfLicenceFunction(BaseFunction):
         # true after it has been used
         if tile.data[TRANSFER_APPLIED_NODE_ID]:
             return
-
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         transfer_of_licence_tiles = Tile.objects.filter(
             resourceinstance_id=resource_instance_id,
             nodegroup_id=TRANSFER_OF_LICENCE_NODEGROUP_ID,
         )
+        
 
         for tol_tile in transfer_of_licence_tiles:
             applied = tol_tile.data.get(TRANSFER_APPLIED_NODE_ID, None)
@@ -56,6 +56,7 @@ class TransferOfLicenceFunction(BaseFunction):
                 raise Exception(
                     "You cannot start a new transfer of licence while there is still a transfer waiting to be closed out."
                 )
+                
 
         # If there is no contacts tile we can exit early
         contacts_tile = Tile.objects.filter(
@@ -66,72 +67,92 @@ class TransferOfLicenceFunction(BaseFunction):
             raise Exception(
                 "No Nominated Excavation Directors found on the Application Details page."
             )
+            
 
         # Get licensees currently on the contacts tile
         licensees = contacts_tile.data.get(CONTACTS_LICENSEES_NODE_ID, []) or []
+        
         original_licensee_resource_ids = [x.get("resourceId") for x in licensees]
+        
 
         # Get employing bodies currently on the contacts tile
         employing_bodies = contacts_tile.data.get(CONTACTS_EMPLOYING_BODY_NODE_ID, []) or []
+        
         original_employing_bodies_resource_ids = [x.get("resourceId") for x in employing_bodies]
+        
 
         # Get licensees that should be removed from the contacts tile
         former_licensee_node_data = tile.data.get(FORMER_LICENSEE_NODE_ID, []) or []
+        
         former_licensee_resource_ids = [
             x.get("resourceId") for x in former_licensee_node_data
         ]
+        
 
         # Get new licensees currently attached to the transfer tile
         new_licensee_node_data = tile.data.get(NEW_LICENSEE_NODE_ID, []) or []
         new_licensee_resource_ids = [
             x.get("resourceId") for x in new_licensee_node_data
         ]
+        
 
         # Get the employing bodies that should be removed from the contacts tile
         former_employing_body_node_data = (
             tile.data.get(FORMER_EMPLOYING_BODY_NODE_ID, []) or []
         )
+        
         former_employing_body_resource_ids = [
             x.get("resourceId") for x in former_employing_body_node_data
         ]
+        
 
         # Get the employing bodies that should be added to the contacts tile
         new_employing_body_node_data = (
             tile.data.get(NEW_EMPLOYING_BODY_NODE_ID, []) or []
         )
+        
         new_employing_body_resource_ids = [
             x.get("resourceId") for x in new_employing_body_node_data
         ]
+        
 
         # Get the applicant that will replace the applicant on the contacts tile
         new_applicant_node_data = tile.data.get(APPLICANT_NODE_ID, []) or []
+        
         new_applicant_resource_id = (
             new_applicant_node_data[0].get("resourceId", None)
             if len(new_applicant_node_data)
             else None
         )
+        
 
         # Get the Cur D Person resource id
         cur_d_person_node_data = tile.data.get(CUR_D_PERSON_NODE_ID, []) or []
+        
         cur_d_person_resource_id = (
             cur_d_person_node_data[0].get("resourceId", None)
             if len(cur_d_person_node_data)
             else None
         )
+        
 
         # Get the Cur D Decision value uuid
         cur_d_decision_value_id = tile.data.get(CUR_D_DECISION_NODE_ID, None) or None
+        
 
         # Get the Cur E Person resource id
         cur_e_person_node_data = tile.data.get(CUR_E_PERSON_NODE_ID, []) or []
+        
         cur_e_person_resource_id = (
             cur_e_person_node_data[0].get("resourceId", None)
             if len(cur_e_person_node_data)
             else None
         )
+        
 
         # Get the Cur E Decision value uuid
         cur_e_decision_value_id = tile.data.get(CUR_E_DECISION_NODE_ID, None) or None
+        
 
         if not new_applicant_resource_id:
             raise Exception(
@@ -165,6 +186,7 @@ class TransferOfLicenceFunction(BaseFunction):
             set(former_employing_body_resource_ids)
             & set(original_employing_bodies_resource_ids)
         )
+        
         if len(former_new_employing_body_id_intersection) != len(
             former_employing_body_resource_ids
         ):
@@ -183,11 +205,13 @@ class TransferOfLicenceFunction(BaseFunction):
 
         # Mark the transfer as applied
         tile.data[TRANSFER_APPLIED_NODE_ID] = True
+        
 
         # This process handles overwriting the applicant
         contacts_applicant = (
             contacts_tile.data.get(CONTACTS_APPLICANT_NODE_ID, []) or []
         )
+        
         contacts_applicant = [
             {
                 "resourceId": new_applicant_resource_id,
@@ -196,15 +220,19 @@ class TransferOfLicenceFunction(BaseFunction):
                 "inverseOntologyProperty": "",
             }
         ]
+        
         contacts_tile.data[CONTACTS_APPLICANT_NODE_ID] = contacts_applicant
+
 
         # This process handles the licensees being removed and added
         contacts_licensees = (
             contacts_tile.data.get(CONTACTS_LICENSEES_NODE_ID, []) or []
         )
+        
         contacts_licensees_resource_ids = [
             x.get("resourceId") for x in contacts_licensees
         ]
+        
         # Remove licensees
         for frid in former_licensee_resource_ids:
             contacts_licensees = list(
@@ -213,6 +241,7 @@ class TransferOfLicenceFunction(BaseFunction):
                     contacts_licensees,
                 )
             )
+            
         # Add the new licensees to the contacts tile
         for nlrid in new_licensee_resource_ids:
             if nlrid in contacts_licensees_resource_ids:
@@ -227,14 +256,17 @@ class TransferOfLicenceFunction(BaseFunction):
             )
         # Set new value onto contacts tile
         contacts_tile.data[CONTACTS_LICENSEES_NODE_ID] = contacts_licensees
+        
 
         # This process handles removing the former employing bodies from the contacts tile
         contacts_employing_bodies = (
             contacts_tile.data.get(CONTACTS_EMPLOYING_BODY_NODE_ID, []) or []
         )
+        
         contacts_employing_bodies_resource_ids = [
             x.get("resourceId") for x in contacts_employing_bodies
         ]
+        
         # Remove employing bodies
         for frid in former_employing_body_resource_ids:
             contacts_employing_bodies = list(
@@ -243,6 +275,7 @@ class TransferOfLicenceFunction(BaseFunction):
                     contacts_employing_bodies,
                 )
             )
+            
         # Add the new licensees to the contacts tile
         for nebrid in new_employing_body_resource_ids:
             if nebrid in contacts_employing_bodies_resource_ids:
@@ -257,6 +290,8 @@ class TransferOfLicenceFunction(BaseFunction):
             )
         # Set new value onto contacts tile
         contacts_tile.data[CONTACTS_EMPLOYING_BODY_NODE_ID] = contacts_employing_bodies
+        
+        resource_instance_id
 
         # Save the changes to the contacts tile
         contacts_tile.save()

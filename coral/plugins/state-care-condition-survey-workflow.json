@@ -167,7 +167,21 @@
                   "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
                   "nodeOptions": {
                     "af2087a6-532c-11ef-9d2a-0242ac120006": {
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "3478037d-4d7a-48bc-a156-f7ac8f04fd78"
+                      ],
                       "allowInstanceCreation": false
+                    },
+                    "85dde816-532c-11ef-9337-0242ac120006": {
+                      "config": {
+                        "maxDate": "today"
+                      }
+                    },
+                    "fbc154dc-532c-11ef-9337-0242ac120006": {
+                      "config": {
+                        "maxDate": "today"
+                      }
                     }
                   }
                 },
