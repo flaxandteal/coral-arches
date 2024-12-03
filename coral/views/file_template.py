@@ -105,7 +105,6 @@ class FileTemplateView(View):
             template_path = os.path.join(
                 settings.APP_ROOT, "docx", template_dict["filename"]
             )
-
         try:
             self.doc = Document(fs.open(template_path))
         except:
@@ -557,6 +556,7 @@ class GenericTemplateProvider:
             with admin():
                 person = Person.where(user_account=self.config["user"].id)
                 person = person[0] if len(person) else self.config["user"] 
+                person = person.name[0].full_name
         except Resource.DoesNotExist:
             person = self.config["user"]
 
