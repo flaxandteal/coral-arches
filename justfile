@@ -217,3 +217,8 @@ clean: docker
 [private]
 @check_no_empty_arches_directory:
 	if [ $(find . -empty -type d -name arches) ]; then echo "There is an empty arches directory in your project, this will create an empty module"; exit 1; fi
+
+
+
+# for func in $(ls coral/functions/); do if [[ $func != *"__"* ]]; then python manage.py fn register -s coral/functions/$func; fi done
+

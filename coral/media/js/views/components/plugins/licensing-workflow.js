@@ -791,17 +791,21 @@ define([
               componentConfigs: [
                 {
                   componentName: 'transfer-of-licence',
-                  componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
-                  manyTitle: 'Transfers',
                   manyTitle: 'Transfers',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
                     nodegroupid: '6397b05c-c443-11ee-94bf-0242ac180006',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['resourceInstanceId']",
+                    hiddenNodes: ["1938e0ac-703d-11ef-934d-0242ac120006"],
                     nodeOptions: {
+                      "1938e0ac-703d-11ef-934d-0242ac120006": {
+                        "node": {
+                          "visible": false
+                        }
+                      },
                       "058ccf60-c44d-11ee-94bf-0242ac180006": {
                         "allowInstanceCreation": false
                       },
