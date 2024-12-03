@@ -26,7 +26,6 @@ from typing import Dict, Any, List, NewType
 from collections.abc import MutableMapping
 import docx
 import textwrap
-import pprint
 from docx import Document
 from docx.text.paragraph import Paragraph
 from docx.oxml.parser import OxmlElement
@@ -457,7 +456,6 @@ class GenericTemplateProvider:
         # if "exclude" in self.config:
         #      semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
 
-        print(semantic_node_list)
         mapping = self.extract(semantic_node_list)  
         if "special" in self.config:
             for special_case in self.config["special"].items():
