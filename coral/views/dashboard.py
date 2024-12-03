@@ -155,7 +155,7 @@ class TaskStrategy:
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='asc', filter='All'):
+    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='desc', filter='All'):
         from arches_orm.models import Consultation
         with admin():
             TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
@@ -269,7 +269,7 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='asc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='desc', filter='all'):
         from arches_orm.models import License
         utilities = Utilities()
         #states
