@@ -23,6 +23,7 @@ import re
 import uuid
 from datetime import datetime
 from typing import Dict, Any, List, NewType
+from collections.abc import MutableMapping
 import docx
 import textwrap
 import pprint
@@ -234,6 +235,21 @@ class FileTemplateView(View):
         return None
 
     def edit_letter(self, resource, provider, config):
+        # include = []
+
+        # if len(self.doc.paragraphs) > 0:
+        #     for paragraph in self.doc.paragraphs:
+        #          if re.search('<.*>', paragraph.text):
+        #             include += re.findall('<([^<]*)>', paragraph.text)
+
+        # if len(self.doc.tables) > 0:
+        #     for table in self.doc.tables:
+        #         for row in table.rows:
+        #             for cell in row.cells:
+        #                  if re.search('<.*>', cell.text):
+        #                     include += re.findall('<([^<]*)>', cell.text)
+
+        # config["include"] = include
         mapping_dict = provider(resource).get_mapping(config)
         self.apply_mapping(mapping_dict)
 
@@ -242,8 +258,10 @@ class FileTemplateView(View):
         for key in mapping:
             if (isinstance(mapping[key], (arches_orm.view_models.concepts.EmptyConceptValueViewModel))):
                 mapping[key] = None
-            if (isinstance(mapping[key], (list, bool))):
+            if (isinstance(mapping[key], (bool))):
                 mapping[key] = str(mapping[key])
+            if (isinstance(mapping[key], (list))):
+                mapping[key] = ", ".join(mapping[key])
             html = False
             if htmlTags.search(mapping[key] if mapping[key] is not None else ""):
                 html = True
@@ -432,13 +450,16 @@ class GenericTemplateProvider:
 
         # Semantic Node List
         semantic_node_list = list(resource.items())
-        
-        if "include" in self.config:
-             semantic_node_list = [item for item in semantic_node_list if item[0] in self.config['include']]
-            
-        if "exclude" in self.config:
-             semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
 
+        
+        # I overlooked that the keys won't be in the first level of the dict. Would need to flatten the dicts to see if any of the children keys are in the include/exclude lists. Probably not worth doing
+        # if "include" in self.config:
+            #  semantic_node_list = [item for item in semantic_node_list if item[0] in self.config['include']]
+            
+        # if "exclude" in self.config:
+        #      semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
+
+        print(semantic_node_list)
         mapping = self.extract(semantic_node_list)  
         if "special" in self.config:
             for special_case in self.config["special"].items():
@@ -533,6 +554,9 @@ class GenericTemplateProvider:
 
         mapping[alias] = str(person)
         return mapping
+    
+    def make_node_list_string(self):
+         pass
 
             
 class MonumentTemplateProvider:
