@@ -22,6 +22,8 @@ import os
 import re
 import uuid
 from datetime import datetime
+from typing import Dict, Any, List, NewType
+from collections.abc import MutableMapping
 import docx
 import textwrap
 from docx import Document
@@ -41,17 +43,18 @@ from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
+import arches_orm
+from arches_orm.wkrm import get_well_known_resource_model_by_graph_id
 import pytz
 from django.core.files.storage import  default_storage
 
-
+   
 class FileTemplateView(View):
     def __init__(self):
         self.doc = None
         self.resource = None
 
     def get(self, request):
-
         parenttile_id = request.GET.get("parenttile_id")
         parent_tile = Tile.objects.get(tileid=parenttile_id)
         letter_tiles = Tile.objects.filter(parenttile=parent_tile)
@@ -70,10 +73,9 @@ class FileTemplateView(View):
         return HttpResponseNotFound("No letters tile matching query by parent tile")
 
     def post(self, request):
-
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
-        print("temple id", template_id)
+        config = request.POST.get("config", data.get("config", {}))
         parenttile_id = request.POST.get("parenttile_id")
         resourceinstance_id = request.POST.get(
             "resourceinstance_id", data.get("resourceinstance_id", None)
@@ -81,6 +83,8 @@ class FileTemplateView(View):
         transaction_id = request.POST.get("transaction_id", uuid.uuid1())
         self.resource = Resource.objects.get(resourceinstanceid=resourceinstance_id)
         self.resource.load_tiles()
+        self.user = request.user
+        config["user"] = self.user
 
         if (
             os.path.exists(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx"))
@@ -90,7 +94,6 @@ class FileTemplateView(View):
 
         fs = default_storage
         template_dict = self.get_template_path(template_id)
-        print("temple dict", template_dict)
         template_path = None
         filesystem_class = default_storage.__class__.__name__
         if filesystem_class == 'S3Boto3Storage':
@@ -107,7 +110,7 @@ class FileTemplateView(View):
         except:
             return HttpResponseNotFound("No Template Found")
 
-        self.edit_letter(self.resource, template_dict["provider"])
+        self.edit_letter(self.resource, template_dict["provider"], config)
 
         timezone = pytz.timezone("Europe/London") 
         current_datetime = datetime.now(timezone)
@@ -176,35 +179,52 @@ class FileTemplateView(View):
 
         return HttpResponseNotFound(response.status_code)
 
+    def save(self, tile, request, context=None):
+        raise NotImplementedError
+
+
+    def post_save(self, *args, **kwargs):
+        raise NotImplementedError
+
+    def delete(self, tile, request):
+        raise NotImplementedError
+
+    def on_import(self, tile):
+        raise NotImplementedError
+
+
+    def after_function_save(self, tile, request):
+        raise NotImplementedError
+
     def get_template_path(self, template_id):
         template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
             "7f1e7061-8bb0-4338-9342-118f1e9214aa": {
                 "filename": "smc-addendum-template.docx",
-                "provider": MonumentTemplateProvider
+                "provider": GenericTemplateProvider
             },
             "e14bd058-e9f2-48f8-8ef5-337310c3420f": {
                 "filename": "smc-provisional-template.docx",
-                "provider": MonumentTemplateProvider
+                "provider": GenericTemplateProvider
             },
             "8d605e5c-d0da-4b72-9ce3-2f7dac3381d1": {
                 "filename": "smc-refusal-template.docx",
-                "provider": MonumentTemplateProvider
+                "provider": GenericTemplateProvider
             },
             "b777ebb6-7ab6-4de3-9825-f8564928eee8" : {
-                "filename": "licence-covering-letter.docx",
-                "provider": LicenceTemplateProvider
+                "filename": "licence-test-letter.docx",
+                "provider": GenericTemplateProvider
             },
             "f86784f0-0c94-4427-bcba-4dd222461e30": {
                 "filename": "final-report-letter.docx",
-                "provider": LicenceTemplateProvider,
+                "provider": GenericTemplateProvider,
             },
             "c9b643bd-2d28-4c91-9d2e-7e861ed34f0f": {
                 "filename": "extra-name-on-letter.docx",
-                "provider": LicenceTemplateProvider,
+                "provider": GenericTemplateProvider,
             },
             "78533d33-e712-48ee-ab4c-6bdc9f0ca51d": {
                 "filename": "extension-of-licence-letter.docx",
-                "provider": LicenceTemplateProvider,
+                "provider": GenericTemplateProvider,
             }
         }
         for key, value in list(template_dict.items()):
@@ -213,13 +233,34 @@ class FileTemplateView(View):
 
         return None
 
-    def edit_letter(self, resource, provider):
-        mapping_dict = provider(resource).get_mapping()
+    def edit_letter(self, resource, provider, config):
+        # include = []
+
+        # if len(self.doc.paragraphs) > 0:
+        #     for paragraph in self.doc.paragraphs:
+        #          if re.search('<.*>', paragraph.text):
+        #             include += re.findall('<([^<]*)>', paragraph.text)
+
+        # if len(self.doc.tables) > 0:
+        #     for table in self.doc.tables:
+        #         for row in table.rows:
+        #             for cell in row.cells:
+        #                  if re.search('<.*>', cell.text):
+        #                     include += re.findall('<([^<]*)>', cell.text)
+
+        # config["include"] = include
+        mapping_dict = provider(resource).get_mapping(config)
         self.apply_mapping(mapping_dict)
 
     def apply_mapping(self, mapping):
         htmlTags = re.compile(r"<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
         for key in mapping:
+            if (isinstance(mapping[key], (arches_orm.view_models.concepts.EmptyConceptValueViewModel))):
+                mapping[key] = None
+            if (isinstance(mapping[key], (bool))):
+                mapping[key] = str(mapping[key])
+            if (isinstance(mapping[key], (list))):
+                mapping[key] = ", ".join(mapping[key])
             html = False
             if htmlTags.search(mapping[key] if mapping[key] is not None else ""):
                 html = True
@@ -288,7 +329,234 @@ class FileTemplateView(View):
         # perhaps replaces {{custom_object}} with pre-determined text structure with custom style/format
 
         return True
+
+Alias = str
+Mapping = Dict[Alias, Any]
+UUIDString = NewType('UUIDString', str)
+def validate_uuid_string(uuid_string: str) -> UUIDString:
+    try:
+        uuid_obj = uuid.UUID(uuid_string)
+    except ValueError:
+        return False
+    return str(uuid_obj) == uuid_string
+RelatedResource = NewType("RelatedResource", arches_orm.view_models.node_list.NodeListViewModel)
+
+class GenericTemplateProvider:
+    def __init__(self, resource_instance: Resource):
+        self.resource_instance = resource_instance
+        self.datatype_factory = DataTypeFactory()
+        self.config = {}
+        # self.tiles not currently used and might need removed
+        self.tiles = resource_instance.tiles
+
+    # Legacy, not in use
+    def get_value_from_tile(self, tile:Tile, node_id:UUIDString) -> Any:
+        """Obtain tile values (Legacy, not in use)
+
+            @param Tile: any tile object
+
+            @param node_id: the target node
+
+            @return Any: tile value or empty string
+        """
+        current_node = models.Node.objects.get(nodeid=node_id)
+        datatype = self.datatype_factory.get_instance(current_node.datatype)
+        returnvalue = datatype.get_display_value(tile, current_node)
+        return "" if returnvalue is None else returnvalue
     
+    # Legacy, not in use
+    def get_resource(self, resource_id:UUIDString) -> Resource:
+        """ Obtain resource from id
+
+            @param resourceinstanceid: uuid for the resource instance
+
+            @return Resource: an instance of arches.app.models.resource.Resource
+        """
+        resource = None
+        try:
+            resource = Resource.objects.filter(pk=resource_id).first()
+            
+        except Resource.DoesNotExist:
+            raise f"Resource ID ({resource_id}) does not exist"
+        return resource
+    
+    def extract(self, node_list) -> Mapping:
+        """Drill down a Semantic Node List to obtain actual values
+
+            @param node_list: 
+            
+            @return Mapping: a mapping with actual values
+        """
+        children_present = True
+        mapping = {}
+        while children_present:
+            newloop = []
+            found_semantic = False
+            for item in node_list:
+                if isinstance(item[0], str):
+                    try:
+                        newloop += item[1].items()
+                        found_semantic = True
+                    except:
+                        segment = {item[0] : item[1]}
+                        mapping = mapping | self.processDatatypes(segment)
+                    node_list = newloop
+                    children_present = found_semantic
+        return mapping
+    
+    def extract_from_related_resource(self, prefix:Alias, related_resource:RelatedResource) -> Mapping:
+        """Process values from a related resource's node list
+        
+            @param prefix: the alias for the related resource will be prefixed
+
+            @param related_resource: a node_list from a related resource
+
+            @return processed_items: a partially processed Mapping
+        """
+        mapping = self.extract(list(related_resource.items()))
+        processed_mapping = self.processDatatypes(mapping)
+        processed_items = {}
+        for processed_item in processed_mapping.items():
+            processed_items[f"{prefix}__{processed_item[0]}"] = processed_item[1]
+        return processed_items
+
+    def get_mapping(self, config={}) -> Mapping:
+        """Creates a mapping for the template engine from the resource instance.
+
+            @param self: must contain resource_instance:Resource
+
+            @param config?: Dict[str:str]
+
+            common config options:
+
+            'include': List[Alias] # if present only specified aliases will have their values mapped
+
+            'exclude': List[Alias] # if present all nodes apart from listed aliases will have their values mapped
+
+            'expand': List[Alias(related resource)] # related resources which should have their values included to the mapping
+
+            'special': Dict[str: List[str]] # The key will be added as an alias, the value determines the mapping value. value[0] determines the function to be used additional strings are paramaters. 
+
+                @example special: {'todays_date': ['make_date', 'today']} # adds 'todays_date' as an alias and uses the make_date function to create today's date
+        """
+        self.config = config
+
+        # wkrm
+        wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
+
+        # wkri
+        resource = wkrm.find(self.resource_instance.resourceinstanceid)
+
+        # Semantic Node List
+        semantic_node_list = list(resource.items())
+
+        
+        # I overlooked that the keys won't be in the first level of the dict. Would need to flatten the dicts to see if any of the children keys are in the include/exclude lists. Probably not worth doing
+        # if "include" in self.config:
+            #  semantic_node_list = [item for item in semantic_node_list if item[0] in self.config['include']]
+            
+        # if "exclude" in self.config:
+        #      semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
+
+        mapping = self.extract(semantic_node_list)  
+        if "special" in self.config:
+            for special_case in self.config["special"].items():
+                if special_case[1] == 'today':
+                    mapping[special_case[0]] = datetime.today().strftime("%d/%m/%Y")
+                elif special_case[1] == 'user':
+                     mapping = self.get_user(mapping, special_case[0])
+
+        return self.processDatatypes(mapping)
+
+    def processDatatypes(self, mapping:Mapping) -> Mapping:
+        """Provides the logic for extracting a node lists's values for different datatypes.
+
+            @param mapping: An unprocessed Mapping
+
+            @return mapping: A processed Mapping with values stringified
+        """
+        for item in mapping.items():
+            alias, value = item
+
+            if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
+                for node in value:
+                    if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
+                        mapping = mapping | self.extract(list(node.items()))
+                # TODO handle node lists that are not semantic e.g bibligraphic source is a resource-instance but has children. Currently we ignore the children 
+                mapping[alias] = None
+                continue
+            if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel, arches_orm.arches_django.datatypes.user.UserViewModel)):
+                mapping[alias] = None
+                continue
+            if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
+                if "expand" in self.config and alias in self.config["expand"] and len(value) > 0:
+                    for related_resource in value:
+                        mapping = mapping | self.extract_from_related_resource(alias, related_resource)
+                        mapping[alias] = str(related_resource)
+                else:
+                    resource_list = []
+                    for related_resource in value.data:
+                        resource_list.append(str(related_resource))
+                    mapping[alias] = resource_list
+                continue
+            if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
+                concept_list = []
+                for datum in value.data:
+                    concept_list.append(str(datum))
+                mapping[alias] = concept_list
+                continue
+            if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
+                mapping[alias] = str(value)
+                continue
+            if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
+                dicted_value = {}
+                for key in list(value.keys()):
+                    if key:
+                        dicted_value[key] = value[key]
+                mapping = mapping | self.extract(list(dicted_value.items()))
+                mapping[alias] = None
+                continue
+            if isinstance(value, str) and not isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel, arches_orm.view_models.concepts.ConceptValueViewModel, arches_orm.view_models.string.StringViewModel)):
+                # Arches ORM doesn't seem to have date datatype
+                try:
+                    mapping[alias] = datetime.fromisoformat(value).strftime("%d/%m/%Y")
+                except Exception as e:
+                    pass
+
+                # Arches ORM doesn't seem to have domain-value datatype
+                if validate_uuid_string(value):
+                     #TODO check only domain-value datatypes are present and make domain logic
+                     pass
+                continue
+                
+        return mapping
+    
+    # not in use but probably a more reusable way of creating special cases
+    def make_date(self, operator:str, mapping:Mapping, alias:Alias, vars=None):
+         if operator == 'today':
+              mapping[alias] = datetime.today().strftime("%d/%m/%Y")
+         elif operator == 'delta':
+              delta = datetime.timedelta(days=vars.days, months=vars.months, years=vars.years)
+              mapping[alias] = datetime.today()+delta.strftime("%d/%m/%Y")
+         pass
+    
+    def get_user(self, mapping:Mapping, alias:Alias) -> Mapping:
+        from arches_orm.models import Person
+        from arches_orm.adapter import admin
+        try:
+            with admin():
+                person = Person.where(user_account=self.config["user"].id)
+                person = person[0] if len(person) else self.config["user"] 
+        except Resource.DoesNotExist:
+            person = self.config["user"]
+
+        mapping[alias] = str(person)
+        return mapping
+    
+    def make_node_list_string(self):
+         pass
+
+            
 class MonumentTemplateProvider:
     MONUMENT_NAME_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11'
     MONUMENT_NAME_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11'
@@ -350,7 +618,6 @@ class MonumentTemplateProvider:
         }
 
     def get_value_from_tile(self, tile, node_id):
-
         current_node = models.Node.objects.get(nodeid=node_id)
         datatype = self.datatype_factory.get_instance(current_node.datatype)
         returnvalue = datatype.get_display_value(tile, current_node)
@@ -1091,7 +1358,6 @@ class LicenceTemplateProvider:
                        self.mapping["Location Description"] = self.get_value_from_tile(
                            activity_tile, self.ACTIVITY_LOCATION_DESCRIPTION_NODE
                        )
-        print(self.mapping)
         return self.mapping
 
 class DocumentHTMLParser(HTMLParser):
