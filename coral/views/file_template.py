@@ -104,7 +104,6 @@ class FileTemplateView(View):
             template_path = os.path.join(
                 settings.APP_ROOT, "docx", template_dict["filename"]
             )
-
         try:
             self.doc = Document(fs.open(template_path))
         except:
@@ -226,6 +225,14 @@ class FileTemplateView(View):
                 "filename": "extension-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
             },
+            "bb6e23cf-0331-ea39-7164-a3af1607a958": {
+                "filename": "advance-listing-letter-to-owner-occupier.docx",
+                "provider": GenericTemplateProvider,
+            },
+            "95456a6b-30e0-b727-91f9-ccc0acfcac87": {
+                "filename": "advance-listing-letter-to-council.docx",
+                "provider": GenericTemplateProvider,
+            },
             "28faad65-2403-b0b9-3ba8-bbbc99efd175": {
                 "filename": "overdue-excavations-report-letter.docx",
                 "provider": GenericTemplateProvider,
@@ -233,8 +240,7 @@ class FileTemplateView(View):
             "f08c5baf-4434-ac59-a02c-e692ae79d455": {
                 "filename": "transfer-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
-            },
-
+            }
         }
         for key, value in list(template_dict.items()):
             if key == template_id:
@@ -556,6 +562,7 @@ class GenericTemplateProvider:
             with admin():
                 person = Person.where(user_account=self.config["user"].id)
                 person = person[0] if len(person) else self.config["user"] 
+                person = person.name[0].full_name
         except Resource.DoesNotExist:
             person = self.config["user"]
 
