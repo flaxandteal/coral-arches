@@ -75,7 +75,7 @@ class FileTemplateView(View):
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
-        config = request.POST.get("config", data.get("config", None))
+        config = request.POST.get("config", data.get("config", {}))
         parenttile_id = request.POST.get("parenttile_id")
         resourceinstance_id = request.POST.get(
             "resourceinstance_id", data.get("resourceinstance_id", None)
@@ -83,6 +83,8 @@ class FileTemplateView(View):
         transaction_id = request.POST.get("transaction_id", uuid.uuid1())
         self.resource = Resource.objects.get(resourceinstanceid=resourceinstance_id)
         self.resource.load_tiles()
+        self.user = request.user
+        config["user"] = self.user
 
         if (
             os.path.exists(os.path.join(settings.APP_ROOT, "uploadedfiles", "docx"))
@@ -461,6 +463,8 @@ class GenericTemplateProvider:
             for special_case in self.config["special"].items():
                 if special_case[1] == 'today':
                     mapping[special_case[0]] = datetime.today().strftime("%d/%m/%Y")
+                elif special_case[1] == 'user':
+                     mapping = self.get_user(mapping, special_case[0])
 
         return self.processDatatypes(mapping)
 
