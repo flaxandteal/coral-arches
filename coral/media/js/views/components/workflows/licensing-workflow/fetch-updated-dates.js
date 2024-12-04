@@ -67,6 +67,7 @@ define([
         const date = new Date(dateString);
 
         date.setMonth(date.getMonth() + 6);
+        date.setDate(date.getDate() - 1);
       
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
