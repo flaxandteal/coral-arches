@@ -766,7 +766,10 @@ define([
                     semanticName: 'Correspondence',
                     letterMetatype: '976e49fe-3928-11ef-ab34-0242ac140006',
                     letterTypeNode: '56364572-3928-11ef-b242-0242ac140006',
-                    letterResourceNode: '21319570-3928-11ef-b242-0242ac140006'
+                    letterResourceNode: '21319570-3928-11ef-b242-0242ac140006',
+                    config: {
+                      expand: ["associated_activities", "employing_body", "licensee"]
+                    }
                   },
                   noTileSidebar: true,
                   tilesManaged: 'many',
