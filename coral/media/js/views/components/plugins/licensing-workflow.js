@@ -768,7 +768,10 @@ define([
                     letterTypeNode: '56364572-3928-11ef-b242-0242ac140006',
                     letterResourceNode: '21319570-3928-11ef-b242-0242ac140006',
                     config: {
-                      expand: ["associated_activities", "employing_body", "licensee"]
+                      expand: ["associated_activities", "employing_body", "licensee"],
+                      special: {
+                        today: "today"
+                      }
                     }
                   },
                   noTileSidebar: true,
