@@ -213,6 +213,12 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 arches_plugins = group.arches_plugins
                 print(arches_plugins, "GAP")
                 for arches_plugin in arches_plugins:
+                    if not isinstance(arches_plugin, ArchesPlugin):
+                        try:
+                            logger.warn("A non-plugin resource was listed as an Arches plugin in a group: %s in %s", arches_plugin.id, group.id)
+                        except Exception as exc:
+                            logger.warn("A non-plugin resource was listed as an Arches plugin in a group: %s", str(exc))
+                        continue
                     print(arches_plugin, "AP")
                     try:
                         identifier = uuid.UUID(arches_plugin.plugin_identifier)
