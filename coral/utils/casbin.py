@@ -1,5 +1,8 @@
-from arches.app.search.components.base import SearchFilterFactory
+import hashlib
+import time
+import uuid
 from urllib.parse import parse_qs
+from arches.app.search.components.base import SearchFilterFactory
 from arches.app.views.search import build_search
 from arches.app.search.elasticsearch_dsl_builder import Bool, Match, Query, Ids, Nested, Terms, MaxAgg, Aggregation, UpdateByQuery
 from arches.app.search.search_engine_factory import SearchEngineFactory
@@ -8,7 +11,10 @@ from arches.app.models.models import Plugin
 from arches.app.models.resource import Resource
 from arches_orm.models import Set, LogicalSet, ArchesPlugin
 from arches_orm.adapter import context_free
-import time
+
+def _consistent_hash(string: str):
+    hsh = hashlib.sha256(string.encode("utf-8"))
+    return uuid.UUID(hsh.hexdigest()[::2])
 
 class SetApplicator:
     def __init__(self, print_statistics, wait_for_completion):
@@ -62,9 +68,15 @@ class SetApplicator:
         plugins = {str(plugin.pk): plugin for plugin in Plugin.objects.all()}
         plugins.update({str(plugin.slug): plugin for plugin in plugins.values()})
         arches_plugins = ArchesPlugin.all()
+        for ap in arches_plugins:
+            if ap.plugin_identifier and ap.id != _consistent_hash(ap.plugin_identifier):
+                print("Found a plugin with an incorrect identifier - removing", ap.plugin_identifier, ap.id)
+                ap.delete()
+        arches_plugins = ArchesPlugin.all()
         known_plugins = set(str(plugins[str(plugin.plugin_identifier)].pk) for plugin in arches_plugins)
         known_plugins |= set(str(plugins[str(plugin.plugin_identifier)].slug) for plugin in arches_plugins)
         print(known_plugins)
+
         unknown_plugins = set(str(plugin.pk) for plugin in Plugin.objects.all()) - known_plugins
         print(unknown_plugins, "UP")
         for plugin in unknown_plugins:
@@ -72,6 +84,7 @@ class SetApplicator:
             ap = ArchesPlugin()
             ap.name = str(plugin.name) or "(unknown)"
             ap.plugin_identifier = str(plugin.slug or plugin.pk)
+            ap.id = _consistent_hash(ap.plugin_identifier)
             ap.save()
             ap._.index()
 
