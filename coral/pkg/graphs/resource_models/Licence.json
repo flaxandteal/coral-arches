@@ -744,13 +744,13 @@
                         "defaultValue": null,
                         "label": "Applied"
                     },
-                    "id": "a6eb95d2-31ac-4f44-8183-192fca1fe138",
+                    "id": "e5ed8520-31ac-4f44-8183-192fca1fe138",
                     "label": {
                         "en": "Applied"
                     },
                     "node_id": "1938e0ac-703d-11ef-934d-0242ac120006",
                     "sortorder": 32,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000006"
                 },
                 {
@@ -4968,6 +4968,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "69b2738e-c4d2-11ee-b171-0242ac180006",
+                    "edgeid": "69b2738e-eacf-4bfa-834d-aa894affa7cf",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115_finishes",
+                    "rangenode_id": "1938e0ac-703d-11ef-b171-f246ab1c4029"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
                     "edgeid": "5d7c1ce6-8bd8-4d99-8d63-c284dd392e98",
                     "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
@@ -7346,6 +7355,26 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "cur_d_decision_node": "2e7a81b0-c4d4-11ee-b171-0242ac180006",
+                        "cur_d_node": "2e7a876e-c4d4-11ee-b171-0242ac180006",
+                        "cur_e_decision_node": "50970b20-c4d3-11ee-90c5-0242ac180006",
+                        "cur_e_node": "50970864-c4d3-11ee-90c5-0242ac180006",
+                        "cur_e_nodegroup": "5096df56-c4d3-11ee-90c5-0242ac180006",
+                        "decision_nodegroup": "1887f678-c42d-11ee-bc4b-0242ac180006",
+                        "decision_valid_until_node": "1887fc86-c42d-11ee-bc4b-0242ac180006",
+                        "extension_applied_node": "1938e0ac-703d-11ef-b171-f246ab1c4029",
+                        "extension_of_licence_nodegroup": "69b2738e-c4d2-11ee-b171-0242ac180006",
+                        "triggering_nodegroups": [
+                            "69b2738e-c4d2-11ee-b171-0242ac180006"
+                        ],
+                        "valid_until_node": "412902cc-c4d5-11ee-90c5-0242ac180006"
+                    },
+                    "function_id": "af21207f-4296-4519-912a-80153a98e5db",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "id": "69b2738e-48cc-4afe-99e4-f83930ba80ae"
+                },
+                {
+                    "config": {
                         "application_details_nodegroup": "4f0f655c-48cf-11ee-8e4e-0242ac140007",
                         "application_details_report_classification_node": "ff3de496-7117-11ef-83a1-0242ac120006",
                         "report_classification_date_node": "ea6ea7a8-dc70-11ee-b70c-0242ac120006",
@@ -7567,6 +7596,38 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "extension_of_licence_applied",
+                    "config": {
+                        "falseLabel": {
+                            "en": "No"
+                        },
+                        "i18n_properties": [
+                            "trueLabel",
+                            "falseLabel"
+                        ],
+                        "trueLabel": {
+                            "en": "Yes"
+                        }
+                    },
+                    "datatype": "boolean",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Extension Applied",
+                    "nodegroup_id": "69b2738e-c4d2-11ee-b171-0242ac180006",
+                    "nodeid": "1938e0ac-703d-11ef-b171-f246ab1c4029",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P115_finishes",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "report_classification_metatype",
                     "config": {
@@ -7834,41 +7895,9 @@
                 {
                     "alias": "letter_type",
                     "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "b777ebb6-7ab6-4de3-9825-f8564928eee8",
-                                "selected": false,
-                                "text": {
-                                    "en": "Licence Cover Letter"
-                                }
-                            },
-                            {
-                                "id": "f86784f0-0c94-4427-bcba-4dd222461e30",
-                                "selected": false,
-                                "text": {
-                                    "en": "Final Report Letter"
-                                }
-                            },
-                            {
-                                "id": "c9b643bd-2d28-4c91-9d2e-7e861ed34f0f",
-                                "selected": false,
-                                "text": {
-                                    "en": "Extra Name on Licence Letter"
-                                }
-                            },
-                            {
-                                "id": "78533d33-e712-48ee-ab4c-6bdc9f0ca51d",
-                                "selected": false,
-                                "text": {
-                                    "en": "Extension of Licence Letter"
-                                }
-                            }
-                        ]
+                        "rdmCollection": "75ba554a-9a0b-10fd-73d2-24c89b821e57"
                     },
-                    "datatype": "domain-value",
+                    "datatype": "concept",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -8115,14 +8144,14 @@
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Grant licence"
+                                    "en": "Approve transfer of licence"
                                 }
                             },
                             {
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
-                                    "en": "Do not grant licence"
+                                    "en": "Do not approve transfer"
                                 }
                             }
                         ]
@@ -9145,7 +9174,7 @@
                                 "id": "381ae7ae-0d2f-45e3-855d-af7fe3aef9a0",
                                 "selected": false,
                                 "text": {
-                                    "en": "Decline"
+                                    "en": "Declined"
                                 }
                             }
                         ]
@@ -10047,14 +10076,14 @@
                                 "id": "e36ebf43-b00e-4e12-a8a1-eb8843a0a926",
                                 "selected": false,
                                 "text": {
-                                    "en": "Do not grant licence"
+                                    "en": "Do not approve extension"
                                 }
                             },
                             {
                                 "id": "5e82bfd8-a455-4a2b-90d2-abe5854b537a",
                                 "selected": false,
                                 "text": {
-                                    "en": "Grant licence"
+                                    "en": "Approve extension"
                                 }
                             }
                         ]

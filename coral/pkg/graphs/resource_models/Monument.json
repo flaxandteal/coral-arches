@@ -5031,6 +5031,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "49c655dc-f5af-11ee-9f07-0242ac170006",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Designation Letter Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "2ba965c8-e7eb-4a4b-98e6-1d6c80162fa9",
+                    "label": {
+                        "en": "Designation Letter Type"
+                    },
+                    "node_id": "218a5601-5eb9-415a-886a-c7900dc5443b",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "58f1a4a0-d640-11ee-8b04-0242ac180006",
                     "config": {
                         "defaultResourceInstance": [],
@@ -15250,6 +15272,28 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "49c655dc-f5af-11ee-9f07-0242ac170006",
+                    "config": {
+                        "defaultValue": "956f9779-3524-448e-b2de-eabf2de95d51",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Designation Letter Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "66267540-acd0-4d40-a3e7-e63c4abba631",
+                    "label": {
+                        "en": "Letter Metatype"
+                    },
+                    "node_id": "d2f77030-a325-460c-b6b1-b4695591bc68",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
                     "card_id": "52cbc3a5-4007-4edc-880c-f02c96e0ce2a",
                     "config": {
                         "dateFormat": "DD-MM-YYYY",
@@ -16441,12 +16485,30 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "49c65316-f5af-11ee-9f07-0242ac170006",
+                    "edgeid": "7383b050-1228-4696-a8d9-07c4d10dbe0c",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "218a5601-5eb9-415a-886a-c7900dc5443b"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "49c6587a-f5af-11ee-9f07-0242ac170006",
                     "edgeid": "49c6898a-f5af-11ee-9f07-0242ac170006",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "49c65b86-f5af-11ee-9f07-0242ac170006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "218a5601-5eb9-415a-886a-c7900dc5443b",
+                    "edgeid": "42e64feb-e3f1-4b8d-aa8e-d590d65351ae",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "d2f77030-a325-460c-b6b1-b4695591bc68"
                 },
                 {
                     "description": null,
@@ -25739,6 +25801,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "designation_letter_type",
+                    "config": {
+                        "rdmCollection": "ef9ffc93-a34b-03bc-1738-46c30e50c4db"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Designation Letter Type",
+                    "nodegroup_id": "49c65316-f5af-11ee-9f07-0242ac170006",
+                    "nodeid": "218a5601-5eb9-415a-886a-c7900dc5443b",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "letter_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
@@ -25756,6 +25841,29 @@
                     "name": "Letter Metatype",
                     "nodegroup_id": "49c65316-f5af-11ee-9f07-0242ac170006",
                     "nodeid": "49c65b86-f5af-11ee-9f07-0242ac170006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "designation_letter_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Designation Letter Metatype",
+                    "nodegroup_id": "49c65316-f5af-11ee-9f07-0242ac170006",
+                    "nodeid": "d2f77030-a325-460c-b6b1-b4695591bc68",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
