@@ -6200,11 +6200,11 @@
                     "card_id": "cde07ceb-4018-4c4c-9810-3a61d36fe842",
                     "config": {
                         "defaultValue": "",
-                        "en": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "New Grade",
+                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -6216,7 +6216,7 @@
                     "node_id": "591d1d50-03aa-11ef-948f-0242ac150003",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "7400751c-8895-11ea-9130-f875a44e0e11",
@@ -25415,56 +25415,9 @@
                 {
                     "alias": "new_grade_type",
                     "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "89fdb87c-7cc1-4c2b-95ec-85e12fcdeb15",
-                                "selected": false,
-                                "text": {
-                                    "en": "D1 - Awaiting Renaming"
-                                }
-                            },
-                            {
-                                "id": "91e9ea50-92e1-4597-9e65-d980c1eefa93",
-                                "selected": false,
-                                "text": {
-                                    "en": "Record Only - Not Listed"
-                                }
-                            },
-                            {
-                                "id": "f14439f0-0647-441a-9e9f-feb7464c6611",
-                                "selected": false,
-                                "text": {
-                                    "en": "B2"
-                                }
-                            },
-                            {
-                                "id": "cf9619ea-cc35-4395-a878-8c806a472918",
-                                "selected": false,
-                                "text": {
-                                    "en": "B1"
-                                }
-                            },
-                            {
-                                "id": "f32dd1a2-87b1-4ef3-8590-f04b06f83bf1",
-                                "selected": false,
-                                "text": {
-                                    "en": "B+"
-                                }
-                            },
-                            {
-                                "id": "f91c0991-0f1a-4b33-ab0a-1a75248d8946",
-                                "selected": false,
-                                "text": {
-                                    "en": "A"
-                                }
-                            }
-                        ],
-                        "rdmCollection": null
+                        "rdmCollection": "d67be3d7-4f88-4c0d-9a1b-e1ac0f0c7921"
                     },
-                    "datatype": "domain-value",
+                    "datatype": "concept",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
