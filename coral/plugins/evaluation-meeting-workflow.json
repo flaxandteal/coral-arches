@@ -26,7 +26,20 @@
                     "b37552bd-9527-11ea-97f4-f875a44e0e11"
                   ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
-                  "semanticName": "System Reference Numbers",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "system-reference"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "58a2b98f-a255-11e9-9a30-00224800b26d"
+                  ],
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "semanticName": "Associated Building",
                   "requiredParentTiles": [
                     {
                       "lookupName": "locationData",
@@ -36,7 +49,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
-                "uniqueInstanceName": "5869a138-b293-49bb-9e96-fa2e309ce891"
+                "uniqueInstanceName": "building"
               }
             ]
           }
@@ -54,7 +67,7 @@
                 "parameters": {
                   "labels": [["Listing Query", "LQ"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4254be30-03b3-11ef-b0e2-0242ac150003",
                   "semanticName": "Listing Query"
                 },
@@ -66,12 +79,13 @@
                 "parameters": {
                   "labels": [["Monument or Area", "HB"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
                   "semanticName": "Related Monuments and Areas",
                   "nodeOptions": {
                     "58a2b98f-a255-11e9-9a30-00224800b26d": {
                       "allowInstanceCreation": false,
+                      "disabled": true,
                       "searchString": "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]",
                       "config": {
                         "label": "HB",
@@ -87,7 +101,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "c6cb8c66-0318-11ef-8ec2-0242ac150006",
                   "semanticName": "Evaluation Meeting Type"
                 },
@@ -98,7 +112,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "2ca5f42c-0319-11ef-8a7d-0242ac150006",
                   "semanticName": "Full Survey Requirement Type"
                 },
@@ -110,7 +124,7 @@
                 "parameters": {
                   "labels": [["Date Consulted", "Meeting Date"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "7224417b-893a-11ea-b383-f875a44e0e11",
                     "40eff4ce-893a-11ea-ae2e-f875a44e0e11"
@@ -129,7 +143,7 @@
                     ["Historian", "Historian Present"]
                   ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "b7304f4c-3ace-11eb-8884-f875a44e0e11",
                     "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
@@ -157,7 +171,7 @@
                 "parameters": {
                   "labels": [["Application Reason", "Reason"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
                   "semanticName": "Consultation Descriptions"
                 },
@@ -180,7 +194,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "083ef3fe-ca61-11ee-afca-0242ac180006",
                     "083fa088-ca61-11ee-afca-0242ac180006",
@@ -191,7 +205,7 @@
                     "083f45ac-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
                   "semanticName": "Addresses"
                 },
                 "tilesManaged": "one",
@@ -201,9 +215,9 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "69500360-d7c5-11ee-a011-0242ac120006",
-                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
                   "semanticName": "Council"
                 },
                 "tilesManaged": "one",
@@ -213,12 +227,12 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "083f0650-ca61-11ee-afca-0242ac180006"
                   ],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas",
                   "nodeOptions": {
                     "083f0db2-ca61-11ee-afca-0242ac180006": {
@@ -240,9 +254,9 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
                   "semanticName": "National Grid References"
                 },
                 "tilesManaged": "one",
@@ -252,10 +266,10 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
                   "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['locationData']",
+                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
                 },
                 "tilesManaged": "one",
@@ -294,7 +308,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['5869a138-b293-49bb-9e96-fa2e309ce891'][0]['resourceid']['resourceInstanceId']",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "34959a52-03aa-11ef-948f-0242ac150003",
                   "semanticName": "Evaluation",
                   "nodeOptions": {

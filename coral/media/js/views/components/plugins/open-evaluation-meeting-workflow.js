@@ -14,7 +14,7 @@ define([
       this.selectedEvaluationMeeting = ko.observable();
       this.selectedBuilding = ko.observable();
 
-      this.buildingString = ``
+      this.buildingString = `/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]`
 
       this.configKeys = ko.observable({ placeholder: 0 });
   
@@ -37,7 +37,7 @@ define([
   
       this.searchSiteVisits = async (resourceId) => {
         const searchResponse = await window.fetch(
-            arches.urls.search_results + `?advanced-search=[{"op"%3A"and"%2C"b37552c2-9527-11ea-8356-f875a44e0e11"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}%2C{"op"%3A"and"%2C"b37552c0-9527-11ea-ad80-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A"EVM"}%2C"b37552c1-9527-11ea-90e0-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A""}%2C"b37552c0-9527-11ea-ad80-f875a44e0e11"%3A{"op"%3A"eq"%2C"val"%3A""}}]&format=json`
+            arches.urls.search_results + `?advanced-search=[{"op"%3A"and"%2C"58a2b98f-a255-11e9-9a30-00224800b26d"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}]&format=json`
         )
         const data = await searchResponse.json()
         return data.results.hits.hits;
