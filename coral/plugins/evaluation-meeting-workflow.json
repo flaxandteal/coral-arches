@@ -292,19 +292,28 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['9185bf0e-9ba7-48d0-a333-d697777b3eee']['f15ca0ea-0878-4ab6-a80c-b6a570b1b380']",
-                  "nodegroupid": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
-                  "semanticName": "Existing Grade Type",
+                  "labels": [["Monument or Area", "HB"]],
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "semanticName": "Existing Grade",
                   "nodeOptions": {
-                    "6af2b696-efc5-11eb-b0b5-a87eeabdefba": {
-                      "disabled": true
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
+                      "allowInstanceCreation": false,
+                      "disabled": true,
+                      "disableDelete": true,
+                      "searchString": "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]",
+                      "config": {
+                        "label": "HB",
+                        "searchString": "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
+                      }
                     }
-                  }
+                  },
+                  "tileid": "['start-meeting-step']['building'][0]['resourceid']['tileId']"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "833231b8-301c-4bfe-953b-596674e2e19c"
+                "componentName": "get-designation-details",
+                "uniqueInstanceName": "f15ca0ea-0878-4ab6-a80c-00224800b26d"
               },
               {
                 "parameters": {
