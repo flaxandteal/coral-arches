@@ -297,18 +297,6 @@
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
                   "semanticName": "Existing Grade",
-                  "nodeOptions": {
-                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
-                      "allowInstanceCreation": false,
-                      "disabled": true,
-                      "disableDelete": true,
-                      "searchString": "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]",
-                      "config": {
-                        "label": "HB",
-                        "searchString": "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
-                      }
-                    }
-                  },
                   "tileid": "['start-meeting-step']['building'][0]['resourceid']['tileId']"
                 },
                 "tilesManaged": "one",

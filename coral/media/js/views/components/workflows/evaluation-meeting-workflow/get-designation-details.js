@@ -29,7 +29,7 @@ define([
           });
         });
   
-      const heritageAssetId = this.tile.data["58a2b98f-a255-11e9-9a30-00224800b26d"]()[0].resourceId()
+      const heritageAssetId = this.tile.data["58a2b98f-a255-11e9-9a30-00224800b26d"]()[0].resourceId
 
       this.fetchTileData = async (resourceId, nodeId) => {
         const tilesResponse = await window.fetch(
