@@ -15995,6 +15995,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "34959a52-03aa-11ef-948f-0242ac150003",
+                    "edgeid": "98cd5214-2bf5-4b99-be22-0242ac150003",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "8d41e49e-03ab-11ef-948f-0242ac150003"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "49d5d390-cfe9-11ee-8a4e-0242ac180006",
                     "edgeid": "997be402-b067-48f0-b94a-a59771bd0dfe",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -25430,6 +25439,139 @@
                     "name": "New Grade Type",
                     "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
                     "nodeid": "591d1d50-03aa-11ef-948f-0242ac150003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "evaluation_criteria",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "text": {"en": "A. Style"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "B. Proportion"},
+                                "selected": false,
+                                "id": "3f45cd03-4ba5-5ca5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "C. Ornamentation"},
+                                "selected": false,
+                                "id": "3f456666-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "D. Plan Form"},
+                                "selected": false,
+                                "id": "32fbcd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "E. Spatial Organisation"},
+                                "selected": false,
+                                "id": "abcdcd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "F. Structural System"},
+                                "selected": false,
+                                "id": "5678cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "G. Innovatory Qualities"},
+                                "selected": false,
+                                "id": "9999cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "H+. Alterations enhancing the building"},
+                                "selected": false,
+                                "id": "d2f6cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "H-. Alterations detracting from building"},
+                                "selected": false,
+                                "id": "4b60cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "I. Quality and survival of Interior"},
+                                "selected": false,
+                                "id": "b1b7cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "J. Setting"},
+                                "selected": false,
+                                "id": "78a5cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "K. Group value"},
+                                "selected": false,
+                                "id": "7241cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "R. Age"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "S. Authenticity"},
+                                "selected": false,
+                                "id": "349fcd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "T. Historic Importance"},
+                                "selected": false,
+                                "id": "5555cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "U. Historic Associations"},
+                                "selected": false,
+                                "id": "4a14cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "V. Authorship"},
+                                "selected": false,
+                                "id": "e261478a-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "W. Northern Ireland / International interest"},
+                                "selected": false,
+                                "id": "3f45cd02-d2f6-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "X. Local Interest"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4b60-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "Y. Social, cultural or economic importance"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-b1b7-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "Z. Rarity"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-94d6-a55478a57241"
+                            }
+                        ],
+                        "rdmCollection": null
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Criteria",
+                    "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
+                    "nodeid": "8d41e49e-03ab-11ef-948f-0242ac150003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
