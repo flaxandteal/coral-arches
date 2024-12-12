@@ -85,10 +85,10 @@ build: check_no_empty_arches_directory check_only_one_python_module docker
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
 	if [ -z {{ARCHES_PROJECT}}/media/node_modules/jquery-validation ]; then rm -rf {{ARCHES_PROJECT}}/media/node_modules; fi
 	just compose stop
-	just compose run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
-	just compose run --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
+	just compose run --rm --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
+	just compose run --rm --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
 	if [ -d {{ARCHES_PROJECT}}/pkg ]; then {{TOOLKIT_FOLDER}}/act.py . load_package --yes; fi
-	just compose run --entrypoint /web_root/entrypoint.sh arches_worker run_npm_build_development
+	just compose run --rm --entrypoint /web_root/entrypoint.sh arches_worker run_npm_build_development
 	just compose stop
 	@echo "IF THIS IS YOUR FIRST TIME RUNNING make build AND YOU HAVE NOT ALREADY, MAKE SURE TO UPDATE urls.py (see just help)"
 
@@ -110,7 +110,7 @@ manage *args: docker
 	if [ $(just group-recipe-exists manage "$1" | wc -w) = 1 ]; 
 	then 
 	command=$1; shift
-	argstring=$(just $command $@); just compose run --entrypoint /bin/bash arches_worker -c ". ../ENV/bin/activate; python manage.py $argstring"
+	argstring=$(just $command $@); just compose run --rm --entrypoint /bin/bash arches_worker -c ". ../ENV/bin/activate; python manage.py $argstring"
 	else argstring=$(echo ". ../ENV/bin/activate; python manage.py $@"); just compose run --entrypoint /bin/bash arches_worker -c "$argstring"
 	fi
 
@@ -145,12 +145,12 @@ run: docker
 [doc('restarts the arches container with --service-ports')]
 web: docker
 	just compose stop arches
-	just compose run --service-ports arches
+	just compose run --rm --service-ports arches
 
 [group('docker')]
 [doc('runs the arches_worker and runs the webpack command in DEV mode')]
 webpack: docker
-	just compose run --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd {{ARCHES_PROJECT}}; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'
+	just compose run --rm --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd {{ARCHES_PROJECT}}; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'
 
 [group('docker')]
 [doc('docker compose down and remove the volumes and images')]
@@ -221,4 +221,58 @@ clean: docker
 
 
 # for func in $(ls coral/functions/); do if [[ $func != *"__"* ]]; then python manage.py fn register -s coral/functions/$func; fi done
+
+# get business data excluding a specific nodeid
+# jq '.business_data.resources[].tiles |= map(select(.nodegroup_id != "ae2039a4-7070-11ee-bb7a-0242ac140008"))' Group_2024-12-09_13-46-27.json 
+
+# Get all group data but members (not as useful as i thought because some members are there to set permissions, i.e when another group is the member), I've included business_data.resource because I was getting confused working with non-symetrical jsons
+# .business_data.resources[] | {name: .resourceinstance.name, tiles: [.tiles[] | select(.nodegroup_id == "ae2039a4-7070-11ee-bb7a-0242ac140008")]} | select(.tiles | length > 0)
+
+
+# get member tiles only from environment
+# jq '.business_data.resources | map(
+#   {
+#     name: .resourceinstance.name,
+#     tiles: [.tiles[] | select(.nodegroup_id == "bb2f7e1c-7029-11ee-885f-0242ac140008")]
+#   } | select(.tiles | length > 0)) | {business_data: {resources: .}}' > member_only.json
+
+
+# combine member tiles to the memberless group, adds the member tiles everything else uses the first file
+# jq --slurp '
+# {
+#   "business_data": {
+#     "resources": (
+#       map(.business_data.resources) | add |
+#       group_by(.resourceinstance.name) |
+#       map({
+#         resourceinstance: .[0].resourceinstance,
+#         tiles: (
+#           map(.tiles) | add |
+#           group_by(.nodegroup_id) |
+#           map(if .[0].nodegroup_id == "bb2f7e1c-7029-11ee-885f-0242ac140008" then # only add members
+#             {
+#               nodegroup_id: .[0].nodegroup_id,
+#               parenttile_id: .[0].parenttile_id,
+#               provisionaledits: .[0].provisionaledits,
+#               resourceinstance_id: .[0].resourceinstance_id,
+#               sortorder: .[0].sortorder,
+#               tileid: .[0].tileid, # .[0] use the first file for everything but data
+#               data: (
+#                 reduce .[].data as $item ({}; . + ($item | if type == "object" then $item else {} end))
+#               ) # reduce data to one list of all members; TODO exclude duplicates
+			  
+#             }
+#           else
+#             .[0] # use the first file for all nodegroups that are not members
+#           end)
+#         )
+#       })
+#     )
+#   }
+# }
+# ' memberless_group.json member_only.json > merged.json
+
+
+# just manage packages -o import_business_data -s merged.json -ow overwrite
+
 

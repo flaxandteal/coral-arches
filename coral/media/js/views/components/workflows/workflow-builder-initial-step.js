@@ -13,9 +13,7 @@ define([
     const self = this;
 
     _.extend(self, params.form);
-
     self.parentTiles = ko.observable(params.form.savedData()?.parentTiles || {});
-
     self.tile().dirty.subscribe(function (val) {
       self.dirty(val);
     });
@@ -31,7 +29,6 @@ define([
           }
         });
       });
-
     params.form.save = async () => {
       const txnId = uuid.generate();
       try {
@@ -108,7 +105,6 @@ define([
       } else {
         parentTileTemplate.tileid = self.parentTiles()[lookupName];
       }
-
       const parentTile = await window.fetch(arches.urls.api_tiles(self.parentTiles()[lookupName]), {
         method: 'POST',
         credentials: 'include',

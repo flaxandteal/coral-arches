@@ -6200,11 +6200,11 @@
                     "card_id": "cde07ceb-4018-4c4c-9810-3a61d36fe842",
                     "config": {
                         "defaultValue": "",
-                        "en": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "New Grade",
+                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -6216,7 +6216,7 @@
                     "node_id": "591d1d50-03aa-11ef-948f-0242ac150003",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "7400751c-8895-11ea-9130-f875a44e0e11",
@@ -11584,7 +11584,7 @@
                     "node_id": "083fafe2-345c-11ef-a5b7-0242ac120003",
                     "sortorder": 34,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "548d948e-7642-4752-89a6-4ba21773cbc6",
@@ -15992,6 +15992,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "591d1d50-03aa-11ef-948f-0242ac150003"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "34959a52-03aa-11ef-948f-0242ac150003",
+                    "edgeid": "98cd5214-2bf5-4b99-be22-0242ac150003",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "8d41e49e-03ab-11ef-948f-0242ac150003"
                 },
                 {
                     "description": null,
@@ -22112,7 +22121,7 @@
                         "options": [],
                         "rdmCollection": "c333cc6e-9abe-9782-bfe5-085f1389c2c7"
                     },
-                    "datatype": "concept",
+                    "datatype": "concept-list",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Townland",
@@ -25415,51 +25424,137 @@
                 {
                     "alias": "new_grade_type",
                     "config": {
+                        "rdmCollection": "d67be3d7-4f88-4c0d-9a1b-e1ac0f0c7921"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "New Grade Type",
+                    "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
+                    "nodeid": "591d1d50-03aa-11ef-948f-0242ac150003",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "evaluation_criteria",
+                    "config": {
                         "i18n_config": {
                             "fn": "arches.app.datatypes.datatypes.DomainDataType"
                         },
                         "options": [
                             {
-                                "id": "89fdb87c-7cc1-4c2b-95ec-85e12fcdeb15",
+                                "text": {"en": "A. Style"},
                                 "selected": false,
-                                "text": {
-                                    "en": "D1 - Awaiting Renaming"
-                                }
+                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
                             },
                             {
-                                "id": "91e9ea50-92e1-4597-9e65-d980c1eefa93",
+                                "text": {"en": "B. Proportion"},
                                 "selected": false,
-                                "text": {
-                                    "en": "Record Only - Not Listed"
-                                }
+                                "id": "3f45cd03-4ba5-5ca5-94d6-99dd3522fa23"
                             },
                             {
-                                "id": "f14439f0-0647-441a-9e9f-feb7464c6611",
+                                "text": {"en": "C. Ornamentation"},
                                 "selected": false,
-                                "text": {
-                                    "en": "B2"
-                                }
+                                "id": "3f456666-102f-4ba5-94d6-99dd3522fa23"
                             },
                             {
-                                "id": "cf9619ea-cc35-4395-a878-8c806a472918",
+                                "text": {"en": "D. Plan Form"},
                                 "selected": false,
-                                "text": {
-                                    "en": "B1"
-                                }
+                                "id": "32fbcd02-102f-4ba5-94d6-99dd3522fa23"
                             },
                             {
-                                "id": "f32dd1a2-87b1-4ef3-8590-f04b06f83bf1",
+                                "text": {"en": "E. Spatial Organisation"},
                                 "selected": false,
-                                "text": {
-                                    "en": "B+"
-                                }
+                                "id": "abcdcd02-102f-4ba5-94d6-99dd3522fa23"
                             },
                             {
-                                "id": "f91c0991-0f1a-4b33-ab0a-1a75248d8946",
+                                "text": {"en": "F. Structural System"},
                                 "selected": false,
-                                "text": {
-                                    "en": "A"
-                                }
+                                "id": "5678cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "G. Innovatory Qualities"},
+                                "selected": false,
+                                "id": "9999cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "H+. Alterations enhancing the building"},
+                                "selected": false,
+                                "id": "d2f6cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "H-. Alterations detracting from building"},
+                                "selected": false,
+                                "id": "4b60cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "I. Quality and survival of Interior"},
+                                "selected": false,
+                                "id": "b1b7cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "J. Setting"},
+                                "selected": false,
+                                "id": "78a5cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "K. Group value"},
+                                "selected": false,
+                                "id": "7241cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "R. Age"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "S. Authenticity"},
+                                "selected": false,
+                                "id": "349fcd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "T. Historic Importance"},
+                                "selected": false,
+                                "id": "5555cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "U. Historic Associations"},
+                                "selected": false,
+                                "id": "4a14cd02-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "V. Authorship"},
+                                "selected": false,
+                                "id": "e261478a-102f-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "W. Northern Ireland / International interest"},
+                                "selected": false,
+                                "id": "3f45cd02-d2f6-4ba5-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "X. Local Interest"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4b60-94d6-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "Y. Social, cultural or economic importance"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-b1b7-99dd3522fa23"
+                            },
+                            {
+                                "text": {"en": "Z. Rarity"},
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-94d6-a55478a57241"
                             }
                         ],
                         "rdmCollection": null
@@ -25474,9 +25569,9 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "New Grade Type",
+                    "name": "Criteria",
                     "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
-                    "nodeid": "591d1d50-03aa-11ef-948f-0242ac150003",
+                    "nodeid": "8d41e49e-03ab-11ef-948f-0242ac150003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
