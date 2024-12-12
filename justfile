@@ -222,3 +222,57 @@ clean: docker
 
 # for func in $(ls coral/functions/); do if [[ $func != *"__"* ]]; then python manage.py fn register -s coral/functions/$func; fi done
 
+# get business data excluding a specific nodeid
+# jq '.business_data.resources[].tiles |= map(select(.nodegroup_id != "ae2039a4-7070-11ee-bb7a-0242ac140008"))' Group_2024-12-09_13-46-27.json 
+
+# Get all group data but members (not as useful as i thought because some members are there to set permissions, i.e when another group is the member), I've included business_data.resource because I was getting confused working with non-symetrical jsons
+# .business_data.resources[] | {name: .resourceinstance.name, tiles: [.tiles[] | select(.nodegroup_id == "ae2039a4-7070-11ee-bb7a-0242ac140008")]} | select(.tiles | length > 0)
+
+
+# get member tiles only from environment
+# jq '.business_data.resources | map(
+#   {
+#     name: .resourceinstance.name,
+#     tiles: [.tiles[] | select(.nodegroup_id == "bb2f7e1c-7029-11ee-885f-0242ac140008")]
+#   } | select(.tiles | length > 0)) | {business_data: {resources: .}}' > member_only.json
+
+
+# combine member tiles to the memberless group, adds the member tiles everything else uses the first file
+# jq --slurp '
+# {
+#   "business_data": {
+#     "resources": (
+#       map(.business_data.resources) | add |
+#       group_by(.resourceinstance.name) |
+#       map({
+#         resourceinstance: .[0].resourceinstance,
+#         tiles: (
+#           map(.tiles) | add |
+#           group_by(.nodegroup_id) |
+#           map(if .[0].nodegroup_id == "bb2f7e1c-7029-11ee-885f-0242ac140008" then # only add members
+#             {
+#               nodegroup_id: .[0].nodegroup_id,
+#               parenttile_id: .[0].parenttile_id,
+#               provisionaledits: .[0].provisionaledits,
+#               resourceinstance_id: .[0].resourceinstance_id,
+#               sortorder: .[0].sortorder,
+#               tileid: .[0].tileid, # .[0] use the first file for everything but data
+#               data: (
+#                 reduce .[].data as $item ({}; . + ($item | if type == "object" then $item else {} end))
+#               ) # reduce data to one list of all members; TODO exclude duplicates
+			  
+#             }
+#           else
+#             .[0] # use the first file for all nodegroups that are not members
+#           end)
+#         )
+#       })
+#     )
+#   }
+# }
+# ' memberless_group.json member_only.json > merged.json
+
+
+# just manage packages -o import_business_data -s merged.json -ow overwrite
+
+
