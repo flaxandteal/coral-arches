@@ -179,6 +179,12 @@ define([
                     resourceid: "['information-step']['notes'][0]['resourceid']['resourceInstanceId']",
                     nodeOptions: {
                       "3ff6232a-cce2-11ee-9264-0242ac180006": {
+                        "component": "user-to-model-select",
+                        "signOffGroups":[
+                          "f3f6ef61-9f63-4e11-b643-ee59390d08e7",
+                          "38161a54-6c5d-46e1-820c-f736c00f78bd",
+                          "5ff98b6a-526f-41ce-83d0-b93188d5b265"
+                        ],
                         "allowInstanceCreation": false
                       }
                     }

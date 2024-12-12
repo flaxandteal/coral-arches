@@ -41,6 +41,9 @@ define([
     this.selectedLetterType = ko.observable();
     this.uploadedFiles = ko.observableArray();
 
+    if(!ko.isObservable(this.tile.data[this.LETTER_TYPE_NODE])){
+      this.tile.data[this.LETTER_TYPE_NODE] = ko.observable(this.tile.data[this.LETTER_TYPE_NODE]);
+    }
     this.tile.data[this.LETTER_TYPE_NODE].subscribe((value) => {
       this.selectedLetterType(value);
     }, this);
@@ -53,7 +56,8 @@ define([
           url: arches.urls.root + 'filetemplate',
           data: JSON.stringify({
             resourceinstance_id: params.resourceid,
-            template_id: this.selectedLetterType()
+            template_id: this.selectedLetterType(),
+            config: params.config
           }),
           context: this,
           success: async (responseText, status, response) => {
