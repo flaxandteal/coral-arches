@@ -51,7 +51,17 @@ def merge_resources_task(
         merge_tracker_resource_id,
         overwrite_multiple_tiles,
     )
-    mr.merge_resource.delete(user=user)
+    deleted_tile = Tile.objects.filter(
+                resourceinstance_id=merge_resource_id,
+                nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2",
+            ).first()
+    if not deleted_tile:
+        deleted_tile = Tile.get_blank_tile_from_nodegroup_id(
+                nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2", resourceid=merge_resource_id
+            )
+
+    deleted_tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+    deleted_tile.save()
 
 @shared_task
 def remap_monument_to_revision(user_id, target_resource_id):
@@ -171,9 +181,17 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
             )
             mr.merge_resource.delete(user=user)
 
-            target_resource = get_resource(target_resource_id)
-            target_resource.delete(user=user)
-
+            print("DEBUG, should be soft deleting", )
+            deleted_revision_tile = Tile.objects.filter(
+                resourceinstance_id=target_resource_id,
+                nodegroup_id="9e59e355-07f0-4b13-86c8-7aa12c04a5e3",
+            ).first()
+            if not deleted_revision_tile:
+                deleted_revision_tile = Tile.get_blank_tile_from_nodegroup_id(
+                        nodegroup_id="9e59e355-07f0-4b13-86c8-7aa12c04a5e3", resourceid=target_resource_id
+                    )
+            deleted_revision_tile.data["9e59e355-07f0-4b13-86c8-7aa12c04a5e3"] = True
+            deleted_revision_tile.save()
             notification = models.Notification(
                 message=f"The revision has completed. All changes made to the Revision Heritage Asset have been merged into the original Heritage Asset. You may begin using the Heritage Asset again. Heritage Asset: {display_name_tile.data.get(DISPLAY_NAME_NODE_ID).get('en').get('value')}",
             )
