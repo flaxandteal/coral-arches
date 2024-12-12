@@ -349,6 +349,16 @@
                   "letterMetatype": "49c65b86-f5af-11ee-9f07-0242ac170006",
                   "letterTypeNode": "49c6587a-f5af-11ee-9f07-0242ac170006",
                   "letterResourceNode": "49c65ece-f5af-11ee-9f07-0242ac170006",
+                  "letterOptions": [
+                    { "text": "SMC Addendum Letter", "id": "smc-addendum-template.docx" },
+                    { "text": "SMC Provisional Letter", "id": "smc-provisional-template.docx"},
+                    { "text": "SMC Refusal Letter", "id": "smc-refusal-template.docx"},
+                    { "text": "SMC Final Letter", "id": "smc-final-template.docx"},
+                    { "text": "SMC Final No Conditions Letter", "id": "smc-final-no-conditions-template.docx"},
+                    { "text": "SMC Provisional No Conditions Letter", "id": "smc-provisional-no-conditions-template.docx"},
+                    { "text": "SMC-CL Provisional Letter", "id": "smc-cl-provisional-template.docx"},
+                    { "text": "SMC-CL Final Letter", "id": "smc-cl-final-template.docx"}
+                  ],
                   "config": {
                     "special": {
                       "today": "today",
@@ -396,40 +406,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "decision"
-              }
-            ]
-          }
-        ],
-        "workflowstepclass": "workflow-form-component"
-      },
-      {
-        "name": "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
-        "title": "Letter",
-        "required": false,
-        "saveWithoutProgressing": true,
-        "layoutSections": [
-          {
-            "componentConfigs": [
-              {
-                "parameters": {
-                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                  "resourceid": "['heritage-asset-step']['438ed643-4d7d-446b-91a8-e1d966d2504d'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["49c65ece-f5af-11ee-9f07-0242ac170006", "218a5601-5eb9-415a-886a-c7900dc5443b"],
-                  "nodegroupid": "49c65316-f5af-11ee-9f07-0242ac170006",
-                  "semanticName": "Correspondence",
-                  "letterMetatype": "49c65b86-f5af-11ee-9f07-0242ac170006",
-                  "letterTypeNode": "49c6587a-f5af-11ee-9f07-0242ac170006",
-                  "letterResourceNode": "49c65ece-f5af-11ee-9f07-0242ac170006",
-                  "config": {
-                    "special": {
-                      "today": "today"
-                    }
-                  }
-                },
-                "noTileSidebar": true,
-                "tilesManaged": "many",
-                "componentName": "file-template",
-                "uniqueInstanceName": "letter-template"
               }
             ]
           }
