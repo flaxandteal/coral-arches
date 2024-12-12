@@ -65,7 +65,10 @@
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "f0b99550-b551-11ee-805b-0242ac120006",
-                  "semanticName": "Associated Actors"
+                  "semanticName": "Associated Actors",
+                  "nodeOptions": {
+                    "component": "user-to-model-select"
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",

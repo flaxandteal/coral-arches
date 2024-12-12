@@ -287,6 +287,13 @@ define([
 
         this.getNodeOptions = (nodeId, widgetConfig = {}) => {
             const options = params.nodeOptions?.[nodeId] || {};
+            if (options?.component) {
+                const widget = this.form.card().widgets().filter(widget => widget.node_id() === nodeId)[0]
+                const lookupId = Object.entries(widget.widgetLookup).filter(entry => entry[1].name === options.component)[0][0]
+                if (widget.widget_id() !== lookupId) {
+                    widget.widget_id(lookupId)
+                }
+            }
             if (options?.config) {
               options.config = ko.observable({
                 ...widgetConfig,

@@ -6,14 +6,10 @@
     <div class="relative">
 
         <!-- Title Block -->
-                  <!-- ko if: !print()-->
-        <div class="aher-report-toolbar">
+        <div class="aher-report-toolbar" data-bind="if: !print()">
             <h1 class="aher-report-toolbar-title"><span class="aher-report-name">{% trans "Person" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
         </div>
-                <!-- /ko -->
-        <!-- ko else -->
-        <h1 class="aher-report-toolbar-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
-        <!-- /ko -->
+        <h1 class="aher-report-toolbar-title" data-bind="if: print()"><span class="aher-report-name">{% trans "Person" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
 
     </div>
     {% endblock report_title_bar %}
