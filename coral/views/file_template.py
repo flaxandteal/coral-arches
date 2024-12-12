@@ -245,8 +245,7 @@ class FileTemplateView(View):
         for key, value in list(template_dict.items()):
             if key == template_id:
                 return value
-
-        return None
+        return { "filename": template_id, "provider": GenericTemplateProvider}
 
     def edit_letter(self, resource, provider, config):
         # include = []
@@ -562,7 +561,8 @@ class GenericTemplateProvider:
             with admin():
                 person = Person.where(user_account=self.config["user"].id)
                 person = person[0] if len(person) else self.config["user"] 
-                person = person.name[0].full_name
+                # person = person["name"][0]["full_name"]
+                str(person)
         except Resource.DoesNotExist:
             person = self.config["user"]
 

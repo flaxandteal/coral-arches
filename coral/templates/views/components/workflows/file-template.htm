@@ -305,11 +305,44 @@
             <!-- ko if: card.isFuncNode && card.isFuncNode()  -->
             <h4 class="is-function-node" data-bind="text: card.isFuncNode()"></h4>
             <!-- /ko -->
+             <!-- ko if: letterOptions -->
+            <div
+            
+          data-bind="component: {
+          name: 'domain-select-widget',
+          node: {
+            'config': {
+              'options': letterOptions,
+              'multiple': true
+            },
+          },
+          params: {
+            node: {
+            'config': {
+              'options': letterOptions,
+              'multiple': true
+              },
+              'configKeys': configKeys
+            },
+            config: {
+              'label': 'Letter Type',
+              'options': letterOptions,
+              'multiple': true
+            },
+            value: document,
+            loading: loading,
+            form: $data,
+            pageVm: $root
+          }
+      }"
+        ></div>
+        <!-- /ko -->
 
             {% endblock form_header %}
             <!-- ko if: card.showSummary() === false -->
             <!-- ko if: card.widgets().length > 0 -->
             {% block form_widgets %}
+            <!-- ko if: ! letterOptions -->
             <form class="widgets" style="margin-bottom: 20px;">
                 <div data-bind="foreach: {
                         data:card.widgets, as: 'widget'
@@ -336,6 +369,7 @@
             }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
             </form>
+            <!-- /ko -->
             {% endblock form_widgets %}
             <!-- /ko -->
             <!-- ko if: showChildCards -->
