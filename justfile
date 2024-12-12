@@ -85,10 +85,10 @@ build: check_no_empty_arches_directory check_only_one_python_module docker
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
 	if [ -z {{ARCHES_PROJECT}}/media/node_modules/jquery-validation ]; then rm -rf {{ARCHES_PROJECT}}/media/node_modules; fi
 	just compose stop
-	just compose run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
-	just compose run --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
+	just compose run --rm --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
+	just compose run --rm --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
 	if [ -d {{ARCHES_PROJECT}}/pkg ]; then {{TOOLKIT_FOLDER}}/act.py . load_package --yes; fi
-	just compose run --entrypoint /web_root/entrypoint.sh arches_worker run_npm_build_development
+	just compose run --rm --entrypoint /web_root/entrypoint.sh arches_worker run_npm_build_development
 	just compose stop
 	@echo "IF THIS IS YOUR FIRST TIME RUNNING make build AND YOU HAVE NOT ALREADY, MAKE SURE TO UPDATE urls.py (see just help)"
 
@@ -110,7 +110,7 @@ manage *args: docker
 	if [ $(just group-recipe-exists manage "$1" | wc -w) = 1 ]; 
 	then 
 	command=$1; shift
-	argstring=$(just $command $@); just compose run --entrypoint /bin/bash arches_worker -c ". ../ENV/bin/activate; python manage.py $argstring"
+	argstring=$(just $command $@); just compose run --rm --entrypoint /bin/bash arches_worker -c ". ../ENV/bin/activate; python manage.py $argstring"
 	else argstring=$(echo ". ../ENV/bin/activate; python manage.py $@"); just compose run --entrypoint /bin/bash arches_worker -c "$argstring"
 	fi
 
@@ -145,12 +145,12 @@ run: docker
 [doc('restarts the arches container with --service-ports')]
 web: docker
 	just compose stop arches
-	just compose run --service-ports arches
+	just compose run --rm --service-ports arches
 
 [group('docker')]
 [doc('runs the arches_worker and runs the webpack command in DEV mode')]
 webpack: docker
-	just compose run --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd {{ARCHES_PROJECT}}; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'
+	just compose run --rm --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd {{ARCHES_PROJECT}}; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'
 
 [group('docker')]
 [doc('docker compose down and remove the volumes and images')]
