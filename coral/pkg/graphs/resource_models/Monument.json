@@ -5,6 +5,33 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "98bd23cd-347d-4fe3-bb6d-267642607b48",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "deleted"
+                    },
+                    "nodegroup_id": "98bd23cd-0923-4d5b-8c84-4269e92887d2",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "36560f39-fd37-4561-b483-05a6ae912642",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -2330,6 +2357,21 @@
                 }
             ],
             "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "98bd23cd-347d-4fe3-bb6d-267642607b48",
+                    "config": {
+                        "defaultValue": null,
+                        "label": "deleted"
+                    },
+                    "id": "98bd23cd-2456-4c19-a766-cb5bf4c08d90",
+                    "label": {
+                        "en": "deleted"
+                    },
+                    "node_id": "98bd23cd-0923-4d5b-8c84-4269e92887d2",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000006"
+                },
                 {
                     "card_id": "6af2a0cd-efc5-11eb-bfc2-a87eeabdefba",
                     "config": {
@@ -15424,6 +15466,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "98bd23cd-a04f-4eeb-8dff-7b6190c0c267",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "98bd23cd-0923-4d5b-8c84-4269e92887d2"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "6af2b6a1-efc5-11eb-bd62-a87eeabdefba",
                     "edgeid": "448093b0-9df6-4e18-9c3d-3a8d4d61ae9c",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -21912,6 +21963,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "98bd23cd-0923-4d5b-8c84-4269e92887d2",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "de6b6af0-44e3-11ef-9114-0242ac120006",
                     "parentnodegroup_id": null
                 },
@@ -22409,6 +22466,38 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "soft_deleted",
+                    "config": {
+                        "falseLabel": {
+                            "en": "No"
+                        },
+                        "i18n_properties": [
+                            "trueLabel",
+                            "falseLabel"
+                        ],
+                        "trueLabel": {
+                            "en": "Yes"
+                        }
+                    },
+                    "datatype": "boolean",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Deleted",
+                    "nodegroup_id": "98bd23cd-0923-4d5b-8c84-4269e92887d2",
+                    "nodeid": "98bd23cd-0923-4d5b-8c84-4269e92887d2",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "listing_criteria",
                     "config": {
