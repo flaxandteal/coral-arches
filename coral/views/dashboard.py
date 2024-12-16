@@ -155,7 +155,7 @@ class TaskStrategy:
         raise NotImplementedError("Subclasses must implement this method")
 
 class PlanningTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='desc', filter='All'):
+    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='desc', filter='all'):
         from arches_orm.models import Consultation
         with admin():
             TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
@@ -177,6 +177,10 @@ class PlanningTaskStrategy(TaskStrategy):
 
             #filter out consultations that are not planning consultations
             planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
+
+            # filter by the user selected filter
+            if filter != 'all':
+                planning_consultations = [c for c in planning_consultations if self.filter_by_domain_value(c, filter)]
 
             #checks against type & status and assigns to user if in correct group
             for consultation in planning_consultations:
@@ -232,9 +236,9 @@ class PlanningTaskStrategy(TaskStrategy):
             ).first()
 
             domain_options = council_node.config.get("options")
-            domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en")} for option in domain_options]
+            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en")} for option in domain_options]
 
-            filter_options = domain_values
+            filter_options = [{'id': 'all', 'name': 'All'}, *domain_values]
 
             return sorted_resources, counters, sort_options, filter_options
     
@@ -281,6 +285,14 @@ class PlanningTaskStrategy(TaskStrategy):
             'responseslug': responseslug
         }
         return resource_data
+    
+    def filter_by_domain_value(self, consultation, filter):
+        from arches_orm.models import Consultation
+        utilities = Utilities()
+        council_value = utilities.node_check(lambda:consultation.location_data.council)
+        if not council_value:
+            return False
+        return council_value == filter
     
 class ExcavationTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='desc', filter='all'):
