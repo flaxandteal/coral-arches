@@ -19,7 +19,7 @@ define([
       this.sortOrder = ko.observable();
       this.filterBy = ko.observable();
       this.sortOptions = ko.observableArray([]);
-      this.filterOptions = ko.observableArray([])
+      this.filterOptions = ko.observableArray([]);
       this.loading = ko.observable(true);
       this.loadingCards = ko.observable(false);
       this.showFilter = ko.observable(false);
@@ -153,9 +153,9 @@ define([
         }
       });
 
-      this.resources.subscribe(async () => {
-        if(this.resources().length > 0 && this.resources()[0].state === 'Excavation') {
-          this.showFilter(true)
+      this.filterOptions.subscribe(async () => {
+        if(this.filterOptions().length > 0) {
+          this.showFilter(true);
         }
       })
 

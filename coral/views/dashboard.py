@@ -161,6 +161,7 @@ class PlanningTaskStrategy(TaskStrategy):
             TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
             TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
             TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
+            COUNCIL_NODE = '69500360-d7c5-11ee-a011-0242ac120006'
             
             is_hm_manager = groupId in [HM_MANAGER] 
             is_hb_manager = groupId in [HB_MANAGER] 
@@ -201,8 +202,6 @@ class PlanningTaskStrategy(TaskStrategy):
                                 is_assigned_to_user = True
                                 break
                     elif assigned_to_list:
-                        for user in assigned_to_list:
-                            print("USER ID", user.id, userResourceId)
                         is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
                     
                     hm_status_conditions = [STATUS_OPEN, STATUS_HB_DONE, STATUS_EXTENSION_REQUESTED]
@@ -226,7 +225,16 @@ class PlanningTaskStrategy(TaskStrategy):
 
             counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
             sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
-            filter_options = []
+
+            council_node = models.Node.objects.filter(
+                nodeid = COUNCIL_NODE,
+                datatype = 'domain-value'
+            ).first()
+
+            domain_options = council_node.config.get("options")
+            domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en")} for option in domain_options]
+
+            filter_options = domain_values
 
             return sorted_resources, counters, sort_options, filter_options
     
@@ -238,8 +246,13 @@ class PlanningTaskStrategy(TaskStrategy):
         deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
         hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
         address = utilities.node_check(lambda: consultation.location_data.addresses)
+        council = utilities.node_check(lambda: consultation.location_data.council)
 
-        address_parts = [address.street.street_value, address.town_or_city.town_or_city_value, address.postcode.postcode_value]
+        address_parts = [
+            address.street.street_value, 
+            address.town_or_city.town_or_city_value, 
+            address.postcode.postcode_value
+        ]
         address = [part for part in address_parts if part is not None and part != 'None']
         
         responseslug = utilities.get_response_slug(groupId) if groupId else None
@@ -264,6 +277,7 @@ class PlanningTaskStrategy(TaskStrategy):
             'deadline': deadline,
             'deadlinemessage': deadline_message,
             'address': address,
+            'council': council,
             'responseslug': responseslug
         }
         return resource_data
