@@ -12,6 +12,7 @@ import json
 import logging
 from itertools import chain 
 import html
+import arches_orm
 
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
@@ -238,9 +239,41 @@ class PlanningTaskStrategy(TaskStrategy):
             domain_options = council_node.config.get("options")
             domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en")} for option in domain_options]
 
-            filter_options = [{'id': 'all', 'name': 'All'}, *domain_values]
+            # get the members of the groups for filtering
+            planning_team_groups = [HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP]
+            hb_groups = [HB_GROUP, HB_MANAGER]
+            hm_groups = [HM_GROUP, HM_MANAGER]
+            members_filter = []
+            if is_hb_manager or is_hb_user:
+                members_filter = self.get_group_members(hb_groups)
+            elif is_hm_manager or is_hm_user:
+                members_filter = self.get_group_members(hm_groups)
+            elif is_admin:
+                members_filter = self.get_group_members(planning_team_groups)           
+
+            filter_options = [
+                {'id': 'all', 'name': 'All'}, 
+                {'id': 'hb_group', 'name': 'HB Group'}, 
+                {'id': 'hm_group', 'name': 'HM Group'}, 
+                *members_filter, 
+                *domain_values
+            ]
 
             return sorted_resources, counters, sort_options, filter_options
+    
+    def get_group_members(self, groups):
+        from arches_orm.models import Group
+        with admin():
+            members_filter = []
+            for group in groups:
+                    group_resource = Group.find(group)
+                    members = [
+                        {'id': str(member.id), 'name': member.name[0].full_name}
+                        for member in group_resource.members
+                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel'
+                    ]
+                    members_filter.extend(members)
+            return members_filter
     
     def build_data(self, consultation, groupId):
         utilities = Utilities()
