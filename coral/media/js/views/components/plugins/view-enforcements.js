@@ -12,6 +12,14 @@ define([
     this.tasks = ko.observable([]);
     this.currentPage = ko.observable(1)
     this.pageSize = ko.observable(12);
+    this.filterOptions = ko.observableArray([
+      {name: 'All', id: 'all'},
+      {name: 'New', id: 'new'},
+      {name: 'Received', id: 'received'},
+      {name: 'In Progress', id: 'inProgress'},
+      {name: 'Closed', id: 'closed'}
+    ]);
+    this.filterBy = ko.observable('all');
 
     this.paginator = koMapping.fromJS({
         current_page: 1,
@@ -77,6 +85,28 @@ define([
       return Promise.all(promises);
     };
 
+    this.filterBy.subscribe((newVal) => {
+      switch (newVal) {
+        case 'all':
+          this.fetchEnforcements(this.searchAll);
+          break;
+        case 'new':
+          this.fetchEnforcements(this.searchNew);
+          break;
+        case 'received':
+            this.fetchEnforcements(this.searchReceived);
+            break;
+        case 'inProgress':
+          this.fetchEnforcements(this.searchInProgress);
+          break;
+        case 'closed':
+          this.fetchEnforcements(this.searchClosed);
+          break;
+        default:
+          this.fetchEnforcements(this.searchAll);
+      }
+    });
+
     this.paginatedItems = ko.observableArray([]);
 
     this.updatePaginatedItems = async () => {
@@ -100,28 +130,73 @@ define([
       this.paginator.has_other_pages(this.totalPages() > 1);
     };
 
-    this.searchParams = new URLSearchParams({
-          'advanced-search': JSON.stringify([
-            { op: 'and', 'c9711ef6-b555-11ee-baf6-0242ac120006': { op: 'null', val: '' } },
-            {
-              op: 'or',
-              'c9711ef6-b555-11ee-baf6-0242ac120006': {
-                op: 'eq',
-                val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
-              }
-            },
-            {
-              op: 'or',
-              'c9711ef6-b555-11ee-baf6-0242ac120006': {
-                op: 'eq',
-                val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
-              }
-            }
-          ]),
+    this.searchAll = JSON.stringify([
+      { op: 'and', 'c9711ef6-b555-11ee-baf6-0242ac120006': { op: 'null', val: '' } },
+      {
+        op: 'or',
+        'c9711ef6-b555-11ee-baf6-0242ac120006': {
+          op: 'eq',
+          val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
+        }
+      },
+      {
+        op: 'or',
+        'c9711ef6-b555-11ee-baf6-0242ac120006': {
+          op: 'eq',
+          val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
+        }
+      },
+      {
+        op: 'or',
+        'c9711ef6-b555-11ee-baf6-0242ac120006': {
+          op: 'eq',
+          val: 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b'
+        }
+      }
+    ]),
+
+    this.searchNew = JSON.stringify([
+      { op: 'and', 'c9711ef6-b555-11ee-baf6-0242ac120006': { op: 'null', val: '' } },
+    ]);
+    
+    this.searchReceived = JSON.stringify([
+      {
+        op: 'and',
+        'c9711ef6-b555-11ee-baf6-0242ac120006': {
+          op: 'eq',
+          val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
+        }
+      }
+    ]),
+
+    this.searchInProgress = JSON.stringify([
+      {
+        op: 'and',
+        'c9711ef6-b555-11ee-baf6-0242ac120006': {
+          op: 'eq',
+          val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
+        }
+      }
+    ]),
+
+    this.searchClosed = JSON.stringify([
+      {
+        op: 'and',
+        'c9711ef6-b555-11ee-baf6-0242ac120006': {
+          op: 'eq',
+          val: 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b'
+        }
+      }
+    ]),
+
+    this.searchParams = (advanceSearch) => new URLSearchParams({
+          'advanced-search': advanceSearch,
           tiles: true,
           pages: 10
       });
-    this.fetchEnforcements = async (searchParams) => {
+
+    this.fetchEnforcements = async (advanceSearch) => {
+        const searchParams = this.searchParams(advanceSearch);
         return window.fetch(`${arches.urls.search_results}?${searchParams}`)
           .then((response) => {
               if (response.ok) {
@@ -139,7 +214,6 @@ define([
       }, 
 
     this.getDescription = (consultation) => {
-      console.log("consultation", consultation)
       const descriptionTile = consultation.tiles.find((tile) => {
         return tile.nodegroup === '89bf628e-b552-11ee-805b-0242ac120006';
       });
@@ -174,7 +248,7 @@ define([
     };
 
     this.init = async () => {
-      await this.fetchEnforcements(this.searchParams);
+      await this.fetchEnforcements(this.searchAll);
     };
 
     this.init();
