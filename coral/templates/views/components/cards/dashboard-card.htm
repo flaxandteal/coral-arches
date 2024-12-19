@@ -45,7 +45,18 @@
       <div style="height:100%; display:flex; align-items:center">
         <h5>Status: <span style="font-weight: initial" data-bind="text: data.status"></span></h5>
       </div>
-      <div>
+      <div class="flex-center">
+        <div class="flex-center margin-right-10">
+          <h5 class="margin-right-5">Response:</h5>
+          <div class="flex-center margin-right-5">
+            <h5 class="margin-right-2" style="font-weight: initial">HM:</h5>
+            <div class="dot-outline" data-bind="css: { 'dot-filled': data.responded.HM }"></div>
+          </div>
+          <div class="flex-center">
+            <h5 class="margin-right-2" style="font-weight: initial">HB:</h5>
+            <div class="dot-outline" data-bind="css: { 'dot-filled': data.responded.HB }"></div>
+          </div>
+        </div>
         <button
           id="f1"
           class="add-function-button btn btn-primary btn-labeled fa fa-link"
