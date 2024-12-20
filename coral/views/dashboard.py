@@ -12,6 +12,7 @@ import json
 import logging
 from itertools import chain 
 import html
+import arches_orm
 
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
@@ -173,14 +174,58 @@ class PlanningTaskStrategy(TaskStrategy):
 
             utilities = Utilities()
 
+
+            # create the entries for the council filter options
+            council_node = models.Node.objects.filter(
+                nodeid = COUNCIL_NODE,
+                datatype = 'domain-value'
+            ).first()
+
+            domain_options = council_node.config.get("options")
+            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+
+            # get the members of the groups for filtering
+            planning_team_groups = [HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP]
+            hb_groups = [HB_GROUP, HB_MANAGER]
+            hm_groups = [HM_GROUP, HM_MANAGER]
+
+            members_filter = []
+            groups_filter = []
+            if is_hb_manager or is_hb_user:
+                members_filter = self.get_group_members(hb_groups)
+            elif is_hm_manager or is_hm_user:
+                members_filter = self.get_group_members(hm_groups)
+            elif is_admin:
+                members_filter = self.get_group_members(planning_team_groups)
+                groups_filter = [
+                    {'id': TYPE_ASSIGN_HB, 'name': 'HB Group', 'type': 'group'}, 
+                    {'id': TYPE_ASSIGN_HM, 'name': 'HM Group', 'type': 'group'}
+                ]       
+
+            filter_options = [
+                {'id': 'all', 'name': 'All', 'type': 'all'}, 
+                *groups_filter, 
+                *members_filter, 
+                *domain_values
+            ]
+
             consultations = Consultation.all()
 
             #filter out consultations that are not planning consultations
             planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
 
-            # filter by the user selected filter
+            # check the correct filter group and apply the filter
             if filter != 'all':
-                planning_consultations = [c for c in planning_consultations if self.filter_by_domain_value(c, filter)]
+                is_member_filter = any(member['id'] == filter for member in members_filter)
+                is_domain_filter = any(value['id'] == filter for value in domain_values)
+                is_group_filter = any(group['id'] == filter for group in filter_options )
+                if is_domain_filter:
+                    planning_consultations = [c for c in planning_consultations if self.filter_by_domain_value(c, filter)]
+                elif is_member_filter:
+                    planning_consultations = [c for c in planning_consultations if self.filter_by_person(c, filter)]
+                elif is_group_filter:
+                    planning_consultations = [c for c in planning_consultations if self.filter_by_group(c, filter)]
+            
 
             #checks against type & status and assigns to user if in correct group
             for consultation in planning_consultations:
@@ -230,17 +275,21 @@ class PlanningTaskStrategy(TaskStrategy):
             counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
             sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
 
-            council_node = models.Node.objects.filter(
-                nodeid = COUNCIL_NODE,
-                datatype = 'domain-value'
-            ).first()
-
-            domain_options = council_node.config.get("options")
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en")} for option in domain_options]
-
-            filter_options = [{'id': 'all', 'name': 'All'}, *domain_values]
-
             return sorted_resources, counters, sort_options, filter_options
+    
+    def get_group_members(self, groups):
+        from arches_orm.models import Group
+        with admin():
+            members_filter = []
+            for group in groups:
+                    group_resource = Group.find(group)
+                    members = [
+                        {'id': str(member.id), 'name': member.name[0].full_name, 'type': 'person'}
+                        for member in group_resource.members
+                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel'
+                    ]
+                    members_filter.extend(members)
+            return members_filter
     
     def build_data(self, consultation, groupId):
         utilities = Utilities()
@@ -287,12 +336,26 @@ class PlanningTaskStrategy(TaskStrategy):
         return resource_data
     
     def filter_by_domain_value(self, consultation, filter):
-        from arches_orm.models import Consultation
         utilities = Utilities()
         council_value = utilities.node_check(lambda:consultation.location_data.council)
         if not council_value:
             return False
         return council_value == filter
+    
+    def filter_by_person(self, consultation, filter):
+        utilities = Utilities()
+        person_list = utilities.node_check(lambda:consultation.action[0].assigned_to_n1)
+        if not person_list:
+            return False
+        return any(str(person.id) == filter for person in person_list)   
+    
+    def filter_by_group(self, consultation, filter):
+        TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
+        utilities = Utilities()
+        action_type = utilities.node_check(lambda:consultation.action[0].action_type)
+        if not action_type:
+            return False
+        return action_type == filter or action_type == TYPE_ASSIGN_BOTH
     
 class ExcavationTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='desc', filter='all'):

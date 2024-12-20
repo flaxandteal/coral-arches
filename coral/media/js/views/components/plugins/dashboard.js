@@ -1,3 +1,4 @@
+/* eslint-disable */
 define([
   'jquery',
   'knockout',
@@ -117,7 +118,6 @@ define([
 
       //reduces the number of items per page based on the window width
       const updateItemsPerPage = () => {
-        console.log('width', window.innerWidth)
         if (window.innerWidth < 1000){
             this.itemsPerPage(2);
         }
