@@ -292,14 +292,31 @@ class PlanningTaskStrategy(TaskStrategy):
             return members_filter
     
     def build_data(self, consultation, groupId):
+        from arches_orm.models import Consultation
         utilities = Utilities()
 
         action_status = utilities.node_check(lambda: consultation.action[0].action_status)
+        action_type = utilities.node_check(lambda: consultation.action[0].action_type)
         date_entered = utilities.node_check(lambda: consultation.consultation_dates.log_date)
         deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
         hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
         address = utilities.node_check(lambda: consultation.location_data.addresses)
         council = utilities.node_check(lambda: consultation.location_data.council)
+        responses = utilities.node_check(lambda: consultation.response_action)
+
+        # Initialise the team responses
+        responded = {
+            'HB': False,
+            'HM': False,
+            'type': utilities.domain_value_string_lookup(Consultation, 'action_type', action_type)
+        }
+
+        # Look up for either te
+        if responses:
+            for response in responses:
+                team = utilities.domain_value_string_lookup(Consultation, 'response_team', response.response_team)
+                if team in responded:
+                    responded[team] = True
 
         address_parts = [
             address.street.street_value, 
@@ -331,7 +348,8 @@ class PlanningTaskStrategy(TaskStrategy):
             'deadlinemessage': deadline_message,
             'address': address,
             'council': council,
-            'responseslug': responseslug
+            'responseslug': responseslug,
+            'responded': responded
         }
         return resource_data
     
@@ -472,6 +490,17 @@ class Utilities:
             return 'None'
         
     def domain_value_string_lookup(self, resource, node_alias, value_id):
+        """
+        Looks up the string representation of a domain value.
+
+        Args:
+            resource (Resource): The resource instance. Use The ORM model eg. Consultation.
+            node_alias (str): The alias of the node.
+            value_id (str): The ID of the value to look up. Use the node variable.
+
+        Returns:
+            str: The string representation of the domain value.
+        """
         node = models.Node.objects.filter(
             alias = node_alias,
             graph_id = resource.graphid
@@ -502,7 +531,7 @@ class Utilities:
     # Method to check if a node exists
     def node_check(self, func, default=None):
         try:
-            print(func())
+            logging.info(func())
             return func()
         except Exception as error:
             logging.warning(f'Node does not exist: {error}')
