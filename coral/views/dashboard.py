@@ -233,6 +233,7 @@ class PlanningTaskStrategy(TaskStrategy):
         utilities = Utilities()
 
         action_status = utilities.node_check(lambda: consultation.action[0].action_status)
+        action_type = utilities.node_check(lambda: consultation.action[0].action_type)
         date_entered = utilities.node_check(lambda: consultation.consultation_dates.log_date)
         deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
         hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
@@ -242,7 +243,8 @@ class PlanningTaskStrategy(TaskStrategy):
         # Initialise the team responses
         responded = {
             'HB': False,
-            'HM': False
+            'HM': False,
+            'type': utilities.domain_value_string_lookup(Consultation, 'action_type', action_type)
         }
 
         # Look up for either te

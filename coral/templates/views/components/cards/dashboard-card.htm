@@ -46,17 +46,23 @@
         <h5>Status: <span style="font-weight: initial" data-bind="text: data.status"></span></h5>
       </div>
       <div class="flex-center">
+        <!--ko if: data.responded.type -->
         <div class="flex-center margin-right-10">
           <h5 class="margin-right-5">Response:</h5>
+          <!--ko if: data.responded.type === 'Assign To Both HM & HB' || data.responded.type === 'Assign To HM' -->
           <div class="flex-center margin-right-5">
             <h5 class="margin-right-2" style="font-weight: initial">HM:</h5>
             <div class="dot-outline" data-bind="css: { 'dot-filled': data.responded.HM }"></div>
           </div>
+          <!-- /ko -->
+          <!--ko if: data.responded.type === 'Assign To Both HM & HB' || data.responded.type === 'Assign To HB' -->
           <div class="flex-center">
             <h5 class="margin-right-2" style="font-weight: initial">HB:</h5>
             <div class="dot-outline" data-bind="css: { 'dot-filled': data.responded.HB }"></div>
           </div>
+          <!-- /ko -->
         </div>
+        <!-- /ko -->
         <button
           id="f1"
           class="add-function-button btn btn-primary btn-labeled fa fa-link"
