@@ -1,3 +1,4 @@
+/* eslint-disable */
 define([
   'jquery',
   'knockout',
@@ -19,7 +20,7 @@ define([
       this.sortOrder = ko.observable();
       this.filterBy = ko.observable();
       this.sortOptions = ko.observableArray([]);
-      this.filterOptions = ko.observableArray([])
+      this.filterOptions = ko.observableArray([]);
       this.loading = ko.observable(true);
       this.loadingCards = ko.observable(false);
       this.showFilter = ko.observable(false);
@@ -92,7 +93,7 @@ define([
             this.loading(false);
             throw new Error(`HTTP error! status: ${data.error}`)
           }
-
+          console.log("response", data.paginator.response)
           koMapping.fromJS(data.paginator, this.paginator)
           this.resources(data.paginator.response)
           this.total(data.paginator.total)
@@ -117,7 +118,6 @@ define([
 
       //reduces the number of items per page based on the window width
       const updateItemsPerPage = () => {
-        console.log('width', window.innerWidth)
         if (window.innerWidth < 1000){
             this.itemsPerPage(2);
         }
@@ -153,9 +153,9 @@ define([
         }
       });
 
-      this.resources.subscribe(async () => {
-        if(this.resources().length > 0 && this.resources()[0].state === 'Excavation') {
-          this.showFilter(true)
+      this.filterOptions.subscribe(async () => {
+        if(this.filterOptions().length > 0) {
+          this.showFilter(true);
         }
       })
 
