@@ -1,4 +1,17 @@
 <div style="margin: 15px; width: 100%">
+  <div style="display:flex; margin: 1rem 5rem; align-items: center;">
+    <p style="margin: 0 0 0 1rem">Filter By:</p>
+    <select 
+        style="text-align-last:unset; margin-left: 1rem" 
+        data-bind="
+          options: filterOptions,
+          optionsText: 'name',
+          optionsValue: 'id',
+          value: filterBy,
+        "
+    >
+    </select>
+  </div>
   <div style="display: flex; justify-content: center; flex-wrap: wrap; width: 100%">
   <!-- ko foreach: { data: paginatedItems, as: 'consultation', noChildContext: true } -->
     <div class="card-grid-item">
