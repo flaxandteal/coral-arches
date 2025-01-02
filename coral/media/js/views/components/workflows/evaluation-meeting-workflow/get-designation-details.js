@@ -46,8 +46,12 @@ define([
           const gradeData = _.filter(tile.display_values, (value) => {return value.nodeid === '6af2b696-efc5-11eb-b0b5-a87eeabdefba'})
           this.grade(gradeData[0].value !== "" ? gradeData[0].value : "None")
         }
+        if (this.grade() === "Loading...") {
+          this.grade("None")
+        }
       }
       this.prepareResource()
+
     }
   
     ko.components.register('get-designation-details', {
