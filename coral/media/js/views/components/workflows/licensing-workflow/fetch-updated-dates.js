@@ -74,7 +74,43 @@ define([
         const day = date.getDate().toString().padStart(2, '0');
         return `${year}-${month}-${day}`;
       }
+
+      this.getLatestTile = async () => {
+        try {
+          const tiles = await this.fetchTileData(this.tile.resourceinstance_id, params.nodegroupid);
+  
+          if (!tiles?.length) return;
+  
+          const tile = tiles[0];
+      
+          if (!tile) return;
+  
+          Object.keys(tile.data).forEach((nodeId) => {
+            this.setValue(tile.data[nodeId], nodeId);
+          });
+  
+          this.tile.tileid = tile.tileid;
+  
+          // Reset dirty state
+          this.tile._tileData(koMapping.toJSON(this.tile.data));
+        } catch (err) {
+          console.error('failed fetching tile: ', err);
+        }
+      };
+  
+      this.setValue = (value, nodeId) => {
+        if (ko.isObservable(this.tile.data[nodeId])) {
+          this.tile.data[nodeId](value);
+        } else {
+          this.tile.data[nodeId] = ko.observable();
+          this.tile.data[nodeId](value);
+        }
+      };
+  
+      this.getLatestTile();
     }
+
+    
   
     ko.components.register('fetch-updated-dates', {
       viewModel: viewModel,
