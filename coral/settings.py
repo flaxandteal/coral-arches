@@ -417,7 +417,7 @@ if DEBUG is True:
 
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", 'django.core.mail.backends.console.EmailBackend')
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "1") == "1"
+EMAIL_USE_TLS = str(os.getenv("EMAIL_USE_TLS", "1")).lower() in ("1", "true")
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "xxxx@xxx.com")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "xxxxxxx")
