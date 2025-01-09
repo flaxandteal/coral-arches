@@ -1,39 +1,72 @@
-<div style="margin: 15px; display: flex-wrap: wrap; width: 100%">
-  <div data-bind="component: {
-    name: 'paging-filter',
-    params: commonSearchModel
-  }"></div>
-  <!-- ko foreach: { data: consultations, as: 'consultation', noChildContext: true } -->
-  <div class="card-grid-item">
-    <div class="panel mar-no">
-      <div class="panel-heading">
-        <h3 id="f1-name" class="panel-title library-card-panel-title">
-          <span data-bind="text: consultation.displayname"></span>
-        </h3>
-      </div>
-      <div
-        class="panel-body library-card-body"
-        data-bind="html: getDescription(consultation)"
-      ></div>
-      <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between">
-        <div>
-          <span>
-            Status: <span data-bind="text: getStatusText(getStatus(consultation))"></span>
-          </span>
+<div style="margin: 15px; width: 100%">
+  <div style="display:flex; margin: 1rem 5rem; align-items: center;">
+    <p style="margin: 0 0 0 1rem">Filter By:</p>
+    <select 
+        style="text-align-last:unset; margin-left: 1rem" 
+        data-bind="
+          options: filterOptions,
+          optionsText: 'name',
+          optionsValue: 'id',
+          value: filterBy,
+        "
+    >
+    </select>
+  </div>
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; width: 100%">
+  <!-- ko foreach: { data: paginatedItems, as: 'consultation', noChildContext: true } -->
+    <div class="card-grid-item">
+      <div class="panel mar-no">
+        <div class="panel-heading">
+          <h3 id="f1-name" class="panel-title library-card-panel-title">
+            <span data-bind="text: consultation.displayname"></span>
+          </h3>
         </div>
-        <div>
-          <button
-            id="f1"
-            class="add-function-button btn btn-primary btn-labeled fa fa-link"
-            data-bind="click: () => {
-              openFlagged(consultation.resourceinstanceid)
-            } "
-          >
-            <span>Open</span>
-          </button>
+        <div
+          class="panel-body library-card-body"
+          data-bind="html: getDescription(consultation)"
+        ></div>
+        <div class="panel-footer" style="height: 53px; display: flex; align-items: center; justify-content: space-between">
+          <div>
+            <span>
+              Status: <span data-bind="text: getStatusText(getStatus(consultation))"></span>
+            </span>
+          </div>
+          <div>
+            <button
+              id="f1"
+              class="add-function-button btn btn-primary btn-labeled fa fa-link"
+              data-bind="click: () => {
+                openFlagged(consultation.resourceinstanceid)
+              } "
+            >
+              <span>Open</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   <!-- /ko -->
+  </div>
+  
+  <div id="paginator" data-bind="with: paginator" style="position: absolute; bottom: 0px; width: 100%">
+    <nav class="text-center" aria-label="paginator">
+        <ul class="pagination" role="menubar">
+            <li><a data-bind="css: {'disabled': !has_previous()}, onEnterkeyClick, click: $parent.newPage.bind($parent, previous_page_number()), 
+                attr: {'aria-label': $root.translations.previousPage, 'aria-disabled': !has_previous(), 'role': 'menuitem'}" href="#">«</a></li>
+            <!-- ko foreach: { data: pages, as: 'page' } -->
+                <!-- ko if: page -->
+                <li class="page" data-bind="click: $parents[1].newPage.bind($parents[1]), css: {'current active': (page == $parent.current_page())}">
+                    <a href="#" data-bind="text: page, attr:{'data-page':page, 'aria-label': $root.translations.page + ' ' + page, 
+                    'role': 'menuitem', 'aria-posinet': page}"
+                ></a></li>
+                <!-- /ko -->
+                <!-- ko ifnot: page -->
+                  <li class="disabled"><a href="#" data-bind="attr: {'aria-label': $root.translations.morePages, 'aria-disabled': true}">...</a></li>
+                <!-- /ko -->
+            <!-- /ko -->
+            <li><a data-bind="css: { 'disabled': !has_next()}, onEnterkeyClick, click: $parent.newPage.bind($parent, next_page_number()),
+                attr: {'aria-label': $root.translations.nextPage, 'aria-disabled': !has_next(), 'role': 'menuitem'}" href="#">»</a></li>
+        </ul>
+    </nav>
+  </div>
 </div>

@@ -331,6 +331,44 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
+        "name": "letters-step",
+        "title": "Letters",
+        "required": false,
+        "saveWithoutProgressing": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "25f41196-ad90-11ef-a1bd-0242ac140006",
+                    "d17bbda2-ad90-11ef-a1bd-0242ac140006"
+                  ],
+                  "nodegroupid": "fc7da674-ad8f-11ef-8e0a-0242ac140006",
+                  "semanticName": "Correspondence",
+                  "letterMetatype": "d17bbda2-ad90-11ef-a1bd-0242ac140006",
+                  "letterTypeNode": "51f2fcd0-ad90-11ef-a1bd-0242ac140006",
+                  "letterResourceNode": "25f41196-ad90-11ef-a1bd-0242ac140006",
+                  "config": {
+                    "special": {
+                      "today": "today",
+                      "user": "user"
+                    }
+                  }
+                },
+                "noTileSidebar": true,
+                "tilesManaged": "many",
+                "componentName": "file-template",
+                "uniqueInstanceName": "letter-template"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
         "name": "approvals-step",
         "title": "Approvals",
         "required": false,
@@ -413,18 +451,6 @@
                 "uniqueInstanceName": "78965eb2-7064-47aa-a65b-cecc9f05884f"
               }
             ]
-          }
-        ],
-        "workflowstepclass": "workflow-form-component"
-      },
-      {
-        "name": "letters-step",
-        "title": "Letters",
-        "required": false,
-        "saveWithoutProgressing": true,
-        "layoutSections": [
-          {
-            "componentConfigs": []
           }
         ],
         "workflowstepclass": "workflow-form-component"

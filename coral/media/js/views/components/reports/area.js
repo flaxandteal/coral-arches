@@ -40,14 +40,6 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
-            self.print = ko.observable(window.location.href.indexOf("?print") > -1)
-
-            self.fullReportConfig = {
-                id: 'area',
-                label: 'Area',
-                ignoreNodes: []
-            }
-
 
             self.nameDataConfig = {
                 name: 'area',

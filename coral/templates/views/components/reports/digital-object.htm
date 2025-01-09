@@ -7,14 +7,9 @@
     <div class="relative">
 
         <!-- Title Block -->
-                  <!-- ko if: !print()-->
         <div class="aher-report-toolbar">
             <h1 class="aher-report-toolbar-title"><span class="aher-report-name">{% trans "Digital Object" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
         </div>
-                <!-- /ko -->
-        <!-- ko else -->
-        <h1 class="aher-report-toolbar-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
-        <!-- /ko -->
 
     </div>
     {% endblock report_title_bar %}
@@ -22,7 +17,7 @@
     
     {% block body %}
     <!-- Link nav -->
-    <div class="aher-report-anchor-container" data-bind="if: !print()">
+    <div class="aher-report-anchor-container">
         <ol class="aher-report-anchors breadcrumb">
             <!-- ko foreach: {data: sections, as: 'section'} -->
             <li tabindex="0" data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="aher-report-a" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }"></li>
@@ -32,7 +27,7 @@
     <div class="aher-tabbed-report">
         <div class="aher-tabbed-report-content">
             <!-- Names Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'name' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'name'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/name',
                     params: {
@@ -43,7 +38,7 @@
                 }"></div>
             </div>
             <!-- Description Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'description' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'description'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/description',
                     params: {
@@ -53,7 +48,7 @@
                 }"></div>
             </div>
             <!-- Publication Details Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'publication' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'publication'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/copyright',
                     params: {
@@ -63,7 +58,7 @@
                 }"></div>
             </div>
             <!-- File Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'file' || print()">
+            <div class="aher-report-page" data-bind="if: activeSection() === 'file'">
                 <div class="aher-report-section">
                     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.files)}, css: {'fa-angle-double-right': visible.files(), 'fa-angle-double-up': !visible.files()}"  class="fa toggle"></i> {% trans "Files" %}</h2>
                     <a data-bind="{if: cards['file'], click: function(){addNewTile(cards['file'])}}" class="aher-report-a">
@@ -118,7 +113,7 @@
                 }"></div>
             </div>
              <!-- JSON Tab -->
-            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json' || print()">
+            <div class="aher-report-page aher-flex-col" data-bind="if: activeSection() === 'json'">
                 <div class="aher-flex-col" data-bind="component: {
                     name: 'views/components/reports/scenes/json',
                     params: {
@@ -133,9 +128,7 @@
 
 {% block summary %}
 <div class="aher-summary-report-header">
-    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span>
-        <!-- <span class="aher-report-name pad-lft-sm">{% trans "(Digital Object)" %}</span> -->
-    </h1>
+    <h1 class="aher-summary-report-title"><span data-bind="text: displayname" class="aher-report-instance-name"></span><span class="aher-report-name pad-lft-sm">{% trans "(Digital Object)" %}</span></h1>
 </div>
 <div class="model-summary-report">
     <div class="aher-report-page">

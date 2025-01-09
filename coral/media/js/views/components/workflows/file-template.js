@@ -40,10 +40,21 @@ define([
 
     this.selectedLetterType = ko.observable();
     this.uploadedFiles = ko.observableArray();
+    this.document = ko.observable();
+    this.configKeys = ko.observable({ placeholder: 0 });
+    this.letterOptions = ko.observable(params.letterOptions)
 
+    if(!ko.isObservable(this.tile.data[this.LETTER_TYPE_NODE])){
+      this.tile.data[this.LETTER_TYPE_NODE] = ko.observable(this.tile.data[this.LETTER_TYPE_NODE]);
+    }
     this.tile.data[this.LETTER_TYPE_NODE].subscribe((value) => {
       this.selectedLetterType(value);
     }, this);
+
+    this.document.subscribe((value) => {
+      console.log("value will be", value)
+      this.selectedLetterType(value);
+    }, this)
 
     this.retrieveFile = async () => {
       // this.loading(true);
@@ -53,7 +64,8 @@ define([
           url: arches.urls.root + 'filetemplate',
           data: JSON.stringify({
             resourceinstance_id: params.resourceid,
-            template_id: this.selectedLetterType()
+            template_id: this.selectedLetterType(),
+            config: params.config
           }),
           context: this,
           success: async (responseText, status, response) => {
@@ -121,7 +133,7 @@ define([
     this.saveRelationship = async (resourceId) => {
       const id = uuid.generate();
 
-      this.tile.data[this.LETTER_TYPE_NODE] = this.selectedLetterType();
+      this.tile.data[this.LETTER_TYPE_NODE] = "08bb630d-a27b-45bc-a13f-567b428018c5";
       this.tile.data[this.LETTER_METATYPE] = '956f9779-3524-448e-b2de-eabf2de95d51';
       this.tile.data[this.LETTER_RESOURCE_NODE] = [
         {
@@ -135,7 +147,7 @@ define([
       const fileTileTemplate = {
         tileid: '',
         data: {
-          [this.LETTER_TYPE_NODE]: this.selectedLetterType(),
+          [this.LETTER_TYPE_NODE]: "08bb630d-a27b-45bc-a13f-567b428018c5",
           [this.LETTER_METATYPE]: '956f9779-3524-448e-b2de-eabf2de95d51',
           [this.LETTER_RESOURCE_NODE]: [
             {

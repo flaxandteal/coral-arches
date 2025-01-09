@@ -10,7 +10,7 @@ env:
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.extract_image_name.outputs.image_name }}
     steps:
@@ -69,7 +69,7 @@ jobs:
           name=${{ fromJSON(steps.build.outputs.metadata)['image.name'] }}
           echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
   Build-Arches-Static:
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     needs: [Build-Arches]
     outputs:
       image: ${{ steps.extract_image_name.outputs.image_name }}
@@ -222,7 +222,7 @@ jobs:
           --health-retries 1000
   Build-Arches-Final:
     needs: [Build-Arches-Static, Build-Arches]
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.extract_image_name.outputs.image_name }}
     steps:

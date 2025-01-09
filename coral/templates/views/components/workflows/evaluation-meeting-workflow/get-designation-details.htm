@@ -222,7 +222,7 @@
 
 <!-- ko if: state === 'form' -->
 {% block form %}
-<div class="card-component" data-bind="css: card.model.cssclass" style="display: flex; justify-content: space-between">
+<div class="card-component" data-bind="css: card.model.cssclass">
 
     <!-- ko if: reviewer && provisionalTileViewModel.selectedProvisionalEdit() -->
     <div class="edit-message-container provisional-editor">
@@ -249,7 +249,7 @@
 
 
 
-    <div class="new-provisional-edit-card-container" style="width: 100%; max-width: 600px; flex-direction: column">
+    <div class="new-provisional-edit-card-container">
         <!-- ko if: reviewer && provisionalTileViewModel.provisionaledits().length > 0 -->
         <!-- ko if: !provisionalTileViewModel.tileIsFullyProvisional() -->
         <div class='new-provisional-edits-list'>
@@ -305,71 +305,22 @@
             <!-- ko if: card.isFuncNode && card.isFuncNode()  -->
             <h4 class="is-function-node" data-bind="text: card.isFuncNode()"></h4>
             <!-- /ko -->
-             <!-- ko if: letterOptions -->
-            <div
-            
-          data-bind="component: {
-          name: 'domain-select-widget',
-          node: {
-            'config': {
-              'options': letterOptions,
-              'multiple': true
-            },
-          },
-          params: {
-            node: {
-            'config': {
-              'options': letterOptions,
-              'multiple': true
-              },
-              'configKeys': configKeys
-            },
-            config: {
-              'label': 'Letter Type',
-              'options': letterOptions,
-              'multiple': true
-            },
-            value: document,
-            loading: loading,
-            form: $data,
-            pageVm: $root
-          }
-      }"
-        ></div>
-        <!-- /ko -->
 
             {% endblock form_header %}
             <!-- ko if: card.showSummary() === false -->
             <!-- ko if: card.widgets().length > 0 -->
             {% block form_widgets %}
-            <!-- ko if: ! letterOptions -->
             <form class="widgets" style="margin-bottom: 20px;">
                 <div data-bind="foreach: {
-                        data:card.widgets, as: 'widget'
+                        data:card.widgets, as: 'widget', noChildContext: true
                     }">
-                    <div data-bind='component: {
-                        name: self.form.widgetLookup[widget.widget_id()].name,
-                        params: {
-                            widget: widget,
-                            formData: self.tile.formData,
-                            tile: self.tile,
-                            form: self.form,
-                            config: widget.configJSON,
-                            label: widget.label(),
-                            inResourceEditor: self.inResourceEditor,
-                            value: self.tile.data[widget.node_id()],
-                            node: self.form.nodeLookup[widget.node_id()],
-                            expanded: self.expanded,
-                            graph: self.form.graph,
-                            type: "resource-editor",
-                            disabled: !self.card.isWritable && !self.preview
-                        }
-                    }, css:{ "active": widget.selected, "hover": widget.hovered, "widget-preview": self.preview
-                }, click: function(data, e) { if (!widget.selected() && self.preview) {widget.selected(true);}
-            }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
+                <div  style="max-width: 600px !important; background: #eee; padding: 8px; border-radius: 6px; margin: 10px 5px 25px 5px; display: flex; flex-direction: column; gap: 12px">
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">Exisiting Grade</span>
+                        <span data-bind="text: grade()" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div>
                 </div>
             </form>
-            <!-- /ko -->
             {% endblock form_widgets %}
             <!-- /ko -->
             <!-- ko if: showChildCards -->
@@ -479,45 +430,9 @@
                 </div>
             </aside>
         </div>
-
-
-        <div style="padding: 10px 5px 25px 5px; margin-right: 10px">
-            <div style="margin-bottom: 8px">
-                <button class="btn btn-shim btn-success btn-lg" data-bind="click: () => {
-                    retrieveFile();
-                }">
-                    <span>Generate</span>
-                </button>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 8px; padding-right: 8px; overflow-y: scroll; max-height: 200px">
-                <!--ko foreach: {data: uploadedFiles(), as: 'file', noChildContext: true} -->
-                    <div style="background-color: #eceef0; padding: 10px 15px; border-radius: 6px; display:flex; justify-content: space-between">
-                        <span data-bind="text: file.name"></span>
-                        <div style="display: flex; gap: 8px">
-                            <a data-bind="click: () => previewDoc(file.url, file.name)" style="text-decoration: underline; color: blue; cursor: pointer;">Preview</a>
-                            <a data-bind="click: () => downloadFile(file.url, file.name)" style="text-decoration: underline; color: blue; cursor: pointer;">Download</a>
-                        </div>
-                    </div>
-                <!-- /ko -->
-            </div>
-        </div>
-
-    </div>
-    <div style="width: 850px">
-        <div style="padding-bottom: 4px; color: red">PREVIEW IS NOT GUARANTEED TO MATCH</div>
-        <div id="docx-preview-element" class="docx-preview--overrides" style="border-radius: 10px; overflow: hidden"></div>
-    </div>
-    
-
-</div>
-
-<div class="card-component">
-    <div class="row widget-wrapper">
-
-        
     </div>
 </div>
-{% endblock form %} 
+{% endblock form %}
 <!-- /ko -->
 
 <!-- ko if: state === 'report' && card.model.visible() -->
