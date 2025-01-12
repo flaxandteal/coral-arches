@@ -35,6 +35,7 @@ from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_us
 from arches.app.models.resource import UnindexedError
 from arches_orm.models import Person, Organization, Set, LogicalSet, Group, ArchesPlugin
 from arches_orm.view_models import ResourceInstanceViewModel
+from arches_orm.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
 from arches_orm.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from django.core.cache import cache
@@ -179,21 +180,35 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             print("RECALC", 2, 6)
         print("RECALC", 3)
 
+        groups_seen = dict()
         sets = []
-
-        def _fill_group(group):
+        def _fill_group(group, ancestors):
             group_key = self._subj_to_str(group)
+            if group_key in ancestors:
+                try:
+                    group_name = str(group)
+                except Exception as e:
+                    group_name = "(name error)"
+                    logging.exception("Name to string casting for a group: %s", str(e))
+                logging.warn("There is a circular reference - %s for %s", group_key, group_name)
+                return []
+            if group_key in groups_seen:
+                return groups_seen[group_key]
             users = []
-            for member in group.members:
+            print(" " * len(ancestors), len(group.members), "members")
+            for n, member in enumerate(group.members):
                 if isinstance(member, Group):
                     member_key = self._subj_to_str(member)
+                    print(" " * (1 + len(ancestors)), n, "/", len(group.members), member_key)
                     # This is the reverse of what might be expected, as the more deeply
                     # nested a group is, the _fewer_ permissions it has. Conversely, the
                     # top groups gather all the permissions from the groups below them,
                     # which fits Casbin's transitivity when top groups are _Casbin members of_
                     # the groups below them.
                     self._enforcer.add_named_grouping_policy("g", group_key, member_key)
-                    users += _fill_group(member)
+                    ancestors = list(ancestors)
+                    ancestors.append(group_key)
+                    users += _fill_group(member, ancestors)
                 elif member.user_account:
                     member_key = self._subj_to_str(member)
                     self._enforcer.add_role_for_user(member_key, group_key)
@@ -211,7 +226,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             #             self._enforcer.add_policy(group_key, obj_key, str(act))
             try:
                 arches_plugins = group.arches_plugins
-                print(arches_plugins, "GAP")
+                print(arches_plugins, "Arches Plugins #1")
                 for arches_plugin in arches_plugins:
                     if not isinstance(arches_plugin, ArchesPlugin):
                         try:
@@ -219,7 +234,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                         except Exception as exc:
                             logger.warn("A non-plugin resource was listed as an Arches plugin in a group: %s", str(exc))
                         continue
-                    print(arches_plugin, "AP")
+                    print(arches_plugin, "Arches Plugins #2")
                     try:
                         identifier = uuid.UUID(arches_plugin.plugin_identifier)
                         plugin = Plugin.objects.get(pk=identifier)
@@ -227,11 +242,17 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                         plugin = Plugin.objects.get(slug=arches_plugin.plugin_identifier)
                     for obj_key in (f"pl:{key}" for key in (plugin.pk, plugin.slug) if key):
                         self._enforcer.add_policy(group_key, obj_key, "view_plugin")
-                        print("AP", group_key, obj_key)
+                        print("Arches Plugins #3", group_key, obj_key)
             except Exception as exc:
                 print("Could not get Arches Plugins", exc)
             for permission in group.permissions:
+                if not permission.action:
+                    logging.warn("Permission action is missing: %s: %s on %s", group_key, str(permission.action), str(permission.object))
+                    continue
                 for act in permission.action:
+                    if not permission.object:
+                        logging.warn("Permission object is missing: %s %s", group_key, str(permission.object))
+                        continue
                     for obj in permission.object:
                         obj_key = self._obj_to_str(obj)
                         if obj_key.startswith("g2"):
@@ -240,17 +261,19 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             if len(group.django_group) == 0:
                 self._ri_to_django_groups(group)
             for gp in group.django_group:
-                if not gp or gp.pk is None:
+                if not gp or gp.pk is None or isinstance(gp, MissingDjangoGroupViewModel):
+                    logging.warn("Missing Django Group in a group: %s for %s", group_key, str(gp.pk) if gp else str(gp))
                     continue
                 if list(gp.user_set.all()) != users:
                     gp.user_set.set(users)
                     gp.save()
+            groups_seen[group_key] = users
             return users
 
         sets = []
 
         print("RECALC", 4)
-        _fill_group(root_group)
+        _fill_group(root_group, list())
         print("RECALC", 5)
 
         for user in User.objects.all():
@@ -260,8 +283,16 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 self._enforcer.add_named_grouping_policy("g", user_key, group_key)
         print("RECALC", 6)
 
-        def _fill_set(st):
+        def _fill_set(st, ancestors):
             set_key = self._obj_to_str(st)
+            if set_key in ancestors:
+                try:
+                    set_name = str(st)
+                except Exception as e:
+                    set_name = "(name error)"
+                    logging.exception("Name to string casting for a set: %s", str(e))
+                logging.warn("There is a circular nested set reference - %s for %s", set_key, set_name)
+                return
             if set_key in sets:
                 sets.remove(set_key)
             # We do not currently handle nesting of logical sets
@@ -270,7 +301,9 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                     for nst in st.nested_sets:
                         nested_set_key = self._obj_to_str(nst)
                         self._enforcer.add_named_grouping_policy("g2", nested_set_key, set_key)
-                        _fill_set(nst)
+                        ancestors = list(ancestors)
+                        ancestors.append(set_key)
+                        _fill_set(nst, ancestors)
                 if st.members:
                     for member in st.members:
                         member_key = self._obj_to_str(member)
@@ -282,7 +315,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 root_set = LogicalSet.find(obj_key.split(":")[1])
             else:
                 root_set = Set.find(obj_key.split(":")[1])
-            _fill_set(root_set)
+            _fill_set(root_set, [])
         print("RECALC", 7)
 
         self._enforcer.save_policy()
@@ -693,11 +726,11 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         return result
 
     @context_free
-    def get_sets_for_user(self, user, perm):
+    def get_sets_for_user(self, user, perm): # also works for a group
         # TODO: add possibility of a default anonymous set(s) from settings
         if not user:
             return set()
-        if user.is_superuser is True:
+        if isinstance(user, User) and user.is_superuser is True:
             return None
 
         sets = set()
