@@ -114,23 +114,23 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
-                  "semanticName": "Related heritage asset(s)"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "related-heritage-assets"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "73fdfe62-8895-11ea-a058-f875a44e0e11",
                   "semanticName": "Development Type"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "development-type"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                  "semanticName": "Related heritage asset(s)"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "related-heritage-assets"
               },
               {
                 "parameters": {
