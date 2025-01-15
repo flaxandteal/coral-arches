@@ -44,7 +44,6 @@ class Dashboard(View):
         with admin():
             user_id = request.user.id                     
             person_resource = Person.where(user_account = user_id)
-            
             if not person_resource:
                 return JsonResponse({"error": "User not found"}, status=404)
             
@@ -163,7 +162,6 @@ class PlanningTaskStrategy(TaskStrategy):
             TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
             TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
             COUNCIL_NODE = '69500360-d7c5-11ee-a011-0242ac120006'
-            
             is_hm_manager = groupId in [HM_MANAGER] 
             is_hb_manager = groupId in [HB_MANAGER] 
             is_hm_user = groupId in [HM_GROUP] 
@@ -231,31 +229,16 @@ class PlanningTaskStrategy(TaskStrategy):
             for consultation in planning_consultations:
                     action_status = utilities.node_check(lambda: consultation.action[0].action_status )
                     action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
-                    assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1, [])
-                    reassigned_to_tiles = utilities.node_check(lambda: consultation.assignment, [])
-
+                    assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1)
+                    
                     user_assigned = any(assigned_to_list)
-
-                    if not user_assigned:
-                        for tile in reassigned_to_tiles:
-                            if any(tile.re_assignee.re_assigned_to):
-                                user_assigned = True
-                                break 
-
                     is_assigned_to_user = False
 
-                    # first checks reassigned to as this overwrites the assigned to field if true
-                    if reassigned_to_tiles:
-                        for tile in reassigned_to_tiles:
-                            if any(user.id == userResourceId for user in tile.re_assignee.re_assigned_to):
-                                is_assigned_to_user = True
-                                break
-                    elif assigned_to_list:
+                    if assigned_to_list:
                         is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
                     
                     hm_status_conditions = [STATUS_OPEN, STATUS_HB_DONE, STATUS_EXTENSION_REQUESTED]
                     hb_status_conditions = [STATUS_OPEN, STATUS_HM_DONE, STATUS_EXTENSION_REQUESTED]
-
                     conditions_for_task = (
                         (is_hm_manager and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
                         (is_hb_manager and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
