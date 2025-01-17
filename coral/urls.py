@@ -14,6 +14,7 @@ from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResourcesView
 from coral.views.monument_revision_remap import RemapMonumentToRevision, RemapRevisionToMonument
 from coral.views.dashboard import Dashboard
+from coral.views.orm import ORM
 from coral.views.file_template import FileTemplateView
 from coral.views.ha_number import HaNumberView
 from coral.views.smr_number import SmrNumberView
@@ -55,6 +56,8 @@ urlpatterns = [
     # Dashboard
     #
     re_path(r"^dashboard/resources", Dashboard.as_view(), name="dashboard"),
+    re_path(r"^orm/resources", ORM.as_view(), name="orm"),
+
 
     #
     # Open Workflow

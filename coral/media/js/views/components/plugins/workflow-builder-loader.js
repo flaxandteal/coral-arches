@@ -25,6 +25,7 @@ define([
   'views/components/workflows/assign-consultation-workflow/pc-summary',
   'views/components/workflows/assign-consultation-workflow/heritage-asset-map',
   'views/components/workflows/fetch-latest-tile',
+  'views/components/workflows/show-nodes',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {

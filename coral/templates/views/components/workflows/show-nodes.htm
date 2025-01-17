@@ -1,0 +1,12 @@
+<table data-bind="style: {'margin-left': `2ch`}">
+    <tbody data-bind="foreach: {data: showNodes, as: 'labelValue'}">
+    <tr>
+                <td>
+        <h2 class="aher-report-section-title" data-bind="text: labelValue[0], class: 'aher-block-key'"></h2>
+    </td>
+    <td>
+    <span data-bind="text: labelValue[1], style: {'margin-left': `4ch`}"></span>
+    </td>
+    </tr>
+    </tbody>
+</table>
