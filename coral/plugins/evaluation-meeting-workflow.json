@@ -196,86 +196,26 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083ef3fe-ca61-11ee-afca-0242ac180006",
-                    "083fa088-ca61-11ee-afca-0242ac180006",
-                    "083e8c16-ca61-11ee-afca-0242ac180006",
-                    "083e6c90-ca61-11ee-afca-0242ac180006",
-                    "083e825c-ca61-11ee-afca-0242ac180006",
-                    "083f935e-ca61-11ee-afca-0242ac180006",
-                    "083f45ac-ca61-11ee-afca-0242ac180006"
-                  ],
-                  "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
-                  "semanticName": "Addresses"
+                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "tileid": "['start-meeting-step']['building'][0]['resourceid']['tileId']",
+                  "semanticName": "Show Location Nodes",
+                  "showNodes": [
+                    ["Building Name", "building_name_value"],
+                    ["Street", "street_value"],
+                    ["Town or City", "town_or_city_value"],
+                    ["County", "county_value"],
+                    ["Postcode", "postcode_value"],
+                    ["Wards and District", "wards_and_district_type"],
+                    ["Council", "council"],
+                    ["Townland", "townland"],
+                    ["Irish Grid Reference (TM65)", "irish_grid_reference_tm65_"],
+                    ["Location Description", "location_description"]
+                  ]
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "9fac9435-2113-4ba6-a69c-3e1f714c82f2"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "69500360-d7c5-11ee-a011-0242ac120006",
-                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
-                  "semanticName": "Council"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "e0a60085-eeeb-44e0-83de-2dcb5ad38d95"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083f0650-ca61-11ee-afca-0242ac180006"
-                  ],
-                  "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas",
-                  "nodeOptions": {
-                    "083f0db2-ca61-11ee-afca-0242ac180006": {
-                      "node": {
-                        "isrequired": true
-                      }
-                    },
-                    "083ea3ae-ca61-11ee-afca-0242ac180006": {
-                      "node": {
-                        "isrequired": true
-                      }
-                    }
-                  }
-                },
-                "tilesManaged": "many",
-                "componentName": "default-card",
-                "uniqueInstanceName": "9a5205f8-8f63-4d9a-bb6e-f23e01aeb319"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
-                  "semanticName": "National Grid References"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "73b99d04-e53f-43e1-aebc-769a470afecc"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
-                  "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
-                  "semanticName": "Location Descriptions"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "3eba5624-3607-4e76-a1fa-6c5a6596410a"
+                "componentName": "show-nodes",
+                "uniqueInstanceName": "show-node-inst"
               }
             ]
           }
