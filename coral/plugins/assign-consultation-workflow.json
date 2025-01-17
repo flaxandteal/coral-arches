@@ -299,6 +299,14 @@
                 "tilesManaged": "one",
                 "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "geometry"
+              },
+              {
+                "componentName": "heritage-asset-map",
+                "uniqueInstanceName": "map-locations",
+                "tilesManaged": "none",
+                "parameters": {
+                    "baseResourceId": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
+                }
               }
             ]
           }

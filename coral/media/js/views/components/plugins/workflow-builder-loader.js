@@ -23,6 +23,7 @@ define([
   'views/components/workflows/heritage-asset-designation-workflow/approval-summary',
   'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',
   'views/components/workflows/assign-consultation-workflow/pc-summary',
+  'views/components/workflows/assign-consultation-workflow/heritage-asset-map',
   'views/components/workflows/fetch-latest-tile',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
