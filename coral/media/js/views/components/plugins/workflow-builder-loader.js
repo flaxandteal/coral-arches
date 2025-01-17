@@ -24,6 +24,7 @@ define([
   'views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge',
   'views/components/workflows/assign-consultation-workflow/pc-summary',
   'views/components/workflows/fetch-latest-tile',
+  'views/components/workflows/show-nodes',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
