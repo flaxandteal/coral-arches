@@ -294,15 +294,20 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Geometry"
+                  "semanticName": "Geometry",
+                  "nodeOptions": {
+                    "083f3c7e-ca61-11ee-afca-0242ac180006": {
+                      "disableEdit": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "geometry"
               },
               {
-                "componentName": "heritage-asset-map",
-                "uniqueInstanceName": "map-locations",
+                "componentName": "related-heritage-asset-map",
+                "uniqueInstanceName": "related-asset-map-locations",
                 "tilesManaged": "none",
                 "parameters": {
                     "baseResourceId": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"

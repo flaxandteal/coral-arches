@@ -11,7 +11,7 @@ define([
     'viewmodels/map',
     'mapbox-gl',
     'mapbox-gl-geocoder',
-    'templates/views/components/workflows/assign-consultation-workflow/heritage-asset-map.htm'
+    'templates/views/components/workflows/assign-consultation-workflow/related-heritage-asset-map.htm'
   ], function (
     _,
     ko,
@@ -34,81 +34,82 @@ define([
       const featureIndex = ko.observable(0)
 
       this.RELATED_HERITAGE_NODE_ID = 'bc64746e-cf4a-11ef-997c-0242ac120007';
-      this.GEO_NODE_ID = "87d3872b-f44f-11eb-bd0c-a87eeabdefba";
+      this.GEO_NODE_ID = '87d3872b-f44f-11eb-bd0c-a87eeabdefba';
       
       MapViewModel.apply(self, [params]);
 
-      this.setupMap = function (map) {
-        map.on('load', function () {
-            mapConfigurator.preConfig(map);
-            map.addControl(new MapboxGl.NavigationControl(), 'top-left');
-            map.addControl(
-              new MapboxGl.FullscreenControl({
-                container: $(map.getContainer()).closest('.workbench-card-wrapper')[0]
-              }),
-              'top-left'
-            );
-            map.addControl(
-              new MapboxGeocoder({
-                accessToken: MapboxGl.accessToken,
-                mapboxgl: MapboxGl,
-                placeholder: arches.geocoderPlaceHolder,
-                bbox: arches.hexBinBounds
-              }),
-              'top-right'
-            );
 
-            self.layers.subscribe(self.updateLayers);
-
-            var hoverFeature;
-
-            map.on('mousemove', function (e) {
-              var style = map.getStyle();
-              if (hoverFeature && hoverFeature.id && style)
-                map.setFeatureState(hoverFeature, { hover: false });
-              hoverFeature = _.find(map.queryRenderedFeatures(e.point), (feature) =>
-                mapPopupProvider.isFeatureClickable(feature, self)
+        this.setupMap = function (map) {
+          map.on('load', function () {
+              mapConfigurator.preConfig(map);
+              map.addControl(new MapboxGl.NavigationControl(), 'top-left');
+              map.addControl(
+                new MapboxGl.FullscreenControl({
+                  container: $(map.getContainer()).closest('.workbench-card-wrapper')[0]
+                }),
+                'top-left'
               );
-              if (hoverFeature && hoverFeature.id && style)
-                map.setFeatureState(hoverFeature, { hover: true });
-
-              map.getCanvas().style.cursor = hoverFeature ? 'pointer' : '';
-              if (self.map().draw_mode) {
-                var crosshairModes = ['draw_point', 'draw_line_string', 'draw_polygon'];
-                map.getCanvas().style.cursor = crosshairModes.includes(self.map().draw_mode)
-                  ? 'crosshair'
-                  : '';
-              }
-            });
-
-            map.draw_mode = null;
-
-            map.on('click', function (e) {
-              const popupFeatures = _.filter(map.queryRenderedFeatures(e.point), (feature) =>
-                mapPopupProvider.isFeatureClickable(feature, self)
+              map.addControl(
+                new MapboxGeocoder({
+                  accessToken: MapboxGl.accessToken,
+                  mapboxgl: MapboxGl,
+                  placeholder: arches.geocoderPlaceHolder,
+                  bbox: arches.hexBinBounds
+                }),
+                'top-right'
               );
-              if (popupFeatures.length) {
-                self.onFeatureClick(popupFeatures, e.lngLat, MapboxGl);
-              }
-            });
-
-            map.on('zoomend', function () {
-
-              self.zoom(parseFloat(map.getZoom()));
-            });
-
-            map.on('dragend', function () {
-              var center = map.getCenter();
-
-              self.centerX(parseFloat(center.lng));
-              self.centerY(parseFloat(center.lat));
-            });
-
-            mapConfigurator.postConfig(map);
-            self.map(map);
-        });
-        getGeometryTiles()
-      };
+  
+              self.layers.subscribe(self.updateLayers);
+  
+              var hoverFeature;
+  
+              map.on('mousemove', function (e) {
+                var style = map.getStyle();
+                if (hoverFeature && hoverFeature.id && style)
+                  map.setFeatureState(hoverFeature, { hover: false });
+                hoverFeature = _.find(map.queryRenderedFeatures(e.point), (feature) =>
+                  mapPopupProvider.isFeatureClickable(feature, self)
+                );
+                if (hoverFeature && hoverFeature.id && style)
+                  map.setFeatureState(hoverFeature, { hover: true });
+  
+                map.getCanvas().style.cursor = hoverFeature ? 'pointer' : '';
+                if (self.map().draw_mode) {
+                  var crosshairModes = ['draw_point', 'draw_line_string', 'draw_polygon'];
+                  map.getCanvas().style.cursor = crosshairModes.includes(self.map().draw_mode)
+                    ? 'crosshair'
+                    : '';
+                }
+              });
+  
+              map.draw_mode = null;
+  
+              map.on('click', function (e) {
+                const popupFeatures = _.filter(map.queryRenderedFeatures(e.point), (feature) =>
+                  mapPopupProvider.isFeatureClickable(feature, self)
+                );
+                if (popupFeatures.length) {
+                  self.onFeatureClick(popupFeatures, e.lngLat, MapboxGl);
+                }
+              });
+  
+              map.on('zoomend', function () {
+  
+                self.zoom(parseFloat(map.getZoom()));
+              });
+  
+              map.on('dragend', function () {
+                var center = map.getCenter();
+  
+                self.centerX(parseFloat(center.lng));
+                self.centerY(parseFloat(center.lat));
+              });
+  
+              mapConfigurator.postConfig(map);
+              self.map(map);
+              getGeometryTiles()
+          });
+        };
 
       const getGeometryTiles = async () => {
         await $.ajax({
@@ -138,7 +139,7 @@ define([
                 }
               }
             });
-        tilesArray.forEach((tile, idx) => {
+        tilesArray.forEach((tile) => {
           getGeoJsonData(tile.resourceId);
         });
       };
@@ -154,13 +155,14 @@ define([
 
                 let filteredResponseData = response.responseJSON.tiles[0].display_values['1'].value;
                 let featuresObject = JSON.parse(filteredResponseData.replace(/'/g, '"'))
+
                 if (dontUpdate()[featuresObject.features[0].id]) {
                   return
                 } 
                 if (self.map()) {
                   dontUpdate({...dontUpdate(), [featuresObject.features[0].id] : true})
                 }
-                  updateMap(featuresObject['features'])
+                  console.log("Update map features ", featuresObject['features']);
               },
               error: (response, status, error) => {
               }
@@ -234,14 +236,17 @@ define([
           });
           featureIndex(featureIndex() + 1)
           map.fitBounds(bounds, { padding: 20 });
+
+          mapConfigurator.postConfig(map);
           self.map(map)
+          console.log("Attempting to retireve map data ", self.map().getSource(geometry.id));
       });
     }
     }
 
     
   
-    ko.components.register('heritage-asset-map', {
+    ko.components.register('related-heritage-asset-map', {
       viewModel: viewModel,
       template: template
     });
