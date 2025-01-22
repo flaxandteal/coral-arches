@@ -162,7 +162,7 @@ define([
                 if (self.map()) {
                   dontUpdate({...dontUpdate(), [featuresObject.features[0].id] : true})
                 }
-                  console.log("Update map features ", featuresObject['features']);
+                  updateMap(featuresObject['features'])
               },
               error: (response, status, error) => {
               }
@@ -239,7 +239,6 @@ define([
 
           mapConfigurator.postConfig(map);
           self.map(map)
-          console.log("Attempting to retireve map data ", self.map().getSource(geometry.id));
       });
     }
     }
