@@ -289,23 +289,6 @@
           {
             "componentConfigs": [
               {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Geometry",
-                  "nodeOptions": {
-                    "083f3c7e-ca61-11ee-afca-0242ac180006": {
-                      "disableEdit": true
-                    }
-                  }
-                },
-                "tilesManaged": "one",
-                "componentName": "fetch-latest-tile",
-                "uniqueInstanceName": "geometry"
-              },
-              {
                 "componentName": "related-heritage-asset-map",
                 "uniqueInstanceName": "related-asset-map-locations",
                 "tilesManaged": "none",
