@@ -153,8 +153,10 @@ define([
               context: this,
               success: async (responseText, status, response) => {
 
-                let filteredResponseData = response.responseJSON.tiles[0].display_values['1'].value;
-                let featuresObject = JSON.parse(filteredResponseData.replace(/'/g, '"'))
+                if (response.responseJSON.tiles[0] !== undefined) {
+
+                  let filteredResponseData = response.responseJSON.tiles[0].display_values['1'].value;
+                  let featuresObject = JSON.parse(filteredResponseData.replace(/'/g, '"'))
 
                 if (dontUpdate()[featuresObject.features[0].id]) {
                   return
@@ -163,6 +165,9 @@ define([
                   dontUpdate({...dontUpdate(), [featuresObject.features[0].id] : true})
                 }
                   updateMap(featuresObject['features'])
+                } else {
+                  return
+                }
               },
               error: (response, status, error) => {
               }
