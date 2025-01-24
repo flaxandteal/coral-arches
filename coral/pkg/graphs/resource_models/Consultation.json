@@ -6203,7 +6203,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Grade",
+                        "label": "Proposed Grade",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -6211,7 +6211,7 @@
                     },
                     "id": "3fcb4acf-40a5-472e-82dc-193129d386a6",
                     "label": {
-                        "en": "New Grade"
+                        "en": "Proposed Grade"
                     },
                     "node_id": "591d1d50-03aa-11ef-948f-0242ac150003",
                     "sortorder": 0,
@@ -8773,7 +8773,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Grade Metatype",
+                        "label": "Proposed Grade Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -8781,7 +8781,7 @@
                     },
                     "id": "710d822e-8d91-4c94-b052-83ea6d7e78b0",
                     "label": {
-                        "en": "New Grade Metatype"
+                        "en": "Proposed Grade Metatype"
                     },
                     "node_id": "acdd0f2c-03aa-11ef-8f72-0242ac150003",
                     "sortorder": 1,
@@ -25422,7 +25422,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "new_grade_type",
+                    "alias": "proposed_grade_type",
                     "config": {
                         "rdmCollection": "d67be3d7-4f88-4c0d-9a1b-e1ac0f0c7921"
                     },
@@ -25436,7 +25436,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "New Grade Type",
+                    "name": "Proposed Grade Type",
                     "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
                     "nodeid": "591d1d50-03aa-11ef-948f-0242ac150003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -28907,7 +28907,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "new_grade_metatype",
+                    "alias": "proposed_grade_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -28921,7 +28921,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "New Grade Metatype",
+                    "name": "Proposed Grade Metatype",
                     "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
                     "nodeid": "acdd0f2c-03aa-11ef-8f72-0242ac150003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
