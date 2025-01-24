@@ -54,11 +54,11 @@
           configKeys: configKeys
         },
         config: {
-          placeholder: 'Select an Incident Report or start new',
+          placeholder: 'Select an Issue Report or start new',
           
-          label: 'Selected Incident Report',
+          label: 'Selected Issue Report',
         },
-        value: selectedIncidentReport,
+        value: selectedIssueReport,
         loading: false,
         pageVm: $root
       "
@@ -83,7 +83,7 @@
       style="min-height: 40.56px"
       data-bind="click: async () => {
         await openWorkflow();
-      }, disable: !selectedIncidentReport()"
+      }, disable: !selectedIssueReport()"
     >
       <span>Open Selected</span>
     </button>
