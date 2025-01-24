@@ -4,15 +4,15 @@ define([
   'knockout-mapping',
   'arches',
   'viewmodels/open-workflow',
-  'templates/views/components/plugins/open-incident-report-workflow.htm'
+  'templates/views/components/plugins/open-issue-report-workflow.htm'
 ], function ($, ko, koMapping, arches, OpenWorkflow, pageTemplate) {
   const openWorkflowViewModel = function (params) {
     OpenWorkflow.apply(this, [params]);
 
     this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
 
-    this.incidentTiles = ko.observableArray();
-    this.selectedIncidentReport = ko.observable();
+    this.issueTiles = ko.observableArray();
+    this.selectedIssueReport = ko.observable();
 
     this.configKeys = ko.observable({ placeholder: 0 });
 
@@ -51,19 +51,19 @@ define([
     this.selectedResource.subscribe(async (resourceId) => {
       if (!resourceId) {
         this.parentTileOptions([]);
-        this.selectedIncidentReport(null);
+        this.selectedIssueReport(null);
         return;
       }
       this.getParentTileOptions(resourceId);
     });
 
-    this.selectedIncidentReport.subscribe((tileId) => {
+    this.selectedIssueReport.subscribe((tileId) => {
       this.addtionalConfigData()['parentTileIds']['d3ff3fe6-d62b-11ee-9454-0242ac180006'] = tileId;
       this.setAdditionalOpenConfigData();
     });
   };
 
-  return ko.components.register('open-incident-report-workflow', {
+  return ko.components.register('open-issue-report-workflow', {
     viewModel: openWorkflowViewModel,
     template: pageTemplate
   });
