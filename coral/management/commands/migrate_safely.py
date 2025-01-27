@@ -1,29 +1,20 @@
-import os, fnmatch, glob
+import os, glob
 import uuid
-from arches.management.commands import utils
 from arches.app.models.graph import Graph
 from arches.app.models.concept import Concept
-from django.urls import reverse
 from django.core import management
 from django.core.management.base import BaseCommand
-from django.db.utils import IntegrityError
-import subprocess
 import json
-import arches_orm
-import requests
 
 class Command(BaseCommand):
     """Safely Migrate a model that may have conflicting changes.
 
     """
-
-
     def add_arguments(self, parser):
         parser.add_argument(
             "-m",
             "--model_name",
-        )
-
+    )
 
     def handle(self, *args, **options):
         ScanForDataRisks().handle_model_update(options["model_name"])
@@ -34,9 +25,10 @@ class ScanForDataRisks():
 
   incoming_json = {}
   graphid = ""
+  graph = None
   datatype_changes = {}
 
-  def compare_nodes(self, model_name: str) -> tuple[list,list,dict]:
+  def compare_nodes(self) -> tuple[list,list,dict]:
     """
     This determines changes to the model's nodes including new nodes, deleted nodes and datatype changes
     """
@@ -51,7 +43,7 @@ class ScanForDataRisks():
 
     graphid = self.graphid
     incoming_nodes = incoming_json['graph'][0]['nodes']
-    current_nodes = Graph.objects.get(pk=graphid).nodes.values()
+    current_nodes = self.graph.nodes.values()
 
     for node in incoming_nodes:
       if node['nodeid'] not in list(map(lambda n : str(n.nodeid), current_nodes)):
@@ -71,17 +63,22 @@ class ScanForDataRisks():
     for nodeid in incoming_datatypes.keys():
       if incoming_datatypes[nodeid] != current_datatypes[nodeid]:
         incoming_node = [node for node in incoming_nodes if node['nodeid'] == nodeid][0]
+        current_node = self.graph.nodes[uuid.UUID(nodeid)]
+        print(current_node.alias, incoming_datatypes[nodeid], current_datatypes[nodeid])
         datatype_changes[nodeid] = {
           "from_datatype": current_datatypes[nodeid],
           "to_datatype": incoming_datatypes[nodeid]
         }
+
         if current_datatypes[nodeid] == 'domain-value' or current_datatypes[nodeid] == 'domain-value-list':
-          datatype_changes[nodeid]['domain_options'] = current_nodes[nodeid]['config']['options']
+          datatype_changes[nodeid]['domain_options'] = current_node.config['options']
+
         if incoming_datatypes[nodeid] == 'domain-value' or incoming_datatypes[nodeid] == 'domain-value-list':
-          datatype_changes[nodeid]['domain_options'] = node['config']['options']
+          datatype_changes[nodeid]['domain_options'] = incoming_node['config']['options']
+
         if current_datatypes[nodeid] == 'concept' or current_datatypes[nodeid] == 'concept-list':
           concept_keys = ("conceptid", "text", "id")
-          collection_id = Graph.objects.get(pk=graphid).nodes[uuid.UUID(nodeid)].config['rdmCollection']
+          collection_id = current_node.config['rdmCollection']
           datatype_changes[nodeid]['concept_options'] = list(map(lambda concept: {concept_keys[i] : concept[i] for i, _ in enumerate(concept)}, Concept().get_child_collections(collection_id)))
 
         if incoming_datatypes[nodeid] == 'concept' or incoming_datatypes[nodeid] == 'concept-list':
@@ -102,14 +99,27 @@ class ScanForDataRisks():
             tile_json = TransformData().string_to_domain_value(tile_json, node)
 
         if change['from_datatype'] == 'domain-value':
+          if change['to_datatype'] == 'domain-value-list':
+            tile_json = TransformData().allow_many(tile_json, node)
           if change['to_datatype'] == 'concept':
             tile_json = TransformData().domain_to_concept(tile_json, change, node)
-          if change['to_datatype'] == 'domain-value-list':
+          if change['to_datatype'] == 'concept-list':
+            tile_json = TransformData().domain_to_concept(tile_json, change, node)
             tile_json = TransformData().allow_many(tile_json, node)
 
         if change['from_datatype'] == 'concept':
           if change['to_datatype'] == 'concept-list':
             tile_json = TransformData().allow_many(tile_json, node)
+          if change['to_datatype'] == 'domain-value':
+            tile_json = TransformData().concept_to_domain(tile_json, change, node)
+          if change['to_datatype'] == 'domain-value-list':
+            tile_json = TransformData().concept_to_domain(tile_json, change, node)
+            tile_json = TransformData().allow_many(tile_json, node)
+
+        if change['from_datatype'] == 'resource-instance':
+          if change['to_datatype'] == 'resource-instance-list':
+            tile_json = TransformData().allow_many(tile_json, node)
+
 
   def handle_model_update(self, model_name):
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
@@ -119,6 +129,8 @@ class ScanForDataRisks():
 
     self.incoming_json = json.loads(file_contents)
     self.graphid = self.incoming_json['graph'][0]['graphid']
+    self.graph = Graph.objects.get(pk=self.graphid)
+
 
     management.call_command("packages",
         operation="export_graphs",
@@ -137,13 +149,11 @@ class ScanForDataRisks():
 
     os.rename(glob.glob(f'{model_name}*.json')[0], f'stale_data_{model_name}.json')
 
-    new_nodes, deleted_nodes, self.datatype_changes = self.compare_nodes(model_name)
-
-    graph = Graph.objects.get(pk=self.graphid)
+    new_nodes, deleted_nodes, self.datatype_changes = self.compare_nodes()
 
     if self.datatype_changes == {}:
-      graph.delete_instances()
-      graph.delete()
+      self.graph.delete_instances()
+      self.graph.delete()
       management.call_command("packages",
         operation="import_graphs",
         source=f"coral/pkg/graphs/resource_models/{model_name}.json"
@@ -152,7 +162,8 @@ class ScanForDataRisks():
       management.call_command("packages",
             operation="import_business_data",
             source=f"stale_data_{model_name}.json",
-            overwrite="overwrite"
+            overwrite="overwrite",
+            prevent_indexing=False
         )
     else:
       with open(f"stale_data_{model_name}.json") as incoming_business_data:
@@ -167,8 +178,8 @@ class ScanForDataRisks():
       with open(f'transformed_{model_name}.json', 'w') as f:
         json.dump(stale_business_data, f)
     
-      graph.delete_instances()
-      graph.delete()
+      self.graph.delete_instances()
+      self.graph.delete()
       management.call_command("packages",
         operation="import_graphs",
         source=f"coral/pkg/graphs/resource_models/{model_name}.json"
@@ -177,19 +188,9 @@ class ScanForDataRisks():
       management.call_command("packages",
             operation="import_business_data",
             source=f"transformed_{model_name}.json",
-            overwrite="overwrite"
+            overwrite="overwrite",
+            prevent_indexing=False
         )
-
-      
-
-
-
-
-    
-
-
-
-
 
 class TransformData():
   """
@@ -205,12 +206,25 @@ class TransformData():
 
   def domain_to_concept(self, tile_json, change, nodeid):
     mapping = {}
+    if tile_json['data'][nodeid] == None or tile_json['data'][nodeid] == "":
+      return tile_json
     for option in change['domain_options']:
-      matching_option = [opt for opt in change['concept_options'].items() if opt['text'] == option['text']][0]
-      mapping[option['id']] = matching_option['conceptid']
-
+      matching_option = [opt for opt in change['concept_options'] if opt['text'] == option['text']][0]
+      mapping[option['id']] = matching_option['id']
     tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
     return tile_json
+  
+  def concept_to_domain(self, tile_json, change, nodeid):
+    mapping = {}
+    if tile_json['data'][nodeid] == None or tile_json['data'][nodeid] == "":
+      return tile_json
+    for option in change['concept_options']:
+        matching_option = [opt for opt in change['domain_options'] if opt['text']['en'] == option['text']][0]
+        mapping[option['id']] = matching_option['id']
+    tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
+    return tile_json
+
+
 
   def allow_many(self, tile_json, nodeid):
     tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
