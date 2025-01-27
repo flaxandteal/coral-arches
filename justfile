@@ -111,7 +111,7 @@ manage *args: docker
 	then 
 	command=$1; shift
 	argstring=$(just $command $@); just compose run --rm --entrypoint /bin/bash arches_worker -c ". ../ENV/bin/activate; python manage.py $argstring"
-	else argstring=$(echo ". ../ENV/bin/activate; python manage.py $@"); just compose run --entrypoint /bin/bash arches_worker -c "$argstring"
+	else argstring=$(echo ". ../ENV/bin/activate; python manage.py $@"); just compose run --rm --entrypoint /bin/bash arches_worker -c "$argstring"
 	fi
 
 [group('kube')]
