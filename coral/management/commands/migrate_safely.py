@@ -1,4 +1,4 @@
-import os
+import os, fnmatch, glob
 import uuid
 from arches.management.commands import utils
 from arches.app.models.graph import Graph
@@ -13,7 +13,7 @@ import arches_orm
 import requests
 
 class Command(BaseCommand):
-    """Recalculate ES resource->set mapping.
+    """Safely Migrate a model that may have conflicting changes.
 
     """
 
@@ -28,7 +28,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print("DEBUGGER, HANLDLING COMMAND")
-        ScanForDataRisks().handle_model_update("Consultation")
+        ScanForDataRisks().handle_model_update(options["model_name"])
         pass
 
 class ScanForDataRisks():
@@ -36,6 +36,7 @@ class ScanForDataRisks():
 
   incoming_json = {}
   graphid = ""
+  datatype_changes = {}
 
   def compare_nodes(self, model_name: str) -> tuple[list,list,dict]:
     """
@@ -121,13 +122,13 @@ class ScanForDataRisks():
     self.incoming_json = json.loads(file_contents)
     self.graphid = self.incoming_json['graph'][0]['graphid']
 
-    # backup resource_model
     management.call_command("packages",
         operation="export_graphs",
         graphs=self.graphid,
         format="json",
         dest_dir="."
     )
+    os.rename(f"{model_name}.json", f"backup_{model_name}.json")
     
     management.call_command("packages",
         operation="export_business_data",
@@ -135,7 +136,36 @@ class ScanForDataRisks():
         format="json",
         dest_dir="."
     )
-    new_nodes, deleted_nodes, datatype_changes = self.compare_nodes(model_name)
+
+    os.rename(glob.glob(f'{model_name}*.json')[0], f'stale_data_{model_name}.json')
+
+    new_nodes, deleted_nodes, self.datatype_changes = self.compare_nodes(model_name)
+
+    print("DATATYPE CHANGES", self.datatype_changes)
+    if self.datatype_changes == {}:
+      print("NO SIGNIFICANT DATA CHANGES")
+      graph = Graph.objects.get(pk=self.graphid)
+      print("deleting", graph)
+      graph.delete()
+      management.call_command("packages",
+        operation="import_graphs",
+        source=f"coral/pkg/graphs/resource_models/{model_name}.json"
+        )
+      
+      management.call_command("packages",
+            operation="import_business_data",
+            source=f"stale_data_{model_name}.json",
+            overwrite="overwrite"
+        )
+    else:
+      with open(f"stale_data_{model_name}.json") as incoming_business_data:
+        file_contents = incoming_business_data.read()
+      stale_business_data = json.loads(file_contents)
+
+
+
+    
+
 
 
 
