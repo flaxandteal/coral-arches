@@ -40,7 +40,7 @@ define([
 
 
         this.setupMap = function (map) {
-          map.on('load', function () {
+          map.on('load', async function() {
               mapConfigurator.preConfig(map);
               map.addControl(new MapboxGl.NavigationControl(), 'top-left');
               map.addControl(
@@ -107,80 +107,72 @@ define([
   
               mapConfigurator.postConfig(map);
               self.map(map);
-              getGeometryTiles()
+              const geometries = await getGeometryTiles()
+              updateMap(geometries)
           });
         };
 
       const getGeometryTiles = async () => {
-        await $.ajax({
-              type: 'GET',
-              url:
-                arches.urls.root +
-                `resource/${params.baseResourceId}/tiles?nodeid=${this.RELATED_HERITAGE_NODE_ID}`,
-              context: this,
-              success: async (responseText, status, response) => {
-                const tiles =
-                  response.responseJSON.tiles[0].data[this.RELATED_HERITAGE_NODE_ID];
-
-                tilesArray = [];
-                tiles.forEach((tile) => {
-                  tilesArray.push(tile);
-                });
-              },
-              error: (response, status, error) => {
-                if (response.statusText !== 'abort') {
-                  // this.viewModel.alert(
-                  //   new AlertViewModel(
-                  //     'ep-alert-red',
-                  //     arches.requestFailed.title,
-                  //     response.responseText
-                  //   )
-                  // );
+        try {
+            const response = await $.ajax({
+                type: 'GET',
+                url: arches.urls.root + `resource/${params.baseResourceId}/tiles?nodeid=${this.RELATED_HERITAGE_NODE_ID}`,
+                context: this
+            });    
+            if (response) {
+                const tiles = response.tiles[0].data[this.RELATED_HERITAGE_NODE_ID];
+                let geometries = [];
+    
+                for (const tile of tiles) {
+                    const data = await getGeoJsonData(tile.resourceId);
+                    if (data && Array.isArray(data)) {
+                        geometries = [...geometries, ...data];
+                    }
                 }
-              }
-            });
-        tilesArray.forEach((tile) => {
-          getGeoJsonData(tile.resourceId);
-        });
+                return geometries;
+            }
+        } catch (error) {
+            console.error("Error fetching tiles:", error);
+            return [];
+        }
       };
+      
+      const getGeoJsonData = async(resourceId) => {
+        try {
+          const response = await $.ajax({
+            type: 'GET',
+            url:
+              arches.urls.root +
+              `resource/${resourceId}/tiles?nodeid=${this.GEO_NODE_ID}`,
+            context: this
+          })
+          if (response.tiles[0] !== undefined) {
 
-      const getGeoJsonData = (resourceId) => {
-        $.ajax({
-          type: 'GET',
-              url:
-                arches.urls.root +
-                `resource/${resourceId}/tiles?nodeid=${this.GEO_NODE_ID}`,
-              context: this,
-              success: async (responseText, status, response) => {
+            let filteredResponseData = response.tiles[0].display_values['1'].value;
+            let featuresObject = JSON.parse(filteredResponseData.replace(/'/g, '"'))
 
-                if (response.responseJSON.tiles[0] !== undefined) {
-
-                  let filteredResponseData = response.responseJSON.tiles[0].display_values['1'].value;
-                  let featuresObject = JSON.parse(filteredResponseData.replace(/'/g, '"'))
-
-                if (dontUpdate()[featuresObject.features[0].id]) {
-                  return
-                } 
-                if (self.map()) {
-                  dontUpdate({...dontUpdate(), [featuresObject.features[0].id] : true})
-                }
-                  updateMap(featuresObject['features'])
-                } else {
-                  return
-                }
-              },
-              error: (response, status, error) => {
-              }
-        });
-    };
+          if (dontUpdate()[featuresObject.features[0].id]) {
+            return
+          } 
+          if (self.map()) {
+            dontUpdate({...dontUpdate(), [featuresObject.features[0].id] : true})
+          }
+            return featuresObject['features']
+          } else {
+            return
+          }
+          
+        } catch (error) {
+          console.error("Error fetching GeoJSON data:", error);
+          return null;
+        }
+      }
 
     const updateMap = (geometries) => {
       let map = self.map()
-
       let bounds = new MapboxGl.LngLatBounds();
       Object.values(geometries).forEach((geometry, idx) => {
         let colour = '#0000FF';
-        if (idx <= 0) colour = '#FF0000';
           if (geometry.geometry.type === 'Point') {
             bounds.extend(geometry.geometry.coordinates);
           } else if (
