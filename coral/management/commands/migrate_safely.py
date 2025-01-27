@@ -17,7 +17,6 @@ class Command(BaseCommand):
 
     """
 
-    print_statistics = False
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -27,7 +26,6 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        print("DEBUGGER, HANLDLING COMMAND")
         ScanForDataRisks().handle_model_update(options["model_name"])
         pass
 
@@ -72,6 +70,7 @@ class ScanForDataRisks():
     # if performance is an issue we can incorprate this into the previous for loop. The extra loop is just a way to ensure we don't get key errors from new or deleted nodes.
     for nodeid in incoming_datatypes.keys():
       if incoming_datatypes[nodeid] != current_datatypes[nodeid]:
+        incoming_node = [node for node in incoming_nodes if node['nodeid'] == nodeid][0]
         datatype_changes[nodeid] = {
           "from_datatype": current_datatypes[nodeid],
           "to_datatype": incoming_datatypes[nodeid]
@@ -82,38 +81,37 @@ class ScanForDataRisks():
           datatype_changes[nodeid]['domain_options'] = node['config']['options']
         if current_datatypes[nodeid] == 'concept' or current_datatypes[nodeid] == 'concept-list':
           concept_keys = ("conceptid", "text", "id")
-          collection_id = current_nodes[nodeid]['config']['rdmCollection']
+          collection_id = Graph.objects.get(pk=graphid).nodes[uuid.UUID(nodeid)].config['rdmCollection']
           datatype_changes[nodeid]['concept_options'] = list(map(lambda concept: {concept_keys[i] : concept[i] for i, _ in enumerate(concept)}, Concept().get_child_collections(collection_id)))
 
         if incoming_datatypes[nodeid] == 'concept' or incoming_datatypes[nodeid] == 'concept-list':
           concept_keys = ("conceptid", "text", "id")
-          collection_id = incoming_nodes[nodeid]['config']['rdmCollection']
+          collection_id = incoming_node['config']['rdmCollection']
           datatype_changes[nodeid]['concept_options'] = list(map(lambda concept: {concept_keys[i] : concept[i] for i, _ in enumerate(concept)}, Concept().get_child_collections(collection_id)))
 
     return new_nodes, deleted_nodes, datatype_changes
 
   def handle_datatype_changes(self, tile_json, datatype_changes: dict):
     for node in tile_json['data']:
-      if node['nodeid'] in datatype_changes.keys():
-        change = datatype_changes[node['nodeid']]
+      if node in datatype_changes.keys():
+        change = datatype_changes[node]
         if change['from_datatype'] == 'string':
           if change['to_datatype'] == 'date':
-            tile_json = TransformData().string_to_date(tile_json, node['nodeid'])
+            tile_json = TransformData().string_to_date(tile_json, node)
           if change['to_datatype'] == 'domain-value':
-            tile_json = TransformData().string_to_domain_value(tile_json, node['nodeid'])
+            tile_json = TransformData().string_to_domain_value(tile_json, node)
 
         if change['from_datatype'] == 'domain-value':
           if change['to_datatype'] == 'concept':
-            tile_json = TransformData().domain_to_concept(tile_json, change, node['nodeid'])
+            tile_json = TransformData().domain_to_concept(tile_json, change, node)
           if change['to_datatype'] == 'domain-value-list':
-            tile_json = TransformData().allow_many(tile_json, node['nodeid'])
+            tile_json = TransformData().allow_many(tile_json, node)
 
         if change['from_datatype'] == 'concept':
           if change['to_datatype'] == 'concept-list':
-            tile_json = TransformData().allow_many(tile_json, node['nodeid'])
+            tile_json = TransformData().allow_many(tile_json, node)
 
   def handle_model_update(self, model_name):
-    print("DEBUGGER, HANDLE MODEL CHANGE", model_name)
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
     with open(model_path) as incoming_json:
       file_contents = incoming_json.read()
@@ -141,11 +139,10 @@ class ScanForDataRisks():
 
     new_nodes, deleted_nodes, self.datatype_changes = self.compare_nodes(model_name)
 
-    print("DATATYPE CHANGES", self.datatype_changes)
+    graph = Graph.objects.get(pk=self.graphid)
+
     if self.datatype_changes == {}:
-      print("NO SIGNIFICANT DATA CHANGES")
-      graph = Graph.objects.get(pk=self.graphid)
-      print("deleting", graph)
+      graph.delete_instances()
       graph.delete()
       management.call_command("packages",
         operation="import_graphs",
@@ -161,6 +158,30 @@ class ScanForDataRisks():
       with open(f"stale_data_{model_name}.json") as incoming_business_data:
         file_contents = incoming_business_data.read()
       stale_business_data = json.loads(file_contents)
+      stale_resources = stale_business_data['business_data']['resources']
+      for resource in stale_resources:
+        stale_tiles = resource['tiles']
+        for tile in stale_tiles:
+          tile = self.handle_datatype_changes(tile, self.datatype_changes)
+      
+      with open(f'transformed_{model_name}.json', 'w') as f:
+        json.dump(stale_business_data, f)
+    
+      graph.delete_instances()
+      graph.delete()
+      management.call_command("packages",
+        operation="import_graphs",
+        source=f"coral/pkg/graphs/resource_models/{model_name}.json"
+        )
+      
+      management.call_command("packages",
+            operation="import_business_data",
+            source=f"transformed_{model_name}.json",
+            overwrite="overwrite"
+        )
+
+      
+
 
 
 
@@ -174,15 +195,15 @@ class TransformData():
   """
   This class should contain all of the transformation functions
   """
-  def string_to_date(tile_json, nodeid):
+  def string_to_date(self, tile_json, nodeid):
     # i believe stuart has made this already
     return tile_json
 
-  def string_to_domain_value(tile_json, nodeid):
+  def string_to_domain_value(self, tile_json, nodeid):
     # not urgent
     return tile_json
 
-  def domain_to_concept(tile_json, change, nodeid):
+  def domain_to_concept(self, tile_json, change, nodeid):
     mapping = {}
     for option in change['domain_options']:
       matching_option = [opt for opt in change['concept_options'].items() if opt['text'] == option['text']][0]
@@ -191,6 +212,6 @@ class TransformData():
     tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
     return tile_json
 
-  def allow_many(tile_json, nodeid):
+  def allow_many(self, tile_json, nodeid):
     tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
     return tile_json
