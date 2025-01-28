@@ -167,7 +167,6 @@ class PlanningTaskStrategy(TaskStrategy):
             is_hm_user = groupId in [HM_GROUP] 
             is_hb_user = groupId in [HB_GROUP] 
             is_admin = groupId in [PLANNING_GROUP]
-
             resources = [] 
 
             utilities = Utilities()
@@ -230,8 +229,8 @@ class PlanningTaskStrategy(TaskStrategy):
                     action_status = utilities.node_check(lambda: consultation.action[0].action_status )
                     action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
                     assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1)
-                    
-                    user_assigned = any(assigned_to_list)
+
+                    user_assigned = any(assigned_to_list or [])
                     is_assigned_to_user = False
 
                     if assigned_to_list:
