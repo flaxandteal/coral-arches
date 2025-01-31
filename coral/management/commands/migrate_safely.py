@@ -41,7 +41,7 @@ class ScanForDataRisks():
     This determines changes to the model's nodes including new nodes, deleted nodes and datatype changes
     """
     new_nodes = []
-    deleted_nodes = []
+    deleted_nodes = {}
     incoming_datatypes = {}
     current_datatypes = {}
     datatype_changes = {}
@@ -63,7 +63,7 @@ class ScanForDataRisks():
 
     for node_json in current_nodes:
       if str(node_json.nodeid) not in incoming_datatypes.keys():
-        deleted_nodes.append(str(node_json.nodeid))
+        deleted_nodes[node_json.alias] = str(node_json.nodeid)
       else:
         current_datatypes[str(node_json.nodeid)] = node_json.datatype
 
@@ -75,7 +75,7 @@ class ScanForDataRisks():
         print(current_node.alias, incoming_datatypes[nodeid], current_datatypes[nodeid])
         datatype_changes[nodeid] = {
           "from_datatype": current_datatypes[nodeid],
-          "to_datatype": incoming_datatypes[nodeid]
+          "to_datatype": incoming_datatypes[nodeid],
         }
 
         if current_datatypes[nodeid] == 'domain-value' or current_datatypes[nodeid] == 'domain-value-list':
@@ -127,7 +127,13 @@ class ScanForDataRisks():
         if change['from_datatype'] == 'resource-instance':
           if change['to_datatype'] == 'resource-instance-list':
             tile_json = TransformData().allow_many(tile_json, node)
+    return tile_json
 
+  def handle_deleted_nodes(self, tile_json, deleted_nodes):
+    for node in list(tile_json['data'].keys()):
+      if node in deleted_nodes.values():
+        tile_json = TransformData().remove_nodes(tile_json, deleted_nodes)
+    return tile_json
 
   def handle_model_update(self, model_name):
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
@@ -181,8 +187,10 @@ class ScanForDataRisks():
       for resource in stale_resources:
         stale_tiles = resource['tiles']
         for tile in stale_tiles:
-          tile = self.handle_datatype_changes(tile, self.datatype_changes)
-      
+          if self.datatype_changes != {}:
+            tile = self.handle_datatype_changes(tile, self.datatype_changes)
+          if len(deleted_nodes) > 0:
+            tile = self.handle_deleted_nodes(tile, deleted_nodes)
       with open(f'transformed_{model_name}.json', 'w') as f:
         json.dump(stale_business_data, f)
     
@@ -199,6 +207,7 @@ class ScanForDataRisks():
             overwrite="overwrite",
             prevent_indexing=False
         )
+      
   def reverse_migration(self, model_name):
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
     with open(model_path) as incoming_json:
@@ -252,7 +261,14 @@ class TransformData():
     tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
     return tile_json
 
-
+  def remove_nodes(self, tile_json: dict, deleted_nodes: dict):
+    try:
+      for node_id in deleted_nodes.values():
+          if node_id in tile_json.get("data", {}):
+              del tile_json["data"][node_id]
+      return tile_json
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
   def allow_many(self, tile_json, nodeid):
     tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
