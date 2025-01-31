@@ -42,6 +42,7 @@ class ScanForDataRisks():
     """
     new_nodes = []
     deleted_nodes = {}
+    deleted_nodegroups = []
     incoming_datatypes = {}
     current_datatypes = {}
     datatype_changes = {}
@@ -51,7 +52,9 @@ class ScanForDataRisks():
 
     graphid = self.graphid
     incoming_nodes = incoming_json['graph'][0]['nodes']
+    incoming_nodegroups = incoming_json['graph'][0]['nodegroups']
     current_nodes = self.graph.nodes.values()
+    current_nodegroups = self.graph.get_nodegroups()
 
     for node in incoming_nodes:
       if node['nodeid'] not in list(map(lambda n : str(n.nodeid), current_nodes)):
@@ -66,6 +69,10 @@ class ScanForDataRisks():
         deleted_nodes[node_json.alias] = str(node_json.nodeid)
       else:
         current_datatypes[str(node_json.nodeid)] = node_json.datatype
+    
+    for nodegroup in current_nodegroups:
+      if str(nodegroup.nodegroupid) not in list(map(lambda ng: str(ng['nodegroupid']), incoming_nodegroups)):
+        deleted_nodegroups.append(str(nodegroup.nodegroupid))
 
     # if performance is an issue we can incorprate this into the previous for loop. The extra loop is just a way to ensure we don't get key errors from new or deleted nodes.
     for nodeid in incoming_datatypes.keys():
@@ -94,7 +101,7 @@ class ScanForDataRisks():
           collection_id = incoming_node['config']['rdmCollection']
           datatype_changes[nodeid]['concept_options'] = list(map(lambda concept: {concept_keys[i] : concept[i] for i, _ in enumerate(concept)}, Concept().get_child_collections(collection_id)))
 
-    return new_nodes, deleted_nodes, datatype_changes
+    return new_nodes, deleted_nodes, deleted_nodegroups, datatype_changes
 
   def handle_datatype_changes(self, tile_json, datatype_changes: dict):
     for node in tile_json['data']:
@@ -135,6 +142,48 @@ class ScanForDataRisks():
         tile_json = TransformData().remove_nodes(tile_json, deleted_nodes)
     return tile_json
 
+  def handle_deleted_nodegroups(self, tile_json, deleted_nodegroups):
+    for value in list(tile_json.values()):
+      if value in deleted_nodegroups:
+        return True
+    return False
+
+  def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups):
+    nodes = self.graph.nodes.values()
+
+    # Print the current state with headings
+    print("\n\nDATA CHANGES")
+    
+    print("\nNew Nodes:")
+    if new_nodes:
+        for node in new_nodes:
+            print(node)
+    else:
+        print("No new nodes added")
+
+    print("\nDeleted Nodes:")
+    if deleted_nodes:
+        for alias, node in deleted_nodes.items():
+            print(f"{alias}: {node}")
+    else:
+        print("No nodes deleted")
+
+    print("\nDeleted Nodegroups:")
+    if deleted_nodegroups:
+        for nodegroup in deleted_nodegroups:
+            alias = next((n.alias for n in nodes if str(n.nodegroup_id) == nodegroup), None)
+            print(f"{alias}: {nodegroup}")
+    else:
+        print("No nodes deleted")
+
+    print("\nDatatype Changes:")
+    if self.datatype_changes:
+        for key, value in self.datatype_changes.items():
+            alias = next((n.alias for n in nodes if str(n.nodeid) == key), None)
+            print(f"{key} ({alias}): {value['from_datatype']} -> {value['to_datatype']}")
+    else:
+        print("No data changes")
+
   def handle_model_update(self, model_name):
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
     with open(model_path) as incoming_json:
@@ -163,9 +212,11 @@ class ScanForDataRisks():
 
     os.rename(glob.glob(f'{model_name}*.json')[0], f'stale_data_{model_name}.json')
 
-    new_nodes, deleted_nodes, self.datatype_changes = self.compare_nodes()
+    new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes = self.compare_nodes()
 
-    if self.datatype_changes == {}:
+    self.handle_data_change_messages(new_nodes, deleted_nodes, deleted_nodegroups)
+
+    if self.datatype_changes == {} and len(deleted_nodes) == 0:
       self.graph.delete_instances()
       self.graph.delete()
       management.call_command("packages",
@@ -191,9 +242,13 @@ class ScanForDataRisks():
             tile = self.handle_datatype_changes(tile, self.datatype_changes)
           if len(deleted_nodes) > 0:
             tile = self.handle_deleted_nodes(tile, deleted_nodes)
+        
+        # filter the tiles to remove the deleted node group tiles
+        if len(deleted_nodegroups) > 0:
+          resource['tiles'] = [tile for tile in stale_tiles if tile['nodegroup_id'] not in deleted_nodegroups]
+
       with open(f'transformed_{model_name}.json', 'w') as f:
         json.dump(stale_business_data, f)
-    
       self.graph.delete_instances()
       self.graph.delete()
       management.call_command("packages",
