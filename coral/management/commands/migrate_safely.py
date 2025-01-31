@@ -69,7 +69,7 @@ class ScanForDataRisks():
         deleted_nodes[node_json.alias] = str(node_json.nodeid)
       else:
         current_datatypes[str(node_json.nodeid)] = node_json.datatype
-    
+
     for nodegroup in current_nodegroups:
       if str(nodegroup.nodegroupid) not in list(map(lambda ng: str(ng['nodegroupid']), incoming_nodegroups)):
         deleted_nodegroups.append(str(nodegroup.nodegroupid))
@@ -183,14 +183,10 @@ class ScanForDataRisks():
     else:
         print("No data changes")
 
-    # Pause and ask for user input to continue
-    input("\nPress Enter to continue with the data conversion...")
-
   def handle_model_update(self, model_name):
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
     with open(model_path) as incoming_json:
       file_contents = incoming_json.read()
-
 
     self.incoming_json = json.loads(file_contents)
     self.graphid = self.incoming_json['graph'][0]['graphid']
@@ -203,7 +199,8 @@ class ScanForDataRisks():
         format="json",
         dest_dir="."
     )
-    os.rename(f"{model_name}.json", f"backup_{model_name}.json")
+    sanitised_model_name = model_name.replace(' ', '_')
+    os.rename(f"{model_name}.json", f"backup_{sanitised_model_name}.json")
     
     management.call_command("packages",
         operation="export_business_data",
@@ -212,13 +209,16 @@ class ScanForDataRisks():
         dest_dir="."
     )
 
-    os.rename(glob.glob(f'{model_name}*.json')[0], f'stale_data_{model_name}.json')
+    os.rename(glob.glob(f'{sanitised_model_name}*.json')[0], f'stale_data_{sanitised_model_name}.json')
 
     new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes = self.compare_nodes()
 
     self.handle_data_change_messages(new_nodes, deleted_nodes, deleted_nodegroups)
 
-    if self.datatype_changes == {} and len(deleted_nodes) == 0:
+    if self.datatype_changes == {} and len(deleted_nodes) == 0 and len(deleted_nodegroups) == 0:
+      input("\nContinue with deleting and updating the graphs and data?")
+
+      
       self.graph.delete_instances()
       self.graph.delete()
       management.call_command("packages",
@@ -228,13 +228,16 @@ class ScanForDataRisks():
       
       management.call_command("packages",
             operation="import_business_data",
-            source=f"stale_data_{model_name}.json",
+            source=f"stale_data_{sanitised_model_name}.json",
             overwrite="overwrite",
             prevent_indexing=False,
             escape_function=True
         )
     else:
-      with open(f"stale_data_{model_name}.json") as incoming_business_data:
+      # Pause and ask for user input to continue
+      input("\nPress Enter to continue with the data conversion...")
+
+      with open(f"stale_data_{sanitised_model_name}.json") as incoming_business_data:
         file_contents = incoming_business_data.read()
       stale_business_data = json.loads(file_contents)
       stale_resources = stale_business_data['business_data']['resources']
@@ -250,10 +253,10 @@ class ScanForDataRisks():
         if len(deleted_nodegroups) > 0:
           resource['tiles'] = [tile for tile in stale_tiles if tile['nodegroup_id'] not in deleted_nodegroups]
 
-      with open(f'transformed_{model_name}.json', 'w') as f:
+      with open(f'transformed_{sanitised_model_name}.json', 'w') as f:
         json.dump(stale_business_data, f)
 
-      input("\nContinue with deleting and updating the graphs and data?")
+      input("\nConversion Complete \n\nContinue with deleting and updating the graphs and data?")
 
       self.graph.delete_instances()
       self.graph.delete()
@@ -264,13 +267,14 @@ class ScanForDataRisks():
       
       management.call_command("packages",
             operation="import_business_data",
-            source=f"transformed_{model_name}.json",
+            source=f"transformed_{sanitised_model_name}.json",
             overwrite="overwrite",
             prevent_indexing=False,
             escape_function=True
         )
       
   def reverse_migration(self, model_name):
+    sanitised_model_name = model_name.replace(' ', '_')
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
     with open(model_path) as incoming_json:
       file_contents = incoming_json.read()
