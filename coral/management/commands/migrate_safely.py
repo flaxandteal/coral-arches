@@ -79,7 +79,6 @@ class ScanForDataRisks():
       if incoming_datatypes[nodeid] != current_datatypes[nodeid]:
         incoming_node = [node for node in incoming_nodes if node['nodeid'] == nodeid][0]
         current_node = self.graph.nodes[uuid.UUID(nodeid)]
-        print(current_node.alias, incoming_datatypes[nodeid], current_datatypes[nodeid])
         datatype_changes[nodeid] = {
           "from_datatype": current_datatypes[nodeid],
           "to_datatype": incoming_datatypes[nodeid],
@@ -184,6 +183,9 @@ class ScanForDataRisks():
     else:
         print("No data changes")
 
+    # Pause and ask for user input to continue
+    input("\nPress Enter to continue with the data conversion...")
+
   def handle_model_update(self, model_name):
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
     with open(model_path) as incoming_json:
@@ -250,6 +252,9 @@ class ScanForDataRisks():
 
       with open(f'transformed_{model_name}.json', 'w') as f:
         json.dump(stale_business_data, f)
+
+      input("\nContinue with deleting and updating the graphs and data?")
+
       self.graph.delete_instances()
       self.graph.delete()
       management.call_command("packages",
