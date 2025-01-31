@@ -228,7 +228,8 @@ class ScanForDataRisks():
             operation="import_business_data",
             source=f"stale_data_{model_name}.json",
             overwrite="overwrite",
-            prevent_indexing=False
+            prevent_indexing=False,
+            escape_function=True
         )
     else:
       with open(f"stale_data_{model_name}.json") as incoming_business_data:
@@ -260,7 +261,8 @@ class ScanForDataRisks():
             operation="import_business_data",
             source=f"transformed_{model_name}.json",
             overwrite="overwrite",
-            prevent_indexing=False
+            prevent_indexing=False,
+            escape_function=True
         )
       
   def reverse_migration(self, model_name):
