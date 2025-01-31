@@ -30,7 +30,7 @@ class HbNumberSuffix:
     
     def increment_letter(self, suffix, attempts):
         if not suffix:
-            return 'B'
+            return 'A'
         if 'Z' in suffix:
             return 'A' * (len(suffix[0]) + 1)   
         return chr(ord(suffix[0]) + attempts) * len(suffix)
