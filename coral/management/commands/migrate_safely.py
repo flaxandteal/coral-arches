@@ -15,10 +15,18 @@ class Command(BaseCommand):
             "-m",
             "--model_name",
     )
+        parser.add_argument(
+          "-r",
+          "--reverse",
+          action="store_true",
+        )
 
     def handle(self, *args, **options):
-        ScanForDataRisks().handle_model_update(options["model_name"])
-        pass
+        if options["reverse"]:
+          ScanForDataRisks().reverse_migration(options["model_name"])
+        else:
+          ScanForDataRisks().handle_model_update(options["model_name"])
+          pass
 
 class ScanForDataRisks():
   """ This class should contain all of the functions needed to determine data migration risks """
@@ -191,6 +199,26 @@ class ScanForDataRisks():
             overwrite="overwrite",
             prevent_indexing=False
         )
+  def reverse_migration(self, model_name):
+    model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
+    with open(model_path) as incoming_json:
+      file_contents = incoming_json.read()
+    self.incoming_json = json.loads(file_contents)
+    self.graphid = self.incoming_json['graph'][0]['graphid']
+    self.graph = Graph.objects.get(pk=self.graphid)
+    self.graph.delete_instances()
+    self.graph.delete()
+    management.call_command("packages",
+      operation="import_graphs",
+      source=f"backup_{model_name}.json"
+      )
+    management.call_command("packages",
+          operation="import_business_data",
+          source=f"stale_data_{model_name}.json",
+          overwrite="overwrite",
+          prevent_indexing=False,
+          escape_function=True
+      )
 
 class TransformData():
   """
