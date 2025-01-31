@@ -280,16 +280,22 @@ class ScanForDataRisks():
       file_contents = incoming_json.read()
     self.incoming_json = json.loads(file_contents)
     self.graphid = self.incoming_json['graph'][0]['graphid']
-    self.graph = Graph.objects.get(pk=self.graphid)
-    self.graph.delete_instances()
-    self.graph.delete()
+    try:
+      self.graph = Graph.objects.get(pk=self.graphid)
+    except:
+      print(f"Graph with id {self.graphid} not found.")
+
+    if self.graph:
+      self.graph.delete_instances()
+      self.graph.delete()
+      
     management.call_command("packages",
       operation="import_graphs",
       source=f"backup_{model_name}.json"
       )
     management.call_command("packages",
           operation="import_business_data",
-          source=f"stale_data_{model_name}.json",
+          source=f"stale_data_{sanitised_model_name}.json",
           overwrite="overwrite",
           prevent_indexing=False,
           escape_function=True
