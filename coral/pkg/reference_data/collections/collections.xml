@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:Collection rdf:about="http://arches:8000/80f303fb-ae0a-4651-babf-21c2cc62a3b7 ">
+    <skos:prefLabel xml:lang="en-us">{"id": "be562809-645e-4f0b-bcca-e1b439b6965b", "value": "Publication Lifecycle"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3eae7027-3fee-4617-bdb5-46770ba2c7ac"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/488cb291-7168-4a5f-86e2-77175cdc09dc"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/fe29bde8-43a4-498e-b1e5-2a4c218294d0"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/bd0b7222-d2b4-4b7d-93a4-a09775e4e950"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/60ee44c9-030f-4e9c-b978-9201688b5bb6"/>
+    </skos:member>
+  </skos:Collection>
   <skos:Collection rdf:about="http://arches:8000/e49a01b7-c018-4c35-af8b-5641fe1d25b4">
     <skos:prefLabel xml:lang="en-us">{"id": "33d8c835-6e26-4c8a-babd-a1f41f53712a", "value": "Letters"}</skos:prefLabel>
       <skos:member>

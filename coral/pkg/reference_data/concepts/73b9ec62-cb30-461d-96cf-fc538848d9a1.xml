@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:Concept rdf:about="http://arches:8000/3eae7027-3fee-4617-bdb5-46770ba2c7ac">
+    <skos:prefLabel xml:lang="en">{"id": "77589a81-d8f6-4e59-8c60-2f16bc4d376b", "value": "Rejected"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/73b9ec62-cb30-461d-96cf-fc538848d9a1">
+        <skos:hasTopConcept rdf:resource="http://arches:8000/bd0b7222-d2b4-4b7d-93a4-a09775e4e950"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/488cb291-7168-4a5f-86e2-77175cdc09dc"/>
+        <dcterms:title xml:lang="en">{"id": "dede49c8-7474-4bff-ab38-7f274356db8f", "value": "Publication Lifecycle"}</dcterms:title>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/fe29bde8-43a4-498e-b1e5-2a4c218294d0"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/3eae7027-3fee-4617-bdb5-46770ba2c7ac"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/60ee44c9-030f-4e9c-b978-9201688b5bb6"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/60ee44c9-030f-4e9c-b978-9201688b5bb6">
+    <skos:inScheme rdf:resource="http://arches:8000/73b9ec62-cb30-461d-96cf-fc538848d9a1"/>
+    <skos:prefLabel xml:lang="en">{"id": "c97b734b-30bb-47fd-9841-d0be4e5b8bb5", "value": "Actioned"}</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/bd0b7222-d2b4-4b7d-93a4-a09775e4e950">
+    <skos:inScheme rdf:resource="http://arches:8000/73b9ec62-cb30-461d-96cf-fc538848d9a1"/>
+    <skos:prefLabel xml:lang="en">{"id": "1529ef30-bfd2-41b8-9263-45d34692560d", "value": "Awaiting Sign-Off"}</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/fe29bde8-43a4-498e-b1e5-2a4c218294d0">
+    <skos:inScheme rdf:resource="http://arches:8000/73b9ec62-cb30-461d-96cf-fc538848d9a1"/>
+    <skos:prefLabel xml:lang="en">{"id": "8d273067-0cad-4a96-ae03-5c1ea4076d09", "value": "Discarded"}</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/488cb291-7168-4a5f-86e2-77175cdc09dc">
+    <skos:prefLabel xml:lang="en">{"id": "21c59202-0937-46b0-9563-ff8f23e3f80c", "value": "Upcoming"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/73b9ec62-cb30-461d-96cf-fc538848d9a1"/>
+  </skos:Concept>
+</rdf:RDF>
