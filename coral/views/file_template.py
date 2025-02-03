@@ -274,9 +274,10 @@ class FileTemplateView(View):
             if (isinstance(mapping[key], (bool))):
                 mapping[key] = str(mapping[key])
             if (isinstance(mapping[key], (list))):
-                mapping[key] = ", ".join(mapping[key])
+                if all(isinstance(item, str) for item in mapping[key]):
+                    mapping[key] = ", ".join(mapping[key])
             html = False
-            if htmlTags.search(mapping[key] if mapping[key] is not None else ""):
+            if htmlTags.search(str(mapping.get(key, ""))):
                 html = True
             self.replace_string(self.doc, key, mapping[key], html)
 

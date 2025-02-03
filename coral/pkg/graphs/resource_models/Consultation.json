@@ -994,6 +994,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "46955ea3-35c5-4eaa-8856-2f339b9b2c85",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Related Heritage Assets"
+                    },
+                    "nodegroup_id": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "4912e2a1-edf2-11eb-b553-a87eeabdefba",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -6203,7 +6230,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Grade",
+                        "label": "Proposed Grade",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -6211,7 +6238,7 @@
                     },
                     "id": "3fcb4acf-40a5-472e-82dc-193129d386a6",
                     "label": {
-                        "en": "New Grade"
+                        "en": "Proposed Grade"
                     },
                     "node_id": "591d1d50-03aa-11ef-948f-0242ac150003",
                     "sortorder": 0,
@@ -8773,7 +8800,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "New Grade Metatype",
+                        "label": "Proposed Grade Metatype",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -8781,7 +8808,7 @@
                     },
                     "id": "710d822e-8d91-4c94-b052-83ea6d7e78b0",
                     "label": {
-                        "en": "New Grade Metatype"
+                        "en": "Proposed Grade Metatype"
                     },
                     "node_id": "acdd0f2c-03aa-11ef-8f72-0242ac150003",
                     "sortorder": 1,
@@ -9443,6 +9470,27 @@
                     "sortorder": 15,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "46955ea3-35c5-4eaa-8856-2f339b9b2c85",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Related Heritage Asset(s)",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "dc3ac909-bb8b-4824-975b-c1967c78433e",
+                    "label": {
+                        "en": "Related Heritage Asset(s)"
+                    },
+                    "node_id": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "548d948e-7642-4752-89a6-4ba21773cbc6",
@@ -14519,6 +14567,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                    "edgeid": "3f1a9b84-25c9-4198-91b6-f3c6efaabf8f",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P15_was_influenced_by",
+                    "rangenode_id": "bc64746e-cf4a-11ef-997c-0242ac120007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
                     "edgeid": "40eff4cf-893a-11ea-96be-f875a44e0e11",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -17396,6 +17453,12 @@
                 "en": "Consultation"
             },
             "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "parentnodegroup_id": null
+                },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
@@ -25422,7 +25485,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "new_grade_type",
+                    "alias": "proposed_grade_type",
                     "config": {
                         "rdmCollection": "d67be3d7-4f88-4c0d-9a1b-e1ac0f0c7921"
                     },
@@ -25436,7 +25499,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "New Grade Type",
+                    "name": "Proposed Grade Type",
                     "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
                     "nodeid": "591d1d50-03aa-11ef-948f-0242ac150003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -28584,6 +28647,40 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "related_heritage_assets",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Heritage Asset",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "Rel_assets",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Related Heritage Assets",
+                    "nodegroup_id": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "nodeid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P15_was_influenced_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "historian",
                     "config": {
                         "graphs": [
@@ -28907,7 +29004,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "new_grade_metatype",
+                    "alias": "proposed_grade_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -28921,7 +29018,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "New Grade Metatype",
+                    "name": "Proposed Grade Metatype",
                     "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
                     "nodeid": "acdd0f2c-03aa-11ef-8f72-0242ac150003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -29991,6 +30088,13 @@
                                 "selected": false,
                                 "text": {
                                     "en": "Scoping Evaluation"
+                                }
+                            },
+                            {
+                                "id": "181b89d7-ac9d-4669-ac0f-dbfa442a3983",
+                                "selected": false,
+                                "text": {
+                                    "en": "New Record"
                                 }
                             }
                         ]
