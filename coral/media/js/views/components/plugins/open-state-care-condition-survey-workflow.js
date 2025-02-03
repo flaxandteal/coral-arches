@@ -13,7 +13,7 @@ define([
       
       this.searchString = "/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]"
 
-      this.incidentTiles = ko.observableArray();
+      this.issueTiles = ko.observableArray();
       this.selectedHeritageAsset = ko.observable();
   
       this.configKeys = ko.observable({ placeholder: 0 });
@@ -100,7 +100,7 @@ define([
         }
         this.addtionalConfigData()['resourceInstanceId'] = resourceId;
         const tileData = await this.fetchTileData(resourceId)
-        this.incidentTiles(tileData)
+        this.issueTiles(tileData)
         this.setAdditionalOpenConfigData();
       });
     };

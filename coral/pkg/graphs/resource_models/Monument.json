@@ -213,7 +213,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Incident Contacts"
+                        "en": "Issue Contacts"
                     },
                     "nodegroup_id": "cacc9d20-d62f-11ee-9454-0242ac180006",
                     "sortorder": null,
@@ -348,7 +348,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Incident Report"
+                        "en": "Issue Report"
                     },
                     "nodegroup_id": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
                     "sortorder": null,
@@ -1050,7 +1050,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Incident Reference"
+                        "en": "Issue Reference"
                     },
                     "nodegroup_id": "20017860-d711-11ee-9dd0-0242ac120006",
                     "sortorder": null,
@@ -1861,7 +1861,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Incident Proposal"
+                        "en": "Issue Proposal"
                     },
                     "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "sortorder": 3,
@@ -2160,7 +2160,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Incident Notes"
+                        "en": "Issue Notes"
                     },
                     "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
                     "sortorder": null,
@@ -23775,7 +23775,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_reference",
+                    "alias": "issue_reference",
                     "config": {
                         "en": ""
                     },
@@ -23789,7 +23789,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Reference",
+                    "name": "Issue Reference",
                     "nodegroup_id": "20017860-d711-11ee-9dd0-0242ac120006",
                     "nodeid": "20017860-d711-11ee-9dd0-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
@@ -36176,7 +36176,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_proposal",
+                    "alias": "issue_proposal",
                     "config": {
                         "en": ""
                     },
@@ -36190,7 +36190,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Proposal",
+                    "name": "Issue Proposal",
                     "nodegroup_id": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "nodeid": "a1f0e104-d648-11ee-9a11-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
@@ -38037,7 +38037,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_contacts",
+                    "alias": "issue_contacts",
                     "config": {
                         "en": ""
                     },
@@ -38051,7 +38051,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Contacts",
+                    "name": "Issue Contacts",
                     "nodegroup_id": "cacc9d20-d62f-11ee-9454-0242ac180006",
                     "nodeid": "cacc9d20-d62f-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
@@ -38202,7 +38202,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_notes",
+                    "alias": "issue_notes",
                     "config": {
                         "en": ""
                     },
@@ -38216,7 +38216,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Notes",
+                    "name": "Issue Notes",
                     "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
                     "nodeid": "d2592394-d62d-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
@@ -38225,7 +38225,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_notes_language_metatype",
+                    "alias": "issue_notes_language_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -38239,7 +38239,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Incident Notes Language Metatype",
+                    "name": "Issue Notes Language Metatype",
                     "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
                     "nodeid": "d2592c72-d62d-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -38248,7 +38248,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_note",
+                    "alias": "issue_note",
                     "config": {
                         "en": ""
                     },
@@ -38262,7 +38262,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Note",
+                    "name": "Issue Note",
                     "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
                     "nodeid": "d2592e8e-d62d-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
@@ -38271,7 +38271,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_notes_type",
+                    "alias": "issue_notes_type",
                     "config": {
                         "rdmCollection": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
                     },
@@ -38285,7 +38285,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Notes Type",
+                    "name": "Issue Notes Type",
                     "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
                     "nodeid": "d259306e-d62d-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -38294,7 +38294,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_notes_metatype",
+                    "alias": "issue_notes_metatype",
                     "config": {
                         "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
@@ -38308,7 +38308,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Incident Notes Metatype",
+                    "name": "Issue Notes Metatype",
                     "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
                     "nodeid": "d259324e-d62d-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
@@ -38317,7 +38317,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_notes_language",
+                    "alias": "issue_notes_language",
                     "config": {
                         "rdmCollection": "daacadea-1454-4cf4-8b14-9ade8069f4d7"
                     },
@@ -38331,7 +38331,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Notes Language",
+                    "name": "Issue Notes Language",
                     "nodegroup_id": "d2592394-d62d-11ee-9454-0242ac180006",
                     "nodeid": "d259341a-d62d-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E56_Language",
@@ -38340,7 +38340,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "incident_report",
+                    "alias": "issue_report",
                     "config": {
                         "en": ""
                     },
@@ -38354,7 +38354,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Incident Report",
+                    "name": "Issue Report",
                     "nodegroup_id": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
                     "nodeid": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E14_Condition_Assessment",

@@ -994,6 +994,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "46955ea3-35c5-4eaa-8856-2f339b9b2c85",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Related Heritage Assets"
+                    },
+                    "nodegroup_id": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "4912e2a1-edf2-11eb-b553-a87eeabdefba",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -9445,6 +9472,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "46955ea3-35c5-4eaa-8856-2f339b9b2c85",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Related Heritage Asset(s)",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "dc3ac909-bb8b-4824-975b-c1967c78433e",
+                    "label": {
+                        "en": "Related Heritage Asset(s)"
+                    },
+                    "node_id": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "548d948e-7642-4752-89a6-4ba21773cbc6",
                     "config": {
                         "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
@@ -14519,6 +14567,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                    "edgeid": "3f1a9b84-25c9-4198-91b6-f3c6efaabf8f",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P15_was_influenced_by",
+                    "rangenode_id": "bc64746e-cf4a-11ef-997c-0242ac120007"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
                     "edgeid": "40eff4cf-893a-11ea-96be-f875a44e0e11",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -17396,6 +17453,12 @@
                 "en": "Consultation"
             },
             "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "parentnodegroup_id": null
+                },
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
@@ -28580,6 +28643,40 @@
                     "nodeid": "a2cda8b4-24cc-11ef-97ad-0242ac130006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
                     "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "related_heritage_assets",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Heritage Asset",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "Rel_assets",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Related Heritage Assets",
+                    "nodegroup_id": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "nodeid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P15_was_influenced_by",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
