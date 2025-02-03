@@ -3,23 +3,23 @@
 {% block report %}
 
 {% block body %}
-<!-- ko if: incidentReports().length -->
+<!-- ko if: issueReports().length -->
 <div class="aher-report-section">
-    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.incidentReports)}, css: {'fa-angle-double-right': visible.incidentReports(), 'fa-angle-double-up': !visible.incidentReports()}" class="fa toggle"></i> {% trans "Display Name" %}</h2>
-    <a data-bind="{if: cards.incidentReports, click: function(){ addNewTile(cards.incidentReports) }}" class="aher-report-a">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.issueReports)}, css: {'fa-angle-double-right': visible.issueReports(), 'fa-angle-double-up': !visible.issueReports()}" class="fa toggle"></i> {% trans "Display Name" %}</h2>
+    <a data-bind="{if: cards.issueReports, click: function(){ addNewTile(cards.issueReports) }}" class="aher-report-a">
         <i class="fa fa-mail-reply"></i>
-        <span data-bind="if: cards.incidentReports.tiles().length">{% trans "Edit Identifier" %}</span>
-        <span data-bind="ifnot: cards.incidentReports.tiles().length">{% trans "Add Identifier" %}</span>
+        <span data-bind="if: cards.issueReports.tiles().length">{% trans "Edit Identifier" %}</span>
+        <span data-bind="ifnot: cards.issueReports.tiles().length">{% trans "Add Identifier" %}</span>
     </a>
 
     <!-- Collapsible content -->
-    <div data-bind="visible: visible.incidentReports" class="aher-report-collapsible-container pad-lft">
-        <!-- ko ifnot: incidentReports() -->
+    <div data-bind="visible: visible.issueReports" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: issueReports() -->
         <div class="aher-nodata-note">No references for this resource</div>
         <!-- /ko -->
 
-        <!-- ko foreach: { data: incidentReports(), as: 'report', noChildContext: true } -->
-        <div class="aher-report-subsection" data-bind="with: incidentReports, as: 'report'">
+        <!-- ko foreach: { data: issueReports(), as: 'report', noChildContext: true } -->
+        <div class="aher-report-subsection" data-bind="with: issueReports, as: 'report'">
 
             <div class="firstchild-container">
                 <div class="aher-report-subsection-ite">
@@ -36,19 +36,19 @@
 </div>
 <!-- /ko -->
 
-<!-- Incident Report -->
-<!-- ko if: incidentReports().length -->
+<!-- Issue Report -->
+<!-- ko if: issueReports().length -->
 <div  class="aher-report-section">
-    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.incidentReports)}, css: {'fa-angle-double-right': visible.incidentReports(), 'fa-angle-double-up': !visible.incidentReports()}" class="fa toggle"></i> {% trans "Incident Reports" %}</h2>
-    <a data-bind="{if: cards.incidentReports, click: function(){addNewTile(cards.incidentReports)}}" class="aher-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Reference" %}</a>
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.issueReports)}, css: {'fa-angle-double-right': visible.issueReports(), 'fa-angle-double-up': !visible.issueReports()}" class="fa toggle"></i> {% trans "Issue Reports" %}</h2>
+    <a data-bind="{if: cards.issueReports, click: function(){addNewTile(cards.issueReports)}}" class="aher-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Reference" %}</a>
 
     <!-- Collapsible content -->
-    <div data-bind="visible: visible.incidentReports" class="aher-report-collapsible-container pad-lft">
-        <!-- ko ifnot: incidentReports().length -->
+    <div data-bind="visible: visible.issueReports" class="aher-report-collapsible-container pad-lft">
+        <!-- ko ifnot: issueReports().length -->
         <div class="aher-nodata-note">No references for this resource</div>
         <!-- /ko -->
 
-        <!-- ko if: incidentReports().length -->
+        <!-- ko if: issueReports().length -->
         <div class="aher-report-subsection">
             <div class="firstchild-container">
                 <div class="aher-table">
@@ -63,7 +63,7 @@
                                 <th class="none">Notes</th>
                             </tr>
                         </thead>
-                        <tbody data-bind="dataTablesForEach: {data: incidentReports, dataTableOptions: incidentReportsTableConfig}">
+                        <tbody data-bind="dataTablesForEach: {data: issueReports, dataTableOptions: issueReportsTableConfig}">
                             <tr>
                                 <td data-bind="text: reference"></td>
                                 <td data-bind="text: statusType"></td>

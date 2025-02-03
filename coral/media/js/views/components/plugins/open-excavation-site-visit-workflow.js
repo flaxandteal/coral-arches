@@ -11,7 +11,7 @@ define([
       OpenWorkflow.apply(this, [params]);
       this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
   
-      this.incidentTiles = ko.observableArray();
+      this.issueTiles = ko.observableArray();
       this.selectedActivity = ko.observable();
   
       this.configKeys = ko.observable({ placeholder: 0 });
@@ -99,7 +99,7 @@ define([
         }
         this.addtionalConfigData()['resourceInstanceId'] = resourceId;
         const tileData = await this.fetchTileData(resourceId)
-        this.incidentTiles(tileData)
+        this.issueTiles(tileData)
         this.setAdditionalOpenConfigData();
       });
     };
