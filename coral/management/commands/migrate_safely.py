@@ -193,15 +193,19 @@ class ScanForDataRisks():
     self.graph = Graph.objects.get(pk=self.graphid)
 
 
-    management.call_command("packages",
-        operation="export_graphs",
-        graphs=self.graphid,
-        format="json",
-        dest_dir="."
-    )
-    sanitised_model_name = model_name.replace(' ', '_')
-    os.rename(f"{model_name}.json", f"backup_{sanitised_model_name}.json")
+    try:
+      management.call_command("packages",
+          operation="export_graphs",
+          graphs=self.graphid,
+          format="json",
+          dest_dir="."
+      )
+      os.rename(f"{model_name}.json", f"backup_{model_name}.json")
+    except Exception as e:
+      print(f"Error during export {e}")
+      input("\nError occurred when exporting. You will not have a backup model. \n\nDo you want to continue?")
     
+    sanitised_model_name = model_name.replace(' ', '_')
     management.call_command("packages",
         operation="export_business_data",
         graphs=self.graphid,
