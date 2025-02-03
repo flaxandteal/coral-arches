@@ -21701,6 +21701,12 @@
             },
             "nodegroups": [
                 {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "3e6f6a49-f24b-45a1-950a-25be5a9e21a3",
+                    "parentnodegroup_id": null
+                },
+                {
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "9e59e355-07f0-4b13-86c8-7aa12c04a5e3",
