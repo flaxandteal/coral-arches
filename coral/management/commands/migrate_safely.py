@@ -275,11 +275,10 @@ class ScanForDataRisks():
       
   def reverse_migration(self, model_name):
     sanitised_model_name = model_name.replace(' ', '_')
-    model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
-    with open(model_path) as incoming_json:
-      file_contents = incoming_json.read()
-    self.incoming_json = json.loads(file_contents)
-    self.graphid = self.incoming_json['graph'][0]['graphid']
+    with open(f"backup_{model_name}.json") as backup_json:
+      file_contents = backup_json.read()
+    backup_json = json.loads(file_contents)
+    self.graphid = backup_json['graph'][0]['graphid']
     try:
       self.graph = Graph.objects.get(pk=self.graphid)
     except:
