@@ -1,10 +1,12 @@
 import os, glob
 import uuid
 from arches.app.models.graph import Graph
+from arches.app.models.models import FunctionXGraph
 from arches.app.models.concept import Concept
 from django.core import management
 from django.core.management.base import BaseCommand
 import json
+import pdb
 
 class Command(BaseCommand):
     """Safely Migrate a model that may have conflicting changes.
@@ -41,6 +43,7 @@ class ScanForDataRisks():
     This determines changes to the model's nodes including new nodes, deleted nodes and datatype changes
     """
     new_nodes = []
+    new_functions = []
     deleted_nodes = {}
     deleted_nodegroups = []
     incoming_datatypes = {}
@@ -53,8 +56,10 @@ class ScanForDataRisks():
     graphid = self.graphid
     incoming_nodes = incoming_json['graph'][0]['nodes']
     incoming_nodegroups = incoming_json['graph'][0]['nodegroups']
+    incoming_functions = incoming_json['graph'][0]['functions_x_graphs']
     current_nodes = self.graph.nodes.values()
     current_nodegroups = self.graph.get_nodegroups()
+    current_functions = FunctionXGraph.objects.filter(graph_id = self.graphid)
 
     for node in incoming_nodes:
       if node['nodeid'] not in list(map(lambda n : str(n.nodeid), current_nodes)):
@@ -73,6 +78,10 @@ class ScanForDataRisks():
     for nodegroup in current_nodegroups:
       if str(nodegroup.nodegroupid) not in list(map(lambda ng: str(ng['nodegroupid']), incoming_nodegroups)):
         deleted_nodegroups.append(str(nodegroup.nodegroupid))
+    
+    for function in incoming_functions:
+      if function['function_id'] not in list(map(lambda f : str(f.function_id), current_functions)):
+        new_functions.append(function['function_id'])
 
     # if performance is an issue we can incorprate this into the previous for loop. The extra loop is just a way to ensure we don't get key errors from new or deleted nodes.
     for nodeid in incoming_datatypes.keys():
@@ -100,7 +109,7 @@ class ScanForDataRisks():
           collection_id = incoming_node['config']['rdmCollection']
           datatype_changes[nodeid]['concept_options'] = list(map(lambda concept: {concept_keys[i] : concept[i] for i, _ in enumerate(concept)}, Concept().get_child_collections(collection_id)))
 
-    return new_nodes, deleted_nodes, deleted_nodegroups, datatype_changes
+    return new_nodes, deleted_nodes, deleted_nodegroups, datatype_changes, new_functions
 
   def handle_datatype_changes(self, tile_json, datatype_changes: dict):
     for node in tile_json['data']:
@@ -147,7 +156,7 @@ class ScanForDataRisks():
         return True
     return False
 
-  def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups):
+  def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups, new_functions):
     nodes = self.graph.nodes.values()
 
     # Print the current state with headings
@@ -159,6 +168,13 @@ class ScanForDataRisks():
             print(node)
     else:
         print("No new nodes added")
+
+    print("\nNew Functions:")
+    if new_functions:
+        for node in new_functions:
+            print(node)
+    else:
+        print("No new functions added")
 
     print("\nDeleted Nodes:")
     if deleted_nodes:
@@ -192,7 +208,6 @@ class ScanForDataRisks():
     self.graphid = self.incoming_json['graph'][0]['graphid']
     self.graph = Graph.objects.get(pk=self.graphid)
 
-
     try:
       management.call_command("packages",
           operation="export_graphs",
@@ -215,9 +230,9 @@ class ScanForDataRisks():
 
     os.rename(glob.glob(f'{sanitised_model_name}*.json')[0], f'stale_data_{sanitised_model_name}.json')
 
-    new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes = self.compare_nodes()
+    new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes, new_functions = self.compare_nodes()
 
-    self.handle_data_change_messages(new_nodes, deleted_nodes, deleted_nodegroups)
+    self.handle_data_change_messages(new_nodes, deleted_nodes, deleted_nodegroups, new_functions)
 
     if self.datatype_changes == {} and len(deleted_nodes) == 0 and len(deleted_nodegroups) == 0:
       input("\nContinue with deleting and updating the graphs and data?")
@@ -275,7 +290,7 @@ class ScanForDataRisks():
             overwrite="overwrite",
             prevent_indexing=False,
             escape_function=True
-        )
+        ) 
       
   def reverse_migration(self, model_name):
     sanitised_model_name = model_name.replace(' ', '_')
