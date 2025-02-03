@@ -1,6 +1,6 @@
 {
   "pluginid": "813eb058-b7aa-4407-a24f-ba19f0e41c92",
-  "name": "Incident Report",
+  "name": "Issue Report",
   "icon": "fa fa-chain-broken",
   "component": "views/components/plugins/workflow-builder-loader",
   "componentname": "workflow-builder-loader",
@@ -26,7 +26,7 @@
                   "semanticName": "System Reference Numbers",
                   "requiredParentTiles": [
                     {
-                      "lookupName": "incidentReport",
+                      "lookupName": "issueReport",
                       "parentNodegroupId": "d3ff3fe6-d62b-11ee-9454-0242ac180006"
                     },
                     {
@@ -45,8 +45,8 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "incident-reference-step",
-        "title": "Incident Reference",
+        "name": "issue-reference-step",
+        "title": "Issue Reference",
         "required": true,
         "hiddenWorkflowButtons": ["undo"],
         "layoutSections": [
@@ -58,12 +58,12 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["2001a6f0-d711-11ee-9dd0-0242ac120006"],
                   "nodegroupid": "20017860-d711-11ee-9dd0-0242ac120006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Incident Reference"
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
+                  "semanticName": "Issue Reference"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
-                "uniqueInstanceName": "incident-reference"
+                "uniqueInstanceName": "issue-reference"
               }
             ]
           }
@@ -72,7 +72,7 @@
       },
       {
         "name": "c7fbd0c2-5796-49e1-9256-9d63a2682e2f",
-        "title": "Record of the incident",
+        "title": "Record of the Issue",
         "required": false,
         "layoutSections": [
           {
@@ -97,7 +97,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a0cb43ee-d62c-11ee-9454-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Damage Type"
                 },
                 "tilesManaged": "one",
@@ -109,7 +109,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "2596ab22-d62d-11ee-8f7b-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Material/Fabric Damage Type"
                 },
                 "tilesManaged": "one",
@@ -121,7 +121,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "723aaf3c-d62d-11ee-8f7b-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Component Damage Type"
                 },
                 "tilesManaged": "one",
@@ -144,8 +144,8 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d2592394-d62d-11ee-9454-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Incident Notes"
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
+                  "semanticName": "Issue Notes"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -156,7 +156,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "cacc9d20-d62f-11ee-9454-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Contacts"
                 },
                 "tilesManaged": "one",
@@ -354,8 +354,8 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a1f0e104-d648-11ee-9a11-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
-                  "semanticName": "Incident Proposal",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
+                  "semanticName": "Issue Proposal",
                   "hiddenNodes": [
                     "30d5defa-d64a-11ee-8b04-0242ac180006"
                   ],
@@ -395,7 +395,7 @@
                   "fileObjectNamePrefix": "Documentation for ",
                   "nodeSuffixId": "2001a33a-d711-11ee-9dd0-0242ac120006",
                   "resourceModelDigitalObjectNodeGroupId": "58f177c8-d640-11ee-8b04-0242ac180006",
-                  "resourceParentTile": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']"
+                  "resourceParentTile": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']"
                 },
                 "tilesManaged": "one",
                 "componentName": "related-document-upload",
@@ -419,7 +419,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "788bf15a-d643-11ee-8b04-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Status Type"
                 },
                 "tilesManaged": "one",
@@ -431,7 +431,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d9bd0504-d643-11ee-8b04-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Work Finish Date",
                   "nodeOptions": {
                     "d9bd0b80-d643-11ee-8b04-0242ac180006": {
@@ -450,7 +450,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "d0f45bbe-d645-11ee-8b04-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Signed Off",
                   "nodeOptions": {
                     "6037c630-d646-11ee-8b04-0242ac180006": {
@@ -468,7 +468,7 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "9665660e-d646-11ee-8b04-0242ac180006",
-                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['incidentReport']",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Sign Off Date",
                   "nodeOptions": {
                     "96656e9c-d646-11ee-8b04-0242ac180006": {
@@ -489,15 +489,15 @@
       }
     ],
     "initWorkflow": {
-      "desc": "Manage incident reports for a Heritage Asset",
+      "desc": "Manage issue reports for a Heritage Asset",
       "icon": "fa fa-chain-broken",
-      "name": "Incident Report",
+      "name": "Issue Report",
       "show": true,
       "bgColor": "#86679c",
       "slugPrefix": "open-workflow?workflow-slug=",
       "circleColor": "#aa86c4"
     }
   },
-  "slug": "incident-report-workflow",
+  "slug": "issue-report-workflow",
   "sortorder": 0
 }
