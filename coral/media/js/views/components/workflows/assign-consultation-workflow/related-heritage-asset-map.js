@@ -119,6 +119,8 @@ define([
                 url: arches.urls.root + `resource/${params.baseResourceId}/tiles?nodeid=${this.RELATED_HERITAGE_NODE_ID}`,
                 context: this
             });    
+
+            console.log(params.baseResourceId);
             if (response) {
                 const tiles = response.tiles[0].data[this.RELATED_HERITAGE_NODE_ID];
                 let geometries = [];
