@@ -13,7 +13,6 @@ define([
         const self = this;
         self.resourceId = Object.values(params.tile.data)[0]()[0]["resourceId"];
         self.title = params.title;
-        console.log(params.title, self.title)
         self.showNodes = ko.observable(params.showNodes);
         self.decodeHTML = (input) => {
             var doc = new DOMParser().parseFromString(input, "text/html");
@@ -40,7 +39,6 @@ define([
                 }
             }
             self.showNodes().forEach(labelValue => {
-                console.log("here", labelValue);
                 this.displayNodes.push([labelValue[0], self.decodeHTML(ormResources[labelValue[1]])]);
             });
             self.showNodes(this.displayNodes);
