@@ -5987,6 +5987,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
+                    "card_id": "e8e923c2-a79f-4e50-9f69-f959033a49e0",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Applicant organisation",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "3241d89a-d4e2-4b9d-9880-79fb4077396c",
+                    "label": {
+                        "en": "Applicant organisation"
+                    },
+                    "node_id": "939ac87e-e3ab-11ef-8530-0242ac120007",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "21b620fc-0423-4f6b-8982-f9ec40a4ecd9",
                     "config": {
                         "defaultValue": "b9ffd5fa-c512-44a6-b1c2-87fd1e3cd519",
@@ -7300,6 +7321,26 @@
                     "sortorder": 16,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "1842da52-0623-4b4f-9ac3-9ba6896e6680",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
+                        "label": "Response Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "51798639-3e72-4dab-a4e3-fb85adfcf12d",
+                    "label": {
+                        "en": "Response Date"
+                    },
+                    "node_id": "798d9d74-e218-11ef-803e-0242ac120003",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "4ea4a18b-184f-11eb-a061-f875a44e0e11",
@@ -9048,6 +9089,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "e8e923c2-a79f-4e50-9f69-f959033a49e0",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Applicant",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "809952e8-73cf-46fe-8175-172043d085f9",
+                    "label": {
+                        "en": "Applicant"
+                    },
+                    "node_id": "dcd282ae-dfda-11ef-a925-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "8d41e4a4-a250-11e9-9163-00224800b26d",
                     "config": {
                         "defaultValue": "",
@@ -9532,6 +9594,26 @@
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
                 {
+                    "card_id": "1842da52-0623-4b4f-9ac3-9ba6896e6680",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
+                        "label": "Date Acknowledged",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "8ecdd74f-98e8-4a0a-ba1b-cb4a979fed65",
+                    "label": {
+                        "en": "Date Acknowledged"
+                    },
+                    "node_id": "2b82c62c-e218-11ef-803e-0242ac120003",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
                     "card_id": "cde07ceb-4018-4c4c-9810-3a61d36fe842",
                     "config": {
                         "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
@@ -9770,6 +9852,26 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "1842da52-0623-4b4f-9ac3-9ba6896e6680",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
+                        "label": "Date Received",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "961945b9-0137-4b58-8bd9-a9f8c5337d53",
+                    "label": {
+                        "en": "Date Received"
+                    },
+                    "node_id": "ea5bb474-e217-11ef-803e-0242ac120003",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "771ddfb0-8895-11ea-8738-f875a44e0e11",
@@ -11715,6 +11817,26 @@
                     "sortorder": 34,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "1842da52-0623-4b4f-9ac3-9ba6896e6680",
+                    "config": {
+                        "dateFormat": "DD-MM-YYYY",
+                        "defaultValue": "",
+                        "label": "Due Date",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "d049fe52-5cac-447b-9c6b-99e4dabfce7a",
+                    "label": {
+                        "en": "Due Date"
+                    },
+                    "node_id": "5b6a2ede-e218-11ef-803e-0242ac120003",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "548d948e-7642-4752-89a6-4ba21773cbc6",

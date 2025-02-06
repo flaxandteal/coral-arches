@@ -11,9 +11,7 @@ define([
 
     const AGRICULTURE_DATE_NODEGROUP_ID = "5d6eecde-e217-11ef-803e-0242ac120003"
     const ISSUE_DATE_NODE = "ea5bb474-e217-11ef-803e-0242ac120003"
-    const VALID_UNTIL_NODE = "2b82c62c-e218-11ef-803e-0242ac120003"
-
-    console.log("Hello from date component ", AGRICULTURE_DATE_NODEGROUP_ID);
+    const VALID_UNTIL_NODE = "5b6a2ede-e218-11ef-803e-0242ac120003"
     
     CardComponentViewModel.apply(this, [params]);
 
@@ -24,18 +22,14 @@ define([
         })
       }
 
-      this.fetchTileData = async () => {
-
-        console.log("Fetching tiles params ", params.baseResourceId + " " + ISSUE_DATE_NODE);
+      this.fetchTileData = async (resourceId) => {
 
         const tilesResponse = await window.fetch(
-          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', params.baseResourceId) +
-            (ISSUE_DATE_NODE ? `?nodeid=${ISSUE_DATE_NODE}` : '')
+          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+            (AGRICULTURE_DATE_NODEGROUP_ID ? `?nodeid=${AGRICULTURE_DATE_NODEGROUP_ID}` : '')
         );
 
         const data = await tilesResponse.json();
-
-        console.log("Response data ", data);
 
         return data.tiles;
       };
@@ -54,7 +48,7 @@ define([
 
       this.getLatestTile = async () => {
         try {
-          const tiles = await this.fetchTileData(this.tile.resourceinstance_id, params.nodegroupid);
+          const tiles = await this.fetchTileData(this.tile.resourceinstance_id);
   
           if (!tiles?.length) return;
   
