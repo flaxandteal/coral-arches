@@ -22,22 +22,22 @@ define([
               }
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'person-name', title: 'Person Name and Identifiers'},
                 {id: 'user-account', title: 'User Account'},
-                {id: 'description', title: 'Descriptions and Citations'},
-                {id: 'location', title: 'Location Data'},
-                {id: 'images', title: 'Images'},
-                {id: 'people', title: 'Associated People and Organizations'},
-                {id: 'contact', title: 'Biography and Contact Details'},
                 {id: 'resources', title: 'Associated Resources'},
-                {id: 'all', title: 'Full Report'},
-                {id: 'json', title: 'JSON'},
+                // {id: 'name', title: 'Names and Classifications'},
+                // {id: 'description', title: 'Descriptions and Citations'},
+                // {id: 'location', title: 'Location Data'},
+                // {id: 'images', title: 'Images'},
+                // {id: 'people', title: 'Associated People and Organizations'},
+                // {id: 'contact', title: 'Biography and Contact Details'},
+                // {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('name');
+            self.activeSection = ko.observable('all');
             self.names = ko.observableArray();
 
             self.fullReportConfig = {
@@ -151,8 +151,8 @@ define([
 
                 self.peopleCards = {
                     people: self.cards?.['associated people and organizations']
-                };
-
+                }
+                
                 self.locationCards = {
                     cards: self.cards,
                     location: {
@@ -171,7 +171,7 @@ define([
                     activities: self.cards?.['associated activities'],
                     consultations: self.cards?.['associated consultations'],
                     files: self.cards?.['associated digital file(s)'],
-                    assets: self.cards?.['associated monuments, areas and artefacts']
+                    assets: self.cards?.['associated heritage assets, areas and artefacts']
                 };
             }
 

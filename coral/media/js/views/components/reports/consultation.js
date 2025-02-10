@@ -7,7 +7,7 @@ define([
     'utils/report',
     'templates/views/components/reports/consultation.htm',
     'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
+    'views/components/reports/scenes/resources'
 ], function($, _, ko, arches, resourceUtils, reportUtils, consultationReportTemplate) {
     return ko.components.register('consultation-report', {
         viewModel: function(params) {
@@ -19,21 +19,22 @@ define([
 
             Object.assign(self, reportUtils);
             self.sections = [
+                {id: 'all', title: 'Full Report'},
                 {id: 'details', title: 'Consultation Details'},
                 {id: 'location', title: 'Location Data'},
-                {id: 'references', title: 'Planning References'},
-                {id: 'contacts', title: 'Contacts'},
-                {id: 'progression', title: 'Consultation Progression'},
-                {id: 'correspondence', title: 'Correspondence'},
-                {id: 'sitevisits', title: 'Site Visits'},
                 {id: 'resources', title: 'Associated Resources'},
-                {id: 'all', title: 'Full Report'},
-                {id: 'json', title: 'JSON'},
+                // {id: 'references', title: 'Planning References'},
+                // {id: 'contacts', title: 'Contacts'},
+                // {id: 'progression', title: 'Consultation Progression'},
+                // {id: 'correspondence', title: 'Correspondence'},
+                // {id: 'sitevisits', title: 'Site Visits'},
+                
+                // {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('details');
+            self.activeSection = ko.observable('all');
 
             self.nameDataConfig = {
                 name: 'consultation',
@@ -50,19 +51,22 @@ define([
             };
 
             self.locationDataConfig = {
-                location: ['Consultation Area'],
-                addresses: undefined,
-                locationDescription: undefined,
+                location: ['location data'],
+                addresses: 'addresses',
+                nationalGrid: 'national grid references',
+                locationDescription: 'location descriptions',
                 administrativeAreas: 'localities/administrative areas',
-                nationalGrid: undefined,
-                namedLocations: undefined
-            }
+                geometry: 'geometry',
+                namedLocations: 'named locations',
+            };
 
             self.resourcesDataConfig = {
-                assets: 'related monuments and areas',
-                files: 'file(s)',
-                relatedApplicationArea: 'consultation area',
-                actors: undefined
+                activities: 'associated activities',
+                consultations: 'associated consultations',
+                files: 'associated files',
+                assets: 'associated monuments and areas',
+                archive: 'associated archives',
+                actors: 'associated actors'
             };
 
             self.nameCards = {};
@@ -86,21 +90,21 @@ define([
                 action: ko.observable(true),
                 outcomes: ko.observable(true),
                 assessmentOfSignificance: ko.observable(true),
-            }
+            };
 
             self.createTableConfig = function(col) {
                 return {
                     ...self.defaultTableConfig,
                     columns: Array(col).fill(null)
                 };
-            }
+            };
 
             self.proposalTableConfig = {
                 ...self.defaultTableConfig,
                 "columns": [
                     { "width": "50%" },
                     { "width": "40%" },
-                   null,
+                    null,
                 ]
             };
 
@@ -109,7 +113,7 @@ define([
                 "columns": [
                     { "width": "70%" },
                     { "width": "20%" },
-                   null,
+                    null,
                 ]
             };
 
@@ -120,7 +124,7 @@ define([
                     { "width": "50%" },
                     { "width": "20%" },
                     { "width": "20%" },
-                   null,
+                    null,
                 ]
             };
 
@@ -129,7 +133,7 @@ define([
                 "columns": [
                     { "width": "45%" },
                     { "width": "45%" },
-                   null,
+                    null,
                 ]
             };
 
@@ -138,7 +142,7 @@ define([
                 "columns": [
                     { "width": "70%" },
                     { "width": "20%" },
-                   null,
+                    null,
                 ]
             };
 
@@ -148,7 +152,7 @@ define([
                 "columns": [
                     { "width": "70%" },
                     { "width": "20%" },
-                   null,
+                    null,
                 ]
             };
 
@@ -183,7 +187,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {reference, source, note, noteDescType, url, urlLabel, tileid};
                 }));
-            };
+            }
 
             const systemReferencesNode = self.getRawNodeValue(self.resource(), 'references');
             if(Array.isArray(systemReferencesNode)){
@@ -195,7 +199,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {reference, referenceType, agency, agencyLink, tileid};
                 }));
-            };
+            }
 
             const correspondenceNode = self.getRawNodeValue(self.resource(), 'correspondence');
             if(Array.isArray(correspondenceNode)){
@@ -206,7 +210,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {letter, letterLink, letterType, tileid};
                 }));
-            };
+            }
 
             const proposalNode = self.getRawNodeValue(self.resource(), 'proposal');
             if(Array.isArray(proposalNode)){
@@ -217,7 +221,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {proposal, file, fileLink, tileid};
                 }));
-            };
+            }
 
             const adviceNode = self.getRawNodeValue(self.resource(), 'advice');
             if(Array.isArray(adviceNode)){
@@ -227,7 +231,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {advice, adviceType, tileid};
                 }));
-            };
+            }
 
             const actionNode = self.getRawNodeValue(self.resource(), 'action');
             if(Array.isArray(actionNode)){
@@ -238,7 +242,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {action, actionType, relatedAdvice, tileid};
                 }));
-            };
+            }
 
             const outcomesNode = self.getRawNodeValue(self.resource(), 'outcomes');
             if(outcomesNode){
@@ -246,7 +250,7 @@ define([
                 const auditOutcome = self.getNodeValue(outcomesNode, 'audit outcome');
                 const tileid = self.getTileId(outcomesNode);
                 self.outcomes({planningOutcome, auditOutcome, tileid});
-            };
+            }
 
             const assessmentOfSignificanceNode = self.getRawNodeValue(self.resource(), 'assessment of significance');
             if(Array.isArray(assessmentOfSignificanceNode)){
@@ -255,7 +259,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {notes, tileid};
                 }));
-            };
+            }
 
             const communicationsNode = self.getRawNodeValue(self.resource(), 'communications');
             if(Array.isArray(communicationsNode)){
@@ -272,7 +276,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {subject, type, date, attendees, note, followOnAction, relatedCondition, digitalFile, digitalFileLink, tileid};
                 }));
-            };
+            }
 
             const siteVisitsNode = self.getRawNodeValue(self.resource(), 'site visits');
             if(Array.isArray(siteVisitsNode)){
@@ -320,7 +324,7 @@ define([
                     const tileid = self.getTileId(node);
                     return {dateOfVisit, location, attendees, observations, recommendations, photographs, tileid};
                 }));
-            };
+            }
 
             const contactNode = self.getRawNodeValue(self.resource(), 'contacts');
             if(contactNode){
@@ -359,14 +363,14 @@ define([
 
                 self.contacts(
                     { consultingContact, planningOfficer, planningOfficerLink, planningBody, planningBodyLink, caseworkOfficer, caseworkOfficerLink, agents, owners, applicants, tileid }
-                )
-            };
+                );
+            }
 
             if(params.report.cards){
                 const cards = params.report.cards;
-
-                self.cards = self.createCardDictionary(cards)
-
+                
+                self.cards = self.createCardDictionary(cards);
+                
                 self.siteVisitSubCards = self.createCardDictionary(self.cards['site visits'].cards());
 
                 self.nameCards = {
@@ -394,7 +398,7 @@ define([
                     files: self.cards?.['associated digital files'],
                     relatedApplicationArea: self.cards?.['consultation location']
                 };
-            };
+            }
 
             self.consultationLocationDescription = ko.observable({
                 sections:
