@@ -125,6 +125,17 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                  "semanticName": "Related heritage asset(s)"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "related-heritage-assets"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
                     "53388daa-24d1-11ef-a3a4-0242ac130006",
                     "a3047fd4-031a-11ef-8ec2-0242ac150006",
@@ -278,16 +289,12 @@
           {
             "componentConfigs": [
               {
+                "componentName": "related-heritage-asset-map",
+                "uniqueInstanceName": "related-asset-map-locations",
+                "tilesManaged": "none",
                 "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
-                  "semanticName": "Geometry"
-                },
-                "tilesManaged": "one",
-                "componentName": "fetch-latest-tile",
-                "uniqueInstanceName": "geometry"
+                    "baseResourceId": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']"
+                }
               }
             ]
           }

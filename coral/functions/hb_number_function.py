@@ -44,43 +44,7 @@ class HbNumberFunction(BaseFunction):
                 }
             }
         references_tile.data[HB_NUMBER_NODE_ID] = id
-        references_tile.save()
-    
-    def update_original_id(self, ri_id, id_number):
-        references_tile = Tile.objects.filter(
-            resourceinstance_id=ri_id,
-            nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-        ).first()
-
-        if references_tile:
-            print("Original ID tile has already been updated and saved")
-            return
-        
-        if isinstance(id_number, dict):
-            id_number = id_number.get('en', {}).get('value', None)
-        match = re.match(r"(HB\d{2}/\d{2}/\d{3})\s([A-Z]*)$", id_number)
-        if match:
-            number = match.group(1)
-            suffix = match.group(2)
-
-            if len(suffix) < 2 and suffix == 'B':
-                references_tile = Tile.objects.filter(
-                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={HB_NUMBER_NODE_ID: {"en": {"value": number}}}
-                ).first()
-                original_id_number = references_tile.data.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
-                update_id_number = {
-                    "en":{
-                        "direction": "ltr",
-                        "value": original_id_number + " A"
-                    }
-                }
-                references_tile.data[HB_NUMBER_NODE_ID] = update_id_number
-                references_tile.save()
-            else:
-                print("The id number does not contain the suffix of B, no update is needed")
-                return
-        
+        references_tile.save()      
 
     def is_last_char_letter(self, value):
         if isinstance(value, dict):
@@ -101,7 +65,6 @@ class HbNumberFunction(BaseFunction):
             hns = HbNumberSuffix(id_number)
             if hns.validate_id(id_number, resource_instance_id=resource_instance_id):
                 print("HB Number is valid: ", id_number)
-                self.update_original_id(resource_instance_id, id_number)
                 self.update_ha_references(resource_instance_id, id_number)
                 return
 

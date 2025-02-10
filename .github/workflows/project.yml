@@ -6,7 +6,7 @@ on:
       - '**'
   workflow_dispatch:
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:feature-plugin-permissions
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:coral-7.6
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
