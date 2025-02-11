@@ -23,6 +23,7 @@ define([
                 {id: 'all', title: 'Full Report'},
                 {id: 'file', title: 'File Details'},
                 {id: 'name', title: 'Names and Identifiers'},
+                {id:'related', title: 'Related Resources'}
                 // {id: 'publication', title: 'Publication Details'},
                 // {id: 'json', title: 'JSON'},
             ];

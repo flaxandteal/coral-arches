@@ -21,7 +21,7 @@ define([
             self.sections = [
                 {id: 'all', title: 'Full Report'},
                 {id: 'name', title: 'Names and Identifiers'},
-                {id: 'resources', title: 'Associated Resources'},
+                {id: 'related', title: 'Related Resources'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);

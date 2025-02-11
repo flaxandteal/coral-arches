@@ -25,7 +25,7 @@ define([
                 {id: 'all', title: 'Full Report'},
                 {id: 'person-name', title: 'Person Name and Identifiers'},
                 {id: 'user-account', title: 'User Account'},
-                {id: 'resources', title: 'Associated Resources'},
+                {id: 'related', title: 'Related Resources'},
                 // {id: 'name', title: 'Names and Classifications'},
                 // {id: 'description', title: 'Descriptions and Citations'},
                 // {id: 'location', title: 'Location Data'},
@@ -152,7 +152,7 @@ define([
                 self.peopleCards = {
                     people: self.cards?.['associated people and organizations']
                 }
-                
+
                 self.locationCards = {
                     cards: self.cards,
                     location: {

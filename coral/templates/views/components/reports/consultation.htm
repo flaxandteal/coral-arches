@@ -780,14 +780,13 @@
                     <!-- /ko -->
                 </div>
             </div>
-            <!-- Resources Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'resources'">
+            <!-- Related Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'related'">
                 <div data-bind="component: {
-                    name: 'views/components/reports/scenes/resources',
+                    name: 'views/components/reports/scenes/all',
                     params: {
-                        data: resource,
-                        cards: resourcesCards,
-                        dataConfig: resourcesDataConfig
+                        report: $data.report,
+                        showCards: false
                     }
                 }"></div>
             </div>

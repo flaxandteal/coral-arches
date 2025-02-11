@@ -23,7 +23,7 @@ define([
                 {id: 'all', title: 'Full Report'},
                 {id: 'name', title: 'Names and Identifiers'},
                 {id: 'location', title: 'Location Data'},
-                {id: 'resources', title: 'Associated Resources'},
+                {id: 'related', title: 'Related Resources'},
                 // {id: 'description', title: 'Descriptions and Citations'},
                 // {id: 'classifications', title: 'Classifications and Dating'},
                 // {id: 'protection', title: 'Designation and Protection Status'},

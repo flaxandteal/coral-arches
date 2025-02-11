@@ -22,7 +22,7 @@ define([
                 {id: 'all', title: 'Full Report'},
                 {id: 'details', title: 'Consultation Details'},
                 {id: 'location', title: 'Location Data'},
-                {id: 'resources', title: 'Associated Resources'},
+                {id: 'related', title: 'Related Resources'},
                 // {id: 'references', title: 'Planning References'},
                 // {id: 'contacts', title: 'Contacts'},
                 // {id: 'progression', title: 'Consultation Progression'},
