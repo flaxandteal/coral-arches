@@ -29,9 +29,11 @@ define([
             this.showRelated = params.showRelated ?? true;
 
             params.report.hideEmptyNodes = true;
-
+            
             ReportViewModel.apply(this, [params]);
 
+            this.relatedResources = Object.values(this.report.relatedResourcesLookup())
+            this.hasRelatedResources = this.relatedResources.some(resource => resource.totalRelatedResources > 1);
             this.viewableCards = ko.observable(this.report.cards);
 
             if (this.nodeGroups?.length > 0) {
