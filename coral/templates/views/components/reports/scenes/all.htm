@@ -8,9 +8,10 @@
 <div class="report-provisional-flag"><span data-bind="text: $root.translations.pendingProvisionalEdits"></div>
 <!--/ko-->
 
+<!-- ko if: showCards -->
 <div class="rp-report-section relative rp-report-section-root" style="padding: 0;">
     <div class="rp-report-section-title" style="padding: 0;">
-        <!-- ko foreach: { data: report.cards, as: 'card' } -->
+        <!-- ko foreach: { data: viewableCards, as: 'card' } -->
             <!-- ko if: ($parent.hideEmptyNodes() === false || card.tiles().length > 0) && ko.unwrap(card.model.visible) -->
             <!-- ko if: $index() !== 0 --><hr class="rp-tile-separator"><!-- /ko -->
             <div class="rp-card-section" style="padding-bottom: 0; margin: 0 10px;">
@@ -21,7 +22,7 @@
                         preview: $parent.report.preview,
                         card: card,
                         pageVm: {...$root, report: $parent.report},
-                        hideEmptyNodes: $parent.hideEmptyNodes
+                        hideEmptyNodes: $parent.hideEmptyNodes,
                     }
                 } --> <!-- /ko -->
             </div>
@@ -29,12 +30,15 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: showRelated -->
 <div class="rp-report-section relative report-related-resources">
-  <div class="rp-report-section-title">
+  <div class="rp-report-section-title" style="padding: 0;">
     <div class="h4 rp-section-title" style="color: #2c4d70"><span data-bind="text: $root.translations.relatedResources"></span></div>
     <!-- ko foreach: { data: Object.values(report.relatedResourcesLookup()), as: 'resourceData' } -->
     <!-- ko if: resourceData.totalRelatedResources > 0 || !$parent.hideEmptyNodes() -->
+    <hr class="rp-tile-separator">
     <div class="rp-card-section" style="padding-bottom: 0.1rem">
         <div class="h5 rp-tile-title">
             <span class="rp-tile-title" data-bind="text: resourceData.name"></span>
@@ -71,10 +75,13 @@
         <!--/ko-->
     </div>
     <!-- /ko -->
-    <!-- /ko -->    
+    <!-- /ko -->
+    <!-- ko if: Object.values(report.relatedResourcesLookup()).length === 0 -->
+    <div class="aher-nodata-note">No resources are currently related</div> 
+    <!-- /ko -->     
   </div>
-  
 </div>  
+<!-- /ko --> 
 
 
 

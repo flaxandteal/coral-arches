@@ -22,13 +22,26 @@ define([
                 "preload_resource_data": true,
                 "templateid": "50000000-0000-0000-0000-000000000001"
             };
+    
+            this.nodeGroups = params.nodeGroups ?? null;
+            this.hiddenNodes = params.hideNodes ?? null;
+            this.showCards = params.showCards ?? true;
+            this.showRelated = params.showRelated ?? true;
 
             params.report.hideEmptyNodes = true;
 
             ReportViewModel.apply(this, [params]);
 
-            this.showCards = params.showCards ?? true;
-            this.showRelated = params.showRelated ?? true;
+            this.viewableCards = ko.observable(this.report.cards);
+
+            if (this.nodeGroups?.length > 0) {
+                this.viewableCards = this.report.cards.filter(card => {
+                    return this.nodeGroups.includes(card.nodegroupid);
+                });
+            }
+            else {
+                this.viewableCards = this.report.cards;
+            }
         },
         template: allReportTemplate
     });

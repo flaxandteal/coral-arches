@@ -23,6 +23,7 @@ define([
                 {id: 'all', title: 'Full Report'},
                 {id: 'name', title: 'Names and Identifiers'},
                 {id: 'location', title: 'Location Data'},
+                {id: 'issue', title: 'Issue Reports'},
                 {id: 'related', title: 'Related Resources'},
                 // {id: 'description', title: 'Descriptions and Citations'},
                 // {id: 'classifications', title: 'Classifications and Dating'},
@@ -36,6 +37,8 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('all');
+
+            self.issueNodeGroups = ['d3ff3fe6-d62b-11ee-9454-0242ac180006'];
 
             self.nameDataConfig = {
                 name: 'heritage asset',
