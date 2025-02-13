@@ -14,21 +14,54 @@ class Command(BaseCommand):
     """
     def add_arguments(self, parser):
         parser.add_argument(
+            "-o",
+            "--operation",
+            action="store",
+            dest="operation",
+            choices=[
+                "migrate",
+                "rehydrate_members",
+                "remove_members"
+            ],
+            help="Operation Type; "
+        )
+        parser.add_argument(
             "-m",
             "--model_name",
-    )
+        )
         parser.add_argument(
           "-r",
           "--reverse",
           action="store_true",
         )
+        parser.add_argument(
+          "-s",
+          "--source",
+          help="The path to the input file",
+        )
+        parser.add_argument(
+          "-e",
+          "--export",
+          help="The path for the output file",
+        )
+        parser.add_argument(
+          "-n",
+          "--new_members",
+          help="The path to the group file containing the wanted members",
+        )
 
     def handle(self, *args, **options):
-        if options["reverse"]:
-          ScanForDataRisks().reverse_migration(options["model_name"])
-        else:
-          ScanForDataRisks().handle_model_update(options["model_name"])
-          pass
+        if options["operation"] == "rehydrate_members":
+          GroupTransform().rehydrate_members(options['source'], options['export'], options['new_members'])
+        if options["operation"] == "remove_members":
+          GroupTransform().remove_members(options['source'], options['export'])
+
+        if options["operation"] == "migrate":
+          if options["reverse"]:
+            ScanForDataRisks().reverse_migration(options["model_name"])
+          else:
+            ScanForDataRisks().handle_model_update(options["model_name"])
+            pass
 
 class ScanForDataRisks():
   """ This class should contain all of the functions needed to determine data migration risks """
@@ -363,3 +396,82 @@ class TransformData():
   def allow_many(self, tile_json, nodeid):
     tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
     return tile_json
+  
+class GroupTransform():
+  """
+  This class contains functions to transform the Groups
+  """
+  def rehydrate_members(self, input_file_path, output_file_path, group_with_members):
+    MEMBER_NODE = "bb2f7e1c-7029-11ee-885f-0242ac140008"
+    try:
+        # Read the JSON file
+        with open(input_file_path, 'r') as file:
+            data = json.load(file)
+
+        group_ids = []
+        new_members = []
+
+        resource_instances = data.get("business_data", {}).get("resources", [])
+
+        for resource in resource_instances:
+            group_ids.append(resource['resourceinstance']['resourceinstanceid'])
+
+        if group_with_members:
+            with open(group_with_members, 'r') as new_file:
+                new_data = json.load(new_file)
+
+            # gets the members from the groups that aren't the groups - will be person models  
+            new_resource_instances = new_data.get("business_data", {}).get("resources", [])
+            for resource in new_resource_instances:    
+                for tile in resource["tiles"]:
+                    if MEMBER_NODE in tile["data"]:
+                        members = [{'value': member, 'name': resource['resourceinstance']["name"]} for member in (tile["data"].get(MEMBER_NODE)or []) if member['resourceId'] not in group_ids]
+                        new_members.extend(members)
+        
+        for resource in resource_instances:    
+            for tile in resource["tiles"]:
+                if MEMBER_NODE in tile["data"]:
+                    if tile["data"][MEMBER_NODE]: 
+                        if len(new_members) > 0:
+                            match = next((item for item in new_members if item['name'] == resource['resourceinstance']["name"]), None)
+                            if match:
+                                tile["data"][MEMBER_NODE].append(match['value'])
+
+
+        data['business_data']['resources'] = resource_instances
+
+        # Write the updated JSON to a new file
+        with open(output_file_path, 'w') as file:
+            json.dump(data, file, indent=4)
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+  def remove_members(self, input_file_path, output_file_path):
+    MEMBER_NODE = "bb2f7e1c-7029-11ee-885f-0242ac140008"
+    try:
+        # Read the JSON file
+        with open(input_file_path, 'r') as file:
+            data = json.load(file)
+
+        group_ids = []
+
+        resource_instances = data.get("business_data", {}).get("resources", [])
+        resource_instances = [resource for resource in resource_instances if resource['resourceinstance']["name"] != "Undefined"]
+
+        for resource in resource_instances:
+            group_ids.append(resource['resourceinstance']['resourceinstanceid'])
+        for resource in resource_instances:    
+            for tile in resource["tiles"]:
+                if MEMBER_NODE in tile["data"]:
+                    if tile["data"][MEMBER_NODE]:
+                        tile["data"][MEMBER_NODE] = [member for member in tile["data"][MEMBER_NODE] if member['resourceId'] in group_ids] 
+
+        data['business_data']['resources'] = resource_instances
+
+        # Write the updated JSON to a new file
+        with open(output_file_path, 'w') as file:
+            json.dump(data, file, indent=4)
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
