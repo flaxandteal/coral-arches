@@ -20,16 +20,17 @@ define([
 
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Identifiers'},
-                {id: 'publication', title: 'Publication Details'},
-                {id: 'file', title: 'File Details'},
                 {id: 'all', title: 'Full Report'},
-                {id: 'json', title: 'JSON'},
+                {id: 'file', title: 'File Details'},
+                {id: 'name', title: 'Names and Identifiers'},
+                {id:'related', title: 'Related Resources'}
+                // {id: 'publication', title: 'Publication Details'},
+                // {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('name');
+            self.activeSection = ko.observable('all');
 
             self.nameDataConfig = {};
 
@@ -41,19 +42,19 @@ define([
 
             self.visible = {
                 files: ko.observable(true),
-            }
+            };
 
             self.createTableConfig = function(col) {
                 return {
                     ...self.defaultTableConfig,
                     columns: Array(col).fill(null)
                 };
-            }
+            };
 
             if(params.report.cards){
                 const cards = params.report.cards;
                 
-                self.cards = self.createCardDictionary(cards)
+                self.cards = self.createCardDictionary(cards);
 
                 self.nameCards = {
                     name: self.cards?.['names'],
@@ -67,7 +68,7 @@ define([
 
                 self.copyrightCards = {
                     copyright: self.cards?.['copyright']
-                }
+                };
             }
 
             self.files = ko.observableArray();
@@ -81,7 +82,7 @@ define([
                     const link = self.getNodeValue(node, 'url');
                     return {name, link, tileid};
                 }));
-            };
+            }
 
             self.fileData = ko.observable({
                 sections:

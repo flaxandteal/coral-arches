@@ -14,9 +14,7 @@ define([
             self.nameTableConfig = {
                 ...self.defaultTableConfig,
                 "columns": [
-                    { "width": "50%" },
-                    { "width": "20%" },
-                    { "width": "20%" },
+                    { "width": "100%" },
                    null,
                 ]
             };
@@ -159,8 +157,8 @@ define([
             if(systemRefData) {
                 const systemRef = {};
                 systemRef.resourceId = self.getNodeValue(systemRefData, 'uuid', 'resourceid');
-                systemRef.legacyId = self.getNodeValue(systemRefData, 'legacyid', 'legacy id');
-                systemRef.primaryReferenceNumber = self.getNodeValue(systemRefData, 'primaryreferencenumber', 'primary reference number');
+                // systemRef.legacyId = self.getNodeValue(systemRefData, 'legacyid', 'legacy id');
+                // systemRef.primaryReferenceNumber = self.getNodeValue(systemRefData, 'primaryreferencenumber', 'primary reference number');
                 systemRef.tileid = self.getTileId(systemRefData);
                 self.systemReferenceNumbers(systemRef);
             }
