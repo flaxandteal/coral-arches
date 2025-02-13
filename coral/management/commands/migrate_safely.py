@@ -44,15 +44,10 @@ class Command(BaseCommand):
           "--export",
           help="The path for the output file",
         )
-        parser.add_argument(
-          "-n",
-          "--new_members",
-          help="The path to the group file containing the wanted members",
-        )
 
     def handle(self, *args, **options):
         if options["operation"] == "rehydrate_members":
-          GroupTransform().rehydrate_members(options['source'], options['export'], options['new_members'])
+          GroupTransform().rehydrate_members(options['source'], options['export'])
         if options["operation"] == "remove_members":
           GroupTransform().remove_members(options['source'], options['export'])
 
@@ -401,8 +396,9 @@ class GroupTransform():
   """
   This class contains functions to transform the Groups
   """
-  def rehydrate_members(self, input_file_path, output_file_path, group_with_members):
+  def rehydrate_members(self, input_file_path, output_file_path):
     MEMBER_NODE = "bb2f7e1c-7029-11ee-885f-0242ac140008"
+    GROUP_ID = "07883c9e-b25c-11e9-975a-a4d18cec433a"
     try:
         # Read the JSON file
         with open(input_file_path, 'r') as file:
@@ -416,7 +412,20 @@ class GroupTransform():
         for resource in resource_instances:
             group_ids.append(resource['resourceinstance']['resourceinstanceid'])
 
-        if group_with_members:
+        
+        management.call_command("packages",
+            operation="export_business_data",
+            graphs=GROUP_ID,
+            format="json",
+            dest_dir="."
+        )
+        
+        files = glob.glob('Group_*.json')
+        if files:
+            latest_file = max(files, key=os.path.getmtime)
+            group_with_members = 'backup_Group_with_members.json'
+            os.rename(latest_file, group_with_members)
+        
             with open(group_with_members, 'r') as new_file:
                 new_data = json.load(new_file)
 
@@ -443,6 +452,18 @@ class GroupTransform():
         # Write the updated JSON to a new file
         with open(output_file_path, 'w') as file:
             json.dump(data, file, indent=4)
+        
+        graph = Graph.objects.get(pk=GROUP_ID)
+
+        graph.delete_instances()
+        
+        management.call_command("packages",
+            operation="import_business_data",
+            source=output_file_path,
+            overwrite="overwrite",
+            prevent_indexing=False,
+            escape_function=True
+        )
 
     except Exception as e:
         print(f"An error occurred: {e}")
