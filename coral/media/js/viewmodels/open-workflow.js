@@ -21,8 +21,6 @@ define([
     this.workflow = ko.observable();
     this.graphIds = ko.observable();
 
-    console.log("work flow", this.workflow);
-
     this.searchString = ko.observable();
 
     this.getWorkflowSlug = () => {

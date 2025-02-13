@@ -51,7 +51,6 @@ define([
             }
           });
 
-          console.log(response);
           if (response?.stepdata) {
             return response;
           } else {
