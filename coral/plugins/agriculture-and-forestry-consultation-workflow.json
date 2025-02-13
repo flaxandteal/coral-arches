@@ -285,6 +285,16 @@
                         "label": "Within deadline"
                       }
                     },
+                    "998d6728-fb26-11ee-838d-0242ac190006": {
+                      "config": {
+                        "label": "Cur E"
+                      },
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        ""
+                      ]
+                    },
                     "24d00d86-fb27-11ee-b5d2-0242ac190006": {
                       "config":{
                         "maxDate":"today",
