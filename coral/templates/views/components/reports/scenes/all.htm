@@ -39,7 +39,7 @@
     <!-- ko foreach: { data: Object.values(report.relatedResourcesLookup()), as: 'resourceData' } -->
     <!-- ko if: resourceData.totalRelatedResources > 0 || !$parent.hideEmptyNodes() -->
     <hr class="rp-tile-separator">
-    <div class="rp-card-section" style="padding-bottom: 0.1rem">
+    <div class="rp-card-section" style="padding-bottom: 0.1rem; margin: 0">
         <div class="h5 rp-tile-title">
             <span class="rp-tile-title" data-bind="text: resourceData.name"></span>
         </div>
