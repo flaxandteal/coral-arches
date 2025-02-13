@@ -17,6 +17,7 @@
             "componentConfigs": [
               {
               "parameters": {
+                  "prefix": "AFC",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
@@ -54,18 +55,28 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "label": "Select Heritage Assets",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  
-                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
-                  "semanticName": "Related Monuments and Areas"
+                  "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                  "nodeOptions": {
+                    "58a2b98f-a255-11e9-9a30-00224800b26d" : {
+                      "searchString": "",
+                      "allowInstanceCreation": false
+                    }
+                  },
+                  "semanticName": "Heritage Asseets"
                 },
-                "tilesManaged": "many",
-                "componentName": "default-card",
-                "uniqueInstanceName": "ba0481cc-fad6-48f3-ae1f-4e385c8ac824"
+                "tilesManaged": "one",
+                "componentName": "get-selected-heritage-asset-details",
+                "uniqueInstanceName": "6cae135a-8a8c-4bbc-92a7-1572a4111bc6"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "76c2097a-e792-11ef-97dd-0242ac120002"
+                  ],
                   "nodegroupid": "8780196a-dfda-11ef-a67e-0242ac120006",
                   "semanticName": "Applicants"
                 },
@@ -99,6 +110,30 @@
                     }
                   }
                 }
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "8780196a-dfda-11ef-a67e-0242ac120006",
+                  "hiddenNodes": [
+                    "dcd282ae-dfda-11ef-a925-0242ac120006", 
+                    "939ac87e-e3ab-11ef-8530-0242ac120007"
+                  ],
+                  "semanticName": "Referred to"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "8b293bfe-862c-4723-a73c-8486c89a1d22"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "771bb1e2-8895-11ea-8446-f875a44e0e11",
+                  "semanticName": "Consultation Type"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "a5125086-8cd4-4ec6-b6c2-dd9b294b5f74"
               },
               {
                 "parameters": {
@@ -139,6 +174,16 @@
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "074f2ac9-2d1e-482e-862e-6f836faad55c"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "nodegroupid": "ffbac7d6-e9ee-11ef-8d51-0242ac120006",
+                  "semanticName": "Consultation status"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "8f9f50fa-4485-4b63-b75a-ec99187bcd13"
               }
             ]
           }
@@ -176,7 +221,34 @@
         "required": false,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+              "parameters": {
+                "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
+                "hiddenNodes": ["b15ee596-e53d-11ef-8521-0242ac120004"],
+                "nodegroupid": "29e3212c-e53d-11ef-93e2-0242ac120004",
+                "semanticName": "agriculture-letter",
+                "letterMetatype": "0c3e516c-e53f-11ef-93e2-0242ac120004",
+                "letterTypeNode": "6d09da12-e53e-11ef-93e2-0242ac120004",
+                "letterResourceNode": "b15ee596-e53d-11ef-8521-0242ac120004",
+                "letterOptions": [
+                    { "text": "Foreestry Response Letter", "id": "forestry-consult-response-template.docx" },
+                    { "text": "Daera Consultation Response Letter", "id": "daera-consultation-response-template.docx"}
+                  ],
+                "config": {
+                    "special": {
+                      "today": "today",
+                      "user": "user"
+                    }
+                  }
+              },
+              "noTileSidebar": true,
+              "tilesManaged": "many",
+              "componentName": "file-template",
+              "uniqueInstanceName": "agriculture-letter"
+            }
+          ]
           }
         ],
         "workflowstepclass": "workflow-form-component",
@@ -188,7 +260,44 @@
         "required": true,
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": 
+                  [ 
+                    "998d6728-fb26-11ee-838d-0242ac190006",
+                    "42ec3232-fb26-11ee-838d-0242ac190006",
+                    "048a4204-fb26-11ee-838d-0242ac190006",
+                    "24337b70-fb26-11ee-838d-0242ac190006",
+                    "42ec3232-fb26-11ee-838d-0242ac190006",
+                    "998d6728-fb26-11ee-838d-0242ac190006",
+                    "b7fb9270-fb26-11ee-b5d2-0242ac190006",
+                    "d0347d52-fb26-11ee-838d-0242ac190006",
+                    "24d01092-fb27-11ee-b5d2-0242ac190006",
+                    "24d01362-fb27-11ee-b5d2-0242ac190006" 
+                  ],
+                  "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "nodeOptions": {
+                    "ff42f8f2-3e93-11ef-9023-0242ac140007": {
+                      "config": {
+                        "label": "Within deadline"
+                      }
+                    },
+                    "24d00d86-fb27-11ee-b5d2-0242ac190006": {
+                      "config":{
+                        "maxDate":"today",
+                        "label": "Date"
+                      }
+                    }
+                  }
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "sign-off"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component",
