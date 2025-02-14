@@ -54,7 +54,6 @@ define([
                 entry = entry[0] == "[" ? entry.slice(1) : entry
                 entry = entry.replace("]]", "]")
                 let match = entry.match(regex)
-
                 if (match) {
                         returnArray.push(match[0].slice(1, match[0].length -1))
                     }
