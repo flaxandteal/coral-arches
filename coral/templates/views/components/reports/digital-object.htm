@@ -121,6 +121,16 @@
                     }
                 }"></div>
             </div>
+            <!-- Related Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'related'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/all',
+                    params: {
+                        report: $data.report,
+                        showCards: false
+                    }
+                }"></div>
+            </div>
         </div>
     </div>            
     {% endblock body %}
