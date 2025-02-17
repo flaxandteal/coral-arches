@@ -17728,6 +17728,16 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "triggering_nodegroups": [
+                            "b37552ce-9527-11ea-a00c-f875a44e0e11"
+                        ]
+                    },
+                    "function_id": "8635fa11-8aef-48c7-9511-9002386143f2",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "id": "97f342ad-14ce-4fe6-9c03-401c71ab12f3"
+                },
+                {
+                    "config": {
                         "amount": 21,
                         "triggeringDateNode": "04494bbe-c769-11ee-82c4-0242ac180006",
                         "triggering_nodegroups": [

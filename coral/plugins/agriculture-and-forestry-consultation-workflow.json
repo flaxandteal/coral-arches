@@ -17,7 +17,6 @@
             "componentConfigs": [
               {
               "parameters": {
-                  "prefix": "AFC",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
@@ -33,7 +32,7 @@
                   ]
                 },
                 "tilesManaged": "one",
-                "componentName": "workflow-builder-initial-step",
+                "componentName": "generate-afc-number",
                 "uniqueInstanceName": "f5a89db6-2626-4d23-915d-0ce86d2e37ee"
               }
             ]
