@@ -10,10 +10,17 @@ define([
 ], function (_, ko, koMapping, uuid, arches, WorkflowBuilderInitialStep, CardComponentViewModel, template) {
   function viewModel(params) {
     WorkflowBuilderInitialStep.apply(this, [params]);
-
+    console.log("params", params)
     this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = 'b37552be-9527-11ea-9213-f875a44e0e11';
+    this.afcValue = ko.observable()
+    this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID].subscribe((val) => {
+      if (val.en.value !== this.afcValue()) {
+        this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID]({en: { direction: 'ltr', value: this.afcValue()}})
+      }
+    })
 
     this.setValue = (value) => {
+      this.afcValue(value)
       const localisedValue = {
         en: {
           direction: 'ltr',

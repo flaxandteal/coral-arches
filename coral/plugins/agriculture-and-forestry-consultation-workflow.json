@@ -29,11 +29,13 @@
                       "lookupName": "locationData",
                       "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
                     }
-                  ]
-                },
-                "nodeOptions": {
-                  "b37552be-9527-11ea-9213-f875a44e0e11": {
-                    "component": "text-widget"
+                  ],
+                  "autoDisabled": true,
+                  "nodeOptions": {
+                    "b37552be-9527-11ea-9213-f875a44e0e11": {
+                      "component": "text-widget",
+                      "disabled": true
+                    }
                   }
                 },
                 "tilesManaged": "one",
