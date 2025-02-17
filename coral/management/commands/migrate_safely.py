@@ -6,7 +6,7 @@ from arches.app.models.concept import Concept
 from django.core import management
 from django.core.management.base import BaseCommand
 import json
-import pdb
+import datetime
 
 class Command(BaseCommand):
     """Safely Migrate a model that may have conflicting changes.
@@ -47,9 +47,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options["operation"] == "rehydrate_members":
-          GroupTransform().rehydrate_members(options['source'], options['export'])
+          GroupTransform().rehydrate_members(options['source'])
         if options["operation"] == "remove_members":
-          GroupTransform().remove_members(options['source'], options['export'])
+          GroupTransform().remove_members()
 
         if options["operation"] == "migrate":
           if options["reverse"]:
@@ -396,9 +396,19 @@ class GroupTransform():
   """
   This class contains functions to transform the Groups
   """
-  def rehydrate_members(self, input_file_path, output_file_path):
-    MEMBER_NODE = "bb2f7e1c-7029-11ee-885f-0242ac140008"
-    GROUP_ID = "07883c9e-b25c-11e9-975a-a4d18cec433a"
+
+  MEMBER_NODE = "bb2f7e1c-7029-11ee-885f-0242ac140008"
+  GROUP_ID = "07883c9e-b25c-11e9-975a-a4d18cec433a"
+  
+  def rehydrate_members(self, input_file_path):
+    """ 
+    Add the members in the current environment into the updated groups
+
+    This requires importing the updated groups without any members into the current environment.
+
+    Parameters:
+      input_file_path (str): The path to the updated groups without members
+    """
     try:
         # Read the JSON file
         with open(input_file_path, 'r') as file:
@@ -409,21 +419,23 @@ class GroupTransform():
 
         resource_instances = data.get("business_data", {}).get("resources", [])
 
+        # Get id's for the groups
         for resource in resource_instances:
             group_ids.append(resource['resourceinstance']['resourceinstanceid'])
 
-        
+        # Export the current group data with the members
         management.call_command("packages",
             operation="export_business_data",
-            graphs=GROUP_ID,
+            graphs=self.GROUP_ID,
             format="json",
-            dest_dir="."
+            dest_dir="coral/pkg/business_data/files"
         )
         
-        files = glob.glob('Group_*.json')
+        files = glob.glob('coral/pkg/business_data/files/Group_*.json')
         if files:
             latest_file = max(files, key=os.path.getmtime)
-            group_with_members = 'backup_Group_with_members.json'
+            today = datetime.datetime.today().strftime('%Y-%m-%d_%H-%M-%S')
+            group_with_members = os.path.join(os.path.dirname(latest_file), f"backup_Group_with_members_{today}.json")
             os.rename(latest_file, group_with_members)
         
             with open(group_with_members, 'r') as new_file:
@@ -433,27 +445,29 @@ class GroupTransform():
             new_resource_instances = new_data.get("business_data", {}).get("resources", [])
             for resource in new_resource_instances:    
                 for tile in resource["tiles"]:
-                    if MEMBER_NODE in tile["data"]:
-                        members = [{'value': member, 'name': resource['resourceinstance']["name"]} for member in (tile["data"].get(MEMBER_NODE)or []) if member['resourceId'] not in group_ids]
+                    if self.MEMBER_NODE in tile["data"]:
+                        members = [{'value': member, 'name': resource['resourceinstance']["name"]} for member in (tile["data"].get(self.MEMBER_NODE)or []) if member['resourceId'] not in group_ids]
                         new_members.extend(members)
         
         for resource in resource_instances:    
             for tile in resource["tiles"]:
-                if MEMBER_NODE in tile["data"]:
-                    if tile["data"][MEMBER_NODE]: 
+                if self.MEMBER_NODE in tile["data"]:
+                    if tile["data"][self.MEMBER_NODE]: 
                         if len(new_members) > 0:
                             match = next((item for item in new_members if item['name'] == resource['resourceinstance']["name"]), None)
                             if match:
-                                tile["data"][MEMBER_NODE].append(match['value'])
+                                tile["data"][self.MEMBER_NODE].append(match['value'])
 
 
         data['business_data']['resources'] = resource_instances
+
+        output_file_path = f"coral/pkg/business_data/files/Updated_Groups_{today}.json"
 
         # Write the updated JSON to a new file
         with open(output_file_path, 'w') as file:
             json.dump(data, file, indent=4)
         
-        graph = Graph.objects.get(pk=GROUP_ID)
+        graph = Graph.objects.get(pk=self.GROUP_ID)
 
         graph.delete_instances()
         
@@ -468,31 +482,51 @@ class GroupTransform():
     except Exception as e:
         print(f"An error occurred: {e}")
 
-  def remove_members(self, input_file_path, output_file_path):
-    MEMBER_NODE = "bb2f7e1c-7029-11ee-885f-0242ac140008"
+  def remove_members(self):
+    """ 
+    Remove the Person instances from the current groups
+    
+    This will remove all Person instances set in the groups members without removing any link between groups.
+    """
     try:
-        # Read the JSON file
-        with open(input_file_path, 'r') as file:
-            data = json.load(file)
+        management.call_command("packages",
+            operation="export_business_data",
+            graphs=self.GROUP_ID,
+            format="json",
+            dest_dir="coral/pkg/business_data/files"
+        )
 
-        group_ids = []
+        files = glob.glob('coral/pkg/business_data/files/Group_*.json')
+        if files:
+            latest_file = max(files, key=os.path.getmtime)
+            today = datetime.datetime.today().strftime('%Y-%m-%d_%H-%M-%S')
+            group_with_members = os.path.join(os.path.dirname(latest_file), f"backup_Group_with_members_{today}.json")
+            os.rename(latest_file, group_with_members)
 
-        resource_instances = data.get("business_data", {}).get("resources", [])
-        resource_instances = [resource for resource in resource_instances if resource['resourceinstance']["name"] != "Undefined"]
+            # Read the JSON file
+            with open(group_with_members, 'r') as file:
+                data = json.load(file)
 
-        for resource in resource_instances:
-            group_ids.append(resource['resourceinstance']['resourceinstanceid'])
-        for resource in resource_instances:    
-            for tile in resource["tiles"]:
-                if MEMBER_NODE in tile["data"]:
-                    if tile["data"][MEMBER_NODE]:
-                        tile["data"][MEMBER_NODE] = [member for member in tile["data"][MEMBER_NODE] if member['resourceId'] in group_ids] 
+            group_ids = []
 
-        data['business_data']['resources'] = resource_instances
+            resource_instances = data.get("business_data", {}).get("resources", [])
+            resource_instances = [resource for resource in resource_instances if resource['resourceinstance']["name"] != "Undefined"]
 
-        # Write the updated JSON to a new file
-        with open(output_file_path, 'w') as file:
-            json.dump(data, file, indent=4)
+            for resource in resource_instances:
+                group_ids.append(resource['resourceinstance']['resourceinstanceid'])
+            for resource in resource_instances:    
+                for tile in resource["tiles"]:
+                    if self.MEMBER_NODE in tile["data"]:
+                        if tile["data"][self.MEMBER_NODE]:
+                            tile["data"][self.MEMBER_NODE] = [member for member in tile["data"][self.MEMBER_NODE] if member['resourceId'] in group_ids] 
+
+            data['business_data']['resources'] = resource_instances
+
+            output_file_path = f"coral/pkg/business_data/files/Empty_Groups_{today}.json"
+
+            # Write the updated JSON to a new file
+            with open(output_file_path, 'w') as file:
+                json.dump(data, file, indent=4)
 
     except Exception as e:
         print(f"An error occurred: {e}")
