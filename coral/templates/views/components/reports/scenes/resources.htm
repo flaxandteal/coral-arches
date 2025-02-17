@@ -3,6 +3,7 @@
 {% block report %}
 
 {% block body %}
+<!-- ko if: activities().length -->
 <!-- Associated Activities section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.activities">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.activities)}, css: {'fa-angle-double-right': visible.activities(), 'fa-angle-double-up': !visible.activities()}" class="fa toggle"></i> {% trans "Associated Activities" %}</h2>
@@ -56,7 +57,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: archive().length -->
 <!-- Associated Archive section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.archive">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.archive)}, css: {'fa-angle-double-right': visible.archive(), 'fa-angle-double-up': !visible.archive()}" class="fa toggle"></i> {% trans "Associated Archive Objects" %}</h2>
@@ -114,7 +117,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: consultations().length -->
 <!-- Associated Consultations section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.consultations">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.consultations)}, css: {'fa-angle-double-right': visible.consultations(), 'fa-angle-double-up': !visible.consultations()}" class="fa toggle"></i> {% trans "Associated Consultations" %}</h2>
@@ -167,7 +172,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: files().length -->
 <!-- Associated Digital Files section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.files">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.files)}, css: {'fa-angle-double-right': visible.files(), 'fa-angle-double-up': !visible.files()}" class="fa toggle"></i> {% trans "Associated Files" %}</h2>
@@ -220,7 +227,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: assets().length -->
 <!-- Associated Monuments section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.assets">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.assets)}, css: {'fa-angle-double-right': visible.assets(), 'fa-angle-double-up': !visible.assets()}" class="fa toggle"></i> {% trans "Associated Monuments/Areas/Artefacts" %}</h2>
@@ -276,8 +285,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
-
+<!-- ko if: actors().length -->
 <!-- Associated People and Organisations section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.actors">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.actors)}, css: {'fa-angle-double-right': visible.actors(), 'fa-angle-double-up': !visible.actors()}" class="fa toggle"></i> {% trans "Associated People and Organisations" %}</h2>
@@ -330,7 +340,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: applicationArea().length -->
 <!-- Related Application Area section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.relatedApplicationArea">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.applicationArea)}, css: {'fa-angle-double-right': visible.applicationArea(), 'fa-angle-double-up': !visible.applicationArea()}" class="fa toggle"></i> {% trans "Related Application Areas" %}</h2>
@@ -376,8 +388,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
-
+<!-- ko if: translation().length -->
 <!-- Translation section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.translation">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.translation)}, css: {'fa-angle-double-right': visible.translation(), 'fa-angle-double-up': !visible.translation()}" class="fa toggle"></i> {% trans "Translations" %}</h2>
@@ -423,7 +436,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: period().length -->
 <!-- Period section -->
 <div class="aher-report-section" data-bind="visible: !!dataConfig.period">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.period)}, css: {'fa-angle-double-right': visible.period(), 'fa-angle-double-up': !visible.period()}" class="fa toggle"></i> {% trans "Periods" %}</h2>
@@ -477,5 +492,6 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 {% endblock body %}
 {% endblock report %}
