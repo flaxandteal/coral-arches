@@ -435,7 +435,7 @@ class GroupTransform():
         if files:
             latest_file = max(files, key=os.path.getmtime)
             today = datetime.datetime.today().strftime('%Y-%m-%d_%H-%M-%S')
-            group_with_members = os.path.join(os.path.dirname(latest_file), f"backup_Group_with_members_{today}.json")
+            group_with_members = os.path.join(os.path.dirname(latest_file), f"backup_Previous_Group_with_members_{today}.json")
             os.rename(latest_file, group_with_members)
         
             with open(group_with_members, 'r') as new_file:
@@ -446,7 +446,7 @@ class GroupTransform():
             for resource in new_resource_instances:    
                 for tile in resource["tiles"]:
                     if self.MEMBER_NODE in tile["data"]:
-                        members = [{'value': member, 'name': resource['resourceinstance']["name"]} for member in (tile["data"].get(self.MEMBER_NODE)or []) if member['resourceId'] not in group_ids]
+                        members = [{'value': member, 'groupId': resource['resourceinstance']["resourceinstanceid"]} for member in (tile["data"].get(self.MEMBER_NODE)or []) if member['resourceId'] not in group_ids]
                         new_members.extend(members)
         
         for resource in resource_instances:    
@@ -454,9 +454,10 @@ class GroupTransform():
                 if self.MEMBER_NODE in tile["data"]:
                     if tile["data"][self.MEMBER_NODE]: 
                         if len(new_members) > 0:
-                            match = next((item for item in new_members if item['name'] == resource['resourceinstance']["name"]), None)
+                            match = next((item for item in new_members if item['groupId'] == resource['resourceinstance']["resourceinstanceid"]), None)
                             if match:
                                 tile["data"][self.MEMBER_NODE].append(match['value'])
+                                
 
 
         data['business_data']['resources'] = resource_instances
