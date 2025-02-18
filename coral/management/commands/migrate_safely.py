@@ -3,6 +3,7 @@ import uuid
 from arches.app.models.graph import Graph
 from arches.app.models.models import FunctionXGraph
 from arches.app.models.concept import Concept
+from arches.app.models.concept import ConceptValue
 from django.core import management
 from django.core.management.base import BaseCommand
 import json
@@ -76,6 +77,7 @@ class ScanForDataRisks():
     deleted_nodegroups = []
     updated_names = []
     updated_concepts = []
+    new_concepts = []
     incoming_datatypes = {}
     current_datatypes = {}
     datatype_changes = {}
@@ -90,30 +92,53 @@ class ScanForDataRisks():
     current_nodes = self.graph.nodes.values()
     current_nodegroups = self.graph.get_nodegroups()
     current_functions = FunctionXGraph.objects.filter(graph_id = self.graphid)
+    
+    # map the node ids into a dict
+    current_node_map = {str(n.nodeid): n for n in current_nodes} 
 
     for node in incoming_nodes:
-      if node['nodeid'] not in list(map(lambda n : str(n.nodeid), current_nodes)):
-        new_nodes.append(node['nodeid'])
-      else:
-        incoming_datatypes[node['nodeid']] = node['datatype']
-        if node['datatype'] == 'domain-value' or node['datatype'] == 'domain-value-list':
-          incoming_option_ids[node['nodeid']] = list(map(lambda o: o['id'], node['config']['options']))
+      node_id = node["nodeid"]
+      node_name = node["name"]
+      node_datatype = node["datatype"]
+      
+      if node_id not in current_node_map: 
+          new_nodes.append(node_id)
+      else:  
+          old_node = current_node_map[node_id]
+
+          # Track datatype changes
+          incoming_datatypes[node_id] = node_datatype
+          if node_datatype in ("domain-value", "domain-value-list"):
+              incoming_option_ids[node_id] = [o["id"] for o in node["config"]["options"]]
+
+          # Track name changes
+          if old_node.name != node_name:
+              updated_names.append({
+                  "nodeid": node_id,
+                  "old_name": old_node.name,
+                  "new_name": node_name
+              })
+
+          # Track change in concept
+          if node_datatype in ("concept", "concept-list") and current_node_map[node_id].datatype in ("concept", "concept-list"):
+             concept = node["config"]["rdmCollection"]
+             old_concept = current_node_map[node_id].config['rdmCollection']
+             if concept != old_concept:
+              def get_concept_value(concept_id):
+                  return Concept().get(concept_id).get_preflabel().value
+
+              updated_concepts.append({
+                  "id": concept,
+                  "value": get_concept_value(concept),
+                  "old_id": old_concept,
+                  "old_value": get_concept_value(old_concept),
+              })
 
     for node_json in current_nodes:
       if str(node_json.nodeid) not in incoming_datatypes.keys():
         deleted_nodes[node_json.alias] = str(node_json.nodeid)
       else:
-        current_datatypes[str(node_json.nodeid)] = node_json.datatype
-
-    for node in incoming_nodes:
-       old_node = next(node_json for node_json in current_nodes if str(node_json.nodeid) == node['nodeid'])
-       if old_node:
-          if str(old_node.name) != node['name']:
-             updated_names.append({
-                'nodeid': node['nodeid'],
-                'old_name': old_node.name,
-                'new_name': node['name']
-             }) 
+        current_datatypes[str(node_json.nodeid)] = node_json.datatype   
 
     for nodegroup in current_nodegroups:
       if str(nodegroup.nodegroupid) not in list(map(lambda ng: str(ng['nodegroupid']), incoming_nodegroups)):
@@ -149,12 +174,11 @@ class ScanForDataRisks():
           collection_id = incoming_node['config']['rdmCollection']
           datatype_changes[nodeid]['concept_id'] = collection_id
           concept_list = list(map(lambda concept: {concept_keys[i] : concept[i] for i, _ in enumerate(concept)}, Concept().get_child_collections(collection_id)))
-          print(concept_list)
           if len(concept_list) == 0:
-            updated_concepts.append(incoming_node['config']['rdmCollection']) 
+            new_concepts.append(incoming_node['config']['rdmCollection']) 
           datatype_changes[nodeid]['concept_options'] = concept_list
 
-    return new_nodes, deleted_nodes, deleted_nodegroups, datatype_changes, new_functions, updated_names, updated_concepts
+    return new_nodes, deleted_nodes, deleted_nodegroups, datatype_changes, new_functions, updated_names, new_concepts, updated_concepts
 
   def handle_datatype_changes(self, tile_json, datatype_changes: dict):
     for node in tile_json['data']:
@@ -201,9 +225,9 @@ class ScanForDataRisks():
         return True
     return False
   
-  def handle_concept_change(self, tile_json, mapping, updated_concepts)
+  # def handle_concept_change(self, tile_json, mapping, updated_concepts)
 
-  def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, updated_concepts):
+  def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, new_concepts, updated_concepts):
     nodes = self.graph.nodes.values()
 
     # Print the current state with headings
@@ -223,6 +247,13 @@ class ScanForDataRisks():
     else:
         print("No new functions added")
 
+    print("\nNew Concepts:")
+    if new_concepts:
+        for concept in new_concepts:
+            print(f"{concept}")
+    else:
+        print("No new concepts")
+
     print("\nUpdated Node Names:")
     if updated_names:
         for node in updated_names:
@@ -230,12 +261,12 @@ class ScanForDataRisks():
     else:
         print("No names changed")
 
-    print("\nNew Concepts:")
+    print("\nUpdated Concepts:")
     if updated_concepts:
         for concept in updated_concepts:
-            print(f"{concept}")
+            print(f"{concept['old_id']} ({concept['old_value']}) -> {concept['id']} ({concept['value']})")
     else:
-        print("No new concepts")
+        print("No updated concepts")
     
     print("\nDeleted Nodes:")
     if deleted_nodes:
@@ -291,9 +322,9 @@ class ScanForDataRisks():
 
     os.rename(glob.glob(f'{sanitised_model_name}*.json')[0], f'stale_data_{sanitised_model_name}.json')
 
-    new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes, new_functions, updated_names, updated_concepts = self.compare_nodes()
+    new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes, new_functions, updated_names, new_concepts, updated_concepts = self.compare_nodes()
 
-    self.handle_data_change_messages(new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, updated_concepts)
+    self.handle_data_change_messages(new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, new_concepts, updated_concepts)
 
     if self.datatype_changes == {} and len(deleted_nodes) == 0 and len(deleted_nodegroups) == 0:
       input("\nContinue with deleting and updating the graphs and data?")
