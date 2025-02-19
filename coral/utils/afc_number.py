@@ -1,14 +1,15 @@
+import re
 from arches.app.models.tile import Tile
 from django.db.models import Max
 from datetime import datetime
 from dateutil.relativedelta import relativedelta 
 
 
-SYSTEM_REFERENCE_NODEGROUP = "b37552ce-9527-11ea-a00c-f875a44e0e11"
+SYSTEM_REFERENCE_NODEGROUP = "b37552ba-9527-11ea-96b5-f875a44e0e11"
 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = "b37552be-9527-11ea-9213-f875a44e0e11"
 
 ID_NUMBER_PREFIX = "AFC"
-ID_NUMBER_PATTERN = r"AFC/\d{2}.*"
+ID_NUMBER_PATTERN = r"AFC\d{3}-\d{2}/\d{2}"
 
 
 class AfcNumber:
@@ -24,7 +25,7 @@ class AfcNumber:
         return f"{current_year.strftime('%y')}/{next_year.strftime('%y')}"
 
     def id_number_format(self, index):
-        return f"{ID_NUMBER_PREFIX}{str(index).zfill(2)}-{self.calculate_tax_year()}"
+        return f"{ID_NUMBER_PREFIX}{str(index).zfill(3)}-{self.calculate_tax_year()}"
 
     def get_latest_id_number(self, resource_instance_id=None):
         latest_id_number_tile = None
@@ -32,27 +33,23 @@ class AfcNumber:
             id_number_generated = {
                 f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__regex": ID_NUMBER_PATTERN,
             }
-            print("id_number_generated ", id_number_generated)
             query_result = Tile.objects.filter(
                 nodegroup_id=SYSTEM_REFERENCE_NODEGROUP,
                 **id_number_generated,
             )
-            print("query_result ", str(list(query_result)))
             if resource_instance_id:
                 query_result.exclude(resourceinstance_id=resource_instance_id)
             query_result = query_result.annotate(
                 most_recent=Max("resourceinstance__createdtime")
             )
-            print("query_result resource instance ", str(query_result));
             
             query_result = query_result.order_by("-most_recent")
-            print("query_result order by ", str(list(query_result)));
             latest_id_number_tile = query_result.first()
-            print("latest_id_number_tile ", str((latest_id_number_tile)));
+
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
             raise e
-
+        
         if not latest_id_number_tile:
             return
 
@@ -62,11 +59,14 @@ class AfcNumber:
             .get("value")
         )
 
-        print(str(latest_id_number))
+        id_number_parts = None
 
-        print(f"Previous ID number: {latest_id_number}")
-        id_number_parts = latest_id_number.split("/")
-        return {"index": int(id_number_parts[1])}
+        index_num = r"AFC(\d{3})-\d{2}/\d{2}"
+        match = re.search(index_num, latest_id_number)
+        if match:
+            id_number_parts = match.group(1)
+            
+        return {"index": int(id_number_parts)}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
         if attempts >= 20:

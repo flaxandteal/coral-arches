@@ -5,7 +5,7 @@ from arches.app.utils.response import JSONResponse
 from coral.utils.afc_number import AfcNumber
 
 
-SYSTEM_REFERENCE_NODEGROUP = "b37552ce-9527-11ea-a00c-f875a44e0e11"
+SYSTEM_REFERENCE_NODEGROUP = "b37552ba-9527-11ea-96b5-f875a44e0e11"
 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = "b37552be-9527-11ea-9213-f875a44e0e11"
 
 

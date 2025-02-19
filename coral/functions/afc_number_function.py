@@ -2,7 +2,7 @@ from arches.app.functions.base import BaseFunction
 from coral.utils.afc_number import AfcNumber
 from arches.app.models.tile import Tile
 
-SYSTEM_REFERENCE_NODEGROUP = "b37552ce-9527-11ea-a00c-f875a44e0e11"
+SYSTEM_REFERENCE_NODEGROUP = "b37552ba-9527-11ea-96b5-f875a44e0e11"
 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = "b37552be-9527-11ea-9213-f875a44e0e11"
 
 details = {
@@ -27,9 +27,6 @@ class AfcNumberFunction(BaseFunction):
         afcn = AfcNumber()
         if afcn.validate_id(id_number, resource_instance_id):
             print("AFC ID is valid: ", id_number)
-            print("test")
             return
-        
-        print("Function being executed");
 
         raise ValueError('This AFC Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please try to save again.')

@@ -62,8 +62,6 @@ define([
       console.log("Response ", response);
 
       const existingId = this.getValue();
-      console.log("Existing ID ", existingId);
-      console.log("Response afcNumber ", response.afcNumber);
       this.setValue(response.afcNumber)
       if (existingId) {
         this.tile()._tileData(koMapping.toJSON(this.tile().data));

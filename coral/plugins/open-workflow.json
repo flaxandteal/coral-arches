@@ -36,7 +36,8 @@
         "slug": "agriculture-and-forestry-consultation-workflow",
         "name": "Agriculture and Forestry Consultation",
         "description": "workflow to help manage and monitor agriculture activities impacting heritage sites",
-        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"]
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"AFC\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
       },
       {
         "slug": "hm-planning-consultation-response-workflow",
