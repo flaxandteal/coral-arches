@@ -59,8 +59,6 @@ define([
         }
       });
 
-      console.log("Response ", response);
-
       const existingId = this.getValue();
       this.setValue(response.afcNumber)
       if (existingId) {

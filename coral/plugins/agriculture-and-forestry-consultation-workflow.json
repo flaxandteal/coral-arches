@@ -277,7 +277,13 @@
                     "24337b70-fb26-11ee-838d-0242ac190006",
                     "42ec3232-fb26-11ee-838d-0242ac190006",
                     "24d01092-fb27-11ee-b5d2-0242ac190006",
-                    "24d01362-fb27-11ee-b5d2-0242ac190006" 
+                    "24d01362-fb27-11ee-b5d2-0242ac190006",
+                    "b7fb9270-fb26-11ee-b5d2-0242ac190006",
+                    "5c9ac7f6-eedd-11ef-b863-0242ac120006",
+                    "903b4ec8-eedd-11ef-b863-0242ac120006",
+                    "82fd0aae-fb26-11ee-b5d2-0242ac190006",
+                    "d0347d52-fb26-11ee-838d-0242ac190006",
+                    "998d6728-fb26-11ee-838d-0242ac190006" 
                   ],
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
@@ -287,15 +293,12 @@
                         "label": "Within deadline"
                       }
                     },
-                    "998d6728-fb26-11ee-838d-0242ac190006": {
-                      "config": {
-                        "label": "Cur E"
-                      },
-                      "allowInstanceCreation": false,
+                    "366577d4-eedd-11ef-829a-0242ac120006": {
                       "component": "user-to-model-select",
                       "signOffGroups": [
                         ""
-                      ]
+                      ],
+                      "allowInstanceCreation": false
                     },
                     "24d00d86-fb27-11ee-b5d2-0242ac190006": {
                       "config":{
@@ -307,7 +310,7 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
-                "uniqueInstanceName": "sign-off"
+                "uniqueInstanceName": "cc573bcb-a260-419f-8961-872f2511df0e"
               }
             ]
           }
