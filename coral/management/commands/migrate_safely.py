@@ -4,6 +4,7 @@ from arches.app.models.graph import Graph
 from arches.app.models.models import FunctionXGraph
 from arches.app.models.concept import Concept
 from arches.app.models.concept import ConceptValue
+from arches.app.models.models import Value
 from django.core import management
 from django.core.management.base import BaseCommand
 import json
@@ -45,6 +46,11 @@ class Command(BaseCommand):
           "--export",
           help="The path for the output file",
         )
+        parser.add_argument(
+          "-M",
+          "--mapping",
+          help="The path for the mapping file to convert node data",
+        )
 
     def handle(self, *args, **options):
         if options["operation"] == "rehydrate_members":
@@ -56,7 +62,7 @@ class Command(BaseCommand):
           if options["reverse"]:
             ScanForDataRisks().reverse_migration(options["model_name"])
           else:
-            ScanForDataRisks().handle_model_update(options["model_name"])
+            ScanForDataRisks().handle_model_update(options["model_name"], options["mapping"])
             pass
 
 class ScanForDataRisks():
@@ -66,6 +72,7 @@ class ScanForDataRisks():
   graphid = ""
   graph = None
   datatype_changes = {}
+  mapping = {}
 
   def compare_nodes(self) -> tuple[list,list,dict]:
     """
@@ -100,6 +107,7 @@ class ScanForDataRisks():
       node_id = node["nodeid"]
       node_name = node["name"]
       node_datatype = node["datatype"]
+      nodegroup_id = node["nodegroup_id"]
       
       if node_id not in current_node_map: 
           new_nodes.append(node_id)
@@ -125,13 +133,21 @@ class ScanForDataRisks():
              old_concept = current_node_map[node_id].config['rdmCollection']
              if concept != old_concept:
               def get_concept_value(concept_id):
+                try:
                   return Concept().get(concept_id).get_preflabel().value
+                except Exception as e:
+                   print(f"{e}")
+                   new_concepts.append(concept)
+                   return "This concept needs to be registered"
 
               updated_concepts.append({
-                  "id": concept,
+                  "concept_id": concept,
                   "value": get_concept_value(concept),
-                  "old_id": old_concept,
+                  "old_concept_id": old_concept,
                   "old_value": get_concept_value(old_concept),
+                  "node_id": node_id,
+                  "node_name": node_name,
+                  "nodegroup": nodegroup_id
               })
 
     for node_json in current_nodes:
@@ -225,7 +241,14 @@ class ScanForDataRisks():
         return True
     return False
   
-  # def handle_concept_change(self, tile_json, mapping, updated_concepts)
+  def handle_concept_change(self, tile_json, updated_concepts):
+    for node in list(tile_json['data'].keys()):
+      if node in [concept["node_id"] for concept in updated_concepts]:
+          mapping = next(value for key, value in self.mapping.items() if key == node)
+          print("tile", tile_json)
+          print("node", node)
+          TransformData().concept_to_concept(tile_json, node, mapping)
+     
 
   def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, new_concepts, updated_concepts):
     nodes = self.graph.nodes.values()
@@ -264,7 +287,8 @@ class ScanForDataRisks():
     print("\nUpdated Concepts:")
     if updated_concepts:
         for concept in updated_concepts:
-            print(f"{concept['old_id']} ({concept['old_value']}) -> {concept['id']} ({concept['value']})")
+            print(f"\nNode: {concept['node_id']} ({concept['node_name']}):")
+            print(f"Concept: {concept['old_concept_id']} ({concept['old_value']}) -> {concept['concept_id']} ({concept['value']})")
     else:
         print("No updated concepts")
     
@@ -291,7 +315,7 @@ class ScanForDataRisks():
     else:
         print("No data changes")
 
-  def handle_model_update(self, model_name):
+  def handle_model_update(self, model_name, mapping=None):
     model_path = f'coral/pkg/graphs/resource_models/{model_name}.json'
     with open(model_path) as incoming_json:
       file_contents = incoming_json.read()
@@ -299,6 +323,9 @@ class ScanForDataRisks():
     self.incoming_json = json.loads(file_contents)
     self.graphid = self.incoming_json['graph'][0]['graphid']
     self.graph = Graph.objects.get(pk=self.graphid)
+    if mapping:
+       with open(mapping, 'r') as file:
+            self.mapping = json.load(file)
 
     try:
       management.call_command("packages",
@@ -326,7 +353,7 @@ class ScanForDataRisks():
 
     self.handle_data_change_messages(new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, new_concepts, updated_concepts)
 
-    if self.datatype_changes == {} and len(deleted_nodes) == 0 and len(deleted_nodegroups) == 0:
+    if self.datatype_changes == {} and len(deleted_nodes) == 0 and len(deleted_nodegroups) == 0 and len(updated_concepts) == 0:
       input("\nContinue with deleting and updating the graphs and data?")
 
       
@@ -359,6 +386,8 @@ class ScanForDataRisks():
             tile = self.handle_datatype_changes(tile, self.datatype_changes)
           if len(deleted_nodes) > 0:
             tile = self.handle_deleted_nodes(tile, deleted_nodes)
+          if len(updated_concepts) > 0:
+             tile = self.handle_concept_change(tile, updated_concepts)
         
         # filter the tiles to remove the deleted node group tiles
         if len(deleted_nodegroups) > 0:
@@ -455,6 +484,20 @@ class TransformData():
   def allow_many(self, tile_json, nodeid):
     tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
     return tile_json
+  
+  def concept_to_concept(self, tile_json, node, mapping):
+      if mapping:
+        current_value = ConceptValue().get(tile_json['data'][node]).conceptid
+        new_value = Value.objects.filter(concept_id = mapping[current_value], valuetype = 'prefLabel').first().valueid
+        # Need to add some error checking when nothing in mapping and for when the new concept hasn't been uploaded
+        if new_value:
+          tile_json['data'][node] = str(new_value)
+        else:
+          tile_json['data'][node] = None
+      else:
+         print("No mapping file provided")
+         return
+    
   
 class GroupTransform():
   """
