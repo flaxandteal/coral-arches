@@ -9,6 +9,9 @@ from django.core import management
 from django.core.management.base import BaseCommand
 import json
 import datetime
+import logging
+
+logging.basicConfig()
 
 class Command(BaseCommand):
     """Safely Migrate a model that may have conflicting changes.
@@ -242,12 +245,17 @@ class ScanForDataRisks():
     return False
   
   def handle_concept_change(self, tile_json, updated_concepts):
+    if self.mapping is None:
+        raise ValueError("No mapping file has been provided for the concept conversion. Use -M to add a file")
+    
     for node in list(tile_json['data'].keys()):
       if node in [concept["node_id"] for concept in updated_concepts]:
-          mapping = next(value for key, value in self.mapping.items() if key == node)
-          print("tile", tile_json)
-          print("node", node)
+          try:
+            mapping = next(value for key, value in self.mapping.items() if key == node)
+          except Exception as e:
+             raise ValueError(f"No mapping could be found in the file for the node {node}") from e
           TransformData().concept_to_concept(tile_json, node, mapping)
+          
      
 
   def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, new_concepts, updated_concepts):
@@ -323,7 +331,8 @@ class ScanForDataRisks():
     self.incoming_json = json.loads(file_contents)
     self.graphid = self.incoming_json['graph'][0]['graphid']
     self.graph = Graph.objects.get(pk=self.graphid)
-    if mapping:
+    self.mapping = mapping
+    if self.mapping:
        with open(mapping, 'r') as file:
             self.mapping = json.load(file)
 
@@ -486,17 +495,30 @@ class TransformData():
     return tile_json
   
   def concept_to_concept(self, tile_json, node, mapping):
-      if mapping:
         current_value = ConceptValue().get(tile_json['data'][node]).conceptid
-        new_value = Value.objects.filter(concept_id = mapping[current_value], valuetype = 'prefLabel').first().valueid
-        # Need to add some error checking when nothing in mapping and for when the new concept hasn't been uploaded
+
+        if current_value in mapping:
+            mapping_value = mapping[current_value]
+        elif 'default' in mapping:
+            mapping_value = mapping['default']
+        else:
+            raise KeyError(f"The node {current_value} was not found in the mapping file, and no 'default' key exists.")
+
+        try:
+          if mapping_value:
+              new_value = Value.objects.filter(concept_id=mapping_value, valuetype='prefLabel').first().valueid
+          else:
+              # Allows for a null value in the mapping
+              new_value = mapping_value
+
+        except Exception as e:
+            raise ValueError(f"The concept {mapping_value} was not found. Have you imported your new concept and collection?") from e
+        
         if new_value:
           tile_json['data'][node] = str(new_value)
         else:
           tile_json['data'][node] = None
-      else:
-         print("No mapping file provided")
-         return
+      
     
   
 class GroupTransform():
