@@ -2,13 +2,14 @@ from django.views.generic import View
 from arches.app.utils.response import JSONResponse
 from arches.app.models.resource import Resource
 from arches_orm.adapter import admin
+import uuid
 
 
 class UserToModel(View):
     def get(self, request):
         user = request.user
 
-        from arches_orm.models import Person
+        from arches_orm.models import Person, Group
 
         try:
             with admin():
@@ -24,6 +25,20 @@ class UserToModel(View):
                     "person": None,
                 }
             )
+        
+        print("DEBUG: user person", vars(person))
+        print("DEBUG: person id", person.id)
+        try:
+            with admin():
+                groups = Group.all()
+                for group in groups:
+                    print("DEBUG group loop")
+                    print("DEBUG id", group.id)
+                    print("DEBUG members", list(map(lambda m: m.id, group.members)))
+                    if uuid.UUID(person.id) in group.members:
+                        print(group.id, person.id, "has the person as a member")
+        except:
+            pass
 
         return JSONResponse({"message": "Found users person model", "person": {
             "resource_id": person.id
