@@ -29,6 +29,7 @@ define([
   'views/components/workflows/agriculture-and-forestry-consultation-workflow/get-selected-heritage-asset-details',
   'views/components/workflows/agriculture-and-forestry-consultation-workflow/update-dates',
   'views/components/workflows/agriculture-and-forestry-consultation-workflow/generate-afc-number',
+  'views/components/workflows/agriculture-and-forestry-consultation-workflow/update-deadline',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
