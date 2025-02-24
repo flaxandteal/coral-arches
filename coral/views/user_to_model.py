@@ -10,11 +10,12 @@ class UserToModel(View):
         user = request.user
 
         from arches_orm.models import Person, Group
-
+        name = None
         try:
             with admin():
-                person = Person.where(user_account=user.id)
+                person = Person.where(user_account=int(user.id)).get()
                 person = person[0] if len(person) else None 
+                name = person._.resource.descriptors['en']['name']
         except Resource.DoesNotExist:
             person = None
 
@@ -26,20 +27,18 @@ class UserToModel(View):
                 }
             )
         
-        print("DEBUG: user person", vars(person))
-        print("DEBUG: person id", person.id)
+        groupids = []
         try:
             with admin():
                 groups = Group.all()
                 for group in groups:
-                    print("DEBUG group loop")
-                    print("DEBUG id", group.id)
-                    print("DEBUG members", list(map(lambda m: m.id, group.members)))
-                    if uuid.UUID(person.id) in group.members:
-                        print(group.id, person.id, "has the person as a member")
-        except:
-            pass
+                    if str(person.id) in list(map(lambda gm: str(gm.id), group.members)):
+                        groupids.append(str(group.id))
+        except Exception as e:
+            print("DEBUG ERROR", e)
 
         return JSONResponse({"message": "Found users person model", "person": {
-            "resource_id": person.id
+            "resource_id": person.id,
+            "name": name,
+            "groups": groupids
         }})
