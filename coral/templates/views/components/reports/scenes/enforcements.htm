@@ -1,0 +1,5 @@
+<!-- ko foreach: {data: enforcements, as: 'enforcement'} -->
+<a data-bind="attr: {href:enforcement.url, title: enforcement.name}">
+    <h4 class="workflow-select-title" data-bind="text: enforcement.name"></h4>
+</a>
+<!-- /ko -->
