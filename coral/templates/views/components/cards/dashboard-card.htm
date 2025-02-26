@@ -180,7 +180,7 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <!-- ko foreach: {data: data.slugs, as: 'slug' -->
+        <!-- ko foreach: {data: data.slugs, as: 'slug' } -->
         <li><a href="#" data-bind="
           click: () => {$parent.openFlagged(data.id, slug.slug)}, 
           text: slug.name"
