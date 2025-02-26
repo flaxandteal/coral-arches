@@ -139,5 +139,57 @@
 </div>
 </div>
 </div>
+<!-- /ko -->
+<!-- ko if: state === 'HeritageAsset'-->
+<div class="card-grid-item" style="margin: 2rem; width:375px">
+  <div class="panel mar-no dashboard-card-panel">
+  <div class="panel-heading" style="height: 38px">
+    <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
+      <span data-bind="text: data.displayname"></span>
+    </h3>
+  </div>
+  <div class="dashboard-card-columns">
+    <div>
+      <h5>Type</h5>
+      <!-- ko foreach: data.monumenttype -->
+      <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+      <!-- /ko -->
+    </div>
+    <div>
+      <h5>Input Date</h5>
+      <p data-bind="text: data.inputdate"></p>
+    </div>
+  </div>
+  <div class="dashboard-card-columns">
+    <div style="min-height: 84px;">
+      <h5>Statutory Consultee Notif Date</h5> 
+      <p data-bind="text: data.statutoryconsulteenotificationdatevalue"></p>
+    </div>
+    <div style="min-height: 84px;">
+      <h5>HMC Ref</h5> 
+      <p data-bind="text: data.hmcreferencenumber"></p>
+    </div>
+  </div>
+  <div class="panel-footer dashboard-footer">
+    <div style="height:100%; display:flex; align-items:center">
+      <h5>Model <span style="font-weight: initial" data-bind="text: data.state"></span></h5>
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Open
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <!-- ko foreach: {data: data.slugs, as: 'slug' -->
+        <li><a href="#" data-bind="
+          click: () => {$parent.openFlagged(data.id, slug.slug)}, 
+          text: slug.name"
+        >Action</a></li>
+        <!-- /ko -->
+      </ul>
+    </div>
+  </div>
+  </div>
+  </div>
 </div>
 <!-- /ko -->
