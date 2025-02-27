@@ -17,6 +17,9 @@ EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
+SECOND_SURVEY_GROUP = '1ce90bd5-4063-4984-931a-cc971414d7db'
+DESIGNATIONS_GROUP = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
+
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
 STATUS_HB_DONE = '71765587-0286-47de-96b4-4391aa6b99ef'
@@ -119,18 +122,21 @@ class Utilities():
     
     def _parse_date(self, date_str):
         date_formats = ['%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f']
+        print(date_str, type(date_str))
         for date_format in date_formats:
             try:
                 return datetime.strptime(date_str, date_format)
             except ValueError:
                 continue
-        return None
+        return date_str
 
     def sort_resources(self, resources, sort_by, sort_order):
+        print('resources', resources)
+        sorted_resources = sorted(
+            resources,
+            key=lambda x: self._parse_date(x[sort_by]),
+            reverse=(sort_order == 'desc')
+        )
+        return sorted_resources
+    
         
-        resources.sort(key=lambda x: (
-                    x[sort_by] is not None, 
-                    self._parse_date(x[sort_by]) if x[sort_by] is not None else None,
-                    x[sort_by]
-                ), reverse=(sort_order == 'desc'))
-        return resources

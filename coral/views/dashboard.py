@@ -4,6 +4,7 @@ from arches_orm.adapter import admin
 from django.core.paginator import Paginator
 from django.core.cache import cache
 import json
+from coral.views.dashboards.paginator import get_paginator
 from coral.views.dashboards.planning_strategy import PlanningTaskStrategy
 from coral.views.dashboards.excavation_strategy import ExcavationTaskStrategy
 from coral.views.dashboards.designation_strategy import DesignationTaskStrategy
@@ -38,15 +39,19 @@ class Dashboard(View):
                 return JsonResponse({"error": "User not found"}, status=404)
             
             update = request.GET.get('update', 'true') == 'true'
-            cache_key = f'dashboard_{user_id}'
+            
 
             task_resources = []
             counters = {}
             sort_by = request.GET.get('sortBy', None)
             sort_order = request.GET.get('sortOrder', None)
             filter = request.GET.get('filterBy', None)
+            page = int(request.GET.get('page', 1))
+            items_per_page = int(request.GET.get('itemsPerPage', 10))
             sort_options = []
             filter_options = []
+
+            cache_key = f'dashboard_{user_id}_{page}'
 
             if not update and cache.get(cache_key):
                 cache_data = cache.get(cache_key)
@@ -55,11 +60,21 @@ class Dashboard(View):
                 counters = data['counters']
                 sort_options = data['sort_options']
                 filter_options = data['filter_options']
+                total_resources = data['total_resources']
                 utilities = Utilities()
                 task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
 
             else:
-                user_group_ids = self.get_groups(person_resource[0].id)
+                key = f"groups_{user_id}"
+                if cache.get(key):
+                    print("YEESS", cache.get(key))
+                    group_data = cache.get(key)
+                    user_group_ids = json.loads(group_data)
+                else:
+                    print("SETTING DATA")
+                    user_group_ids = self.get_groups(person_resource[0].id)
+                    cache.set(key, json.dumps(user_group_ids), 60 * 15)                
+                
                 strategies = set()
                 for groupId in user_group_ids:
                     strategy = self.select_strategy(groupId)
@@ -67,35 +82,22 @@ class Dashboard(View):
                         strategies.add(self.select_strategy(groupId))
                 for strategy in strategies:
                     if sort_by is not None and sort_order is not None and sort_by:
-                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order, filter)
+                        resources, total_resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, page, items_per_page, sort_by, sort_order, filter)
                     else:
-                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id)
+                        resources, total_resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, page, items_per_page)
                     task_resources.extend(resources)
 
                 cache_data = json.dumps({
                     'task_resources': task_resources,
+                    'total_resources': total_resources,
                     'counters': counters,
                     'sort_options': sort_options,
                     'filter_options': filter_options
                     })
                 cache.set(cache_key, cache_data, 60 * 15)
 
-            page = int(request.GET.get('page', 1))
-            items_per_page = int(request.GET.get('itemsPerPage', 10))
-            paginator = Paginator(task_resources, items_per_page)
-            pages = [page]
-            if paginator.num_pages > 1:
-                before = list(range(1, page))
-                after = list(range(page + 1, paginator.num_pages + 1))
-                default_ct = 2
-                ct_before = default_ct if len(after) > default_ct else default_ct * 2 - len(after)
-                ct_after = default_ct if len(before) > default_ct else default_ct * 2 - len(before)
-                if len(before) > ct_before:
-                    before = [1, None] + before[-1 * (ct_before - 1) :]
-                if len(after) > ct_after:
-                    after = after[0 : ct_after - 1] + [None, paginator.num_pages]
-                pages = before + pages + after
-            
+            paginator, pages = get_paginator(total_resources, page, items_per_page)
+
             page_obj = paginator.get_page(page)
 
             return JsonResponse({
@@ -110,7 +112,7 @@ class Dashboard(View):
                     'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
                     'start_index': page_obj.start_index(),
                     'total': paginator.count,
-                    'response': page_obj.object_list
+                    'response': task_resources
                 },
                 'counters': counters,
                 'sort_options': sort_options,
