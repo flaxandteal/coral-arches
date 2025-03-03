@@ -6,7 +6,7 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/workflows/fmw-workflow/get-selected-monument-details.htm'
+  'templates/views/components/workflows/agriculture-and-forestry-consultation-workflow/get-selected-heritage-asset-details.htm'
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
