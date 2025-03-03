@@ -28,7 +28,7 @@ class AfcNumber:
         return f"{previous_year.strftime('%y')}/{current_year.strftime('%y')}"
         
     def id_number_format(self, index):
-        return f"{ID_NUMBER_PREFIX}{str(index).zfill(3)}-{self.calculate_tax_year()}"
+        return f"{ID_NUMBER_PREFIX}{str(index).zfill(3)}-{self.return_tax_year()}"
 
     def get_latest_id_number(self, resource_instance_id=None):
         latest_id_number_tile = None
