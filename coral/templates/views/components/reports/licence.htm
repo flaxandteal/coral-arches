@@ -4,7 +4,7 @@
 {% block report %}
     {% block report_title_bar %}
     <!-- Custom Template Report Title Bar -->
-    <div class="relative">
+    <div class="aher-report-toolbar">
 
         <!-- Title Block -->
                   <!-- ko if: !print()-->
@@ -40,6 +40,27 @@
                     }
                 }"></div>
             </div>
+            <!-- Names Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'name'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/name',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Related Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'related'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/all',
+                    params: {
+                        report: $data.report,
+                        showCards: false
+                    }
+                }"></div>
+            </div>
         </div>
     </div>            
     {% endblock body %}
@@ -70,6 +91,38 @@
                 cards: descriptionCards,
             }
         }"></div>
+        <!-- Names Tab -->
+        <div class="aher-report-page" data-bind="if: activeSection() === 'name'">
+            <div data-bind="component: {
+                name: 'views/components/reports/scenes/name',
+                params: {
+                    data: resource,
+                    cards: nameCards,
+                    dataConfig: nameDataConfig
+                }
+            }"></div>
+        </div>
+        <!-- Description Tab -->
+        <div class="aher-report-page" data-bind="if: activeSection() === 'description'">
+            <div data-bind="component: {
+                name: 'views/components/reports/scenes/description',
+                params: {
+                    data: resource,
+                    dataConfig: descriptionDataConfig,
+                    cards: descriptionCards,
+                }
+            }"></div>
+        </div>
+        <!-- Location Tab -->
+        <div class="aher-report-page" data-bind="if: activeSection() === 'location'">
+            <div data-bind="component: {
+                name: 'views/components/reports/scenes/location',
+                params: {
+                    data: resource,
+                    cards: locationCards,
+                }
+            }"></div>
+        </div>
     </div>
 </div>
 
