@@ -13,18 +13,20 @@ ID_NUMBER_PATTERN = r"AFC\d{3}-\d{2}/\d{2}"
 
 
 class AfcNumber:
-    def calculate_tax_year(self):
-        current_month = datetime.now().month
-        current_day = datetime.now().day
+    def return_tax_year(self):
         current_year = datetime.now()
+        current_date = datetime.now().strftime("%d-%m")
 
-        if current_month < 4 and current_day <6:
-            previous_year = current_year - relativedelta(years=1)
-            return f"{previous_year.strftime('%y')}/{current_year.strftime('%y')}"
+        current_date_obj = datetime.strptime(current_date, "%d-%m")
+        comparison_date_obj = datetime.strptime("06-04", "%d-%m")
+
+        if current_date_obj >= comparison_date_obj:
+            next_year = current_year + relativedelta(years=1)
+            return f"{current_year.strftime('%y')}/{next_year.strftime('%y')}"
+
+        previous_year = current_year - relativedelta(years=1)
+        return f"{previous_year.strftime('%y')}/{current_year.strftime('%y')}"
         
-        next_year = current_year + relativedelta(years=1)
-        return f"{current_year.strftime('%y')}/{next_year.strftime('%y')}"
-
     def id_number_format(self, index):
         return f"{ID_NUMBER_PREFIX}{str(index).zfill(3)}-{self.calculate_tax_year()}"
 
