@@ -109,14 +109,13 @@
                     }
                 }"></div>
             </div>
-            <!-- Resources Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'resources'">
+            <!-- Related Resources Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'related'">
                 <div data-bind="component: {
-                    name: 'views/components/reports/scenes/resources',
+                    name: 'views/components/reports/scenes/all',
                     params: {
-                        data: resource,
-                        cards: resourcesCards,
-                        dataConfig: resourceDataConfig
+                        report: $data.report,
+                        showCards: false
                     }
                 }"></div>
             </div>
@@ -125,7 +124,21 @@
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/all',
                     params: {
-                        report: $data.report
+                        report: $data.report,
+                        showCards: true,
+                        showRelated: true,
+                        nodeGroups: null
+                    }
+                }"></div>
+            </div>
+            <!-- Issue Report Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'issue'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/all',
+                    params: {
+                        report: $data.report,
+                        showRelated: false,
+                        nodeGroups: issueNodeGroups,
                     }
                 }"></div>
             </div>
@@ -145,6 +158,17 @@
                     params: {
                         data: resource,
                         cards: communicationCards
+                    }
+                }"></div>
+            </div>
+            <!-- Enforcement Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'enforcements'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/enforcements',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        report: $data.report
                     }
                 }"></div>
             </div>
