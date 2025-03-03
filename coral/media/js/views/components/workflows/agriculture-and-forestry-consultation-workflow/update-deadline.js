@@ -43,6 +43,10 @@ define([
         const responseDate = new Date(dateTiles.data[RESPONSE_DATE_NODE]);
         const dueDate = new Date(dateTiles.data[DUE_DATE_NODE]);
 
+        if (dateTiles.data[RESPONSE_DATE_NODE] == null) {
+          return false;
+        }
+
         if (responseDate < dueDate) {
             return true;   
         } else {
