@@ -231,7 +231,7 @@
             "componentConfigs": [
               {
               "parameters": {
-                "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                "graphid": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
                 "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
                 "hiddenNodes": ["b15ee596-e53d-11ef-8521-0242ac120004"],
                 "nodegroupid": "29e3212c-e53d-11ef-93e2-0242ac120004",
@@ -265,6 +265,7 @@
         "name": "sign-off-step",
         "title": "Sign off",
         "required": true,
+        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
