@@ -9,6 +9,7 @@ define([
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json',
     'views/components/reports/scenes/all',
+    'views/components/reports/scenes/enforcements',
 ], function($, _, ko, arches, resourceUtils, reportUtils, heritageAssetReportTemplate) {
     return ko.components.register('heritage-asset-report', {
         viewModel: function(params) {
@@ -25,6 +26,7 @@ define([
                 {id: 'location', title: 'Location Data'},
                 {id: 'issue', title: 'Issue Reports'},
                 {id: 'related', title: 'Related Resources'},
+                {id: 'enforcements', title: 'Pending Enforcements'},
                 // {id: 'description', title: 'Descriptions and Citations'},
                 // {id: 'classifications', title: 'Classifications and Dating'},
                 // {id: 'protection', title: 'Designation and Protection Status'},

@@ -161,6 +161,17 @@
                     }
                 }"></div>
             </div>
+            <!-- Enforcement Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'enforcements'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/enforcements',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        report: $data.report
+                    }
+                }"></div>
+            </div>
         </div>
     </div>            
     {% endblock body %}
