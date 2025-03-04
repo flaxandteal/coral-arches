@@ -50,16 +50,26 @@ details = {
 }
 class NotifyPlanning(BaseFunction):       
 
-    def post_save(self, tile, request, context):
+    def save(self, tile, request, context):
         from arches_orm.models import Person
 
         if context and context.get('escape_function', False):
             return
-    
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         nodegroup_id = str(tile.nodegroup_id)
         existing_notification = models.Notification.objects.filter(
-            context__resource_instance_id=resource_instance_id
+            context__resource_instance_id=resource_instance_id,
+            context__group=None
+        ).first()
+
+        both_notification = models.Notification.objects.filter(
+            context__resource_instance_id=resource_instance_id,
+            context__group='both'
+        ).first()
+
+        admin_notification = models.Notification.objects.filter(
+            context__group='admin'
         ).first()
 
         resource = Resource.objects.get(pk=resource_instance_id)
@@ -72,6 +82,7 @@ class NotifyPlanning(BaseFunction):
                     "resource_instance_id": resource_instance_id,
                     "consultation_id": name,
                     "last_notified": None,
+                    "group": None,
                     "response_slug": 'assign-consultation-workflow'
                 },
             )
@@ -79,8 +90,38 @@ class NotifyPlanning(BaseFunction):
         else:
             notification = existing_notification
             notification.message = f"{name} has been assigned to you"
+        
+        if not admin_notification:
+            admin_notification = models.Notification(
+                message=f"{name} has been updated",
+                context={
+                    "resource_instance_id": resource_instance_id,
+                    "consultation_id": name,
+                    "last_notified": None,
+                    "group": 'admin',
+                    "response_slug": 'assign-consultation-workflow'
+                },
+            )
+        else:
+            admin_notification.message = f"{name} has been updated"
+
+        if not both_notification:
+            both_notification = models.Notification(
+                message=f"{name} has been assigned to you",
+                context={
+                    "resource_instance_id": resource_instance_id,
+                    "consultation_id": name,
+                    "last_notified": None,
+                    "group": 'both',
+                    "response_slug": 'assign-consultation-workflow'
+                },
+            )
+        else:
+            both_notification.message = f"{name} has been assigned to you"
 
         notification.created = timezone.now()
+        admin_notification.created = timezone.now()
+        both_notification.created = timezone.now()
 
         data = tile.data
 
@@ -103,7 +144,7 @@ class NotifyPlanning(BaseFunction):
                 response_group = "HB"
             notification.message = f"{name} response has been completed by {response_group}"
             response_slug = 'assign-consultation-workflow'
-            self.notify_group(PLANNING_ADMIN, notification, response_slug)
+            self.notify_group(PLANNING_ADMIN, PLANNING_ADMIN, notification, response_slug)
             return
 
         # fetch re-assigned to data from a seperate nodegroup
@@ -124,24 +165,33 @@ class NotifyPlanning(BaseFunction):
 
         action_type_conditions = [STATUS_OPEN, EXTENSION_REQUESTED]
 
+        # Need to create a new notification per group to keep the slugs unique for each user
         if ACTION_STATUS in data and ACTION_TYPE in data:
             if data[ACTION_TYPE] is None and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
-                if existing_notification and existing_notification.context["last_notified"] == PLANNING_ADMIN:
+                if existing_notification and PLANNING_ADMIN == existing_notification.context["last_notified"]:
                     return
-                self.notify_group(PLANNING_ADMIN, notification, 'assign-consultation-workflow')
+                self.notify_group(PLANNING_ADMIN, PLANNING_ADMIN, notification, 'assign-consultation-workflow')
 
-            elif data[ACTION_TYPE] in [ASSIGN_HM, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
-                if existing_notification and existing_notification.context["last_notified"] == HM_MANAGERS:
+            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_HM and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+                if existing_notification and HM_MANAGERS == existing_notification.context["last_notified"]:
                     return
-                self.notify_group(HM_MANAGERS, notification, 'hm-planning-consultation-response-workflow')
+                self.notify_group(HM_MANAGERS, HM_MANAGERS, notification, 'hm-planning-consultation-response-workflow')              
 
-            elif data[ACTION_TYPE] in [ASSIGN_HB, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
-                if existing_notification and existing_notification.context["last_notified"] == HB_MANAGERS:
+            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_HB and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+                if existing_notification and HB_MANAGERS == existing_notification.context["last_notified"]:
                     return
                 
-                self.notify_group(HB_MANAGERS, notification, 'hb-planning-consultation-response-workflow')
+                self.notify_group(HB_MANAGERS, HB_MANAGERS, notification, 'hb-planning-consultation-response-workflow')
+           
+            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_BOTH and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+                if existing_notification and 'all' == existing_notification.context["last_notified"]:
+                    return
+                
+                self.notify_group(HB_MANAGERS, 'all', notification, 'hb-planning-consultation-response-workflow')
+                self.notify_group(HM_MANAGERS, 'all', both_notification, 'hm-planning-consultation-response-workflow')
+                self.notify_group(PLANNING_ADMIN, 'all', admin_notification, 'assign-consultation-workflow')
 
-            elif data[ACTION_STATUS] in action_type_conditions and is_assigned_to_a_user:
+            if data[ACTION_STATUS] in action_type_conditions and is_assigned_to_a_user:
                 with admin():
                     assigned_users_list = []
                     
@@ -157,16 +207,16 @@ class NotifyPlanning(BaseFunction):
 
                     self.notify_users(assigned_users_list, notification)
 
-    def notify_group(self, group_id, notification, response_slug):
+    def notify_group(self, group_id, last_notified, notification, response_slug):
         from arches_orm.models import Group, Person
-        
         with admin():
             group = Group.find(group_id)
             persons = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
 
-            notification.context["last_notified"] = group_id
+            notification.context["last_notified"] = last_notified
             notification.context["response_slug"] = response_slug
             notification.save()
+
             for person in persons:
                 user = person.user_account
 
@@ -190,7 +240,7 @@ class NotifyPlanning(BaseFunction):
                 continue  # Skip already notified users
 
             notified_users_list.append(selected_user.id)
-            notification.context["last_notified"] = notified_users_list
+            notification.context["last_notified"] = 'users'
             notification.context["response_slug"] = f"{user['team']}-planning-consultation-response-workflow"
             notification.save()
             
