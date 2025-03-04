@@ -341,7 +341,7 @@ class ScanForDataRisks():
           operation="export_graphs",
           graphs=self.graphid,
           format="json",
-          dest_dir="."
+          dest_dir="coral/pkg/business_data/files"
       )
       os.rename(f"{model_name}.json", f"backup_{model_name}.json")
     except Exception as e:
@@ -353,7 +353,7 @@ class ScanForDataRisks():
         operation="export_business_data",
         graphs=self.graphid,
         format="json",
-        dest_dir="."
+        dest_dir="coral/pkg/business_data/files"
     )
 
     os.rename(glob.glob(f'{sanitised_model_name}*.json')[0], f'stale_data_{sanitised_model_name}.json')
@@ -384,7 +384,7 @@ class ScanForDataRisks():
       # Pause and ask for user input to continue
       input("\nPress Enter to continue with the data conversion...")
 
-      with open(f"stale_data_{sanitised_model_name}.json") as incoming_business_data:
+      with open(f"coral/pkg/business_data/files/stale_data_{sanitised_model_name}.json") as incoming_business_data:
         file_contents = incoming_business_data.read()
       stale_business_data = json.loads(file_contents)
       stale_resources = stale_business_data['business_data']['resources']
@@ -402,7 +402,7 @@ class ScanForDataRisks():
         if len(deleted_nodegroups) > 0:
           resource['tiles'] = [tile for tile in stale_tiles if tile['nodegroup_id'] not in deleted_nodegroups]
 
-      with open(f'transformed_{sanitised_model_name}.json', 'w') as f:
+      with open(f'coral/pkg/business_data/files/transformed_{sanitised_model_name}.json', 'w') as f:
         json.dump(stale_business_data, f)
 
       input("\nConversion Complete \n\nContinue with deleting and updating the graphs and data?")
@@ -416,7 +416,7 @@ class ScanForDataRisks():
       
       management.call_command("packages",
             operation="import_business_data",
-            source=f"transformed_{sanitised_model_name}.json",
+            source=f"coral/pkg/business_data/files/transformed_{sanitised_model_name}.json",
             overwrite="overwrite",
             prevent_indexing=False,
             escape_function=True
@@ -424,7 +424,7 @@ class ScanForDataRisks():
       
   def reverse_migration(self, model_name):
     sanitised_model_name = model_name.replace(' ', '_')
-    with open(f"backup_{model_name}.json") as backup_json:
+    with open(f"coral/pkg/business_data/files/backup_{model_name}.json") as backup_json:
       file_contents = backup_json.read()
     backup_json = json.loads(file_contents)
     self.graphid = backup_json['graph'][0]['graphid']
@@ -439,11 +439,11 @@ class ScanForDataRisks():
       
     management.call_command("packages",
       operation="import_graphs",
-      source=f"backup_{model_name}.json"
+      source=f"coral/pkg/business_data/files/backup_{model_name}.json"
       )
     management.call_command("packages",
           operation="import_business_data",
-          source=f"stale_data_{sanitised_model_name}.json",
+          source=f"coral/pkg/business_data/files/stale_data_{sanitised_model_name}.json",
           overwrite="overwrite",
           prevent_indexing=False,
           escape_function=True
@@ -466,9 +466,12 @@ class TransformData():
     if tile_json['data'][nodeid] == None or tile_json['data'][nodeid] == "":
       return tile_json
     for option in change['domain_options']:
-      matching_option = [opt for opt in change['concept_options'] if opt['text'] == option['text']][0]
-      mapping[option['id']] = matching_option['id']
-    tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
+      matching_option = next((opt for opt in change['concept_options'] if opt['text'] == option['text']), None)
+      if matching_option:
+        mapping[option['id']] = matching_option['id']
+        tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
+      else:
+        tile_json['data'][nodeid] = None 
     return tile_json
   
   def concept_to_domain(self, tile_json, change, nodeid):
