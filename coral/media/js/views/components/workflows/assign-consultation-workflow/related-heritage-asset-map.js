@@ -149,17 +149,15 @@ define([
             context: this
           })
           if (response.tiles[0] !== undefined) {
+            let featuresObject = response.tiles[0].data['87d3d7dc-f44f-11eb-bee9-a87eeabdefba']['features'];
 
-            let filteredResponseData = response.tiles[0].display_values['1'].value;
-            let featuresObject = JSON.parse(filteredResponseData.replace(/'/g, '"'))
-
-          if (dontUpdate()[featuresObject.features[0].id]) {
+          if (dontUpdate()[featuresObject[0].id]) {
             return
           } 
           if (self.map()) {
-            dontUpdate({...dontUpdate(), [featuresObject.features[0].id] : true})
+            dontUpdate({...dontUpdate(), [featuresObject[0].id] : true})
           }
-            return featuresObject['features']
+            return featuresObject
           } else {
             return
           }
