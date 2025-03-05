@@ -75,6 +75,10 @@ class NotifyPlanning(BaseFunction):
         resource = Resource.objects.get(pk=resource_instance_id)
         name = resource.displayname()
         
+        # The existing notification stops groups from being sent multiple of the same notification
+        # Use this notification as the primary notification
+        # The other 2 notifications are used to allow multiple groups with different slugs to be notified
+        
         if not existing_notification:
             notification = models.Notification(
                 message=f"{name} has been assigned to you",
