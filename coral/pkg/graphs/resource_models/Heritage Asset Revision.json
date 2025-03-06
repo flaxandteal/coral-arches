@@ -15276,6 +15276,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "2af35abc-9dee-4438-a127-c0fb69e63124",
+                    "edgeid": "1d2a8a5c-bab1-47eb-bd60-7b4488a7a585",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P141_assigned",
+                    "rangenode_id": "0cc38683-b771-4caa-b452-874a7ec20ca6"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
                     "edgeid": "9e59e355-05eb-4d2f-a142-7bfc0ceef443",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -22218,6 +22227,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "scheduling_criteria",
+                    "config": {
+                        "rdmCollection": "95eceaf7-07ad-8a34-f0ac-fca389b4e7ad"
+                    },
+                    "datatype": "concept-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Scheduling Criteria",
+                    "nodegroup_id": "2af35abc-9dee-4438-a127-c0fb69e63124",
+                    "nodeid": "0cc38683-b771-4caa-b452-874a7ec20ca6",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P141_assigned",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "soft_deleted",
                     "config": {
