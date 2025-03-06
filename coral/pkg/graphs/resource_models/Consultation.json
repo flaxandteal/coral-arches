@@ -1442,6 +1442,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "76c0ca09-b643-4bfe-8eca-74c22c8bf3f2",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Consultation type"
+                    },
+                    "nodegroup_id": "34aca644-fa89-11ef-9ad3-fe5c026ae565",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "771ddfb0-8895-11ea-8738-f875a44e0e11",
                     "component_id": "2f9054d8-de57-45cd-8a9c-58bbb1619030",
                     "config": {
@@ -11530,6 +11557,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "76c0ca09-b643-4bfe-8eca-74c22c8bf3f2",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Consultation type",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "bb20ae13-f3f1-46df-b1d5-45db61990135",
+                    "label": {
+                        "en": "Consultation type"
+                    },
+                    "node_id": "34aca644-fa89-11ef-9ad3-fe5c026ae565",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                },
+                {
                     "card_id": "7400751c-8895-11ea-9130-f875a44e0e11",
                     "config": {
                         "defaultValue": null,
@@ -16016,6 +16064,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                    "edgeid": "6f545b65-e801-482a-8063-e1d8c3d700f4",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P10i_contains",
+                    "rangenode_id": "34aca644-fa89-11ef-9ad3-fe5c026ae565"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
                     "edgeid": "708920d0-7f01-4754-8bc4-2d42d31aa275",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -18106,6 +18163,12 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "34959a52-03aa-11ef-948f-0242ac150003",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "34aca644-fa89-11ef-9ad3-fe5c026ae565",
                     "parentnodegroup_id": null
                 },
                 {
@@ -24005,6 +24068,47 @@
                     "nodeid": "34a8720c-03ab-11ef-8f72-0242ac150003",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "consultation_type_n1",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "2e7b88c2-c5d5-4484-b69e-23483de9fb52",
+                                "selected": false,
+                                "text": {
+                                    "en": "Other"
+                                }
+                            },
+                            {
+                                "id": "d1661f81-93c6-4564-af92-8b0de1b08c99",
+                                "selected": false,
+                                "text": {
+                                    "en": "Abstraction"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Consultation type",
+                    "nodegroup_id": "34aca644-fa89-11ef-9ad3-fe5c026ae565",
+                    "nodeid": "34aca644-fa89-11ef-9ad3-fe5c026ae565",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E11_Modification",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P10i_contains",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
