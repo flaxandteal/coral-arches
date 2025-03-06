@@ -47,8 +47,8 @@
           ],
           "workflowstepclass": "workflow-form-component",
           "informationboxdata": {
-            "text": "From this page you can begin a new Agriculture & Forestry Consultation.",
-            "heading": "Agriculture and Forestry Consultation"
+            "text": "From this page you can begin a new DAERA Consultation.",
+            "heading": "DAERA Consultation"
           },
           "hiddenWorkflowButtons": ["undo"]
         },
@@ -92,7 +92,7 @@
                 },
                 {
                   "componentName": "update-dates",
-                  "uniqueInstanceName": "agriculture-dates",
+                  "uniqueInstanceName": "daera-dates",
                   "tilesManaged": "one",
                   "parameters": {
                     "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
