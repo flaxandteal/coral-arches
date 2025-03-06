@@ -40,6 +40,13 @@
         "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"AFC\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
       },
       {
+        "slug": "daera-workflow",
+        "name": "DAERA Workflow",
+        "description": "workflow to help manage and monitor DAERA activities impacting heritage sites",
+        "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
+        "searchString": "/search/resources?paging-filter=1&resource-type-filter=[{\"graphid\":\"8d41e49e-a250-11e9-9eab-00224800b26d\",\"inverted\":false}]&sort-results=asc&advanced-search=[{\"op\":\"and\",\"b37552be-9527-11ea-9213-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"AIL\"},\"b37552bf-9527-11ea-9c87-f875a44e0e11\":{\"op\":\"~\",\"lang\":\"en\",\"val\":\"\"},\"b37552bd-9527-11ea-97f4-f875a44e0e11\":{\"op\":\"eq\",\"val\":\"\"}}]"
+      },
+      {
         "slug": "hm-planning-consultation-response-workflow",
         "name": "HM Planning Consultation Response",
         "description": "You will see a list of consultations in the dropdown below. If nothing appears there it nothing to respond to. Only consultations assigned to either HM, or HB & HM will appear in the dropdown. This is configured from the Planning Consultation workflow.",

@@ -244,6 +244,16 @@
         "slug": "open-workflow?workflow-slug=agriculture-and-forestry-consultation-workflow",
         "circleColor": "#4a5e94",
         "desc": "workflow to help manage and monitor agriculture activities impacting heritage sites"
+      },
+      {
+        "workflowid": "030708f3-3946-4a1c-b23a-4c20698205a1",
+        "icon": "fa fa-file-text",
+        "name": "DAERA Workflow",
+        "show": true,
+        "bgColor": "#617099",
+        "slug": "open-workflow?workflow-slug=daera-workflow",
+        "circleColor": "#4a5e94",
+        "desc": "workflow to help manage and monitor DAERA activities impacting heritage sites"
       }
     ],
     "show": true

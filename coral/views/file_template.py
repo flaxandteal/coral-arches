@@ -205,6 +205,10 @@ class FileTemplateView(View):
                 "filename": "daera-consultation-response-template.docx",
                 "provider": GenericTemplateProvider
             },
+            "c5562218-ed5f-4468-9efd-656e3337badd": {
+                "filename": "daera-ail-consultation-template.docx",
+                "provider": GenericTemplateProvider
+            },
             "7f1e7061-8bb0-4338-9342-118f1e9214aa": {
                 "filename": "smc-addendum-template.docx",
                 "provider": GenericTemplateProvider
