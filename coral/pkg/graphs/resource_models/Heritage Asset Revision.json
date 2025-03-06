@@ -2389,7 +2389,7 @@
                         "en": "Listing Criteria"
                     },
                     "node_id": "f4c393ac-6aa6-11ef-b1e8-a1a88c0bb289",
-                    "sortorder": 4,
+                    "sortorder": 8,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
@@ -2440,7 +2440,7 @@
                         "en": "Land Use Site"
                     },
                     "node_id": "5782bd48-6aa6-11ef-b2e2-0242ac120006",
-                    "sortorder": 6,
+                    "sortorder": 10,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
@@ -3994,7 +3994,7 @@
                         "en": "Grade Metatype"
                     },
                     "node_id": "278b1a76-d5c2-4370-bd43-aa37d3eb5092",
-                    "sortorder": 8,
+                    "sortorder": 7,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -4108,9 +4108,31 @@
                         "en": "Grade"
                     },
                     "node_id": "319d5b7e-d766-4a99-9cb6-dabc17e36060",
-                    "sortorder": 5,
+                    "sortorder": 6,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "0e47da02-80e7-4763-b036-5e5ea193fa45",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Scheduling Criteria",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "4195eaed-7131-4d86-8a59-b83981ccd85e",
+                    "label": {
+                        "en": "Scheduling Criteria"
+                    },
+                    "node_id": "0cc38683-b771-4caa-b452-874a7ec20ca6",
+                    "sortorder": 9,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "3bb065d6-9710-4b6f-a042-ee761cd19511",
