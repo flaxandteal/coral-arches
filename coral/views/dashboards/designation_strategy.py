@@ -1,3 +1,5 @@
+from datetime import datetime
+from dateutil import parser
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
 from arches_orm.view_models import ConceptListValueViewModel, ConceptValueViewModel
@@ -36,14 +38,18 @@ class DesignationTaskStrategy(TaskStrategy):
         resources = []
         tasks = []
         ha_all = Monument.all(lazy=True)
-        # har_all = MonumentRevision.all(lazy=True)
-        # consultation_all = Consultation.all(lazy=True)
+        har_all = MonumentRevision.all(lazy=True)
+        consultation_all = Consultation.all(lazy=True)
 
         heritage_assets = [ha for ha in ha_all if ha.garden_sign_off.status_type_n1 != APPROVED]
-        # evaluation_meetings = [c for c in consultation_all if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('EVM/')]
+        heritage_asset_revisions = [
+            har for har in har_all 
+            if any(approval.desg_approver.desg_approved_by is None for approval in har.approvals)
+        ]
+        evaluation_meetings = [c for c in consultation_all if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('EVM/')]
         
         resources.extend(heritage_assets)
-        # resources.extend(har_all)
+        resources.extend(heritage_asset_revisions)
 
         total_resources = len(resources)
         sorted_resources = self.sort_resources(resources, sort_nodes, sort_by, sort_order)
@@ -56,15 +62,15 @@ class DesignationTaskStrategy(TaskStrategy):
             task = self.build_data(resource, groupId)
             tasks.append(task)
 
-        # for consultation in evaluation_meetings:
-        #     related_ha = consultation.related_monuments_and_areas
-        #     meeting_tasks = []
-        #     for ha in related_ha:
-        #         match = next((task for task in tasks if task['id'] == str(ha.id)), None)
-        #         if match:
-        #             meeting_tasks.append(match)
-        #     for task in meeting_tasks:
-        #         task['meeting'] = True
+        for consultation in evaluation_meetings:
+            related_ha = consultation.related_monuments_and_areas
+            meeting_tasks = []
+            for ha in related_ha:
+                match = next((task for task in tasks if task['id'] == str(ha.id)), None)
+                if match:
+                    meeting_tasks.append(match)
+            for task in meeting_tasks:
+                task['meeting'] = True
             
 
         return tasks, total_resources, counters, sort_options, filter_options
@@ -79,7 +85,7 @@ class DesignationTaskStrategy(TaskStrategy):
             'hb_number',
             'smr_number',
             'monument_type',
-            'input_date',
+            'input_date_value',
             'statutory_consultee_notification_date_value',
         ]
 
@@ -120,12 +126,21 @@ class DesignationTaskStrategy(TaskStrategy):
             {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
             {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
         ]
-        print("NODESS", node_values['resourceid'])
+        
         # Resource specific values
         if isinstance(resource, Monument):
-            node_values['model'] = 'ha'
+            node_values['model'] = 'Heritage Asset'
         if isinstance(resource, MonumentRevision):
-            node_values['model'] = 'har'
+            node_values['model'] = 'Heritage Asset Revision'
+
+        # transform returned values
+        date_values = [
+            'statutoryconsulteenotificationdatevalue',
+            'inputdatevalue'
+        ]
+        for value in date_values:
+            if node_values.get(value):
+                node_values[value] = self.convert_dates_str(node_values[value])
 
         return node_values    
 
@@ -137,3 +152,7 @@ class DesignationTaskStrategy(TaskStrategy):
                     sort_function(x)
                 ), reverse=(sort_order == 'desc'))
         return resources
+
+    def convert_dates_str(self, date_str):
+        date_obj = parser.parse(date_str)
+        return date_obj.strftime("%d-%m-%Y")
