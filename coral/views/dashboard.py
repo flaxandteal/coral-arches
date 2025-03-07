@@ -40,7 +40,7 @@ class Dashboard(View):
             
             update = request.GET.get('update', 'true') == 'true'
             
-
+            dashboard = request.GET.get('dashboard', None)
             task_resources = []
             counters = {}
             sort_by = request.GET.get('sortBy', None)
@@ -67,25 +67,41 @@ class Dashboard(View):
             else:
                 key = f"groups_{user_id}"
                 if cache.get(key):
-                    print("YEESS", cache.get(key))
                     group_data = cache.get(key)
                     user_group_ids = json.loads(group_data)
                 else:
-                    print("SETTING DATA")
                     user_group_ids = self.get_groups(person_resource[0].id)
-                    cache.set(key, json.dumps(user_group_ids), 60 * 15)                
-                
-                strategies = set()
+                    cache.set(key, json.dumps(user_group_ids), 60 * 15) 
+                                   
+                strategies = []
                 for groupId in user_group_ids:
                     strategy = self.select_strategy(groupId)
                     if strategy:
-                        strategies.add(self.select_strategy(groupId))
-                for strategy in strategies:
-                    if sort_by is not None and sort_order is not None and sort_by:
-                        resources, total_resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, page, items_per_page, sort_by, sort_order, filter)
-                    else:
-                        resources, total_resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, page, items_per_page)
-                    task_resources.extend(resources)
+                        strategies.append(strategy)
+
+                if not strategies:
+                    return JsonResponse({"error": "No valid strategy found"}, status=404)
+                
+                if dashboard:
+                    strategy = next((s['strategy'] for s in strategies if dashboard == s.id), None)
+                    if strategy is None:
+                        return JsonResponse({"error": "User not in group"}, status=404)
+                else: 
+                    strategy = strategies[0]['strategy']
+                    
+                task_params = {
+                    'groupId': groupId,
+                    'userResourceId': person_resource[0].id,
+                    'page': page,
+                    'page_size': items_per_page
+                }
+                    
+                if sort_by is not None and sort_order is not None:
+                    task_params.update({'sort_by': sort_by, 'sort_order': sort_order})
+                if filter is not None:
+                    task_params.update({'filter': filter })
+                resources, total_resources, counters, sort_options, filter_options = strategy.get_tasks(**task_params)
+                task_resources.extend(resources)
 
                 cache_data = json.dumps({
                     'task_resources': task_resources,
@@ -135,11 +151,11 @@ class Dashboard(View):
     
     def select_strategy(self, groupId):
         if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
-            return PlanningTaskStrategy()
+            return { id: groupId, 'name': 'Planning Dashboard', 'strategy': PlanningTaskStrategy() }
         elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
-            return ExcavationTaskStrategy()
+            return { id: groupId, 'name': 'Excavation Dashboard', 'strategy': ExcavationTaskStrategy() }
         elif groupId in [SECOND_SURVEY_GROUP, DESIGNATIONS_GROUP]:
-            return DesignationTaskStrategy()
+            return { id: groupId, 'name': 'Records and Designation Dashboard', 'strategy': DesignationTaskStrategy() }
         return
 
 
