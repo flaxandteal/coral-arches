@@ -6084,7 +6084,7 @@
                         "en": "Applicant organisation"
                     },
                     "node_id": "939ac87e-e3ab-11ef-8530-0242ac120007",
-                    "sortorder": 1,
+                    "sortorder": 2,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
@@ -7117,7 +7117,7 @@
                         "en": "Agent"
                     },
                     "node_id": "4ea4c884-184f-11eb-b64d-f875a44e0e11",
-                    "sortorder": 17,
+                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
@@ -9063,6 +9063,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "e8e923c2-a79f-4e50-9f69-f959033a49e0",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Referred to",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "78148836-5820-4abb-b265-18c60420b6c7",
+                    "label": {
+                        "en": "Referred to"
+                    },
+                    "node_id": "76c2097a-e792-11ef-97dd-0242ac120002",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "cde07ceb-4018-4c4c-9810-3a61d36fe842",
                     "config": {
                         "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
@@ -9207,7 +9228,7 @@
                         "en": "Applicant"
                     },
                     "node_id": "dcd282ae-dfda-11ef-a925-0242ac120006",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
@@ -12273,6 +12294,27 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
+                    "card_id": "e8e923c2-a79f-4e50-9f69-f959033a49e0",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Agent",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "eb9c51ad-ac35-498c-93ca-c934feb0f479",
+                    "label": {
+                        "en": "Agent"
+                    },
+                    "node_id": "714a4b84-faa1-11ef-b148-8e7ccd27c960",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "29ac4c3f-b797-4b8c-8e16-b16e28d93798",
                     "config": {
                         "defaultValue": "62f3f620-ea25-46c8-9a7b-dbadf23aa874",
@@ -14783,6 +14825,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
                     "rangenode_id": "42ec3232-fb26-11ee-838d-0242ac190006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "8780196a-dfda-11ef-a67e-0242ac120006",
+                    "edgeid": "36e275ea-f21c-4982-98d7-4b484a3d8d86",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                    "rangenode_id": "714a4b84-faa1-11ef-b148-8e7ccd27c960"
                 },
                 {
                     "description": null,
@@ -27781,6 +27832,40 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "agent_n1",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Person",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Agent",
+                    "nodegroup_id": "8780196a-dfda-11ef-a67e-0242ac120006",
+                    "nodeid": "714a4b84-faa1-11ef-b148-8e7ccd27c960",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                    "sortorder": 3,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "target_date",
                     "config": {},
                     "datatype": "semantic",
@@ -28601,29 +28686,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "agriculture_related_people",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "hascustomalias": false,
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Agriculture related people",
-                    "nodegroup_id": "8780196a-dfda-11ef-a67e-0242ac120006",
-                    "nodeid": "8780196a-dfda-11ef-a67e-0242ac120006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P11_had_participant",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "applicants_n1",
                     "config": {
                         "en": ""
@@ -29258,7 +29320,7 @@
                     "nodeid": "939ac87e-e3ab-11ef-8530-0242ac120007",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 1,
+                    "sortorder": 2,
                     "sourcebranchpublication_id": null
                 },
                 {
@@ -31911,7 +31973,7 @@
                     "nodeid": "dcd282ae-dfda-11ef-a925-0242ac120006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "sourcebranchpublication_id": null
                 },
                 {
