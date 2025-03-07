@@ -9,37 +9,46 @@ EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='desc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='createdat', sort_order='desc', filter='all'):
         from arches_orm.models import License
         utilities = Utilities()
-        #states
-        is_admin = groupId == EXCAVATION_ADMIN_GROUP
-        is_user = groupId == EXCAVATION_USER_GROUP
-        is_cur_e = groupId == EXCAVATION_CUR_E
 
         sort_options = ['createdat', 'validuntil']
-
-        resources = [] 
 
         licences_all = License.all()
 
         licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
-
         if filter != 'all':
             # Checks the report status against the filter value
             licences = [l for l in licences if self.is_valid_license(l, filter)]
+        
+        sort_nodes = {
+            'validuntildate': lambda resource: resource.decision[0].licence_valid_timespan.valid_until_date,
+            'createdat': lambda resource: resource._.resource.createdtime
+        }
 
-        for licence in licences:
-            task = self.build_data(licence, groupId)
-            if task:
-                resources.append(task)
-        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+        # Sort nodes allow us to access the model node value for sorting
+        sorted_resources = utilities.sort_resources_date(licences, sort_nodes, sort_by, sort_order)
+
+        # Get total number of resources
+        total_resources = len(licences)
+
+        # Build data only for the current page
+        start_index = (page -1) * page_size
+        end_index = (page * page_size)
+        indexed_resources = sorted_resources[start_index:end_index]
+
+        tasks = []
+
+        for resource in indexed_resources:
+            task = self.build_data(resource, groupId)
+            tasks.append(task)
 
         counters = []
         sort_options = [{'id': 'createdat', 'name': 'Created At'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
         filter_options = [{'id': 'all', 'name': 'All'},{'id': 'final', 'name': 'Final'}, {'id': 'preliminary', 'name': 'Preliminary'}, {'id': 'interim', 'name': 'Interim'}, {'id': 'unclassified', 'name': 'Unclassified'}, {'id': 'summary', 'name': 'Summary'}]
 
-        return sorted_resources, counters, sort_options, filter_options
+        return tasks, total_resources, counters, sort_options, filter_options
 
     
     def build_data(self, licence, groupId):

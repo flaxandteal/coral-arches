@@ -121,8 +121,11 @@ class Utilities():
         return message
     
     def _parse_date(self, date_str):
+        if isinstance(date_str, datetime):
+            return date_str
         date_formats = ['%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f']
-        print(date_str, type(date_str))
+        if date_str is None:
+            return datetime.min
         for date_format in date_formats:
             try:
                 return datetime.strptime(date_str, date_format)
@@ -135,6 +138,15 @@ class Utilities():
         sorted_resources = sorted(
             resources,
             key=lambda x: self._parse_date(x[sort_by]),
+            reverse=(sort_order == 'desc')
+        )
+        return sorted_resources
+    
+    def sort_resources_date(self, resources, sort_option, sort_by, sort_order):
+        sort_function = sort_option[sort_by]
+        sorted_resources = sorted(
+            resources, 
+            key=lambda x: self._parse_date(self.node_check(lambda: sort_function(x))) if self.node_check(lambda: sort_function(x)) is not None else datetime.max,
             reverse=(sort_order == 'desc')
         )
         return sorted_resources

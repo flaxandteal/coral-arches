@@ -24,7 +24,7 @@ STATUTORY = 'd06d5de0-2881-4d71-89b1-522ebad3088d'
 NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
 
 class PlanningTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='desc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='deadline', sort_order='desc', filter='all'):
         from arches_orm.models import Consultation
         with admin():
             TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
@@ -36,6 +36,7 @@ class PlanningTaskStrategy(TaskStrategy):
             is_hm_user = groupId in [HM_GROUP] 
             is_hb_user = groupId in [HB_GROUP] 
             is_admin = groupId in [PLANNING_GROUP]
+
             resources = [] 
 
             utilities = Utilities()
@@ -79,7 +80,6 @@ class PlanningTaskStrategy(TaskStrategy):
 
             #filter out consultations that are not planning consultations
             planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
-
             # check the correct filter group and apply the filter
             if filter != 'all':
                 is_member_filter = any(member['id'] == filter for member in members_filter)
@@ -114,19 +114,33 @@ class PlanningTaskStrategy(TaskStrategy):
                         (is_hb_user and is_assigned_to_user and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
                         (is_admin)
                     )
-                    if conditions_for_task:                 
-                        task = self.build_data(consultation, groupId)
-                        if task:
-                            resources.append(task)
+                    if conditions_for_task:  
+                        resources.append(consultation)
+            sort_nodes = {
+                'deadline': lambda resource: resource.action[0].action_dates.target_date_n1,
+                'datetime': lambda resource: resource.consultation_dates.log_date
+            }
 
+            # Sort nodes allow us to access the model node value for sorting
+            sorted_resources = utilities.sort_resources_date(resources, sort_nodes, sort_by, sort_order)
 
-            # Convert the 'deadline', 'date' field to a date and sort
-            sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
+            # Get total number of resources
+            total_resources = len(resources)
+
+            # Build data only for the current page
+            start_index = (page -1) * page_size
+            end_index = (page * page_size)
+            indexed_resources = sorted_resources[start_index:end_index]
+
+            tasks = []
+
+            for resource in indexed_resources:
+                task = self.build_data(resource, groupId)
+                tasks.append(task)
 
             counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
             sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
-
-            return sorted_resources, counters, sort_options, filter_options
+            return tasks, total_resources, counters, sort_options, filter_options
     
     def get_group_members(self, groups):
         from arches_orm.models import Group
