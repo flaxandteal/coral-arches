@@ -9,16 +9,16 @@ define([
   ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
     function viewModel(params) {
 
-    const AGRICULTURE_DATE_NODEGROUP_ID = "5d6eecde-e217-11ef-803e-0242ac120003"
-    const ISSUE_DATE_NODE = "ea5bb474-e217-11ef-803e-0242ac120003"
-    const VALID_UNTIL_NODE = "5b6a2ede-e218-11ef-803e-0242ac120003"
+    const DATE_NODEGROUP_ID = params.dateNodeGroupID;
+    const ISSUE_DATE_NODE = params.issueDateNode;
+    const DUE_DATE_UNTIL_NODE = params.dueDateNode;
     
     CardComponentViewModel.apply(this, [params]);
 
       if (this.tile.data[ISSUE_DATE_NODE] && ko.isObservable(this.tile.data[ISSUE_DATE_NODE])) {
         this.tile.data[ISSUE_DATE_NODE].subscribe(issueDate => {
-          const validUntilDate = this.addTwoWeeks(issueDate)
-          this.tile.data[VALID_UNTIL_NODE](validUntilDate)
+          const dueDate = this.addTwoWeeks(issueDate)
+          this.tile.data[DUE_DATE_UNTIL_NODE](dueDate)
         })
       }
 
@@ -26,7 +26,7 @@ define([
 
         const tilesResponse = await window.fetch(
           arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
-            (AGRICULTURE_DATE_NODEGROUP_ID ? `?nodeid=${AGRICULTURE_DATE_NODEGROUP_ID}` : '')
+            (DATE_NODEGROUP_ID ? `?nodeid=${DATE_NODEGROUP_ID}` : '')
         );
 
         const data = await tilesResponse.json();
