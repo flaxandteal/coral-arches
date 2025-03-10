@@ -21,35 +21,56 @@ class DesignationTaskStrategy(TaskStrategy):
         from arches_orm.models import Monument, MonumentRevision, Consultation
         with admin():
 
-            sort_nodes = {
-                'resourceid': lambda resource: resource.system_reference_numbers.uuid.resourceid,
-                'hb_number': lambda resource: resource.heritage_asset_references.hb_number,
-                'smr_number': lambda resource: resource.heritage_asset_references.smr_number,
-                'ihr_number': lambda resource: resource.heritage_asset_references.ihr_number,
-                'garden_number': lambda resource: resource.heritage_asset_references.historic_parks_and_gardens
+            field_accessors = {
+                'resourceid': {
+                    Consultation: lambda r: r.related_monuments_and_areas[0].system_reference_numbers.uuid.resourceid,
+                    Monument: lambda r: r.system_reference_numbers.uuid.resourceid,
+                    MonumentRevision: lambda r: r.system_reference_numbers.uuid.resourceid
+                },
+                'hb_number': {
+                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.hb_number,
+                    Monument: lambda r: r.heritage_asset_references.hb_number,
+                    MonumentRevision: lambda r: r.heritage_asset_references.hb_number
+                },
+                'smr_number': {
+                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.smr_number,
+                    Monument: lambda r: r.heritage_asset_references.smr_number,
+                    MonumentRevision: lambda r: r.heritage_asset_references.smr_number
+                },
+                'ihr_number': {
+                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.ihr_number,
+                    Monument: lambda r: r.heritage_asset_references.ihr_number,
+                    MonumentRevision: lambda r: r.heritage_asset_references.ihr_number
+                },
+                'garden_number': {
+                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.historic_parks_and_gardens,
+                    Monument: lambda r: r.heritage_asset_references.historic_parks_and_gardens,
+                    MonumentRevision: lambda r: r.heritage_asset_references.historic_parks_and_gardens
+                }
             }
 
             resources = []
             tasks = []
-            ha_all = Monument.all(lazy=True)
-            har_all = MonumentRevision.all(lazy=True)
-            consultation_all = Consultation.all(lazy=True)
 
-            heritage_assets = [ha for ha in ha_all if ha.garden_sign_off.status_type_n1 != APPROVED]
-            heritage_asset_revisions = [
+            ha_all = Monument.all(lazy=True)        
+            self.heritage_assets = [ha for ha in ha_all if ha.garden_sign_off.status_type_n1 != APPROVED]
+            resources.extend(self.heritage_assets)
+
+            har_all = MonumentRevision.all(lazy=True)
+            self.heritage_asset_revisions = [
                 har for har in har_all 
                 if any(approval.desg_approver.desg_approved_by is None for approval in har.approvals)
             ]
-            evaluation_meetings = [
+            resources.extend(self.heritage_asset_revisions)
+
+            consultation_all = Consultation.all(lazy=True)
+            self.evaluation_meetings = [
                 c for c in consultation_all 
                 if (resourceid := c.system_reference_numbers.uuid.resourceid) and 
                 resourceid.startswith('EVM/') and 
                 c.evaluation.sign_off_date_n1.start_date is None
             ]
-            
-            resources.extend(heritage_assets)
-            resources.extend(heritage_asset_revisions)
-            resources.extend(evaluation_meetings)
+            resources.extend(self.evaluation_meetings)
 
             if filter != 'all':
                 filter_options = self.get_filter_options(groupId)
@@ -60,14 +81,14 @@ class DesignationTaskStrategy(TaskStrategy):
                 if filter_type == 'date': 
                     resources = [r for r in resources if self.filter_by_date_value(r)]
                 if filter_type == 'heritage_asset':
-                    resources = heritage_assets
+                    resources = self.heritage_assets
                 if filter_type == 'revision':
-                    resources = heritage_asset_revisions
+                    resources = self.heritage_asset_revisions
                 if filter_type == 'meetings':
-                    resources = evaluation_meetings
+                    resources = self.evaluation_meetings
 
             total_resources = len(resources)
-            sorted_resources = self.sort_resources(resources, sort_nodes, sort_by, sort_order)
+            sorted_resources = self.sort_resources(resources, field_accessors, sort_by, sort_order)
 
             start_index = (page -1) * page_size
             end_index = (page * page_size)
@@ -80,7 +101,7 @@ class DesignationTaskStrategy(TaskStrategy):
                     task = self.build_data(resource, groupId)
                 tasks.append(task)
 
-            counters = []
+            counters = self.get_counters()
             
             return tasks, total_resources, counters
     
@@ -114,7 +135,13 @@ class DesignationTaskStrategy(TaskStrategy):
         ]
 
     def get_counters(self):
-        return
+        return {
+            'Resource Types': {
+                'Heritage Assets': len(self.heritage_assets),
+                'Designations': len(self.heritage_asset_revisions),
+                'Evaluation Meetings': len(self.evaluation_meetings)
+            }
+        }
     
     def build_data(self, resource, groupId):
         from arches_orm.models import Monument, MonumentRevision
@@ -182,7 +209,8 @@ class DesignationTaskStrategy(TaskStrategy):
                 'display_name_value',
                 'log_date',
                 'follow_up_meeting_date_value',
-                'related_monuments_and_areas'
+                'related_monuments_and_areas',
+                'council'
             ]
 
             node_values = self.get_values(nodes, resource)
@@ -206,10 +234,8 @@ class DesignationTaskStrategy(TaskStrategy):
                 'followupmeetingdatevalue'
             ]
             for value in date_values:
-                print("VALUE", value, type(value))
                 if node_values.get(value):
                     node_values[value] = self.convert_date_str(node_values[value])
-                    print("HERE", node_values[value])
 
             return node_values  
 
@@ -225,7 +251,6 @@ class DesignationTaskStrategy(TaskStrategy):
     def get_values(self, nodes: List, resource):
         values = resource._._values
         resource_values = {}
-        print("THIS VALUES", values)
         for node in nodes:
             value = values.get(node, None)
             if isinstance(value, list) and value:
@@ -237,21 +262,47 @@ class DesignationTaskStrategy(TaskStrategy):
 
         return resource_values   
     
-    def sort_resources(self, resources, sort_option, sort_by, sort_order):
-        sort_function = sort_option[sort_by]
-        resources.sort(key=lambda x: (
-                    sort_function(x) is None, 
-                    sort_function(x) if sort_function(x) is not None else ''
-                ), reverse=(sort_order == 'desc'))
-        return resources
+    def sort_resources(self, resources, field_accessors, sort_by, sort_order):
+        # Helper: safely retrieve the sort value
+        def safe_sort_value(resource):
+            accessors = field_accessors.get(sort_by, {})
+            resource_type = type(resource)
+            accessor = accessors.get(resource_type)
+            if accessor:
+                try:
+                    return accessor(resource)
+                except Exception:
+                    return None
+            return None
+
+        # Partition resources into those with a valid sort value and those with None
+        valid_items = []
+        none_items = []
+        for r in resources:
+            val = safe_sort_value(r)
+            if val == 'None':
+                none_items.append(r)
+            else:
+                valid_items.append((r, val))
+        # Sort the valid items according to sort_order
+        reverse = (sort_order == 'desc')
+        sorted_valid = sorted(valid_items, key=lambda x: x[1], reverse=reverse)
+        
+        # Extract the sorted resource objects and append the ones with None
+        sorted_resources = [item[0] for item in sorted_valid] + none_items
+        return sorted_resources
 
     def convert_date_str(self, date_str):
         date_obj = parser.parse(date_str)
         return date_obj.strftime("%d-%m-%Y")
     
     def filter_by_council_value(self, resource, filter):
+        from arches_orm.models import Consultation
         utilities = Utilities()
-        council_value = utilities.node_check(lambda:resource.location_data.council)
+        if isinstance(resource, Consultation):
+            council_value = utilities.node_check(lambda:resource.related_monuments_and_areas[0].location_data.council)
+        else:
+            council_value = utilities.node_check(lambda:resource.location_data.council)
         if not council_value:
             return False
         return council_value == filter
