@@ -77,12 +77,18 @@ class Utilities():
 
         return counts
     
-    def get_count_groups(self, resources, count_groups: list):
+    def get_count_groups(self, resources, count_groups: dict):
         counters = {}
 
-        for count in count_groups:
-            counters[count] = self.get_count(resources, count)
+        for key, func in count_groups.items():
+            counts = defaultdict(int)
 
+            for resource in resources:
+                value = self.node_check(lambda: func(resource), None)
+                converted_value = self.convert_id_to_string(value)
+                counts[converted_value] += 1
+
+            counters[key] = dict(sorted(counts.items()))
         
         return counters
     

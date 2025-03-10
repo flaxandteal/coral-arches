@@ -72,7 +72,8 @@ class Dashboard(View):
                 else:
                     user_group_ids = self.get_groups(person_resource[0].id)
                     cache.set(key, json.dumps(user_group_ids), 60 * 15) 
-                                   
+
+                user_group_ids = self.get_groups(person_resource[0].id)           
                 strategies = []
                 for groupId in user_group_ids:
                     strategy = self.select_strategy(groupId)
@@ -100,7 +101,9 @@ class Dashboard(View):
                     task_params.update({'sort_by': sort_by, 'sort_order': sort_order})
                 if filter is not None:
                     task_params.update({'filter': filter })
-                resources, total_resources, counters, sort_options, filter_options = strategy.get_tasks(**task_params)
+                resources, total_resources, counters = strategy.get_tasks(**task_params)
+                filter_options = strategy.get_filter_options(groupId)
+                sort_options = strategy.get_sort_options()
                 task_resources.extend(resources)
 
                 cache_data = json.dumps({

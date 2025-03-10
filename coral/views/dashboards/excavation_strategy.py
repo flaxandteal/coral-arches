@@ -45,11 +45,24 @@ class ExcavationTaskStrategy(TaskStrategy):
             tasks.append(task)
 
         counters = []
-        sort_options = [{'id': 'createdat', 'name': 'Created At'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
-        filter_options = [{'id': 'all', 'name': 'All'},{'id': 'final', 'name': 'Final'}, {'id': 'preliminary', 'name': 'Preliminary'}, {'id': 'interim', 'name': 'Interim'}, {'id': 'unclassified', 'name': 'Unclassified'}, {'id': 'summary', 'name': 'Summary'}]
 
-        return tasks, total_resources, counters, sort_options, filter_options
+        return tasks, total_resources, counters
 
+    def get_sort_options(self):
+        return [
+            {'id': 'createdat', 'name': 'Created At'}, 
+            {'id': 'validuntildate', 'name': 'Valid Until'}
+        ]
+    
+    def get_filter_options(self, groupId=None):
+        return [
+            {'id': 'all', 'name': 'All'},
+            {'id': 'final', 'name': 'Final'}, 
+            {'id': 'preliminary', 'name': 'Preliminary'}, 
+            {'id': 'interim', 'name': 'Interim'}, 
+            {'id': 'unclassified', 'name': 'Unclassified'}, 
+            {'id': 'summary', 'name': 'Summary'}
+        ]
     
     def build_data(self, licence, groupId):
         from arches_orm.models import License

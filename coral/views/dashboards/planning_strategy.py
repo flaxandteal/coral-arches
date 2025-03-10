@@ -15,6 +15,11 @@ HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
 HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
+TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
+TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
+TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
+
+COUNCIL_NODE = '69500360-d7c5-11ee-a011-0242ac120006'
 STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
 STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
 STATUS_HB_DONE = '71765587-0286-47de-96b4-4391aa6b99ef'
@@ -26,11 +31,7 @@ NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
 class PlanningTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='deadline', sort_order='desc', filter='all'):
         from arches_orm.models import Consultation
-        with admin():
-            TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
-            TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
-            TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
-            COUNCIL_NODE = '69500360-d7c5-11ee-a011-0242ac120006'
+        with admin():        
             is_hm_manager = groupId in [HM_MANAGER] 
             is_hb_manager = groupId in [HB_MANAGER] 
             is_hm_user = groupId in [HM_GROUP] 
@@ -41,40 +42,11 @@ class PlanningTaskStrategy(TaskStrategy):
 
             utilities = Utilities()
 
+            filter_options = self.get_filter_options(groupId)
 
-            # create the entries for the council filter options
-            council_node = models.Node.objects.filter(
-                nodeid = COUNCIL_NODE,
-                datatype = 'domain-value'
-            ).first()
-
-            domain_options = council_node.config.get("options")
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
-
-            # get the members of the groups for filtering
-            planning_team_groups = [HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP]
-            hb_groups = [HB_GROUP, HB_MANAGER]
-            hm_groups = [HM_GROUP, HM_MANAGER]
-
-            members_filter = []
-            groups_filter = []
-            if is_hb_manager or is_hb_user:
-                members_filter = self.get_group_members(hb_groups)
-            elif is_hm_manager or is_hm_user:
-                members_filter = self.get_group_members(hm_groups)
-            elif is_admin:
-                members_filter = self.get_group_members(planning_team_groups)
-                groups_filter = [
-                    {'id': TYPE_ASSIGN_HB, 'name': 'HB Group', 'type': 'group'}, 
-                    {'id': TYPE_ASSIGN_HM, 'name': 'HM Group', 'type': 'group'}
-                ]       
-
-            filter_options = [
-                {'id': 'all', 'name': 'All', 'type': 'all'}, 
-                *groups_filter, 
-                *members_filter, 
-                *domain_values
-            ]
+            domain_values = [f for f in filter_options if f.get('type') == 'council']
+            members_filter = [f for f in filter_options if f.get('type') == 'person']
+            groups_filter = [f for f in filter_options if f.get('type') == 'group']
 
             consultations = Consultation.all()
 
@@ -84,7 +56,7 @@ class PlanningTaskStrategy(TaskStrategy):
             if filter != 'all':
                 is_member_filter = any(member['id'] == filter for member in members_filter)
                 is_domain_filter = any(value['id'] == filter for value in domain_values)
-                is_group_filter = any(group['id'] == filter for group in filter_options )
+                is_group_filter = any(group['id'] == filter for group in groups_filter )
                 if is_domain_filter:
                     planning_consultations = [c for c in planning_consultations if self.filter_by_domain_value(c, filter)]
                 elif is_member_filter:
@@ -138,9 +110,69 @@ class PlanningTaskStrategy(TaskStrategy):
                 task = self.build_data(resource, groupId)
                 tasks.append(task)
 
-            counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
-            sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
-            return tasks, total_resources, counters, sort_options, filter_options
+            count_nodes = {
+                'status': lambda resource: resource.action[0].action_status,
+                'heirarchy_type': lambda resource: resource.hierarchy_type
+            }
+
+            counters = utilities.get_count_groups(resources, count_nodes)
+            
+            return tasks, total_resources, counters
+        
+    def get_sort_options(self):
+        return [
+            {'id': 'deadline', 'name': 'Deadline'}, 
+            {'id': 'date', 'name': 'Date'}
+        ]
+    
+    def get_filter_options(self, groupId=None):
+        """Get filter options for planning tasks."""
+        from arches.app.models import models
+        with admin():
+            # Define constants needed for filters
+            is_hm_manager = groupId in [HM_MANAGER] 
+            is_hb_manager = groupId in [HB_MANAGER] 
+            is_hm_user = groupId in [HM_GROUP] 
+            is_hb_user = groupId in [HB_GROUP] 
+            is_admin = groupId in [PLANNING_GROUP]
+            
+            # Create entries for council filter options
+            council_node = models.Node.objects.filter(
+                nodeid = COUNCIL_NODE,
+                datatype = 'domain-value'
+            ).first()
+
+            domain_options = council_node.config.get("options")
+            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+
+            # Get members of groups for filtering
+            planning_team_groups = [HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP]
+            hb_groups = [HB_GROUP, HB_MANAGER]
+            hm_groups = [HM_GROUP, HM_MANAGER]
+
+            members_filter = []
+            groups_filter = []
+            
+            if is_hb_manager or is_hb_user:
+                members_filter = self.get_group_members(hb_groups)
+            elif is_hm_manager or is_hm_user:
+                members_filter = self.get_group_members(hm_groups)
+            elif is_admin:
+                members_filter = self.get_group_members(planning_team_groups)
+                groups_filter = [
+                    {'id': TYPE_ASSIGN_HB, 'name': 'HB Group', 'type': 'group'}, 
+                    {'id': TYPE_ASSIGN_HM, 'name': 'HM Group', 'type': 'group'}
+                ]       
+
+            filter_options = [
+                {'id': 'all', 'name': 'All', 'type': 'all'}, 
+                *groups_filter, 
+                *members_filter, 
+                *domain_values
+            ]
+            
+            return filter_options
+
     
     def get_group_members(self, groups):
         from arches_orm.models import Group
