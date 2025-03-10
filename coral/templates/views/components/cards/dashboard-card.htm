@@ -30,14 +30,14 @@
       <div style="max-height: 80px">
         <h5>Description</h5> 
         <div style="max-height: 50px; overflow: auto">
-          <p style="font-size: 1rem" data-bind="text: data.displaydescription"></p>
+          <p style="font-size: 1.2rem" data-bind="text: data.displaydescription"></p>
         </div>
         
       </div>
       <div style="min-height: 84px;">
         <h5>Address</h5> 
         <!-- ko foreach: data.address -->
-          <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+          <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
         <!-- /ko -->
       </div>
     </div>
@@ -111,13 +111,13 @@
   <div style="min-height: 84px;">
     <h5>Employing Body</h5> 
     <!-- ko foreach: data.employingbody -->
-      <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+      <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
     <!-- /ko -->
   </div>
   <div style="min-height: 84px;">
     <h5>Nominated Directors</h5> 
     <!-- ko foreach: data.nominateddirectors -->
-      <p style="margin-bottom: 2px; font-size: 1rem" data-bind="text: $data"></p>
+      <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
     <!-- /ko -->
   </div>
 </div>
@@ -141,38 +141,40 @@
 </div>
 <!-- /ko -->
 <!-- ko if: state === 'HeritageAsset'-->
-<div class="card-grid-item" style="margin: 2rem; width:375px">
+<div class="card-grid-item" style="margin: 2rem; width:375px; height: 245px">
   <div class="panel mar-no dashboard-card-panel">
   <div class="panel-heading" style="height: 38px">
     <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
       <span data-bind="text: data.displayname"></span>
     </h3>
   </div>
-  <div class="dashboard-card-columns">
+  <div class="dashboard-card-columns" style="margin-bottom: 0;">
     <div>
       <h5>Type</h5>
-      <div style="height: 50px; overflow: auto">
+      <div style="max-height: 60px; overflow: auto">
         <!-- ko foreach: data.monumenttype -->
-        <p style="margin-bottom: 2px; font-size: 1rem;" data-bind="text: $data"></p>
+        <p style="margin-bottom: 2px; font-size: 1.2rem;" data-bind="text: $data"></p>
         <!-- /ko -->
       </div>
       
     </div>
-    <div style="margin-right: 15px">
+    <div style="margin-right: 20px">
       <h5>Input Date</h5>
       <p data-bind="text: data.inputdatevalue"></p>
     </div>
   </div>
+  <!-- ko if: data.model == 'Designation'-->
   <div class="dashboard-card-columns" style="min-height: 50px;">
     <div>
       <h5>Statutory Consultee Notif Date</h5> 
       <p data-bind="text: data.statutoryconsulteenotificationdatevalue"></p>
     </div>
-    <div style="margin-right: 15px">
+    <div style="margin-right: 20px; max-width: 160px; overflow:clip">
       <h5>HMC Ref</h5> 
       <p data-bind="text: data.hmcreferencenumber"></p>
     </div>
   </div>
+  <!-- /ko -->
   <div class="panel-footer dashboard-footer" style="background-color: #a6dadf;">
     <div style="height:100%; display:flex; align-items:center">
       <h5>Model <span style="font-weight: initial" data-bind="text: data.model"></span></h5>
@@ -197,7 +199,7 @@
 </div>
 <!-- /ko -->
  <!-- ko if: state === 'Meeting'-->
-<div class="card-grid-item" style="margin: 2rem; width:375px">
+<div class="card-grid-item" style="margin: 2rem; width:375px; height: 245px">
   <div class="panel mar-no dashboard-card-panel">
   <div class="panel-heading" style="height: 38px">
     <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
@@ -207,16 +209,14 @@
   <div class="dashboard-card-columns">
     <div>
       <h5>Meeting Date</h5>
-      <div>
-        <p style="margin-bottom: 2px; font-size: 1rem;" data-bind="text: data.logdate"></p>
-      </div>
+      <p style="margin-bottom: 2px;" data-bind="text: data.logdate"></p>
     </div>
-    <div style="margin-right: 15px">
+    <div style="margin-right: 20px">
       <h5>Follow Up Meeting</h5>
       <p data-bind="text: data.followupmeetingdatevalue"></p>
     </div>
   </div>
-  <div class="dashboard-card-columns" style="min-height: 50px; margin-bottom: 35px;">
+  <div class="dashboard-card-columns" style="min-height: 50px; margin-bottom: 22px;">
     <div>
       <h5>Meeting ID</h5> 
       <p data-bind="text: data.displaynamevalue"></p>
