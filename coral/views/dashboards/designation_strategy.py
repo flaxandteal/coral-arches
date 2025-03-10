@@ -177,7 +177,7 @@ class DesignationTaskStrategy(TaskStrategy):
                 {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
             ]
             if isinstance(resource, MonumentRevision):
-                node_values['model'] = 'Heritage Asset Revision'
+                node_values['model'] = 'Designation'
                 node_values['slugs'] = [
                 {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
             ]
