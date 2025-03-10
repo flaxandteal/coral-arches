@@ -17,7 +17,7 @@ COUNCIL_NODE = "447973ce-d7e2-11ee-a4a1-0242ac120006"
 
 class DesignationTaskStrategy(TaskStrategy):
     
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter=None):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter='all'):
         from arches_orm.models import Monument, MonumentRevision, Consultation
         with admin():
 
@@ -28,6 +28,7 @@ class DesignationTaskStrategy(TaskStrategy):
                 'ihr_number': lambda resource: resource.heritage_asset_references.ihr_number,
                 'garden_number': lambda resource: resource.heritage_asset_references.historic_parks_and_gardens
             }
+
             resources = []
             tasks = []
             ha_all = Monument.all(lazy=True)
@@ -39,10 +40,31 @@ class DesignationTaskStrategy(TaskStrategy):
                 har for har in har_all 
                 if any(approval.desg_approver.desg_approved_by is None for approval in har.approvals)
             ]
-            evaluation_meetings = [c for c in consultation_all if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('EVM/')]
+            evaluation_meetings = [
+                c for c in consultation_all 
+                if (resourceid := c.system_reference_numbers.uuid.resourceid) and 
+                resourceid.startswith('EVM/') and 
+                c.evaluation.sign_off_date_n1.start_date is None
+            ]
             
             resources.extend(heritage_assets)
             resources.extend(heritage_asset_revisions)
+            resources.extend(evaluation_meetings)
+
+            if filter != 'all':
+                filter_options = self.get_filter_options(groupId)
+                filter_type = next((option['type'] for option in filter_options if option['id'] == filter), None)
+
+                if filter_type == 'council':
+                    resources = [r for r in resources if self.filter_by_council_value(r, filter)]
+                if filter_type == 'date': 
+                    resources = [r for r in resources if self.filter_by_date_value(r)]
+                if filter_type == 'heritage_asset':
+                    resources = heritage_assets
+                if filter_type == 'revision':
+                    resources = heritage_asset_revisions
+                if filter_type == 'meetings':
+                    resources = evaluation_meetings
 
             total_resources = len(resources)
             sorted_resources = self.sort_resources(resources, sort_nodes, sort_by, sort_order)
@@ -52,18 +74,11 @@ class DesignationTaskStrategy(TaskStrategy):
             indexed_resources = sorted_resources[start_index:end_index]
 
             for resource in indexed_resources:
-                task = self.build_data(resource, groupId)
+                if isinstance(resource, Consultation):
+                    task = self.build_meeting_data(resource)
+                else:
+                    task = self.build_data(resource, groupId)
                 tasks.append(task)
-
-            for consultation in evaluation_meetings:
-                related_ha = consultation.related_monuments_and_areas
-                meeting_tasks = []
-                for ha in related_ha:
-                    match = next((task for task in tasks if task['id'] == str(ha.id)), None)
-                    if match:
-                        meeting_tasks.append(match)
-                for task in meeting_tasks:
-                    task['meeting'] = True
 
             counters = []
             
@@ -80,7 +95,7 @@ class DesignationTaskStrategy(TaskStrategy):
         ]
     
     def get_filter_options(self, groupId=None):
-        from arches_orm.models import Monument, MonumentRevision, MergeResourceTracker, Consultation
+        from arches_orm.models import Monument
         with admin():
             """Return the available filter options for the designation tasks."""
             # create the entries for the council filter options
@@ -90,10 +105,12 @@ class DesignationTaskStrategy(TaskStrategy):
             domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
 
             return [
+                {'id': 'all', 'name': 'All', 'type': 'default'},
+                {'id': 'heritage_asset', 'name': 'Heritage Assets', 'type': 'heritage_asset'},
+                {'id': 'revision', 'name': 'Designations', 'type': 'revision'},
+                {'id': 'meeting', 'name': 'Evaluation Meetings', 'type': 'meetings'},
                 *domain_values,
-                {'id': 'approved_cur_d', 'name': 'To be approved by Cur D'},
-                {'id': 'approved_spto', 'name': 'To be approved by SPTO'}, 
-                {'id': 'stat_date', 'name': 'Statutory Consultee Notification Date'}
+                {'id': 'stat_date', 'name': 'Statutory Consultee Notification Date', 'type': 'date'}
         ]
 
     def get_counters(self):
@@ -115,49 +132,36 @@ class DesignationTaskStrategy(TaskStrategy):
                 'statutory_consultee_notification_date_value',
             ]
 
-            def extract_value(item):
-                """Helper function to extract the value from different datatypes"""
-                if isinstance(item, ConceptListValueViewModel):
-                    return [concept.value.value for concept in item]
-                if isinstance(item, ConceptValueViewModel):
-                    return item.value.value 
-                else:
-                    return item
-
-            def get_values(nodes: List, resource):
-                values = resource._._values
-                resource_values = {}
-                
-                for node in nodes:
-                    value = values.get(node, None)
-                    if isinstance(value, list) and value:
-                        key = str(node).replace('_', '')
-                        if len(value) == 1:
-                            resource_values[key] = extract_value(value[0].value)
-                        else:
-                            resource_values[key] = [extract_value(item.value) for item in value]                   
-
-                return resource_values   
-
-            node_values = get_values(nodes, resource)
+            node_values = self.get_values(nodes, resource)
 
             # Additional display values
             node_values['id'] = str(resource.id)
             node_values['resourceid'] = resource.system_reference_numbers.uuid.resourceid # this is pulled from here as the get values is retunrning a list
-            print(node_values['resourceid'])
+
             node_values['state'] = 'HeritageAsset'
-            node_values['slugs'] = [
+            
+            # Resource specific values
+            if isinstance(resource, Monument):
+                node_values['model'] = 'Heritage Asset'
+                node_values['slugs'] = [
                 {'name': 'Add Building', 'slug': 'add-building-workflow'},
                 {'name': 'Add Monument', 'slug': 'add-monument-workflow'},
                 {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
                 {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
             ]
-            
-            # Resource specific values
-            if isinstance(resource, Monument):
-                node_values['model'] = 'Heritage Asset'
             if isinstance(resource, MonumentRevision):
                 node_values['model'] = 'Heritage Asset Revision'
+                node_values['slugs'] = [
+                {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
+            ]
+
+            # return the most recent date for this node
+            if node_values.get('statutoryconsulteenotificationdatevalue') and isinstance(node_values['statutoryconsulteenotificationdatevalue'], list):
+                dates = []
+                for date in node_values['statutoryconsulteenotificationdatevalue']:
+                    date_obj = parser.parse(date)
+                    dates.append(date_obj)
+                node_values['statutoryconsulteenotificationdatevalue'] = str(max(dates))
 
             # transform returned values
             date_values = [
@@ -168,17 +172,95 @@ class DesignationTaskStrategy(TaskStrategy):
                 if node_values.get(value):
                     node_values[value] = self.convert_date_str(node_values[value])
 
-            return node_values    
+            return node_values  
 
+    def build_meeting_data(self, resource):
+        from arches_orm.models import Consultation
+        with admin():
+
+            nodes = [
+                'display_name_value',
+                'log_date',
+                'follow_up_meeting_date_value',
+                'related_monuments_and_areas'
+            ]
+
+            node_values = self.get_values(nodes, resource)
+
+            # Additional display values
+            node_values['id'] = str(resource.id)
+            if node_values.get('relatedmonumentsandareas', None):
+                node_values['relatedmonumentsandareas'] = node_values['relatedmonumentsandareas'][0].display_name
+
+            node_values['state'] = 'Meeting'
+            node_values['model'] = 'Evaluation Meeting'
+            
+            # Resource specific values
+            node_values['slugs'] = [
+            {'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'},
+            ]
+
+            # transform returned values
+            date_values = [
+                'logdate',
+                'followupmeetingdatevalue'
+            ]
+            for value in date_values:
+                print("VALUE", value, type(value))
+                if node_values.get(value):
+                    node_values[value] = self.convert_date_str(node_values[value])
+                    print("HERE", node_values[value])
+
+            return node_values  
+
+    def extract_value(self, item):
+        """Helper function to extract the value from different datatypes"""
+        if isinstance(item, ConceptListValueViewModel):
+            return [concept.value.value for concept in item]
+        if isinstance(item, ConceptValueViewModel):
+            return item.value.value 
+        else:
+            return item
+
+    def get_values(self, nodes: List, resource):
+        values = resource._._values
+        resource_values = {}
+        print("THIS VALUES", values)
+        for node in nodes:
+            value = values.get(node, None)
+            if isinstance(value, list) and value:
+                key = str(node).replace('_', '')
+                if len(value) == 1:
+                    resource_values[key] = self.extract_value(value[0].value)
+                else:
+                    resource_values[key] = [self.extract_value(item.value) for item in value]                   
+
+        return resource_values   
+    
     def sort_resources(self, resources, sort_option, sort_by, sort_order):
         sort_function = sort_option[sort_by]
         resources.sort(key=lambda x: (
-                    sort_function(x) is not None, 
-                    sort_function(x) if sort_function(x) is not None else None,
-                    sort_function(x)
+                    sort_function(x) is None, 
+                    sort_function(x) if sort_function(x) is not None else ''
                 ), reverse=(sort_order == 'desc'))
         return resources
 
     def convert_date_str(self, date_str):
         date_obj = parser.parse(date_str)
         return date_obj.strftime("%d-%m-%Y")
+    
+    def filter_by_council_value(self, resource, filter):
+        utilities = Utilities()
+        council_value = utilities.node_check(lambda:resource.location_data.council)
+        if not council_value:
+            return False
+        return council_value == filter
+    
+    def filter_by_date_value(self, resource):
+        utilities = Utilities()
+        approvals = utilities.node_check(lambda:resource.approvals)
+        for approval in approvals:
+            match = utilities.node_check(approval.statutory_consultee_notification_date.statutory_consultee_notification_date_value) == None
+            if match:
+                return True
+        return False
