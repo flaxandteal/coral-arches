@@ -52,9 +52,9 @@ class Dashboard(View):
             filter_options = []
 
             cache_key = f'dashboard_{user_id}_{page}'
+            cache_data = cache.get(cache_key)
 
-            if not update and cache.get(cache_key):
-                cache_data = cache.get(cache_key)
+            if not update and cache_data:
                 data = json.loads(cache_data)
                 task_resources = data['task_resources']
                 counters = data['counters']
@@ -66,14 +66,14 @@ class Dashboard(View):
 
             else:
                 key = f"groups_{user_id}"
-                if cache.get(key):
-                    group_data = cache.get(key)
-                    user_group_ids = json.loads(group_data)
+                data_cache = cache.get(key)
+
+                if data_cache:
+                    user_group_ids = json.loads(data_cache)
                 else:
                     user_group_ids = self.get_groups(person_resource[0].id)
                     cache.set(key, json.dumps(user_group_ids), 60 * 15) 
-
-                user_group_ids = self.get_groups(person_resource[0].id)           
+       
                 strategies = []
                 for groupId in user_group_ids:
                     strategy = self.select_strategy(groupId)
