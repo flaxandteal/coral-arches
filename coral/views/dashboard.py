@@ -39,6 +39,9 @@ class Dashboard(View):
                 return JsonResponse({"error": "User not found"}, status=404)
             
             update = request.GET.get('update', 'true') == 'true'
+
+            if update:
+                cache.delete_many(f'dashboard_{user_id}_*')
             
             dashboard = request.GET.get('dashboard', None)
             task_resources = []
@@ -63,7 +66,6 @@ class Dashboard(View):
                 total_resources = data['total_resources']
                 utilities = Utilities()
                 task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
-
             else:
                 key = f"groups_{user_id}"
                 data_cache = cache.get(key)
