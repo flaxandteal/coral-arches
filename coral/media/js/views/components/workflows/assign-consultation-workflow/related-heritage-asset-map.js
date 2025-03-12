@@ -4,249 +4,152 @@ define([
     'knockout-mapping',
     'uuid',
     'arches',
-    'viewmodels/alert',
     'viewmodels/card-component',
-    'utils/map-configurator',
-    'utils/map-popup-provider',
-    'viewmodels/map',
-    'mapbox-gl',
-    'mapbox-gl-geocoder',
     'templates/views/components/workflows/assign-consultation-workflow/related-heritage-asset-map.htm'
-  ], function (
-    _,
-    ko,
-    koMapping,
-    uuid,
-    arches,
-    AlertViewModel,
-    CardComponentViewModel,
-    mapConfigurator,
-    mapPopupProvider,
-    MapViewModel,
-    MapboxGl,
-    MapboxGeocoder,    
-    template
-  ) {
+], function(_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
     function viewModel(params) {
-      this.loading = params.pageVm.loading;
-      const self = this;
-      const dontUpdate = ko.observable({})
-      const featureIndex = ko.observable(0)
+        CardComponentViewModel.apply(this, [params]);
+        this.RELATED_HERITAGE_NODE_ID = 'bc64746e-cf4a-11ef-997c-0242ac120007';
+        this.GEO_NODE_ID = '87d3872b-f44f-11eb-bd0c-a87eeabdefba';
+        this.tileId = this.tile.tileid;
+        this.resourceId = this.tile.resourceinstance_id;
+        this.shouldRender = ko.observable(false);
 
-      this.RELATED_HERITAGE_NODE_ID = 'bc64746e-cf4a-11ef-997c-0242ac120007';
-      this.GEO_NODE_ID = '87d3872b-f44f-11eb-bd0c-a87eeabdefba';
-      
-      MapViewModel.apply(self, [params]);
-
-
-        this.setupMap = function (map) {
-          map.on('load', async function() {
-              mapConfigurator.preConfig(map);
-              map.addControl(new MapboxGl.NavigationControl(), 'top-left');
-              map.addControl(
-                new MapboxGl.FullscreenControl({
-                  container: $(map.getContainer()).closest('.workbench-card-wrapper')[0]
-                }),
-                'top-left'
-              );
-              map.addControl(
-                new MapboxGeocoder({
-                  accessToken: MapboxGl.accessToken,
-                  mapboxgl: MapboxGl,
-                  placeholder: arches.geocoderPlaceHolder,
-                  bbox: arches.hexBinBounds
-                }),
-                'top-right'
-              );
-  
-              self.layers.subscribe(self.updateLayers);
-  
-              var hoverFeature;
-  
-              map.on('mousemove', function (e) {
-                var style = map.getStyle();
-                if (hoverFeature && hoverFeature.id && style)
-                  map.setFeatureState(hoverFeature, { hover: false });
-                hoverFeature = _.find(map.queryRenderedFeatures(e.point), (feature) =>
-                  mapPopupProvider.isFeatureClickable(feature, self)
+        this.fetchTileData = async(resourceId, nodeId) => {
+            try{
+                const tilesResponse = await window.fetch(
+                    arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+              (nodeId ? `?nodeid=${nodeId}` : '')
                 );
-                if (hoverFeature && hoverFeature.id && style)
-                  map.setFeatureState(hoverFeature, { hover: true });
-  
-                map.getCanvas().style.cursor = hoverFeature ? 'pointer' : '';
-                if (self.map().draw_mode) {
-                  var crosshairModes = ['draw_point', 'draw_line_string', 'draw_polygon'];
-                  map.getCanvas().style.cursor = crosshairModes.includes(self.map().draw_mode)
-                    ? 'crosshair'
-                    : '';
-                }
-              });
-  
-              map.draw_mode = null;
-  
-              map.on('click', function (e) {
-                const popupFeatures = _.filter(map.queryRenderedFeatures(e.point), (feature) =>
-                  mapPopupProvider.isFeatureClickable(feature, self)
-                );
-                if (popupFeatures.length) {
-                  self.onFeatureClick(popupFeatures, e.lngLat, MapboxGl);
-                }
-              });
-  
-              map.on('zoomend', function () {
-  
-                self.zoom(parseFloat(map.getZoom()));
-              });
-  
-              map.on('dragend', function () {
-                var center = map.getCenter();
-  
-                self.centerX(parseFloat(center.lng));
-                self.centerY(parseFloat(center.lat));
-              });
-  
-              mapConfigurator.postConfig(map);
-              self.map(map);
-              const geometries = await getGeometryTiles()
-              updateMap(geometries)
-          });
+                const data = await tilesResponse.json();
+
+                return data.tiles;
+            }
+            catch (error){
+                console.error("Error fetching data:", error);
+                return null;
+            }
+            
         };
 
-      const getGeometryTiles = async () => {
-        try {
-            const response = await $.ajax({
-                type: 'GET',
-                url: arches.urls.root + `resource/${params.baseResourceId}/tiles?nodeid=${this.RELATED_HERITAGE_NODE_ID}`,
-                context: this
-            });    
-
-            console.log(params.baseResourceId);
-            if (response) {
-                const tiles = response.tiles[0].data[this.RELATED_HERITAGE_NODE_ID];
-                let geometries = [];
-    
-                for (const tile of tiles) {
-                    const data = await getGeoJsonData(tile.resourceId);
-                    if (data && Array.isArray(data)) {
-                        geometries = [...geometries, ...data];
-                    }
-                }
-                return geometries;
-            }
-        } catch (error) {
-            console.error("Error fetching tiles:", error);
-            return [];
-        }
-      };
+        this.getRelatedHeritage = async() => {
+            this.assets = await this.fetchTileData(params.resourceid, this.RELATED_HERITAGE_NODE_ID);
+            if (!this.assets?.length) return;
+            this.assets = this.assets[0].data[this.RELATED_HERITAGE_NODE_ID];
       
-      const getGeoJsonData = async(resourceId) => {
-        try {
-          const response = await $.ajax({
-            type: 'GET',
-            url:
-              arches.urls.root +
-              `resource/${resourceId}/tiles?nodeid=${this.GEO_NODE_ID}`,
-            context: this
-          })
-          if (response.tiles[0] !== undefined) {
-            let featuresObject = response.tiles[0].data['87d3d7dc-f44f-11eb-bee9-a87eeabdefba']['features'];
+            let geometries = [];
 
-          if (dontUpdate()[featuresObject[0].id]) {
-            return
-          } 
-          if (self.map()) {
-            dontUpdate({...dontUpdate(), [featuresObject[0].id] : true})
-          }
-            return featuresObject
-          } else {
-            return
-          }
-          
-        } catch (error) {
-          console.error("Error fetching GeoJSON data:", error);
-          return null;
-        }
-      }
+            for (const tile of this.assets) {
+                const data = await this.getGeoJsonData(tile.resourceId);
+                if (data && Array.isArray(data)) {
+                    geometries = [...geometries, ...data];
+                }
+            }
+            return geometries;
+        };
 
-    const updateMap = (geometries) => {
-      let map = self.map()
-      let bounds = new MapboxGl.LngLatBounds();
-      Object.values(geometries).forEach((geometry, idx) => {
-        let colour = '#0000FF';
-          if (geometry.geometry.type === 'Point') {
-            bounds.extend(geometry.geometry.coordinates);
-          } else if (
-            geometry.geometry.type === 'Polygon' ||
-            geometry.geometry.type === 'MultiPolygon'
-          ) {
-            geometry.geometry.coordinates.forEach(function (polygon) {
-              polygon.forEach(function (coord) {
-                bounds.extend(coord);
-              });
-            });
-          } else if (
-            geometry.geometry.type === 'LineString' ||
-            geometry.geometry.type === 'MultiLineString'
-          ) {
-            geometry.geometry.coordinates.forEach(function (coord) {
-              bounds.extend(coord);
-            });
-          }
-          map.addSource(geometry.id, {
-            type: 'geojson',
-            data: geometry
-          });
-          map.addLayer({
-            id: 'myGeoJSON-polygon-layer' + geometry.id,
-            type: 'fill',
-            source: geometry.id,
-            'source-layer': '',
-            paint: {
-              'fill-color': colour,
-              'fill-opacity': 0.5
-            },
-            filter: ['==', '$type', 'Polygon']
-          });
-          map.addLayer({
-            id: 'myGeoJSON-circle-layer' + geometry.id,
-            type: 'circle',
-            source: geometry.id,
-            'source-layer': '',
-            paint: {
-              'circle-color': colour,
-              'circle-radius': 6,
-              'circle-opacity': 0.5
-            },
-            filter: ['==', '$type', 'Point']
-          });
-          map.addLayer({
-            id: 'myGeoJSON-line-layer' + geometry.id,
-            type: 'line',
-            source: geometry.id,
-            'source-layer': '',
-            paint: {
-              'line-color': colour,
-              'line-width': 2,
-              'line-opacity': 0.5
-            },
-            filter: ['==', '$type', 'LineString']
-          });
-          featureIndex(featureIndex() + 1)
-          map.fitBounds(bounds, { padding: 20 });
+        this.getGeoJsonData = async(resourceId) => {
+            try {
+                this.assets = await this.fetchTileData(resourceId, this.GEO_NODE_ID);
 
-          mapConfigurator.postConfig(map);
-          self.map(map)
-      });
+                if (this.assets[0] !== undefined) {
+                    let featureData = this.assets[0].data['87d3d7dc-f44f-11eb-bee9-a87eeabdefba']['features'];
+                    return featureData;
+                } else {
+                    return;
+                }
+      
+            } catch (error) {
+                console.error("Error fetching GeoJSON data:", error);
+                return null;
+            }
+        };
+
+        this.getGeometryData = async() => {
+            this.featureData = await this.getRelatedHeritage();
+            if(!this.featureData) return null;
+            this.geometry = {
+                "type": "FeatureCollection",
+                "features": this.featureData
+            };            
+            return this.geometry;
+        };
+
+        this.getLatestTile = async() => {
+            try {
+                const tiles = await this.fetchTileData(this.resourceId, params.nodegroupid);
+                const geom = await this.getGeometryData();
+                // Check for existing data, if none get the HA geometries
+                if (!tiles?.length) {  
+                    if(!geom?.length) {
+                        this.shouldRender(true);
+                        return;
+                    }              
+                    geom.features.forEach( feature => {
+                        feature.properties.nodeId = params.resourceid;
+                    });
+                    this.setValue(geom, '083f3c7e-ca61-11ee-afca-0242ac180006');
+                }
+                // Checking if the HA geometries match the number of saved geometries
+                else if (tiles[0].data['083f3c7e-ca61-11ee-afca-0242ac180006'] && geom){
+                    const existingGeom = tiles[0].data['083f3c7e-ca61-11ee-afca-0242ac180006'];
+                    const savedPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point');
+                    const haPoints = geom.features.filter(feature => feature.geometry.type === 'Point');
+
+                    if(savedPoints.length > haPoints.length){
+                        // Removes points if a HA is removed, all polygons are removed as they cannot be linked with a point
+                        const haIds = geom.features.map(f => f.id);
+                        existingGeom.features = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && haIds.includes(feature.id));        
+                    } else {
+                        // Update the tile with the HA geometries
+                        const existingIds = existingGeom.features.map(f => f.id);
+                        const newPoints = geom.features.filter(g => !existingIds.includes(g.id));
+                        if(newPoints.length){
+                            newPoints.forEach(feature => {
+                                feature.properties.nodeId = params.resourceId;
+                                existingGeom.features.push(feature);
+                            });
+                        }
+                    }
+                    this.setValue(existingGeom, '083f3c7e-ca61-11ee-afca-0242ac180006'); 
+                }
+                // Return the existing saved tiles for the consultation
+                else {
+                    const tile = tiles[0];
+
+                    if (!tile) {
+                        this.shouldRender(true);
+                        return;
+                    }
+                    
+                    Object.keys(tile.data).forEach((nodeId) => {
+                        this.setValue(tile.data[nodeId], nodeId);
+                    });
+                    this.tile.tileid = tile.tileid;
+                    // Reset dirty state
+                    this.tile._tileData(koMapping.toJSON(this.tile.data));
+                }
+                this.shouldRender(true);
+            } catch (err) {
+                console.error('failed fetching tile: ', err);
+            }
+        };
+
+        this.setValue = (value, nodeId) => {
+            if (ko.isObservable(this.tile.data[nodeId])) {
+                this.tile.data[nodeId](value);
+            } else {
+                this.tile.data[nodeId] = ko.observable();
+                this.tile.data[nodeId](value);
+            }
+        };
+
+        this.getLatestTile();
     }
-    }
-
-    
-  
     ko.components.register('related-heritage-asset-map', {
-      viewModel: viewModel,
-      template: template
+        viewModel: viewModel,
+        template: componentTemplate
     });
-  
+
     return viewModel;
-  });
-  
+});
