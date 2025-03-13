@@ -1784,6 +1784,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "8ddd1d7b-e341-4e52-a683-e1fd25159dad",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Monuments Group"
+                    },
+                    "nodegroup_id": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "9628fcaf-1401-4fb3-ab92-73fb2b5ae4b0",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -15629,6 +15656,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                    "edgeid": "5c8d41dd-356d-486d-9abc-ce3b7c44db2b",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "b299c804-fb45-11ef-b148-8e7ccd27c960"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "caf5bff1-a3d7-11e9-aa28-00224800b26d",
                     "edgeid": "5d89cd19-51a5-11eb-9a3d-f875a44e0e11",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -17726,6 +17762,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                    "edgeid": "f3796497-9f9c-409e-a429-732aa548d7f5",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "rangenode_id": "0bf0bb56-fb46-11ef-b148-8e7ccd27c960"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
                     "edgeid": "f3b619d9-35e9-40be-9196-720f2cb0f02e",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -17867,6 +17912,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "fc5cc1de-fb15-11ee-b5d2-0242ac190006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                    "edgeid": "fd44383d-ad21-49ef-b772-90c9a9090c52",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "rangenode_id": "6fcde888-fb46-11ef-b148-8e7ccd27c960"
                 },
                 {
                     "description": null,
@@ -18430,6 +18484,12 @@
                     "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "b299c804-fb45-11ef-b148-8e7ccd27c960",
                     "parentnodegroup_id": null
                 },
                 {
@@ -22958,6 +23018,29 @@
                     "nodeid": "094eb7ce-0c52-11ef-8f48-0242ac140006",
                     "ontologyclass": "http://www.ics.forth.gr/isl/CRMsci/S21_Measurement",
                     "parentproperty": "http://www.ics.forth.gr/isl/CRMsci/O24i_was_measured_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "monuments",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "number",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Monuments",
+                    "nodegroup_id": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                    "nodeid": "0bf0bb56-fb46-11ef-b148-8e7ccd27c960",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
@@ -27809,6 +27892,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "scheduled_monuments",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "number",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Scheduled monuments",
+                    "nodegroup_id": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                    "nodeid": "6fcde888-fb46-11ef-b148-8e7ccd27c960",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E27_Site",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P168i_defines_place",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "bdlo_reference_number",
                     "config": {
                         "en": ""
@@ -30292,6 +30398,29 @@
                     "nodeid": "b256857e-fb25-11ee-b5d2-0242ac190006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "monuments_group",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Monuments Group",
+                    "nodegroup_id": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                    "nodeid": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E60_Number",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },

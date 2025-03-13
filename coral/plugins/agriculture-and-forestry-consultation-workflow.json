@@ -80,6 +80,20 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "b299c804-fb45-11ef-b148-8e7ccd27c960",
+                  "relatedHANodeGroupID": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                  "mounmentNode": "0bf0bb56-fb46-11ef-b148-8e7ccd27c960",
+                  "scheduledMonumentNode": "6fcde888-fb46-11ef-b148-8e7ccd27c960",
+                  "semanticName": "monuments"
+                },
+                "tilesManaged": "one",
+                "componentName": "monuments-count",
+                "uniqueInstanceName": "352a21d6-472b-4803-a198-a9679279ea26"
+              },
+              {
+                "parameters": {
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
                     "76c2097a-e792-11ef-97dd-0242ac120002",
                     "714a4b84-faa1-11ef-b148-8e7ccd27c960"

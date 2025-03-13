@@ -40,9 +40,6 @@ define([
 
     const self = this
 
-    console.log("In selected comp");
-    console.log("Tile data ", this.tile.data['bc64746e-cf4a-11ef-997c-0242ac120007']());
-
     this.form
       .card()
       ?.widgets()
@@ -56,7 +53,6 @@ define([
 
     this.tile.data['bc64746e-cf4a-11ef-997c-0242ac120007'].subscribe((value) => {
       if (value && value.length) {
-        console.log("Value ", value);
         currentResources = value.map(t => ko.unwrap(t.resourceId))
         currentResources.forEach(id => {
           this.cards({...this.cards(), [id] : {
@@ -76,7 +72,6 @@ define([
     }, this);
 
     this.fetchTileData = async (resourceId) => {
-      console.log("Recource id ", resourceId);
       const tilesResponse = await window.fetch(
         arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
       );
@@ -85,7 +80,6 @@ define([
     };
 
     this.getMonumentDetails = async (resourceId) => {
-      console.log("Recource id ", resourceId);
       const tiles = await this.fetchTileData(resourceId);
       const designationType = ko.observable();
       const monumentName = ko.observable();
@@ -94,11 +88,12 @@ define([
       const bFile = ko.observable();
       const townlandValue = ko.observable();
 
-      console.log("TIles ", tiles);
-
+      console.log("TIles returned", tiles);
+      console.log("Value ", value);
       const additionalPromises = []
 
       for (const tile of tiles) {
+        console.log("Tile loop ", tile);
         if (tile.nodegroup === this.HERRITAGE_ASSET_REFERENCES_NODEGROUP) {
           smrNumber(tile.data[this.SMR_NUMBER_NODE].en.value);
           console.log(smrNumber());
