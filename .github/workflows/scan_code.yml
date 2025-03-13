@@ -26,4 +26,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SK_TOKEN }}
         with:
           image: ghcr.io/flaxandteal/arches_coral_static:dev-13650788094
-          args: --file=Dockerfile --severity-threshold=high
+         # args: --file=Dockerfile --severity-threshold=high
