@@ -1,0 +1,29 @@
+name: Container Security Scan
+
+on:
+  push:
+    branches:
+      - main
+#  schedule:
+#    - cron: '0 12 * * 1'  # Weekly scan on Mondays at 12:00 UTC
+
+jobs:
+  security_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.SK_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull container image
+        run: docker pull ghcr.io/flaxandteal/arches_coral_static:latest
+
+      - name: Run Snyk scan
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ghcr.io/flaxandteal/arches_coral_static:latest
+          args: --file=Dockerfile --severity-threshold=high
