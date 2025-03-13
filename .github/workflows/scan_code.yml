@@ -10,6 +10,10 @@ on:
 jobs:
   security_scan:
     runs-on: ubuntu-latest
+    env:
+      ImageName: ghcr.io/flaxandteal/arches_coral_static_py
+      ImageTag: v7.6.19-RELEASE
+      # ghcr.io/flaxandteal/arches_coral_static:dev-13650788094
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,12 +22,13 @@ jobs:
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
   
       - name: Pull container image
-        run: docker pull ghcr.io/flaxandteal/arches_coral_static:dev-13650788094
+        run: docker pull $ImageName:$ImageTag
 
       - name: Run Snyk scan
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ghcr.io/flaxandteal/arches_coral_static:dev-13650788094
+          image: $ImageName:$ImageTag
          # args: --file=Dockerfile --severity-threshold=high
+      
