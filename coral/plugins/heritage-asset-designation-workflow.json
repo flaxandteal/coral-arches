@@ -367,7 +367,8 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": ["save"]
       },
       {
         "name": "approvals-step",

@@ -115,7 +115,7 @@
                     "dateNodeGroupID": "5d6eecde-e217-11ef-803e-0242ac120003",
                     "issueDateNode": "ea5bb474-e217-11ef-803e-0242ac120003",
                     "dueDateNode": "5b6a2ede-e218-11ef-803e-0242ac120003",
-                    "daysToAdd": 14,
+                    "daysToAdd": 21,
                     "nodeOptions": {
                       "ea5bb474-e217-11ef-803e-0242ac120003": {
                         "config":{
@@ -259,7 +259,7 @@
                   "letterTypeNode": "6d09da12-e53e-11ef-93e2-0242ac120004",
                   "letterResourceNode": "b15ee596-e53d-11ef-8521-0242ac120004",
                   "letterOptions": [
-                      { "text": "Daera AIL Consultation", "id": "daera-ail-consultation-template.docx"}
+                      { "text": "DAERA AIL Consultation", "id": "daera-ail-consultation-template.docx"}
                     ],
                   "config": {
                       "special": {
@@ -277,7 +277,7 @@
             }
           ],
           "workflowstepclass": "workflow-form-component",
-          "hiddenWorkflowButtons": []
+          "hiddenWorkflowButtons": ["save"]
         },
         {
           "name": "sign-off-step",

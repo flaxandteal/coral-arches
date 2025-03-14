@@ -279,7 +279,7 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": ["save"]
       },
       {
         "name": "sign-off-step",

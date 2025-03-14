@@ -40,6 +40,10 @@ define([
       this.withinDeadline = async () => {
         const dateTiles = await this.fetchAgriDate(this.tile.resourceinstance_id);
 
+        if (!dateTiles) {
+          return false;
+        }
+
         const responseDate = new Date(dateTiles.data[RESPONSE_DATE_NODE]);
         const dueDate = new Date(dateTiles.data[DUE_DATE_NODE]);
 
@@ -49,9 +53,9 @@ define([
 
         if (responseDate < dueDate) {
             return true;   
-        } else {
-          return false
         }
+
+          return false
       }
 
       this.getLatestTile = async () => {
