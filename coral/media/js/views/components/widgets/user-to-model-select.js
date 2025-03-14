@@ -22,10 +22,14 @@ define([
     this.iconClass = ko.observable(this.permittedToSign() ? (this.isUserAdded() ? 'fa fa-check' : 'fa-plus-circle') : 'fa fa-code')
     this.textClass = ko.observable(this.isUserAlreadyAdded ? '' : 'cons-type')
 
+
+    this.valueString.subscribe((val) => {
+      console.log("renaming", val)
+    })
     this.setValue = () => {
       if (this.tile.data[this.node.id]()) {
         this.tile.data[this.node.id](null)
-        this.iconClass('fa fa-plus-circle')
+        this.iconClass('fa fa-plus-circle') 
         this.textClass('cons-type')
       } else {
         this.tile.data[this.node.id]([{resourceId: this.personId()}])
@@ -55,55 +59,30 @@ define([
           console.error(response, status, error);
         }
       });
+      
       if (response.person){
         const personId = response.person.resource_id
+        const groups = response.person.groups
+        this.valueString(response.person.name)
         this.personId(personId)
-        return personId
+        return groups
       }
       return false
     }
 
-    this.getName = async () => {
-      const personId = this.personId() ? this.personId() : await this.getPersonId()
-      if (!personId) {
-        this.valueString("User is not linked to a specific person")
-        return "User is not linked to a specific person"
-      }
-      const name = await $.ajax({
-        type: 'GET',
-        url: `/resource/descriptors/${personId}`,
-        dataType: 'json',
-        context: this,
-        error: (response, status, error) => {
-          console.error(response, status, error);
-        }
-      })
-      this.name(name.displayname)
-      this.valueString(name.displayname)
-      return name.displayname
-    }
-
     this.validatePermission = async () => {
-      const personId = this.personId() ? this.personId() : await this.getPersonId() 
-      if (!personId) {
+      const groups = this.personId() ? this.personId() : await this.getPersonId()
+
+      if (!this.personId()) {
         return false
       }
       if (this.signOffGroups.length === 0) {
         this.permittedToSign(true)
         return true
       }
-      const groups = await $.ajax({
-        type: 'GET',
-        url: `/search/resources?advanced-search=[{"op"%3A"and"%2C"bb2f7e1c-7029-11ee-885f-0242ac140008"%3A{"op"%3A""%2C"val"%3A["${personId}"]}}]`,
-        dataType: 'json',
-        context: this,
-        error: (response, status, error) => {
-          console.error(response, status, error);
-        }
-      })
 
       if (this.signOffGroups.length > 0) {
-        groupIntersection = Array.from(new Set(groups.results.hits.hits.map(hit => hit._id)).intersection(new Set(this.signOffGroups)))
+        groupIntersection = Array.from(new Set(groups).intersection(new Set(this.signOffGroups)))
         this.permittedToSign(groupIntersection.length > 0)
         return groupIntersection.length > 0
       } 
@@ -114,7 +93,6 @@ define([
       const permitted = await this.validatePermission()
       if (permitted) {
         this.iconClass('fa fa-plus-circle')
-        this.valueString(this.getName())
       } else {
         this.valueString('You do not have permission to sign off')
       }

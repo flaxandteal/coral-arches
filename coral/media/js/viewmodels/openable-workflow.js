@@ -50,6 +50,7 @@ define([
               console.log(response, status, error);
             }
           });
+
           if (response?.stepdata) {
             return response;
           } else {
