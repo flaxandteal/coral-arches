@@ -45,7 +45,12 @@ class SetApplicator:
             else:
                 bool_query.must(set_query())
                 bool_query.must_not(Nested(path="sets", query=Terms(field="sets.id", terms=[str(set_id)])))
-                source = "ctx._source.sets.addAll(params.logicalSets)"
+                source = """
+                if (ctx._source.sets == null) {
+                    ctx._source.sets = [];
+                }
+                ctx._source.sets.addAll(params.logicalSets);
+                """
                 sets = [{"id": str(set_id)}]
             dsl.add_query(bool_query)
             update_by_query = UpdateByQuery(se=se, query=dsl, script={
