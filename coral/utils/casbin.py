@@ -17,9 +17,10 @@ def _consistent_hash(string: str):
     return uuid.UUID(hsh.hexdigest()[::2])
 
 class SetApplicator:
-    def __init__(self, print_statistics, wait_for_completion):
+    def __init__(self, print_statistics, wait_for_completion, synchronous=False):
         self.print_statistics = print_statistics
         self.wait = wait_for_completion
+        self.synchronous = synchronous
 
     def _apply_set(self, se, set_id, set_query, resourceinstanceid=None):
         results = []
@@ -54,7 +55,7 @@ class SetApplicator:
                     "logicalSets": sets
                 }
             })
-            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=False))
+            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=self.synchronous))
         return results
 
     @context_free
