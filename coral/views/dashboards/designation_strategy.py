@@ -280,7 +280,7 @@ class DesignationTaskStrategy(TaskStrategy):
         none_items = []
         for r in resources:
             val = safe_sort_value(r)
-            if val == 'None':
+            if val == 'None' or val == None:
                 none_items.append(r)
             else:
                 valid_items.append((r, val))
