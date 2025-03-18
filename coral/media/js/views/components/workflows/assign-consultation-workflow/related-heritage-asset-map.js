@@ -79,9 +79,10 @@ define([
             try {
                 const tiles = await this.fetchTileData(this.resourceId, params.nodegroupid);
                 const geom = await this.getGeometryData();
+
                 // Check for existing data, if none get the HA geometries
                 if (!tiles?.length) {  
-                    if(!geom?.length) {
+                    if(!geom?.features?.length) {
                         this.shouldRender(true);
                         return;
                     }              
