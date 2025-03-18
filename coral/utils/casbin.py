@@ -19,7 +19,7 @@ def _consistent_hash(string: str):
 class SetApplicator:
     def __init__(self, print_statistics, wait_for_completion, synchronous=False):
         self.print_statistics = print_statistics
-        self.wait = wait_for_completion
+        self.wait = wait_for_completion and (not synchronous)
         self.synchronous = synchronous
 
     def _apply_set(self, se, set_id, set_query, resourceinstanceid=None):
