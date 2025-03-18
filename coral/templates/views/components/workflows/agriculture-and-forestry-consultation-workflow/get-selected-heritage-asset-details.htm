@@ -1,9 +1,8 @@
+
 {% load i18n %}
 <!-- ko foreach: { data: [$data], as: 'self' } -->
-
 <!-- ko if: state === 'editor-tree' && self.card.model.visible() -->
 {% block editor_tree %}
-<!-- ko if: shouldRender -->
 <li role="treeitem card-treeitem" class="jstree-node" data-bind="css: {'jstree-open': (card.tiles().length > 0 && card.expanded()), 'jstree-closed' : (card.tiles().length > 0 && !card.expanded()), 'jstree-leaf': card.tiles().length === 0, 'hide-background': !self.showGrid()}, scrollTo: card.scrollTo, container: '.resource-editor-tree'">
     <i class="jstree-icon" role="presentation" data-bind="click: function(){card.expanded(!card.expanded())}, css: {'jstree-ocl': self.showGrid}"></i>
     <a class="jstree-anchor" href="#" tabindex="-1" data-bind="css:{'filtered': card.highlight(), 'jstree-clicked': card.selected, 'child-selected': card.isChildSelected(), 'func-node': card.isFuncNode(),'unsaved-edit': card.isDirty() === true}, event: {
@@ -40,7 +39,6 @@
                         {% block editor_tree_node_content %}
                         <!-- ko if: self.card.widgets().length > 0 && self.card.widgets()[0].visible -->
                         <span data-bind="text: self.card.widgets()[0].label || self.card.model.name"></span>:
-                        
                         <div style="display: inline;" data-bind="component: {
                             name: self.form.widgetLookup[self.card.widgets()[0].widget_id()].name,
                             params: {
@@ -55,7 +53,6 @@
                                 disabled: !self.card.isWritable && !self.preview
                             }
                         }"></div>
-                        
                         <!-- /ko -->
                         <!-- ko if: self.card.widgets().length === 0 || !self.card.widgets()[0].visible -->
                         <span data-bind="text: self.card.model.name"></span>
@@ -85,8 +82,6 @@
         </div>
     </ul>
 </li>
-<!-- /ko -->
-
 {% endblock editor_tree %}
 <!-- /ko -->
 
@@ -262,9 +257,9 @@
                 <div class='new-provisional-edits-title'>
                     <span data-bind="text: $root.translations.provisionalEdits"></span>
                 </div>
-                <div
-                    class="btn btn-shim btn-danger btn-labeled btn-xs fa fa-trash new-provisional-edits-delete-all"
-                    style="padding: 3px;"
+                <div 
+                    class="btn btn-shim btn-danger btn-labeled btn-xs fa fa-trash new-provisional-edits-delete-all" 
+                    style="padding: 3px;" 
                     data-bind="click: function(){provisionalTileViewModel.deleteAllProvisionalEdits()}"
                 >
                     <span data-bind="text: $root.translations.deleteAllEdits"></span>
@@ -296,7 +291,7 @@
 
                 <!-- ko if: card.model.helpenabled -->
                 <span>
-                    <a data-bind="click: function () {card.model.get('helpactive')(true) }" style="cursor:pointer;">
+                    <a data-bind="click: function () {card.model.get('helpactive')(true) }" style="cursor:pointer;"> 
                         <span data-bind="text: $root.translations.help"></span>
                         <i class="fa fa-question-circle"></i>
                     </a>
@@ -314,7 +309,6 @@
             {% endblock form_header %}
             <!-- ko if: card.showSummary() === false -->
             <!-- ko if: card.widgets().length > 0 -->
-             <!-- ko if: self.shouldRender() -->
             {% block form_widgets %}
             <form class="widgets" style="margin-bottom: 20px;">
                 <div data-bind="foreach: {
@@ -328,6 +322,8 @@
                             tile: self.tile,
                             form: self.form,
                             config: widget.configJSON,
+                            allowInstanceCreation: false,
+                            searchString: "",
                             label: widget.label(),
                             inResourceEditor: self.inResourceEditor,
                             value: self.tile.data[widget.node_id()],
@@ -335,18 +331,42 @@
                             expanded: self.expanded,
                             graph: self.form.graph,
                             type: "resource-editor",
-                            disabled: !self.card.isWritable && !self.preview,
-                            ...self.getNodeOptions?.(widget.node_id(), widget.configJSON())
+                            disabled: !self.card.isWritable && !self.preview
                         }
                     }, css:{ "active": widget.selected, "hover": widget.hovered, "widget-preview": self.preview
                 }, click: function(data, e) { if (!widget.selected() && self.preview) {widget.selected(true);}
-            }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } },
-            mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible,
-            class: self.componentCssClasses(widget)'></div>
+            }, event: { mouseover: function(){ if (self.preview){widget.hovered(true) } }, mouseout: function(){ if (self.preview){widget.hovered(null)} } }, visible: widget.visible'></div>
                 </div>
+                <!-- ko foreach: { data: selectedMonuments(), as: 'monument', noChildContext: true } -->
+                <div  style="max-width: 600px !important; background: #eee; padding: 8px; border-radius: 6px; margin: 10px 5px 25px 5px; display: flex; flex-direction: column; gap: 12px">
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">SMR Number</span>
+                        <span data-bind="text: cards()[monument].smrNumber" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">CM Number</span>
+                        <span data-bind="text: cards()[monument].cmNumber" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">Monument Name</span>
+                        <span data-bind="text: cards()[monument].monumentName" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">Designation Type</span>
+                        <span data-bind="text: cards()[monument].designationType" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">Townland</span>
+                        <span data-bind="text: cards()[monument].townlandValue" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px">
+                        <span style="font-weight: bold; font-size: 14px">B File(s)</span>
+                        <span data-bind="text: cards()[monument].bFile" style="background: white; padding: 4px 10px; border-radius: 4px"></span>
+                    </div> 
+                </div>
+                <!-- /ko -->
             </form>
             {% endblock form_widgets %}
-            <!-- /ko -->
             <!-- /ko -->
             <!-- ko if: showChildCards -->
             {% block form_cards %}
@@ -399,8 +419,8 @@
             {% block form_buttons %}
             <div class="install-buttons">
                 <!-- ko if: tile.tileid && self.deleteTile -->
-                <button
-                    class="btn btn-shim btn-labeled btn-lg fa fa-trash"
+                <button 
+                    class="btn btn-shim btn-labeled btn-lg fa fa-trash" 
                     data-bind="click: self.deleteTile, css: {disabled: (!card.isWritable && !self.preview), 'btn-warning': card.isWritable }"
                 >
                     <span data-bind="text: $root.translations.deleteThisRecord"></span>
@@ -420,7 +440,7 @@
                     </button>
                     <!-- /ko -->
                 <!-- /ko -->
-
+                
                 <!-- ko if: !tile.tileid && !showChildCards() -->
                 <button class="btn btn-shim btn-labeled btn-lg fa fa-plus" data-bind="click: self.saveTile, css: {disabled: (!card.isWritable && !self.preview), 'btn-mint': card.isWritable }">
                     <span data-bind="text: $root.translations.add"></span>
