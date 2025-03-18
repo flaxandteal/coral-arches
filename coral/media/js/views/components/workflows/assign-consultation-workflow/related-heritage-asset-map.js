@@ -80,6 +80,13 @@ define([
                 const tiles = await this.fetchTileData(this.resourceId, params.nodegroupid);
                 const geom = await this.getGeometryData();
 
+                // mark the heritage assets to differentiate from points added in consultation
+                if (geom){
+                    geom.features.forEach( feature => {
+                        feature.properties['fromHeritageAsset'] = true;
+                    });
+                }
+
                 // Check for existing data, if none get the HA geometries
                 if (!tiles?.length) {  
                     if(!geom?.features?.length) {
@@ -94,15 +101,30 @@ define([
                 // Checking if the HA geometries match the number of saved geometries
                 else if (tiles[0].data['083f3c7e-ca61-11ee-afca-0242ac180006'] && geom){
                     const existingGeom = tiles[0].data['083f3c7e-ca61-11ee-afca-0242ac180006'];
-                    const savedPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point');
+                    const savedHAPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && ('fromHeritageAsset' in feature.properties));
                     const haPoints = geom.features.filter(feature => feature.geometry.type === 'Point');
+                    const consultationPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && !('fromHeritageAsset' in feature.properties));
 
-                    if(savedPoints.length > haPoints.length){
+                    if(savedHAPoints.length > haPoints.length){
                         // Removes points if a HA is removed, all polygons are removed as they cannot be linked with a point
                         const haIds = geom.features.map(f => f.id);
-                        existingGeom.features = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && haIds.includes(feature.id));        
+                        const newHaPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && haIds.includes(feature.id));   
+                        existingGeom.features = newHaPoints;
+                        existingGeom.features.push(...consultationPoints);     
+                    } else if (savedHAPoints.length === haPoints.length) {
+                        // swtiches HA's if length of list is equal
+                        const savedIds = savedHAPoints.map(f => f.id).sort();
+                        const haIds = haPoints.map(f => f.id).sort();
+
+                        // Check if the two arrays are equal in length and values
+                        const arraysEqual = savedIds.length === haIds.length && savedIds.every((id, index) => id === haIds[index]);
+
+                        if (!arraysEqual) {
+                            existingGeom.features = haPoints;
+                            existingGeom.features.push(...consultationPoints);  
+                        }
                     } else {
-                        // Update the tile with the HA geometries
+                        // Update the tile with the HA geometries if extra added
                         const existingIds = existingGeom.features.map(f => f.id);
                         const newPoints = geom.features.filter(g => !existingIds.includes(g.id));
                         if(newPoints.length){
