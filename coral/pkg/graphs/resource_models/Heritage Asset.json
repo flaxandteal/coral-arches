@@ -21954,12 +21954,6 @@
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "355608a6-5edf-11ef-bca0-0242ac120006",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
                     "nodegroupid": "98bd23cd-0923-4d5b-8c84-4269e92887d2",
                     "parentnodegroup_id": null
                 },
@@ -31486,7 +31480,7 @@
                 {
                     "alias": "area_name",
                     "config": {
-                        "rdmCollection": "dabd4def-631e-e295-acec-136522543ea0"
+                        "rdmCollection": "acb5feaf-e491-4e53-bff2-2801167fd65a"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -32568,7 +32562,7 @@
                 {
                     "alias": "area_type",
                     "config": {
-                        "rdmCollection": "eda531bb-050b-4f12-2421-1c50fcdcf11a"
+                        "rdmCollection": "59a0a035-bbd0-4e5e-9528-862790edc610"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -37563,6 +37557,13 @@
                                 "selected": false,
                                 "text": {
                                     "en": "Full"
+                                }
+                            },
+                            {
+                                "id": "65a1baef-72e7-45c8-b57b-bd3040c57f49",
+                                "selected": false,
+                                "text": {
+                                    "en": "Condition"
                                 }
                             },
                             {
