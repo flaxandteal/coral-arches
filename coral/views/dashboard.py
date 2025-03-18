@@ -1,18 +1,14 @@
 from django.views.generic import View
 from django.http import JsonResponse
-from arches.app.models import models
-from arches.app.models.tile import Resource
-from arches_orm.wkrm import WELL_KNOWN_RESOURCE_MODELS
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
-from datetime import datetime, timezone
-from collections import defaultdict 
 from django.core.cache import cache
 import json
-import logging
-from itertools import chain 
-import html
-import arches_orm
+from coral.views.dashboards.paginator import get_paginator
+from coral.views.dashboards.planning_strategy import PlanningTaskStrategy
+from coral.views.dashboards.excavation_strategy import ExcavationTaskStrategy
+from coral.views.dashboards.designation_strategy import DesignationTaskStrategy
+from coral.views.dashboards.dashboard_utils import Utilities
 
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
@@ -29,13 +25,8 @@ EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
-STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
-STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
-STATUS_HB_DONE = '71765587-0286-47de-96b4-4391aa6b99ef'
-STATUS_HM_DONE = '4608b315-0135-49a0-9686-9bc3c36990d8'
-STATUS_EXTENSION_REQUESTED = '28112b3f-ef44-40b4-a215-931c0c88bc5e'
-STATUTORY = 'd06d5de0-2881-4d71-89b1-522ebad3088d'
-NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
+SECOND_SURVEY_GROUP = '1ce90bd5-4063-4984-931a-cc971414d7db'
+DESIGNATIONS_GROUP = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
 
 class Dashboard(View):
 
@@ -48,64 +39,84 @@ class Dashboard(View):
                 return JsonResponse({"error": "User not found"}, status=404)
             
             update = request.GET.get('update', 'true') == 'true'
-            cache_key = f'dashboard_{user_id}'
-
+            
+            dashboard = request.GET.get('dashboard', None)
             task_resources = []
             counters = {}
             sort_by = request.GET.get('sortBy', None)
             sort_order = request.GET.get('sortOrder', None)
             filter = request.GET.get('filterBy', None)
+            page = int(request.GET.get('page', 1))
+            items_per_page = int(request.GET.get('itemsPerPage', 10))
             sort_options = []
             filter_options = []
 
-            if not update and cache.get(cache_key):
-                cache_data = cache.get(cache_key)
+            cache_key = f'dashboard_{user_id}_{page}'
+            cache_data = cache.get(cache_key)
+
+            if not update and cache_data:
                 data = json.loads(cache_data)
                 task_resources = data['task_resources']
                 counters = data['counters']
                 sort_options = data['sort_options']
                 filter_options = data['filter_options']
+                total_resources = data['total_resources']
                 utilities = Utilities()
                 task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
 
             else:
-                user_group_ids = self.get_groups(person_resource[0].id)
-                strategies = set()
+                key = f"groups_{user_id}"
+                data_cache = cache.get(key)
+
+                if data_cache:
+                    user_group_ids = json.loads(data_cache)
+                else:
+                    user_group_ids = self.get_groups(person_resource[0].id)
+                    cache.set(key, json.dumps(user_group_ids), 60 * 15) 
+       
+                strategies = []
                 for groupId in user_group_ids:
                     strategy = self.select_strategy(groupId)
                     if strategy:
-                        strategies.add(self.select_strategy(groupId))
-                for strategy in strategies:
-                    if sort_by is not None and sort_order is not None and sort_by:
-                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id, sort_by, sort_order, filter)
-                    else:
-                        resources, counters, sort_options, filter_options = strategy.get_tasks(groupId, person_resource[0].id)
-                    task_resources.extend(resources)
+                        strategies.append(strategy)
+
+                if not strategies:
+                    return JsonResponse({"error": "No valid strategy found"}, status=404)
+                
+                if dashboard:
+                    strategy = next((s['strategy'] for s in strategies if dashboard == s.id), None)
+                    if strategy is None:
+                        return JsonResponse({"error": "User not in group"}, status=404)
+                else: 
+                    strategy = strategies[0]['strategy']
+                    
+                task_params = {
+                    'groupId': groupId,
+                    'userResourceId': person_resource[0].id,
+                    'page': page,
+                    'page_size': items_per_page
+                }
+                    
+                if sort_by is not None and sort_order is not None:
+                    task_params.update({'sort_by': sort_by, 'sort_order': sort_order})
+                if filter is not None:
+                    task_params.update({'filter': filter })
+                resources, total_resources, counters = strategy.get_tasks(**task_params)
+                filter_options = strategy.get_filter_options(groupId)
+                sort_options = strategy.get_sort_options()
+                task_resources.extend(resources)
 
                 cache_data = json.dumps({
                     'task_resources': task_resources,
+                    'total_resources': total_resources,
                     'counters': counters,
                     'sort_options': sort_options,
                     'filter_options': filter_options
                     })
                 cache.set(cache_key, cache_data, 60 * 15)
 
-            page = int(request.GET.get('page', 1))
-            items_per_page = int(request.GET.get('itemsPerPage', 10))
-            paginator = Paginator(task_resources, items_per_page)
-            pages = [page]
-            if paginator.num_pages > 1:
-                before = list(range(1, page))
-                after = list(range(page + 1, paginator.num_pages + 1))
-                default_ct = 2
-                ct_before = default_ct if len(after) > default_ct else default_ct * 2 - len(after)
-                ct_after = default_ct if len(before) > default_ct else default_ct * 2 - len(before)
-                if len(before) > ct_before:
-                    before = [1, None] + before[-1 * (ct_before - 1) :]
-                if len(after) > ct_after:
-                    after = after[0 : ct_after - 1] + [None, paginator.num_pages]
-                pages = before + pages + after
-            
+            paginator, pages = get_paginator(total_resources, page, items_per_page)
+
             page_obj = paginator.get_page(page)
 
             return JsonResponse({
@@ -120,7 +131,7 @@ class Dashboard(View):
                     'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
                     'start_index': page_obj.start_index(),
                     'total': paginator.count,
-                    'response': page_obj.object_list
+                    'response': task_resources
                 },
                 'counters': counters,
                 'sort_options': sort_options,
@@ -143,424 +154,17 @@ class Dashboard(View):
     
     def select_strategy(self, groupId):
         if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
-            return PlanningTaskStrategy()
+            return { id: groupId, 'name': 'Planning Dashboard', 'strategy': PlanningTaskStrategy() }
         elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
-            return ExcavationTaskStrategy()
+            return { id: groupId, 'name': 'Excavation Dashboard', 'strategy': ExcavationTaskStrategy() }
+        elif groupId in [SECOND_SURVEY_GROUP, DESIGNATIONS_GROUP]:
+            return { id: groupId, 'name': 'Records and Designation Dashboard', 'strategy': DesignationTaskStrategy() }
         return
 
-class TaskStrategy:
-    def get_tasks(self, groupId, userResourceId, sort_by, sort_order, filter):
-        raise NotImplementedError("Subclasses must implement this method")
-    def build_data(self, resource, groupId):
-        raise NotImplementedError("Subclasses must implement this method")
-
-class PlanningTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='deadline', sort_order='desc', filter='all'):
-        from arches_orm.models import Consultation
-        with admin():
-            TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
-            TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
-            TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
-            COUNCIL_NODE = '69500360-d7c5-11ee-a011-0242ac120006'
-            is_hm_manager = groupId in [HM_MANAGER] 
-            is_hb_manager = groupId in [HB_MANAGER] 
-            is_hm_user = groupId in [HM_GROUP] 
-            is_hb_user = groupId in [HB_GROUP] 
-            is_admin = groupId in [PLANNING_GROUP]
-            resources = [] 
-
-            utilities = Utilities()
 
 
-            # create the entries for the council filter options
-            council_node = models.Node.objects.filter(
-                nodeid = COUNCIL_NODE,
-                datatype = 'domain-value'
-            ).first()
-
-            domain_options = council_node.config.get("options")
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
-
-            # get the members of the groups for filtering
-            planning_team_groups = [HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP]
-            hb_groups = [HB_GROUP, HB_MANAGER]
-            hm_groups = [HM_GROUP, HM_MANAGER]
-
-            members_filter = []
-            groups_filter = []
-            if is_hb_manager or is_hb_user:
-                members_filter = self.get_group_members(hb_groups)
-            elif is_hm_manager or is_hm_user:
-                members_filter = self.get_group_members(hm_groups)
-            elif is_admin:
-                members_filter = self.get_group_members(planning_team_groups)
-                groups_filter = [
-                    {'id': TYPE_ASSIGN_HB, 'name': 'HB Group', 'type': 'group'}, 
-                    {'id': TYPE_ASSIGN_HM, 'name': 'HM Group', 'type': 'group'}
-                ]       
-
-            filter_options = [
-                {'id': 'all', 'name': 'All', 'type': 'all'}, 
-                *groups_filter, 
-                *members_filter, 
-                *domain_values
-            ]
-
-            consultations = Consultation.all()
-
-            #filter out consultations that are not planning consultations
-            planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
-
-            # check the correct filter group and apply the filter
-            if filter != 'all':
-                is_member_filter = any(member['id'] == filter for member in members_filter)
-                is_domain_filter = any(value['id'] == filter for value in domain_values)
-                is_group_filter = any(group['id'] == filter for group in filter_options )
-                if is_domain_filter:
-                    planning_consultations = [c for c in planning_consultations if self.filter_by_domain_value(c, filter)]
-                elif is_member_filter:
-                    planning_consultations = [c for c in planning_consultations if self.filter_by_person(c, filter)]
-                elif is_group_filter:
-                    planning_consultations = [c for c in planning_consultations if self.filter_by_group(c, filter)]
-            
-
-            #checks against type & status and assigns to user if in correct group
-            for consultation in planning_consultations:
-                    action_status = utilities.node_check(lambda: consultation.action[0].action_status )
-                    action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
-                    assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1)
-
-                    user_assigned = any(assigned_to_list or [])
-                    is_assigned_to_user = False
-
-                    if assigned_to_list:
-                        is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
-                    
-                    hm_status_conditions = [STATUS_OPEN, STATUS_HB_DONE, STATUS_EXTENSION_REQUESTED]
-                    hb_status_conditions = [STATUS_OPEN, STATUS_HM_DONE, STATUS_EXTENSION_REQUESTED]
-                    conditions_for_task = (
-                        (is_hm_manager and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
-                        (is_hb_manager and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
-                        (is_hm_user and is_assigned_to_user and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                        (is_hb_user and is_assigned_to_user and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                        (is_admin)
-                    )
-                    if conditions_for_task:                 
-                        task = self.build_data(consultation, groupId)
-                        if task:
-                            resources.append(task)
 
 
-            # Convert the 'deadline', 'date' field to a date and sort
-            sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
-
-            counters = utilities.get_count_groups(resources, ['status', 'hierarchy_type'])
-            sort_options = [{'id': 'deadline', 'name': 'Deadline'}, {'id': 'date', 'name': 'Date'}]
-
-            return sorted_resources, counters, sort_options, filter_options
-    
-    def get_group_members(self, groups):
-        from arches_orm.models import Group
-        with admin():
-            members_filter = []
-            for group in groups:
-                    group_resource = Group.find(group)
-                    members = [
-                        {'id': str(member.id), 'name': member.name[0].full_name, 'type': 'person'}
-                        for member in group_resource.members
-                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel'
-                    ]
-                    members_filter.extend(members)
-            return members_filter
-    
-    def build_data(self, consultation, groupId):
-        from arches_orm.models import Consultation
-        utilities = Utilities()
-
-        action_status = utilities.node_check(lambda: consultation.action[0].action_status)
-        action_type = utilities.node_check(lambda: consultation.action[0].action_type)
-        date_entered = utilities.node_check(lambda: consultation.consultation_dates.log_date)
-        deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
-        hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
-        address = utilities.node_check(lambda: consultation.location_data.addresses)
-        council = utilities.node_check(lambda: consultation.location_data.council)
-        responses = utilities.node_check(lambda: consultation.response_action)
-
-        # Initialise the team responses
-        responded = {
-            'HB': False,
-            'HM': False,
-            'type': utilities.domain_value_string_lookup(Consultation, 'action_type', action_type)
-        }
-
-        # Look up for either te
-        if responses:
-            for response in responses:
-                team = utilities.domain_value_string_lookup(Consultation, 'response_team', response.response_team)
-                if team in responded:
-                    responded[team] = True
-
-        address_parts = [
-            address.street.street_value, 
-            address.town_or_city.town_or_city_value, 
-            address.postcode.postcode_value
-        ]
-        address = [part for part in address_parts if part is not None and part != 'None']
-        
-        responseslug = utilities.get_response_slug(groupId) if groupId else None
-        
-        if date_entered:
-            date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
-
-        deadline_message = None
-        if deadline:
-            deadline_date = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z")
-            deadline_message = utilities.create_deadline_message(deadline_date)
-            deadline = deadline_date.strftime("%d-%m-%Y")          
-
-        resource_data = {
-            'id': str(consultation.id),
-            'state': 'Planning',
-            'displayname': consultation._._name,
-            'displaydescription': html.unescape(consultation._._description),
-            'status': utilities.convert_id_to_string(action_status),
-            'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
-            'date': date_entered,
-            'deadline': deadline,
-            'deadlinemessage': deadline_message,
-            'address': address,
-            'council': council,
-            'responseslug': responseslug,
-            'responded': responded
-        }
-        return resource_data
-    
-    def filter_by_domain_value(self, consultation, filter):
-        utilities = Utilities()
-        council_value = utilities.node_check(lambda:consultation.location_data.council)
-        if not council_value:
-            return False
-        return council_value == filter
-    
-    def filter_by_person(self, consultation, filter):
-        utilities = Utilities()
-        person_list = utilities.node_check(lambda:consultation.action[0].assigned_to_n1)
-        if not person_list:
-            return False
-        return any(str(person.id) == filter for person in person_list)   
-    
-    def filter_by_group(self, consultation, filter):
-        TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
-        utilities = Utilities()
-        action_type = utilities.node_check(lambda:consultation.action[0].action_type)
-        if not action_type:
-            return False
-        return action_type == filter or action_type == TYPE_ASSIGN_BOTH
-    
-class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, sort_by='createdat', sort_order='desc', filter='all'):
-        from arches_orm.models import License
-        utilities = Utilities()
-        #states
-        is_admin = groupId == EXCAVATION_ADMIN_GROUP
-        is_user = groupId == EXCAVATION_USER_GROUP
-        is_cur_e = groupId == EXCAVATION_CUR_E
-
-        sort_options = ['createdat', 'validuntil']
-
-        resources = [] 
-
-        licences_all = License.all()
-
-        licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
-
-        if filter != 'all':
-            # Checks the report status against the filter value
-            licences = [l for l in licences if self.is_valid_license(l, filter)]
-
-        for licence in licences:
-            task = self.build_data(licence, groupId)
-            if task:
-                resources.append(task)
-        sorted_resources = utilities.sort_resources(resources, sort_by, sort_order)
-
-        counters = []
-        sort_options = [{'id': 'createdat', 'name': 'Created At'}, {'id': 'validuntildate', 'name': 'Valid Until'}]
-        filter_options = [{'id': 'all', 'name': 'All'},{'id': 'final', 'name': 'Final'}, {'id': 'preliminary', 'name': 'Preliminary'}, {'id': 'interim', 'name': 'Interim'}, {'id': 'unclassified', 'name': 'Unclassified'}, {'id': 'summary', 'name': 'Summary'}]
-
-        return sorted_resources, counters, sort_options, filter_options
-
-    
-    def build_data(self, licence, groupId):
-        from arches_orm.models import License
-        utilities = Utilities()
-
-        resource_instance = Resource.objects.get(resourceinstanceid = licence.id)
-        created_at = resource_instance.createdtime
-
-        activity_list = utilities.node_check(lambda: licence.associated_activities)
-        display_name = utilities.node_check(lambda:licence.licence_names.name),
-        # issue_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.issue_date)
-        cm_reference = utilities.node_check(lambda:licence.cm_references.cm_reference_number)
-        valid_until_date = utilities.node_check(lambda:licence.decision[0].licence_valid_timespan.valid_until_date)
-        employing_body = utilities.node_check(lambda:licence.contacts.companies.employing_body)
-        nominated_directors = utilities.node_check(lambda:licence.contacts.licensees.licensee)
-        licence_number = utilities.node_check(lambda:licence.licence_number.licence_number_value)
-        nominated_directors_name_list = [utilities.node_check(lambda:director.name[0].full_name) for director in nominated_directors]
-
-        employing_body_name_list = [utilities.node_check(lambda:body.names[0].organization_name) for body in employing_body]
-
-        report_status = utilities.node_check(lambda:licence.application_details.report_classification_type)
-
-        name = display_name[0]
-        if name.startswith("Excavation Licence"):
-            display_name = name[len("Excavation Licence"):].strip()
-
-        site_name = next(
-            (utilities.node_check(lambda:activity.activity_names[0].activity_name) for activity in activity_list if activity and activity.activity_names),
-            None
-        )
-
-        response_slug = utilities.get_response_slug(groupId) if groupId else None
-
-        # convert date format
-        if valid_until_date:
-            valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
-
-        resource_data = {
-            'id': str(licence.id),
-            'state': 'Excavation',
-            'displayname': display_name,
-            'sitename': site_name,
-            'createdat': str(created_at),
-            'cmreference': cm_reference,
-            'validuntildate': valid_until_date,
-            'employingbody': employing_body_name_list,
-            'nominateddirectors': nominated_directors_name_list,
-            'reportstatus': utilities.domain_value_string_lookup(License, 'report_classification_type', report_status), ## will need changed after Taiga #2199 is complete
-            'licencenumber': licence_number,
-            'responseslug': response_slug
-        }
-        return resource_data
-    
-    def is_valid_license(self, licence, filter):
-        from arches_orm.models import License
-        utilities = Utilities()
-        classification_type = utilities.node_check(lambda:licence.application_details.report_classification_type)
-        if not classification_type:
-            return False
-        string_value = utilities.domain_value_string_lookup(License, 'report_classification_type', classification_type)
-        return string_value.lower() == filter
-
-class Utilities:
-    def convert_id_to_string(self, id):
-        if id == STATUS_OPEN:
-            return 'Open'
-        elif id == STATUS_CLOSED:
-            return 'Closed'
-        elif id == STATUS_HB_DONE:
-            return 'HB done'
-        elif id == STATUS_HM_DONE:
-            return 'HM done'
-        elif id == STATUS_EXTENSION_REQUESTED:
-            return 'Extension requested'
-        elif id == STATUTORY:
-            return 'Statutory'
-        elif id == NON_STATUTORY:
-            return 'Non-statutory'
-        elif id == None:
-            return 'None'
-        
-    def domain_value_string_lookup(self, resource, node_alias, value_id):
-        """
-        Looks up the string representation of a domain value.
-
-        Args:
-            resource (Resource): The resource instance. Use The ORM model eg. Consultation.
-            node_alias (str): The alias of the node.
-            value_id (str): The ID of the value to look up. Use the node variable.
-
-        Returns:
-            str: The string representation of the domain value.
-        """
-        node = models.Node.objects.filter(
-            alias = node_alias,
-            graph_id = resource.graphid
-        ).first()
-        options = node.config.get("options")
-        for option in options:
-            if option.get("id") == value_id:
-                return option.get("text").get("en")
-        
-    def get_count(self, resources, counter):
-        counts = defaultdict(int)
-        for resource in resources:
-            counts[resource[counter]] += 1
-
-        counts = {key: counts[key] for key in sorted(counts)}
-
-        return counts
-    
-    def get_count_groups(self, resources, count_groups: list):
-        counters = {}
-
-        for count in count_groups:
-            counters[count] = self.get_count(resources, count)
-
-        
-        return counters
-    
-    # Method to check if a node exists
-    def node_check(self, func, default=None):
-        try:
-            logging.info(func())
-            return func()
-        except Exception as error:
-            logging.warning(f'Node does not exist: {error}')
-            return default
-        
-    def get_response_slug(self, groupId):
-        if groupId in [HM_GROUP, HM_MANAGER]:
-            return "hm-planning-consultation-response-workflow"
-        elif groupId in [HB_GROUP, HB_MANAGER]:
-            return "hb-planning-consultation-response-workflow"
-        elif groupId in [PLANNING_GROUP]:
-            return "assign-consultation-workflow"
-        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
-            return "licensing-workflow"
-    
-    def create_deadline_message(self, date):
-        message = None
-        date_now = datetime.now(timezone.utc)
-        difference = (date.date() - date_now.date()).days
-
-        if difference < 0:
-            message = "Overdue"
-        elif difference == 0:
-            message = "Due Today"
-        elif difference <= 3:
-            day_word = "day" if difference == 1 else "days"
-            message = f"{difference} {day_word} until due"
-
-        return message
-    
-    def _parse_date(self, date_str):
-        date_formats = ['%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f']
-        for date_format in date_formats:
-            try:
-                return datetime.strptime(date_str, date_format)
-            except ValueError:
-                continue
-        return None
-
-    def sort_resources(self, resources, sort_by, sort_order):
-        
-        resources.sort(key=lambda x: (
-                    x[sort_by] is not None, 
-                    self._parse_date(x[sort_by]) if x[sort_by] is not None else None,
-                    x[sort_by]
-                ), reverse=(sort_order == 'desc'))
-        return resources
         
     
 
