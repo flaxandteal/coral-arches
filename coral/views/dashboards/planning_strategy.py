@@ -203,7 +203,22 @@ class PlanningTaskStrategy(TaskStrategy):
 
         ha_refs = []
         for ha in related_ha:
-            ha_refs.append(next((ref for ref in ha.heritage_asset_references.values() if ref != ''), None))
+            ihr = ha.heritage_asset_references.ihr_number
+            hb = ha.heritage_asset_references.hb_number
+            smr = ha.heritage_asset_references.smr_number
+            gardens = ha.heritage_asset_references.historic_parks_and_gardens
+
+            def valid(val):
+                return val is not None and val.strip() != ''
+
+            if valid(ihr):
+                ha_refs.append(ihr)
+            if valid(hb):
+                ha_refs.append(hb)
+            if valid(smr):
+                ha_refs.append(smr)
+            if valid(gardens):
+                ha_refs.append(gardens)
 
         assigned_to_names = None
         if assigned_to:
