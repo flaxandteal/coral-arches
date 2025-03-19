@@ -45,7 +45,11 @@ define([
 
     this.cards = ko.observable({})
 
-    const self = this
+    this.dataNode = params.node;
+
+    const self = this;
+
+    this.searchString = params.searchString;
 
     this.form
       .card()
@@ -58,7 +62,7 @@ define([
         });
       });
 
-    this.tile.data['58a2b98f-a255-11e9-9a30-00224800b26d'].subscribe((value) => {
+    this.tile.data[this.dataNode].subscribe((value) => {
       if (value && value.length) {
         const currentResources = value.map(t => ko.unwrap(t.resourceId))
         currentResources.forEach(id => {
@@ -91,7 +95,7 @@ define([
       const designationType = ko.observable('None');
       const monumentName = ko.observable('None');
       const haRefNumber = ko.observable('None');
-      const haNumberLabel = ko.observable('None');
+      const haNumberLabel = ko.observable('Heritage Asset Ref Number');
       const bFile = ko.observable('None');
       const townlandValue = ko.observable('None');
 
@@ -174,7 +178,7 @@ define([
               if (response.statusText !== 'abort') {
                 const alert = new AlertViewModel(
                   'ep-alert-red',
-                  arches.translations.requestFailed.title,
+                  arches.requestFailed.title,
                   response.responseText
                 )
                 this.viewModel.alert( alert );
