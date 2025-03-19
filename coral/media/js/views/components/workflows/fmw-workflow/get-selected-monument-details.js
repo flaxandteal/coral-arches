@@ -32,6 +32,13 @@ define([
     this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
     this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
 
+    this.haRefStrings = {
+      '158e1ed2-3aae-11ef-a2d0-0242ac120003': 'SMR Number',
+      '250002fe-3aae-11ef-91fd-0242ac120003': 'HB Number',
+      '1de9abf0-3aae-11ef-91fd-0242ac120003': 'IHR Number',
+      '2c2d02fc-3aae-11ef-91fd-0242ac120003': 'Historic Parks and Gardens Number'
+    }
+
     this.labels = params.labels || [];
 
     this.selectedMonuments = ko.observable([]);
@@ -53,7 +60,7 @@ define([
 
     this.tile.data['58a2b98f-a255-11e9-9a30-00224800b26d'].subscribe((value) => {
       if (value && value.length) {
-        currentResources = value.map(t => ko.unwrap(t.resourceId))
+        const currentResources = value.map(t => ko.unwrap(t.resourceId))
         currentResources.forEach(id => {
           this.cards({...this.cards(), [id] : {
             designationType : "",
@@ -81,33 +88,34 @@ define([
 
     this.getMonumentDetails = async (resourceId) => {
       const tiles = await this.fetchTileData(resourceId);
-      const designationType = ko.observable();
-      const monumentName = ko.observable();
-      const cmNumber = ko.observable();
-      const smrNumber = ko.observable();
-      const bFile = ko.observable();
-      const townlandValue = ko.observable();
+      const designationType = ko.observable('None');
+      const monumentName = ko.observable('None');
+      const haRefNumber = ko.observable('None');
+      const haNumberLabel = ko.observable('None');
+      const bFile = ko.observable('None');
+      const townlandValue = ko.observable('None');
 
       const additionalPromises = []
 
       for (const tile of tiles) {
         if (tile.nodegroup === this.HERRITAGE_ASSET_REFERENCES_NODEGROUP) {
-          smrNumber(tile.data[this.SMR_NUMBER_NODE].en.value);
+          for (const [key, value] of Object.entries(tile.data)){
+            if (value){
+              haRefNumber(value.en.value);
+              haNumberLabel(this.haRefStrings[key]);
+            }
+          }
         }
 
         if (tile.nodegroup === this.MONUMENT_NAMES_NODEGROUP) {
           monumentName(tile.data[this.MONUMENT_NAMES_NODE].en.value);
         }
 
-        if (tile.nodegroup === this.CM_REFERENCE_NODEGROUP) {
-          cmNumber(tile.data[this.CM_REFERENCE_NODE].en.value);
-        }
-
         if (tile.nodegroup === this.BFILE_NODEGROUP) {
           let bfileIds = tile.data[this.BFILE_NODE].map(t => t.resourceId)
-          
+          bFile('');
           for (let id of bfileIds) {
-            additionalPromises.push(await $.ajax({
+            additionalPromises.push($.ajax({
               type: 'GET',
               url: arches.urls.api_resource_report(id),
               context: self,
@@ -131,7 +139,7 @@ define([
 
         if (tile.nodegroup === this.DESIGNATIONS_NODEGROUP) {
           const typeId = tile.data[this.DESIGNATIONS_TYPE_NODE];
-          additionalPromises.push(await $.ajax({
+          additionalPromises.push($.ajax({
             type: 'GET',
             url: arches.urls.concept_value + `?valueid=${typeId}`,
             context: self,
@@ -140,21 +148,22 @@ define([
             },
             error: function (response, status, error) {
               if (response.statusText !== 'abort') {
-                this.viewModel.alert(
-                  new AlertViewModel(
-                    'ep-alert-red',
-                    arches.requestFailed.title,
-                    response.responseText
-                  )
-                );
+                const alert = new AlertViewModel(
+                  'ep-alert-red',
+                  arches.requestFailed.title,
+                  response.responseText
+                )
+                this.viewModel.alert( alert );
               }
+              return
             }
           }))
         }
 
         if (tile.nodegroup === this.ADDRESSES_NODEGROUP) {
           const typeId = tile.data[this.TOWNLAND_NODE];
-          additionalPromises.push(await $.ajax({
+          if (!typeId) continue;
+          additionalPromises.push($.ajax({
             type: 'GET',
             url: arches.urls.concept_value + `?valueid=${typeId}`,
             context: self,
@@ -163,52 +172,30 @@ define([
             },
             error: function (response, status, error) {
               if (response.statusText !== 'abort') {
-                this.viewModel.alert(
-                  new AlertViewModel(
-                    'ep-alert-red',
-                    arches.requestFailed.title,
-                    response.responseText
-                  )
-                );
+                const alert = new AlertViewModel(
+                  'ep-alert-red',
+                  arches.translations.requestFailed.title,
+                  response.responseText
+                )
+                this.viewModel.alert( alert );
               }
+              return
             }
           }))
         }
       }
-        await Promise.all(additionalPromises)
-        .then((p) => {
-          //
-        })
-        .catch(p => {
-          //
-        })
-        .finally(() => {
-          this.cards({...this.cards(), [resourceId]: {
-            designationType : designationType(),
-            monumentName : monumentName(),
-            cmNumber : cmNumber(),
-            smrNumber : smrNumber(),
-            bFile : bFile(),
-            townlandValue : townlandValue()
-          }})
-        })
-    };
-    if (this.tile.data['58a2b98f-a255-11e9-9a30-00224800b26d']())  {
-      const preFilled = this.tile.data['58a2b98f-a255-11e9-9a30-00224800b26d']().map(t => t.resourceId)
-      preFilled.forEach(id => {
-        this.cards()[id] = {
-          designationType : "",
-          monumentName : "",
-          cmNumber : "",
-          smrNumber : "",
-          bFile : "",
-          townlandValue : ""
-        }
-        this.getMonumentDetails(id);
-      })
-      this.selectedMonuments(preFilled);
-    }
-  }
+      await Promise.all(additionalPromises);
+        
+    this.cards({...this.cards(), [resourceId]: {
+              designationType : designationType(),
+              monumentName : monumentName(),
+              haNumberLabel: haNumberLabel(),
+              smrNumber : haRefNumber(),
+              bFile : bFile(),
+              townlandValue : townlandValue()
+            }})
+          
+  }}
 
   ko.components.register('get-selected-monument-details', {
     viewModel: viewModel,
