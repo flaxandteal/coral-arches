@@ -1,6 +1,6 @@
 <!-- ko if: state === 'Planning'-->
 <div class="card-grid-item" style="margin: 1rem; width:375px">
-  <div class="panel mar-no dashboard-card-panel">
+  <div class="panel mar-no dashboard-card-panel planning-card">
     <div class="panel-heading" style="height: 38px">
       <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
         <span data-bind="text: data.displayname"></span>
@@ -12,10 +12,10 @@
         </div>
       <!-- /ko -->
     </div>
-    <div class="dashboard-card-columns">
-      <div>
-        <h5>Consultaiton Date</h5>
-        <p data-bind="text: data.date ?? 'Not Set'"></p>
+    <div class="dashboard-card-columns" style="margin-bottom: 5px">
+      <div style="max-height: 80px">
+        <h5>Classification</h5> 
+          <p style="font-size: 1.2rem" data-bind="text: data.classification"></p>
       </div>
       <div>
         <h5>Deadline</h5>
@@ -26,19 +26,31 @@
         <p data-bind="text: data.hierarchy_type"></p>
       </div>
     </div>
-    <div class="dashboard-card-columns-alt">
-      <div style="max-height: 80px">
-        <h5>Description</h5> 
-        <div style="max-height: 50px; overflow: auto">
-          <p style="font-size: 1.2rem" data-bind="text: data.displaydescription"></p>
+    <div class="dashboard-card-columns">
+      <div>
+        <h5>Heritage Asset Refs</h5> 
+        <div class="dashboard-card-list">
+          <!-- ko foreach: data.ha_refs -->
+          <p style="font-size: 1.2rem; margin-bottom: 5px" data-bind="text: $data"></p>
+          <!-- /ko -->
+        </div>
+      </div>
+      <div>
+        <h5>Assigned To</h5>
+        <div class="dashboard-card-list">
+          <!-- ko foreach: data.assigned_to -->
+          <p data-bind="text: $data ?? 'Not Set'"></p>
+          <!-- /ko -->
+        </div>
+      </div>
+      <div>
+        <h5>Address</h5> 
+        <div class="dashboard-card-list">
+          <!-- ko foreach: data.address -->
+          <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
+          <!-- /ko -->
         </div>
         
-      </div>
-      <div style="min-height: 84px;">
-        <h5>Address</h5> 
-        <!-- ko foreach: data.address -->
-          <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
-        <!-- /ko -->
       </div>
     </div>
     <div class="panel-footer dashboard-footer">

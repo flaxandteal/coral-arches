@@ -40,6 +40,17 @@ class Dashboard(View):
             
             update = request.GET.get('update', 'true') == 'true'
             
+            # set a version key for the cache
+            version_key = f"dashboard_version_{user_id}"
+            version = cache.get(version_key)
+            if version is None:
+                version = 1
+                cache.set(version_key, version, 60 * 15) 
+
+            if update:
+                version += 1
+                cache.set(version_key, version, 60 * 60)
+            
             dashboard = request.GET.get('dashboard', None)
             task_resources = []
             counters = {}
@@ -51,9 +62,8 @@ class Dashboard(View):
             sort_options = []
             filter_options = []
 
-            cache_key = f'dashboard_{user_id}_{page}'
+            cache_key = f'dashboard_{user_id}_{version}_{page}'
             cache_data = cache.get(cache_key)
-
             if not update and cache_data:
                 data = json.loads(cache_data)
                 task_resources = data['task_resources']
@@ -63,7 +73,6 @@ class Dashboard(View):
                 total_resources = data['total_resources']
                 utilities = Utilities()
                 task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
-
             else:
                 key = f"groups_{user_id}"
                 data_cache = cache.get(key)
