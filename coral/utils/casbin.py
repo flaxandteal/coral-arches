@@ -20,6 +20,14 @@ class SetApplicator:
     def __init__(self, print_statistics, wait_for_completion, synchronous=False):
         self.print_statistics = print_statistics
         self.wait = wait_for_completion and (not synchronous)
+        if synchronous:
+            print("""
+                WARNING: synchronous currently 409s due to a
+                limitation of Elasticsearch:
+                  https://stackoverflow.com/questions/56602137/wait-for-completion-of-updatebyquery-with-the-elasticsearch-dsl
+                This may still be useful for debugging purposes.
+                TODO: use the lower-level refresh API for passing retry_on_conflict.
+            """)
         self.synchronous = synchronous
 
     def _apply_set(self, se, set_id, set_query, resourceinstanceid=None):
