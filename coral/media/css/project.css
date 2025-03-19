@@ -1046,11 +1046,21 @@ span.rp-tile-title {
     display:flex; 
     width:100%;
     padding: 0 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .dashboard-card-columns-alt > div:first-child {
     width: 75%;
+}
+
+.dashboard-card-list {
+    max-height: 58px;
+    overflow: auto;
+}
+
+.dashboard-card-list > p {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
 }
 
 .dashboard-card-panel {
@@ -1065,4 +1075,8 @@ span.rp-tile-title {
     min-height: 120px;
     margin:2rem 5rem;
     padding: 0 1rem 1rem 1rem;
+}
+
+.planning-card {
+    min-height: 258px;
 }

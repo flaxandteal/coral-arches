@@ -90,7 +90,6 @@ class PlanningTaskStrategy(TaskStrategy):
                         resources.append(consultation)
             sort_nodes = {
                 'deadline': lambda resource: resource.action[0].action_dates.target_date_n1,
-                'datetime': lambda resource: resource.consultation_dates.log_date
             }
 
             # Sort nodes allow us to access the model node value for sorting
@@ -122,7 +121,6 @@ class PlanningTaskStrategy(TaskStrategy):
     def get_sort_options(self):
         return [
             {'id': 'deadline', 'name': 'Deadline'}, 
-            {'id': 'date', 'name': 'Date'}
         ]
     
     def get_filter_options(self, groupId=None):
@@ -194,12 +192,40 @@ class PlanningTaskStrategy(TaskStrategy):
 
         action_status = utilities.node_check(lambda: consultation.action[0].action_status)
         action_type = utilities.node_check(lambda: consultation.action[0].action_type)
-        date_entered = utilities.node_check(lambda: consultation.consultation_dates.log_date)
+        assigned_to = utilities.node_check(lambda: consultation.action[0].assigned_to_n1)
         deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
         hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
         address = utilities.node_check(lambda: consultation.location_data.addresses)
         council = utilities.node_check(lambda: consultation.location_data.council)
         responses = utilities.node_check(lambda: consultation.response_action)
+        classification = utilities.node_check(lambda: consultation.classification_type)
+        related_ha = utilities.node_check(lambda: consultation.related_heritage_assets)
+
+        ha_refs = []
+        for ha in related_ha:
+            ihr = ha.heritage_asset_references.ihr_number
+            hb = ha.heritage_asset_references.hb_number
+            smr = ha.heritage_asset_references.smr_number
+            gardens = ha.heritage_asset_references.historic_parks_and_gardens
+
+            def valid(val):
+                return val is not None and val.strip() != ''
+
+            if valid(ihr):
+                ha_refs.append(ihr)
+            if valid(hb):
+                ha_refs.append(hb)
+            if valid(smr):
+                ha_refs.append(smr)
+            if valid(gardens):
+                ha_refs.append(gardens)
+
+        assigned_to_names = None
+        if assigned_to:
+            assigned_to_names = list(map(lambda person: person.name[0].full_name,  assigned_to))
+
+        if classification:
+            classification = utilities.domain_value_string_lookup(Consultation, 'classification_type', classification)
 
         # Initialise the team responses
         responded = {
@@ -223,9 +249,6 @@ class PlanningTaskStrategy(TaskStrategy):
         address = [part for part in address_parts if part is not None and part != 'None']
         
         responseslug = utilities.get_response_slug(groupId) if groupId else None
-        
-        if date_entered:
-            date_entered = datetime.strptime(date_entered, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
 
         deadline_message = None
         if deadline:
@@ -240,11 +263,13 @@ class PlanningTaskStrategy(TaskStrategy):
             'displaydescription': html.unescape(consultation._._description),
             'status': utilities.convert_id_to_string(action_status),
             'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
-            'date': date_entered,
+            'assigned_to': assigned_to_names,
+            'ha_refs': ha_refs,
             'deadline': deadline,
             'deadlinemessage': deadline_message,
             'address': address,
             'council': council,
+            'classification': classification,
             'responseslug': responseslug,
             'responded': responded
         }
