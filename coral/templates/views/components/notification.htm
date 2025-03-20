@@ -40,7 +40,9 @@
         <!-- /ko -->
         <!-- ko if: state.fields_cache.notif.context.enforcement_id -->
         <div class='entry'>
-            <a data-bind="attr: { href: 'open-workflow?workflow-slug=respond-to-enforcement-workflow&resource-id=' +  state.fields_cache.notif.context.resource_instance_id }" target="_blank" style="color: steelblue">
+            <a data-bind="click: () => {
+                openFlagged(state.fields_cache.notif.context.resource_instance_id, 'flag-for-enforcement-workflow')
+              } " target="_blank" style="color: steelblue">
                 <button class='btn btn-notifs-download btn-labeled btn-sm fa fa-link'>
                     <span data-bind="text: 'Open ' + state.fields_cache.notif.context.enforcement_id"></span>
                 </button>
