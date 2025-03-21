@@ -9,49 +9,42 @@ define([
   ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
     function viewModel(params) {
 
-    const AGRICULTURE_DATE_NODEGROUP_ID = "5d6eecde-e217-11ef-803e-0242ac120003"
-    const RESPONSE_DATE_NODE = '798d9d74-e218-11ef-803e-0242ac120003';
-    const DUE_DATE_NODE = '5b6a2ede-e218-11ef-803e-0242ac120003';
-    const DEADLINE_NODE = 'ff42f8f2-3e93-11ef-9023-0242ac140007';
+    const DATE_NODEGROUP_ID = params.dateNodeGroupID;
+    const ISSUE_DATE_NODE = params.issueDateNode;
+    const DUE_DATE_UNTIL_NODE = params.dueDateNode;
+    const DAYS_TO_ADD = params.daysToAdd;
     
     CardComponentViewModel.apply(this, [params]);
 
+      if (this.tile.data[ISSUE_DATE_NODE] && ko.isObservable(this.tile.data[ISSUE_DATE_NODE])) {
+        this.tile.data[ISSUE_DATE_NODE].subscribe(issueDate => {
+          const dueDate = this.addDays(issueDate)
+          this.tile.data[DUE_DATE_UNTIL_NODE](dueDate)
+        })
+      }
+
       this.fetchTileData = async (resourceId) => {
+
         const tilesResponse = await window.fetch(
-          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
+          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+            (DATE_NODEGROUP_ID ? `?nodeid=${DATE_NODEGROUP_ID}` : '')
         );
 
         const data = await tilesResponse.json();
 
         return data.tiles;
       };
+      
+      
+      this.addDays = (dateString) => {
+        const date = new Date(dateString);
 
-      this.fetchAgriDate = async (resourceId) => {
-        const tilesResponse = await window.fetch(
-          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
-            (AGRICULTURE_DATE_NODEGROUP_ID ? `?nodeid=${AGRICULTURE_DATE_NODEGROUP_ID}` : '')
-        );
-
-        const data = await tilesResponse.json();
-
-        return data.tiles[0];
-      }
-
-      this.withinDeadline = async () => {
-        const dateTiles = await this.fetchAgriDate(this.tile.resourceinstance_id);
-
-        const responseDate = new Date(dateTiles.data[RESPONSE_DATE_NODE]);
-        const dueDate = new Date(dateTiles.data[DUE_DATE_NODE]);
-
-        if (dateTiles.data[RESPONSE_DATE_NODE] == null) {
-          return false;
-        }
-
-        if (responseDate < dueDate) {
-            return true;   
-        } else {
-          return false
-        }
+        date.setDate(date.getDate() + DAYS_TO_ADD);
+      
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
       }
 
       this.getLatestTile = async () => {
@@ -69,10 +62,7 @@ define([
           });
   
           this.tile.tileid = tile.tileid;
-
-          const bool = await this.withinDeadline();
-          this.tile.data[DEADLINE_NODE](bool)
-
+  
           // Reset dirty state
           this.tile._tileData(koMapping.toJSON(this.tile.data));
         } catch (err) {
@@ -94,10 +84,11 @@ define([
 
     
   
-    ko.components.register('update-deadline', {
+    ko.components.register('update-dates', {
       viewModel: viewModel,
       template: componentTemplate
     });
   
     return viewModel;
   });
+  

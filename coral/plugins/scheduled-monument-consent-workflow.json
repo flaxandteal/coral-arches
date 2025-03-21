@@ -374,7 +374,8 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": ["save"]
       },
       {
         "name": "decision-step",
