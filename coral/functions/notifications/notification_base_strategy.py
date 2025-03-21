@@ -16,7 +16,7 @@ class NotificationStrategy:
             name = name.removesuffix(remove_suffix).strip()
         return  name, resource_instance_id
     
-    def create_notification(self, message, name, resource_instance_id, response_slug):
+    def create_notification(self, message, name, resource_instance_id, response_slug, notiftype_id):
         self._delete_existing_notification(resource_instance_id)
         notification = models.Notification(
                     message = message,
