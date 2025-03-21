@@ -19,7 +19,7 @@ class NotificationStrategy():
             name = name.removesuffix(remove_suffix).strip()
         return  name, resource_instance_id
     
-    def create_notification(self, message, name, resource_instance_id, response_slug, notiftype_id):
+    def create_notification(self, message, name, resource_instance_id, response_slug, notiftype_id=None, email=False):
         self._delete_existing_notification(resource_instance_id)
         notification = models.Notification(
                     message = message,
@@ -28,7 +28,20 @@ class NotificationStrategy():
                         "resource_id": name,
                         "response_slug": response_slug
                     },
+                    notiftype_id = notiftype_id
                 )
+        
+        if email:
+            link = self._build_url()
+            email_params = {
+                "greeting": message,
+                "email": "", 
+                "salutation": "Hi",
+                "username": "", 
+                "link": link,
+                "button_text": "Open Arches"
+            }
+            notification.context.update(email_params)
                         
         notification.save()
         return notification
@@ -48,11 +61,22 @@ class NotificationStrategy():
     def notify_user(self, user, notification):
         user = user.user_account
 
+        if 'email' in notification.context:
+            notification = self.update_email_details(notification, user)
+
         user_x_notification = models.UserXNotification(
             notif = notification,
             recipient = user
         )
         user_x_notification.save()
+
+    def update_email_details(self, notification, user):
+        notification.context['username'] = user.username
+        notification.context['email'] = user.email
+        return notification
+    
+    def _build_url(self):
+        return self.request.build_absolute_uri(f"/index.htm")
     
     def get_domain_value_string(self, value_id, node_id):
         node = models.Node.objects.filter(

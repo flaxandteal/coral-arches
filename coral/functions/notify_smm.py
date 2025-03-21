@@ -75,7 +75,7 @@ class FMWStrategy(NotificationStrategy):
         message = f"A new FMW Inspection {reference} has been started and requires attention"
         groups_to_notify = [ADMIN, SMM_CUR_D, SMM_CUR_E]
 
-        notification = self.create_notification(message, reference, resource_instance_id, FMW_SLUG, SMM_NOTIF_TYPE)
+        notification = self.create_notification(message, reference, resource_instance_id, FMW_SLUG, SMM_NOTIF_TYPE, email=True)
                                 
         self.notify_groups(user, groups_to_notify, notification)
 
@@ -86,7 +86,7 @@ class IssueReportStrategy(NotificationStrategy):
         message = f"A new Issue Report for {name} has been started and requires attention"
         groups_to_notify = [ADMIN, SMM_CUR_D]
 
-        notification = self.create_notification(message, name, resource_instance_id, ISSUE_REPORT_SLUG, SMM_NOTIF_TYPE)
+        notification = self.create_notification(message, name, resource_instance_id, ISSUE_REPORT_SLUG, SMM_NOTIF_TYPE, email=True)
                                 
         self.notify_groups(user, groups_to_notify, notification)
 
@@ -97,6 +97,6 @@ class SMCStrategy(NotificationStrategy):
         message = f"A new SMC for {name} has been started and requires attention"
         groups_to_notify = [ADMIN, SMM_CUR_D]
 
-        notification = self.create_notification(message, name, resource_instance_id, SMC_SLUG, SMM_NOTIF_TYPE)
+        notification = self.create_notification(message, name, resource_instance_id, SMC_SLUG, SMM_NOTIF_TYPE, email=True)
                                 
         self.notify_groups(user, groups_to_notify, notification)
