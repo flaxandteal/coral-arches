@@ -3,7 +3,10 @@ from arches.app.models.resource import Resource
 from arches_orm.adapter import admin
 import logging
 
-class NotificationStrategy:
+class NotificationStrategy():
+    def __init__(self, request):
+        self.request = request
+
     def send_notification(self, user, tile):
         raise NotImplementedError("Subclasses should implement this method")
 

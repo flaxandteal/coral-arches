@@ -61,7 +61,7 @@ class NotifySMM(BaseFunction):
             user = request.user
             user_resource = Person.where(user_account=user.id)[0] if user and Person.where(user_account=user.id) else None
             
-            notification_manager = NotificationManager(nodegroup_id, user_resource, tile, strategy_registry)
+            notification_manager = NotificationManager(nodegroup_id, user_resource, tile, strategy_registry, request)
 
             notification_manager.notify()
 
