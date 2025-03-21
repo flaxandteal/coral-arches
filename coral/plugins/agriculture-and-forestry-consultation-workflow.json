@@ -64,8 +64,12 @@
                   "label": "Select Heritage Assets",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
-                  "node": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                  "nodegroupid": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
+                  "node": "2b4cfdac-04ba-11f0-9182-9e7c335817fb",
+                  "hiddenNodes": [
+                      "dc809034-04ba-11f0-8d60-9e7c335817fb", 
+                      "49d44590-04bb-11f0-8d60-9e7c335817fb"
+                    ],
                   "nodeOptions": {
                     "58a2b98f-a255-11e9-9a30-00224800b26d" : {
                       "searchString": "",
@@ -82,10 +86,13 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "b299c804-fb45-11ef-b148-8e7ccd27c960",
-                  "relatedHANodeGroupID": "bc64746e-cf4a-11ef-997c-0242ac120007",
-                  "mounmentNode": "0bf0bb56-fb46-11ef-b148-8e7ccd27c960",
-                  "scheduledMonumentNode": "6fcde888-fb46-11ef-b148-8e7ccd27c960",
+                  "nodegroupid": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
+                  "hiddenNodes": [
+                    "2b4cfdac-04ba-11f0-9182-9e7c335817fb"
+                  ],
+                  "relatedHANodeGroupID": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
+                  "mounmentNode": "dc809034-04ba-11f0-8d60-9e7c335817fb",
+                  "scheduledMonumentNode": "49d44590-04bb-11f0-8d60-9e7c335817fb",
                   "semanticName": "monuments"
                 },
                 "tilesManaged": "one",

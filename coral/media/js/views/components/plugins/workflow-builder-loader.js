@@ -26,7 +26,6 @@ define([
   'views/components/workflows/assign-consultation-workflow/related-heritage-asset-map',
   'views/components/workflows/fetch-latest-tile',
   'views/components/workflows/show-nodes',
-  'views/components/workflows/agriculture-and-forestry-consultation-workflow/get-selected-heritage-asset-details',
   'views/components/workflows/update-dates',
   'views/components/workflows/agriculture-and-forestry-consultation-workflow/generate-afc-number',
   'views/components/workflows/update-deadline',

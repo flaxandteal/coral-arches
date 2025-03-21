@@ -12,9 +12,19 @@ define([
     const HA_NODEGROUP_ID = params.relatedHANodeGroupID;
     const MONUMENT_COUNT_NODE = params.mounmentNode;
     const SCHEDULED_MONUMENT_COUNT_NODE = params.scheduledMonumentNode;
-    const count = ko.observable(0);
+    const HA_NODE = "2b4cfdac-04ba-11f0-9182-9e7c335817fb";
 
     CardComponentViewModel.apply(this, [params]);
+
+    if (this.tile.data[HA_NODE] && ko.isObservable(this.tile.data[HA_NODE])) {
+      console.log("IN IF");
+
+      this.tile.data[HA_NODE].subscribe(() => {
+        console.log("subscribed to HA node");
+        const monumentCount = this.tile.data[HA_NODE]().length;
+        this.tile.data[MONUMENT_COUNT_NODE](monumentCount);
+      });
+    };
 
       this.fetchTileData = async (resourceId) => {
 
@@ -24,24 +34,6 @@ define([
         const data = await tilesResponse.json();
 
         return data.tiles;
-      };
-
-      this.fetchHAData = async (resourceId) => {
-        const tilesResponse = await window.fetch(
-          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
-            (HA_NODEGROUP_ID ? `?nodeid=${HA_NODEGROUP_ID}` : '')
-        );
-
-        const data = await tilesResponse.json();
-
-        return data.tiles;
-      };
-
-      this.returnMonumentCount = async () => {
-        const haTIleData = await this.fetchHAData(this.tile.resourceinstance_id);
-        const monumentCount = haTIleData[0]['data']['bc64746e-cf4a-11ef-997c-0242ac120007'].length;
-
-        return monumentCount;
       };
 
       this.returnScheduledMonumentData = async (nodeId) => {
@@ -56,10 +48,10 @@ define([
       const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
       this.returnScheduledMonumentCount = async () => {
-        const haTIleData = await this.fetchHAData(this.tile.resourceinstance_id);
+        const haTIleData = this.tile.data[HA_NODE]();
         var countItr = 0;
 
-        haTIleData[0]['data']['bc64746e-cf4a-11ef-997c-0242ac120007'].forEach(async (tile) => {
+        haTIleData.forEach(async (tile) => {
           const scheduledMonumentData = await this.returnScheduledMonumentData(tile['resourceId']);
           
            scheduledMonumentData.forEach((data) => {
@@ -91,12 +83,11 @@ define([
   
           this.tile.tileid = tile.tileid;
 
-          const monumentCount = await this.returnMonumentCount();
-          this.tile.data[MONUMENT_COUNT_NODE](monumentCount);
+          console.log(this.tile.data[HA_NODE](), "HA node");
 
           const scheduledMonumentCount = await this.returnScheduledMonumentCount();
           this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE](scheduledMonumentCount);
-  
+
           // Reset dirty state
           this.tile._tileData(koMapping.toJSON(this.tile.data));
         } catch (err) {
