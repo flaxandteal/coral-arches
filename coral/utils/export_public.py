@@ -6,6 +6,7 @@ import psycopg2
 import shutil
 from uuid import UUID
 from django.contrib.auth.models import User, Group as DjangoGroup
+from django.core.files.storage import  default_storage
 from arches.app.models.models import GraphModel
 
 from arches.app.search.elasticsearch_dsl_builder import Query
@@ -116,15 +117,12 @@ def export_business_data(output_dir, graph_ids, resource_ids):
                 )  # New exporter needed for each graphid, else previous data is appended with each subsequent graph
                 data = resource_exporter.export(graph_id=graphid, resourceinstanceids=None, languages=languages)
                 for file in data:
-                    with open(
-                        os.path.join(
-                            output_dir,
-                            "".join(char if (char.isalnum() or char in safe_characters) else "-" for char in file["name"]).rstrip(),
-                        ),
-                        "w",
-                    ) as f:
-                        file["outputfile"].seek(0)
-                        shutil.copyfileobj(file["outputfile"], f, 16 * 1024)
+                    filename= os.path.join(
+                        "publicexport",
+                        "".join(char if (char.isalnum() or char in safe_characters) else "-" for char in file["name"]).rstrip(),
+                    )
+                    file["outputfile"].seek(0)
+                    default_storage.save(filename, file["outputfile"])
                     print("\t", file["name"], "written")
             except KeyError:
                 print("{0} is not a valid export file format.".format(file_format))
