@@ -4,6 +4,7 @@ import os
 import readline
 import psycopg2
 import shutil
+from io import BytesIO
 from uuid import UUID
 from django.contrib.auth.models import User, Group as DjangoGroup
 from django.core.files.storage import  default_storage
@@ -122,7 +123,9 @@ def export_business_data(output_dir, graph_ids, resource_ids):
                         "".join(char if (char.isalnum() or char in safe_characters) else "-" for char in file["name"]).rstrip(),
                     )
                     file["outputfile"].seek(0)
-                    default_storage.save(filename, file["outputfile"])
+                    bytesio = BytesIO(file["outputfile"].getvalue().encode())
+                    bytesio.seek(0)
+                    default_storage.save(filename, bytesio)
                     print("\t", file["name"], "written")
             except KeyError:
                 print("{0} is not a valid export file format.".format(file_format))
