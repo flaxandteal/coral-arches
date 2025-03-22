@@ -4,6 +4,7 @@ import os
 import readline
 import psycopg2
 import shutil
+from uuid import UUID
 from django.contrib.auth.models import User, Group as DjangoGroup
 from arches.app.models.models import GraphModel
 
@@ -15,13 +16,21 @@ from arches.app.search.mappings import RESOURCES_INDEX
 from arches_orm.adapter import context_free
 from arches_orm.models import Group, Person
 from arches.app.utils.data_management.resources.exporter import ResourceExporter
+from arches.app.models.resource import Resource
 from coral import settings
 
 @context_free
 def export_public(output_dir):
     from arches.app.search.search_engine_factory import SearchEngineInstance as _se
 
-    pblc = Group.find("452ab9f2-ed4c-44dc-9ad3-ff9085734bc8")
+    try:
+        pblc = Group.find("452ab9f2-ed4c-44dc-9ad3-ff9085734bc8")
+    except Resource.DoesNotExist:
+        pblc = Group()
+        pblc.id = UUID("452ab9f2-ed4c-44dc-9ad3-ff9085734bc8")
+        pblc.basic_info.append()
+        pblc.basic_info[0].name = "PUBLIC Group"
+        pblc.save()
     print(pblc)
     if not output_dir:
         print("No output directory specified, dry-run")
