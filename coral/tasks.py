@@ -23,6 +23,11 @@ logging.basicConfig()
 
 
 @shared_task
+def export_public_resources(output_dir):
+    from coral.utils.export_public import export_public
+    export_public(output_dir)
+
+@shared_task
 def recalculate_permissions_table():
     framework = CasbinPermissionFramework()
     enforcer = framework._enforcer
