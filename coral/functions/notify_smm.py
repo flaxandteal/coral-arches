@@ -1,7 +1,8 @@
 from arches.app.functions.base import BaseFunction
 from arches_orm.adapter import admin
-from coral.functions.notifications.notification_base_strategy import NotificationStrategy
 from coral.functions.notifications.notification_manager import NotificationManager
+import logging
+import os
 
 # node groups
 SIGN_OFF = "93199292-fb24-11ee-838d-0242ac190006" # FMW completed
@@ -20,12 +21,9 @@ SIGN_OFF_DATE = "24d00d86-fb27-11ee-b5d2-0242ac190006"
 REFERENCE_NUMBER = "2001a33a-d711-11ee-9dd0-0242ac120006"
 
 #response slugs
-FMW_SLUG = "fmw-inspection-workflow"
 ISSUE_REPORT_SLUG = "issue-report-workflow"
 SMC_SLUG = "scheduled-monument-consent-workflow"
 
-#notification type
-SMM_NOTIF_TYPE = "f49995b9-59ea-4f85-adbb-0e3a60587bd6"
 
 details = {
     "functionid": "3211cb7d-2629-4eaf-94e7-1a371fabca5f",
@@ -45,58 +43,44 @@ details = {
 
 class NotifySMM(BaseFunction):
     def post_save(self, tile, request, context):
-        from arches_orm.models import Person
-        with admin():
-            if context and context.get('escape_function', False):
-                return
-
-            strategy_registry = { 
-                SIGN_OFF: FMWStrategy,
-                ISSUE_REFERENCE: IssueReportStrategy,
-                PROPOSAL: SMCStrategy
-            }
-
-            nodegroup_id = str(tile.nodegroup_id)
-
-            user = request.user
-            user_resource = Person.where(user_account=user.id)[0] if user and Person.where(user_account=user.id) else None
-            
-            notification_manager = NotificationManager(nodegroup_id, user_resource, tile, strategy_registry, request)
-
-            notification_manager.notify()
-
-class FMWStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        reference, resource_instance_id = self.get_resource_details(tile)
-
-        if not reference.startswith("FMW"):
+        if context and context.get('escape_function', False):
             return
 
-        message = f"A new FMW Inspection {reference} has been started and requires attention"
-        groups_to_notify = [ADMIN, SMM_CUR_D, SMM_CUR_E]
+        strategy_registry = { 
+            # FMW Workflow
+            SIGN_OFF: {
+                'config': {
+                    'message': "A new FMW Inspection {name} has been started and requires attention",
+                    'response_slug': "fmw-inspection-workflow",
+                    'notiftype_id': "f49995b9-59ea-4f85-adbb-0e3a60587bd6",
+                    'groups_to_notify': [ADMIN, SMM_CUR_D, SMM_CUR_E],
+                    'email': True,
+                    'check_prefix': 'FMW'
+                }
+            },
+            # Issue Report
+            ISSUE_REFERENCE: {
+                'config': {
+                    'message': "A new Issue Report for {name} has been started and requires attention",
+                    'response_slug': "issue-report-workflow",
+                    'notiftype_id': "f49995b9-59ea-4f85-adbb-0e3a60587bd6",
+                    'groups_to_notify': [ADMIN, SMM_CUR_D],
+                    'email': True,
+                }
+            },
+            # SMC Workflow
+            PROPOSAL: {
+                'config': {
+                    'message': "A new SMC for {name} has been started and requires attention",
+                    'response_slug': "scheduled-monument-consent-workflow",
+                    'notiftype_id': "f49995b9-59ea-4f85-adbb-0e3a60587bd6",
+                    'groups_to_notify': [ADMIN, SMM_CUR_D],
+                    'email': True,
+                }
+            },
+        }
+        
+        notification_manager = NotificationManager(tile, strategy_registry, request)
 
-        notification = self.create_notification(message, reference, resource_instance_id, FMW_SLUG, SMM_NOTIF_TYPE, email=True)
-                                
-        self.notify_groups(user, groups_to_notify, notification)
-
-class IssueReportStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile)
-
-        message = f"A new Issue Report for {name} has been started and requires attention"
-        groups_to_notify = [ADMIN, SMM_CUR_D]
-
-        notification = self.create_notification(message, name, resource_instance_id, ISSUE_REPORT_SLUG, SMM_NOTIF_TYPE, email=True)
-                                
-        self.notify_groups(user, groups_to_notify, notification)
-
-class SMCStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile)
-
-        message = f"A new SMC for {name} has been started and requires attention"
-        groups_to_notify = [ADMIN, SMM_CUR_D]
-
-        notification = self.create_notification(message, name, resource_instance_id, SMC_SLUG, SMM_NOTIF_TYPE, email=True)
-                                
-        self.notify_groups(user, groups_to_notify, notification)
+        notification_manager.notify()
+            
