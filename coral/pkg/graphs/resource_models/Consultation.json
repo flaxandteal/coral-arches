@@ -12696,11 +12696,11 @@
                 {
                     "description": null,
                     "domainnode_id": "93199292-fb24-11ee-838d-0242ac190006",
-                    "edgeid": "f0050529-2876-4007-b31c-b788f21bf1c4",
+                    "edgeid": "45fb3428-f26f-4676-8499-cea936a4cdc4",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "rangenode_id": "ff42f8f2-3e93-11ef-9023-0242ac140007"
+                    "rangenode_id": "9bcf2ec2-018a-4ccc-a895-f45ffc22239e"
                 },
                 {
                     "description": null,
@@ -17928,12 +17928,6 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "ffbac7d6-e9ee-11ef-8d51-0242ac120006",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
                     "parentnodegroup_id": null
                 },
                 {
@@ -32611,6 +32605,38 @@
                     "name": "Send Papers",
                     "nodegroup_id": "93199292-fb24-11ee-838d-0242ac190006",
                     "nodeid": "ff42f8f2-3e93-11ef-9023-0242ac140007",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "within_deadline",
+                    "config": {
+                        "falseLabel": {
+                            "en": "No"
+                        },
+                        "i18n_properties": [
+                            "trueLabel",
+                            "falseLabel"
+                        ],
+                        "trueLabel": {
+                            "en": "Yes"
+                        }
+                    },
+                    "datatype": "boolean",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Within Deadline",
+                    "nodegroup_id": "93199292-fb24-11ee-838d-0242ac190006",
+                    "nodeid": "9bcf2ec2-018a-4ccc-a895-f45ffc22239e",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0,
