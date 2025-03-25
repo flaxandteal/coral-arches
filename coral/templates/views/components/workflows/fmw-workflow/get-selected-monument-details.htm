@@ -348,11 +348,15 @@
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">Designation Type</span>
-                        <span data-bind="text: cards()[monument].designationType" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <!-- ko foreach: cards()[monument].designationType -->
+                        <span data-bind="text: $data" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <!-- /ko -->
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">Townland</span>
-                        <span data-bind="text: cards()[monument].townlandValue" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <!-- ko foreach: cards()[monument].townlandValue -->
+                        <span data-bind="text: $data" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <!-- /ko -->
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">B File(s)</span>
