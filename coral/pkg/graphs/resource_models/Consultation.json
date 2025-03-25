@@ -17927,6 +17927,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "ffbac7d6-e9ee-11ef-8d51-0242ac120006",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
                     "parentnodegroup_id": null
                 },
@@ -26097,7 +26103,7 @@
                 {
                     "alias": "proposed_grade_type",
                     "config": {
-                        "rdmCollection": "d67be3d7-4f88-4c0d-9a1b-e1ac0f0c7921"
+                        "rdmCollection": "dcf57269-152d-11f0-8098-cad3ba7ecac2"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -26125,114 +26131,114 @@
                         },
                         "options": [
                             {
-                                "text": {"en": "A. Style"},
-                                "selected": false,
-                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "B. Proportion"},
-                                "selected": false,
-                                "id": "3f45cd03-4ba5-5ca5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "C. Ornamentation"},
-                                "selected": false,
-                                "id": "3f456666-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "D. Plan Form"},
-                                "selected": false,
-                                "id": "32fbcd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "E. Spatial Organisation"},
-                                "selected": false,
-                                "id": "abcdcd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "F. Structural System"},
-                                "selected": false,
-                                "id": "5678cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "G. Innovatory Qualities"},
-                                "selected": false,
-                                "id": "9999cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "H+. Alterations enhancing the building"},
-                                "selected": false,
-                                "id": "d2f6cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "H-. Alterations detracting from building"},
-                                "selected": false,
-                                "id": "4b60cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "I. Quality and survival of Interior"},
-                                "selected": false,
-                                "id": "b1b7cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "J. Setting"},
-                                "selected": false,
-                                "id": "78a5cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "K. Group value"},
-                                "selected": false,
-                                "id": "7241cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "R. Age"},
-                                "selected": false,
-                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "S. Authenticity"},
-                                "selected": false,
-                                "id": "349fcd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "T. Historic Importance"},
-                                "selected": false,
-                                "id": "5555cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "U. Historic Associations"},
-                                "selected": false,
-                                "id": "4a14cd02-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "V. Authorship"},
-                                "selected": false,
-                                "id": "e261478a-102f-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "W. Northern Ireland / International interest"},
-                                "selected": false,
-                                "id": "3f45cd02-d2f6-4ba5-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "X. Local Interest"},
-                                "selected": false,
-                                "id": "3f45cd02-102f-4b60-94d6-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "Y. Social, cultural or economic importance"},
-                                "selected": false,
-                                "id": "3f45cd02-102f-4ba5-b1b7-99dd3522fa23"
-                            },
-                            {
-                                "text": {"en": "Z. Rarity"},
+                                "text": { "en": "Z. Rarity" },
                                 "selected": false,
                                 "id": "3f45cd02-102f-4ba5-94d6-a55478a57241"
-                            }
+                              },
+                              {
+                                "text": { "en": "Y. Social, cultural or economic importance" },
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-b1b7-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "X. Local Interest" },
+                                "selected": false,
+                                "id": "3f45cd02-102f-4b60-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "W. Northern Ireland / International interest" },
+                                "selected": false,
+                                "id": "3f45cd02-d2f6-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "V. Authorship" },
+                                "selected": false,
+                                "id": "e261478a-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "U. Historic Associations" },
+                                "selected": false,
+                                "id": "4a14cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "T. Historic Importance" },
+                                "selected": false,
+                                "id": "5555cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "S. Authenticity" },
+                                "selected": false,
+                                "id": "349fcd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "R. Age" },
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "K. Group value" },
+                                "selected": false,
+                                "id": "7241cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "J. Setting" },
+                                "selected": false,
+                                "id": "78a5cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "I. Quality and survival of Interior" },
+                                "selected": false,
+                                "id": "b1b7cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "H-. Alterations detracting from building" },
+                                "selected": false,
+                                "id": "4b60cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "H+. Alterations enhancing the building" },
+                                "selected": false,
+                                "id": "d2f6cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "G. Innovatory Qualities" },
+                                "selected": false,
+                                "id": "9999cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "F. Structural System" },
+                                "selected": false,
+                                "id": "5678cd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "E. Spatial Organisation" },
+                                "selected": false,
+                                "id": "abcdcd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "D. Plan Form" },
+                                "selected": false,
+                                "id": "32fbcd02-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "C. Ornamentation" },
+                                "selected": false,
+                                "id": "3f456666-102f-4ba5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "B. Proportion" },
+                                "selected": false,
+                                "id": "3f45cd03-4ba5-5ca5-94d6-99dd3522fa23"
+                              },
+                              {
+                                "text": { "en": "A. Style" },
+                                "selected": false,
+                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
+                              }
                         ],
                         "rdmCollection": null
                     },
-                    "datatype": "domain-value",
+                    "datatype": "domain-value-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -28499,29 +28505,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "agriculture_related_people",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "semantic",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "hascustomalias": false,
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Agriculture related people",
-                    "nodegroup_id": "8780196a-dfda-11ef-a67e-0242ac120006",
-                    "nodeid": "8780196a-dfda-11ef-a67e-0242ac120006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P11_had_participant",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "applicants_n1",
                     "config": {
                         "en": ""
@@ -28574,181 +28557,6 @@
                     "nodeid": "87e0b839-9391-11ea-8a85-f875a44e0e11",
                     "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P165i_is_incorporated_in",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "evaluation_criteria",
-                    "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "A. Style"
-                                }
-                            },
-                            {
-                                "id": "3f45cd03-4ba5-5ca5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "B. Proportion"
-                                }
-                            },
-                            {
-                                "id": "3f456666-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "C. Ornamentation"
-                                }
-                            },
-                            {
-                                "id": "32fbcd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "D. Plan Form"
-                                }
-                            },
-                            {
-                                "id": "abcdcd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "E. Spatial Organisation"
-                                }
-                            },
-                            {
-                                "id": "5678cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "F. Structural System"
-                                }
-                            },
-                            {
-                                "id": "9999cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "G. Innovatory Qualities"
-                                }
-                            },
-                            {
-                                "id": "d2f6cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "H+. Alterations enhancing the building"
-                                }
-                            },
-                            {
-                                "id": "4b60cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "H-. Alterations detracting from building"
-                                }
-                            },
-                            {
-                                "id": "b1b7cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "I. Quality and survival of Interior"
-                                }
-                            },
-                            {
-                                "id": "78a5cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "J. Setting"
-                                }
-                            },
-                            {
-                                "id": "7241cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "K. Group value"
-                                }
-                            },
-                            {
-                                "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "R. Age"
-                                }
-                            },
-                            {
-                                "id": "349fcd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "S. Authenticity"
-                                }
-                            },
-                            {
-                                "id": "5555cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "T. Historic Importance"
-                                }
-                            },
-                            {
-                                "id": "4a14cd02-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "U. Historic Associations"
-                                }
-                            },
-                            {
-                                "id": "e261478a-102f-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "V. Authorship"
-                                }
-                            },
-                            {
-                                "id": "3f45cd02-d2f6-4ba5-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "W. Northern Ireland / International interest"
-                                }
-                            },
-                            {
-                                "id": "3f45cd02-102f-4b60-94d6-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "X. Local Interest"
-                                }
-                            },
-                            {
-                                "id": "3f45cd02-102f-4ba5-b1b7-99dd3522fa23",
-                                "selected": false,
-                                "text": {
-                                    "en": "Y. Social, cultural or economic importance"
-                                }
-                            },
-                            {
-                                "id": "3f45cd02-102f-4ba5-94d6-a55478a57241",
-                                "selected": false,
-                                "text": {
-                                    "en": "Z. Rarity"
-                                }
-                            }
-                        ],
-                        "rdmCollection": null
-                    },
-                    "datatype": "domain-value",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Criteria",
-                    "nodegroup_id": "34959a52-03aa-11ef-948f-0242ac150003",
-                    "nodeid": "8d41e49e-03ab-11ef-948f-0242ac150003",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
