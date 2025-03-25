@@ -367,6 +367,9 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "hiddenNodes": [
+                    "9bcf2ec2-018a-4ccc-a895-f45ffc22239e"
+                  ],
                   "nodeOptions": {
                     "998d6728-fb26-11ee-838d-0242ac190006": {
                       "allowInstanceCreation": false,
