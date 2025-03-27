@@ -48,6 +48,17 @@ define([
     })
 
     this.signOffGroups = params.signOffGroups ? params.signOffGroups : [] 
+    this.conflictNode = params.conflictNode ?? null; // check if user signed a different node that prevents sign off
+    this.conflictAllowBlank = params.conflictAllowBlank ?? true; // allows signoff if the conflict node is not filled in
+
+    this.fetchTileData = async(resourceId, nodeId) => {
+      const tilesResponse = await window.fetch(
+        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+          (nodeId ? `?nodeid=${nodeId}` : '')
+      );
+      const data = await tilesResponse.json();
+      return data.tiles;
+    };
 
     this.getPersonId = async () => {
       const response = await $.ajax({
@@ -70,6 +81,27 @@ define([
       return false
     }
 
+    this.checkConflictNode = async() => {
+      if (this.conflictNode in this.tile.data){
+        this.nodeValue = this.tile.data[this.conflictNode]();
+      }
+      else {
+        const response = await this.fetchTileData(this.tile.resourceinstance_id, this.conflictNode);
+        this.nodeValue = response[0].data[this.conflictNode]
+      }
+      if (!this.nodeValue) return this.conflictAllowBlank
+      if (Array.isArray(this.nodeValue)){
+        for (const item of this.nodeValue){
+          if (item.resourceId === this.personId()){
+            this.permittedToSign(false);
+            return false
+          }
+        }  
+      }
+      // if this returns false when the conflict node is empty it will allow the user to sign off
+      return false
+    }
+    
     this.validatePermission = async () => {
       const groups = this.personId() ? this.personId() : await this.getPersonId()
 
@@ -82,9 +114,15 @@ define([
       }
 
       if (this.signOffGroups.length > 0) {
-        groupIntersection = Array.from(new Set(groups).intersection(new Set(this.signOffGroups)))
-        this.permittedToSign(groupIntersection.length > 0)
-        return groupIntersection.length > 0
+        let allowSignOff = false
+        this.groupIntersection = Array.from(new Set(groups).intersection(new Set(this.signOffGroups)))
+        this.permittedToSign(this.groupIntersection.length > 0)
+        allowSignOff = this.groupIntersection.length > 0
+
+        if(this.conflictNode){
+          allowSignOff = this.checkConflictNode();
+        }
+        return allowSignOff
       } 
       return false
     };
