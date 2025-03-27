@@ -19,7 +19,7 @@ define([
     this.isUserAlreadyAdded = !!this.tile.data[this.node.id]()
     this.isUserAdded = ko.observable(!!this.tile.data[this.node.id]())
     this.valueString = ko.observable(this.tile.data[this.node.id]() ? this.tile.data[this.node.id]() : 'loading...')
-    this.iconClass = ko.observable(this.permittedToSign() ? (this.isUserAdded() ? 'fa fa-check' : 'fa-plus-circle') : 'fa fa-code')
+    this.iconClass = ko.observable(this.permittedToSign() ? (this.isUserAdded() ? 'fa fa-check' : 'fa-plus-circle') : 'fa fa-ban')
     this.textClass = ko.observable(this.isUserAlreadyAdded ? '' : 'cons-type')
 
 
@@ -89,7 +89,10 @@ define([
         const response = await this.fetchTileData(this.tile.resourceinstance_id, this.conflictNode);
         this.nodeValue = response[0].data[this.conflictNode]
       }
-      if (!this.nodeValue) return this.conflictAllowBlank
+      if (!this.nodeValue) {
+        this.permittedToSign(this.conflictAllowBlank);
+        return this.conflictAllowBlank
+      }
       if (Array.isArray(this.nodeValue)){
         for (const item of this.nodeValue){
           if (item.resourceId === this.personId()){
