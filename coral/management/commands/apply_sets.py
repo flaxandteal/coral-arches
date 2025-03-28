@@ -45,6 +45,14 @@ class Command(BaseCommand):
             help="Do extra searches to provide relevant statistics?",
         )
 
+        parser.add_argument(
+            "-S",
+            "--synchronous",
+            action="store_true",
+            dest="synchronous",
+            help="Run update-by-query synchronously",
+        )
+
 
     def handle(self, *args, **options):
         # Cannot be imported until Django ready
@@ -52,8 +60,9 @@ class Command(BaseCommand):
         from coral.utils.casbin import SetApplicator
 
         print_statistics = True if options["print_statistics"] else False
+        synchronous = True if options["synchronous"] else False
 
-        set_applicator = SetApplicator(print_statistics=print_statistics, wait_for_completion=True)
+        set_applicator = SetApplicator(print_statistics=print_statistics, wait_for_completion=True, synchronous=synchronous)
         try:
             set_applicator.apply_sets()
         except psycopg2.OperationalError:
