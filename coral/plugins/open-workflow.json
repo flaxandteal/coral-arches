@@ -8,8 +8,8 @@
     "show": false,
     "openableWorkflows": [
       {
-        "slug": "respond-to-enforcement-workflow",
-        "name": "Respond to Enforcement",
+        "slug": "flag-for-enforcement-workflow",
+        "name": "Flag for Enforcement",
         "graphIds": ["8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84"],
         "description": "",
         "disableStartNew": true,

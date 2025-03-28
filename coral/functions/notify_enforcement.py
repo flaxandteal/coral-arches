@@ -1,6 +1,4 @@
 from arches.app.functions.base import BaseFunction
-from arches.app.models.resource import Resource
-from arches.app.models.tile import Tile
 from arches.app.models import models
 from arches_orm.models import Person, Group
 
@@ -61,6 +59,8 @@ class NotifyEnforcement(BaseFunction):
         if not reason_description or not system_ref:
             return
 
+        link_url = request.build_absolute_uri(f"/index.htm")
+        
         notification = models.Notification(
             message=reason_description.data.get(REASON_DESC_NODE)
             .get("en")
@@ -70,7 +70,14 @@ class NotifyEnforcement(BaseFunction):
                 "enforcement_id": system_ref.data.get(SYSTEM_REF_RESOURCE_ID_NODE)
                 .get("en")
                 .get("value"),
+                "greeting": f"A new enforcement has been created: \n{reason_description.data.get(REASON_DESC_NODE).get('en', None).get('value', None)}",
+                "email": "", # set with the users below
+                "salutation": "Hi",
+                "username": "", # set with the users below
+                "link": link_url,
+                "button_text": "Open Arches"
             },
+            notiftype_id='e15c6b6e-0526-45fa-b004-d382c5e8f5a5'
         )
         notification.save()
 
@@ -80,6 +87,8 @@ class NotifyEnforcement(BaseFunction):
 
         for person in persons:
             user = person.user_account
+            notification.context['username'] = user.username
+            notification.context['email'] = user.email
 
             user_x_notification = models.UserXNotification(
                 notif=notification, recipient=user
