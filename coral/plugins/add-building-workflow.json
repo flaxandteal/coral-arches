@@ -374,6 +374,8 @@
                     "9382b7b4-1905-11ef-aa9f-0242ac150006": {
                       "component": "user-to-model-select",
                       "signOffGroups": ["9a88b67b-cb12-4137-a100-01a977335298"],
+                      "conflictNode": ["1200e850-1905-11ef-aa9f-0242ac150006"],
+                      "conflictAllowBlank": false,
                       "allowInstanceCreation": false
                     },
                     "ac25af94-1903-11ef-aa9c-0242ac150006": {

@@ -6,18 +6,18 @@
     <div class="row">
         <span class="control-labx mesel widget-input-label" data-bind="text:label()"></span>
     </div>
-    <div class="rr-table">
+    <div class="rr-table" style="overflow: auto">
         <div class="rr-table-row" data-bind="click: permittedToSign() && !isUserAlreadyAdded ? function(e){setValue()} : function(e) { }">
             <div class="rr-table-row-initial">
                 <div class="rr-table-column" style="flex-grow: 1; cursor: pointer;">
                     <div class="rr-table-instance-label">
-                        <i data-bind="class: permittedToSign() ? 'sm-icon-wrap fa fa-user' : 'sm-icon-wrap fa fa-code'"></i><span data-bind="class: textClass(), text: valueString()"></span>
+                        <i data-bind="class: permittedToSign() ? 'sm-icon-wrap fa fa-user' : 'sm-icon-wrap fa fa-ban', style: { 'pointer-events': permittedToSign() ? 'none' : 'auto',  'margin-right': '1rem' }"></i><span data-bind="class: textClass(), text: valueString()"></span>
                     </div>
                 </div>
-                <!-- ko if: !isUserAlreadyAdded -->
-                <div class="rr-table-column icon-column">
+                <!-- ko if: !isUserAlreadyAdded && permittedToSign() -->
+                <div class="rr-table-column icon-column" style="width:auto">
                     <div class=".tabbed-workflow-footer-button-container">
-                        <button data-bind="class: permittedToSign() ? 'btn btn-success' : 'btn btn-danger'">
+                        <button data-bind="class: permittedToSign() ? 'btn btn-success' : 'btn btn-danger'" style="height:36px">
                             <i data-bind="class: iconClass()"></i>
                         </button>
                     </div>
