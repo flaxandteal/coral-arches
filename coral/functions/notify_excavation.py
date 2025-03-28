@@ -1,9 +1,7 @@
 from arches.app.functions.base import BaseFunction
-from arches.app.models import models
-from arches.app.models.resource import Resource
 from arches_orm.adapter import admin
-import logging
-import pdb
+from coral.functions.notifications.notification_base_strategy import NotificationStrategy
+from coral.functions.notifications.notification_manager import NotificationManager
 
 # node groups
 SYSTEM_REFERENCE = '991c3c74-48b6-11ee-85af-0242ac140007'
@@ -55,250 +53,181 @@ details = {
 
 class NotifyExcavation(BaseFunction):
     def post_save(self, tile, request, context):
-        from arches_orm.models import Person
-        with admin():
-            if context and context.get('escape_function', False):
-                return
-
-            nodegroup_id = str(tile.nodegroup_id)
-
-            user = request.user
-            user_resource = Person.where(user_account=user.id)[0] if user and Person.where(user_account=user.id) else None
-            
-            notification_manager = NotificationManager(nodegroup_id, user_resource, tile)
-
-            notification_manager.notify()
-
-class NotificationStrategy:
-    def send_notification(self, user, tile):
-        raise NotImplementedError("Subclasses should implement this method")
-
-    def get_resource_details(self, tile, remove_prefix=None, remove_suffix=None):
-        resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
-        name = Resource.objects.get(pk=resource_instance_id).displayname()
-        if remove_prefix:
-            name = name.removeprefix(remove_prefix).strip()
-        if remove_suffix:
-            name = name.removesuffix(remove_suffix).strip()
-        return  name, resource_instance_id
-    
-    def create_notification(self, message, name, resource_instance_id, response_slug):
-        self._delete_existing_notification(resource_instance_id)
-        notification = models.Notification(
-                    message = message,
-                    context = {
-                        "resource_instance_id": resource_instance_id,
-                        "resource_id": name,
-                        "response_slug": response_slug
-                    },
-                )
-                        
-        notification.save()
-        return notification
-    
-    def notify_groups(self, user, group_list, notification):
-        from arches_orm.models import Group, Person
-        with admin():
-            for group_id in group_list:
-                group = Group.find(group_id)
-                person_list = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
-                
-                for person in person_list:
-                    if user is None or person != user:
-                        
-                        self.notify_user(person, notification)
+        if context and context.get('escape_function', False):
+            return
         
-    def notify_user(self, user, notification):
-        user = user.user_account
+        strategy_registry = {
+            SYSTEM_REFERENCE : {
+                'config': {
+                    'message': "A new excavation licence {name} has been started and requires attention",
+                    'remove_prefix': 'Excavation Licence',
+                    'response_slug': 'licensing-workflow',
+                    'groups_to_notify': [ADMIN_GROUP, CUR_E_GROUP, CUR_D_GROUP],
+                    'email': False
+                }
+            },
+            REPORT : {
+                'strategy': ReportStrategy,
+                'config': {
+                    'message': "A new report has been added to {name}",
+                    'remove_prefix': 'Excavation Licence',
+                    'response_slug': 'licensing-workflow',
+                    'groups_to_notify': [CUR_D_GROUP, CUR_E_GROUP, ADMIN_GROUP],
+                    'email': False
+                }
+            }, 
+            CUR_D_DECISION : {
+                'strategy': CurDDecisionStrategy,
+                'config': {
+                    'message': "The Cur Grade D Decision has been updated for {name}.",
+                    'remove_prefix': 'Excavation Licence',
+                    'response_slug': 'licensing-workflow',
+                    'groups_to_notify': [ADMIN_GROUP, CUR_E_GROUP],
+                    'email': False
+                }
+            },  
+            CUR_E_DECISON : {
+                'strategy': CurEDecisionStrategy,
+                'config': {
+                    'message': "The Cur Grade E Decision has been updated for {name}.",
+                    'remove_prefix': 'Excavation Licence',
+                    'response_slug': 'licensing-workflow',
+                    'groups_to_notify': [ADMIN_GROUP, CUR_D_GROUP],
+                    'email': False
+                }
+            },  
+            APPLICATION_DETAILS : {
+                'strategy': ApplicationDetailsStrategy,
+                'config': {
+                    'message': "The Stage of Application for {name} has been updated",
+                    'remove_prefix': 'Excavation Licence',
+                    'response_slug': 'licensing-workflow',
+                    'groups_to_notify': [ADMIN_GROUP],
+                    'email': False
+                }
+            }, 
+            TRANSFER_OF_LICENCE : {
+                'strategy': TransferOfLicenceStrategy,
+                'config': {
+                    'message': "A Transfer of Licence has been created for {name}",
+                    'remove_prefix': 'Excavation Licence',
+                    'response_slug': 'licensing-workflow',
+                    'groups_to_notify': [ADMIN_GROUP],
+                    'email': False
+                }
+            }, 
+            EXTENSION_OF_LICENCE: {
+                'strategy': ExtensionOfLicenceStrategy,
+                'config': {
+                    'message': "An Extension of Licence {name} has been created",
+                    'remove_prefix': 'Excavation Licence',
+                    'response_slug': 'licensing-workflow',
+                    'groups_to_notify': [ADMIN_GROUP],
+                    'email': False
+                }
+            }, 
+        }
 
-        user_x_notification = models.UserXNotification(
-            notif = notification,
-            recipient = user
-        )
-        user_x_notification.save()
-    
-    def get_domain_value_string(self, value_id, node_id):
-        node = models.Node.objects.filter(
-            pk = node_id,   
-        ).first()
-        options = node.config.get("options")
-        value_string = next((option.get("text").get("en") for option in options if option.get("id") == value_id), None)
-        return value_string
+        notification_manager = NotificationManager(tile, strategy_registry, request)
 
-    def _delete_existing_notification(self, resource_instance_id):
-        existing_notification = models.Notification.objects.filter(
-            context__resource_instance_id=resource_instance_id
-        ).first()
-
-        if existing_notification:
-            existing_notification.delete()
-            logging.info("Deleted Existing Notification")
-
-class SystemReferenceStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name = tile.data[RESOURCE_ID].get("en").get("value").removeprefix('Excavation Licence').strip()
-
-        resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
-
-        message = f"A new excavation licence {name} has been started and requires attention"
-        groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP, CUR_D_GROUP]
-
-        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
-                                
-        self.notify_groups(user, groups_to_notify, notification)
-
+        notification_manager.notify()
 class CurEDecisionStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
-        decision_id = tile.data[GRADE_E_DECISION]
+    def send_notification(self):
+        decision_id = self.tile.data[GRADE_E_DECISION]
         decision_string = self.get_domain_value_string(decision_id, GRADE_E_DECISION)
 
-        message = f"The Cur Grade E Decision has been set to '{decision_string}' for {name}. This requires further attention"
-        groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
+        if decision_string:
+            self.config['message'] = f"The Cur Grade E Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
 
-        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
-                                
-        self.notify_groups(user, groups_to_notify, notification)
+        super().send_notification()
 
 class CurDDecisionStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
-        decision_id = tile.data[GRADE_D_DECISION]
+    def send_notification(self):
+        decision_id = self.tile.data[GRADE_D_DECISION]
         decision_string = self.get_domain_value_string(decision_id, GRADE_D_DECISION)
 
-        message = f"The Cur Grade D Decision has been set to '{decision_string}' for {name}. This requires further attention"
-        groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP]
+        if decision_string:
+            self.config['message'] = f"The Cur Grade D Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
 
-        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
-                                
-        self.notify_groups(user, groups_to_notify, notification)
+        super().send_notification()
 
 class ReportStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
+    def send_notification(self):
         from arches_orm.models import Group
         with admin():
-            groups_to_notify = [CUR_D_GROUP, CUR_E_GROUP, ADMIN_GROUP]
-            name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
-
-            message = f"A new report has been added to {name}"
-
-            if user:
+            if self.user:
                 admin_group = Group.find(ADMIN_GROUP)
-                is_admin = any(member.id == user.id for member in admin_group.members)
+                is_admin = any(member.id == self.user.id for member in admin_group.members)
 
                 cur_e_group = Group.find(CUR_E_GROUP)
-                is_cur_e = any(member.id == user.id for member in cur_e_group.members)
+                is_cur_e = any(member.id == self.user.id for member in cur_e_group.members)
 
                 cur_d_group = Group.find(CUR_D_GROUP)
-                is_cur_d = any(member.id == user.id for member in cur_d_group.members)
+                is_cur_d = any(member.id == self.user.id for member in cur_d_group.members)
 
-                classification_type = tile.data[CLASSIFICATION_TYPE]
+                classification_type = self.tile.data[CLASSIFICATION_TYPE]
                 classification_string = self.get_domain_value_string(classification_type, CLASSIFICATION_TYPE)
     
                 if is_admin:
-                    groups_to_notify = [CUR_D_GROUP, CUR_E_GROUP]
+                    self.config['groups_to_notify'] = [CUR_D_GROUP, CUR_E_GROUP]
                 elif is_cur_e and classification_type:
-                    groups_to_notify = [CUR_D_GROUP, ADMIN_GROUP]
-                    message = message + f" with classification type {classification_string}"
+                    self.config['groups_to_notify'] = [CUR_D_GROUP, ADMIN_GROUP]
+                    self.config['message'] = self.config['message'] + f" with classification type {classification_string}"
                 elif is_cur_d and classification_type:
-                    groups_to_notify = [CUR_E_GROUP, ADMIN_GROUP]
-                    message = message + f" with classification type {classification_string}"
-                
-
-        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
+                    self.config['groups_to_notify'] = [CUR_E_GROUP, ADMIN_GROUP]
+                    self.config['message'] = self.config['message'] + f" with classification type {classification_string}"
                                         
-        self.notify_groups(user, groups_to_notify, notification)
+        super().send_notification()
 
 class ApplicationDetailsStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
+    def send_notification(self):
 
-        soa_id = tile.data[STAGE_OF_APPLICATION]
-
+        soa_id = self.tile.data[STAGE_OF_APPLICATION]
 
         if soa_id:
             soa_string = self.get_domain_value_string(soa_id, STAGE_OF_APPLICATION)
-            message = f"The Stage of Application for {name} has been updated to {soa_string}"
+            self.config['message'] = f"The Stage of Application for {self.name} has been updated to {soa_string}"
 
-            notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
-                                        
-            groups_to_notify = [ADMIN_GROUP]
-            self.notify_groups(user, groups_to_notify, notification)
+            super().send_notification()
 
 class TransferOfLicenceStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
+    def send_notification(self):
 
-        grade_e_decision = tile.data[TRANSFER_GRADE_E_DECISION]
-        grade_d_decision = tile.data[TRANSFER_GRADE_D_DECISION]
-        groups_to_notify = [ADMIN_GROUP]
+        grade_e_decision = self.tile.data[TRANSFER_GRADE_E_DECISION]
+        grade_d_decision = self.tile.data[TRANSFER_GRADE_D_DECISION]
 
         if not (grade_d_decision or grade_e_decision):
-            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
-            message = f"A Transfer of Licence has been created for {name}"
+            self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
+            self.config['message'] = f"A Transfer of Licence has been created for {self.name}"
         elif grade_d_decision:
             decision_string = self.get_domain_value_string(grade_d_decision, TRANSFER_GRADE_D_DECISION)
-            message = f"The Cur Grade D Decision for the Transfer of Licence {name} has been updated to {decision_string}"
-            groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP]
+            self.config['message'] = f"The Cur Grade D Decision for the Transfer of Licence {self.name} has been updated to {decision_string}"
+            self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_E_GROUP]
         elif grade_e_decision and not grade_d_decision:
             decision_string = self.get_domain_value_string(grade_e_decision, TRANSFER_GRADE_E_DECISION)
-            message = f"The Cur Grade E Decision for the Transfer of Licence  {name} has been updated to {decision_string}"
-            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
+            self.config['message'] = f"The Cur Grade E Decision for the Transfer of Licence  {self.name} has been updated to {decision_string}"
+            self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP]
         
 
-        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
-        
-        self.notify_groups(user, groups_to_notify, notification)
+        super().send_notification()
 
 class ExtensionOfLicenceStrategy(NotificationStrategy):
-    def send_notification(self, user, tile):
-        name, resource_instance_id = self.get_resource_details(tile, 'Excavation Licence')
+    def send_notification(self):
 
-        grade_e_decision = tile.data[EXTENSION_GRADE_E_DECISION]
-        grade_d_decision = tile.data[EXTENSION_GRADE_D_DECISION]
-        groups_to_notify = [ADMIN_GROUP]
+        grade_e_decision = self.tile.data[EXTENSION_GRADE_E_DECISION]
+        grade_d_decision = self.tile.data[EXTENSION_GRADE_D_DECISION]
 
         if not (grade_d_decision or grade_e_decision):
-            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
-            message = f"An Extension of Licence {name} has been created"
+            self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
+            self.config['message'] = f"An Extension of Licence {self.name} has been created"
         elif grade_d_decision:
             decision_string = self.get_domain_value_string(grade_d_decision, EXTENSION_GRADE_D_DECISION)
-            message = f"The Cur Grade D Decision for the extension of licence {name} has been updated to {decision_string}"
-            groups_to_notify = [ADMIN_GROUP, CUR_E_GROUP]
+            self.config['message'] = f"The Cur Grade D Decision for the extension of licence {self.name} has been updated to {decision_string}"
+            self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_E_GROUP]
         elif grade_e_decision and not grade_d_decision:
             decision_string = self.get_domain_value_string(grade_e_decision, EXTENSION_GRADE_E_DECISION)
-            message = f"The Cur Grade E Decision for the extension of licence {name} has been updated to {decision_string}"
-            groups_to_notify = [ADMIN_GROUP, CUR_D_GROUP]
+            self.config['message'] = f"The Cur Grade E Decision for the extension of licence {self.name} has been updated to {decision_string}"
+            self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP]
             
-        notification = self.create_notification(message, name, resource_instance_id, EXCAVATION_SLUG)
-                                    
-        self.notify_groups(user, groups_to_notify, notification)
-
-class NotificationManager():
-    strategy_registry = {
-        SYSTEM_REFERENCE : SystemReferenceStrategy, 
-        REPORT : ReportStrategy, 
-        CUR_D_DECISION : CurDDecisionStrategy, 
-        CUR_E_DECISON : CurEDecisionStrategy, 
-        APPLICATION_DETAILS : ApplicationDetailsStrategy, 
-        TRANSFER_OF_LICENCE : TransferOfLicenceStrategy,
-        EXTENSION_OF_LICENCE: ExtensionOfLicenceStrategy
-    }
-
-    def __init__(self, node_group_id, user, tile):
-        self.user = user
-        self.node_group_id = node_group_id
-        self.tile = tile
-        self.strategy = self._select_strategy(node_group_id)
-        # self.strategy.delete_existing_notification(tile)
-
-    def _select_strategy(self, node_group_id):
-        strategy_class = self.strategy_registry.get(node_group_id)
-        if strategy_class:
-            return strategy_class()
-        else:
-            raise ValueError(f"No strategy found for node group id: {node_group_id}")
-        
-    def notify(self):
-        self.strategy.send_notification(self.user, self.tile)
+        super().send_notification()
 
