@@ -1,6 +1,5 @@
 from arches.app.models.tile import Tile
-from django.db.models import Max
-
+from django.db.models.fields.json import KT
 
 SYSTEM_REFERENCE_NODEGROUP = "325a2f2f-efe4-11eb-9b0c-a87eeabdefba"
 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = "325a430a-efe4-11eb-810b-a87eeabdefba"
@@ -26,9 +25,10 @@ class HaNumber:
             if resource_instance_id:
                 query_result.exclude(resourceinstance_id=resource_instance_id)
             query_result = query_result.annotate(
-                most_recent=Max("resourceinstance__createdtime")
-            )
-            query_result = query_result.order_by("-most_recent")
+                    ha_id_number=KT(f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value")
+                ).filter(ha_id_number__startswith="HA/")
+            
+            query_result = query_result.order_by("-ha_id_number")
             latest_id_number_tile = query_result.first()
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
@@ -91,7 +91,7 @@ class HaNumber:
             latest_id_number = self.get_latest_id_number(resource_instance_id)
         except Exception as e:
             print(f"Failed getting the previously used ID number: {e}")
-            return retry()
+            return # retry()
 
         if latest_id_number:
             # Offset attempts so it starts at 1 and will try to generate

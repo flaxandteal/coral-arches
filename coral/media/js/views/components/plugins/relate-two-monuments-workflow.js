@@ -218,9 +218,8 @@ define([
                       "e561be82-d7d7-11ee-ade0-0242ac120006": {
                         "component": "user-to-model-select",
                         "signOffGroups": [
-                          "f3f6ef61-9f63-4e11-b643-ee59390d08e7",
-                          "38161a54-6c5d-46e1-820c-f736c00f78bd",
-                          "5ff98b6a-526f-41ce-83d0-b93188d5b265"
+                          "1ce90bd5-4063-4984-931a-cc971414d7db",
+                          "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
                         ],
                         "allowInstanceCreation": false
                       }

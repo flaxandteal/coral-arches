@@ -980,7 +980,16 @@
                 {
                     "alias": "arches_plugins",
                     "config": {
-                        "graphs": [],
+                        "graphs": [
+                            {
+                                "graphid": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "name": "Arches Plugins",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                "useOntologyRelationship": false
+                            }
+                        ],
                         "searchDsl": "",
                         "searchString": ""
                     },

@@ -204,6 +204,7 @@
     </div>
 </div>
 
+<!-- ko if: descriptions().length -->
 <!-- Location Description -->
 <div class="aher-report-section" data-bind="if: !!dataConfig.locationDescription">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.descriptions)}, css: {'fa-angle-double-right': visible.descriptions(), 'fa-angle-double-up': !visible.descriptions()}" class="fa toggle"></i> {% trans "Location Descriptions" %}</h2>
@@ -253,7 +254,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: administrativeAreas().length -->
 <!-- Admin Areas -->
 <div class="aher-report-section" data-bind="if: !!dataConfig.administrativeAreas">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.administrativeAreas)}, css: {'fa-angle-double-right': visible.administrativeAreas(), 'fa-angle-double-up': !visible.administrativeAreas()}" class="fa toggle"></i> {% trans "Administrative Areas" %}</h2>
@@ -305,7 +308,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: buFusionId() -->
 <!-- BU Fusion ID section -->
 <div class="aher-report-section">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.buFusionId)}, css: {'fa-angle-double-right': visible.buFusionId(), 'fa-angle-double-up': !visible.buFusionId()}" class="fa toggle"></i> {% trans "BU Fusion ID" %}</h2>
@@ -336,7 +341,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: uniqueBuildingId() -->
 <!-- Unique Building ID section -->
 <div class="aher-report-section">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.uniqueBuildingId)}, css: {'fa-angle-double-right': visible.uniqueBuildingId(), 'fa-angle-double-up': !visible.uniqueBuildingId()}" class="fa toggle"></i> {% trans "Unique Building ID" %}</h2>
@@ -367,7 +374,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: lpFusionId() -->
 <!-- LP Fusion ID section -->
 <div class="aher-report-section">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.lpFusionId)}, css: {'fa-angle-double-right': visible.lpFusionId(), 'fa-angle-double-up': !visible.lpFusionId()}" class="fa toggle"></i> {% trans "LP Fusion ID" %}</h2>
@@ -398,7 +407,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: nationalGridReferences().length -->
 <!-- National Grid References -->
 <div class="aher-report-section" data-bind="if: !!dataConfig.nationalGrid">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.nationalGrid)}, css: {'fa-angle-double-right': visible.nationalGrid(), 'fa-angle-double-up': !visible.nationalGrid()}" class="fa toggle"></i> {% trans "National Grid References" %}</h2>
@@ -446,7 +457,9 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
+<!-- ko if: namedLocations().length -->
 <!-- Named Locations -->
 <div class="aher-report-section" data-bind="if: !!dataConfig.namedLocations">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.namedLocations)}, css: {'fa-angle-double-right': visible.namedLocations(), 'fa-angle-double-up': !visible.namedLocations()}" class="fa toggle"></i> {% trans "Named Locations" %}</h2>
@@ -494,6 +507,7 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
 
 {% endblock body %}
 {% endblock report %}

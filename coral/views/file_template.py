@@ -197,6 +197,14 @@ class FileTemplateView(View):
 
     def get_template_path(self, template_id):
         template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
+             "a01fb4b1-b443-f59b-e086-dd647de66fde": {
+                "filename": "forestry-consult-response-template.docx",
+                "provider": GenericTemplateProvider
+            },
+            "f9bb9268-810a-ceff-754d-a18e92c9d8a1": {
+                "filename": "daera-consultation-response-template.docx",
+                "provider": GenericTemplateProvider
+            },
             "7f1e7061-8bb0-4338-9342-118f1e9214aa": {
                 "filename": "smc-addendum-template.docx",
                 "provider": GenericTemplateProvider

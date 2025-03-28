@@ -21,6 +21,7 @@ from coral.views.smr_number import SmrNumberView
 from coral.views.garden_number import GardenNumberView
 from coral.views.hb_number import HbNumberView
 from coral.views.user_to_model import UserToModel
+from coral.views.afc_number import AfcNumberView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -82,6 +83,11 @@ urlpatterns = [
     re_path(r"^generate-smr-number", SmrNumberView.as_view(), name="generate_smr_number"),
     re_path(r"^generate-garden-number", GardenNumberView.as_view(), name="generate_garden_number"),
     re_path(r"^generate-hb-number", HbNumberView.as_view(), name="generate_hb_number"),
+
+    #
+    # Agriculture and forestry consultation number
+    #
+    re_path(r"^generate-afc-number", AfcNumberView.as_view(), name="generate_afc_number"),
 
     #
     # User to Model

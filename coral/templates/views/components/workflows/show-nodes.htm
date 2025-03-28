@@ -1,12 +1,20 @@
-<table data-bind="style: {'margin-left': `2ch`}">
-    <tbody data-bind="foreach: {data: showNodes, as: 'labelValue'}">
-    <tr>
-                <td>
-        <h2 class="aher-report-section-title" data-bind="text: labelValue[0], class: 'aher-block-key'"></h2>
-    </td>
-    <td>
-    <span data-bind="text: labelValue[1], style: {'margin-left': `4ch`}"></span>
-    </td>
-    </tr>
-    </tbody>
-</table>
+<div class="card-component">
+    <div
+        class="her-final-step-section"
+        style="padding: 0px; border-bottom: 1px solid #7777; margin: 0 15px"
+    >
+        <h4 class="summary-value" style="color: #2b547c" data-bind="text: title"></h4>
+    </div>
+    <table data-bind="style: {'margin-left': `2ch`}">
+        <tbody data-bind="foreach: {data: showNodes, as: 'labelValue'}">
+        <tr>
+                    <td>
+            <h4 class="summary-value" style="color: #2b547c; font-size: 14px;" data-bind="text: labelValue[0]"></h4>
+        </td>
+        <td>
+        <span class="summary-value" data-bind="text: labelValue[1], style: {'margin-left': `4ch`}"></span>
+        </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
