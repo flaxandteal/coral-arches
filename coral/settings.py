@@ -15,6 +15,7 @@ import inspect
 import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
+from csp.constants import NONCE, SELF
 
 try:
     from arches.settings import *
@@ -184,6 +185,7 @@ DATABASES = {
 SEARCH_THUMBNAILS = False
 
 INSTALLED_APPS = (
+    "csp",
     "webpack_loader",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -212,6 +214,7 @@ if DEBUG:
 ARCHES_APPLICATIONS = ()
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -228,13 +231,25 @@ MIDDLEWARE = [
     # "silk.middleware.SilkyMiddleware",
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
 ]
+
+
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "default-src": [SELF],
+        "script-src": [SELF, NONCE, "cdnjs.cloudflare.com"],
+        "img-src": [SELF],
+        "font-src": [SELF, NONCE, "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
+        "style-src": [SELF, NONCE, "cdnjs.cloudflare.com", "fonts.googleapis.com"],
+        "connect-src": [SELF, NONCE, "cdnjs.cloudflare.com"],
+    },
+}
+
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     MIDDLEWARE.append("debug_toolbar_force.middleware.ForceDebugToolbarMiddleware")
     import socket
     hostname, __, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
-
 
 AWS_STORAGE_BUCKET_NAME=os.environ.get("AWS_STORAGE_BUCKET_NAME", None)
 AWS_S3_ENDPOINT_URL=os.environ.get("AWS_S3_ENDPOINT_URL", None)
