@@ -66,38 +66,17 @@
                     "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
                     "nodegroupid": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
                     "node": "2b4cfdac-04ba-11f0-9182-9e7c335817fb",
-                    "hiddenNodes": [
-                        "dc809034-04ba-11f0-8d60-9e7c335817fb", 
-                        "49d44590-04bb-11f0-8d60-9e7c335817fb"
-                      ],
                     "nodeOptions": {
                     "58a2b98f-a255-11e9-9a30-00224800b26d" : {
                       "searchString": "",
                       "allowInstanceCreation": false
                     }
                   },
-                    "semanticName": "Heritage Asseets"
+                    "semanticName": "Heritage Asseets details"
                   },
                   "tilesManaged": "one",
-                  "componentName": "get-selected-monument-details",
+                  "componentName": "get-selected-monument-details-with-count",
                   "uniqueInstanceName": "6cae135a-8a8c-4bbc-92a7-1572a4111bc6"
-                },
-                {
-                  "parameters": {
-                    "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
-                    "nodegroupid": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
-                    "hiddenNodes": [
-                      "2b4cfdac-04ba-11f0-9182-9e7c335817fb"
-                    ],
-                    "relatedHANodeGroupID": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
-                    "mounmentNode": "dc809034-04ba-11f0-8d60-9e7c335817fb",
-                    "scheduledMonumentNode": "49d44590-04bb-11f0-8d60-9e7c335817fb",
-                    "semanticName": "monuments"
-                  },
-                  "tilesManaged": "one",
-                  "componentName": "monuments-count",
-                  "uniqueInstanceName": "352a21d6-472b-4803-a198-a9679279ea26"
                 },
                 {
                   "parameters": {
@@ -312,16 +291,13 @@
                       "903b4ec8-eedd-11ef-b863-0242ac120006",
                       "5c9ac7f6-eedd-11ef-b863-0242ac120006",
                       "366577d4-eedd-11ef-829a-0242ac120006",
-                      "93199292-fb24-11ee-838d-0242ac190006"
+                      "93199292-fb24-11ee-838d-0242ac190006",
+                      "998d6728-fb26-11ee-838d-0242ac190006",
+                      "ff42f8f2-3e93-11ef-9023-0242ac140007" 
                     ],
                     "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
                     "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
                     "nodeOptions": {
-                      "ff42f8f2-3e93-11ef-9023-0242ac140007": {
-                        "config": {
-                          "label": "Within deadline"
-                        }
-                      },
                       "bacad6b8-eedd-11ef-829a-0242ac120006": {
                         "component": "user-to-model-select",
                         "signOffGroups": [
