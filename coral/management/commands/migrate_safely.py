@@ -343,7 +343,7 @@ class ScanForDataRisks():
           format="json",
           dest_dir="coral/pkg/business_data/files"
       )
-      os.rename(f"{model_name}.json", f"backup_{model_name}.json")
+      os.rename(f"coral/pkg/business_data/files/{model_name}.json", f"coral/pkg/business_data/files/backup_{model_name}.json")
     except Exception as e:
       print(f"Error during export {e}")
       input("\nError occurred when exporting. You will not have a backup model. \n\nDo you want to continue?")
@@ -356,7 +356,7 @@ class ScanForDataRisks():
         dest_dir="coral/pkg/business_data/files"
     )
 
-    os.rename(glob.glob(f'{sanitised_model_name}*.json')[0], f'stale_data_{sanitised_model_name}.json')
+    os.rename(glob.glob(f'coral/pkg/business_data/files/{sanitised_model_name}*.json')[0], f'coral/pkg/business_data/files/stale_data_{sanitised_model_name}.json')
 
     new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes, new_functions, updated_names, new_concepts, updated_concepts = self.compare_nodes()
 
