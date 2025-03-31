@@ -37,20 +37,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="shortcut icon" href="{% webpack_static 'img/favicon.png' %}" />
+    <link nonce="{{CSP_NONCE}}" rel="shortcut icon" href="{% webpack_static 'img/favicon.png' %}" />
 
-    <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin'>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
+    <link nonce="{{CSP_NONCE}}" rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin'>
+    <link nonce="{{CSP_NONCE}}" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
 
-    <link href="{% webpack_static 'css/unify.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-    <link href="{% webpack_static 'css/index.css' %}" rel="stylesheet">
-    <link href="{% webpack_static 'css/front.css' %}" rel="stylesheet">
+    <link nonce="{{CSP_NONCE}}" href="{% webpack_static 'css/unify.css' %}">
+    <link nonce="{{CSP_NONCE}}" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link nonce="{{CSP_NONCE}}" href="{% webpack_static 'css/index.css' %}" rel="stylesheet">
+    <link nonce="{{CSP_NONCE}}" href="{% webpack_static 'css/front.css' %}" rel="stylesheet">
 
 </head>
 
 <body>
-    <script src="{% webpack_static 'node_modules/requirejs/require.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'node_modules/requirejs/require.js' %}"></script>
     {% include 'javascript.htm' %}
 
     <!--=== Header ===-->
@@ -428,31 +428,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.0/jquery-migrate.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.3.8/SmoothScroll.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
-    <script src="{% webpack_static 'plugins/revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js' %}"></script>
-    <script src="{% webpack_static 'plugins/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
-    <script src="{% webpack_static 'plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>
-    <script src="{% webpack_static 'plugins/one.app.js' %}"></script>
-    <script src="{% webpack_static 'plugins/pace-loader.js' %}"></script>
-    <script src="{% webpack_static 'plugins/owl-carousel.js' %}"></script>
-    <script src="{% webpack_static 'plugins/style-switcher.js' %}"></script>
-    <script src="{% webpack_static 'plugins/revolution-slider.js' %}"></script>
-    <script src="{% webpack_static 'plugins/cube-portfolio-lightbox.js' %}"></script>
-    <script src="{% webpack_static 'node_modules/knockout/build/output/knockout-latest.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.0/jquery-migrate.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.3.8/SmoothScroll.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax-min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/one.app.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/pace-loader.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/owl-carousel.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/style-switcher.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/revolution-slider.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'plugins/cube-portfolio-lightbox.js' %}"></script>
+    <script nonce="{{CSP_NONCE}}" src="{% webpack_static 'node_modules/knockout/build/output/knockout-latest.js' %}"></script>
 
 
-    <script>
+    <script nonce="{{CSP_NONCE}}">
         jQuery(document).ready(function() {
             App.init();
             App.initCounter();
