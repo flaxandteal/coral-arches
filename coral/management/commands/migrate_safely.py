@@ -245,19 +245,19 @@ class ScanForDataRisks():
     return False
   
   def handle_concept_change(self, tile_json, updated_concepts):
-    if self.mapping is None:
-        raise ValueError("No mapping file has been provided for the concept conversion. Use -M to add a file")
-    
     for node in list(tile_json['data'].keys()):
       if node in [concept["node_id"] for concept in updated_concepts]:
           try:
-            mapping = next(value for key, value in self.mapping.items() if key == node)
+            if self.mapping:
+              mapping = next(value for key, value in self.mapping.items() if key == node)
+            else:
+              answer = input("No mapping has been provided. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
+              if answer.lower() == 'y':
+                 mapping = { 'default': None }
           except Exception as e:
-             raise ValueError(f"No mapping could be found in the file for the node {node}") from e
+            raise ValueError(f"No mapping could be found in the file for the node {node}") from e
           TransformData().concept_to_concept(tile_json, node, mapping)
-          
-     
-
+  
   def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, new_concepts, updated_concepts):
     nodes = self.graph.nodes.values()
 
