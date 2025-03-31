@@ -499,7 +499,9 @@ class TransformData():
     return tile_json
   
   def concept_to_concept(self, tile_json, node, mapping):
-        current_value = ConceptValue().get(tile_json['data'][node]).conceptid
+        current_value = None
+        if tile_json['data'][node]:
+          current_value = ConceptValue().get(tile_json['data'][node]).conceptid
 
         if current_value in mapping:
             mapping_value = mapping[current_value]
