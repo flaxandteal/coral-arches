@@ -494,7 +494,8 @@ class TransformData():
         print(f"An error occurred: {e}")
 
   def allow_many(self, tile_json, nodeid):
-    tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
+    if tile_json['data'][nodeid]:
+      tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
     return tile_json
   
   def concept_to_concept(self, tile_json, node, mapping):
