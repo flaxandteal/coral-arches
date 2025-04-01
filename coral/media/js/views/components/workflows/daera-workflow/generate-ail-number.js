@@ -12,12 +12,14 @@ define([
     WorkflowBuilderInitialStep.apply(this, [params]);
     this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = 'b37552be-9527-11ea-9213-f875a44e0e11';
     this.ailValue = ko.observable()
-    this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID].subscribe((val) => {
-      if (val.en.value !== this.ailValue()) {
-        this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID]({en: { direction: 'ltr', value: this.ailValue()}})
-      }
-    })
-
+    if (ko.isObservable(this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID])) {
+      this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID].subscribe((val) => {
+        if (val.en.value !== this.ailValue()) {
+          this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID]({en: { direction: 'ltr', value: this.ailValue()}})
+        }
+      })
+    }
+    
     this.setValue = (value) => {
       this.ailValue(value)
       const localisedValue = {
