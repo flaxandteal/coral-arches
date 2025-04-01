@@ -6,7 +6,7 @@ define([
   'arches',
   'viewmodels/card-component',
   'viewmodels/alert',
-  'templates/views/components/workflows/fmw-workflow/get-selected-monument-details.htm'
+  'templates/views/components/workflows/get-selected-monument-details-with-count.htm'
 ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
@@ -26,12 +26,16 @@ define([
     this.CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006';
     this.CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006';
 
-    this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
+    this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba';
     this.TOWNLAND_NODEGROUP = '919bcb94-345c-11ef-a5b7-0242ac120003';
     this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
+    this.COUNTY_NODE = "87d3ff32-f44f-11eb-aa82-a87eeabdefba";
 
     this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
     this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
+
+    this.CONSTRUCTION_NODEGROUP = "77e8f287-efdc-11eb-a790-a87eeabdefba";
+    this.HA_TYPE_NODE = "77e90834-efdc-11eb-b2b9-a87eeabdefba";
 
     this.haRefStrings = {
       '158e1ed2-3aae-11ef-a2d0-0242ac120003': 'SMR Number',
@@ -73,11 +77,11 @@ define([
         currentResources.forEach(id => {
           this.cards({
             ...this.cards(), [id]: {
-              designationType: "",
+              haType: "",
               monumentName: "",
               cmNumber: "",
               smrNumber: "",
-              bFile: "",
+              countyValue: "",
               townlandValue: ""
             }
           })
@@ -89,9 +93,10 @@ define([
       }
     }, this);
 
-    this.fetchTileData = async (resourceId) => {
+    this.fetchTileData = async(resourceId, nodeId=null) => {
       const tilesResponse = await window.fetch(
-        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
+        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+          (nodeId ? `?nodeid=${nodeId}` : '')
       );
       const data = await tilesResponse.json();
       return data.tiles;
@@ -134,6 +139,7 @@ define([
     // check related resources for a REV and also the deleted node to check if its merged
     this.returnScheduledMonumentCount = async(resourceId) => {
       const haData = await this.returnRelatedResources(resourceId);
+      const tileData = await this.fetchTileData(resourceId, "74ef37e0-37b5-11ef-9263-0242ac150006");
       var countItr = 0;
       haData.forEach(item => {
         if (item.displayname.startsWith("REV")){
@@ -188,12 +194,12 @@ define([
 
     this.getMonumentDetails = async (resourceId) => {
       const tiles = await this.fetchTileData(resourceId);
-      const designationType = ko.observable('None');
+      const countyValue = ko.observable('None');
       const monumentName = ko.observable('None');
       const haRefNumber = ko.observable('None');
       const haNumberLabel = ko.observable('Heritage Asset Ref Number');
-      const bFile = ko.observable('None');
-      const townlandValue = ko.observable('None');
+      const haType = ko.observableArray(['None']);
+      const townlandValue = ko.observableArray(['None']);
 
       const additionalPromises = []
 
@@ -211,89 +217,86 @@ define([
           monumentName(tile.data[this.MONUMENT_NAMES_NODE].en.value);
         }
 
-        if (tile.nodegroup === this.BFILE_NODEGROUP) {
-          let bfileIds = tile.data[this.BFILE_NODE].map(t => t.resourceId)
-          bFile('');
-          for (let id of bfileIds) {
+        if (tile.nodegroup === this.ADDRESSES_NODEGROUP) {
+          const townlandData = tile.data[this.TOWNLAND_NODE];
+          const countyData = tile.data[this.COUNTY_NODE];
+        
+          const idsToFetch = []
+          if (townlandData){
+            townlandValue.removeAll();
+            townlandData.forEach(id => {
+              idsToFetch.push({ key: this.TOWNLAND_NODE, id })
+            })
+          }
+          if (countyData){
+            idsToFetch.push({ key: this.COUNTY_NODE, id: countyData})
+          }
+          
+          idsToFetch.forEach(id => {
             additionalPromises.push($.ajax({
               type: 'GET',
-              url: arches.urls.api_resource_report(id),
+              url: arches.urls.concept_value + `?valueid=${id.id}`,
               context: self,
-              success: async function (responseJSON, status, response) {
-                bFile(bFile() ? `${bFile()},\n${responseJSON.report_json["Display Name"]["Display Name Value"]}` : responseJSON.report_json["Display Name"]["Display Name Value"])
+              success: function (responseJSON, status, response) {
+                if(id.key === this.TOWNLAND_NODE){
+                  townlandValue.push(responseJSON.value);
+                }
+                else if(id.key === this.COUNTY_NODE){
+                  countyValue(responseJSON.value);
+                }
               },
               error: function (response, status, error) {
                 if (response.statusText !== 'abort') {
-                  this.viewModel.alert(
-                    new AlertViewModel(
-                      'ep-alert-red',
-                      arches.requestFailed.title,
-                      response.responseText
-                    )
-                  );
+                  const alert = new AlertViewModel(
+                    'ep-alert-red',
+                    arches.requestFailed.title,
+                    response.responseText
+                  )
+                  this.viewModel.alert(alert);
                 }
+                return
               }
             }))
-          }
+          })
         }
 
-        if (tile.nodegroup === this.DESIGNATIONS_NODEGROUP) {
-          const typeId = tile.data[this.DESIGNATIONS_TYPE_NODE];
+        if (tile.nodegroup === this.CONSTRUCTION_NODEGROUP) {
+          const typeId = tile.data[this.HA_TYPE_NODE];
           if (!typeId) continue;
-          additionalPromises.push($.ajax({
-            type: 'GET',
-            url: arches.urls.concept_value + `?valueid=${typeId}`,
-            context: self,
-            success: function (responseJSON, status, response) {
-              designationType(responseJSON.value);
-            },
-            error: function (response, status, error) {
-              if (response.statusText !== 'abort') {
-                const alert = new AlertViewModel(
-                  'ep-alert-red',
-                  arches.requestFailed.title,
-                  response.responseText
-                )
-                this.viewModel.alert(alert);
+          haType.removeAll()
+          typeId.forEach(id => {
+            additionalPromises.push($.ajax({
+              type: 'GET',
+              url: arches.urls.concept_value + `?valueid=${id}`,
+              context: self,
+              success: function (responseJSON, status, response) {
+                haType.push(responseJSON.value);
+              },
+              error: function (response, status, error) {
+                if (response.statusText !== 'abort') {
+                  const alert = new AlertViewModel(
+                    'ep-alert-red',
+                    arches.requestFailed.title,
+                    response.responseText
+                  )
+                  this.viewModel.alert( alert );
+                }
+                return
               }
-              return
-            }
-          }))
-        }
-
-        if (tile.nodegroup === this.ADDRESSES_NODEGROUP) {
-          const typeId = tile.data[this.TOWNLAND_NODE];
-          if (!typeId) continue;
-          additionalPromises.push($.ajax({
-            type: 'GET',
-            url: arches.urls.concept_value + `?valueid=${typeId}`,
-            context: self,
-            success: function (responseJSON, status, response) {
-              townlandValue(responseJSON.value);
-            },
-            error: function (response, status, error) {
-              if (response.statusText !== 'abort') {
-                const alert = new AlertViewModel(
-                  'ep-alert-red',
-                  arches.requestFailed.title,
-                  response.responseText
-                )
-                this.viewModel.alert(alert);
-              }
-              return
-            }
-          }))
+            }))
+          })
         }
       }
+
       await Promise.all(additionalPromises);
 
       this.cards({
         ...this.cards(), [resourceId]: {
-          designationType: designationType(),
+          haType: haType(),
           monumentName: monumentName(),
           haNumberLabel: haNumberLabel(),
           smrNumber: haRefNumber(),
-          bFile: bFile(),
+          countyValue: countyValue(),
           townlandValue: townlandValue()
         }
       })
