@@ -97,58 +97,76 @@ define([
       return data.tiles;
     };
 
+    let previousValue;
+
     if (this.tile.data[HA_NODE] && ko.isObservable(this.tile.data[HA_NODE])) {
-      this.tile.data[HA_NODE].subscribe(async () => {
+      this.tile.data[HA_NODE].subscribe(async(oldValue) => {
+        console.log("Old VALUE", oldValue)
+        previousValue = oldValue
+      }, null, "beforeChange");
+    };
+
+    if (this.tile.data[HA_NODE] && ko.isObservable(this.tile.data[HA_NODE])) {
+      this.tile.data[HA_NODE].subscribe(async(newValue) => {
+        console.log("NEW VALUE", newValue)
+        let newEntry = []
+        if (previousValue){
+          newEntry = newValue.filter(item => previousValue.indexOf(item) === -1);
+        } else {
+          newEntry = newValue
+        }
+        console.log(newEntry[0].resourceId())
         const monumentCount = this.tile.data[HA_NODE]().length;
-        const scheduledMonumentCount = await this.returnScheduledMonumentCount();
         this.tile.data[MONUMENT_COUNT_NODE](monumentCount);
-        this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE](scheduledMonumentCount);
-      });
+        const scheduledMonumentCount = await this.returnScheduledMonumentCount(newEntry[0].resourceId());
+        this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE](this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE]() + scheduledMonumentCount);
+      }, "arrayChange");
     };
 
     this.returnScheduledMonumentData = async (resourceId) => {
       const tilesResponse = await window.fetch(
-        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId));
+        arches.urls.related_resources + resourceId);
 
       const data = await tilesResponse.json();
-
-      return data.tiles;
+      
+      return data.related_resources.related_resources;
     };
 
-    this.returnMonumentData = async () => {
+    this.returnMonumentData = async (resourceId) => {
       const tilesResponse = await window.fetch(
-        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', this.tile.resourceinstance_id) +
-        (HA_NODE ? `?nodeid=${HA_NODE}` : '')
+        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+        (this.SYSTEM_REFERENCE_RESOURCE_ID_NODE ? `?nodeid=${this.SYSTEM_REFERENCE_RESOURCE_ID_NODE}` : '')
       );
 
       const data = await tilesResponse.json();
+      console.log("IN FETCH", data)
 
       return data.tiles;
     };
 
-    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-
-    this.returnScheduledMonumentCount = async () => {
-      const haData = await this.returnMonumentData();
+    this.returnScheduledMonumentCount = async (resourceId) => {
+      console.log(resourceId)
+      const haData = await this.returnScheduledMonumentData(resourceId)
       var countItr = 0;
-
-      haData.forEach(async (tile) => {
-        const scheduledMonumentData = await this.returnScheduledMonumentData(tile['data']['2b4cfdac-04ba-11f0-9182-9e7c335817fb'][0]['resourceId']);
-
-        scheduledMonumentData.forEach((data) => {
-          console.log(data, "nodegroup data for scheduled monument count");
-            if (data['nodegroup'] == '6af2a0cb-efc5-11eb-8436-a87eeabdefba') {
-              if (data['data']['74ef37e0-37b5-11ef-9263-0242ac150006']) {
-                countItr++;
-              };
-            };
+      console.log("HATDATA: ", haData)
+      haData.forEach(item => {
+        if (item.displayname.startsWith("REV")){
+          const deleteNode = "9e59e355-07f0-4b13-86c8-7aa12c04a5e3";
+          const deleted = item.tiles.find(node => {
+            if(node.data && (deleteNode in node.data)){
+              return node.data[deleteNode]
+            }
+            return false
           });
-        });
-
-      await sleep(1500); // not ideal but foreach isn't aware of await/async so func was returning before loops were finished
-      return countItr;
-    };
-
+          if (!deleted){
+            console.log("I ran")
+            countItr++
+          }
+        }
+      })
+        return countItr;
+      } 
+    
     this.getLatestTile = async () => {
       try {
         const tiles = await this.fetchTileData(this.tile.resourceinstance_id);
