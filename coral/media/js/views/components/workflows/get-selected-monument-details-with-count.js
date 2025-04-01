@@ -99,23 +99,22 @@ define([
 
     let previousValue;
 
+    // get the old value of the drop down
     if (this.tile.data[HA_NODE] && ko.isObservable(this.tile.data[HA_NODE])) {
       this.tile.data[HA_NODE].subscribe(async(oldValue) => {
-        console.log("Old VALUE", oldValue)
-        previousValue = oldValue
+        previousValue = oldValue;
       }, null, "beforeChange");
-    };
+    }
 
+    // get the new value and compare with the previous to find what has been added
     if (this.tile.data[HA_NODE] && ko.isObservable(this.tile.data[HA_NODE])) {
       this.tile.data[HA_NODE].subscribe(async(newValue) => {
-        console.log("NEW VALUE", newValue)
-        let newEntry = []
+        let newEntry = [];
         if (previousValue){
           newEntry = newValue.filter(item => previousValue.indexOf(item) === -1);
         } else {
-          newEntry = newValue
+          newEntry = newValue;
         }
-        console.log(newEntry[0].resourceId())
         const monumentCount = this.tile.data[HA_NODE]().length;
         this.tile.data[MONUMENT_COUNT_NODE](monumentCount);
         const scheduledMonumentCount = await this.returnScheduledMonumentCount(newEntry[0].resourceId());
@@ -123,49 +122,35 @@ define([
       }, "arrayChange");
     };
 
-    this.returnScheduledMonumentData = async (resourceId) => {
+    this.returnRelatedResources = async(resourceId) => {
       const tilesResponse = await window.fetch(
         arches.urls.related_resources + resourceId);
 
       const data = await tilesResponse.json();
-      
+
       return data.related_resources.related_resources;
     };
 
-    this.returnMonumentData = async (resourceId) => {
-      const tilesResponse = await window.fetch(
-        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
-        (this.SYSTEM_REFERENCE_RESOURCE_ID_NODE ? `?nodeid=${this.SYSTEM_REFERENCE_RESOURCE_ID_NODE}` : '')
-      );
-
-      const data = await tilesResponse.json();
-      console.log("IN FETCH", data)
-
-      return data.tiles;
-    };
-
-    this.returnScheduledMonumentCount = async (resourceId) => {
-      console.log(resourceId)
-      const haData = await this.returnScheduledMonumentData(resourceId)
+    // check related resources for a REV and also the deleted node to check if its merged
+    this.returnScheduledMonumentCount = async(resourceId) => {
+      const haData = await this.returnRelatedResources(resourceId);
       var countItr = 0;
-      console.log("HATDATA: ", haData)
       haData.forEach(item => {
         if (item.displayname.startsWith("REV")){
           const deleteNode = "9e59e355-07f0-4b13-86c8-7aa12c04a5e3";
           const deleted = item.tiles.find(node => {
             if(node.data && (deleteNode in node.data)){
-              return node.data[deleteNode]
+              return node.data[deleteNode];
             }
-            return false
+            return false;
           });
           if (!deleted){
-            console.log("I ran")
-            countItr++
+            countItr++;
           }
         }
-      })
+      });
         return countItr;
-      } 
+      }; 
     
     this.getLatestTile = async () => {
       try {
