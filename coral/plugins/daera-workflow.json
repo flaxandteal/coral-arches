@@ -55,7 +55,7 @@
         {
           "name": "consultation-step",
           "title": "Consultation",
-          "required": true,
+          "required": false,
           "layoutSections": [
             {
               "componentConfigs": [
