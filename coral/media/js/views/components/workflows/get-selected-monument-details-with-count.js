@@ -123,7 +123,7 @@ define([
         }
         const monumentCount = this.tile.data[HA_NODE]().length;
         this.tile.data[MONUMENT_COUNT_NODE](monumentCount);
-        const scheduledMonumentCount = await this.returnScheduledMonumentCount(newEntry[0].resourceId());
+        const scheduledMonumentCount = await this.returnScheduledMonumentCount(ko.unwrap(newEntry[0].resourceId));
         this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE](this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE]() + scheduledMonumentCount);
       }, "arrayChange");
     };
