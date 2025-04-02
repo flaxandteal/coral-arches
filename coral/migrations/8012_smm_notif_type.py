@@ -19,7 +19,7 @@ def add_notification_types(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('coral', '8011_registration_link_model'),
+        ('coral', '8012_auto_20250320_1503'),
     ]
 
     operations = [
