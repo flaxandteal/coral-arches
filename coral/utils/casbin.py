@@ -17,9 +17,18 @@ def _consistent_hash(string: str):
     return uuid.UUID(hsh.hexdigest()[::2])
 
 class SetApplicator:
-    def __init__(self, print_statistics, wait_for_completion):
+    def __init__(self, print_statistics, wait_for_completion, synchronous=False):
         self.print_statistics = print_statistics
-        self.wait = wait_for_completion
+        self.wait = wait_for_completion and (not synchronous)
+        if synchronous:
+            print("""
+                WARNING: synchronous currently 409s due to a
+                limitation of Elasticsearch:
+                  https://stackoverflow.com/questions/56602137/wait-for-completion-of-updatebyquery-with-the-elasticsearch-dsl
+                This may still be useful for debugging purposes.
+                TODO: use the lower-level refresh API for passing retry_on_conflict.
+            """)
+        self.synchronous = synchronous
 
     def _apply_set(self, se, set_id, set_query, resourceinstanceid=None):
         results = []
@@ -44,7 +53,12 @@ class SetApplicator:
             else:
                 bool_query.must(set_query())
                 bool_query.must_not(Nested(path="sets", query=Terms(field="sets.id", terms=[str(set_id)])))
-                source = "ctx._source.sets.addAll(params.logicalSets)"
+                source = """
+                if (ctx._source.sets == null) {
+                    ctx._source.sets = [];
+                }
+                ctx._source.sets.addAll(params.logicalSets);
+                """
                 sets = [{"id": str(set_id)}]
             dsl.add_query(bool_query)
             update_by_query = UpdateByQuery(se=se, query=dsl, script={
@@ -54,7 +68,7 @@ class SetApplicator:
                     "logicalSets": sets
                 }
             })
-            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=False))
+            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=self.synchronous))
         return results
 
     @context_free

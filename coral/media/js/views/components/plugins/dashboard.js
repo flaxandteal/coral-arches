@@ -165,7 +165,7 @@ define([
           if (prevItemsPerPage === this.itemsPerPage()){
             return
           }
-          await getTasks('false');
+          await getTasks('true');
       }, 200));
 
       this.newPage = async (pageNumber) => {
