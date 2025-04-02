@@ -9206,7 +9206,7 @@
                         "en": "Monuments"
                     },
                     "node_id": "dc809034-04ba-11f0-8d60-9e7c335817fb",
-                    "sortorder": null,
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000008"
                 },
@@ -11715,7 +11715,7 @@
                         "en": "Scheduled monuments"
                     },
                     "node_id": "49d44590-04bb-11f0-8d60-9e7c335817fb",
-                    "sortorder": null,
+                    "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000008"
                 },
@@ -12761,6 +12761,27 @@
                     "sortorder": 2,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "2cb92e02-7b51-4e45-a1f3-bc1e6e7c26d2",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Related Heritage Assets",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "80bd8c71-3de1-4039-a909-83b99893827a",
+                    "label": {
+                        "en": "Related Heritage Assets"
+                    },
+                    "node_id": "2b4cfdac-04ba-11f0-9182-9e7c335817fb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 }
             ],
             "color": "rgba(159,29,34,1)",
@@ -24068,7 +24089,7 @@
                     "nodeid": "2b4cfdac-04ba-11f0-9182-9e7c335817fb",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E10_Transfer_of_Custody",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P15i_influenced",
-                    "sortorder": 2,
+                    "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
                 {
@@ -25270,7 +25291,7 @@
                     "nodeid": "49d44590-04bb-11f0-8d60-9e7c335817fb",
                     "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D35_Area",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
-                    "sortorder": 0,
+                    "sortorder": 2,
                     "sourcebranchpublication_id": null
                 },
                 {
@@ -31987,7 +32008,7 @@
                     "nodeid": "dc809034-04ba-11f0-8d60-9e7c335817fb",
                     "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D35_Area",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
-                    "sortorder": 0,
+                    "sortorder": 1,
                     "sourcebranchpublication_id": null
                 },
                 {
