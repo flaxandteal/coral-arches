@@ -22,6 +22,7 @@ from coral.views.garden_number import GardenNumberView
 from coral.views.hb_number import HbNumberView
 from coral.views.user_to_model import UserToModel
 from coral.views.afc_number import AfcNumberView
+from coral.views.ail_number import AilNumberView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -88,6 +89,11 @@ urlpatterns = [
     # Agriculture and forestry consultation number
     #
     re_path(r"^generate-afc-number", AfcNumberView.as_view(), name="generate_afc_number"),
+
+    #
+    # DAERA consultation number
+    #
+    re_path(r"^generate-ail-number", AilNumberView.as_view(), name="generate_ail_number"),
 
     #
     # User to Model
