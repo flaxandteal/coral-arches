@@ -94,6 +94,7 @@ define([
     }, this);
 
     this.fetchTileData = async(resourceId, nodeId=null) => {
+      console.log("node", resourceId, nodeId)
       const tilesResponse = await window.fetch(
         arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
           (nodeId ? `?nodeid=${nodeId}` : '')
@@ -127,36 +128,19 @@ define([
       }, "arrayChange");
     };
 
-    this.returnRelatedResources = async(resourceId) => {
-      const tilesResponse = await window.fetch(
-        arches.urls.related_resources + resourceId);
-
-      const data = await tilesResponse.json();
-
-      return data.related_resources.related_resources;
-    };
-
-    // check related resources for a REV and also the deleted node to check if its merged
+    // check the HA recommend for scheduled monument - only present if revision merged in
     this.returnScheduledMonumentCount = async(resourceId) => {
-      const haData = await this.returnRelatedResources(resourceId);
-      const tileData = await this.fetchTileData(resourceId, "74ef37e0-37b5-11ef-9263-0242ac150006");
-      var countItr = 0;
-      haData.forEach(item => {
-        if (item.displayname.startsWith("REV")){
-          const deleteNode = "9e59e355-07f0-4b13-86c8-7aa12c04a5e3";
-          const deleted = item.tiles.find(node => {
-            if(node.data && (deleteNode in node.data)){
-              return node.data[deleteNode];
-            }
-            return false;
-          });
-          if (!deleted){
-            countItr++;
-          }
+      const RECOMMENDED_DESIGNATION_NODE = "74ef37e0-37b5-11ef-9263-0242ac150006"
+      const SCHEDULED_MONUMENT_CONCEPT = "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9"
+      const tileData = await this.fetchTileData(resourceId, RECOMMENDED_DESIGNATION_NODE);
+      for(const tile of tileData){
+        if(tile.data[RECOMMENDED_DESIGNATION_NODE].includes(SCHEDULED_MONUMENT_CONCEPT)){
+          return 1;
         }
-      });
-        return countItr;
-      }; 
+      }
+      return 0;
+    }
+       
     
     this.getLatestTile = async () => {
       try {
