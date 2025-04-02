@@ -97,7 +97,7 @@ define([
       const haRefNumber = ko.observable('None');
       const haNumberLabel = ko.observable('Heritage Asset Ref Number');
       const bFile = ko.observable('None');
-      const townlandValue = ko.observable('None');
+      const townlandValue = ko.observableArray(['None']);
 
       const additionalPromises = []
 
@@ -143,6 +143,7 @@ define([
 
         if (tile.nodegroup === this.DESIGNATIONS_NODEGROUP) {
           const typeId = tile.data[this.DESIGNATIONS_TYPE_NODE];
+          if(!typeId) continue;
           additionalPromises.push($.ajax({
             type: 'GET',
             url: arches.urls.concept_value + `?valueid=${typeId}`,
@@ -167,25 +168,28 @@ define([
         if (tile.nodegroup === this.ADDRESSES_NODEGROUP) {
           const typeId = tile.data[this.TOWNLAND_NODE];
           if (!typeId) continue;
-          additionalPromises.push($.ajax({
-            type: 'GET',
-            url: arches.urls.concept_value + `?valueid=${typeId}`,
-            context: self,
-            success: function (responseJSON, status, response) {
-              townlandValue(responseJSON.value);
-            },
-            error: function (response, status, error) {
-              if (response.statusText !== 'abort') {
-                const alert = new AlertViewModel(
-                  'ep-alert-red',
-                  arches.requestFailed.title,
-                  response.responseText
-                )
-                this.viewModel.alert( alert );
+          townlandValue.removeAll()
+          typeId.forEach(id => {
+            additionalPromises.push($.ajax({
+              type: 'GET',
+              url: arches.urls.concept_value + `?valueid=${id}`,
+              context: self,
+              success: function (responseJSON, status, response) {
+                townlandValue.push(responseJSON.value);
+              },
+              error: function (response, status, error) {
+                if (response.statusText !== 'abort') {
+                  const alert = new AlertViewModel(
+                    'ep-alert-red',
+                    arches.requestFailed.title,
+                    response.responseText
+                  )
+                  this.viewModel.alert( alert );
+                }
+                return
               }
-              return
-            }
-          }))
+            }))
+          })
         }
       }
       await Promise.all(additionalPromises);

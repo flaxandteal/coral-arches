@@ -64,25 +64,26 @@
                   "label": "Select Heritage Assets",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
-                  "node": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                  "nodegroupid": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
+                  "node": "2b4cfdac-04ba-11f0-9182-9e7c335817fb",
                   "nodeOptions": {
-                    "58a2b98f-a255-11e9-9a30-00224800b26d" : {
-                      "searchString": "",
-                      "allowInstanceCreation": false
-                    }
-                  },
-                  "semanticName": "Heritage Asseets"
+                  "58a2b98f-a255-11e9-9a30-00224800b26d" : {
+                    "searchString": "",
+                    "allowInstanceCreation": false
+                  }
+                },
+                  "semanticName": "Heritage Asseets details"
                 },
                 "tilesManaged": "one",
-                "componentName": "get-selected-monument-details",
+                "componentName": "get-selected-monument-details-with-count",
                 "uniqueInstanceName": "6cae135a-8a8c-4bbc-92a7-1572a4111bc6"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
-                    "76c2097a-e792-11ef-97dd-0242ac120002"
+                    "76c2097a-e792-11ef-97dd-0242ac120002",
+                    "714a4b84-faa1-11ef-b148-8e7ccd27c960"
                   ],
                   "nodegroupid": "8780196a-dfda-11ef-a67e-0242ac120006",
                   "semanticName": "Applicants"
@@ -99,6 +100,10 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "nodegroupid": "5d6eecde-e217-11ef-803e-0242ac120003",
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
+                  "dateNodeGroupID": "5d6eecde-e217-11ef-803e-0242ac120003",
+                  "issueDateNode": "ea5bb474-e217-11ef-803e-0242ac120003",
+                  "dueDateNode": "5b6a2ede-e218-11ef-803e-0242ac120003",
+                  "daysToAdd": 14,
                   "nodeOptions": {
                     "ea5bb474-e217-11ef-803e-0242ac120003": {
                       "config":{
@@ -124,7 +129,8 @@
                   "nodegroupid": "8780196a-dfda-11ef-a67e-0242ac120006",
                   "hiddenNodes": [
                     "dcd282ae-dfda-11ef-a925-0242ac120006", 
-                    "939ac87e-e3ab-11ef-8530-0242ac120007"
+                    "939ac87e-e3ab-11ef-8530-0242ac120007",
+                    "714a4b84-faa1-11ef-b148-8e7ccd27c960"
                   ],
                   "semanticName": "Referred to"
                 },
@@ -260,7 +266,7 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": ["save"]
       },
       {
         "name": "sign-off-step",
@@ -275,28 +281,26 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": 
                   [ 
-                    "42ec3232-fb26-11ee-838d-0242ac190006",
+                    "998d6728-fb26-11ee-838d-0242ac190006",
+                    "d0347d52-fb26-11ee-838d-0242ac190006",
+                    "b7fb9270-fb26-11ee-b5d2-0242ac190006",
+                    "82fd0aae-fb26-11ee-b5d2-0242ac190006",
+                    "24d008ea-fb27-11ee-b5d2-0242ac190006",
+                    "b256857e-fb25-11ee-b5d2-0242ac190006",
                     "048a4204-fb26-11ee-838d-0242ac190006",
                     "24337b70-fb26-11ee-838d-0242ac190006",
                     "42ec3232-fb26-11ee-838d-0242ac190006",
-                    "24d01092-fb27-11ee-b5d2-0242ac190006",
-                    "24d01362-fb27-11ee-b5d2-0242ac190006",
-                    "b7fb9270-fb26-11ee-b5d2-0242ac190006",
-                    "5c9ac7f6-eedd-11ef-b863-0242ac120006",
                     "903b4ec8-eedd-11ef-b863-0242ac120006",
-                    "82fd0aae-fb26-11ee-b5d2-0242ac190006",
-                    "d0347d52-fb26-11ee-838d-0242ac190006",
-                    "998d6728-fb26-11ee-838d-0242ac190006" 
+                    "5c9ac7f6-eedd-11ef-b863-0242ac120006",
+                    "366577d4-eedd-11ef-829a-0242ac120006",
+                    "93199292-fb24-11ee-838d-0242ac190006",
+                    "998d6728-fb26-11ee-838d-0242ac190006",
+                    "ff42f8f2-3e93-11ef-9023-0242ac140007" 
                   ],
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
                   "nodeOptions": {
-                    "ff42f8f2-3e93-11ef-9023-0242ac140007": {
-                      "config": {
-                        "label": "Within deadline"
-                      }
-                    },
-                    "366577d4-eedd-11ef-829a-0242ac120006": {
+                    "bacad6b8-eedd-11ef-829a-0242ac120006": {
                       "component": "user-to-model-select",
                       "signOffGroups": [
                         ""

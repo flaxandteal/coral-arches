@@ -6,24 +6,22 @@ define([
   'arches',
   'views/components/workflows/workflow-builder-initial-step',
   'viewmodels/card-component',
-  'templates/views/components/workflows/generate-afc-number.htm'
+  'templates/views/components/workflows/generate-ail-number.htm'
 ], function (_, ko, koMapping, uuid, arches, WorkflowBuilderInitialStep, CardComponentViewModel, template) {
   function viewModel(params) {
     WorkflowBuilderInitialStep.apply(this, [params]);
     this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = 'b37552be-9527-11ea-9213-f875a44e0e11';
-    this.afcValue = ko.observable()
-
+    this.ailValue = ko.observable()
     if (ko.isObservable(this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID])) {
       this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID].subscribe((val) => {
-        if (val.en.value !== this.afcValue()) {
-          this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID]({en: { direction: 'ltr', value: this.afcValue()}})
+        if (val.en.value !== this.ailValue()) {
+          this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID]({en: { direction: 'ltr', value: this.ailValue()}})
         }
       })
     }
     
-
     this.setValue = (value) => {
-      this.afcValue(value)
+      this.ailValue(value)
       const localisedValue = {
         en: {
           direction: 'ltr',
@@ -53,7 +51,7 @@ define([
 
       const response = await $.ajax({
         type: 'POST',
-        url: '/generate-afc-number',
+        url: '/generate-ail-number',
         dataType: 'json',
         data: JSON.stringify(data),
         context: this,
@@ -63,7 +61,7 @@ define([
       });
 
       const existingId = this.getValue();
-      this.setValue(response.afcNumber)
+      this.setValue(response.ailNumber)
       if (existingId) {
         this.tile()._tileData(koMapping.toJSON(this.tile().data));
       }
@@ -73,7 +71,7 @@ define([
     this.generateId();
   }
 
-  ko.components.register('generate-afc-number', {
+  ko.components.register('generate-ail-number', {
     viewModel: viewModel,
     template: template
   });
