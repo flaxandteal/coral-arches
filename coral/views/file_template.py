@@ -252,6 +252,10 @@ class FileTemplateView(View):
             "f08c5baf-4434-ac59-a02c-e692ae79d455": {
                 "filename": "transfer-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
+            },
+            "planning-pdf-merger": {
+                 "filename": "planning-response-combined.docx",
+                 "provider": GenericTemplateProvider
             }
         }
         for key, value in list(template_dict.items()):

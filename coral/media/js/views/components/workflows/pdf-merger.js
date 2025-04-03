@@ -99,8 +99,8 @@ define([
         this.getFileData = (resource, observable) => {
             let fileData = null;
             for (const tile of resource.tiles) {
-                if ("96f8830a-8490-11ea-9aba-f875a44e0e11" in tile.data) {
-                    fileData = tile.data["96f8830a-8490-11ea-9aba-f875a44e0e11"];
+                if (this.DIGITAL_OBJECT_FILE_NODE in tile.data) {
+                    fileData = tile.data[this.DIGITAL_OBJECT_FILE_NODE];
                     break;
                 }
             }
@@ -134,44 +134,53 @@ define([
 
         console.log(this.tile.data);
 
+        const getDisplayName = async() => {
+            const resource = await window.fetch(
+                arches.urls.api_resources(params.resourceid) + '?format=json'
+            );
+            const resourceData = await resource.json();
+            return resourceData.displayname;
+        };
+
         this.retrieveFile = async() => {
             // this.loading(true);
-            if (this.selectedLetterType()) {
-                await $.ajax({
-                    type: 'POST',
-                    url: arches.urls.root + 'filetemplate',
-                    data: JSON.stringify({
-                        resourceinstance_id: params.resourceid,
-                        template_id: this.selectedLetterType(),
-                        config: params.config
-                    }),
-                    context: this,
-                    success: async(responseText, status, response) => {
-                        console.log(response.responseJSON);
-                        await this.saveDigitalResourceName(
-                            response.responseJSON.tile.data[this.DIGITAL_OBJECT_FILE_NODE][0].name,
-                            response.responseJSON.tile.resourceinstance_id
+
+            await $.ajax({
+                type: 'POST',
+                url: arches.urls.root + 'filetemplate',
+                data: JSON.stringify({
+                    resourceinstance_id: params.resourceid,
+                    template_id: 'planning-pdf-merger',
+                    config: params.config
+                }),
+                context: this,
+                success: async(responseText, status, response) => {
+                    const displayName = await getDisplayName();
+                    await this.saveDigitalResourceName(
+                        `Generated Response document for ${displayName}`,
+                        response.responseJSON.tile.resourceinstance_id
+                    );
+                    await this.saveRelationship(response.responseJSON.tile.resourceinstance_id);
+                },
+                error: (response, status, error) => {
+                    console.log(response);
+                    if (response.statusText !== 'abort') {
+                        this.viewModel.alert(
+                            new AlertViewModel(
+                                'ep-alert-red',
+                                arches.requestFailed.title,
+                                response.responseText
+                            )
                         );
-                        await this.saveRelationship(response.responseJSON.tile.resourceinstance_id);
-                    },
-                    error: (response, status, error) => {
-                        console.log(response);
-                        if (response.statusText !== 'abort') {
-                            this.viewModel.alert(
-                                new AlertViewModel(
-                                    'ep-alert-red',
-                                    arches.requestFailed.title,
-                                    response.responseText
-                                )
-                            );
-                        }
                     }
-                });
-            }
+                }
+            });
+            
             // this.loading(false);
         };
 
         this.saveDigitalResourceName = async(name, resourceId) => {
+            console.log("name", name)  
             const nameTemplate = {
                 tileid: '',
                 data: {
@@ -211,9 +220,9 @@ define([
         this.saveRelationship = async(resourceId) => {
             const id = uuid.generate();
 
-            this.tile.data[this.LETTER_TYPE_NODE] = "08bb630d-a27b-45bc-a13f-567b428018c5";
-            this.tile.data[this.LETTER_METATYPE] = '956f9779-3524-448e-b2de-eabf2de95d51';
-            this.tile.data[this.LETTER_RESOURCE_NODE] = [
+            console.log(this.tile.data[this.RESPONSE_FILES_NODE]);
+
+            this.tile.data[this.RESPONSE_FILES_NODE] = [
                 {
                     resourceId: resourceId,
                     ontologyProperty: '',
@@ -225,9 +234,7 @@ define([
             const fileTileTemplate = {
                 tileid: '',
                 data: {
-                    [this.LETTER_TYPE_NODE]: "08bb630d-a27b-45bc-a13f-567b428018c5",
-                    [this.LETTER_METATYPE]: '956f9779-3524-448e-b2de-eabf2de95d51',
-                    [this.LETTER_RESOURCE_NODE]: [
+                    [this.RESPONSE_FILES_NODE]: [
                         {
                             resourceId: resourceId,
                             ontologyProperty: '',
@@ -271,7 +278,7 @@ define([
 
             await Promise.all(
                 this.form.tiles().map((tile) => {
-                    const digitalObjectResourceId = ko.toJS(tile.data)[this.LETTER_RESOURCE_NODE]?.[0]
+                    const digitalObjectResourceId = ko.toJS(tile.data)[this.RESPONSE_FILES_NODE]?.[0]
                         .resourceId;
                     if (!digitalObjectResourceId) return;
                     return $.ajax({
@@ -287,6 +294,7 @@ define([
                                 tileId: response.responseJSON.tiles[0].tileid,
                                 url: fileObj.url,
                                 name: fileObj.name
+                                
                             });
                         },
                         error: (response, status, error) => {
@@ -305,7 +313,8 @@ define([
                 })
             );
 
-            this.uploadedFiles(fileTiles);
+            console.log("FILETILES", fileTiles);
+            this.uploadedFiles(fileTiles.filter(tile => tile.name.includes('planning-response-combined')));
             this.uploadedFiles.valueHasMutated();
         };
 
