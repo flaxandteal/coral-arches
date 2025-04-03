@@ -95,10 +95,8 @@ class UpdatePlanningNameFunction(BaseFunction):
                     base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
                     current_date = date.today()
                     current_year = current_date.year
-                    id 
-                    for character in range(length):
-                        id = random.choices(base62chars, None, length)
-                  
+                    characters = random.choices(base62chars, k=length)
+                    id = "".join(characters)
                     return f"{prefix}/{current_year}/{id}"
                 
                 if resource_id_value.endswith('evaluation-meeting-workflow'):
