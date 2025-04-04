@@ -1,3 +1,5 @@
+from datetime import date
+import random
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches_orm.models import Person, Group
@@ -55,6 +57,19 @@ class NotifyEnforcement(BaseFunction):
         system_ref = models.TileModel.objects.filter(
             resourceinstance_id=resource_instance_id, nodegroup_id=SYSTEM_REF_NODEGROUP
         ).first()
+
+        if system_ref.startswith('extrados'):
+            def generateID (prefix="ENF", length=6):
+                base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+                current_date = date.today()
+                current_year = current_date.year
+                characters = random.choices(base62chars, k=length)
+                id = "".join(characters)
+                return f"{prefix}/{current_year}/{id}"
+            
+            system_ref = generateID()
+            tile.data[SYSTEM_REF_RESOURCE_ID_NODE]['en']['value'] = system_ref
+            tile.save()
 
         if not reason_description or not system_ref:
             return
