@@ -43,6 +43,7 @@ class UpdateArchiveDisplayName(BaseFunction):
             
             prefixed_id = generateID()
             tile.data[RESOURCE_ID_NODE]['en']['value'] = prefixed_id
+            tile.save()
 
         try:
             display_tile =  Tile.objects.get(
