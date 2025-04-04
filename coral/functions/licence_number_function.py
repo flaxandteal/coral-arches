@@ -52,14 +52,12 @@ details = {
     "component": "",
 }
 
-print("LICENCE DEBUG INIT")
+
 def licence_number_format(year, index):
-    print("LICENCE DEBUG licence_number_format(year, index):")
     return f"{LICENCE_NUMBER_PREFIX}/{year}/{str(index).zfill(3)}"
 
 
 def get_latest_licence_number(licence_instance_id):
-    print("LICENCE DEBUG get_latest_licence_number(licence_instance_id):")
 
     latest_licence_number_tile = None
     try:
@@ -92,7 +90,6 @@ def get_latest_licence_number(licence_instance_id):
 
 
 def generate_licence_number(licence_instance_id, attempts=0):
-    print("LICENCE DEBUG generate_licence_number(licence_instance_id, attempts=0):")
 
     if attempts >= 20:
         raise Exception(
@@ -100,7 +97,6 @@ def generate_licence_number(licence_instance_id, attempts=0):
         )
 
     def retry():
-        print("LICENCE DEBUG retry():")
         nonlocal attempts, licence_instance_id
         attempts += 1
         return generate_licence_number(licence_instance_id, attempts)
@@ -120,7 +116,7 @@ def generate_licence_number(licence_instance_id, attempts=0):
         return retry()
 
     if licence_number_tile:
-        print("LICENCE DEBUG A licence number has already been created for this licence")
+        print("A licence number has already been created for this licence")
         return
 
     latest_licence_number = None
@@ -172,11 +168,9 @@ def generate_licence_number(licence_instance_id, attempts=0):
 class LicenceNumberFunction(BaseFunction):
 
     def post_save(self, tile, request, context):
-        print("LICENCE DEBUG post_save(self, tile, request, context):")
         if context and context.get('escape_function', False):
             return
 
-        print("LICENCE DEBUG LICENCE DEBUG POST_SAVE")
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         tile_nodegroup_id = str(tile.nodegroup.nodegroupid)
 
@@ -196,12 +190,6 @@ class LicenceNumberFunction(BaseFunction):
                 app_id = (
                     tile.data.get(SYSTEM_REF_RESOURCE_ID_NODE).get("en").get("value")
                 )
-                if app_id.startswith('extrados'):
-                    print("LICENCE DEBUG EXTRADOS")
-                    newAppNumber = get_latest_licence_number(tile.resource_instance_id)
-                    tile.data[SYSTEM_REF_RESOURCE_ID_NODE] = { "en": {"direction": "ltr", "value": newAppNumber}}
-                    print("LICENCE DEBUG LICENCE DEBUG", newAppNumber)
-                    tile.save()
                 # Set the licence name to use the app id
                 name_tile = Tile.objects.filter(
                     resourceinstance_id=resource_instance_id,
