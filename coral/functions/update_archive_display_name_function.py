@@ -1,3 +1,5 @@
+from datetime import date
+import random
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
 
@@ -29,6 +31,19 @@ class UpdateArchiveDisplayName(BaseFunction):
         source_name = tile.data.get(ARCHIVE_SOURCE_NAME_NODE, None)
 
         name_data = source_name if source_name else resource_id_name
+
+        if prefixed_id.startswith('extrados'):
+            def generateID (prefix="ARC", length=6):
+                base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+                current_date = date.today()
+                current_year = current_date.year
+                characters = random.choices(base62chars, k=length)
+                id = "".join(characters)
+                return f"{prefix}/{current_year}/{id}"
+            
+            prefixed_id = generateID()
+            tile.data[RESOURCE_ID_NODE]['en']['value'] = prefixed_id
+            tile.save()
 
         try:
             display_tile =  Tile.objects.get(

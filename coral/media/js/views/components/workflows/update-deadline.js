@@ -51,9 +51,9 @@ define([
 
         if (responseDate < dueDate) {
             return true;   
-        } else {
-          return false
         }
+
+          return false
       }
 
       this.getLatestTile = async () => {
