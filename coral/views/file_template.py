@@ -47,8 +47,9 @@ import arches_orm
 from arches_orm.wkrm import get_well_known_resource_model_by_graph_id
 import pytz
 from django.core.files.storage import  default_storage
-
-   
+from coral.views.pdf_extract import PdfExtract
+import logging
+import os
 class FileTemplateView(View):
     def __init__(self):
         self.doc = None
@@ -76,6 +77,7 @@ class FileTemplateView(View):
         data = json.loads(request.body.decode("utf-8"))
         template_id = request.POST.get("template_id", data.get("template_id", None))
         config = request.POST.get("config", data.get("config", {}))
+        extract_pdf = config.get("extract_pdf", False)
         parenttile_id = request.POST.get("parenttile_id")
         resourceinstance_id = request.POST.get(
             "resourceinstance_id", data.get("resourceinstance_id", None)
@@ -108,6 +110,27 @@ class FileTemplateView(View):
             self.doc = Document(fs.open(template_path))
         except:
             return HttpResponseNotFound("No Template Found")
+        
+        if extract_pdf:
+             config['extract_pdf_text'] = []
+             pdf_extract = PdfExtract()
+             files = data.get('files')
+             for file in files:
+                filename = file["name"].replace(" ", "_")
+                if filesystem_class == 'S3Boto3Storage':
+                    file_path = os.path.join(
+                        "uploadedfiles", filename
+                    )
+                elif filesystem_class == 'FileSystemStorage':
+                    file_path = os.path.join(
+                        settings.APP_ROOT, "uploadedfiles", filename
+                    )
+                try:
+                    file = fs.open(file_path)
+                    text = pdf_extract.extract_text(file.read())
+                    config['extract_pdf_text'] = text
+                except:
+                    return HttpResponseNotFound(f"No file found for {file['name']}")
 
         self.edit_letter(self.resource, template_dict["provider"], config)
 
@@ -280,6 +303,11 @@ class FileTemplateView(View):
 
         # config["include"] = include
         mapping_dict = provider(resource).get_mapping(config)
+
+        if config.get("extract_pdf", False):
+             data = config.get("extract_pdf_text", [])
+             mapping_dict["pdf_data"] = data
+
         self.apply_mapping(mapping_dict)
 
     def apply_mapping(self, mapping):
@@ -328,6 +356,14 @@ class FileTemplateView(View):
                     for cell in row.cells:
                         replace_in_runs(cell.paragraphs, k, v)
 
+        if key == "pdf_data":
+            # Process all paragraphs that contain <pdf_extract>
+            for paragraph in document.paragraphs:
+                if f"<{key}>" in paragraph.text:
+                    self.replace_pdf_extract(paragraph, v, tolerance=2)
+            # Also iterate through tables, sections etc. as needed...
+            return
+
         if v and key is not None:
             k = "<" + key + ">"
             doc = document
@@ -350,6 +386,61 @@ class FileTemplateView(View):
                     iterate_tables(section.footer.tables, k, v)
                     replace_in_runs(section.header.paragraphs, k, v)
                     iterate_tables(section.header.tables, k, v)
+
+    def replace_pdf_extract(self, paragraph, extracted_segments, tolerance=2):
+        """
+        Given a paragraph and a list of extracted segments from pdf_extract,
+        group segments by similar y values (same line) and add them as runs.
+        Each segment is a dict with keys "text", "x", "y" and "is_bold".
+        """
+        # Sort segments first by page then y then x:
+        segments = sorted(extracted_segments, key=lambda s: (s["page"], s["y"], s["x"]))
+        
+        # Group segments that are on the same line (within a tolerance)
+        lines = []
+        current_line = []
+        current_y = None
+        for seg in segments:
+            if current_y is None or abs(seg["y"] - current_y) <= tolerance:
+                current_line.append(seg)
+                current_y = seg["y"]  # use the first segment's y for the line
+            else:
+                lines.append(current_line)
+                current_line = [seg]
+                current_y = seg["y"]
+        if current_line:
+            lines.append(current_line)
+        
+        # Remove old runs (or clear paragraph) if needed:
+        paragraph.clear()
+        
+        # For each group (line), add a run per segment:
+        for i, line in enumerate(lines):
+            # Sort segments by x position for each line
+            line = sorted(line, key=lambda s: s["x"])
+
+            # Add runs for each segment, applying bold formatting if needed
+            for seg in line:
+                run = paragraph.add_run(seg["text"])
+                if seg.get("is_bold"):
+                    run.bold = True
+            
+            # Determine how to join this line with the next (if any)
+            if i < len(lines) - 1:
+                next_line = lines[i + 1]
+                # Calculate the vertical positions.
+                current_line_base = min(seg["y"] for seg in line)
+                line_height = max(seg["height"] for seg in line)
+                next_line_base = min(seg["y"] for seg in next_line)
+                gap = next_line_base - current_line_base
+                # If gap is more than twice the line height,
+                # then add a break; otherwise add a space.
+                if gap > 2 * line_height:
+                    run = paragraph.add_run()
+                    run.add_break()
+                    run.add_break()
+                else:
+                    paragraph.add_run(" ")
 
     def insert_image(self, document, k, v, image_path=None, config=None):
         # going to need to write custom logic depending on how images should be placed/styled
@@ -435,6 +526,17 @@ class GenericTemplateProvider:
                     children_present = found_semantic
         return mapping
     
+    def merge_mappings(self, original: dict, new: dict):
+        merged = original.copy() if original is not None else {}
+        for key, value in new.items():
+            if 'many_tiles' in self.config and key in self.config['many_tiles'] and key in merged:
+                if not isinstance(merged[key], list):
+                    merged[key] = [merged[key]]
+                merged[key].append(value)
+            else:
+                merged[key] = value
+        return merged
+
     def extract_from_related_resource(self, prefix:Alias, related_resource:RelatedResource) -> Mapping:
         """Process values from a related resource's node list
         
@@ -497,7 +599,7 @@ class GenericTemplateProvider:
                 elif special_case[1] == 'user':
                      mapping = self.get_user(mapping, special_case[0])
 
-        return self.processDatatypes(mapping)
+        return self.processDatatypes(mapping)         
 
     def processDatatypes(self, mapping:Mapping) -> Mapping:
         """Provides the logic for extracting a node lists's values for different datatypes.
@@ -512,14 +614,14 @@ class GenericTemplateProvider:
             if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
                 for node in value:
                     if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
-                        mapping = mapping | self.extract(list(node.items()))
+                        mapping = self.merge_mappings(mapping, self.extract(list(node.items())))
                 # TODO handle node lists that are not semantic e.g bibligraphic source is a resource-instance but has children. Currently we ignore the children 
                 mapping[alias] = None
                 continue
             if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel, arches_orm.arches_django.datatypes.user.UserViewModel)):
                 mapping[alias] = None
                 continue
-            if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):
+            if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):             
                 if "expand" in self.config and alias in self.config["expand"] and len(value) > 0:
                     for related_resource in value:
                         mapping = mapping | self.extract_from_related_resource(alias, related_resource)
