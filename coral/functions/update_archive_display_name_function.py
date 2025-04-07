@@ -32,7 +32,7 @@ class UpdateArchiveDisplayName(BaseFunction):
 
         name_data = source_name if source_name else resource_id_name
 
-        if prefixed_id.startswith('extrados'):
+        if resource_id_name.startswith('extrados'):
             def generateID (prefix="ARC", length=6):
                 base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
                 current_date = date.today()
@@ -41,8 +41,8 @@ class UpdateArchiveDisplayName(BaseFunction):
                 id = "".join(characters)
                 return f"{prefix}/{current_year}/{id}"
             
-            prefixed_id = generateID()
-            tile.data[RESOURCE_ID_NODE]['en']['value'] = prefixed_id
+            resource_id_name = generateID()
+            tile.data[RESOURCE_ID_NODE]['en']['value'] = resource_id_name
             tile.save()
 
         try:

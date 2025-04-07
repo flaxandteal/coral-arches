@@ -91,6 +91,7 @@ class UpdatePlanningNameFunction(BaseFunction):
                 system_reference_tile, SYSTEM_REFERENCE_RESOURCE_NODE_ID
             )
             if resource_id_value.startswith('extrados'):
+                print("DEBUG PLANNING NAME UPDATE: ", resource_id_value)
                 def generateID (prefix="CON", length=6):
                     base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
                     current_date = date.today()
