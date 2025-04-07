@@ -355,6 +355,8 @@
                     { "text": "DAERA AIL Consultation", "id": "daera-ail-consultation-template.docx"}
                   ],
                 "config": {
+                    "many_tiles": [ "response_summary_value" ],
+                    "extract_pdf": true,
                     "special": {
                       "today": "today",
                       "user": "user"

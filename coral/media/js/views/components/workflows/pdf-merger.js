@@ -131,7 +131,6 @@ define([
         this.fetchResponseSummary();
         this.checkUploadedFiles();
 
-
         console.log(this.tile.data);
 
         const getDisplayName = async() => {
@@ -144,13 +143,14 @@ define([
 
         this.retrieveFile = async() => {
             // this.loading(true);
-
+            
             await $.ajax({
                 type: 'POST',
                 url: arches.urls.root + 'filetemplate',
                 data: JSON.stringify({
                     resourceinstance_id: params.resourceid,
                     template_id: 'planning-pdf-merger',
+                    files: this.HMFiles().concat(this.HBFiles()),
                     config: params.config
                 }),
                 context: this,
