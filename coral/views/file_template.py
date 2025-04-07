@@ -128,7 +128,12 @@ class FileTemplateView(View):
                 try:
                     file = fs.open(file_path)
                     text = pdf_extract.extract_text(file.read())
-                    config['extract_pdf_text'] = text
+                    config['extract_pdf_text'].append(
+                        { 
+                              'file': file, 
+                              'text': text 
+                        }
+                    )
                 except:
                     return HttpResponseNotFound(f"No file found for {file['name']}")
 
@@ -319,7 +324,7 @@ class FileTemplateView(View):
                 mapping[key] = str(mapping[key])
             if (isinstance(mapping[key], (list))):
                 if all(isinstance(item, str) for item in mapping[key]):
-                    mapping[key] = ", ".join(mapping[key])
+                    mapping[key] = "\n \n".join(mapping[key])
             html = False
             if htmlTags.search(str(mapping.get(key, ""))):
                 html = True
@@ -357,11 +362,14 @@ class FileTemplateView(View):
                         replace_in_runs(cell.paragraphs, k, v)
 
         if key == "pdf_data":
-            # Process all paragraphs that contain <pdf_extract>
             for paragraph in document.paragraphs:
                 if f"<{key}>" in paragraph.text:
-                    self.replace_pdf_extract(paragraph, v, tolerance=2)
-            # Also iterate through tables, sections etc. as needed...
+                    paragraph.clear()
+                    for file in v:
+                        self.replace_pdf_extract(paragraph, file["text"], tolerance=2)
+                        run = paragraph.add_run()
+                        run.add_break()
+                        run.add_break()
             return
 
         if v and key is not None:
@@ -391,7 +399,7 @@ class FileTemplateView(View):
         """
         Given a paragraph and a list of extracted segments from pdf_extract,
         group segments by similar y values (same line) and add them as runs.
-        Each segment is a dict with keys "text", "x", "y" and "is_bold".
+        Each segment is a dict with keys "text", "x", "y", "height" and "is_bold".
         """
         # Sort segments first by page then y then x:
         segments = sorted(extracted_segments, key=lambda s: (s["page"], s["y"], s["x"]))
@@ -411,36 +419,38 @@ class FileTemplateView(View):
         if current_line:
             lines.append(current_line)
         
-        # Remove old runs (or clear paragraph) if needed:
-        paragraph.clear()
-        
         # For each group (line), add a run per segment:
         for i, line in enumerate(lines):
             # Sort segments by x position for each line
             line = sorted(line, key=lambda s: s["x"])
-
-            # Add runs for each segment, applying bold formatting if needed
-            for seg in line:
-                run = paragraph.add_run(seg["text"])
-                if seg.get("is_bold"):
-                    run.bold = True
+            current_line_text = "".join(seg["text"] for seg in line).rstrip()
             
+            for seg in line:
+                if seg["text"].startswith("http"):
+                    html_parser = DocumentHTMLParser(paragraph, self.doc)
+                    html_parser.add_hyperlink(paragraph, seg["text"], seg["text"], color='5384da')
+                else:
+                    run = paragraph.add_run(seg["text"])
+                    if seg.get("is_bold"):
+                        run.bold = True
+
             # Determine how to join this line with the next (if any)
             if i < len(lines) - 1:
                 next_line = lines[i + 1]
-                # Calculate the vertical positions.
+                next_line_text = "".join(seg["text"] for seg in next_line).lstrip()
                 current_line_base = min(seg["y"] for seg in line)
                 line_height = max(seg["height"] for seg in line)
                 next_line_base = min(seg["y"] for seg in next_line)
                 gap = next_line_base - current_line_base
-                # If gap is more than twice the line height,
-                # then add a break; otherwise add a space.
                 if gap > 2 * line_height:
                     run = paragraph.add_run()
                     run.add_break()
                     run.add_break()
+                elif current_line_text.endswith(":") or re.match(r"^\d+\.", next_line_text):
+                    paragraph.add_run().add_break()
                 else:
                     paragraph.add_run(" ")
+
 
     def insert_image(self, document, k, v, image_path=None, config=None):
         # going to need to write custom logic depending on how images should be placed/styled

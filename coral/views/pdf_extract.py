@@ -26,7 +26,7 @@ class PdfExtract():
                                 "width": span["bbox"][2] - span["bbox"][0],
                                 "height": span["bbox"][3] - span["bbox"][1],
                                 "font": span["font"],
-                                "is_bold": "Bold" in span["font"],
+                                "is_bold": "Bold" in span["font"] or "F1" in span["font"],
                                 "size": span["size"],
                                 "bg": span.get("bg")
                             })
