@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
 from arches.app.views.user import UserManagerView
-from arches.app.views.file import TempFileView
+from coral.views.api_file import TempFileView
 from coral.views.group_manager import GroupManagerView
 from coral.views.person_user import PersonUserSignupView
 from arches.app.views.plugin import PluginView
