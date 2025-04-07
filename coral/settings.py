@@ -15,7 +15,7 @@ import inspect
 import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
-from csp.constants import NONCE, SELF
+from csp.constants import SELF, NONE
 
 try:
     from arches.settings import *
@@ -235,12 +235,12 @@ MIDDLEWARE = [
 
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
-        "default-src": [SELF],
-        "script-src": [SELF, NONCE, "cdnjs.cloudflare.com"],
+        "default-src": [NONE],
+        "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com"],
         "img-src": [SELF],
-        "font-src": [SELF, NONCE, "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
-        "style-src": [SELF, NONCE, "cdnjs.cloudflare.com", "fonts.googleapis.com"],
-        "connect-src": [SELF, NONCE, "cdnjs.cloudflare.com"],
+        "font-src": [SELF, "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
+        "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
+        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com"],
     },
 }
 
