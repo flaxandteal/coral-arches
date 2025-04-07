@@ -10,8 +10,9 @@ from django.utils.decorators import method_decorator
 from arches.app.models.models import File, TempFile
 from arches.app.models.system_settings import settings
 from django.core.exceptions import PermissionDenied
+from django.core.files.storage import storages
 from arches.app.utils.response import JSONResponse
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from mimetypes import MimeTypes
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -34,6 +35,12 @@ class TempFileView(View):
         return response
     
     def post(self, request):
+        # print(storage_instance = storages.create_storage({"BACKEND": "package.storage.CustomStorage"}))
+        print("DEBUG FILE UPLOAD", request)
+        print("DEBUG FILE UPLOAD FILE", request.FILES)
+        print("DEBUG FILE UPLOAD POST", request.POST)
+
+
         file_id = uuid.uuid4()
         file_name = request.POST.get("fileName", None)
         file = request.FILES.get("file", None)
@@ -47,3 +54,5 @@ class TempFileView(View):
         }
 
         return JSONResponse(response_dict)
+    
+
