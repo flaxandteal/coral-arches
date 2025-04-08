@@ -44,14 +44,19 @@ class TempFileView(View):
         file_id = uuid.uuid4()
         file_name = request.POST.get("fileName", None)
         file = request.FILES.get("file", None)
-        file.file_name = file_name
-        file.name = file_name
+        print("DEBUG file", file)
+        print("DEBUG file_name", file_name)
+        
         temp_file = TempFile.objects.create(fileid=file_id, path=file)
         temp_file.save()
 
         response_dict = {
             "file_id": file_id
         }
+        print("DEBUG FILE UPLOAD POST List", list(request.POST.items()))
+
+        print("DEBUG FILE UPLOAD FILE", vars(request.FILES))
+        print("DEBUG FILE UPLOAD POST", vars(request.POST))
 
         return JSONResponse(response_dict)
     
