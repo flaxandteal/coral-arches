@@ -6640,29 +6640,6 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "storage_shelf_name_metatype",
-                    "config": {
-                        "rdmCollection": null
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Storage Shelf Name Metatype",
-                    "nodegroup_id": "c69aa19d-fe7b-11ea-9e10-f875a44e0e11",
-                    "nodeid": "2b3687be-ba03-11ee-a343-0242ac180006",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
                     "alias": "copyright_details",
                     "config": {},
                     "datatype": "semantic",
