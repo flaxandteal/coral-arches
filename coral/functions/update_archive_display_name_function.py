@@ -32,7 +32,7 @@ class UpdateArchiveDisplayName(BaseFunction):
 
         name_data = source_name if source_name else resource_id_name
 
-        if resource_id_name.startswith('extrados'):
+        if resource_id_name.en.value.startswith('extrados'):
             def generateID (prefix="ARC", length=6):
                 base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
                 current_date = date.today()
