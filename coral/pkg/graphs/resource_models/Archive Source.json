@@ -4228,28 +4228,6 @@
                 {
                     "card_id": "c69aa19f-fe7b-11ea-9b9e-f875a44e0e11",
                     "config": {
-                        "defaultValue": "a0e096e2-f5ae-4579-950d-3040714713b4",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Storage Shelf Name Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "f91a0248-b21d-4b05-a773-50851ebe382f",
-                    "label": {
-                        "en": "Storage Shelf Name Metatype"
-                    },
-                    "node_id": "2b3687be-ba03-11ee-a343-0242ac180006",
-                    "sortorder": 14,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "c69aa19f-fe7b-11ea-9b9e-f875a44e0e11",
-                    "config": {
                         "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
@@ -4348,15 +4326,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "145f9615-9ad2-11ea-b4d3-f875a44e0e11"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "14d97346-ba03-11ee-987d-0242ac180006",
-                    "edgeid": "1b9a95b7-2cc6-455f-bb71-8f7a7b893385",
-                    "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "2b3687be-ba03-11ee-a343-0242ac180006"
                 },
                 {
                     "description": null,
