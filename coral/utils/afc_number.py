@@ -36,11 +36,13 @@ class AfcNumber:
     def get_latest_id_number(self, resource_instance_id=None, daera= False):
         latest_id_number_tile = None
         if daera:
-            ID_NUMBER_PATTERN = 'AIL'
+            ID_NUMBER_PATTERN = r"AIL\d{3}-\d{2}/\d{2}"
         try:
             id_number_generated = {
                 f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value__regex": ID_NUMBER_PATTERN,
             }
+            print("AFC: ", ID_NUMBER_PATTERN)
+            print("AFC", id_number_generated)
             query_result = Tile.objects.filter(
                 nodegroup_id=SYSTEM_REFERENCE_NODEGROUP,
                 **id_number_generated,
@@ -53,6 +55,7 @@ class AfcNumber:
             
             query_result = query_result.order_by("-most_recent")
             latest_id_number_tile = query_result.first()
+            print("AFC LATEST IS", latest_id_number_tile)
 
         except Exception as e:
             raise e
@@ -72,12 +75,12 @@ class AfcNumber:
         else:
             index_num = r"(AFC\d{3})-\d{2}/\d{2}"
         match = re.search(index_num, latest_id_number)
+        print("AFC MATCH", match)
         if match:
             id_number_parts = match.group(1)
             
         id_number_parts = int(id_number_parts.removeprefix('AFC').removeprefix('AIL'))
-
-            
+        print("AFC NUMBER PARTS", id_number_parts)
         return {"index": id_number_parts}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0, daera=False):
