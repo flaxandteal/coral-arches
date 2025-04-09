@@ -18,7 +18,7 @@ from django.core.files.base import ContentFile
 
 
 from arches.app.utils.response import JSONResponse
-from arches.app.datatypes import FileListDataType
+from arches.app.datatypes.datatypes import FileListDataType
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
 from mimetypes import MimeTypes
