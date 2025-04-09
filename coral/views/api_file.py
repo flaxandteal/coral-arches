@@ -47,7 +47,6 @@ class TempFileView(View):
     def post(self, request: Request):
         # print(storage_instance = storages.create_storage({"BACKEND": "package.storage.CustomStorage"}))
         print("DEBUG FILE UPLOAD", request)
-        print("DEBUG FILE UPLOAD", request.params)
         print("DEBUG FILE UPLOAD FILE", request.FILES)
         print("DEBUG FILE UPLOAD POST", request.POST)
 
