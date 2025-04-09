@@ -16,9 +16,10 @@ from django.core.files import File
 from django.core.files.storage import default_storage    
 from django.core.files.base import ContentFile
 
-
 from arches.app.utils.response import JSONResponse
 from arches.app.datatypes.datatypes import FileListDataType
+from arches.app.models.system_settings import settings
+
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
 from mimetypes import MimeTypes
@@ -61,18 +62,21 @@ class TempFileView(View):
         83365
         """
 
+        print("directory is", file_path)
+        uploadDirectory = settings.UPLOADED_FILES_DIR
         
         file_id = uuid.uuid4()
         file_name = request.POST.get("fileName", None)
         file = request.FILES.get("file", None)
         print("DEBUG file", file)
         print("DEBUG file_name", file_name)
+        file_path = "%s/%s" % (settings.UPLOADED_FILES_DIR, str(file_name))
         paths = []
         paths_string = ","
         for filename, file in request.FILES.items():
             name = request.FILES[filename].name
             paths.append(name)
-            default_storage.save(f'/uploadedfiles/{name}', file)
+            default_storage.save(file_path)
         paths_string.join(paths)
 
         """
