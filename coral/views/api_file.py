@@ -69,7 +69,7 @@ class TempFileView(View):
         print("DEBUG file_name", file_name)
         paths = []
         paths_string = ","
-        for filename, file in request.FILES.iteritems():
+        for filename, file in request.FILES.items():
             name = request.FILES[filename].name
             paths.append(name)
             default_storage.save(f'/uploadedfiles/{name}', file)
