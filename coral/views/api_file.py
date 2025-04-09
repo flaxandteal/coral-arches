@@ -66,18 +66,16 @@ class TempFileView(View):
         print("uploadDirectory", uploadDirectory)
         
         file_id = uuid.uuid4()
-        file_name = request.POST.get("fileName", None)
         file = request.FILES.get("file", None)
         print("DEBUG file", file)
-        print("DEBUG file_name", file_name)
-        file_path = "%s/%s" % (settings.UPLOADED_FILES_DIR, str(file_name))
-        print("directory is", file_path)
         paths = []
         paths_string = ","
         for filename, file in request.FILES.items():
-            name = request.FILES[filename].name
-            paths.append(name)
-            default_storage.save(file_path)
+            # name = request.FILES[filename].name
+            file_path = "%s/%s" % (settings.UPLOADED_FILES_DIR, str(filename))
+            paths.append(filename)
+
+            default_storage.save(file_path, file)
         paths_string.join(paths)
 
         """
