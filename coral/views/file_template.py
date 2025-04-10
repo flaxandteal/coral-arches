@@ -48,7 +48,6 @@ from arches_orm.wkrm import get_well_known_resource_model_by_graph_id
 import pytz
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
-import logging
 import os
 class FileTemplateView(View):
     def __init__(self):
@@ -403,6 +402,7 @@ class FileTemplateView(View):
         """
         # Sort segments first by page then y then x:
         segments = sorted(extracted_segments, key=lambda s: (s["page"], s["y"], s["x"]))
+        max_line_width = 510
         
         # Group segments that are on the same line (within a tolerance)
         lines = []
@@ -423,12 +423,37 @@ class FileTemplateView(View):
         for i, line in enumerate(lines):
             # Sort segments by x position for each line
             line = sorted(line, key=lambda s: s["x"])
-            current_line_text = "".join(seg["text"] for seg in line).rstrip()
             
             for seg in line:
                 if seg["text"].startswith("http"):
+                    link_text = seg["text"]
+                    link_width = seg["x"] + seg["width"]
+                    if link_width >= max_line_width or link_text.endswith("-") and next_line is not None:
+                         j = i + 1
+                         while j < len(lines):
+                              next_line = lines[j] if i < len(lines) - 1 else None
+                              next_line_width = None
+                              if next_line:
+                                    next_line_width = sum(s["width"] for s in next_line)
+                                    next_line_text = "".join(seg["text"] for seg in next_line)
+                              if next_line_width < max_line_width:
+                                space_index = next_line_text.find(" ")
+                                if space_index != -1:
+                                    next_line[0]["text"] = next_line[0]["text"][space_index:]
+                                    addition = next_line_text[:space_index]
+                                else:
+                                    next_line[0]["text"] = ""
+                                    addition = next_line_text
+                                link_text += addition.strip()
+                                break
+                              else:
+                                link_text += addition.strip()
+                                for s in next_line:
+                                     s["text"] = ""
+                                j += 1
+                              
                     html_parser = DocumentHTMLParser(paragraph, self.doc)
-                    html_parser.add_hyperlink(paragraph, seg["text"], seg["text"], color='5384da')
+                    html_parser.add_hyperlink(paragraph, link_text, link_text, color='5384da')
                 else:
                     run = paragraph.add_run(seg["text"])
                     if seg.get("is_bold"):
@@ -436,8 +461,10 @@ class FileTemplateView(View):
 
             # Determine how to join this line with the next (if any)
             if i < len(lines) - 1:
-                next_line = lines[i + 1]
-                next_line_text = "".join(seg["text"] for seg in next_line).lstrip()
+                current_line_text = "".join(seg["text"] for seg in line)
+                next_line = lines[i + 1] if i < len(lines) - 1 else None
+                if next_line:
+                    next_line_text = "".join(seg["text"] for seg in next_line)
                 current_line_base = min(seg["y"] for seg in line)
                 line_height = max(seg["height"] for seg in line)
                 next_line_base = min(seg["y"] for seg in next_line)
@@ -446,7 +473,7 @@ class FileTemplateView(View):
                     run = paragraph.add_run()
                     run.add_break()
                     run.add_break()
-                elif current_line_text.endswith(":") or re.match(r"^\d+\.", next_line_text):
+                elif current_line_text.strip().endswith(":") or re.match(r"^\d+\.", next_line_text):
                     paragraph.add_run().add_break()
                 else:
                     paragraph.add_run(" ")
