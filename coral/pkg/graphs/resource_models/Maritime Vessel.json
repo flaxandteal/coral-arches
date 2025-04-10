@@ -15697,6 +15697,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P17_was_motivated_by",
                     "rangenode_id": "fe0a4ecd-3ed2-11eb-949a-f875a44e0e11"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "49bac387-5464-11e9-8cb8-000d3ab1e588",
+                    "edgeid": "e0bed5e5-1462-4dc7-ab93-6eceab5d145f",
+                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "e0bed5e5-1462-4dc7-ab93-6eceab5d145f"
                 }
             ],
             "functions_x_graphs": [
@@ -26892,6 +26901,27 @@
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
                     "sortorder": 0
+                },
+                {
+                    "alias": "_legacy_record",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "Legacy Data",
+                    "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Legacy Data",
+                    "nodegroup_id": "e0bed5e5-1462-4dc7-ab93-6eceab5d145f",
+                    "nodeid": "e0bed5e5-1462-4dc7-ab93-6eceab5d145f",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
