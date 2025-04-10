@@ -423,39 +423,54 @@
 
         <div>
             <h3>Responses</h3>
-            <div>
+            <!-- ko if: assignedTo() === TYPE_ASSIGN_HM || assignedTo() === TYPE_ASSIGN_BOTH -->
+            <div style="padding: 1rem;">
                 <h4>HM Response</h4>
-                <div>
-                    <label>Response Summary</label>
-                    <input type="checkbox" data-bind="checked: HMSummary, disable: true"></input>
+                <div class="response-container">
+                    <div>
+                        <span>Response Summary</span>
+                        <input type="checkbox" class="read-only-check" data-bind="checked: HMSummary"></input>
+                    </div>
                     <h5>Uploaded Files</h5>
                     <ul class="list-group">
                         <!-- ko foreach: HMFiles -->
                         <li class="list-group-item" data-bind="text: $data.name"></li>
                         <!-- /ko -->
+                        <!-- ko if: HMFiles.length === 0-->
+                        <li class="list-group-item">No uploaded files</li>
+                        <!-- /ko --> 
                     </ul>
                 </div>
             </div>
-            <div>
+            <!-- /ko -->
+            <!-- ko if: assignedTo() === TYPE_ASSIGN_HB || assignedTo() === TYPE_ASSIGN_BOTH -->
+            <div style="padding: 1rem">
                 <h4>HB Response</h4>
-                <div>
-                    <label>Response Summary</label>
-                    <input type="checkbox" data-bind="checked: HBSummary, disable: true"></input>
+                <div class="response-container">
+                    <div>
+                        <span>Response Summary</span>
+                        <input type="checkbox" class="read-only-check" data-bind="checked: HBSummary"></input>
+                    </div>
+                    
                     <h5>Uploaded Files</h5>
                     <ul class="list-group">
                         <!-- ko foreach: HBFiles -->
                         <li class="list-group-item" data-bind="text: $data.name"></li>
                         <!-- /ko -->
+                        <!-- ko if: HBFiles.length === 0-->
+                        <li class="list-group-item">No uploaded files</li>
+                        <!-- /ko --> 
                     </ul>
                 </div>
             </div>
+            <!-- /ko -->
         </div>
 
         <div style="padding: 10px 5px 25px 5px; margin-right: 10px">
             <div style="margin-bottom: 8px">
                 <button class="btn btn-shim btn-success btn-lg" data-bind="click: () => {
                     retrieveFile();
-                }">
+                }, disable: disableGenerate">
                     <span>Generate</span>
                 </button>
             </div>

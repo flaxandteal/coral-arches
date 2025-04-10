@@ -58,6 +58,21 @@ define([
         this.configKeys = ko.observable({ placeholder: 0 });
         this.letterOptions = ko.observable(params.letterOptions);
 
+        this.disableGenerate = ko.computed(() => {
+            const assigned = this.assignedTo();
+            
+            if (assigned === this.TYPE_ASSIGN_BOTH) {
+                return !this.HMSummary() && !this.HBSummary();
+            }
+            if (assigned === this.TYPE_ASSIGN_HB) {
+                return !this.HBSummary();
+            }
+            if (assigned === this.TYPE_ASSIGN_HM) {
+                return !this.HMSummary();
+            }
+            return true;
+        });
+
         this.fetchTileData = async(resourceId, nodeId) => {
             const tilesResponse = await window.fetch(
                 arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
@@ -69,7 +84,6 @@ define([
 
         this.fetchAssignedValue = async() => {
             const tile = await this.fetchTileData(params.resourceid, this.ACTION_TYPE_NODE);
-            console.log(tile[0].data[this.ACTION_TYPE_NODE]);
             const responseTypeId = tile[0].data[this.ACTION_TYPE_NODE];
             return responseTypeId;
         };
@@ -127,11 +141,11 @@ define([
         };
         
 
-        this.assignedTo(this.fetchAssignedValue());
+        this.fetchAssignedValue().then((value) => {
+            this.assignedTo(value);
+        });
         this.fetchResponseSummary();
         this.checkUploadedFiles();
-
-        console.log(this.tile.data);
 
         const getDisplayName = async() => {
             const resource = await window.fetch(
@@ -163,7 +177,6 @@ define([
                     await this.saveRelationship(response.responseJSON.tile.resourceinstance_id);
                 },
                 error: (response, status, error) => {
-                    console.log(response);
                     if (response.statusText !== 'abort') {
                         this.viewModel.alert(
                             new AlertViewModel(
@@ -180,7 +193,6 @@ define([
         };
 
         this.saveDigitalResourceName = async(name, resourceId) => {
-            console.log("name", name)  
             const nameTemplate = {
                 tileid: '',
                 data: {
@@ -219,8 +231,6 @@ define([
 
         this.saveRelationship = async(resourceId) => {
             const id = uuid.generate();
-
-            console.log(this.tile.data[this.RESPONSE_FILES_NODE]);
 
             this.tile.data[this.RESPONSE_FILES_NODE] = [
                 {
@@ -313,7 +323,6 @@ define([
                 })
             );
 
-            console.log("FILETILES", fileTiles);
             this.uploadedFiles(fileTiles.filter(tile => tile.name.includes('planning-response-combined')));
             this.uploadedFiles.valueHasMutated();
         };
