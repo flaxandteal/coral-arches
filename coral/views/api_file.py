@@ -69,7 +69,7 @@ class TempFileView(View):
         
         file_id = uuid.uuid4()
         file = request.FILES.get("file", None)
-        print("DEBUG file", vars(file))
+        print("DEBUG file", file)
         paths = []
         paths_string = ","
         for filename, file in request.FILES.items():
