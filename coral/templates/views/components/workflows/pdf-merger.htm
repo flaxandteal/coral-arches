@@ -436,7 +436,7 @@
                         <!-- ko foreach: HMFiles -->
                         <li class="list-group-item" data-bind="text: $data.name"></li>
                         <!-- /ko -->
-                        <!-- ko if: HMFiles.length === 0-->
+                        <!-- ko if: HMFiles().length === 0-->
                         <li class="list-group-item">No uploaded files</li>
                         <!-- /ko --> 
                     </ul>
@@ -457,7 +457,7 @@
                         <!-- ko foreach: HBFiles -->
                         <li class="list-group-item" data-bind="text: $data.name"></li>
                         <!-- /ko -->
-                        <!-- ko if: HBFiles.length === 0-->
+                        <!-- ko if: HBFiles().length === 0-->
                         <li class="list-group-item">No uploaded files</li>
                         <!-- /ko --> 
                     </ul>
