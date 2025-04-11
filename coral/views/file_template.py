@@ -134,7 +134,7 @@ class FileTemplateView(View):
                         }
                     )
                 except:
-                    return HttpResponseNotFound(f"No file found for {file['name']}")
+                    return HttpResponseNotFound(f"No file found")
 
         self.edit_letter(self.resource, template_dict["provider"], config)
 
