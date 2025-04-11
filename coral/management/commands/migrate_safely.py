@@ -245,19 +245,19 @@ class ScanForDataRisks():
     return False
   
   def handle_concept_change(self, tile_json, updated_concepts):
-    if self.mapping is None:
-        raise ValueError("No mapping file has been provided for the concept conversion. Use -M to add a file")
-    
     for node in list(tile_json['data'].keys()):
       if node in [concept["node_id"] for concept in updated_concepts]:
           try:
-            mapping = next(value for key, value in self.mapping.items() if key == node)
+            if self.mapping:
+              mapping = next(value for key, value in self.mapping.items() if key == node)
+            else:
+              answer = input("No mapping has been provided. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
+              if answer.lower() == 'y':
+                 mapping = { 'default': None }
           except Exception as e:
-             raise ValueError(f"No mapping could be found in the file for the node {node}") from e
+            raise ValueError(f"No mapping could be found in the file for the node {node}") from e
           TransformData().concept_to_concept(tile_json, node, mapping)
-          
-     
-
+  
   def handle_data_change_messages(self, new_nodes, deleted_nodes, deleted_nodegroups, new_functions, updated_names, new_concepts, updated_concepts):
     nodes = self.graph.nodes.values()
 
@@ -341,9 +341,9 @@ class ScanForDataRisks():
           operation="export_graphs",
           graphs=self.graphid,
           format="json",
-          dest_dir="."
+          dest_dir="coral/pkg/business_data/files"
       )
-      os.rename(f"{model_name}.json", f"backup_{model_name}.json")
+      os.rename(f"coral/pkg/business_data/files/{model_name}.json", f"coral/pkg/business_data/files/backup_{model_name}.json")
     except Exception as e:
       print(f"Error during export {e}")
       input("\nError occurred when exporting. You will not have a backup model. \n\nDo you want to continue?")
@@ -353,10 +353,10 @@ class ScanForDataRisks():
         operation="export_business_data",
         graphs=self.graphid,
         format="json",
-        dest_dir="."
+        dest_dir="coral/pkg/business_data/files"
     )
 
-    os.rename(glob.glob(f'{sanitised_model_name}*.json')[0], f'stale_data_{sanitised_model_name}.json')
+    os.rename(glob.glob(f'coral/pkg/business_data/files/{sanitised_model_name}*.json')[0], f'coral/pkg/business_data/files/stale_data_{sanitised_model_name}.json')
 
     new_nodes, deleted_nodes, deleted_nodegroups, self.datatype_changes, new_functions, updated_names, new_concepts, updated_concepts = self.compare_nodes()
 
@@ -384,7 +384,7 @@ class ScanForDataRisks():
       # Pause and ask for user input to continue
       input("\nPress Enter to continue with the data conversion...")
 
-      with open(f"stale_data_{sanitised_model_name}.json") as incoming_business_data:
+      with open(f"coral/pkg/business_data/files/stale_data_{sanitised_model_name}.json") as incoming_business_data:
         file_contents = incoming_business_data.read()
       stale_business_data = json.loads(file_contents)
       stale_resources = stale_business_data['business_data']['resources']
@@ -402,7 +402,7 @@ class ScanForDataRisks():
         if len(deleted_nodegroups) > 0:
           resource['tiles'] = [tile for tile in stale_tiles if tile['nodegroup_id'] not in deleted_nodegroups]
 
-      with open(f'transformed_{sanitised_model_name}.json', 'w') as f:
+      with open(f'coral/pkg/business_data/files/transformed_{sanitised_model_name}.json', 'w') as f:
         json.dump(stale_business_data, f)
 
       input("\nConversion Complete \n\nContinue with deleting and updating the graphs and data?")
@@ -416,7 +416,7 @@ class ScanForDataRisks():
       
       management.call_command("packages",
             operation="import_business_data",
-            source=f"transformed_{sanitised_model_name}.json",
+            source=f"coral/pkg/business_data/files/transformed_{sanitised_model_name}.json",
             overwrite="overwrite",
             prevent_indexing=False,
             escape_function=True
@@ -424,7 +424,7 @@ class ScanForDataRisks():
       
   def reverse_migration(self, model_name):
     sanitised_model_name = model_name.replace(' ', '_')
-    with open(f"backup_{model_name}.json") as backup_json:
+    with open(f"coral/pkg/business_data/files/backup_{model_name}.json") as backup_json:
       file_contents = backup_json.read()
     backup_json = json.loads(file_contents)
     self.graphid = backup_json['graph'][0]['graphid']
@@ -439,11 +439,11 @@ class ScanForDataRisks():
       
     management.call_command("packages",
       operation="import_graphs",
-      source=f"backup_{model_name}.json"
+      source=f"coral/pkg/business_data/files/backup_{model_name}.json"
       )
     management.call_command("packages",
           operation="import_business_data",
-          source=f"stale_data_{sanitised_model_name}.json",
+          source=f"coral/pkg/business_data/files/stale_data_{sanitised_model_name}.json",
           overwrite="overwrite",
           prevent_indexing=False,
           escape_function=True
@@ -466,9 +466,12 @@ class TransformData():
     if tile_json['data'][nodeid] == None or tile_json['data'][nodeid] == "":
       return tile_json
     for option in change['domain_options']:
-      matching_option = [opt for opt in change['concept_options'] if opt['text'] == option['text']][0]
-      mapping[option['id']] = matching_option['id']
-    tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
+      matching_option = next((opt for opt in change['concept_options'] if opt['text'] == option['text']), None)
+      if matching_option:
+        mapping[option['id']] = matching_option['id']
+        tile_json['data'][nodeid] = mapping[tile_json['data'][nodeid]]
+      else:
+        tile_json['data'][nodeid] = None 
     return tile_json
   
   def concept_to_domain(self, tile_json, change, nodeid):
@@ -491,11 +494,14 @@ class TransformData():
         print(f"An error occurred: {e}")
 
   def allow_many(self, tile_json, nodeid):
-    tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
+    if tile_json['data'][nodeid]:
+      tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
     return tile_json
   
   def concept_to_concept(self, tile_json, node, mapping):
-        current_value = ConceptValue().get(tile_json['data'][node]).conceptid
+        current_value = None
+        if tile_json['data'][node]:
+          current_value = ConceptValue().get(tile_json['data'][node]).conceptid
 
         if current_value in mapping:
             mapping_value = mapping[current_value]
