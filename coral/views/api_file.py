@@ -11,7 +11,8 @@ from arches.app.models.models import File, TempFile
 from arches.app.models.system_settings import settings
 from django.core.exceptions import PermissionDenied
 from django.core.files.storage import storages
-from django.core.files import File
+from arches.app.models.tile import Tile as TileProxyModel, TileValidationError
+
 
 from django.core.files.storage import default_storage    
 from django.core.files.base import ContentFile
@@ -46,65 +47,97 @@ class TempFileView(View):
         return response
     
     def post(self, request: Request):
-        # print(storage_instance = storages.create_storage({"BACKEND": "package.storage.CustomStorage"}))
-        print("DEBUG FILE UPLOAD", request)
-        print("DEBUG FILE UPLOAD FILE", request.FILES)
-        print("DEBUG FILE UPLOAD POST", request.POST)
-
+        print("IT DEFO HAS UPDATED")
+        tileid = request.POST.get("tileid", uuid.uuid4())
+        print("tileid",tileid)
+        fileid = request.POST.get("file_id", uuid.uuid4())
+        print("fileid",fileid)
+        nodeid = request.POST.get("nodeid", uuid.uuid4())
+        print("nodeid",nodeid)
+        file_name = request.POST.get("file_name", "temp.jpg")
         """
         >>> storages.backends
         {'default': {'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage', 'OPTIONS': {}}, 'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'}}
         """
-        print("storages.backends", storages.backends)
-
         """
         >>> default_storage.size('/uploadedfiles/04-04-2025-12-12_planning-response-combined.docx')
         83365
         """
 
-        uploadDirectory = settings.UPLOADED_FILES_DIR
-        print("uploadDirectory", uploadDirectory)
-        mediaRoot = settings.MEDIA_ROOT
-        print("mediaRoot", mediaRoot)
-        
-        file_id = uuid.uuid4()
         file = request.FILES.get("file", None)
-        print("DEBUG file", file)
         paths = []
         paths_string = ","
+        tiles = []
         for filename, file in request.FILES.items():
+            print("IN THE LOOP")
             # name = request.FILES[filename].name
-            print("file datas", filename, file)
-            file_path = "%s/%s" % (settings.UPLOADED_FILES_DIR, str(filename))
-            print("path", file_path)
-            paths.append(filename)
+            file_path = "%s/%s" % (settings.UPLOADED_FILES_DIR, str(file))
+            paths.append(str(file))
+            print(paths)
 
             default_storage.save(file_path, file)
+            try:
+                print("TRY")
+                print(File)
+                print(fileid)
+                print("file again", file)
+                image_file, file_created = File.objects.get_or_create(pk=fileid)
+                print("Created FILE", image_file, file_created)
+                print("path", image_file.path.readable())
+                print("FILE vars", vars(image_file))
+                print("read", vars(file))
+                print("saving", str(file))
+                print("file.file", file.file)
+                print("read1", file.file.read1())
+                print("read", file.file.read())
+                image_file.path.save(str(file), file.file.read())
+                print("SAVED")
+
+                tile = TileProxyModel.objects.get(pk=tileid)
+                print("TILE just created", tile)
+                tile_data = tile.get_tile_data(request.user.pk)
+                print("TILE data", tile_data)
+
+                for image in tile_data[nodeid]:
+                    print("image loop", image)
+                    if image["file_id"] == fileid:
+                        image["url"] = image_file.path.url
+                        image["size"] = image_file.path.size
+                        # I don't really want to run all the code TileProxyModel.save(),
+                        # so I just call it's super class
+                        super(TileProxyModel, tile).save()
+                        tile.index()
+
+                print("TILE AFTER EVERYTHING", tile)
+                tiles.append(tile)
+            except Exception as e:
+                return JSONResponse(status=500)
+            
         paths_string.join(paths)
 
+        print("paths string", paths_string)
         """
         Takes a comma separated string of paths.
         """
         tile_json = FileListDataType().transform_value_for_tile(paths_string)
 
-        print("transformed Upload", tile_json)
+        print("tile_json", tile_json)
 
+        print("file_name",file_name)
+        file_data = request.FILES.get("data")
+        print("file_data",file_data)
+        
         # temp_file = TempFile.objects.create(fileid=file_id, path=file)
         # temp_file.save()
 
         # response_dict = {
         #     "file_id": file_id
         # }
-        # print("DEBUG FILE UPLOAD POST List", list(request.POST.items()))
 
-        # print("DEBUG FILE UPLOAD FILE", vars(request.FILES))
-        # print("DEBUG FILE UPLOAD POST", vars(request.POST))
 
         # file_objs = request.data.getlist("files")
-        # print("DEBUG file_objs", file_objs)
         # for file_obj in file_objs:
         #     path = default_storage.save(settings.MEDIA_ROOT, ContentFile(file_obj.read()))
-        #     print("images path are",path)
 
         """
         for file_data in files:
@@ -137,6 +170,6 @@ class TempFileView(View):
         """
 
 
-        return JSONResponse(tile_json)
+        return JSONResponse(tiles)
     
 
