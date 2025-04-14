@@ -15,9 +15,9 @@ details = {
     "component": "",
 }
 
-
 class AfcNumberFunction(BaseFunction):
-    def post_save(self, tile, request, context):
+
+    def save(self, tile, request, context):
         if context and context.get('escape_function', False):
             return
 
@@ -25,6 +25,10 @@ class AfcNumberFunction(BaseFunction):
         id_number = tile.data.get(SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None)
 
         afcn = AfcNumber()
+        if id_number['en']['value'].startswith('extrados'):
+            id_number = afcn.generate_id_number()
+            tile.data[SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID] = { "en": {"direction": "ltr", "value": id_number}}
+            tile.save()
         if afcn.validate_id(id_number, resource_instance_id):
             print("AFC ID is valid: ", id_number)
             return

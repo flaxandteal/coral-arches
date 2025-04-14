@@ -1,3 +1,5 @@
+from datetime import date
+import random
 from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
@@ -27,6 +29,25 @@ class UpdateActivityName(BaseFunction):
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         prefixed_id = tile.data[ACTIVITY_RESOURCE_ID_NODE].get("en").get("value")
+
+        if prefixed_id.startswith('extrados'):
+            def generateID (prefix="ACT", length=6):
+                base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+                current_date = date.today()
+                current_year = current_date.year
+                characters = random.choices(base62chars, k=length)
+                id = "".join(characters)
+                return f"{prefix}/{current_year}/{id}"
+            
+            if prefixed_id.endswith('evaluation-meeting-workflow'):
+                prefixed_id = generateID('ESV')
+                tile.data[ACTIVITY_SYSTEM_REF_NODEGROUP]['en']['value'] = prefixed_id
+            else:
+                prefixed_id = generateID()
+                tile.data[ACTIVITY_SYSTEM_REF_NODEGROUP]['en']['value'] = prefixed_id
+
+            tile.save()
+
 
         if prefixed_id.startswith("ESV"):
             Tile.objects.get_or_create(

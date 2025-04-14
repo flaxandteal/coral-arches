@@ -25,8 +25,12 @@ class HaNumberFunction(BaseFunction):
         id_number = tile.data.get(SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None)
 
         hn = HaNumber()
+        if id_number['en']['value'].startswith('extrados'):
+            id_number = hn.generate_id_number()
+            tile.data[SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID] = { "en": {"direction": "ltr", "value": id_number}}
+            tile.save()
         if hn.validate_id(id_number, resource_instance_id):
-            print("Heritage Asset ID is valid: ", id_number)
+            print("DEBUG","Heritage Asset ID is valid: ", id_number)
             return
 
         raise ValueError('This HA Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please try to save again.')

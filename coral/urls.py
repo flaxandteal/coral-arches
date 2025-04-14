@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
 from arches.app.views.user import UserManagerView
+from coral.views.api_file import TempFileView
 from coral.views.group_manager import GroupManagerView
 from coral.views.person_user import PersonUserSignupView
 from arches.app.views.plugin import PluginView
@@ -99,6 +100,11 @@ urlpatterns = [
     # User to Model
     #
     re_path(r"^user-to-model", UserToModel.as_view(), name="user_to_model"),
+
+    #
+    # api upload
+    #
+    re_path(r"^api/temp_file$", TempFileView.as_view(), name="api_temp_file"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

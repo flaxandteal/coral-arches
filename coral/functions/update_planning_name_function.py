@@ -1,5 +1,10 @@
+from datetime import date
+import random
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
+
+from coral.functions.afc_number_function import AfcNumberFunction
+from coral.utils.afc_number import AfcNumber
 
 PLANNING_REFERENCE_NODEGROUP_ID = "b4974044-c768-11ee-a945-0242ac180006"
 PLANNING_REFERENCE_NODE_ID = "b4974a58-c768-11ee-a945-0242ac180006"
@@ -24,7 +29,6 @@ details = {
     "classname": "UpdatePlanningNameFunction",
     "component": "",
 }
-
 
 class UpdatePlanningNameFunction(BaseFunction):
     def get_system_reference_tile(self, resource_instance_id):
@@ -51,6 +55,7 @@ class UpdatePlanningNameFunction(BaseFunction):
                 DISPLAY_NAME_NODEGROUP_ID, resourceid=resource_instance_id
             )
             display_name_tile.save()
+        
         return display_name_tile
 
     def get_localised_string_value(self, tile, node_id):
@@ -85,6 +90,42 @@ class UpdatePlanningNameFunction(BaseFunction):
             resource_id_value = self.get_localised_string_value(
                 system_reference_tile, SYSTEM_REFERENCE_RESOURCE_NODE_ID
             )
+            if resource_id_value.startswith('extrados'):
+                print("DEBUG PLANNING NAME UPDATE: ", resource_id_value)
+                def generateID (prefix="CON", length=6):
+                    base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+                    current_date = date.today()
+                    current_year = current_date.year
+                    characters = random.choices(base62chars, k=length)
+                    id = "".join(characters)
+                    return f"{prefix}/{current_year}/{id}"
+                
+                if resource_id_value.endswith('evaluation-meeting-workflow'):
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID('EVM')
+
+                elif resource_id_value.endswith('fmw-inspection-workflow'):
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID('FMW')
+
+                elif resource_id_value.endswith('curatorial-workflow'):
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID('CIN')
+                
+                elif resource_id_value.endswith('planning-consultation-response-workflow'):
+                    afc = AfcNumber()
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID()
+
+                elif resource_id_value.endswith('agriculture-and-forestry-consultation-workflow'):
+                    afc = AfcNumber()
+                    newNumber = afc.generate_id_number(system_reference_tile.resourceinstance)
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = newNumber
+
+                elif resource_id_value.endswith('daera-workflow'):
+                    afc = AfcNumber()
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = afc.generate_id_number(system_reference_tile.resourceinstance, daera=True)
+                else:
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID()
+
+                tile.save()
+
 
         if planning_ref_value:
             display_name_tile.data[DISPLAY_NAME_NODE_ID] = (
