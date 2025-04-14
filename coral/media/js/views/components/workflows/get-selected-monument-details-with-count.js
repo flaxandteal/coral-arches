@@ -11,9 +11,6 @@ define([
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
-    this.SYSTEM_REFERENCE_NODEGROUP = '325a2f2f-efe4-11eb-9b0c-a87eeabdefba';
-    this.SYSTEM_REFERENCE_RESOURCE_ID_NODE = '325a430a-efe4-11eb-810b-a87eeabdefba';
-
     this.HERRITAGE_ASSET_REFERENCES_NODEGROUP = 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
     this.SMR_NUMBER_NODE = '158e1ed2-3aae-11ef-a2d0-0242ac120003';
 
@@ -144,7 +141,7 @@ define([
     
     this.getLatestTile = async () => {
       try {
-        const tiles = await this.fetchTileData(this.tile.resourceinstance_id);
+        const tiles = await this.fetchTileData(this.tile.resourceinstance_id, this.dataNode);
 
         if (!tiles?.length) return;
 
