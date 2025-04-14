@@ -57,8 +57,7 @@ class NotifyEnforcement(BaseFunction):
         system_ref = models.TileModel.objects.filter(
             resourceinstance_id=resource_instance_id, nodegroup_id=SYSTEM_REF_NODEGROUP
         ).first()
-        print("NOTIFY ENFORCEMENT DEBUG:", system_ref)
-        if system_ref.startswith('extrados'):
+        if system_ref.data[SYSTEM_REF_RESOURCE_ID_NODE]['en']['value'].startswith('extrados'):
             def generateID (prefix="ENF", length=6):
                 base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
                 current_date = date.today()
