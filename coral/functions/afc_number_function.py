@@ -1,5 +1,6 @@
 from arches.app.functions.base import BaseFunction
 from coral.utils.afc_number import AfcNumber
+from coral.utils.ail_number import AilNumber
 from arches.app.models.tile import Tile
 
 SYSTEM_REFERENCE_NODEGROUP = "b37552ba-9527-11ea-96b5-f875a44e0e11"
@@ -14,7 +15,6 @@ details = {
     "classname": "AfcNumberFunction",
     "component": "",
 }
-
 class AfcNumberFunction(BaseFunction):
 
     def save(self, tile, request, context):
@@ -24,13 +24,29 @@ class AfcNumberFunction(BaseFunction):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None)
 
+        id_number_string = id_number.get("en").get("value")
+
+        daera_num = AilNumber()
         afcn = AfcNumber()
-        if id_number['en']['value'].startswith('extrados'):
+        if id_number_string.startswith("extrados-agriculture"):
             id_number = afcn.generate_id_number()
             tile.data[SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID] = { "en": {"direction": "ltr", "value": id_number}}
             tile.save()
-        if afcn.validate_id(id_number, resource_instance_id):
-            print("AFC ID is valid: ", id_number)
-            return
-
-        raise ValueError('This AFC Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please try to save again.')
+        elif id_number_string.startswith("extrados-daera"):
+            id_number = daera_num.generate_id_number()
+            tile.data[SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID] = { "en": {"direction": "ltr", "value": id_number}}
+            tile.save()
+        if id_number_string.startswith("AIL"):
+            if daera_num.validate_id(id_number, resource_instance_id):
+                print("AIL ID is valid: ", id_number)
+                return
+            raise ValueError(
+                'This ID number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please refresh and save again.'
+                )
+        elif id_number_string.startswith("AFC"):
+            if afcn.validate_id(id_number, resource_instance_id):
+                print("AFC ID is valid: ", id_number)
+                return
+            raise ValueError(
+                'This ID number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please refresh and save again.'
+                )
