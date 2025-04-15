@@ -22,10 +22,6 @@ define([
     this.iconClass = ko.observable(this.permittedToSign() ? (this.isUserAdded() ? 'fa fa-check' : 'fa-plus-circle') : 'fa fa-ban')
     this.textClass = ko.observable(this.isUserAlreadyAdded ? '' : 'cons-type')
 
-
-    this.valueString.subscribe((val) => {
-      console.log("renaming", val)
-    })
     this.setValue = () => {
       if (this.tile.data[this.node.id]()) {
         this.tile.data[this.node.id](null)
@@ -82,6 +78,7 @@ define([
     }
 
     this.checkConflictNode = async() => {
+      // get from the nodegroup or fetch additional nodegroups
       if (this.conflictNode in this.tile.data){
         this.nodeValue = this.tile.data[this.conflictNode]();
       }
@@ -91,7 +88,7 @@ define([
       }
       if (!this.nodeValue) {
         this.permittedToSign(this.conflictAllowBlank);
-        return this.conflictAllowBlank
+        return this.conflictAllowBlank;
       }
       if (Array.isArray(this.nodeValue)){
         for (const item of this.nodeValue){
@@ -101,12 +98,12 @@ define([
           }
         }  
       }
-      // if this returns false when the conflict node is empty it will allow the user to sign off
-      return false
+      return true
     }
     
     this.validatePermission = async () => {
-      const groups = this.personId() ? this.personId() : await this.getPersonId()
+      
+      const groups = await this.getPersonId() ?? this.personId();
 
       if (!this.personId()) {
         return false
@@ -121,7 +118,6 @@ define([
         this.groupIntersection = Array.from(new Set(groups).intersection(new Set(this.signOffGroups)))
         this.permittedToSign(this.groupIntersection.length > 0)
         allowSignOff = this.groupIntersection.length > 0
-
         if(this.conflictNode){
           allowSignOff = this.checkConflictNode();
         }
