@@ -21840,6 +21840,16 @@
                 {
                     "config": {
                         "triggering_nodegroups": [
+                            "e71df5cc-3aad-11ef-a2d0-0242ac120003"
+                        ]
+                    },
+                    "function_id": "dc23eb7a-a291-410c-9a3c-b867bf55ff30",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "id": "7eac663c-f826-46e2-b9a4-127b9ed159a0"
+                },
+                {
+                    "config": {
+                        "triggering_nodegroups": [
                             "93199292-fb24-11ee-838d-0242ac190006",
                             "20017860-d711-11ee-9dd0-0242ac120006",
                             "345ffce6-d23e-11ee-9ae7-0242ac180006"

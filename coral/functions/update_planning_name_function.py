@@ -103,24 +103,26 @@ class UpdatePlanningNameFunction(BaseFunction):
                 if resource_id_value.endswith('evaluation-meeting-workflow'):
                     tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID('EVM')
 
-                if resource_id_value.endswith('fmw-inspection-workflow'):
+                elif resource_id_value.endswith('fmw-inspection-workflow'):
                     tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID('FMW')
 
-                if resource_id_value.endswith('curatorial-workflow'):
+                elif resource_id_value.endswith('curatorial-workflow'):
                     tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID('CIN')
                 
-                if resource_id_value.endswith('planning-consultation-response-workflow'):
+                elif resource_id_value.endswith('planning-consultation-response-workflow'):
                     afc = AfcNumber()
                     tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID()
 
-                if resource_id_value.endswith('agriculture-and-forestry-consultation-workflow'):
+                elif resource_id_value.endswith('agriculture-and-forestry-consultation-workflow'):
                     afc = AfcNumber()
                     newNumber = afc.generate_id_number(system_reference_tile.resourceinstance)
                     tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = newNumber
 
-                if resource_id_value.endswith('daera-workflow'):
+                elif resource_id_value.endswith('daera-workflow'):
                     afc = AfcNumber()
                     tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = afc.generate_id_number(system_reference_tile.resourceinstance, daera=True)
+                else:
+                    tile.data[SYSTEM_REFERENCE_RESOURCE_NODE_ID]['en']['value'] = generateID()
 
                 tile.save()
 
