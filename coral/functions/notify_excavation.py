@@ -1,5 +1,7 @@
 from arches.app.functions.base import BaseFunction
 from arches_orm.adapter import admin
+from arches.app.models.models import EditLog 
+from django.db.models import F
 from coral.functions.notifications.notification_base_strategy import NotificationStrategy
 from coral.functions.notifications.notification_manager import NotificationManager
 
@@ -16,6 +18,8 @@ EXTENSION_OF_LICENCE = '69b2738e-c4d2-11ee-b171-0242ac180006'
 ADMIN_GROUP = '4fbe3955-ccd3-4c5b-927e-71672c61f298'
 CUR_D_GROUP = '751d8543-8e5e-4317-bcb8-700f1b421a90'
 CUR_E_GROUP = '214900b1-1359-404d-bba0-7dbd5f8486ef'
+R_AND_D_USERS = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
+R_AND_D_MANAGERS = 'e778f4a1-97c6-446f-b1c4-418a81c3212e'
 
 #nodes
 RESOURCE_ID = '991c49b2-48b6-11ee-85af-0242ac140007'
@@ -55,7 +59,6 @@ class NotifyExcavation(BaseFunction):
     def post_save(self, tile, request, context):
         if context and context.get('escape_function', False):
             return
-        
         strategy_registry = {
             SYSTEM_REFERENCE : {
                 'config': {
@@ -137,8 +140,8 @@ class CurEDecisionStrategy(NotificationStrategy):
         decision_string = self.get_domain_value_string(decision_id, GRADE_E_DECISION)
 
         if decision_string:
-            self.config['message'] = f"The Cur Grade E Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
-
+            self.notification.message = f"The Cur Grade E Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
+            self.notification.save()
         super().send_notification()
 
 class CurDDecisionStrategy(NotificationStrategy):
@@ -147,7 +150,8 @@ class CurDDecisionStrategy(NotificationStrategy):
         decision_string = self.get_domain_value_string(decision_id, GRADE_D_DECISION)
 
         if decision_string:
-            self.config['message'] = f"The Cur Grade D Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
+            self.notification.message = f"The Cur Grade D Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
+            self.notification.save()
 
         super().send_notification()
 
@@ -155,6 +159,9 @@ class ReportStrategy(NotificationStrategy):
     def send_notification(self):
         from arches_orm.models import Group
         with admin():
+            is_admin = False
+            is_cur_d = False
+            is_cur_e = False
             if self.user:
                 admin_group = Group.find(ADMIN_GROUP)
                 is_admin = any(member.id == self.user.id for member in admin_group.members)
@@ -165,17 +172,37 @@ class ReportStrategy(NotificationStrategy):
                 cur_d_group = Group.find(CUR_D_GROUP)
                 is_cur_d = any(member.id == self.user.id for member in cur_d_group.members)
 
-                classification_type = self.tile.data[CLASSIFICATION_TYPE]
-                classification_string = self.get_domain_value_string(classification_type, CLASSIFICATION_TYPE)
-    
+            classification_type = self.tile.data[CLASSIFICATION_TYPE]
+            classification_string = self.get_domain_value_string(classification_type, CLASSIFICATION_TYPE)
+
+            # checks edit log for new or changed report tiles
+            report_tile = EditLog.objects.filter(
+                resourceinstanceid = self.resource_instance_id,
+                tileinstanceid = self.tile.tileid
+            ).annotate(
+                old_class_type=F(f"newvalue__{CLASSIFICATION_TYPE}"),
+            ).order_by(
+                '-timestamp'
+            ).values(
+                'old_class_type',
+                'timestamp'
+            ).first()
+
+            send_notification = report_tile == None or self.tile.data[CLASSIFICATION_TYPE] != report_tile["old_class_type"]
+
+            if send_notification:
                 if is_admin:
                     self.config['groups_to_notify'] = [CUR_D_GROUP, CUR_E_GROUP]
                 elif is_cur_e and classification_type:
                     self.config['groups_to_notify'] = [CUR_D_GROUP, ADMIN_GROUP]
-                    self.config['message'] = self.config['message'] + f" with classification type {classification_string}"
+                    self.notification.message = f"A new report has been added to {self.name} with classification type '{classification_string}'"
                 elif is_cur_d and classification_type:
                     self.config['groups_to_notify'] = [CUR_E_GROUP, ADMIN_GROUP]
-                    self.config['message'] = self.config['message'] + f" with classification type {classification_string}"
+                    self.notification.message = f"A new report has been added to {self.name} with classification type '{classification_string}'"
+                if classification_string == 'Final':
+                    self.notification.message = f"A new report has been added to {self.name} with classification type '{classification_string}'"
+                    self.config['groups_to_notify'].extend([R_AND_D_MANAGERS, R_AND_D_USERS])
+                self.notification.save()
                                         
         super().send_notification()
 
@@ -186,8 +213,8 @@ class ApplicationDetailsStrategy(NotificationStrategy):
 
         if soa_id:
             soa_string = self.get_domain_value_string(soa_id, STAGE_OF_APPLICATION)
-            self.config['message'] = f"The Stage of Application for {self.name} has been updated to {soa_string}"
-
+            self.notification.message = f"The Stage of Application for {self.name} has been updated to {soa_string}"
+            self.notification.save()
             super().send_notification()
 
 class TransferOfLicenceStrategy(NotificationStrategy):
@@ -198,16 +225,16 @@ class TransferOfLicenceStrategy(NotificationStrategy):
 
         if not (grade_d_decision or grade_e_decision):
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
-            self.config['message'] = f"A Transfer of Licence has been created for {self.name}"
+            self.notification.message = f"A Transfer of Licence has been created for {self.name}"
         elif grade_d_decision:
             decision_string = self.get_domain_value_string(grade_d_decision, TRANSFER_GRADE_D_DECISION)
-            self.config['message'] = f"The Cur Grade D Decision for the Transfer of Licence {self.name} has been updated to {decision_string}"
+            self.notification.message = f"The Cur Grade D Decision for the Transfer of Licence {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_E_GROUP]
         elif grade_e_decision and not grade_d_decision:
             decision_string = self.get_domain_value_string(grade_e_decision, TRANSFER_GRADE_E_DECISION)
-            self.config['message'] = f"The Cur Grade E Decision for the Transfer of Licence  {self.name} has been updated to {decision_string}"
+            self.notification.message = f"The Cur Grade E Decision for the Transfer of Licence  {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP]
-        
+        self.notification.save()
 
         super().send_notification()
 
@@ -219,15 +246,16 @@ class ExtensionOfLicenceStrategy(NotificationStrategy):
 
         if not (grade_d_decision or grade_e_decision):
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
-            self.config['message'] = f"An Extension of Licence {self.name} has been created"
+            self.notification.message = f"An Extension of Licence {self.name} has been created"
         elif grade_d_decision:
             decision_string = self.get_domain_value_string(grade_d_decision, EXTENSION_GRADE_D_DECISION)
-            self.config['message'] = f"The Cur Grade D Decision for the extension of licence {self.name} has been updated to {decision_string}"
+            self.notification.message = f"The Cur Grade D Decision for the extension of licence {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_E_GROUP]
         elif grade_e_decision and not grade_d_decision:
             decision_string = self.get_domain_value_string(grade_e_decision, EXTENSION_GRADE_E_DECISION)
-            self.config['message'] = f"The Cur Grade E Decision for the extension of licence {self.name} has been updated to {decision_string}"
+            self.notification.message = f"The Cur Grade E Decision for the extension of licence {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP]
+        self.notification.save()
             
         super().send_notification()
 
