@@ -18,6 +18,8 @@ class NotificationStrategy():
 
         if check_prefix and not self.name.startswith(check_prefix):
             return
+        
+        self._delete_existing_notification()
                                 
         self.notify_groups()
 
@@ -31,8 +33,6 @@ class NotificationStrategy():
         return  name
     
     def create_notification(self):
-        self._delete_existing_notification()
-
         message_template = self.config.get('message', None)
         message = message_template.format(name=self.name) if message_template else None
 
@@ -78,7 +78,6 @@ class NotificationStrategy():
 
         if 'email' in self.notification.context:
             self.update_email_details(user)
-
         user_x_notification = models.UserXNotification(
             notif = self.notification,
             recipient = user
@@ -103,7 +102,7 @@ class NotificationStrategy():
     def _delete_existing_notification(self):
         existing_notification = models.Notification.objects.filter(
             context__resource_instance_id=self.resource_instance_id
-        ).first()
+        ).exclude(pk=self.notification.pk).first()
 
         if existing_notification:
             existing_notification.delete()
