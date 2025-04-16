@@ -375,7 +375,7 @@ class ScanForDataRisks():
       
       management.call_command("packages",
             operation="import_business_data",
-            source=f"stale_data_{sanitised_model_name}.json",
+            source=f"coral/pkg/business_data/files/stale_data_{sanitised_model_name}.json",
             overwrite="overwrite",
             prevent_indexing=False,
             escape_function=True

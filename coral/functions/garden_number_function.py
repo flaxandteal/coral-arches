@@ -24,7 +24,7 @@ details = {
 
 
 class GardenNumberFunction(BaseFunction):
-    def update_ha_references(self, ri_id, id):
+    def update_ha_references(self, ri_id, id, request):
         references_tile = Tile.objects.filter(
             resourceinstance_id=ri_id,
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -38,7 +38,7 @@ class GardenNumberFunction(BaseFunction):
         if isinstance(id, str):
             id = {"en": {"direction": "ltr", "value": id}}
         references_tile.data[GARDEN_NUMBER_NODE_ID] = id
-        references_tile.save()
+        references_tile.save(request=request)
 
     def post_save(self, tile, request, context):
         if context and context.get("escape_function", False):
@@ -66,7 +66,7 @@ class GardenNumberFunction(BaseFunction):
 
         if not county_name and not id_number:
             # Clear HPG Number
-            self.update_ha_references(resource_instance_id, "")
+            self.update_ha_references(resource_instance_id, "", request)
             return
         
         if not county_name and id_number:
@@ -76,7 +76,7 @@ class GardenNumberFunction(BaseFunction):
 
         if gn.validate_id(id_number, resource_instance_id):
             print("Garden Number is valid: ", id_number)
-            self.update_ha_references(resource_instance_id, id_number)
+            self.update_ha_references(resource_instance_id, id_number, request)
             return
 
         raise ValueError(
