@@ -7,7 +7,7 @@ class NotificationManager():
             if not strategy_registry:
                 raise ValueError("A strategy register must be provided")
             self.request = request
-            persons = Person.where(user_account=request.user.id) if request.user else []
+            persons = Person.where(user_account=request.user.id).get() if request.user else []
             self.user = persons[0] if persons else None
             self.tile = tile
             self.node_group_id = str(tile.nodegroup_id)
