@@ -130,6 +130,8 @@ class DesignationTaskStrategy(TaskStrategy):
  
             indexed_resources = sorted_resources[start_index:end_index]
 
+            print('page_size : ', page_size)
+
             for resource in indexed_resources:
                 if isinstance(resource, Consultation):
                     task = self.build_meeting_data(resource)
