@@ -80,7 +80,7 @@ class Dashboard(View):
                 if data_cache:
                     user_group_ids = json.loads(data_cache)
                 else:
-                    user_group_ids = self.get_groups(person_resource[0].id)
+                    user_group_ids = self.get_groups(person_resource.id)
                     cache.set(key, json.dumps(user_group_ids), 60 * 15) 
        
                 strategies = []
@@ -101,7 +101,7 @@ class Dashboard(View):
                     
                 task_params = {
                     'groupId': groupId,
-                    'userResourceId': person_resource[0].id,
+                    'userResourceId': person_resource.id,
                     'page': page,
                     'page_size': items_per_page
                 }
