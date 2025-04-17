@@ -24,8 +24,8 @@ requests_oauthlib
 python-docx
 django-csp==4.0b7
 
+git+https://github.com/flaxandteal/arches-orm@v0.2.2
 
-git+https://github.com/flaxandteal/arches-orm@v0.1.5
 pika
 django-authorization
 casbin-django-orm-adapter
