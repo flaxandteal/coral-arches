@@ -1,4 +1,5 @@
 from arches.app.models.tile import Tile
+from arches.app.models.models import EditLog 
 from django.db.models import Max
 import re
 
@@ -14,6 +15,11 @@ class HbNumber:
         self.ward_distict_text = ward_distict_text
 
     def id_number_format(self, index):
+        
+        district_number, ward_number = self.parse_district_ward()
+        return f"HB{district_number}/{ward_number}/{str(index).zfill(3)}"
+    
+    def parse_district_ward(self):
         pattern = r"\(\d+/\d+\)"
         match = re.search(pattern, self.ward_distict_text)
         if not match:
@@ -21,44 +27,41 @@ class HbNumber:
                 f"Provided {self.ward_distict_text} does not contain district or ward ID."
             )
         district_number, ward_number = match.group(0)[1:-1].split("/")
-        return f"HB/{district_number}/{ward_number}/{str(index).zfill(3)}"
+        return district_number, ward_number
 
-    def get_latest_id_number(self, resource_instance_id=None):
-        latest_id_number_tile = None
+    def get_latest_id_number(self, district_number, ward_number, resource_instance_id=None):
+        latest_id_number = None
         try:
             id_number_generated = {
-                f"data__{HB_NUMBER_NODE_ID}__icontains": f"HB/",
+                f"newvalue__{HB_NUMBER_NODE_ID}__icontains": f"HB{district_number}/{ward_number}",
             }
-            query_result = Tile.objects.filter(
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                **id_number_generated,
-            )
+            query_result = EditLog.objects.filter(
+                nodegroupid=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+                edittype='tile create',
+                **id_number_generated
+            ).order_by("-timestamp")     
             if resource_instance_id:
-                query_result.exclude(resourceinstance_id=resource_instance_id)
-            query_result = query_result.annotate(
-                most_recent=Max("resourceinstance__createdtime")
-            )
-            query_result = query_result.order_by("-most_recent")
-            latest_id_number_tile = query_result.first()
+                query_result = query_result.exclude(resourceinstanceid=resource_instance_id)
+            for tile in query_result:
+                latest_id_number = tile.newvalue.get(HB_NUMBER_NODE_ID, {}).get("en", {}).get("value", "")
+                if latest_id_number[-1].isalpha():
+                    continue
+                break
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
             raise e
-
-        if not latest_id_number_tile:
-            return
-
-        latest_id_number = (
-            latest_id_number_tile.data.get(HB_NUMBER_NODE_ID).get("en").get("value")
-        )
+        
+        if latest_id_number is None:
+            return None
 
         print(f"Previous ID number: {latest_id_number}")
         id_number_parts = latest_id_number.split("/")
-        return {"index": int(id_number_parts[3])}
+        return {"index": int(id_number_parts[2])}
 
     def generate_id_number(self, resource_instance_id=None, attempts=0):
-        if attempts >= 5:
+        if attempts >= 20:
             raise Exception(
-                "After 5 attempts, it wasn't possible to generate an ID that was unique!"
+                "After 20 attempts, it wasn't possible to generate an ID that was unique!"
             )
 
         def retry():
@@ -68,9 +71,10 @@ class HbNumber:
 
         if resource_instance_id:
             id_number_tile = None
+            district_number, ward_number = self.parse_district_ward()
             try:
                 generated_id_query = {
-                    f"data__{HB_NUMBER_NODE_ID}__icontains": self.ward_distict_text,
+                    f"data__{HB_NUMBER_NODE_ID}__icontains": f"{district_number}/{ward_number}",
                 }
                 id_number_tile = Tile.objects.filter(
                     resourceinstance_id=resource_instance_id,
@@ -79,21 +83,25 @@ class HbNumber:
                 ).first()
             except Exception as e:
                 print(f"Failed checking if ID number tile already exists: {e}")
-                return retry()
+                return 
 
             if id_number_tile:
                 print("A ID number has already been created for this resource")
-                return
+                id_number = id_number_tile.data.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
+                if not id_number:
+                    raise ValueError('No ID found but one has been created for the resource')
+                return id_number
 
         latest_id_number = None
         try:
-            latest_id_number = self.get_latest_id_number(resource_instance_id)
+            latest_id_number = self.get_latest_id_number(district_number, ward_number, resource_instance_id)
         except Exception as e:
             print(f"Failed getting the previously used ID number: {e}")
-            return retry()
-
+            return 
         if latest_id_number:
-            next_number = latest_id_number["index"] + 1
+            # Offset attempts so it starts at 1 and will try to generate
+            # new increments for the total amount of allow attempts
+            next_number = latest_id_number["index"] + (attempts + 1)
             id_number = self.id_number_format(next_number)
         else:
             # If there is no latest resource to work from we know
@@ -102,31 +110,29 @@ class HbNumber:
 
         passed = self.validate_id(id_number)
         if not passed:
-            return retry()
+            return
 
         print(f"ID number is unique, ID number: {id_number}")
         return id_number
 
-    def validate_id(self, id_number):
-        try:
-            if isinstance(id_number, dict):
-                id_number_tile = Tile.objects.filter(
-                    nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={
-                        HB_NUMBER_NODE_ID: id_number
-                    },
-                ).first()
-            # Runs a query searching for an identical ID value
-            else:
-                id_number_tile = Tile.objects.filter(
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                    data__contains={
-                        HB_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
-                    },
-                ).first()
-            if id_number_tile:
-                return False
-        except Exception as e:
-            print(f"Failed validating ID number: {e}")
-            return False
-        return True
+    def validate_id(self, id_number, resource_instance_id=None):
+        data_query = {
+            HB_NUMBER_NODE_ID: {"en": {"direction": "ltr", "value": id_number}}
+        }
+        if isinstance(id_number, dict):
+            data_query[HB_NUMBER_NODE_ID] = id_number
+
+        id_number_value = data_query.get(HB_NUMBER_NODE_ID, {}).get('en', {}).get('value', None)
+
+        if not id_number_value:
+            raise ValueError('To generate a new HB Number, select a Ward and District Numbering and click "generate"')
+
+        district_number, ward_number = self.parse_district_ward()
+        if f"{district_number}/{ward_number}" not in id_number_value:
+            raise ValueError('The generated HB Number does not align with the selected Ward and District Numbering.')
+
+        id_number_tile = Tile.objects.filter(
+            nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+            data__contains=data_query,
+        ).exclude(resourceinstance_id=resource_instance_id).first()
+        return not bool(id_number_tile)

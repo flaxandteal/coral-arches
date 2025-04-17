@@ -10,7 +10,7 @@ HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
 COUNTY_NODEGROUP_ID = "87d3ff2a-f44f-11eb-9951-a87eeabdefba"
 ADDRESS_NODEGROUP_ID = "87d39b25-f44f-11eb-95e5-a87eeabdefba"
 GARDEN_NUMBER_NODE_ID = "2c2d02fc-3aae-11ef-91fd-0242ac120003"
-COUNTY_NODE_ID = "8bfe714e-3ec2-11ef-9023-0242ac140007"
+COUNTY_NODE_ID = "87d3ff32-f44f-11eb-aa82-a87eeabdefba"
 
 
 
@@ -35,12 +35,15 @@ class GardenNumberView(View):
                 ).first()
                 county_name = county_name_tile.value
                 county_abbreviation = GardenNumber(county_name).abbreviate_county(county_name)
-                abbreviation = (
-                    references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
-                    .get("en")
-                    .get("value")
-                    .split("-")[0]
-                )
+                garden_number = references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
+                abbreviation = None
+                if garden_number:
+                    abbreviation = (
+                        garden_number
+                        .get("en")
+                        .get("value")
+                        .split("-")[0]
+                    )
                 if county_abbreviation == abbreviation:
                     if references_tile.data.get(GARDEN_NUMBER_NODE_ID, None):
                         id = (

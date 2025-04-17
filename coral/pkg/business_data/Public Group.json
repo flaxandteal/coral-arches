@@ -1,0 +1,70 @@
+{
+  "business_data": {
+    "resources": [
+      {
+        "resourceinstance": {
+          "descriptors": {
+            "en": {
+              "description": "<Statement_content>",
+              "map_popup": "Undefined",
+              "name": "Public Group"
+            }
+          },
+          "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+          "graph_publication_id": "15c5db4f-4f47-41b8-aaf6-db4ae3ebd908",
+          "legacyid": null,
+          "name": "PUBLIC Group",
+          "principaluser_id": null,
+          "resourceinstanceid": "452ab9f2-ed4c-44dc-9ad3-ff9085734bc8",
+          "publication_id": "15c5db4f-4f47-41b8-aaf6-db4ae3ebd908"
+        },
+        "tiles": [
+          {
+            "data": {
+              "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "PUBLIC Group" },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              },
+              "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+              "e8fe4f4e-027a-11ed-9dee-0242ac180008": null
+            },
+            "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "452ab9f2-ed4c-44dc-9ad3-ff9085734bc8",
+            "sortorder": 0,
+            "tileid": "f1c5beb9-e3a6-439a-989a-f366731139b7"
+          },
+          {
+            "data": {
+              "32dba023-c05e-11e9-aa88-a4d18cec433a": {
+                "de": { "direction": "ltr", "value": "" },
+                "el": { "direction": "ltr", "value": "" },
+                "en": { "direction": "ltr", "value": "Resources available to the general public [EXTERNAL]." },
+                "en-US": { "direction": "ltr", "value": "" },
+                "en-us": { "direction": "ltr", "value": "" },
+                "fr": { "direction": "ltr", "value": "" },
+                "pt": { "direction": "ltr", "value": "" },
+                "ru": { "direction": "ltr", "value": "" },
+                "zh": { "direction": "ltr", "value": "" }
+              }
+            },
+            "nodegroup_id": "32db94f8-c05e-11e9-a2c1-a4d18cec433a",
+            "parenttile_id": null,
+            "provisionaledits": null,
+            "resourceinstance_id": "452ab9f2-ed4c-44dc-9ad3-ff9085734bc8",
+            "sortorder": 0,
+            "tileid": "8e5dd5d4-abc7-48aa-820c-c4bddf6dfa58"
+          }
+        ]
+      }
+    ]
+  }
+}

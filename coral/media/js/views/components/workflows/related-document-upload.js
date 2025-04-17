@@ -10,7 +10,7 @@ define([
 ], function ($, _, ko, koMapping, uuid, arches, uploadDocumentStepTemplate) {
   function viewModel(params) {
     var self = this;
-
+    
     /**
      * Both of these values should come from the first card you initialized in
      * the workflow.
@@ -20,7 +20,8 @@ define([
     this.resourceModelDigitalObjectNodeId =
       params?.resourceModelDigitalObjectNodeId || params.resourceModelDigitalObjectNodeGroupId;
     this.fileObjectNamePrefix = params?.fileObjectNamePrefix || 'Files for ';
-
+    this.nodeSuffixId = params.nodeSuffixId ?? null
+    this.resourceParentTile = params.resourceParentTile;
     /**
      * The group id refers to the Digital Object name group.
      * The name node refers to the child node of the group that configures the name.
@@ -101,17 +102,47 @@ define([
         sortorder: 0
       };
 
+      const fetchTileData = async (resourceId, nodeId) => {
+        const tilesResponse = await window.fetch(
+          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+            (nodeId ? `?nodeid=${nodeId}` : '')
+        );
+        const data = await tilesResponse.json();
+        return data.tiles;
+      };
+
+      const fetchNodeData = async (resourceId, nodeId) => {
+        const tiles = await fetchTileData(resourceId, nodeId);
+        let matchingTile = null
+        for(const tile of tiles) {
+          if(tile.parenttile === this.resourceParentTile) {
+            matchingTile = tile;
+            break;
+          }
+        }
+        if(!matchingTile) {
+          return console.error("No tile data available for suffix")
+        }
+        suffixString = matchingTile.data[this.nodeSuffixId].en?.value
+        return suffixString;
+      }
+
       const resource = await window.fetch(
         arches.urls.api_resources(ko.unwrap(self.resourceModelId)) + '?format=json'
       );
+      let suffixString = '';
+      if(self.nodeSuffixId){
+        suffixString = ' ' + await fetchNodeData(ko.unwrap(self.resourceModelId), self.nodeSuffixId)
+      }
       if (resource?.ok) {
         const resourceData = await resource.json();
         nameTemplate.data[self.digitalResourceNameNodeId] = {
           en: {
             direction: 'ltr',
-            value: self.fileObjectNamePrefix + resourceData.displayname
+            value: self.fileObjectNamePrefix + resourceData.displayname + suffixString
           }
         };
+
         /**
          * Check if the tile has already been saved and has a tile id assigned.
          */
@@ -150,7 +181,7 @@ define([
 
     const saveRelationship = async () => {
       /**
-       * In the example of excavation license the `Files (D1)` nodegroup
+       * In the example of excavation licence the `Files (D1)` nodegroup
        * has two identical uuids. One refers to the nodegroup and the other
        * to the node. This is used twice to provide the resource relationship.
        *
@@ -160,19 +191,28 @@ define([
        *
        * This can be found in datatypes.py on line 2080.
        */
+
+      prefilledKeys = {};
+      if (params.prefilledNodes) {
+        params.prefilledNodes.forEach(([nodeId, value]) => {
+          prefilledKeys[nodeId] = value;
+        });
+      }
+
       const fileTileTemplate = {
         tileid: '',
         data: {
-          [self.resourceModelDigitalObjectNodeGroupId]: [
+          [self.resourceModelDigitalObjectNodeId]: [
             {
               resourceId: self.resourceId(),
               ontologyProperty: '',
               inverseOntologyProperty: ''
             }
-          ]
+          ],
+          ...prefilledKeys
         },
         nodegroup_id: self.resourceModelDigitalObjectNodeGroupId,
-        parenttile_id: null,
+        parenttile_id: self.resourceParentTile,
         resourceinstance_id: ko.unwrap(self.resourceModelId),
         sortorder: 0
       };

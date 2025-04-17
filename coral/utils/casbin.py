@@ -1,18 +1,34 @@
-from arches.app.search.components.base import SearchFilterFactory
+import hashlib
+import time
+import uuid
 from urllib.parse import parse_qs
+from arches.app.search.components.base import SearchFilterFactory
 from arches.app.views.search import build_search
 from arches.app.search.elasticsearch_dsl_builder import Bool, Match, Query, Ids, Nested, Terms, MaxAgg, Aggregation, UpdateByQuery
 from arches.app.search.search_engine_factory import SearchEngineFactory
 from arches.app.search.mappings import RESOURCES_INDEX
+from arches.app.models.models import Plugin
 from arches.app.models.resource import Resource
-from arches_orm.models import Set, LogicalSet
+from arches_orm.models import Set, LogicalSet, ArchesPlugin
 from arches_orm.adapter import context_free
-import time
+
+def _consistent_hash(string: str):
+    hsh = hashlib.sha256(string.encode("utf-8"))
+    return uuid.UUID(hsh.hexdigest()[::2])
 
 class SetApplicator:
-    def __init__(self, print_statistics, wait_for_completion):
+    def __init__(self, print_statistics, wait_for_completion, synchronous=False):
         self.print_statistics = print_statistics
-        self.wait = wait_for_completion
+        self.wait = wait_for_completion and (not synchronous)
+        if synchronous:
+            print("""
+                WARNING: synchronous currently 409s due to a
+                limitation of Elasticsearch:
+                  https://stackoverflow.com/questions/56602137/wait-for-completion-of-updatebyquery-with-the-elasticsearch-dsl
+                This may still be useful for debugging purposes.
+                TODO: use the lower-level refresh API for passing retry_on_conflict.
+            """)
+        self.synchronous = synchronous
 
     def _apply_set(self, se, set_id, set_query, resourceinstanceid=None):
         results = []
@@ -37,7 +53,12 @@ class SetApplicator:
             else:
                 bool_query.must(set_query())
                 bool_query.must_not(Nested(path="sets", query=Terms(field="sets.id", terms=[str(set_id)])))
-                source = "ctx._source.sets.addAll(params.logicalSets)"
+                source = """
+                if (ctx._source.sets == null) {
+                    ctx._source.sets = [];
+                }
+                ctx._source.sets.addAll(params.logicalSets);
+                """
                 sets = [{"id": str(set_id)}]
             dsl.add_query(bool_query)
             update_by_query = UpdateByQuery(se=se, query=dsl, script={
@@ -47,7 +68,7 @@ class SetApplicator:
                     "logicalSets": sets
                 }
             })
-            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=False))
+            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=self.synchronous))
         return results
 
     @context_free
@@ -56,6 +77,32 @@ class SetApplicator:
 
         Run update-by-queries to mark/unmark sets against resources in Elasticsearch.
         """
+
+        print("Confirming all plugins present")
+        plugins = {str(plugin.pk): plugin for plugin in Plugin.objects.all()}
+        plugins.update({str(plugin.slug): plugin for plugin in plugins.values()})
+        arches_plugins = ArchesPlugin.all()
+        for ap in arches_plugins:
+            if ap.plugin_identifier and ap.id != _consistent_hash(ap.plugin_identifier):
+                print("Found a plugin with an incorrect identifier - removing", ap.plugin_identifier, ap.id)
+                ap.delete()
+        arches_plugins = ArchesPlugin.all()
+        known_plugins = set(str(plugins[str(plugin.plugin_identifier)].pk) for plugin in arches_plugins)
+        known_plugins |= set(str(plugins[str(plugin.plugin_identifier)].slug) for plugin in arches_plugins)
+        print(known_plugins)
+
+        unknown_plugins = set(str(plugin.pk) for plugin in Plugin.objects.all()) - known_plugins
+        print(unknown_plugins, "UP")
+        for plugin in unknown_plugins:
+            plugin = Plugin.objects.get(pk=plugin)
+            ap = ArchesPlugin()
+            ap.name = str(plugin.name) or "(unknown)"
+            ap.plugin_identifier = str(plugin.slug or plugin.pk)
+            ap.id = _consistent_hash(ap.plugin_identifier)
+            ap.save()
+            ap._.index()
+
+        print("Done with plugins")
 
         from arches.app.search.search_engine_factory import SearchEngineInstance as _se
 

@@ -59,6 +59,8 @@ define([
       this.resourceTypesToDisplayInDropDown = ko.observableArray(!!params.graphids ? ko.toJS(params.graphids) : []);
       this.graphIds = ko.observableArray();
       this.searchString = params.searchString || ko.unwrap(params.node?.config.searchString);
+      this.showEdit = ko.observable(params.showEdit ?? false);
+      this.disableDelete = ko.observable(params.disableDelete ?? false);
       
       if (!!params.configForm) {
           this.allowInstanceCreation = false;
@@ -191,11 +193,15 @@ define([
       
       this.setValue = function(valueObject) {
           if (self.multiple) {
+              const valueResourceId = ko.unwrap(valueObject.resourceId)
+              const found = self.value()?.find((i) => ko.unwrap(i.resourceId) === valueResourceId);
               valueObject = [valueObject];
               if (self.value() !== null) {
-                  valueObject = valueObject.concat(self.value());
+                    valueObject = valueObject.concat(self.value());
               }
-              self.value(valueObject);
+              if (!found) {
+                self.value(valueObject);
+              }
           } else {
               self.value([valueObject]);
           }
@@ -332,12 +338,14 @@ define([
           closeOnSelect: true,
           allowClear: self.displayOntologyTable ? false : true,
           onSelect: function(item) {
+            console.log('item selected: ', item)
               self.selectedItem(item);
               if (item._source) {
                   if (self.onlyManageResourceIds){
                       self.value(item._id);
                   } else {
                       var ret = self.makeObject(item._id, item._source);
+                      console.log('after make object: ', ret)
                       self.setValue(ret);
                       window.setTimeout(function() {
                           if(self.displayOntologyTable){

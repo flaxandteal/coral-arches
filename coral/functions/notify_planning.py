@@ -50,18 +50,34 @@ details = {
 }
 class NotifyPlanning(BaseFunction):       
 
-    def post_save(self, tile, request, context):
+    def save(self, tile, request, context):
         from arches_orm.models import Person
+
+        if context and context.get('escape_function', False):
+            return
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         nodegroup_id = str(tile.nodegroup_id)
-
         existing_notification = models.Notification.objects.filter(
-            context__resource_instance_id=resource_instance_id
+            context__resource_instance_id=resource_instance_id,
+            context__group=None
+        ).first()
+
+        both_notification = models.Notification.objects.filter(
+            context__resource_instance_id=resource_instance_id,
+            context__group='both'
+        ).first()
+
+        admin_notification = models.Notification.objects.filter(
+            context__group='admin'
         ).first()
 
         resource = Resource.objects.get(pk=resource_instance_id)
         name = resource.displayname()
+        
+        # The existing notification stops groups from being sent multiple of the same notification
+        # Use this notification as the primary notification
+        # The other 2 notifications are used to allow multiple groups with different slugs to be notified
         
         if not existing_notification:
             notification = models.Notification(
@@ -70,14 +86,46 @@ class NotifyPlanning(BaseFunction):
                     "resource_instance_id": resource_instance_id,
                     "consultation_id": name,
                     "last_notified": None,
+                    "group": None,
+                    "response_slug": 'assign-consultation-workflow'
                 },
             )
         
         else:
             notification = existing_notification
             notification.message = f"{name} has been assigned to you"
+        
+        if not admin_notification:
+            admin_notification = models.Notification(
+                message=f"{name} has been updated",
+                context={
+                    "resource_instance_id": resource_instance_id,
+                    "consultation_id": name,
+                    "last_notified": None,
+                    "group": 'admin',
+                    "response_slug": 'assign-consultation-workflow'
+                },
+            )
+        else:
+            admin_notification.message = f"{name} has been updated"
+
+        if not both_notification:
+            both_notification = models.Notification(
+                message=f"{name} has been assigned to you",
+                context={
+                    "resource_instance_id": resource_instance_id,
+                    "consultation_id": name,
+                    "last_notified": None,
+                    "group": 'both',
+                    "response_slug": 'assign-consultation-workflow'
+                },
+            )
+        else:
+            both_notification.message = f"{name} has been assigned to you"
 
         notification.created = timezone.now()
+        admin_notification.created = timezone.now()
+        both_notification.created = timezone.now()
 
         data = tile.data
 
@@ -99,15 +147,16 @@ class NotifyPlanning(BaseFunction):
             elif response_group_uuid == RESPONSE_HB:
                 response_group = "HB"
             notification.message = f"{name} response has been completed by {response_group}"
-            self.notify_group(PLANNING_ADMIN, notification)
+            response_slug = 'assign-consultation-workflow'
+            self.notify_group(PLANNING_ADMIN, PLANNING_ADMIN, notification, response_slug)
             return
 
         # fetch re-assigned to data from a seperate nodegroup
         try:
-            assignment_tile = Tile.objects.get(
+            assignment_tile = Tile.objects.filter(
                 resourceinstance_id = resource_instance_id,
                 nodegroup_id = ASSIGNMENT_NODEGROUP
-            )
+            ).first()
         except Tile.DoesNotExist:
             assignment_tile = None
 
@@ -120,43 +169,58 @@ class NotifyPlanning(BaseFunction):
 
         action_type_conditions = [STATUS_OPEN, EXTENSION_REQUESTED]
 
+        # Need to create a new notification per group to keep the slugs unique for each user
         if ACTION_STATUS in data and ACTION_TYPE in data:
             if data[ACTION_TYPE] is None and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
-                if existing_notification and existing_notification.context["last_notified"] == PLANNING_ADMIN:
+                if existing_notification and PLANNING_ADMIN == existing_notification.context["last_notified"]:
                     return
-                self.notify_group(PLANNING_ADMIN, notification)
+                self.notify_group(PLANNING_ADMIN, PLANNING_ADMIN, notification, 'assign-consultation-workflow')
 
-            elif data[ACTION_TYPE] in [ASSIGN_HM, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
-                if existing_notification and existing_notification.context["last_notified"] == HM_MANAGERS:
+            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_HM and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+                if existing_notification and HM_MANAGERS == existing_notification.context["last_notified"]:
                     return
-                self.notify_group(HM_MANAGERS, notification)
+                self.notify_group(HM_MANAGERS, HM_MANAGERS, notification, 'hm-planning-consultation-response-workflow')              
 
-            elif data[ACTION_TYPE] in [ASSIGN_HB, ASSIGN_BOTH] and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
-                if existing_notification and existing_notification.context["last_notified"] == HB_MANAGERS:
+            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_HB and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+                if existing_notification and HB_MANAGERS == existing_notification.context["last_notified"]:
                     return
                 
-                self.notify_group(HB_MANAGERS, notification)
+                self.notify_group(HB_MANAGERS, HB_MANAGERS, notification, 'hb-planning-consultation-response-workflow')
+           
+            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_BOTH and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+                if existing_notification and 'all' == existing_notification.context["last_notified"]:
+                    return
+                
+                self.notify_group(HB_MANAGERS, 'all', notification, 'hb-planning-consultation-response-workflow')
+                self.notify_group(HM_MANAGERS, 'all', both_notification, 'hm-planning-consultation-response-workflow')
+                self.notify_group(PLANNING_ADMIN, 'all', admin_notification, 'assign-consultation-workflow')
 
-            elif data[ACTION_STATUS] in action_type_conditions and is_assigned_to_a_user:
+            if data[ACTION_STATUS] in action_type_conditions and is_assigned_to_a_user:
                 with admin():
                     assigned_users_list = []
+                    
                     if re_assignment_node:
                         return
                     else:
                         for user in tile.data[ASSIGNED_TO]:
-                            assigned_users_list.append(user)
+                            team = self.find_user_team(user)
+                            assigned_users_list.append({
+                                'user': user,
+                                'team': team
+                            })
 
                     self.notify_users(assigned_users_list, notification)
 
-    def notify_group(self, group_id, notification):
+    def notify_group(self, group_id, last_notified, notification, response_slug):
         from arches_orm.models import Group, Person
-        
         with admin():
             group = Group.find(group_id)
             persons = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
 
-            notification.context["last_notified"] = group_id
+            notification.context["last_notified"] = last_notified
+            notification.context["response_slug"] = response_slug
             notification.save()
+
             for person in persons:
                 user = person.user_account
 
@@ -171,8 +235,7 @@ class NotifyPlanning(BaseFunction):
         notified_users_list = notification.context.get("last_notified", []) if isinstance(notification.context.get("last_notified"), list) else []
 
         for user in assigned_users_list:
-
-            selected_user = Person.find(user['resourceId'])
+            selected_user = Person.find(user['user']['resourceId'])
 
             if not selected_user.user_account:
                 return
@@ -181,10 +244,35 @@ class NotifyPlanning(BaseFunction):
                 continue  # Skip already notified users
 
             notified_users_list.append(selected_user.id)
-            notification.context["last_notified"] = notified_users_list
+            notification.context["last_notified"] = 'users'
+            notification.context["response_slug"] = f"{user['team']}-planning-consultation-response-workflow"
             notification.save()
             
             user_x_notification = models.UserXNotification(
                 notif=notification, recipient=selected_user.user_account
             )
             user_x_notification.save()
+
+    def find_user_team(self, user):
+        from arches_orm.models import Group, Person
+        hm_teams = [HM_MANAGERS, HM_USER]
+        hb_teams = [HB_MANAGERS, HB_USER]
+
+        hb_groups = [Group.find(id) for id in hb_teams]
+        hm_groups = [Group.find(id) for id in hm_teams]
+
+        person = Person.find(user['resourceId'])
+
+        def find_users_in_teams(groups):
+            for group in groups:
+                for member in group.members:
+                    if member.id == person.id:
+                        return True
+            return False
+        user_team = None
+        if find_users_in_teams(hm_groups):
+            user_team = 'hm'
+        elif find_users_in_teams(hb_groups):
+            user_team = 'hb'
+
+        return user_team

@@ -31,7 +31,7 @@ define([
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
                     ],
-                    label: 'Name/SMR of the Heritage Asset',
+                    label: 'Base Heritage Asset',
                     getTileIdFromNodegroup: [
                       {
                         nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
@@ -64,7 +64,7 @@ define([
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
                     ],
-                    label: 'Name/SMR of the Heritage Asset',
+                    label: 'Merge Heritage Asset',
                     getTileIdFromNodegroup: [
                       {
                         nodegroupId: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
@@ -85,7 +85,7 @@ define([
           informationboxdata: {
             displayed: true,
             heading: 'Geometry Locations',
-            text: "Red represents the base resource. Blue represents the merge resource."
+            text: 'Red represents the base resource. Blue represents the merge resource.'
           },
           layoutSections: [
             {
@@ -96,7 +96,7 @@ define([
                   tilesManaged: 'none',
                   parameters: {
                     baseResourceId: "['search-step']['base-record'][0]['selectedResourceId']",
-                    mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']",
+                    mergeResourceId: "['merging-step']['merge-record'][0]['selectedResourceId']"
                   }
                 }
               ]
@@ -116,13 +116,14 @@ define([
             {
               componentConfigs: [
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'base-record-legacy-id',
                   tilesManaged: 'one',
                   parameters: {
                     resourceid: "['search-step']['base-record'][0]['selectedResourceId']",
                     nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
                     tileid: "['search-step']['base-record'][0]['systemRef']",
+                    labels: [["HA Number","Base HA Number"]],
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
                       '325a441c-efe4-11eb-9283-a87eeabdefba'
@@ -131,13 +132,14 @@ define([
                   }
                 },
                 {
-                  componentName: 'default-card',
+                  componentName: 'default-card-util',
                   uniqueInstanceName: 'merge-record-legacy-id',
                   tilesManaged: 'one',
                   parameters: {
                     resourceid: "['merging-step']['merge-record'][0]['selectedResourceId']",
                     nodegroupid: '325a2f2f-efe4-11eb-9b0c-a87eeabdefba',
                     tileid: "['merging-step']['merge-record'][0]['systemRef']",
+                    labels: [["HA Number","Merged HA Number"]],
                     hiddenNodes: [
                       '325a2f33-efe4-11eb-b0bb-a87eeabdefba',
                       '325a441c-efe4-11eb-9283-a87eeabdefba'
@@ -163,7 +165,7 @@ define([
           name: 'approval-step',
           required: true,
           workflowstepclass: 'workflow-form-component',
-          saveWithoutProgressing: true,
+          hiddenWorkflowButtons: ['undo'],
           layoutSections: [
             {
               componentConfigs: [
@@ -174,8 +176,17 @@ define([
                   parameters: {
                     graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
                     nodegroupid: '3ff60eda-cce2-11ee-9264-0242ac180006',
-                    resourceid:
-                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['information-step']['notes'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "3ff6232a-cce2-11ee-9264-0242ac180006": {
+                        "component": "user-to-model-select",
+                        "signOffGroups":[
+                          "1ce90bd5-4063-4984-931a-cc971414d7db",
+                          "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                        ],
+                        "allowInstanceCreation": false
+                      }
+                    }
                   }
                 },
                 {
@@ -196,10 +207,33 @@ define([
                   parameters: {
                     graphid: 'd9318eb6-f28d-427c-b061-6fe3021ce8aa',
                     nodegroupid: '726951a8-cce0-11ee-af2a-0242ac180006',
-                    resourceid:
-                      "['information-step']['notes'][0]['resourceid']['resourceInstanceId']"
+                    resourceid: "['information-step']['notes'][0]['resourceid']['resourceInstanceId']",
+                    nodeOptions: {
+                      "726956bc-cce0-11ee-af2a-0242ac180006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
                   }
-                },
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Submit Merge',
+          name: 'submit-merge-step',
+          required: true,
+          workflowstepclass: 'workflow-form-component',
+          hiddenWorkflowButtons: ['save', 'undo'],
+          informationboxdata: {
+            heading: 'WARNING: Process Description',
+            text: 'The merge process involves taking the values from the Merge Resource and applying them to the Base Resource. Single values from the Base Resource won\'t be overwritten by the Merge Resource (Base Resource takes precedence). This process cannot easily be undone please confirm you are happy with your decision.'
+          },
+          layoutSections: [
+            {
+              componentConfigs: [
                 {
                   componentName: 'submit-merge',
                   uniqueInstanceName: 'approval',

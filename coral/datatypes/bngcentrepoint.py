@@ -20,6 +20,8 @@ details = {
 
 class BNGCentreDataType(BaseDataType):
     def validate(self, value, row_number=None, source=None, node=None, nodeid=None, strict=False, request=None):
+        if not value: 
+            return []
 
         errors = []
         gridSquareArray = [

@@ -1,0 +1,312 @@
+{
+    "graph": [
+        {
+            "author": "Phil Weir ",
+            "cards": [
+                {
+                    "active": true,
+                    "cardid": "a9c9ece0-93ff-4d4b-ad76-b6da627a7a32",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": {
+                        "en": "UUID of the referenced workflow."
+                    },
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Plugin Identifier"
+                    },
+                    "nodegroup_id": "d124c1a6-6780-11ef-9f42-0242ac120006",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "b4ea3573-cb7a-403f-9529-ea9fd2b5c847",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Name"
+                    },
+                    "nodegroup_id": "c0bde702-69c9-11ef-903c-0242ac120005",
+                    "sortorder": null,
+                    "visible": true
+                }
+            ],
+            "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "a9c9ece0-93ff-4d4b-ad76-b6da627a7a32",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Arches Plugin",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "8dd4fc82-b478-4249-97b8-ab8edd4ebbfa",
+                    "label": {
+                        "en": "Arches Plugin"
+                    },
+                    "node_id": "d124c1a6-6780-11ef-9f42-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "b4ea3573-cb7a-403f-9529-ea9fd2b5c847",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "d494c32f-ec12-4e24-80df-08e2e1f53c75",
+                    "label": {
+                        "en": "Name"
+                    },
+                    "node_id": "c0bde702-69c9-11ef-903c-0242ac120005",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                }
+            ],
+            "color": null,
+            "config": {},
+            "deploymentdate": null,
+            "deploymentfile": null,
+            "description": {
+                "en": "Basic structure to represent an (Arches) workflow"
+            },
+            "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "d993e67e-677f-11ef-9f42-0242ac120006",
+                    "edgeid": "3c643bc8-fd78-4f22-9021-ac8ca9e7167a",
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+                    "rangenode_id": "d124c1a6-6780-11ef-9f42-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "d993e67e-677f-11ef-9f42-0242ac120006",
+                    "edgeid": "b9dd781a-2d4a-4e71-9179-dc27b67c1300",
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "c0bde702-69c9-11ef-903c-0242ac120005"
+                }
+            ],
+            "functions_x_graphs": [
+                {
+                    "config": {
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "c0bde702-69c9-11ef-903c-0242ac120005",
+                                "string_template": "Plugin"
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "",
+                                "string_template": ""
+                            },
+                            "name": {
+                                "nodegroup_id": "c0bde702-69c9-11ef-903c-0242ac120005",
+                                "string_template": "<Name>"
+                            }
+                        },
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "60000000-0000-0000-0000-000000000001",
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "id": "028fdeb8-b79b-47c0-a38e-cf893e7e5fe7"
+                }
+            ],
+            "graphid": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+            "iconclass": "fa fa-plug",
+            "is_editable": false,
+            "isresource": true,
+            "jsonldcontext": null,
+            "name": {
+                "en": "Arches Plugin"
+            },
+            "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "c0bde702-69c9-11ef-903c-0242ac120005",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "d124c1a6-6780-11ef-9f42-0242ac120006",
+                    "parentnodegroup_id": null
+                }
+            ],
+            "nodes": [
+                {
+                    "alias": "name",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": true,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Name",
+                    "nodegroup_id": "c0bde702-69c9-11ef-903c-0242ac120005",
+                    "nodeid": "c0bde702-69c9-11ef-903c-0242ac120005",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E35_Title",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "plugin_identifier",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": "UUID of the referenced workflow.",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "hascustomalias": true,
+                    "is_collector": true,
+                    "isrequired": true,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Plugin Identifier",
+                    "nodegroup_id": "d124c1a6-6780-11ef-9f42-0242ac120006",
+                    "nodeid": "d124c1a6-6780-11ef-9f42-0242ac120006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": null,
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": true,
+                    "name": "Arches Plugin",
+                    "nodegroup_id": null,
+                    "nodeid": "d993e67e-677f-11ef-9f42-0242ac120006",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                    "parentproperty": "",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                }
+            ],
+            "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+            "publication": {
+                "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                "notes": null,
+                "publicationid": "b26ae79e-69ca-11ef-8193-0242ac120005",
+                "published_time": "2024-09-03T08:01:16.943"
+            },
+            "relatable_resource_model_ids": [],
+            "resource_2_resource_constraints": [],
+            "root": {
+                "alias": null,
+                "config": {
+                    "en": ""
+                },
+                "datatype": "semantic",
+                "description": "",
+                "exportable": false,
+                "fieldname": null,
+                "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+                "hascustomalias": false,
+                "is_collector": false,
+                "isrequired": false,
+                "issearchable": true,
+                "istopnode": true,
+                "name": "Arches Plugin",
+                "nodegroup_id": null,
+                "nodeid": "d993e67e-677f-11ef-9f42-0242ac120006",
+                "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
+            },
+            "slug": null,
+            "subtitle": {
+                "en": "Workflows, etc."
+            },
+            "template_id": "50000000-0000-0000-0000-000000000001",
+            "version": ""
+        }
+    ],
+    "metadata": {
+        "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
+        "git hash": "bf3f81818 2024-09-07 21:13:20 +0100",
+        "os": "Linux",
+        "os version": "6.8.0-41-generic"
+    }
+}

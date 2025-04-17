@@ -33,7 +33,7 @@ define([
         renderNodeIds: [{ nodeId: '9d15ac44-c768-11ee-a945-0242ac180006', label: 'Reference' }]
       },
       difReceivedDate: {
-        label: 'DIF Received Date',
+        label: 'DfI Received Date',
         nodegroupId: '04492152-c769-11ee-82c4-0242ac180006',
         renderNodeIds: [{ nodeId: '04494bbe-c769-11ee-82c4-0242ac180006', label: 'Date' }]
       },
@@ -102,6 +102,11 @@ define([
         nodegroupId: '69500360-d7c5-11ee-a011-0242ac120006',
         renderNodeIds: [{ nodeId: '69500360-d7c5-11ee-a011-0242ac120006', label: 'Selection' }]
       },
+      irishGridRef: {
+        label: 'Irish Grid Reference',
+        nodegroupId: '083e226c-ca61-11ee-afca-0242ac180006',
+        renderNodeIds: [{ nodeId: 'ac3eb490-1682-11ef-b68e-0242ac120006', label: 'Reference (TM65)' }]
+      },
       areaNames: {
         label: 'Localities/Administrative Areas',
         nodegroupId: '083dc93e-ca61-11ee-afca-0242ac180006',
@@ -110,7 +115,7 @@ define([
           { nodeId: '083ea3ae-ca61-11ee-afca-0242ac180006', label: 'Area Name' }
         ]
       },
-      locationDescrition: {
+      locationDescription: {
         label: 'Location Description',
         nodegroupId: '083e1bb4-ca61-11ee-afca-0242ac180006',
         renderNodeIds: [{ nodeId: '083eae58-ca61-11ee-afca-0242ac180006', label: 'Description' }]
@@ -120,7 +125,7 @@ define([
         nodegroupId: 'dc9bfb24-cfd9-11ee-8cc1-0242ac180006',
         renderNodeIds: [
           { nodeId: '6b8f5866-2f0d-11ef-b37c-0242ac140006', label: 'Team' },
-          { nodeId: 'fbdd2304-cfda-11ee-8cc1-0242ac180006', label: 'Re-Assigned To' },
+          // { nodeId: 'fbdd2304-cfda-11ee-8cc1-0242ac180006', label: 'Re-Assigned To' },
           { nodeId: '50d15bec-cfda-11ee-8cc1-0242ac180006', label: 'Assigned To' }
         ]
       }

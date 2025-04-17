@@ -15,6 +15,7 @@ import inspect
 import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
+from csp.constants import SELF, NONE
 
 try:
     from arches.settings import *
@@ -22,7 +23,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=5, minor=0, patch=7)
+APP_VERSION = semantic_version.Version(major=7, minor=10, patch=39)
 
 GROUPINGS = {
     "groups": {
@@ -55,6 +56,8 @@ WEBPACK_LOADER = {
 
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
 CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
+
+CORAL_UPGRADE_WINDOW_FILE = os.getenv("CORAL_UPGRADE_WINDOW_FILE", "")
 
 DAUTHZ = {
     # DEFAULT Dauthz enforcer
@@ -182,6 +185,7 @@ DATABASES = {
 SEARCH_THUMBNAILS = False
 
 INSTALLED_APPS = (
+    "csp",
     "webpack_loader",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -199,7 +203,6 @@ INSTALLED_APPS = (
     "corsheaders",
     "oauth2_provider",
     "django_celery_results",
-    "compressor",
     "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",
@@ -211,6 +214,7 @@ if DEBUG:
 ARCHES_APPLICATIONS = ()
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -227,13 +231,26 @@ MIDDLEWARE = [
     # "silk.middleware.SilkyMiddleware",
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
 ]
+
+
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "default-src": [NONE],
+        "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
+        "img-src": [SELF, "blob:", "data:"],
+        "font-src": [SELF, "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
+        "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
+        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
+        "worker-src": [SELF, "blob:"],
+    },
+}
+
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     MIDDLEWARE.append("debug_toolbar_force.middleware.ForceDebugToolbarMiddleware")
     import socket
     hostname, __, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
-
 
 AWS_STORAGE_BUCKET_NAME=os.environ.get("AWS_STORAGE_BUCKET_NAME", None)
 AWS_S3_ENDPOINT_URL=os.environ.get("AWS_S3_ENDPOINT_URL", None)
@@ -295,6 +312,13 @@ FORCE_SCRIPT_NAME = None
 FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
+
+USER_SIGNUP_GROUP = "Crowdsource Editor"
+ALLOWED_SIGNUP_GROUPS = [
+    "Crowdsource Editor",
+    "Resource Editor",
+    "Resource Reviewer",
+]
 
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
 if USE_CASBIN:
@@ -408,14 +432,14 @@ if DEBUG is True:
     SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  #<-- Only need to uncomment this for testing without an actual email server
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = "xxxx@xxx.com"
-# EMAIL_HOST_PASSWORD = 'xxxxxxx'
-# EMAIL_PORT = 587
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", 'django.core.mail.backends.console.EmailBackend')
+EMAIL_USE_TLS = str(os.getenv("EMAIL_USE_TLS", "1")).lower() in ("1", "true")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "xxxx@xxx.com")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "xxxxxxx")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
 # If True, allows for user self creation via the signup view. If False, users can only be created via the Django admin view.
 ENABLE_USER_SIGNUP = False

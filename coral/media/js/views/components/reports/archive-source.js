@@ -15,6 +15,7 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
 
             Object.assign(self, reportUtils);
             self.sections = [
@@ -23,12 +24,20 @@ define([
                 {id: 'images', title: 'Images'},
                 {id: 'archive', title: 'Archive Holding'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+
+            self.fullReportConfig = {
+                id: 'archive-source',
+                label: 'Archive Source',
+                ignoreNodes: []
+            }
+
 
             self.nameDataConfig = {
                 name: 'archive source',

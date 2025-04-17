@@ -23,7 +23,7 @@ details = {
 
 
 class SmrNumberFunction(BaseFunction):
-    def update_ha_references(self, ri_id, id):
+    def update_ha_references(self, ri_id, id, request):
         references_tile = Tile.objects.filter(
             resourceinstance_id=ri_id,
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -43,27 +43,32 @@ class SmrNumberFunction(BaseFunction):
             }
 
         references_tile.data[SMR_NUMBER_NODE_ID] = id
-        references_tile.save()
+        references_tile.save(request=request)
 
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(GENERATED_SMR_NODE_ID, None)
-
-        if not id_number:
-            return
 
         map_sheet_id = models.Value.objects.filter(
             valueid=tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID, None)
         ).first()
 
+        if not map_sheet_id and not id_number:
+            # Clear SMR Number
+            self.update_ha_references(resource_instance_id, "", request)
+            return
+        
+        if not map_sheet_id and id_number:
+            raise ValueError('No selected NISMR Numbering selected but a generated ID was provided.')
+
         sn = SmrNumber(map_sheet_id=map_sheet_id.value)
 
-        if sn.validate_id(id_number):
+        if sn.validate_id(id_number, resource_instance_id):
             print("SMR Number is valid: ", id_number)
-            self.update_ha_references(resource_instance_id, id_number)
+            self.update_ha_references(resource_instance_id, id_number, request)
             return
-
-        id_number = sn.generate_id_number(resource_instance_id)
-        self.update_ha_references(resource_instance_id, id_number)
-
-        return
+        
+        raise ValueError('This SMR Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')

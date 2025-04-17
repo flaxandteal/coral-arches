@@ -1,0 +1,68 @@
+<div class="card-component" style="width: 100%">
+  <div class="row widget-wrapper">
+    <h4 data-bind="text: workflow().name"></h4>
+  </div>
+  <div class="row widget-wrapper">
+    <div
+      data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+          graphids: ['076f9381-7b00-11e9-8d6b-80000b44d1d9'],
+          config: {
+            label: 'Select Building',
+            placeholder: 'Please select the Building',
+          },
+          searchString: buildingString,
+          renderContext: 'workflow',
+          value: selectedBuilding
+        }
+      }"
+    ></div>
+    <div  style="max-width: 620px !important">
+    <domain-select-widget
+      params="
+        node: {
+          config: {
+            options: parentTileOptions,
+            multiple: false
+          },
+          configKeys: configKeys
+        },
+        config: {
+          placeholder: 'Select a Evaluation Meeting or start new',
+          
+          label: 'Selected Evaluation Meeting',
+        },
+        value: selectedResource,
+        loading: false,
+        pageVm: $root
+      "
+    ></domain-select-widget>
+      </div>
+  </div>
+  <div class="row widget-wrapper" style="display: flex">
+    <!-- ko if: !workflow().disableStartNew -->
+    <button
+      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
+      style="min-height: 40.56px"
+      data-bind="click: async () => {
+        await startNew().then(async () => {
+          await openWorkflow()
+        });
+      }, disable: !selectedBuilding()"
+    >
+      <span>Start New</span>
+    </button>
+    <!-- /ko -->
+     
+    <button
+      class="btn btn-shim btn-labeled btn-lg btn-primary"
+      style="min-height: 40.56px"
+      data-bind="click: async () => {
+        await openWorkflow();
+      }, disable: !selectedResource()"
+    >
+      <span>Open Selected</span>
+    </button>
+  </div>
+</div>

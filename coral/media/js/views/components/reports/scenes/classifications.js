@@ -446,13 +446,14 @@ define([
                     }));
                 }
 
-                const historicalPeriodNode = self.getRawNodeValue(params.data(), self.dataConfig.historicalPeriodType);
+                const historicalPeriodNode = self.getRawNodeValue(params.data(), 'historical period type');
                 if(historicalPeriodNode) {
                     self.historicalPeriods([
                         {
                             "period": historicalPeriodNode['@display_value']
                         }
                     ]);
+
                 }
 
                 const datesNode = self.getRawNodeValue(params.data(), self.dataConfig.dates);

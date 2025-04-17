@@ -39,7 +39,7 @@
         </div>
         <!-- ko if: applicationData() -->
         <!-- ko foreach: { data: Object.values(applicationData()), as: 'appData', noChildContext: true } -->
-            <!-- ko if: appData.resourceId && appData.name && appData.totalLicenses !== null && appData.totalOpenApplications !== null && appData.state -->
+            <!-- ko if: appData.resourceId && appData.name && appData.totalLicences !== null && appData.totalOpenApplications !== null && appData.state -->
             <div style="padding: 8px; color: white; max-width: 600px; margin-top: 8px; border-radius: 4px" data-bind="style: { background: colour(appData.state) }">
                 <div style="display: flex">
                     <div data-bind="text: title(appData.state)" style="font-size: 14px; font-weight: 700"></div>
@@ -48,7 +48,7 @@
                 <div data-bind="text: message(appData.resourceId, appData.state)" style="font-size: 13px; font-weight: 600"></div>
             </div>
             <div style="padding: 8px; color: white; max-width: 600px; margin-top: 8px; border-radius: 4px; color: black; background: #ddd">
-                <div data-bind="text: totalLicensesMessage(appData.resourceId)" style="font-size: 13px; font-weight: 600"></div>
+                <div data-bind="text: totalLicencesMessage(appData.resourceId)" style="font-size: 13px; font-weight: 600"></div>
             </div>
             <!-- /ko -->
         <!-- /ko -->

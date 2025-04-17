@@ -1,5 +1,7 @@
+import yaml
 import logging
-from coral.permissions.casbin import CasbinPermissionFramework
+import datetime
+from pathlib import Path
 from celery import shared_task
 from coral.utils.merge_resources import MergeResources
 from arches.app.models import models
@@ -9,6 +11,13 @@ from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from django.db import transaction
 from coral.utils.casbin import SetApplicator
+from tempfile import NamedTemporaryFile
+
+from arches.app.models.system_settings import settings
+from arches.app.utils.arches_crypto import AESCipher
+from arches.management.commands.packages import Command as PackageCommand
+
+from coral.permissions.casbin import CasbinPermissionFramework
 
 logging.basicConfig()
 
@@ -42,7 +51,17 @@ def merge_resources_task(
         merge_tracker_resource_id,
         overwrite_multiple_tiles,
     )
-    mr.merge_resource.delete(user=user)
+    deleted_tile = Tile.objects.filter(
+                resourceinstance_id=merge_resource_id,
+                nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2",
+            ).first()
+    if not deleted_tile:
+        deleted_tile = Tile.get_blank_tile_from_nodegroup_id(
+                nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2", resourceid=merge_resource_id
+            )
+
+    deleted_tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+    deleted_tile.save()
 
 @shared_task
 def remap_monument_to_revision(user_id, target_resource_id):
@@ -60,24 +79,50 @@ def remap_monument_to_revision(user_id, target_resource_id):
         )
         result = rr.remap_resources(user)
 
-        if result['remapped']:
-            parent_target_nodegroup = models.NodeGroup.objects.filter(pk=REVISION_PARENT_MONUMENT_NODEGROUP_ID).first()
-            destination_resource = Resource.objects.filter(pk=result['destinationResourceId']).first()
-            parent_target_tile = Tile(
-                resourceinstance=destination_resource,
-                data={
-                    REVISION_PARENT_MONUMENT_NODEGROUP_ID: [
-                        {
-                            "resourceId": target_resource_id,
-                            "ontologyProperty": "",
-                            "inverseOntologyProperty": "",
-                        }
-                    ]
-                },
-                nodegroup=parent_target_nodegroup,
-            )
-            parent_target_tile.save()
-            return result
+        if not result['remapped']:
+            return
+        
+        REVISION_DISPLAY_NAME_NODEGROUP_ID = "423d8a10-3f60-11ef-b9b0-0242ac140006"
+        REVISION_DISPLAY_NAME_NODE_ID = REVISION_DISPLAY_NAME_NODEGROUP_ID
+
+        display_name_tile = Tile.objects.filter(
+            resourceinstance_id=result['destinationResourceId'],
+            nodegroup_id=REVISION_DISPLAY_NAME_NODEGROUP_ID,
+        ).first()
+
+        parent_target_nodegroup = models.NodeGroup.objects.filter(pk=REVISION_PARENT_MONUMENT_NODEGROUP_ID).first()
+        destination_resource = Resource.objects.filter(pk=result['destinationResourceId']).first()
+        parent_target_tile = Tile(
+            resourceinstance=destination_resource,
+            data={
+                REVISION_PARENT_MONUMENT_NODEGROUP_ID: [
+                    {
+                        "resourceId": target_resource_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": "",
+                    }
+                ]
+            },
+            nodegroup=parent_target_nodegroup,
+        )
+        parent_target_tile.save()
+
+        notification = models.Notification(
+            message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
+            context={
+                "resource_instance_id": result['destinationResourceId'],
+                "resource_id": f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+                "response_slug": "heritage-asset-designation-workflow"
+            },
+        )
+        notification.save()
+
+        user_x_notification = models.UserXNotification(
+            notif=notification, recipient=user
+        )
+        user_x_notification.save()
+
+        return result
         
 
 
@@ -93,17 +138,35 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
         rr = RemapResources(
             target_graph_id=MONUMENT_REVISION_GRAPH_ID,
             destination_graph_id=MONUMENT_GRAPH_ID,
-            excluded_aliases=["monument", "monument_revision", "parent_monument"],
+            excluded_aliases=["monument", "monument_revision", "parent_monument", "heritage_asset_references"],
             target_resource_id=target_resource_id,
         )
         result = rr.remap_resources(user)
 
+        DISPLAY_NAME_NODEGROUP_ID = "ce85b994-3f5f-11ef-b9b0-0242ac140006"
+        DISPLAY_NAME_NODE_ID = DISPLAY_NAME_NODEGROUP_ID
+
+        display_name_tile = Tile.objects.filter(
+            resourceinstance_id=result['destinationResourceId'],
+            nodegroup_id=DISPLAY_NAME_NODEGROUP_ID,
+        ).first()
+
         if result["remapped"]:
-            parent_monumnet_tile = Tile.objects.filter(
+            notification = models.Notification(
+                message=f"The Revision Heritage Asset has been remapped back to a Heritage Asset. The merge process has started and will complete shortly. Heritage Asset: {display_name_tile.data.get(DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+            )
+            notification.save()
+
+            user_x_notification = models.UserXNotification(
+                notif=notification, recipient=user
+            )
+            user_x_notification.save()
+            
+            parent_monument_tile = Tile.objects.filter(
                 resourceinstance_id=target_resource_id,
                 nodegroup_id=PARENT_MONUMENT_NODEGROUP,
             ).first()
-            monument_node = parent_monumnet_tile.data[PARENT_MONUMENT_NODE]
+            monument_node = parent_monument_tile.data[PARENT_MONUMENT_NODE]
             monument_resource_id = monument_node[0].get("resourceId")
 
             merge_tracker_resource_id = setup_merge_resource_tracker(user)
@@ -114,12 +177,30 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
                 merge_resource_id=result["destinationResourceId"],
                 merge_tracker_resource_id=merge_tracker_resource_id,
                 overwrite_multiple_tiles=True,
+                exclude_nodegroups_from_overwrite_multiple_tiles=['7e0533aa-37b7-11ef-9263-0242ac150006']
             )
             mr.merge_resource.delete(user=user)
 
-            target_resource = get_resource(target_resource_id)
-            target_resource.delete(user=user)
+            print("DEBUG, should be soft deleting", )
+            deleted_revision_tile = Tile.objects.filter(
+                resourceinstance_id=target_resource_id,
+                nodegroup_id="9e59e355-07f0-4b13-86c8-7aa12c04a5e3",
+            ).first()
+            if not deleted_revision_tile:
+                deleted_revision_tile = Tile.get_blank_tile_from_nodegroup_id(
+                        nodegroup_id="9e59e355-07f0-4b13-86c8-7aa12c04a5e3", resourceid=target_resource_id
+                    )
+            deleted_revision_tile.data["9e59e355-07f0-4b13-86c8-7aa12c04a5e3"] = True
+            deleted_revision_tile.save()
+            notification = models.Notification(
+                message=f"The revision has completed. All changes made to the Revision Heritage Asset have been merged into the original Heritage Asset. You may begin using the Heritage Asset again. Heritage Asset: {display_name_tile.data.get(DISPLAY_NAME_NODE_ID).get('en').get('value')}",
+            )
+            notification.save()
 
+            user_x_notification = models.UserXNotification(
+                notif=notification, recipient=user
+            )
+            user_x_notification.save()
 
 def get_resource(resource_id):
     resource = None
@@ -223,3 +304,60 @@ def setup_merge_resource_tracker(user):
     merge_tracker_sys_ref.save()
 
     return str(merge_tracker_resource.resourceinstanceid)
+
+@shared_task
+def reset_database(lock_code_enc):
+    lock_code = AES.decrypt(lock_code_enc)
+
+    if not hasattr(settings, "CORAL_UPGRADE_WINDOW_FILE"):
+        logging.error(
+            "No upgrade windows file set (CORAL_UPGRADE_WINDOW_FILE), so cannot programmatically reset DB"
+        )
+        return
+
+    with Path(settings.CORAL_UPGRADE_WINDOW_FILE).open() as uwf:
+        upgrade_windows = yaml.load(uwf)
+
+    in_window = False
+    now = datetime.datetime.now()
+    AES = AESCipher(settings.SECRET_KEY)
+    for fm, to, window_code_enc in upgrade_windows:
+        fm = datetime.datetime.fromisoformat(fm)
+        to = datetime.datetime.fromisoformat(to)
+        if fm <= now <= to:
+            unlock = False
+            try:
+                unlock = AES.decrypt(window_code_enc) == lock_code
+            except Exception as exc:
+                logging.error("%s: Could not decrypt window lock for %s:%s", str(exc), fm, to)
+            if unlock:
+                in_window = True
+                break
+            else:
+                logging.error("Could not match window lock after %s", fm)
+                return
+
+    if in_window:
+        command = PackageCommand()
+        with NamedTemporaryFile() as tf:
+            # This is a workaround for the fact that we cannot pass a flag to
+            # prevent writing SYSTEM_SETTINGS_LOCAL_PATH
+            sslp = settings.SYSTEM_SETTINGS_LOCAL_PATH
+            settings.SYSTEM_SETTINGS_LOCAL_PATH = tf.name
+            command.load_package(
+                str(Path(__file__).parent / "pkg"),
+                setup_db=True,
+                defer_indexing=False,
+                is_application=False,
+                include_business_data=True
+            )
+            settings.SYSTEM_SETTINGS_LOCAL_PATH = sslp
+        logging.info(
+            "Completed automated reset"
+        )
+    else:
+        logging.error(
+            "Not currently in an upgrade window, check %s",
+            settings.CORAL_UPGRADE_WINDOW_FILE
+        )
+        return

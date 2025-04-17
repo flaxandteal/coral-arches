@@ -1,0 +1,605 @@
+{
+    "business_data": {
+        "resources": [
+            {
+                "resourceinstance": {
+                    "descriptors": {
+                        "en": {
+                            "description": "Undefined",
+                            "map_popup": "Undefined",
+                            "name": "Excavation Cur E Group"
+                        }
+                    },
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+                    "legacyid": null,
+                    "name": "Excavation Cur E Group",
+                    "principaluser_id": null,
+                    "resourceinstanceid": "214900b1-1359-404d-bba0-7dbd5f8486ef",
+                    "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+                },
+                "tiles": [
+                    {
+                        "data": {
+                            "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                                "de": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "el": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en": {
+                                    "direction": "ltr",
+                                    "value": "Excavation Cur E Group"
+                                },
+                                "en-US": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en-us": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "fr": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "pt": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "ru": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "zh": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                }
+                            },
+                            "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+                            "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                                {
+                                    "inverseOntologyProperty": "",
+                                    "ontologyProperty": "",
+                                    "resourceId": "4fbe3955-ccd3-4c5b-927e-71672c61f298",
+                                    "resourceXresourceId": "af97e24c-6b82-436d-8d8e-6d807cc97ff9"
+                                }
+                            ]
+                        },
+                        "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "214900b1-1359-404d-bba0-7dbd5f8486ef",
+                        "sortorder": 0,
+                        "tileid": "345ed869-43dc-4012-883a-c05ecbb8fb94"
+                    },
+                    {
+                        "data": {
+                            "bb2f7e1c-7029-11ee-885f-0242ac140008": null
+                        },
+                        "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "214900b1-1359-404d-bba0-7dbd5f8486ef",
+                        "sortorder": 0,
+                        "tileid": "d9b442c1-5151-49e5-bcbc-d945596dfbea"
+                    },
+                    {
+                        "data": {
+                            "448bcdb8-7071-11ee-8b8c-0242ac140008": [
+                                {
+                                    "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "resourceId": "4a1ccf22-a490-4073-8054-54e19fcfc5fe",
+                                    "resourceXresourceId": "ebb022e2-0a26-407a-8f70-c718fde60783"
+                                },
+                                {
+                                    "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "resourceId": "5c6cac44-5d0d-45a1-aac5-84c8997fc69a",
+                                    "resourceXresourceId": "154bc924-6199-4b66-821a-335a0f1b5df6"
+                                }
+                            ],
+                            "7cb692b2-7072-11ee-bb7a-0242ac140008": [
+                                "9790952e-6f1d-4938-a02c-492915950107",
+                                "1f5cb79d-035a-4d3e-a79b-f9c0489fd076",
+                                "e3a6493e-5df4-4ad4-a699-ade7ccf01917",
+                                "4ccc137b-8804-4610-8378-a271fdb4385f"
+                            ]
+                        },
+                        "nodegroup_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "214900b1-1359-404d-bba0-7dbd5f8486ef",
+                        "sortorder": 0,
+                        "tileid": "b3b923ad-2a2c-45ee-b75e-d52ed96b7b9a"
+                    }
+                ]
+            },
+            {
+                "resourceinstance": {
+                    "descriptors": {
+                        "en": {
+                            "description": "Undefined",
+                            "map_popup": "Undefined",
+                            "name": "Excavation Cur D Group"
+                        }
+                    },
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+                    "legacyid": null,
+                    "name": "Excavation Cur D Group",
+                    "principaluser_id": null,
+                    "resourceinstanceid": "751d8543-8e5e-4317-bcb8-700f1b421a90",
+                    "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+                },
+                "tiles": [
+                    {
+                        "data": {
+                            "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                                "de": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "el": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en": {
+                                    "direction": "ltr",
+                                    "value": "Excavation Cur D Group"
+                                },
+                                "en-US": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en-us": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "fr": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "pt": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "ru": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "zh": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                }
+                            },
+                            "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+                            "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                                {
+                                    "inverseOntologyProperty": "",
+                                    "ontologyProperty": "",
+                                    "resourceId": "4fbe3955-ccd3-4c5b-927e-71672c61f298",
+                                    "resourceXresourceId": "9110a471-55a5-4ac6-b685-205e83ef1c10"
+                                }
+                            ]
+                        },
+                        "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "751d8543-8e5e-4317-bcb8-700f1b421a90",
+                        "sortorder": 0,
+                        "tileid": "1c046b5f-1ed4-4afb-b20f-a60c54078710"
+                    },
+                    {
+                        "data": {
+                            "bb2f7e1c-7029-11ee-885f-0242ac140008": null
+                        },
+                        "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "751d8543-8e5e-4317-bcb8-700f1b421a90",
+                        "sortorder": 0,
+                        "tileid": "07f08ed8-4f56-4142-b71f-942ffa447fed"
+                    },
+                    {
+                        "data": {
+                            "448bcdb8-7071-11ee-8b8c-0242ac140008": [
+                                {
+                                    "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "resourceId": "4a1ccf22-a490-4073-8054-54e19fcfc5fe",
+                                    "resourceXresourceId": "d935fdac-da52-42e6-b3b5-a95d16db5cdc"
+                                },
+                                {
+                                    "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "resourceId": "5c6cac44-5d0d-45a1-aac5-84c8997fc69a",
+                                    "resourceXresourceId": "3d6465f1-7e4f-4414-bb3c-afe6fdc11b52"
+                                }
+                            ],
+                            "7cb692b2-7072-11ee-bb7a-0242ac140008": [
+                                "9790952e-6f1d-4938-a02c-492915950107",
+                                "1f5cb79d-035a-4d3e-a79b-f9c0489fd076",
+                                "e3a6493e-5df4-4ad4-a699-ade7ccf01917",
+                                "4ccc137b-8804-4610-8378-a271fdb4385f"
+                            ]
+                        },
+                        "nodegroup_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "751d8543-8e5e-4317-bcb8-700f1b421a90",
+                        "sortorder": 0,
+                        "tileid": "667090de-8a41-4d8a-b0d6-3d59d19229e0"
+                    }
+                ]
+            },
+            {
+                "resourceinstance": {
+                    "descriptors": {
+                        "en": {
+                            "description": "Undefined",
+                            "map_popup": "Undefined",
+                            "name": "Excavation Admin Group"
+                        }
+                    },
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "graph_publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006",
+                    "legacyid": null,
+                    "name": "Excavation Admin Group",
+                    "principaluser_id": null,
+                    "resourceinstanceid": "4fbe3955-ccd3-4c5b-927e-71672c61f298",
+                    "publication_id": "bcaac244-1158-11ef-a6e2-0242ac170006"
+                },
+                "tiles": [
+                    {
+                        "data": {
+                            "448bcdb8-7071-11ee-8b8c-0242ac140008": [
+                                {
+                                    "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "resourceId": "4a1ccf22-a490-4073-8054-54e19fcfc5fe",
+                                    "resourceXresourceId": "e39ed2a1-e298-4adb-b6cf-85b90d83bee9"
+                                },
+                                {
+                                    "inverseOntologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "ontologyProperty": "ac41d9be-79db-4256-b368-2f4559cfbe55",
+                                    "resourceId": "5c6cac44-5d0d-45a1-aac5-84c8997fc69a",
+                                    "resourceXresourceId": "8b65835b-cc83-43fb-a48b-74093c0b598a"
+                                }
+                            ],
+                            "7cb692b2-7072-11ee-bb7a-0242ac140008": [
+                                "9790952e-6f1d-4938-a02c-492915950107",
+                                "1f5cb79d-035a-4d3e-a79b-f9c0489fd076",
+                                "e3a6493e-5df4-4ad4-a699-ade7ccf01917",
+                                "4ccc137b-8804-4610-8378-a271fdb4385f"
+                            ]
+                        },
+                        "nodegroup_id": "ae2039a4-7070-11ee-bb7a-0242ac140008",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "4fbe3955-ccd3-4c5b-927e-71672c61f298",
+                        "sortorder": 0,
+                        "tileid": "17d1bba3-9bfa-4734-848b-3fbaa9653c94"
+                    },
+                    {
+                        "data": {
+                            "127095f5-c05e-11e9-bb57-a4d18cec433a": {
+                                "de": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "el": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en": {
+                                    "direction": "ltr",
+                                    "value": "Excavation Admin Group"
+                                },
+                                "en-US": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en-us": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "fr": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "pt": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "ru": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "zh": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                }
+                            },
+                            "6b7fc7e2-0279-11ed-b140-0242ac180008": null,
+                            "e8fe4f4e-027a-11ed-9dee-0242ac180008": [
+                                {
+                                    "inverseOntologyProperty": "",
+                                    "ontologyProperty": "",
+                                    "resourceId": "d2368123-9628-49a2-b3dd-78ac6ee3e911",
+                                    "resourceXresourceId": "8aeec9ca-9863-4520-b9b0-79f4f52546a1"
+                                }
+                            ]
+                        },
+                        "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "4fbe3955-ccd3-4c5b-927e-71672c61f298",
+                        "sortorder": 0,
+                        "tileid": "78ebe746-5743-44ab-b20d-053b66aa1033"
+                    },
+                    {
+                        "data": {
+                            "bb2f7e1c-7029-11ee-885f-0242ac140008": [
+                                {
+                                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                                    "resourceId": "751d8543-8e5e-4317-bcb8-700f1b421a90",
+                                    "resourceXresourceId": "b3fda21c-5e28-483a-9f0f-4f3950de26d9"
+                                },
+                                {
+                                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
+                                    "resourceId": "214900b1-1359-404d-bba0-7dbd5f8486ef",
+                                    "resourceXresourceId": "7206399a-12e1-40e1-98d9-2815ad3cd25e"
+                                }
+                            ]
+                        },
+                        "nodegroup_id": "bb2f7e1c-7029-11ee-885f-0242ac140008",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "4fbe3955-ccd3-4c5b-927e-71672c61f298",
+                        "sortorder": 0,
+                        "tileid": "864eb736-37e1-4c56-9b66-c02eddec8c2b"
+                    }
+                ]
+            },
+            {
+                "resourceinstance": {
+                    "descriptors": {
+                        "en": {
+                            "description": "Undefined",
+                            "map_popup": "Undefined",
+                            "name": "All Excavation Activities"
+                        }
+                    },
+                    "graph_id": "5b8b4084-9687-11ee-8782-0242ac140006",
+                    "graph_publication_id": "6d9d83c6-9688-11ee-a81e-0242ac140006",
+                    "legacyid": null,
+                    "name": "All Excavation Activities",
+                    "principaluser_id": 44,
+                    "resourceinstanceid": "5c6cac44-5d0d-45a1-aac5-84c8997fc69a",
+                    "publication_id": "6d9d83c6-9688-11ee-a81e-0242ac140006"
+                },
+                "tiles": [
+                    {
+                        "data": {
+                            "2f94332c-9688-11ee-8782-0242ac140006": {
+                                "de": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "el": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en": {
+                                    "direction": "ltr",
+                                    "value": "advanced-search=[{\"op\"%3A\"and\"%2C\"e7d69603-9939-11ea-9e7f-f875a44e0e11\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"EL\"}%2C\"e7d69604-9939-11ea-baef-f875a44e0e11\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"e7d69602-9939-11ea-b514-f875a44e0e11\"%3A{\"op\"%3A\"eq\"%2C\"val\"%3A\"\"}}]"
+                                },
+                                "en-US": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en-us": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "fr": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "pt": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "ru": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "zh": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                }
+                            }
+                        },
+                        "nodegroup_id": "2f94332c-9688-11ee-8782-0242ac140006",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "5c6cac44-5d0d-45a1-aac5-84c8997fc69a",
+                        "sortorder": 0,
+                        "tileid": "50161c85-4e89-4628-8e43-3cbc97a2cc77"
+                    },
+                    {
+                        "data": {
+                            "5b8b46b0-9687-11ee-8782-0242ac140006": {
+                                "de": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "el": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en": {
+                                    "direction": "ltr",
+                                    "value": "All Excavation Activities"
+                                },
+                                "en-US": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en-us": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "fr": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "pt": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "ru": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "zh": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                }
+                            }
+                        },
+                        "nodegroup_id": "5b8b43ae-9687-11ee-8782-0242ac140006",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "5c6cac44-5d0d-45a1-aac5-84c8997fc69a",
+                        "sortorder": 0,
+                        "tileid": "51c4dc60-6cba-4af7-97a6-83fae26594f3"
+                    }
+                ]
+            },
+            {
+                "resourceinstance": {
+                    "descriptors": {
+                        "en": {
+                            "description": "Undefined",
+                            "map_popup": "Undefined",
+                            "name": "All Excavation Licences"
+                        }
+                    },
+                    "graph_id": "5b8b4084-9687-11ee-8782-0242ac140006",
+                    "graph_publication_id": "6d9d83c6-9688-11ee-a81e-0242ac140006",
+                    "legacyid": null,
+                    "name": "All Excavation Licences",
+                    "principaluser_id": 44,
+                    "resourceinstanceid": "4a1ccf22-a490-4073-8054-54e19fcfc5fe",
+                    "publication_id": "6d9d83c6-9688-11ee-a81e-0242ac140006"
+                },
+                "tiles": [
+                    {
+                        "data": {
+                            "2f94332c-9688-11ee-8782-0242ac140006": {
+                                "de": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "el": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en": {
+                                    "direction": "ltr",
+                                    "value": "advanced-search=[{\"op\"%3A\"and\"%2C\"991c49b2-48b6-11ee-85af-0242ac140007\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"EL\"}%2C\"991c5326-48b6-11ee-85af-0242ac140007\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"991c4340-48b6-11ee-85af-0242ac140007\"%3A{\"op\"%3A\"eq\"%2C\"val\"%3A\"\"}}]"
+                                },
+                                "en-US": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en-us": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "fr": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "pt": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "ru": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "zh": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                }
+                            }
+                        },
+                        "nodegroup_id": "2f94332c-9688-11ee-8782-0242ac140006",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "4a1ccf22-a490-4073-8054-54e19fcfc5fe",
+                        "sortorder": 0,
+                        "tileid": "d31d1e36-fe6b-4033-bd16-d6c3be9855f8"
+                    },
+                    {
+                        "data": {
+                            "5b8b46b0-9687-11ee-8782-0242ac140006": {
+                                "de": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "el": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en": {
+                                    "direction": "ltr",
+                                    "value": "All Excavation Licences"
+                                },
+                                "en-US": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "en-us": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "fr": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "pt": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "ru": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                },
+                                "zh": {
+                                    "direction": "ltr",
+                                    "value": ""
+                                }
+                            }
+                        },
+                        "nodegroup_id": "5b8b43ae-9687-11ee-8782-0242ac140006",
+                        "parenttile_id": null,
+                        "provisionaledits": null,
+                        "resourceinstance_id": "4a1ccf22-a490-4073-8054-54e19fcfc5fe",
+                        "sortorder": 0,
+                        "tileid": "2092af48-f5bc-4426-b3ee-73f93ad92eff"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -8,3 +8,36 @@
 .title-info-margin {
     margin: 1rem 1rem 0 1rem
 }
+
+.dashboard-footer {
+    height: 53px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top:auto
+}
+
+.dot-outline {
+    width: 13px;
+    height: 13px;
+    border: 0.2rem solid grey;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-filled {
+    background-color: green;
+    border: none;
+}
+
+.margin-right-2 {
+    margin-right: 2px;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}

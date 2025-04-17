@@ -17,27 +17,6 @@ class SmrNumberView(View):
         selected_nismr_id = data.get("selectedNismrId")
 
         map_sheet_id = models.Value.objects.filter(valueid=selected_nismr_id).first()
-
-        if resource_instance_id:
-            references_tile = Tile.objects.filter(
-                resourceinstance_id=resource_instance_id,
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-            ).first()
-
-            if references_tile and references_tile.data.get(SMR_NUMBER_NODE_ID, None):
-                id = (
-                    references_tile.data.get(SMR_NUMBER_NODE_ID, None)
-                    .get("en")
-                    .get("value")
-                )
-                print("SMR Number has already been generated: ", id)
-                return JSONResponse(
-                    {
-                        "message": "SMR Number has already been generated",
-                        "smrNumber": id,
-                    }
-                )
-
         sn = SmrNumber(map_sheet_id=map_sheet_id.value)
         smr_number = sn.generate_id_number(resource_instance_id)
 

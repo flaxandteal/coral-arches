@@ -16,6 +16,7 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
 
             Object.assign(self, reportUtils);
             self.sections = [
@@ -29,6 +30,7 @@ define([
                 {id: 'publication', title: 'Publication Details'},
                 {id: 'archive', title: 'Archive Holding'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
 
@@ -41,6 +43,12 @@ define([
                 ...self.defaultTableConfig,
                 columns: Array(4).fill(null)
             };
+
+            self.fullReportConfig = {
+                id: 'artefact',
+                label: 'Artefact',
+                ignoreNodes: []
+            }
 
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);

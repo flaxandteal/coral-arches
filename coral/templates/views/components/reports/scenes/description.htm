@@ -51,6 +51,60 @@
         <!-- /ko -->
     </div>
 </div>
+
+<!-- ko if: designationDescriptions().length -->
+<div class="aher-report-section">
+    <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.designationDescriptions)}, css: {'fa-angle-double-right': visible.designationDescriptions(), 'fa-angle-double-up': !visible.designationDescriptions()}" class="fa toggle"></i> {% trans "Designation Descriptions" %}</h2>
+    <span data-bind="if: cards.designationDescriptions && (!designationDescriptions().length || cards.designationDescriptions.cardinality == 'n')">
+        <a class="aher-report-a" data-bind="click: function(){add(cards.designationDescriptions)}"><i class="fa fa-mail-reply"></i> {% trans "Add Description" %}</a>
+    </span>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.designationDescriptions" class="aher-report-collapsible-container pad-lft">
+
+        <!-- ko ifnot: designationDescriptions().length -->
+        <div class="aher-nodata-note">No designation descriptions for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: designationDescriptions().length -->
+        <div class="aher-report-subsection" >
+            <div class="firstchild-container">
+                <div class="aher-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="aher-table-header">
+                                <th>{% trans "Content" %}</th>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Recommendation" %}</th>
+                                <th class="aher-table-control all"></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: designationDescriptions, dataTableOptions: designationDescriptionTableConfig }">
+                            <tr>
+                                <td data-bind="html: description"></td>
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: recommendation"></td>
+                                <td class="aher-table-control">
+                                    <div data-bind="if: $parent.cards && $parent.cards.designationDescriptions">
+                                        <a href="#" data-bind="click: function() {$parent.edit(tileid, $parent.cards.designationDescriptions)}" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }">
+                                            <i class="fa fa-mail-reply"></i>
+                                        </a>
+                                        <a href="#" data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.designationDescriptions)" onkeyup="if(event.which == 13 || event.keyCode == 13){ $(this).trigger('click'); }">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<!-- /ko -->
+
 <div class="aher-report-section" data-bind="visible: !!dataConfig.citation">
     <h2 class="aher-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.citation)}, css: {'fa-angle-double-right': visible.citation(), 'fa-angle-double-up': !visible.citation()}" class="fa toggle"></i> {% trans "Citations" %}</h2>
     <span data-bind="if: cards.citation && (!citations() || cards.citation.cardinality == 'n')">

@@ -1,0 +1,20 @@
+{
+    "pluginid": "56d9335d-af75-4385-b246-b0957c70a207",
+    "name": "Open Evaluation Meeting Workflow",
+    "icon": "fa fa-edit",
+    "component": "views/components/plugins/open-evaluation-meeting-workflow",
+    "componentname": "open-evaluation-meeting-workflow",
+    "config": {
+      "show": false,
+      "openableWorkflows": [
+        {
+          "slug": "evaluation-meeting-workflow",
+          "name": "Evaluation Meeting",
+          "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"],
+          "hideRecents": true
+        }
+      ]
+    },
+    "slug": "open-evaluation-meeting-workflow",
+    "sortorder": 0
+  }

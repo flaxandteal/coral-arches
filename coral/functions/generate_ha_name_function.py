@@ -94,6 +94,9 @@ class GenerateHertiageAssetNameFunction(BaseFunction):
         tile.save()
 
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         ha_ref_tile = self.get_ha_references_tile(resource_instance_id)
@@ -145,7 +148,7 @@ class GenerateHertiageAssetNameFunction(BaseFunction):
 
         # This is a many tile, currently just assuming the first and possibly only tile in there
         # has the correct name. In the future we might need to use currency to identify the correct name.
-        ha_name = None
+        ha_name = "Untitled (Please provide a name)"
         if len(ha_name_tiles):
             ha_name = self.get_localised_string_value(
                 ha_name_tiles[0], HA_NAMES_NAME_NODE_ID

@@ -151,9 +151,9 @@ At first, it is not possible to access the workflows and some other functionalit
 
 The first two commands imports the resources "Global Set" and "Global Group". It acts as a mock model that acted as a root in a tree-like model of the groups.
 ```
-make manage CMD="packages -o import_business_data -s coral/pkg/business_data/files/Root\ Set.json -ow overwrite"
+make manage CMD="packages -o import_business_data -s coral/pkg/business_data/Root\ Set.json -ow overwrite"
 
-make manage CMD="packages -o import_business_data -s coral/pkg/business_data/files/Root\ Group.json -ow overwrite"
+make manage CMD="packages -o import_business_data -s coral/pkg/business_data/Root\ Group.json -ow overwrite"
 ```
 
 

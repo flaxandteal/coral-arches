@@ -26,8 +26,24 @@ define([
 
             self.dataConfig = {
                 scientificDate: 'scientific date assignment',
+                issueReports: 'issue report',
                 artefactConditin: undefined
             }
+
+
+            self.issueReports = ko.observableArray();
+
+            this.issueReportsTableConfig = {
+                ...this.defaultTableConfig,
+                "columns": [
+                    { "width": "20%" },
+                    { "width": "20%" },
+                    { "width": "20%" },
+                    { "width": "20%" },
+                    { "width": "20%" },
+                   null,
+                ]
+            };
 
             self.cards = Object.assign({}, params.cards);
             self.edit = params.editTile || self.editTile;
@@ -37,7 +53,9 @@ define([
             self.artefactCondition = ko.observableArray();
             self.visible = {
                 scientificDate: ko.observable(true),
-                artefactCondition: ko.observable(true)
+                artefactCondition: ko.observable(true),
+                issueReports: ko.observable(true)
+
             }
             Object.assign(self.dataConfig, params.dataConfig || {});
 
@@ -96,9 +114,90 @@ define([
                         };
                     }));
                 }
+                
+                console.log('params.data(): ', params.data())
+                const issueReportsData = self.getRawNodeValue(params.data(), {
+                    testPaths: [
+                        ["issue report"]
+                    ]
+                });
+                console.log('issueReportsData: ', issueReportsData)
+                
+                if(issueReportsData) {
+                    issueReportsData.forEach((report) => {
+                      const issueReport = {};
+                      issueReport.componentDamageType = self.getNodeValue(
+                        report,
+                        'component damage type'
+                      );
+                      issueReport.damageType = self.getNodeValue(report, 'damage type');
+                      issueReport.notes = self.getNodeValue(
+                        report,
+                        'issue notes',
+                        'issue note'
+                      );
+                      issueReport.proposalActionType = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'action type'
+                      );
+                      issueReport.proposalApprover = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'approver',
+                        'approved by'
+                      );
+                      issueReport.proposalContactDetails = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'contact details',
+                        'contact details value'
+                      );
+                      issueReport.proposalIntendedDateStart = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'intended dates',
+                        'intended start date'
+                      );
+                      issueReport.proposalIntendedDateEnd = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'intended dates',
+                        'intended end date'
+                      );
+                      issueReport.proposalDate = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'proposal date',
+                        'proposal date value'
+                      );
+                      issueReport.proposalDescriptionType = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'proposal description type',
+                        '@display_value'
+                      );
+                      issueReport.proposalText = self.getNodeValue(
+                        report,
+                        'issue proposal',
+                        'proposal text'
+                      );
+                      issueReport.reference = self.getNodeValue(report, 'issue reference', 'reference number');
+                      issueReport.materialFabricDamage = self.getNodeValue(
+                        report,
+                        'material/fabric damage type'
+                      );
+                      issueReport.signOffDate = self.getNodeValue(report, 'sign off date', 'sign off date value');
+                      issueReport.statusType = self.getNodeValue(report, 'status type');
+                      issueReport.workFinishDate = self.getNodeValue(report, 'work finish date', 'work finish date value');
+                      self.issueReports.push(issueReport);
+                    });
+                    console.log('self.issueReports: ', self.issueReports());
+                }
+
+
 
             }
-
         },
         template: assessmentsReportTemplate
     });

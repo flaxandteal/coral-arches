@@ -19,34 +19,42 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
+
+            self.fullReportConfig = {
+                id: 'activity',
+                label: 'Activity',
+                ignoreNodes: []
+            };
 
             Object.assign(self, reportUtils);
             self.sections = [
+                {id: 'all', title: 'Full Report'},
                 {id: 'name', title: 'Names and Identifiers'},
-                {id: 'description', title: 'Descriptions and Citations'},
-                {id: 'classifications', title: 'Classifications and Dating'},
                 {id: 'location', title: 'Location Data'},
-                {id: 'protection', title: 'Designation and Protection Status'},
-                {id: 'archive', title: 'Archive Holding'},
-                {id: 'people', title: 'Associated People and Organizations'},
-                {id: 'resources', title: 'Associated Resources'},
-                {id: 'json', title: 'JSON'},
+                {id: 'related', title: 'Related Resources'},
+                // {id: 'description', title: 'Descriptions and Citations'},
+                // {id: 'classifications', title: 'Classifications and Dating'},
+                // {id: 'protection', title: 'Designation and Protection Status'},
+                // {id: 'archive', title: 'Archive Holding'},
+                // {id: 'people', title: 'Associated People and Organizations'},
+                // {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.activityArchive = ko.observableArray();
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('name');
+            self.activeSection = ko.observable('all');
 
             self.activityArchiveConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(5).fill(null)
-            }
+            };
 
             self.descriptionDataConfig = {
                 descriptions: 'activity descriptions',
                 citation: 'bibliographic source citation'
-            }
+            };
 
             self.nameDataConfig = {
                 name: 'activity',
@@ -68,7 +76,7 @@ define([
                 files: 'digital files',
                 assets: 'associated monuments and areas',
                 actors: undefined
-            }
+            };
 
             self.cards = {};
             self.nameCards = {};
@@ -81,9 +89,9 @@ define([
             self.summary = params.summary;
             self.visible = {
                 activityArchive: ko.observable(true)
-            }
+            };
 
-            const activityArchiveNode = self.getRawNodeValue(self.resource(), 'activity archive material')
+            const activityArchiveNode = self.getRawNodeValue(self.resource(), 'activity archive material');
             if(Array.isArray(activityArchiveNode)){
                 self.activityArchive(activityArchiveNode.map(node => {
                     const type = self.getNodeValue(node, 'archive material', 'archive source type');
@@ -106,7 +114,7 @@ define([
             if(params.report.cards){
                 const cards = params.report.cards;
 
-                self.cards = self.createCardDictionary(cards)
+                self.cards = self.createCardDictionary(cards);
 
                 Object.assign(self.cards, {
                     activityArchive: self.cards?.['activity archive material']
@@ -133,7 +141,7 @@ define([
                             namedLocations: 'named locations'
                         }
                     }
-                }
+                };
 
                 Object.assign(self.protectionCards, self.locationCards);
 
@@ -157,7 +165,7 @@ define([
                     archive: self.cards?.['associated archive objects'],
                     assets: self.cards?.['associated monuments and areas'],
                     files: self.cards?.['associated digital files'],
-                }
+                };
             }
 
         },

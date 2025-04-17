@@ -39,6 +39,9 @@ define([
                 areaAssignment: ko.observable(true),
                 landUse: ko.observable(true),
                 namedLocations: ko.observable(true),
+                buFusionId: ko.observable(true),
+                uniqueBuildingId: ko.observable(true),
+                lpFusionId: ko.observable(true),
             }
             Object.assign(self.dataConfig, params.dataConfig || {});
 
@@ -134,6 +137,11 @@ define([
             self.landUseClassification = ko.observableArray();
             self.namedLocations = ko.observableArray();
             self.locationRoot = undefined;
+
+            self.buFusionId = ko.observable();
+            self.uniqueBuildingId = ko.observable();
+            self.lpFusionId = ko.observable();
+
 
             // utitility function - checks whether at least one observable (or array object)
             // has a set value (used to determine whether a section is visible)
@@ -298,6 +306,35 @@ define([
                 }
 
             }
+
+            const buFusionIdData = self.getRawNodeValue(params.data(), {
+                testPaths: [
+                    ["bu fusion id"]
+                ]
+            });
+            if(buFusionIdData) {
+                self.buFusionId(self.getRawNodeValue(buFusionIdData, 'bu fusion id number', 'en', 'value'))
+            }
+
+            const uniqueBuildingIdData = self.getRawNodeValue(params.data(), {
+                testPaths: [
+                    ["unique building id"]
+                ]
+            });
+            if(uniqueBuildingIdData) {
+                self.uniqueBuildingId(self.getRawNodeValue(uniqueBuildingIdData, 'unique building id number', 'en', 'value'))
+            }
+
+            const lpFusionIdData = self.getRawNodeValue(params.data(), {
+                testPaths: [
+                    ["lp fusion id"]
+                ]
+            });
+            if(lpFusionIdData) {
+                self.lpFusionId(self.getRawNodeValue(lpFusionIdData, 'lp fusion id number', 'en', 'value'))
+            }
+
+
         },
         template: locationReportTemplate
     });

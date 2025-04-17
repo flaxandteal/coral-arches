@@ -11,6 +11,21 @@ define([
   function viewModel(params) {
     console.log('submit-merge params: ', params);
 
+    this.configKeys = ko.observable({ placeholder: 0 });
+
+    this.checkboxOptions = ko.observable([
+      {
+        text: '',
+        id: 'acknowledged'
+      }
+    ]);
+
+    this.selectedCheckboxOptions = ko.observableArray();
+
+    this.hasAcknowledgedProcess = ko.computed(() => {
+      return !!this.selectedCheckboxOptions().includes('acknowledged');
+    }, this);
+
     this.submitMerge = async () => {
       console.log('submitting merge');
 
@@ -37,7 +52,9 @@ define([
             'Merge process has STARTED',
             'You can now safely save and exit the workflow. Be aware that these two resources are in the process of merging which can take up to 5 minutes to complete.',
             null,
-            function () {}
+            function () {
+              window.window.location = arches.urls.plugin('init-workflow');
+            }
           )
         );
       } catch (e) {

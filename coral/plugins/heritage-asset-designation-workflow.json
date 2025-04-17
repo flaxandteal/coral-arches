@@ -19,10 +19,13 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "hiddenNodes": [
-                    "469af519-d78e-46e2-b0bb-281bcab211d0",
-                    "147187c1-3319-4f6c-9cec-0c295164df14"
+                    "e35da588-3f60-11ef-b90f-0242ac140006",
+                    "b892d1ca-3f60-11ef-b90f-0242ac140006",
+                    "161be232-3f61-11ef-b90f-0242ac140006",
+                    "7c87629a-3f60-11ef-b90f-0242ac140006"
                   ],
-                  "nodegroupid": "cbf55769-eaf1-4074-84d9-8a47310dfbc2",
+                  "labels": [["Display Name", "Heritage Asset"]],
+                  "nodegroupid": "423d8a10-3f60-11ef-b9b0-0242ac140006",
                   "semanticName": "System Reference Numbers",
                   "requiredParentTiles": [
                     {
@@ -34,6 +37,21 @@
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
                 "uniqueInstanceName": "d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "hiddenNodes": [
+                    "bcf507be-3ea8-11ef-8377-0242ac140006"
+                  ],
+                  "nodegroupid": "bcf507be-3ea8-11ef-8377-0242ac140006",
+                  "labels": [
+                    ["Generated SMR", "SMR Number"]
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "597b9423-7777-49fe-a5d6-b61edb4764e7"
               }
             ]
           }
@@ -61,7 +79,7 @@
       },
       {
         "name": "address-step",
-        "title": "Address",
+        "title": "Location Details",
         "required": false,
         "layoutSections": [
           {
@@ -76,7 +94,8 @@
                     "f6d2d1c3-77aa-472e-8f3d-225e2ed8641c",
                     "64cafd35-77a6-4c49-af74-d8221964f0c9",
                     "2fa946b5-5127-4bd2-b571-33515ef17788",
-                    "23dd50e9-e9ff-4717-8a34-86862513b8ba"
+                    "23dd50e9-e9ff-4717-8a34-86862513b8ba",
+                    "d16a913e-63fd-4361-ae9b-25965c731f82"
                   ],
                   "nodegroupid": "38dad285-9014-4c7b-ad81-b0562038ebf2",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
@@ -90,14 +109,50 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "02003ed4-b2b5-4fcc-847b-bc34e7c72ee3",
+                  "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
+                  "semanticName": "Council"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "73639516-ee29-4e81-8d45-d2349d4e02d4"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": ["425b6c5f-7b32-4cd6-8597-0f605cc8992b"],
                   "nodegroupid": "cc176b79-d9d3-4aab-bbd5-f604a73cae34",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
-                  "semanticName": "Localities/Administrative Areas"
+                  "semanticName": "Localities/Administrative Areas",
+                  "nodeOptions": {
+                    "1bdbf596-4f86-4494-9ba9-f82f5de54180": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "c2d5cbeb-ef24-4526-9bcf-520d17b85bce": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
                 "uniqueInstanceName": "9ae2ae7c-db34-4572-802c-cebdd4b2c002"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "e290279d-9857-441e-a511-50d9d4dc4210",
+                  "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
+                  "semanticName": "Irish Grid Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "fetch-latest-tile",
+                "uniqueInstanceName": "e290279d-926b-44ab-b585-c41976899d23"
               },
               {
                 "parameters": {
@@ -133,20 +188,8 @@
                   "semanticName": "Geometry"
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "fetch-latest-tile",
                 "uniqueInstanceName": "6a28726c-926b-44ab-b585-c41976899d23"
-              },
-              {
-                "parameters": {
-                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
-                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "e290279d-9857-441e-a511-50d9d4dc4210",
-                  "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
-                  "semanticName": "Irish Grid Reference"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card",
-                "uniqueInstanceName": "e290279d-926b-44ab-b585-c41976899d23"
               }
             ]
           }
@@ -165,7 +208,19 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "67712762-378e-11ef-9263-0242ac150006",
-                  "semanticName": "Designation Descriptions"
+                  "semanticName": "Designation Descriptions",
+                  "nodeOptions": {
+                    "677133f6-378e-11ef-9263-0242ac150006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    },
+                    "b2d6a190-378f-11ef-a167-0242ac150006": {
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
@@ -178,6 +233,7 @@
                   "nodegroupid": "2af35abc-9dee-4438-a127-c0fb69e63124",
                   "semanticName": "Designation and Protection Assignment",
                   "hiddenNodes": [
+                    "ba848524-c2ab-4d13-add0-2f1680391127",
                     "6f588050-8ead-4131-9ea5-495bf62f2443",
                     "d11ecd97-0a37-4e2b-90d3-35ec5bfcc8dc",
                     "2f1563f3-92a6-4985-8eb1-53b88e34f538",
@@ -188,12 +244,34 @@
                     "b850af26-7f33-4b26-a7e2-daa15308c56c",
                     "482d0935-2330-491a-aa41-d0cc3293b568",
                     "15b164d5-9509-4d4c-a0b7-e4b430ba5d31"
-
-                ]
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
                 "uniqueInstanceName": "designation-protection-type"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "94c6fd66-19fa-4261-8728-35a67a88b96b",
+                  "labels": [["CM Reference", "Records NI"]],
+                  "semanticName": "Record NI"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card-util",
+                "uniqueInstanceName": "4ae2af75-3829-4633-9b69-0242ac180006"
+              },
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "010db21a-0eda-11ef-aa66-0242ac140006",
+                  "semanticName": "HMC Reference"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "4ae2af75-3829-4633-aa66-0242ac140006"
               }
             ]
           }
@@ -253,6 +331,46 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
+        "name": "letters-step",
+        "title": "Letters",
+        "required": false,
+        "saveWithoutProgressing": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "25f41196-ad90-11ef-a1bd-0242ac140006",
+                    "d17bbda2-ad90-11ef-a1bd-0242ac140006"
+                  ],
+                  "nodegroupid": "fc7da674-ad8f-11ef-8e0a-0242ac140006",
+                  "semanticName": "Correspondence",
+                  "letterMetatype": "d17bbda2-ad90-11ef-a1bd-0242ac140006",
+                  "letterTypeNode": "51f2fcd0-ad90-11ef-a1bd-0242ac140006",
+                  "letterResourceNode": "25f41196-ad90-11ef-a1bd-0242ac140006",
+                  "config": {
+                    "expand": ["owner"],
+                    "special": {
+                      "today": "today",
+                      "user": "user"
+                    }
+                  }
+                },
+                "noTileSidebar": true,
+                "tilesManaged": "many",
+                "componentName": "file-template",
+                "uniqueInstanceName": "letter-template"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": ["save"]
+      },
+      {
         "name": "approvals-step",
         "title": "Approvals",
         "required": false,
@@ -264,13 +382,73 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "nodegroupid": "3c51740c-dbd0-11ee-8835-0242ac120006",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "99605e36-3924-11ef-82af-0242ac150006"
-                  ],
-                  "semanticName": "Approvals"
+                  "hiddenNodes": ["99605e36-3924-11ef-82af-0242ac150006"],
+                  "semanticName": "Approvals",
+                  "nodeOptions": {
+                    "3b267ffe-dbd1-11ee-b0db-0242ac120006": {
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "1ce90bd5-4063-4984-931a-cc971414d7db",
+                        "7e044ca4-96cd-4550-8f0c-a2c860f99f6b",
+                        "753770b1-5250-4268-8882-4828a127b0e7"
+                      ]
+                    },
+                    "ad22dad6-dbd0-11ee-b0db-0242ac120006": {
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "1ce90bd5-4063-4984-931a-cc971414d7db",
+                        "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                      ]
+                    },
+                    "36b51a2b-baf3-4dc4-b714-08bc58fcaac8": {
+                       "config":{
+                         "maxDate":"today"
+                       }
+                     },
+                    "36b51a2b-2fad-45fb-9e93-088016aa0fc9": {
+                       "config":{
+                         "maxDate":"today"
+                       }
+                     },
+                    "0cd0998c-dbd6-11ee-b0db-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "af5fd406-dbd1-11ee-b0db-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "cffa2fc8-3797-11ef-a167-0242ac150006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "d70da550-3798-11ef-a167-0242ac150006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "a20d4124-3795-11ef-9263-0242ac150006": {
+                      "config":{
+                        "maxDate":"today",
+                        "label": "Owner Notified Date"
+                      }
+                    },
+                    "59935456-379a-11ef-9263-0242ac150006": {
+                      "label": "Director Sign Off Date",
+                      "config":{
+                        "maxDate":"today",
+                        "label": "Director Sign Off Date"
+                      }
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "start-remap-and-merge",
+                "componentName": "default-card",
                 "uniqueInstanceName": "78965eb2-7064-47aa-a65b-cecc9f05884f"
               }
             ]
@@ -279,13 +457,34 @@
         "workflowstepclass": "workflow-form-component"
       },
       {
-        "name": "letters-step",
-        "title": "Letters",
+        "name": "apply-revision",
+        "title": "Apply Revision",
         "required": false,
         "saveWithoutProgressing": true,
+        "informationboxdata": {
+          "heading": "WARNING: Process Description",
+          "text": "To revise a Heritage Asset a copy is created. This copy needs to be reconciled back into the original Heritage Asset to apply the updates. Once the \"Apply Revision\" process has started it cannot be undone until it is complete. Clicking the button will exit the workflow and delete the Revision Heritage Asset."
+        },
         "layoutSections": [
           {
-            "componentConfigs": []
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "approval-summary",
+                "uniqueInstanceName": "93354680-c0b9-43a5-8f74-8b5a1c00c06d"
+              },
+              {
+                "parameters": {
+                  "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "none",
+                "componentName": "start-remap-and-merge",
+                "uniqueInstanceName": "ccd9d680-ed67-4981-89d9-064ee13ca19d"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component"
