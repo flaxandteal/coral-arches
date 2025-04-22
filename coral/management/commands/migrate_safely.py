@@ -499,29 +499,39 @@ class TransformData():
     return tile_json
   
   def concept_to_concept(self, tile_json, node, mapping):
-        current_value = None
+        current_value = []
         if tile_json['data'][node]:
-          current_value = ConceptValue().get(tile_json['data'][node]).conceptid
-
-        if current_value in mapping:
-            mapping_value = mapping[current_value]
-        elif 'default' in mapping:
-            mapping_value = mapping['default']
-        else:
-            raise KeyError(f"The node {current_value} was not found in the mapping file, and no 'default' key exists.")
-
-        try:
-          if mapping_value:
-              new_value = Value.objects.filter(concept_id=mapping_value, valuetype='prefLabel').first().valueid
+          if isinstance(tile_json['data'][node], list):
+            for item in tile_json['data'][node]:
+               concept_value = ConceptValue().get(item).conceptid
+               current_value.append(concept_value)
           else:
-              # Allows for a null value in the mapping
-              new_value = mapping_value
+            current_value.append(ConceptValue().get(tile_json['data'][node]).conceptid)
 
-        except Exception as e:
-            raise ValueError(f"The concept {mapping_value} was not found. Have you imported your new concept and collection?") from e
-        
-        if new_value:
-          tile_json['data'][node] = str(new_value)
+        updated_values = []
+        for value in current_value:
+          if value in mapping:
+              mapping_value = mapping[value]
+          elif 'default' in mapping:
+              mapping_value = mapping['default']
+          else:
+              raise KeyError(f"The node {current_value} was not found in the mapping file, and no 'default' key exists.")
+
+          try:
+            if mapping_value:
+                new_value = Value.objects.filter(concept_id=mapping_value, valuetype='prefLabel').first().valueid
+            else:
+                # Allows for a null value in the mapping
+                new_value = mapping_value
+
+          except Exception as e:
+              raise ValueError(f"The concept {mapping_value} was not found. Have you imported your new concept and collection?") from e
+          updated_values.append(str(new_value))
+
+        if len(updated_values) > 1:
+          tile_json['data'][node] = updated_values # this will update the list of concept values
+        elif len(updated_values) == 1:
+          tile_json['data'][node] = updated_values[0] # allows for a single conept value 
         else:
           tile_json['data'][node] = None
       
