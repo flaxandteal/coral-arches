@@ -251,9 +251,12 @@ class ScanForDataRisks():
             if self.mapping:
               mapping = next(value for key, value in self.mapping.items() if key == node)
             else:
-              answer = input("No mapping has been provided. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
+              answer = input(f"No mapping has been provided for {node}. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
               if answer.lower() == 'y':
-                 mapping = { 'default': None }
+                if self.mapping is None:
+                    self.mapping = {}
+                self.mapping[node] = { 'default': None }
+                mapping = { 'default': None }
           except Exception as e:
             raise ValueError(f"No mapping could be found in the file for the node {node}") from e
           TransformData().concept_to_concept(tile_json, node, mapping)
