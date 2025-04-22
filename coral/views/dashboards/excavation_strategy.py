@@ -2,6 +2,7 @@ from arches.app.models.tile import Resource
 from datetime import datetime
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
+import copy
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
 EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
@@ -9,59 +10,68 @@ EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='createdat', sort_order='desc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceinstance__createdtime', sort_order='desc', filter='All'):
         from arches_orm.models import License
-        utilities = Utilities()
 
-        sort_options = ['createdat', 'validuntil']
+        licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
+        queryBuilder = License.where(**licencesDefaultWhereConditions)
 
-        licences_all = License.all()
-
-        licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
-        if filter != 'all':
-            # Checks the report status against the filter value
-            licences = [l for l in licences if self.is_valid_license(l, filter)]
+        def apply_filters(queryBuilder):
+            if filter == 'All':
+                return queryBuilder;
+    
+            return queryBuilder.where(report_classification_type=filter);
         
-        sort_nodes = {
-            'validuntildate': lambda resource: resource.decision[0].licence_valid_timespan.valid_until_date,
-            'createdat': lambda resource: resource._.resource.createdtime
-        }
+        def apply_order_by(queryBuilder):
+            direction = '-'
+            if (sort_order == 'desc'): direction = ''
 
-        # Sort nodes allow us to access the model node value for sorting
-        sorted_resources = utilities.sort_resources_date(licences, sort_nodes, sort_by, sort_order)
+            return queryBuilder.order_by(f'{direction}{sort_by}')
 
-        # Get total number of resources
-        total_resources = len(licences)
+        def get_paginated_resources(queryBuilder):
+            copyQueryBuilder = copy.deepcopy(queryBuilder)
+            start_index = (page -1) * page_size
+            end_index = (page * page_size)
+            return copyQueryBuilder.offset(start_index, end_index)
+    
+        def get_count(queryBuilder):
+            copyQueryBuilder = copy.deepcopy(queryBuilder)
+            return copyQueryBuilder.count()
+        
+        def build_tasks(resources):
+            tasks = []
 
-        # Build data only for the current page
-        start_index = (page -1) * page_size
-        end_index = (page * page_size)
-        indexed_resources = sorted_resources[start_index:end_index]
+            for resource in resources:
+                task = self.build_data(resource, groupId)
+                tasks.append(task)
 
-        tasks = []
+            return tasks
 
-        for resource in indexed_resources:
-            task = self.build_data(resource, groupId)
-            tasks.append(task)
+        queryBuilder = apply_filters(queryBuilder)
+        queryBuilder = apply_order_by(queryBuilder)
 
+        resources = get_paginated_resources(queryBuilder)
+        total_resources = get_count(queryBuilder)
+        
+        tasks = build_tasks(resources)
         counters = []
 
         return tasks, total_resources, counters
 
     def get_sort_options(self):
         return [
-            {'id': 'createdat', 'name': 'Created At'}, 
-            {'id': 'validuntildate', 'name': 'Valid Until'}
+            {'id': 'resourceinstance__createdtime', 'name': 'Created At'}, 
+            {'id': 'valid_until_date', 'name': 'Valid Until'}
         ]
     
     def get_filter_options(self, groupId=None):
         return [
-            {'id': 'all', 'name': 'All'},
-            {'id': 'final', 'name': 'Final'}, 
-            {'id': 'preliminary', 'name': 'Preliminary'}, 
-            {'id': 'interim', 'name': 'Interim'}, 
-            {'id': 'unclassified', 'name': 'Unclassified'}, 
-            {'id': 'summary', 'name': 'Summary'}
+            {'id': 'All', 'name': 'All'},
+            {'id': 'Final', 'name': 'Final'}, 
+            {'id': 'Preliminary', 'name': 'Preliminary'}, 
+            {'id': 'Interim', 'name': 'Interim'}, 
+            {'id': 'Unclassified', 'name': 'Unclassified'}, 
+            {'id': 'Summary', 'name': 'Summary'}
         ]
     
     def build_data(self, licence, groupId):
@@ -116,11 +126,11 @@ class ExcavationTaskStrategy(TaskStrategy):
         }
         return resource_data
     
-    def is_valid_license(self, licence, filter):
-        from arches_orm.models import License
-        utilities = Utilities()
-        classification_type = utilities.node_check(lambda:licence.application_details.report_classification_type)
-        if not classification_type:
-            return False
-        string_value = utilities.domain_value_string_lookup(License, 'report_classification_type', classification_type)
-        return string_value.lower() == filter
+    # def is_valid_license(self, licence, filter):
+    #     from arches_orm.models import License
+    #     utilities = Utilities()
+    #     classification_type = utilities.node_check(lambda:licence.application_details.report_classification_type)
+    #     if not classification_type:
+    #         return False
+    #     string_value = utilities.domain_value_string_lookup(License, 'report_classification_type', classification_type)
+    #     return string_value.lower() == filter
