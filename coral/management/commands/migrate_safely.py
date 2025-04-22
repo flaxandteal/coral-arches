@@ -599,7 +599,7 @@ class GroupTransform():
                 if self.MEMBER_NODE in tile["data"]:
                     if tile["data"][self.MEMBER_NODE]: 
                         if len(new_members) > 0:
-                            match = next((item for item in new_members if item['groupId'] == resource['resourceinstance']["resourceinstanceid"]), None)
+                            match = [item['value'] for item in new_members if item['groupId'] == resource['resourceinstance']["resourceinstanceid"]]
                             if match:
                                 tile["data"][self.MEMBER_NODE].append(match['value'])
                                 
