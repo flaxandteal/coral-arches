@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Concept rdf:about="http://arches:8000/f98e395a-1e50-1e47-706f-af9efcb42a24">
+    <skos:prefLabel xml:lang="en">{"id": "fd044285-9b19-42be-4bf6-9d2f487a0e6b", "value": "Rarity"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b">
+        <skos:prefLabel xml:lang="en">{"id": "0be2a236-bbd5-33aa-e514-e7dfe696c149", "value": "Scheduling Criteria"}</skos:prefLabel>
+        <dcterms:title xml:lang="en">{"id": "633185eb-8a91-b848-0e4b-8b551a789484", "value": "Scheduling Criteria"}</dcterms:title>
+        <dcterms:identifier xml:lang="en">{"id": "8040658c-a2d3-b8ce-10ab-386dab61fdbc", "value": "http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"}</dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/15af41b8-ca2e-d35d-84b8-51b40493a0b6"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/f98e395a-1e50-1e47-706f-af9efcb42a24"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/ec969c65-d18b-5506-b6a2-a42ab728f2d6"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/f5e8a9fe-a5b6-4d27-dc7d-01551dd81a64"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/08614c3c-d3bb-3d1b-1922-a33c2ff43bf1"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/4b59d9ce-0a8d-668e-3d41-72ed3f42efa3"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/65bbf7ea-348b-10d4-df7a-d290c1ff9c48"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/e5324cd0-9db1-b817-bace-608efa1ac036"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/ec969c65-d18b-5506-b6a2-a42ab728f2d6">
+    <skos:prefLabel xml:lang="en">{"id": "3272f276-8080-4e18-6d6a-2cd41b5db8cc", "value": "Documentation"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/15af41b8-ca2e-d35d-84b8-51b40493a0b6">
+    <skos:prefLabel xml:lang="en">{"id": "79aa85fc-0f88-3115-f1b2-7450c27f20d2", "value": "Period"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/f5e8a9fe-a5b6-4d27-dc7d-01551dd81a64">
+    <skos:prefLabel xml:lang="en">{"id": "1edb0a92-94d8-be3f-4910-4e6a21159df4", "value": "Group value"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/e5324cd0-9db1-b817-bace-608efa1ac036">
+    <skos:prefLabel xml:lang="en">{"id": "9cb88418-64fb-91f6-0db6-53012415bc82", "value": "Fragility / Vulnerability"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/4b59d9ce-0a8d-668e-3d41-72ed3f42efa3">
+    <skos:prefLabel xml:lang="en">{"id": "deb3e514-03e8-12d7-10e3-59d2464eebbb", "value": "Diversity"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/08614c3c-d3bb-3d1b-1922-a33c2ff43bf1">
+    <skos:prefLabel xml:lang="en">{"id": "1ba14d08-a9ac-ddf0-79ea-a963428ce9f4", "value": "Survival / Condition"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/65bbf7ea-348b-10d4-df7a-d290c1ff9c48">
+    <skos:prefLabel xml:lang="en">{"id": "5e193f33-8c95-f182-2b06-54561d99fca0", "value": "Potential"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/b1b6b577-468d-06b4-4542-a9f8ba6d996b"/>
+  </skos:Concept>
+</rdf:RDF>

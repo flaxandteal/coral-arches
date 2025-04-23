@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:Collection rdf:about="http://arches:8000/59a0a035-bbd0-4e5e-9528-862790edc610">
+    <skos:prefLabel xml:lang="en">{"id": "2a87724d-4361-218e-3b6d-fd895e9b566a", "value": "Administrative Area Type"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/7adf9ae8-e391-411a-9438-3c1f18b7fb92"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/efaf6911-f907-434e-8964-be372953e32d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/cbf31401-691b-4267-a380-d7de452f8b0b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/134002f4-c7ef-4d87-a251-2db395f91159"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2f88e8b7-3d99-188a-39ec-b3798e785294"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ff2aaa01-13c6-4a85-9f4f-b0e2aec6f64c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/331d7a64-9c68-04ce-c5f3-a9ca5a2f004c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/44a30cb3-e168-46f4-8398-331344daff2b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/abab2708-50f8-0c11-8ebd-8bc98ef6f6f1"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3428b28c-0538-839e-f158-03d5de2046ff"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/94f5c1a1-dab2-81c9-024a-2090c12526b2"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/8a85128b-4cf5-0013-f837-14581bd6bced"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5efb8a33-7a2f-753f-70d7-12b17ec7d97d"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

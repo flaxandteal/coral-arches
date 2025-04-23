@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/1d449e67-ad39-be38-c675-253e6925c8e1">
+    <skos:prefLabel xml:lang="en">{"id": "b8a96eeb-085e-c2c7-ecae-7f5a085a1d45", "value": "NIHED Mitigation Type Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "50f0347a-9bd0-457c-e03c-7533b33b4472", "value": "NIHED Mitigation Type Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "5de065db-6cba-2bfc-5493-5457232a1bcf", "value": "http://arches:8000/1d449e67-ad39-be38-c675-253e6925c8e1"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/34f53df8-b80c-eda9-4df5-f9e3f54de1e7">
+        <skos:prefLabel xml:lang="en">{"id": "6c552ec0-2590-187f-1241-15eed3a5daee", "value": "Grant Amount per FY"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1d449e67-ad39-be38-c675-253e6925c8e1"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/1d309346-e6c9-2b3b-f553-adfd2f2b782b">
+        <skos:prefLabel xml:lang="en">{"id": "7a53934a-4649-2acc-7691-397b8c75a6f5", "value": "Grant paid"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1d449e67-ad39-be38-c675-253e6925c8e1"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

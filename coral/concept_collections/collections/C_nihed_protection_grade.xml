@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:Collection rdf:about="http://arches:8000/dcf57269-152d-11f0-8098-cad3ba7ecac2">
+    <skos:prefLabel xml:lang="en">{"id": "83f69bc7-b5f9-5bbc-65b9-a2018cbcbde8", "value": "NIHED Protection Grade"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/a79351a1-67dd-7789-ff50-f945670e6d8c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3ebd5697-e19d-454b-845e-fd552b5f0aa4"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4d4d77e6-8e7b-98fd-b995-f43c603cf571"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/071e73f8-0176-f1ed-6272-8fe87bb823da"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4cdae2de-b5b1-af18-7914-9588bef6209a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/6fd017cb-9c87-e5c0-e2cd-a5d3b2fdaaf2"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/892b21d3-5b95-e30e-9563-476fe63403cf"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2d339321-b2c0-37cf-4be1-4c945c4c7118"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/292d9e9b-2e4c-b80b-a97f-53ff5fbd732e"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/35fb8f55-70a2-6117-9300-cd2a08bdef05"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/885ca507-7850-6ce3-962a-7661c639a822">
+    <skos:prefLabel xml:lang="en">{"id": "f85323c0-c4a7-3604-c03b-a39e470c7890", "value": "NIHED Place Type Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "e667396c-47e4-1513-7896-22e58d469d74", "value": "NIHED Place Type Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "4782aed2-c081-11cc-4cb8-0bcb7c3b9ff4", "value": "http://arches:8000/885ca507-7850-6ce3-962a-7661c639a822"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/40ad6c88-aeb6-69d7-7fc8-9f701d97721c">
+        <skos:prefLabel xml:lang="en">{"id": "9b3961e4-f18f-d592-cf94-098a2ed2c724", "value": "AAP"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/885ca507-7850-6ce3-962a-7661c639a822"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

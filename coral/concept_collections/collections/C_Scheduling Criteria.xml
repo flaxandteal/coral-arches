@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Collection rdf:about="http://arches:8000/95eceaf7-07ad-8a34-f0ac-fca389b4e7ad">
+    <skos:prefLabel xml:lang="en">{"id": "2705bb29-0399-8e7e-4a9b-f980b2dd80a5", "value": "Scheduling Criteria"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/15af41b8-ca2e-d35d-84b8-51b40493a0b6"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f98e395a-1e50-1e47-706f-af9efcb42a24"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ec969c65-d18b-5506-b6a2-a42ab728f2d6"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f5e8a9fe-a5b6-4d27-dc7d-01551dd81a64"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/08614c3c-d3bb-3d1b-1922-a33c2ff43bf1"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4b59d9ce-0a8d-668e-3d41-72ed3f42efa3"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/65bbf7ea-348b-10d4-df7a-d290c1ff9c48"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e5324cd0-9db1-b817-bace-608efa1ac036"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

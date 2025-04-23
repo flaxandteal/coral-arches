@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:Collection rdf:about="http://arches:8000/ba699269-4399-5d71-1d79-5e81d82c4ebb">
+    <skos:prefLabel xml:lang="en">{"id": "b6def2cc-3924-369f-018c-babfd73d39ae", "value": "NIHED Agriculture and Forestry Type"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/109ee5f6-ea90-cb37-8093-0d4469328f38"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/13ee446b-5af4-848a-e07a-f8eb3fca30a0"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/c56909d9-968f-0d12-d78d-8d7742c9d1f9"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e1d81688-0fa8-98d4-16c0-4b70b6addb11"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/851e3cd8-150f-d758-7fde-17f89e0d54ec"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

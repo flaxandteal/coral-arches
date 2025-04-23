@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/e2413443-3e43-000d-3bed-e074c0e6d2fa">
+    <skos:prefLabel xml:lang="en">{"id": "bea855ca-f9c9-a4aa-ae09-7c4ae7e4744a", "value": "Letters Agriculture and Forestry"}</skos:prefLabel>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/a01fb4b1-b443-f59b-e086-dd647de66fde">
+        <skos:prefLabel xml:lang="en">{"id": "19de2e95-a30f-af9e-0fa5-eef8a01394c7", "value": "Forestry Consultation Response"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/e2413443-3e43-000d-3bed-e074c0e6d2fa"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/f9bb9268-810a-ceff-754d-a18e92c9d8a1">
+        <skos:prefLabel xml:lang="en">{"id": "1f5101cf-ab38-0d1c-7905-59a7abc16138", "value": "DAERA Consultation Response"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/e2413443-3e43-000d-3bed-e074c0e6d2fa"/>
+      </skos:Concept>
+    </skos:narrower>
+    <dcterms:title xml:lang="en">{"id": "cb2ec206-466e-9542-a5c0-4d00ed88c32b", "value": "Letters Agriculture and Forestry"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "27311b64-b4bd-e871-d284-9c8a65720139", "value": "http://arches:8000/e2413443-3e43-000d-3bed-e074c0e6d2fa"}</dcterms:identifier>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/a01fb4b1-b443-f59b-e086-dd647de66fde"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/f9bb9268-810a-ceff-754d-a18e92c9d8a1"/>
+  </skos:ConceptScheme>
+</rdf:RDF>

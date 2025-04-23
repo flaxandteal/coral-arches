@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:Concept rdf:about="http://arches:8000/3a963a0d-bb86-91c8-ab6a-22cd18263557">
+    <skos:prefLabel xml:lang="en">{"id": "477e4922-79a9-262d-eec5-3d752d2ecd03", "value": "Turf Cutting"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f">
+        <skos:prefLabel xml:lang="en">{"id": "10268650-f67f-3a86-869b-99c52300e24b", "value": "NIHED Threats Extension"}</skos:prefLabel>
+        <dcterms:title xml:lang="en">{"id": "0e0916f1-fdac-a77d-5d3a-59ddd40c0162", "value": "NIHED Threats Extension"}</dcterms:title>
+        <dcterms:identifier xml:lang="en">{"id": "64e2fd69-452a-6497-3b2f-2db0c7564f41", "value": "http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"}</dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/3df6dcc0-53c2-44e2-ba96-8dc6d441314e"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/3df6dcc0-53c2-44e2-ba96-8dc6d441314e">
+    <skos:prefLabel xml:lang="en">{"id": "a99359cb-8dfd-e5d7-933a-bf3d4b6b7df7", "value": "Human Activity"}</skos:prefLabel>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/89441a50-30a0-4c7c-a4f2-0cfd6193f618">
+        <skos:prefLabel xml:lang="en">{"id": "ef07697e-ac28-2834-ce60-b96640319b56", "value": "Agricultural Requirements"}</skos:prefLabel>
+        <skos:narrower rdf:resource="http://arches:8000/e54ac0bb-b982-c5a5-7fb3-3b50737bc8ca"/>
+        <skos:narrower rdf:resource="http://arches:8000/f9fd07e5-0c94-8f04-bf56-dc9a47d93c4a"/>
+        <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/3afe0eed-23fa-4425-fda0-1997414eb6a0">
+        <skos:prefLabel xml:lang="en">{"id": "7c8f077f-aa13-b7ea-fe8e-18afc98d03f6", "value": "Development"}</skos:prefLabel>
+        <skos:narrower rdf:resource="http://arches:8000/5b4b4d0f-d205-e93b-5c34-67bd0c3d0c22"/>
+        <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/f0ef6fa1-06a5-6800-6878-2fe9526ed6bc">
+        <skos:prefLabel xml:lang="en">{"id": "baf1417c-3b0c-9c66-4bd4-528e242b5806", "value": "Public Utilities"}</skos:prefLabel>
+        <skos:narrower rdf:resource="http://arches:8000/99f3c371-0caa-4e7f-a08e-2bdf7737c7ff"/>
+        <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="http://arches:8000/3a963a0d-bb86-91c8-ab6a-22cd18263557"/>
+    <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/e14f5e72-3e7c-15ae-cd99-2cda776a6efc">
+    <skos:prefLabel xml:lang="en">{"id": "15a6f966-cf86-5199-27d0-349552d7f2db", "value": "Tree Planting"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/a8b8875a-5fad-3226-c03d-5ce49c04cd32">
+    <skos:prefLabel xml:lang="en">{"id": "ab52a4c3-9dc5-e243-b4eb-457aa5a4544c", "value": "Clearance"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/99f3c371-0caa-4e7f-a08e-2bdf7737c7ff">
+    <skos:prefLabel xml:lang="en">{"id": "a6a574e2-f1df-a941-ac70-cdf1d720751b", "value": "Reservoir"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/e54ac0bb-b982-c5a5-7fb3-3b50737bc8ca">
+    <skos:prefLabel xml:lang="en">{"id": "3092b4bf-830f-4e42-cf3d-8c348f90d1de", "value": "Field Improvement"}</skos:prefLabel>
+    <skos:narrower rdf:resource="http://arches:8000/a8b8875a-5fad-3226-c03d-5ce49c04cd32"/>
+    <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/5b4b4d0f-d205-e93b-5c34-67bd0c3d0c22">
+    <skos:prefLabel xml:lang="en">{"id": "8d3eba79-4eef-5cc6-763a-47ca223423fd", "value": "Building"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/f9fd07e5-0c94-8f04-bf56-dc9a47d93c4a">
+    <skos:prefLabel xml:lang="en">{"id": "27dcc153-6e79-a276-a170-0dccc9db35ac", "value": "Cultivation"}</skos:prefLabel>
+    <skos:narrower rdf:resource="http://arches:8000/e14f5e72-3e7c-15ae-cd99-2cda776a6efc"/>
+    <skos:inScheme rdf:resource="http://arches:8000/d32a4173-b8e0-e426-9259-aa731219c29f"/>
+  </skos:Concept>
+</rdf:RDF>

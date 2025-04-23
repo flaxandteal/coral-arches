@@ -1,0 +1,339 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Collection rdf:about="http://arches:8000/06bbe5d2-93e8-43df-a4f4-5667648fd2ef">
+    <skos:prefLabel xml:lang="en">{"id": "95480b13-1261-13ce-3c4c-2a9b1d30ad3a", "value": "Cross Reference Source"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2ce67a26-0902-494f-9bd1-b29c2ac6cbe3"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2893ddbc-fd9b-45eb-b313-4ca17036052c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/fda2e567-f30e-47dc-8876-5ff9075a3339">
+        <skos:member rdf:resource="http://arches:8000/6d74bb65-524d-442f-8428-c399e4a4cd13"/>
+      </skos:Concept>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/6d74bb65-524d-442f-8428-c399e4a4cd13"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/86809922-db8c-4a54-a229-b72b81f3a8fc"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/dfdcf814-1aff-4ffc-9ebc-6a24dc0a1f65"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/cacf5181-245a-4246-bfde-2d2a4515227a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/172dbe72-e0b4-44ee-88f6-bcc35c2462c8"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2647bdbf-20d9-4747-bcc8-de4daf11baa1"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/edffa063-c620-46e6-a689-d2b27bf4364d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/0a62292d-03a4-448c-a9a0-725474511f4f"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ac4102e3-b615-4024-ad8d-ee601771dc26"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e24e352a-133d-4841-853f-16311ebd755d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/a6590eb8-d4d9-4857-add4-4b561b427f93"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ae047870-ccbf-44a9-89ab-404aebae276c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/c8b1683f-48af-4478-afbf-36c59ae67616"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/cffffe0c-ba9a-4f84-a561-abbc539ce849"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/72cb1d9c-1122-42f4-b8e4-855bbf6ee01c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/d08dde1e-e781-4d8d-a9d2-f47d9df9c127"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/8981d6d1-33a6-4277-b79b-277f1a3ea584"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ca6bff31-f90f-4596-afd4-fdaec50069d4"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/0e2eee02-9005-4845-851c-597a75e46ec3"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2b1e0f40-1e1a-4414-b848-a6c3fbafd690"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/a1371463-d9c1-4acd-8cba-97698a077e68"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e388f010-ae3d-489b-835a-f31569c41615"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5f2d89f3-d7ca-4ed4-ac9c-01aa28a5cc56"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e5059731-9094-41f5-ab06-23afeb438386"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/532a9265-f9d0-4e2c-aa0b-7d7ed14c7d8e"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3cd4d5f9-5ed8-4b5c-944c-5023abf32f6c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/9461a0d3-94ae-4fbc-a34a-254af20fe31b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/7e054249-8959-448b-b89e-a74cca21e300"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/b8f1cb2c-9c6d-4230-b3ad-5b3db1c8de9f"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e6367c0d-ac26-43f9-9a34-68ef9422d7b3"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3fc2c972-b72c-48b4-9b5c-bd0c678ee9d8"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/abb6195e-f981-4aef-a913-8e03202c806d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2cc10f9b-e6fa-467c-9679-719c6bf84610"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/198fff9a-5305-4a05-b10f-1c4edb970993"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2e3c1415-a222-43f5-a143-c5ad005d83fe"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4cc20d19-46ff-46ad-a671-122f44269393"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4b703f39-e19f-4ad2-9650-b3874bb460a4"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/669799b8-4842-4b5a-9184-cac00cf6c6e2"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/1aea0bc2-fdd1-4b30-a57c-a074a283756c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/de0cb737-512c-402b-9efe-f0ea35c63d7a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/fd5a1771-4434-4b2c-a40d-0b7bf8687171">
+        <skos:member rdf:resource="http://arches:8000/8de65fbe-737d-4289-8968-12c6e3d1edc8"/>
+        <skos:member rdf:resource="http://arches:8000/caff1334-5234-4a43-85f5-4ab68c6f8d5a"/>
+        <skos:member rdf:resource="http://arches:8000/a3a1abe1-9041-4972-b3e8-933ff176b5a0"/>
+      </skos:Concept>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/8de65fbe-737d-4289-8968-12c6e3d1edc8"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/caff1334-5234-4a43-85f5-4ab68c6f8d5a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/a3a1abe1-9041-4972-b3e8-933ff176b5a0"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/b3612342-5b03-49dc-b548-0f4297d8234b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ee9bffce-e85e-4ece-afb7-dc8ca41fc263"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/755ebf0b-b944-4639-aa15-3a1cb29cd24b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/fa7a9164-2a73-4e98-be9e-3f849d7d2a84"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e050905f-7e2b-47e2-b81b-1c9011672969"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/faf080d8-d73a-4bc1-a8c1-a2fa7bc920d6"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/bd9dadea-99db-4781-a382-9a15113b4c42"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e69c8d3c-2be6-4910-a623-fa4a8dc8f367"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/08d11569-f3bc-430d-a382-5084a845c5b9"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/20185760-93c3-4256-851b-be31a25c9795"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2eecb593-91d8-4164-97f0-1271ff8f1d6c"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/90114628-61e0-4a84-94da-bb41b83e8d91">
+        <skos:member rdf:resource="http://arches:8000/85932da7-2078-485c-937f-d6566f8c6071"/>
+        <skos:member rdf:resource="http://arches:8000/74b2cff4-295c-470a-a227-06f173956c50"/>
+        <skos:member rdf:resource="http://arches:8000/89dd5328-525d-4874-9dde-f6da4c794652"/>
+      </skos:Concept>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/85932da7-2078-485c-937f-d6566f8c6071"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/74b2cff4-295c-470a-a227-06f173956c50"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/89dd5328-525d-4874-9dde-f6da4c794652"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4116a842-f7d6-4c87-b46b-4b2d47b1a0d5"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/622a252d-700c-46fc-a310-fdc782634d6d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e9439f23-782f-4e76-96bd-9470c602f130"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/39cdbf89-37ae-4e70-a431-a7f0ab9ecc41"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/07c37454-bf75-4895-8866-418df018a7ba"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/a11dd988-4eac-46e6-aad7-83fd31b8bb92"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/446a20db-d38a-460c-be00-5a1dd90bd7e6"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5f2b9cd3-8cdb-452d-a039-fe53cd52b92a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/8ab6cbfc-2fcf-4aa6-8dd0-082edcd4d846"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/d1ac5ef1-1229-4abe-9c63-8d18785970cf"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/002dc2f1-9051-4ed1-a4ca-659338133d1a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/e3cd7c71-b840-4821-9934-3b9300637477"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/b255ff7a-ea37-4bb7-b33a-68f482e13725"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f5eb7dc8-5825-41b8-9ff0-ef5e2118b878"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/618eaa8c-88c9-4c8c-8500-971877284e17"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/34a33eac-ef43-4d01-82ce-69275639a436"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/11126611-7029-47e4-9956-e8f3203abd84"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/32eeaeec-061f-473b-bc49-8a92e76887ce">
+        <skos:member rdf:resource="http://arches:8000/279d4763-0e87-4052-8920-dafd1de1a073"/>
+        <skos:member rdf:resource="http://arches:8000/9ea7f9a9-7a23-4eb2-9047-4a33b3f933e3"/>
+        <skos:member rdf:resource="http://arches:8000/85c37c04-2a7b-42e3-98f0-1715c7e8031b"/>
+        <skos:member rdf:resource="http://arches:8000/8eaaf5f4-2f52-416f-b945-4dfddfa77fb7"/>
+        <skos:member rdf:resource="http://arches:8000/a93e4547-3f1c-42a0-88dd-ae2c23a5d89f"/>
+        <skos:member rdf:resource="http://arches:8000/4b0d47a2-bdef-4aba-b871-5324c7aa5e6b"/>
+        <skos:member rdf:resource="http://arches:8000/9ecfc282-8018-4405-bc14-ac35e1d102e8"/>
+        <skos:member rdf:resource="http://arches:8000/87e92a8c-7385-4623-840c-e1fd50482101"/>
+        <skos:member rdf:resource="http://arches:8000/d1d5d816-67ef-48e2-be78-fe2ada48b9ff"/>
+      </skos:Concept>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/279d4763-0e87-4052-8920-dafd1de1a073"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/9ea7f9a9-7a23-4eb2-9047-4a33b3f933e3"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/85c37c04-2a7b-42e3-98f0-1715c7e8031b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/8eaaf5f4-2f52-416f-b945-4dfddfa77fb7"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/a93e4547-3f1c-42a0-88dd-ae2c23a5d89f"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/4b0d47a2-bdef-4aba-b871-5324c7aa5e6b"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/9ecfc282-8018-4405-bc14-ac35e1d102e8"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/87e92a8c-7385-4623-840c-e1fd50482101"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/d1d5d816-67ef-48e2-be78-fe2ada48b9ff"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/909315ab-8810-464f-8c29-bc89520317fd"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/acc8e942-5f71-487b-96bb-3e6ea66e06fc">
+        <skos:member rdf:resource="http://arches:8000/65a0fc89-cbfc-4f80-804f-beeda9012385"/>
+        <skos:member rdf:resource="http://arches:8000/991eccab-5396-4661-aebf-cb6b510bbb66"/>
+        <skos:member rdf:resource="http://arches:8000/394d25ce-704c-400c-9934-d2a05cb7e502"/>
+      </skos:Concept>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/65a0fc89-cbfc-4f80-804f-beeda9012385"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/991eccab-5396-4661-aebf-cb6b510bbb66"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/394d25ce-704c-400c-9934-d2a05cb7e502"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/fa14bcf5-f1de-fcc5-b087-1a5f91ef7e6a"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/90481515-9375-a9b4-ddce-da423ddd3342"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/0d28727d-9eb7-88e1-b8d1-d30c0b37faea"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5eddf317-1ac9-7c54-4e29-228c1d89c3d4"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/f265b773-3aba-7414-2672-b70ba85cccb7"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/9c654c84-6dd4-634c-8bb2-7a7ec028e76e"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/d7f60c37-2daf-e3f7-7d33-e3c3bceb3d34"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/9b4af449-31ed-bf5b-5409-32ad3497b09d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/b2ea9228-09c5-5722-190e-6fcd98b24584"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

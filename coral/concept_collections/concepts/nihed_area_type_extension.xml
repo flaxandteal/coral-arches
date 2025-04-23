@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580">
+    <skos:prefLabel xml:lang="en">{"id": "24a3f956-0db2-5d2f-3612-ec3e3208e53b", "value": "NIHED Area Type Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "9316ef78-fa2d-fa23-38b7-0de74ecb4c91", "value": "NIHED Area Type Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "510f6919-2adb-20c3-7526-4ad6e14f6eec", "value": "http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/abab2708-50f8-0c11-8ebd-8bc98ef6f6f1">
+        <skos:prefLabel xml:lang="en">{"id": "0e7653a1-5b47-5c32-8e64-edab8ff370f6", "value": "Barony"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/3428b28c-0538-839e-f158-03d5de2046ff">
+        <skos:prefLabel xml:lang="en">{"id": "8bfe98d8-e144-cd68-39bf-5166a152afa1", "value": "Council"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/331d7a64-9c68-04ce-c5f3-a9ca5a2f004c">
+        <skos:prefLabel xml:lang="en">{"id": "277fd3d0-d198-bc36-8178-6f49c7154aa8", "value": "County"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/2f88e8b7-3d99-188a-39ec-b3798e785294">
+        <skos:prefLabel xml:lang="en">{"id": "905f0c3b-c12e-963a-af7c-2463c35ba90f", "value": "Parish"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/94f5c1a1-dab2-81c9-024a-2090c12526b2">
+        <skos:prefLabel xml:lang="en">{"id": "ead9ee62-d018-e613-bf3d-4356bb2c3300", "value": "Town"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/8a85128b-4cf5-0013-f837-14581bd6bced">
+        <skos:prefLabel xml:lang="en">{"id": "0156e899-3740-7ad9-7425-103612f04ca3", "value": "Townland"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/5efb8a33-7a2f-753f-70d7-12b17ec7d97d">
+        <skos:prefLabel xml:lang="en">{"id": "4d3601cc-4ca8-f816-eed8-a35e208051f2", "value": "Ward"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/1cc516e2-7369-fd53-1654-07c30d0a9580"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

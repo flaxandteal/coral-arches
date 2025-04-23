@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Collection rdf:about="http://arches:8000/ef9ffc93-a34b-03bc-1738-46c30e50c4db">
+    <skos:prefLabel xml:lang="en">{"id": "7523de4c-bf21-c807-927c-19422a8f330f", "value": "Letters Designation"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/7f28d22e-6fc2-25f7-df26-ab2d45502f7f"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/7da22e36-5009-636f-4d98-453fd6e4c14f"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

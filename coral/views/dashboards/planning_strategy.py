@@ -5,10 +5,14 @@ from datetime import datetime
 import html
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
+from coral.utils.user_role import UserRole
+import copy
+from typing import List
 
 MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
 HIERARCHY_NODE_GROUP = '0dd6ccb8-cffe-11ee-8a4e-0242ac180006'
+
 PLANNING_GROUP = '74afc49c-3c68-4f6c-839a-9bc5af76596b'
 HM_GROUP = '29a43158-5f50-495f-869c-f651adf3ea42'
 HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
@@ -29,83 +33,151 @@ STATUTORY = 'd06d5de0-2881-4d71-89b1-522ebad3088d'
 NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
 
 class PlanningTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='deadline', sort_order='desc', filter='all'):
+
+    _user_role: UserRole = None;
+
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='desc', filter='all'):
         from arches_orm.models import Consultation
+        from arches_orm.models import Group
         with admin():        
-            is_hm_manager = groupId in [HM_MANAGER] 
-            is_hb_manager = groupId in [HB_MANAGER] 
-            is_hm_user = groupId in [HM_GROUP] 
-            is_hb_user = groupId in [HB_GROUP] 
-            is_admin = groupId in [PLANNING_GROUP]
+            self._user_role = UserRole(groupId)
 
             resources = [] 
-
             utilities = Utilities()
-
             filter_options = self.get_filter_options(groupId)
 
             domain_values = [f for f in filter_options if f.get('type') == 'council']
             members_filter = [f for f in filter_options if f.get('type') == 'person']
             groups_filter = [f for f in filter_options if f.get('type') == 'group']
 
-            consultations = Consultation.all()
+            consultationsDefaultWhereConditions = { 'resourceid__startswith': 'CON/' }
+            queryBuilder = Consultation.where(**consultationsDefaultWhereConditions)
+            foundGroups = Group.where(resourceinstance__resourceinstanceid=HM_MANAGER).get()
+            for group in foundGroups:
+                test = [
+                    {'id': str(member.id), 'name': member.name[0].full_name, 'type': 'person'}
+                    for member in group.members
+                    if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel'
+                ]
+                # members_filter.extend(members)
+                print(test)
+            # print('GROUP HERE : ', foundGroup)
 
-            #filter out consultations that are not planning consultations
-            planning_consultations=[c for c in consultations if (resourceid := c.system_reference_numbers.uuid.resourceid) and resourceid.startswith('CON/')]
-            # check the correct filter group and apply the filter
-            if filter != 'all':
+            copyQueryBuilder = copy.deepcopy(queryBuilder)
+            results = copyQueryBuilder.get()
+
+            for result in results:
+                if result.action and len(result.action) > 0:
+                    action = result.action[0]
+                    if (action.action_type):
+                        print('ACTION TYPE : ', action.action_type)
+            
+            def apply_default_conditions(queryBuilder):
+                # def get_paginated_resources(queryBuilder):
+                #     copyQueryBuilder = copy.deepcopy(queryBuilder)
+                #     # start_index = (page -1) * page_size
+                #     # end_index = (page * page_size)
+                #     # return copyQueryBuilder.offset(start_index, end_index)
+                #     return copyQueryBuilder.get()
+
+                # * The admin
+                if (self._user_role.planning_group['is_role']):
+                    return;
+            
+                # * The HM manager
+                elif (self._user_role.hm_manager['is_role']):
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    # print('LENGTH ACTION STATUS : ', len(get_paginated_resources(queryBuilder)))
+
+                    # * Action Type
+                    queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
+                    # print('LENGTH ACTION TYPE : ', len(get_paginated_resources(queryBuilder)))
+
+                    # * Assigned to
+                    # ! This doesn't work with None for some strange reason
+                    queryBuilder = queryBuilder.where(assigned_to_n1=None).or_where(assigned_to_n1__contains=str(userResourceId))
+                    # print('LENGTH ASSIGNMENT : ', len(get_paginated_resources(queryBuilder)))
+
+                # * The HM user
+                elif (self._user_role.hm_user['is_role']):
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    # * Action Type
+                    queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
+                    # * Assigned to
+                    queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
+
+                # * The HB manager
+                elif (self._user_role.hb_manager['is_role']):
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
+                    # * Action Type
+                    queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
+                    # * Assigned to
+                    # ! This doesn't work with None for some strange reason
+                    queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None)
+            
+                # * The HB user
+                elif (self._user_role.hb_user['is_role']):
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
+                    # * Action Type
+                    queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
+                    # * Assigned to
+                    queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
+                
+                return queryBuilder
+                        
+            def apply_filters(queryBuilder):
+                if (filter == 'all'):
+                    return queryBuilder
+
+                # ? Seems like there can be three filter options for domains here.
+                # ! We can speed this up by prefixing the sub string on the value and then removing it
                 is_member_filter = any(member['id'] == filter for member in members_filter)
                 is_domain_filter = any(value['id'] == filter for value in domain_values)
                 is_group_filter = any(group['id'] == filter for group in groups_filter )
+
+                print('is_member_filter : ', is_member_filter)
+                print('is_domain_filter : ', is_domain_filter)
+                print('is_group_filter : ', is_group_filter)
+
                 if is_domain_filter:
-                    planning_consultations = [c for c in planning_consultations if self.filter_by_domain_value(c, filter)]
+                    queryBuilder = queryBuilder.where(council=filter)
                 elif is_member_filter:
-                    planning_consultations = [c for c in planning_consultations if self.filter_by_person(c, filter)]
+                    queryBuilder = queryBuilder.where(assigned_to_n1__contains=filter)
                 elif is_group_filter:
-                    planning_consultations = [c for c in planning_consultations if self.filter_by_group(c, filter)]
-            
-
-            #checks against type & status and assigns to user if in correct group
-            for consultation in planning_consultations:
-                    action_status = utilities.node_check(lambda: consultation.action[0].action_status )
-                    action_type = utilities.node_check(lambda: consultation.action[0].action_type) 
-                    assigned_to_list = utilities.node_check(lambda: consultation.action[0].assigned_to_n1)
-
-                    user_assigned = any(assigned_to_list or [])
-                    is_assigned_to_user = False
-
-                    if assigned_to_list:
-                        is_assigned_to_user = any(user.id == userResourceId for user in assigned_to_list)
+                    queryBuilder = queryBuilder.where(action_type=filter)
                     
-                    hm_status_conditions = [STATUS_OPEN, STATUS_HB_DONE, STATUS_EXTENSION_REQUESTED]
-                    hb_status_conditions = [STATUS_OPEN, STATUS_HM_DONE, STATUS_EXTENSION_REQUESTED]
-                    conditions_for_task = (
-                        (is_hm_manager and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
-                        (is_hb_manager and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH] and (not user_assigned or is_assigned_to_user)) or
-                        (is_hm_user and is_assigned_to_user and action_status in hm_status_conditions and action_type in [TYPE_ASSIGN_HM, TYPE_ASSIGN_BOTH]) or
-                        (is_hb_user and is_assigned_to_user and action_status in hb_status_conditions and action_type in [TYPE_ASSIGN_HB, TYPE_ASSIGN_BOTH]) or
-                        (is_admin)
-                    )
-                    if conditions_for_task:  
-                        resources.append(consultation)
-            sort_nodes = {
-                'deadline': lambda resource: resource.action[0].action_dates.target_date_n1,
-            }
+                return queryBuilder 
 
-            # Sort nodes allow us to access the model node value for sorting
-            sorted_resources = utilities.sort_resources_date(resources, sort_nodes, sort_by, sort_order)
+            def apply_order_by(queryBuilder):
+                direction = '-'
+                if (sort_order == 'desc'): direction = ''
 
-            # Get total number of resources
-            total_resources = len(resources)
-
-            # Build data only for the current page
-            start_index = (page -1) * page_size
-            end_index = (page * page_size)
-            indexed_resources = sorted_resources[start_index:end_index]
+                return queryBuilder.order_by(f'{direction}{sort_by}')
+            
+            def get_paginated_resources(queryBuilder):
+                copyQueryBuilder = copy.deepcopy(queryBuilder)
+                start_index = (page -1) * page_size
+                end_index = (page * page_size)
+                return copyQueryBuilder.offset(start_index, end_index)
+                
+            def get_count(queryBuilder):
+                copyQueryBuilder = copy.deepcopy(queryBuilder)
+                return copyQueryBuilder.count()
+            
+            queryBuilder = apply_default_conditions(queryBuilder)
+            queryBuilder = apply_filters(queryBuilder)
+            queryBuilder = apply_order_by(queryBuilder)
+            
+            total_resources = get_count(queryBuilder)
+            resources = get_paginated_resources(queryBuilder)
 
             tasks = []
 
-            for resource in indexed_resources:
+            for resource in resources:
                 task = self.build_data(resource, groupId)
                 tasks.append(task)
 
@@ -114,13 +186,14 @@ class PlanningTaskStrategy(TaskStrategy):
                 'heirarchy_type': lambda resource: resource.hierarchy_type
             }
 
+            # ! We can work out the count
             counters = utilities.get_count_groups(resources, count_nodes)
             
             return tasks, total_resources, counters
         
     def get_sort_options(self):
         return [
-            {'id': 'deadline', 'name': 'Deadline'}, 
+            {'id': 'target_date_n1', 'name': 'Deadline'}, 
         ]
     
     def get_filter_options(self, groupId=None):
@@ -141,7 +214,7 @@ class PlanningTaskStrategy(TaskStrategy):
             ).first()
 
             domain_options = council_node.config.get("options")
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+            domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
 
             # Get members of groups for filtering
             planning_team_groups = [HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP]
@@ -151,6 +224,7 @@ class PlanningTaskStrategy(TaskStrategy):
             members_filter = []
             groups_filter = []
             
+            # ! We can maybe use here resourceinstance__id here to search for resource instances
             if is_hb_manager or is_hb_user:
                 members_filter = self.get_group_members(hb_groups)
             elif is_hm_manager or is_hm_user:
@@ -158,8 +232,8 @@ class PlanningTaskStrategy(TaskStrategy):
             elif is_admin:
                 members_filter = self.get_group_members(planning_team_groups)
                 groups_filter = [
-                    {'id': TYPE_ASSIGN_HB, 'name': 'HB Group', 'type': 'group'}, 
-                    {'id': TYPE_ASSIGN_HM, 'name': 'HM Group', 'type': 'group'}
+                    {'id': 'Assign To HB', 'name': 'HB Group', 'type': 'group'}, 
+                    {'id': 'Assign To HM', 'name': 'HM Group', 'type': 'group'}
                 ]       
 
             filter_options = [
@@ -172,19 +246,34 @@ class PlanningTaskStrategy(TaskStrategy):
             return filter_options
 
     
-    def get_group_members(self, groups):
+    def get_group_members(self, groups: List[str]):
         from arches_orm.models import Group
         with admin():
-            members_filter = []
-            for group in groups:
-                    group_resource = Group.find(group)
+            if (len(groups) == 0): return [];
+
+            def get_groups():
+                foundGroupRecords = Group.where(resourceinstance__resourceinstanceid=groups[0])
+
+                for _, group in enumerate(groups[1:], start=1):
+                    foundGroupRecords = foundGroupRecords.or_where(resourceinstance__resourceinstanceid=group).get()
+
+                return foundGroupRecords.get()
+
+            def transform_group_members(foundGroupRecords):
+                members_filter = []
+
+                for foundGroupRecord in foundGroupRecords:
                     members = [
                         {'id': str(member.id), 'name': member.name[0].full_name, 'type': 'person'}
-                        for member in group_resource.members
+                        for member in foundGroupRecord.members
                         if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel'
                     ]
                     members_filter.extend(members)
-            return members_filter
+
+                return members_filter
+
+            foundGroupRecords = get_groups()
+            return transform_group_members(foundGroupRecords)
     
     def build_data(self, consultation, groupId):
         from arches_orm.models import Consultation
@@ -252,15 +341,15 @@ class PlanningTaskStrategy(TaskStrategy):
 
         deadline_message = None
         if deadline:
-            deadline_date = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z")
+            deadline_date = datetime.strptime(str(deadline), "%Y-%m-%d %H:%M:%S%z")
             deadline_message = utilities.create_deadline_message(deadline_date)
             deadline = deadline_date.strftime("%d-%m-%Y")          
 
         resource_data = {
             'id': str(consultation.id),
             'state': 'Planning',
-            'displayname': consultation._._name,
-            'displaydescription': html.unescape(consultation._._description),
+            # 'displayname': consultation._._name, ! issue with get_discripter 
+            # 'displaydescription': html.unescape(consultation._._description), ! issue with get_discripter 
             'status': utilities.convert_id_to_string(action_status),
             'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
             'assigned_to': assigned_to_names,
@@ -274,25 +363,3 @@ class PlanningTaskStrategy(TaskStrategy):
             'responded': responded
         }
         return resource_data
-    
-    def filter_by_domain_value(self, consultation, filter):
-        utilities = Utilities()
-        council_value = utilities.node_check(lambda:consultation.location_data.council)
-        if not council_value:
-            return False
-        return council_value == filter
-    
-    def filter_by_person(self, consultation, filter):
-        utilities = Utilities()
-        person_list = utilities.node_check(lambda:consultation.action[0].assigned_to_n1)
-        if not person_list:
-            return False
-        return any(str(person.id) == filter for person in person_list)   
-    
-    def filter_by_group(self, consultation, filter):
-        TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
-        utilities = Utilities()
-        action_type = utilities.node_check(lambda:consultation.action[0].action_type)
-        if not action_type:
-            return False
-        return action_type == filter or action_type == TYPE_ASSIGN_BOTH

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/4a025cd7-b954-f752-70ee-2cfac966caf2">
+    <skos:prefLabel xml:lang="en">{"id": "9aa72187-7c66-1990-ffbf-a93a59bd950e", "value": "NIHED FISH Evidence Thesaurus Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "76f84802-3273-36f7-1f88-a20e3da6827e", "value": "NIHED FISH Evidence Thesaurus Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "4d8f74a3-70b7-3d1a-5262-e19909fcac3f", "value": "http://arches:8000/4a025cd7-b954-f752-70ee-2cfac966caf2"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/dad47c55-c5c3-f7d8-7fc6-0ae17e63edef">
+        <skos:prefLabel xml:lang="en">{"id": "332f2510-294e-50ba-a61e-d8ccbcfbc6f7", "value": "Not demolished"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/4a025cd7-b954-f752-70ee-2cfac966caf2"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/3249e0c8-9893-e067-6eac-3fc3120c2024">
+        <skos:prefLabel xml:lang="en">{"id": "4efb6ddc-123d-c32d-2c4e-8736e9d1af7d", "value": "Derelict"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/4a025cd7-b954-f752-70ee-2cfac966caf2"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/e93ab8b3-d357-a32d-c28e-5349281c66f3">
+    <skos:prefLabel xml:lang="en">{"id": "232592b6-c8df-d451-c71f-0e1b82d26265", "value": "NIHED Measurement Units Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "8463ef68-c16a-8818-8912-3ab52aeb4c70", "value": "NIHED Measurement Units Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "bf81ddb8-7962-749e-55b0-1b7c34fc5664", "value": "http://arches:8000/e93ab8b3-d357-a32d-c28e-5349281c66f3"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/925921e2-fead-d774-114d-cd3835438cab">
+        <skos:prefLabel xml:lang="en">{"id": "a2c66050-8c13-146d-97bf-68afc6e96c74", "value": "Volume"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/e93ab8b3-d357-a32d-c28e-5349281c66f3"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

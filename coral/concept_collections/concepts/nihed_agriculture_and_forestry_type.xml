@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:ConceptScheme rdf:about="http://arches:8000/79e3060e-e165-ed4b-4e20-1faeff773bfc">
+    <skos:prefLabel xml:lang="en">{"id": "1866ca2f-a4cc-93c1-5f6d-8bca815b24ac", "value": "NIHED Agriculture and Forestry Type"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "ff77cf2a-cd5a-3215-3b18-5785f5426c5b", "value": "NIHED Agriculture and Forestry Type"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "6393c6ef-736d-a30a-dcdf-1ebd8346fad0", "value": "http://arches:8000/79e3060e-e165-ed4b-4e20-1faeff773bfc"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/109ee5f6-ea90-cb37-8093-0d4469328f38">
+        <skos:prefLabel xml:lang="en">{"id": "a6b92a87-b0cc-91a5-924a-70bd7f23cc0b", "value": "Deforestation"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/79e3060e-e165-ed4b-4e20-1faeff773bfc"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/13ee446b-5af4-848a-e07a-f8eb3fca30a0">
+        <skos:prefLabel xml:lang="en">{"id": "c269c3e0-2edb-3a9f-7ce9-ec17279d7988", "value": "Afforestation"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/79e3060e-e165-ed4b-4e20-1faeff773bfc"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/c56909d9-968f-0d12-d78d-8d7742c9d1f9">
+        <skos:prefLabel xml:lang="en">{"id": "c660ae81-f0d0-e91c-e6f6-a694fb96460d", "value": "Hedge Removal"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/79e3060e-e165-ed4b-4e20-1faeff773bfc"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/e1d81688-0fa8-98d4-16c0-4b70b6addb11">
+        <skos:prefLabel xml:lang="en">{"id": "9b3b2d56-0612-049f-84b9-be8e86c5f31f", "value": "Thinning"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/79e3060e-e165-ed4b-4e20-1faeff773bfc"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/851e3cd8-150f-d758-7fde-17f89e0d54ec">
+        <skos:prefLabel xml:lang="en">{"id": "bd9e2bce-25f7-2a2d-9acd-01f8a42c117c", "value": "Maintenance"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/79e3060e-e165-ed4b-4e20-1faeff773bfc"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

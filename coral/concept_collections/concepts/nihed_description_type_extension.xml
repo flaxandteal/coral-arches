@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Concept rdf:about="http://arches:8000/16178b98-09b0-1ecc-34b9-1588c253c504">
+    <skos:prefLabel xml:lang="en">{"id": "1f4ed154-c4e6-945a-fd62-18bc796a18ed", "value": "Proposed EHS Final"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a">
+        <skos:prefLabel xml:lang="en">{"id": "5c1d0119-691c-8f38-0d17-78550f513760", "value": "NIHED Description Type Extension"}</skos:prefLabel>
+        <dcterms:title xml:lang="en">{"id": "e92453b6-9e54-0a34-75eb-490932e295a3", "value": "NIHED Description Type Extension"}</dcterms:title>
+        <dcterms:identifier xml:lang="en">{"id": "61466710-702f-1c81-3ab7-7a6974a7a674", "value": "http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"}</dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/08974737-ade5-b093-6b80-9f7a974b173a"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/4f2a9b5b-b70f-cce1-48ce-f430a761a9ee"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/c07a2dc1-b90b-3926-fcce-aff0badd83f1"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/5e4e0941-ea22-0ab8-5eaf-9bb7583844b2"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/09f13d9c-734a-6f80-f0d2-fa277cb9c489"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/048bf7b7-d7c3-b0db-3a1a-6c8cdc338542"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/0d47d231-ab3d-d25a-4a58-dd203fdef974"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/f245c0af-d4a0-b7ef-a8d3-bbf8b59202f2"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/724009cf-48ef-14be-3ace-01cc58cc0ac3"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/16178b98-09b0-1ecc-34b9-1588c253c504"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/42361014-90a6-ec6f-16e0-e2d9e3e34d88"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/49e4f822-fde3-30c9-2947-085d4a3b69b0"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/261ee467-914a-e900-9928-3e0856ea111e"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/09f13d9c-734a-6f80-f0d2-fa277cb9c489">
+    <skos:prefLabel xml:lang="en">{"id": "97f89f99-8406-2f3a-5480-b3afafacbbbc", "value": "Condition Report By Warden"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/261ee467-914a-e900-9928-3e0856ea111e">
+    <skos:prefLabel xml:lang="en">{"id": "fa940f30-8594-5ebc-4e63-680f91187a5e", "value": "Comment"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/724009cf-48ef-14be-3ace-01cc58cc0ac3">
+    <skos:prefLabel xml:lang="en">{"id": "28dd4b88-8f57-5d5d-0d86-9954ef4a0915", "value": "EHS Final"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/f245c0af-d4a0-b7ef-a8d3-bbf8b59202f2">
+    <skos:prefLabel xml:lang="en">{"id": "35928550-e06f-1993-2204-bbd6014673e7", "value": "See Site Description"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/c07a2dc1-b90b-3926-fcce-aff0badd83f1">
+    <skos:prefLabel xml:lang="en">{"id": "16bb2e89-b9c8-86c3-4934-b1c508c33c4f", "value": "Condition"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/048bf7b7-d7c3-b0db-3a1a-6c8cdc338542">
+    <skos:prefLabel xml:lang="en">{"id": "364434ed-61ac-5496-a476-95d66134fb4e", "value": "Reference"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/49e4f822-fde3-30c9-2947-085d4a3b69b0">
+    <skos:prefLabel xml:lang="en">{"id": "c6e23116-535d-f0b0-60ec-8520a47b4194", "value": "Email"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/5e4e0941-ea22-0ab8-5eaf-9bb7583844b2">
+    <skos:prefLabel xml:lang="en">{"id": "44d2212d-5224-de2a-3814-69eddca7f1d4", "value": "Site Management"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/42361014-90a6-ec6f-16e0-e2d9e3e34d88">
+    <skos:prefLabel xml:lang="en">{"id": "3750e797-203c-f848-0231-d339655739b5", "value": "Contact"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/08974737-ade5-b093-6b80-9f7a974b173a">
+    <skos:prefLabel xml:lang="en">{"id": "2464eb5f-2c59-a906-a439-7ffb92fc8af6", "value": "Site Summary"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/0d47d231-ab3d-d25a-4a58-dd203fdef974">
+    <skos:prefLabel xml:lang="en">{"id": "8d7d5d37-9444-54bc-e608-84d7104e035e", "value": "Survey"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/4f2a9b5b-b70f-cce1-48ce-f430a761a9ee">
+    <skos:prefLabel xml:lang="en">{"id": "d2245ddc-045e-a289-752e-0cefeec3f74f", "value": "Edited Type"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/0c75486b-d7d4-d886-1e99-a644472f9e8a"/>
+  </skos:Concept>
+</rdf:RDF>

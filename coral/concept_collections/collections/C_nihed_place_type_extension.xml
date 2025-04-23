@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Collection rdf:about="http://arches:8000/eb484b63-43c5-46c2-885c-bca2685590de">
+    <skos:prefLabel xml:lang="en">{"id": "a3c52e61-cae1-d5a1-9862-b8a540c9cfe6", "value": "Place Type"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/69c05819-b5a5-4fbc-a476-5c9673823d35"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/68b5973b-82df-408e-9c72-4098a1315a63"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3fea6717-7058-4b61-b413-8372e35ce845"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/40ad6c88-aeb6-69d7-7fc8-9f701d97721c"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

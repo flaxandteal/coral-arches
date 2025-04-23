@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Concept rdf:about="http://arches:8000/48a3e77b-5ae0-dfe5-f099-a24940c010f0">
+    <skos:prefLabel xml:lang="en">{"id": "fbb83107-fd86-0a13-d41b-867241699083", "value": "Unreliable"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/6575f19f-a94d-4149-f027-60cbae7d3ebf">
+        <skos:prefLabel xml:lang="en">{"id": "948d036b-b8af-bc3e-6c4e-d8c77120487b", "value": "NIHED Spatial Accuracy Qualifiers Extension"}</skos:prefLabel>
+        <dcterms:title xml:lang="en">{"id": "e0a39c35-608f-7a09-226f-0636f05be365", "value": "NIHED Spatial Accuracy Qualifiers Extension"}</dcterms:title>
+        <dcterms:identifier xml:lang="en">{"id": "9d9977dc-6153-b17e-c5a8-9b311d49f646", "value": "http://arches:8000/6575f19f-a94d-4149-f027-60cbae7d3ebf"}</dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/f9958d68-86b2-c28a-1b74-dd9582df5c6e"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/770ede40-9b2e-e68e-5fb5-79e3ebef2c3b"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/c54aeacd-d343-38ee-86fa-e317f0f06f28"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/48a3e77b-5ae0-dfe5-f099-a24940c010f0"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/576fceee-f745-c93d-b521-75bbc5344923"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/d2219df3-f54f-c5dd-24ea-bc32ce74f620"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/f9958d68-86b2-c28a-1b74-dd9582df5c6e">
+    <skos:prefLabel xml:lang="en">{"id": "89564bb5-ce59-bcd1-f1bf-d751c055d957", "value": "Reasonable"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/6575f19f-a94d-4149-f027-60cbae7d3ebf"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/c54aeacd-d343-38ee-86fa-e317f0f06f28">
+    <skos:prefLabel xml:lang="en">{"id": "5bc2d2a7-e346-1fec-55b4-0488b67e6845", "value": "Approximate"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/6575f19f-a94d-4149-f027-60cbae7d3ebf"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/770ede40-9b2e-e68e-5fb5-79e3ebef2c3b">
+    <skos:prefLabel xml:lang="en">{"id": "d526817c-ce04-011c-9a90-8704bd1f5ecd", "value": "Accurate"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/6575f19f-a94d-4149-f027-60cbae7d3ebf"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/576fceee-f745-c93d-b521-75bbc5344923">
+    <skos:prefLabel xml:lang="en">{"id": "774fd78e-70a9-b8f8-2304-919f0778d1c4", "value": "Precisely known"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/6575f19f-a94d-4149-f027-60cbae7d3ebf"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/d2219df3-f54f-c5dd-24ea-bc32ce74f620">
+    <skos:prefLabel xml:lang="en">{"id": "aa3b4c25-1872-5638-3bf2-3c9e87897e76", "value": "Surveyed"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/6575f19f-a94d-4149-f027-60cbae7d3ebf"/>
+  </skos:Concept>
+</rdf:RDF>

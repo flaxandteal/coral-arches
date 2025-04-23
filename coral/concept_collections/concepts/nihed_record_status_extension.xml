@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/dbf2805b-682b-0491-f1bf-d6d40978a082">
+    <skos:prefLabel xml:lang="en">{"id": "b8086044-b5b3-1226-2d6c-0ad839cddb5c", "value": "NIHED Record Status Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "179e3d3d-22cc-fbaf-5b6b-f3eeb11032ef", "value": "NIHED Record Status Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "d882b0c9-e11c-a472-8235-13ab123295d9", "value": "http://arches:8000/dbf2805b-682b-0491-f1bf-d6d40978a082"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/96a0ba7b-65d5-a3e7-d847-f0b8bff5922c">
+        <skos:prefLabel xml:lang="en">{"id": "45cc8b03-7853-e552-4ab7-83e64f66fdbd", "value": "Supervisor"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/dbf2805b-682b-0491-f1bf-d6d40978a082"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/a494fcdf-ca60-9923-b573-7ea988723394">
+        <skos:prefLabel xml:lang="en">{"id": "dbc753f2-c26e-47a2-829c-2d827348bfea", "value": "Administrator"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/dbf2805b-682b-0491-f1bf-d6d40978a082"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

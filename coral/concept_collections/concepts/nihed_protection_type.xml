@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91">
+    <skos:prefLabel xml:lang="en">{"id": "1bf209e7-778d-0e9e-a764-8c56aa5c2419", "value": "NIHED Protection Type"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "73717ccb-d1bc-2f46-2251-dd99d0323094", "value": "NIHED Protection Type"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "aff93a19-e8fe-48b8-7486-859697774e7e", "value": "http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/a15bc92e-2b74-41be-86aa-cce1b016a53a">
+        <skos:prefLabel xml:lang="en">{"id": "c7948a7f-8d84-fc92-b7ec-a024ae3e9892", "value": "Non-statutory"}</skos:prefLabel>
+        <skos:narrower rdf:resource="http://arches:8000/c50a2023-76c8-af87-1740-719fd188652f"/>
+        <skos:narrower rdf:resource="http://arches:8000/7cb6d69f-cbcc-6688-c847-72b245362912"/>
+        <skos:narrower rdf:resource="http://arches:8000/e3ebd960-3e99-b4e8-7d75-67af815588b8"/>
+        <skos:narrower rdf:resource="http://arches:8000/46d2daf4-7492-bac3-90ee-8ef71984f585"/>
+        <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/d68ac545-d7c1-2ffe-b9f3-89fe73391cc0">
+        <skos:prefLabel xml:lang="en">{"id": "ffc547f0-2fba-0a53-65fe-d012594da1d1", "value": "Statutory"}</skos:prefLabel>
+        <skos:narrower rdf:resource="http://arches:8000/c217f061-aca7-e610-e00e-1eed1e2c8f6a"/>
+        <skos:narrower rdf:resource="http://arches:8000/1e898077-9144-9ef0-b6e1-08f4e4881972"/>
+        <skos:narrower rdf:resource="http://arches:8000/9eba2604-bc74-d202-9856-e52be6ac0411"/>
+        <skos:narrower rdf:resource="http://arches:8000/fa679365-0449-5983-9f4d-3e0955e1e549"/>
+        <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/053f5e66-d336-06e5-3b79-72557b785484">
+        <skos:prefLabel xml:lang="en">{"id": "cc3822c6-4e44-72fa-6b72-4b701759e43b", "value": "World Heritage"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about="http://arches:8000/c50a2023-76c8-af87-1740-719fd188652f">
+    <skos:prefLabel xml:lang="en">{"id": "2b9e7521-588d-5387-422f-0edb818e7e68", "value": "Area of Archaeological Potential"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/7cb6d69f-cbcc-6688-c847-72b245362912">
+    <skos:prefLabel xml:lang="en">{"id": "b35829c8-a863-69f8-ad5b-4331660d8909", "value": "Heritage at Risk"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/c217f061-aca7-e610-e00e-1eed1e2c8f6a">
+    <skos:prefLabel xml:lang="en">{"id": "971be817-ba70-cdaa-41f7-7c47f1f368f8", "value": "Listed Building"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/1e898077-9144-9ef0-b6e1-08f4e4881972">
+    <skos:prefLabel xml:lang="en">{"id": "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9", "value": "Scheduled Monument"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/46d2daf4-7492-bac3-90ee-8ef71984f585">
+    <skos:prefLabel xml:lang="en">{"id": "eb6e19dc-cf31-7db7-1209-0e1b969f2ff8", "value": "Registered Historic Park, Garden or Demesne"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/fa679365-0449-5983-9f4d-3e0955e1e549">
+    <skos:prefLabel xml:lang="en">{"id": "8da10724-1bd3-c095-6d4d-fb8657574b40", "value": "State Care Monument"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/e3ebd960-3e99-b4e8-7d75-67af815588b8">
+    <skos:prefLabel xml:lang="en">{"id": "74aed0ef-ed5f-7f3f-a75b-0db6fa0669f4", "value": "Area of Significant Archaeological Interest"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/9eba2604-bc74-d202-9856-e52be6ac0411">
+    <skos:prefLabel xml:lang="en">{"id": "11d8daf4-9e40-d2e2-a9ef-f980efe83412", "value": "Protected Wreck"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/9d57c0ee-b467-a09e-de8e-abd68b0cfa91"/>
+  </skos:Concept>
+</rdf:RDF>

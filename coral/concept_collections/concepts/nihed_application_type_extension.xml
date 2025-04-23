@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Concept rdf:about="http://arches:8000/3072f583-ee81-5c11-532c-2d75d7d08b66">
+    <skos:prefLabel xml:lang="en">{"id": "d5f975ac-4bec-4861-1b0a-55e8b2cdffd1", "value": "Systematic Second Survey"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/d3cb4a4a-18c3-443e-2083-9a2290e963e4">
+        <skos:prefLabel xml:lang="en">{"id": "ea76fa5a-ec66-efe8-b728-2a427c0d5264", "value": "NIHED Application Type Extension"}</skos:prefLabel>
+        <dcterms:title xml:lang="en">{"id": "f5f224b2-96d4-069d-87c2-d15720e9dc94", "value": "NIHED Application Type Extension"}</dcterms:title>
+        <dcterms:identifier xml:lang="en">{"id": "4bb73a77-b9f8-4006-ec0c-ec792c57a14e", "value": "http://arches:8000/d3cb4a4a-18c3-443e-2083-9a2290e963e4"}</dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/3072f583-ee81-5c11-532c-2d75d7d08b66"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/f9a6b180-a742-c2aa-9aed-a8d0491d4e02"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/9acaea25-1f4e-434d-9606-6f1e50de5f82"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/f9a6b180-a742-c2aa-9aed-a8d0491d4e02">
+    <skos:prefLabel xml:lang="en">{"id": "486034c5-8929-a6e5-c2e4-feb5b6664b4e", "value": "Adhoc Second Survey"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d3cb4a4a-18c3-443e-2083-9a2290e963e4"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/9acaea25-1f4e-434d-9606-6f1e50de5f82">
+    <skos:prefLabel xml:lang="en">{"id": "8d0ab00f-eaa1-3463-748e-5ec9e77f3c2b", "value": "Thematic Survey"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d3cb4a4a-18c3-443e-2083-9a2290e963e4"/>
+  </skos:Concept>
+</rdf:RDF>

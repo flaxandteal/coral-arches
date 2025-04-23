@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Collection rdf:about="http://arches:8000/bc729c9e-d098-4936-a3a2-9e7676195264">
+    <skos:prefLabel xml:lang="en">{"id": "3512e398-83c2-6f0b-db13-1f4e7632400e", "value": "Summary Statistics"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/03ebf28d-003a-9ca8-5bcc-67d38ea25fe5"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/2e34c4a2-2efe-284e-ee28-f5771f75f527"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ece34319-61f9-68a3-964d-04fb655ed64f"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/3d5e0660-ff67-a278-7863-b291e17d00f2"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/6fceab1d-101a-dcf4-d7e1-91650caf4307"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

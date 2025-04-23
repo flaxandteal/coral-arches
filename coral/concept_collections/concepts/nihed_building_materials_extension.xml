@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/623576a3-d3c5-1ace-f04f-1f86febafdd1">
+    <skos:prefLabel xml:lang="en">{"id": "cee6c958-2246-f3d9-0cdd-9aaa6d4386e1", "value": "NIHED Building Materials Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "5659409f-c67f-d710-0bf1-8ad3e80f6fc1", "value": "NIHED Building Materials Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "d319ac1e-c4f8-c363-1617-6498de334f11", "value": "http://arches:8000/623576a3-d3c5-1ace-f04f-1f86febafdd1"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/7a127616-26df-4dca-a4cb-966efb8b6546">
+        <skos:prefLabel xml:lang="en">{"id": "fd4354fb-5877-9b1e-3c2c-5ee78f0553d4", "value": "Rye"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/623576a3-d3c5-1ace-f04f-1f86febafdd1"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/a0a0fefc-692c-c52e-bc93-3654c49ce2ec">
+        <skos:prefLabel xml:lang="en">{"id": "65d42ca7-5ff8-e8c6-36f1-ee59f34a1bd5", "value": "Wheat"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/623576a3-d3c5-1ace-f04f-1f86febafdd1"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/3509ba4d-bd6f-afc4-e164-b7ba2e07ef62">
+        <skos:prefLabel xml:lang="en">{"id": "eebc87aa-2ac2-c853-4bf4-0d27378cf1a2", "value": "Flax"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/623576a3-d3c5-1ace-f04f-1f86febafdd1"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/1c5c4990-0306-3053-f112-5dd18b9a301f">
+        <skos:prefLabel xml:lang="en">{"id": "090fc586-ca02-c0f3-beea-f6632d0ba2e1", "value": "Wheat and Flax"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/623576a3-d3c5-1ace-f04f-1f86febafdd1"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

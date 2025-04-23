@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/07d707fb-f757-90e8-1144-d09c1daf4609">
+    <skos:prefLabel xml:lang="en">{"id": "761a55a1-8082-276b-cf42-9b0c5d441eae", "value": "NIHED Designation Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "0dc5a37d-db05-4966-27d1-ef066cea5702", "value": "NIHED Designation Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "69c517ea-3f51-1ed5-0a52-507051e25894", "value": "http://arches:8000/07d707fb-f757-90e8-1144-d09c1daf4609"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/4b0ed3fd-93b5-b461-8931-5fdec600edcc">
+        <skos:prefLabel xml:lang="en">{"id": "21c50f53-3922-0246-8fe8-bf640be2b8e8", "value": "State Care Monument"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/07d707fb-f757-90e8-1144-d09c1daf4609"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Concept rdf:about="http://arches:8000/c53aa522-83d7-bae5-f523-822f572965cd">
+    <skos:prefLabel xml:lang="en">{"id": "27e5d14e-af7a-e2eb-8781-849e1fb57e33", "value": "Action"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/d2008750-799d-33b8-ed62-bf1823d8df31">
+        <skos:prefLabel xml:lang="en">{"id": "320b4a46-f28d-a1fc-5293-147fd13b07c2", "value": "NIHED Condition Type Extension"}</skos:prefLabel>
+        <dcterms:title xml:lang="en">{"id": "9292eec5-40a1-c196-b2d1-cc9a9767f76a", "value": "NIHED Condition Type Extension"}</dcterms:title>
+        <dcterms:identifier xml:lang="en">{"id": "32c44c06-0176-50ec-80e0-a569f0f465ba", "value": "http://arches:8000/d2008750-799d-33b8-ed62-bf1823d8df31"}</dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/c53aa522-83d7-bae5-f523-822f572965cd"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/f79f956d-f743-0858-d215-4462eb8af375"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/808df612-781b-94a0-840d-748ed1d36d85"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/06b4cef7-b2a9-f233-f831-4e3dcdf7fbf7"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/292b6539-aab0-9e7f-9ea1-cba54d499227"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/808df612-781b-94a0-840d-748ed1d36d85">
+    <skos:prefLabel xml:lang="en">{"id": "229525a6-eb56-806e-0f06-2f07644ffe54", "value": "HBC"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d2008750-799d-33b8-ed62-bf1823d8df31"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/292b6539-aab0-9e7f-9ea1-cba54d499227">
+    <skos:prefLabel xml:lang="en">{"id": "a20a65e6-ab27-5525-bd6a-0cbd1b29c87b", "value": "Funding Stream"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d2008750-799d-33b8-ed62-bf1823d8df31"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/06b4cef7-b2a9-f233-f831-4e3dcdf7fbf7">
+    <skos:prefLabel xml:lang="en">{"id": "5e594e48-a8d9-63f1-1d13-99d713af2c6c", "value": "Planner"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d2008750-799d-33b8-ed62-bf1823d8df31"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/f79f956d-f743-0858-d215-4462eb8af375">
+    <skos:prefLabel xml:lang="en">{"id": "7a77314a-cb4b-5378-d7b4-7a55019248f4", "value": "DC"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d2008750-799d-33b8-ed62-bf1823d8df31"/>
+  </skos:Concept>
+</rdf:RDF>

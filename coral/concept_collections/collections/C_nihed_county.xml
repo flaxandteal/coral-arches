@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Collection rdf:about="http://arches:8000/763ba635-3800-324a-8d54-c1427bcaa5aa">
+    <skos:prefLabel xml:lang="en">{"id": "a8bffa60-dc30-bfaa-e85d-28914dcf249e", "value": "County"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/65ebc4dc-5a50-9c47-c642-ce3fa6786e68"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/73a3bfe5-e16e-4e58-0fd8-c306227fa41d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ec749dfa-f7cb-5444-3ba8-bca6cc136723"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/858e4dd6-884d-f823-5034-068aa0358e4d"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/c6e1e237-d943-2b73-7d80-ed15d27db6d7"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/374ec98c-c6d7-8bf5-cc6a-d871e97f32f9"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

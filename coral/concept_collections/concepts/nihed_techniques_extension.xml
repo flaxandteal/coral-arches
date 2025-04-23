@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Concept rdf:about="http://arches:8000/2334dbcd-80f8-8c04-8c92-673d95689d84">
+    <skos:prefLabel xml:lang="en">{"id": "a9c624c6-e085-0c86-a15f-3e146f1cca41", "value": "Rope"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://arches:8000/d458416c-a7c2-2f98-060f-d81b2c8e4cab">
+        <skos:prefLabel xml:lang="en">{"id": "f50fe989-39ec-0003-9b65-eb6e65ab9cad", "value": "NIHED Techniques Extension"}</skos:prefLabel>
+        <dcterms:title xml:lang="en">{"id": "1ec295a3-22c8-d68f-3bdd-145890bbf5d3", "value": "NIHED Techniques Extension"}</dcterms:title>
+        <dcterms:identifier xml:lang="en">{"id": "5bbfc5a2-54ae-b75b-a3aa-11a1fc246c2f", "value": "http://arches:8000/d458416c-a7c2-2f98-060f-d81b2c8e4cab"}</dcterms:identifier>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/2334dbcd-80f8-8c04-8c92-673d95689d84"/>
+        <skos:hasTopConcept rdf:resource="http://arches:8000/7b8d5ce4-93bf-0eb2-3337-2b0275dcf15a"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://arches:8000/7b8d5ce4-93bf-0eb2-3337-2b0275dcf15a">
+    <skos:prefLabel xml:lang="en">{"id": "724c7578-35d4-5b04-7f48-bf1c6f279d73", "value": "Scallops"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://arches:8000/d458416c-a7c2-2f98-060f-d81b2c8e4cab"/>
+  </skos:Concept>
+</rdf:RDF>

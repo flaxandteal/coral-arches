@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82">
+    <skos:prefLabel xml:lang="en">{"id": "07038170-a0ed-7802-9bad-f29c2ac0173e", "value": "NIHED Planning Outcome Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "e4be20b0-57eb-f62c-b077-3c3a8fd9cabf", "value": "NIHED Planning Outcome Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "a4d3a470-c0d1-fb15-dd79-6a9d5163e202", "value": "http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/21d7df3f-2d5d-b5ad-8795-9152af3ea4ce">
+        <skos:prefLabel xml:lang="en">{"id": "8bca686b-8d60-1b24-d68b-2bb6a6d343a6", "value": "Record Only"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/fc40a4da-71d1-e347-e999-3d1f0ab0bd7c">
+        <skos:prefLabel xml:lang="en">{"id": "5e6a672c-94c4-eb63-51f3-b4150f22d625", "value": "Listing Unchanged"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/a3e6524f-90da-f33c-1eb1-ca4c2551c4cd">
+        <skos:prefLabel xml:lang="en">{"id": "a78d7385-21ba-2447-fa92-b7ed5289c570", "value": "Not Allocated"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/5658722e-989c-26ab-a6c8-f6c669ebcec7">
+        <skos:prefLabel xml:lang="en">{"id": "016b2326-8e44-cbf1-0c65-c393ed5ced4c", "value": "New Listing"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/bd796647-cce5-acf8-6247-1f86a192693a">
+        <skos:prefLabel xml:lang="en">{"id": "848484ce-db55-7ea6-8d83-40fc4cbd49fd", "value": "Delisting"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/865fd531-c16c-77a2-326a-3abd0d5835f5">
+        <skos:prefLabel xml:lang="en">{"id": "ad0f617d-8ea5-bc81-af0e-097a107606b5", "value": "Amendment"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ae874a6-5636-741d-90ba-b108edf27e82"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>

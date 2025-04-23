@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme rdf:about="http://arches:8000/63b28511-d1cd-9a96-51ca-0fbebfee8832">
+    <skos:prefLabel xml:lang="en">{"id": "169a9e3d-ccc3-e98f-333b-a37040d7005f", "value": "NIHED Components Thesaurus Extension"}</skos:prefLabel>
+    <dcterms:title xml:lang="en">{"id": "cd6b2d97-cda4-dab5-78ca-06d60c3b519a", "value": "NIHED Components Thesaurus Extension"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "410949d0-0c70-9420-6f54-0dbf71bfa8cc", "value": "http://arches:8000/63b28511-d1cd-9a96-51ca-0fbebfee8832"}</dcterms:identifier>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/2f8be71c-9832-51e6-0320-7bf6a183e541">
+        <skos:prefLabel xml:lang="en">{"id": "a6907dfe-8aee-7ebe-761f-ed43c7c4de1d", "value": "Tut"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/63b28511-d1cd-9a96-51ca-0fbebfee8832"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/c8380720-19e1-7e8b-0480-12958000d943">
+        <skos:prefLabel xml:lang="en">{"id": "376691bd-81a4-f74e-f771-da8c7ac35bc9", "value": "Partial Tut"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/63b28511-d1cd-9a96-51ca-0fbebfee8832"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+  </skos:ConceptScheme>
+</rdf:RDF>
