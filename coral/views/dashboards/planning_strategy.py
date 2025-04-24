@@ -47,7 +47,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
             domain_values = self.get_filter_council_options()
             members_filter = self.get_filter_members_options()
-            groups_filter = self.get_filter_members_options()
+            groups_filter = self.get_filter_group_options()
 
             consultationsDefaultWhereConditions = { 'resourceid__startswith': 'CON/' }
             queryBuilder = Consultation.where(**consultationsDefaultWhereConditions)
@@ -86,7 +86,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 # * The HM manager
                 elif (self._user_role.hm_manager['is_role']):
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # print('LENGTH ACTION STATUS : ', len(get_paginated_resources(queryBuilder)))
 
                     # * Action Type
@@ -101,7 +101,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 # * The HM user
                 elif (self._user_role.hm_user['is_role']):
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to
@@ -110,7 +110,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 # * The HB manager
                 elif (self._user_role.hb_manager['is_role']):
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to
@@ -120,7 +120,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 # * The HB user
                 elif (self._user_role.hb_user['is_role']):
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to

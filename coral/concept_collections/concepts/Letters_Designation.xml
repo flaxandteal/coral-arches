@@ -2,18 +2,18 @@
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <skos:ConceptScheme rdf:about="http://arches:8000/dac50073-2581-0a5b-cdd0-b7cdc1c3aa9a">
     <skos:prefLabel xml:lang="en">{"id": "7208ee3f-46e0-b617-df5d-3ff60a740fe6", "value": "Letters Designation"}</skos:prefLabel>
-    <skos:narrower>
+    <skos:hasTopConcept>
       <skos:Concept rdf:about="http://arches:8000/7f28d22e-6fc2-25f7-df26-ab2d45502f7f">
         <skos:prefLabel xml:lang="en">{"id": "bb6e23cf-0331-ea39-7164-a3af1607a958", "value": "Advance Listing Letter to Owner and Occupier"}</skos:prefLabel>
         <skos:inScheme rdf:resource="http://arches:8000/dac50073-2581-0a5b-cdd0-b7cdc1c3aa9a"/>
       </skos:Concept>
-    </skos:narrower>
-    <skos:narrower>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
       <skos:Concept rdf:about="http://arches:8000/7da22e36-5009-636f-4d98-453fd6e4c14f">
         <skos:prefLabel xml:lang="en">{"id": "95456a6b-30e0-b727-91f9-ccc0acfcac87", "value": "Advance Listing Letter to Council"}</skos:prefLabel>
         <skos:inScheme rdf:resource="http://arches:8000/dac50073-2581-0a5b-cdd0-b7cdc1c3aa9a"/>
       </skos:Concept>
-    </skos:narrower>
+    </skos:hasTopConcept>
     <dcterms:title xml:lang="en">{"id": "826414d5-d2b7-2ed2-0f53-9f20dcdc22cd", "value": "Letters Designation"}</dcterms:title>
     <dcterms:identifier xml:lang="en">{"id": "e218b817-a651-fd38-20d8-abec01528f7d", "value": "http://arches:8000/dac50073-2581-0a5b-cdd0-b7cdc1c3aa9a"}</dcterms:identifier>
     <skos:hasTopConcept rdf:resource="http://arches:8000/7f28d22e-6fc2-25f7-df26-ab2d45502f7f"/>

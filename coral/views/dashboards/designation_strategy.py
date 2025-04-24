@@ -124,7 +124,7 @@ class DesignationTaskStrategy(TaskStrategy):
             start_index = (page -1) * page_size
             end_index = (page * page_size)
         
-            # ! I can't develop use the sorting or pagination with emerald asuUnfortunately, emerald currently can't handle sorting by combing 
+            # ! I can't develop use the sorting or pagination with emerald as Unfortunately, emerald currently can't handle sorting by combing 
             # ! three models currently (Monument, MonumentRevision & Consultation)
             # ! There needs to be a join method in emerald, to allow the join of other models, however I don't have time to create this, therefore
             # ! the system below is fine and should be fast enough for the customer. 
