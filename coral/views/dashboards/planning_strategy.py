@@ -44,11 +44,10 @@ class PlanningTaskStrategy(TaskStrategy):
 
             resources = [] 
             utilities = Utilities()
-            filter_options = self.get_filter_options(groupId)
 
-            domain_values = [f for f in filter_options if f.get('type') == 'council']
-            members_filter = [f for f in filter_options if f.get('type') == 'person']
-            groups_filter = [f for f in filter_options if f.get('type') == 'group']
+            domain_values = self.get_filter_council_options()
+            members_filter = self.get_filter_members_options()
+            groups_filter = self.get_filter_members_options()
 
             consultationsDefaultWhereConditions = { 'resourceid__startswith': 'CON/' }
             queryBuilder = Consultation.where(**consultationsDefaultWhereConditions)
@@ -163,15 +162,51 @@ class PlanningTaskStrategy(TaskStrategy):
                 start_index = (page -1) * page_size
                 end_index = (page * page_size)
                 return copyQueryBuilder.offset(start_index, end_index)
-                
-            def get_count(queryBuilder):
+            
+            def get_counters(queryBuilder):
+                def _get_counters_hierarchy_type():
+                    keys = ['Statutory', 'Non-statutory', None]
+                    hierarchy_type = {}
+
+                    for key in keys:
+                        count = get_count(queryBuilder, { 'hierarchy_type': key })
+                        if (count != 0):
+                            hierarchy_type['None' if (key == None) else key] = count
+
+                    return hierarchy_type;
+                            
+                def _get_counters_action_status():
+                    keys = ['Extension requested', 'Open', 'Closed', 'HB done', 'HM done']
+                    hierarchy_type = {}
+
+                    for key in keys:
+                        count = get_count(queryBuilder, { 'action_status': key })
+                        if (count != 0):
+                            hierarchy_type['None' if (key == None) else key] = count
+
+                    return hierarchy_type;
+            
+                # ? Everyone can see the states? So even HM can see HB done?
+                return {
+                    'status': _get_counters_action_status(),
+                    'heirarchy_type': _get_counters_hierarchy_type()
+                }
+
+            def get_count(queryBuilder, whereConditions=None):
                 copyQueryBuilder = copy.deepcopy(queryBuilder)
-                return copyQueryBuilder.count()
+
+                if (whereConditions == None):
+                    return copyQueryBuilder.count()
+                else:
+                    return copyQueryBuilder.where(**whereConditions).count()
             
             queryBuilder = apply_default_conditions(queryBuilder)
             queryBuilder = apply_filters(queryBuilder)
-            queryBuilder = apply_order_by(queryBuilder)
             
+            counters = get_counters(queryBuilder)
+
+            queryBuilder = apply_order_by(queryBuilder)
+
             total_resources = get_count(queryBuilder)
             resources = get_paginated_resources(queryBuilder)
 
@@ -180,15 +215,7 @@ class PlanningTaskStrategy(TaskStrategy):
             for resource in resources:
                 task = self.build_data(resource, groupId)
                 tasks.append(task)
-
-            count_nodes = {
-                'status': lambda resource: resource.action[0].action_status,
-                'heirarchy_type': lambda resource: resource.hierarchy_type
-            }
-
-            # ! We can work out the count
-            counters = utilities.get_count_groups(resources, count_nodes)
-            
+                
             return tasks, total_resources, counters
         
     def get_sort_options(self):
@@ -196,17 +223,9 @@ class PlanningTaskStrategy(TaskStrategy):
             {'id': 'target_date_n1', 'name': 'Deadline'}, 
         ]
     
-    def get_filter_options(self, groupId=None):
-        """Get filter options for planning tasks."""
+    def get_filter_council_options(self):
         from arches.app.models import models
         with admin():
-            # Define constants needed for filters
-            is_hm_manager = groupId in [HM_MANAGER] 
-            is_hb_manager = groupId in [HB_MANAGER] 
-            is_hm_user = groupId in [HM_GROUP] 
-            is_hb_user = groupId in [HB_GROUP] 
-            is_admin = groupId in [PLANNING_GROUP]
-            
             # Create entries for council filter options
             council_node = models.Node.objects.filter(
                 nodeid = COUNCIL_NODE,
@@ -216,31 +235,41 @@ class PlanningTaskStrategy(TaskStrategy):
             domain_options = council_node.config.get("options")
             domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
 
-            # Get members of groups for filtering
-            planning_team_groups = [HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP]
-            hb_groups = [HB_GROUP, HB_MANAGER]
-            hm_groups = [HM_GROUP, HM_MANAGER]
-
-            members_filter = []
-            groups_filter = []
+            return domain_values
+    
+    def get_filter_members_options(self):
+        with admin():
+            if (self._user_role.hb_manager['is_role'] or self._user_role.hb_user['is_role']):
+                return self.get_group_members([HB_GROUP, HB_MANAGER])
             
-            # ! We can maybe use here resourceinstance__id here to search for resource instances
-            if is_hb_manager or is_hb_user:
-                members_filter = self.get_group_members(hb_groups)
-            elif is_hm_manager or is_hm_user:
-                members_filter = self.get_group_members(hm_groups)
-            elif is_admin:
-                members_filter = self.get_group_members(planning_team_groups)
-                groups_filter = [
+            elif (self._user_role.hm_manager['is_role'] or self._user_role.hm_user['is_role']):
+                return self.get_group_members([HM_GROUP, HM_MANAGER])
+            
+            elif (self._user_role.planning_group['is_role']):
+                return self.get_group_members([HB_GROUP, HM_GROUP, HB_MANAGER, HM_MANAGER, PLANNING_GROUP])
+            
+            else:
+                return []
+
+    def get_filter_group_options(self):
+        with admin():
+            if (self._user_role.planning_group['is_role']):
+                return [
                     {'id': 'Assign To HB', 'name': 'HB Group', 'type': 'group'}, 
                     {'id': 'Assign To HM', 'name': 'HM Group', 'type': 'group'}
-                ]       
+                ]
+            
+            else:
+                return []
 
+    def get_filter_options(self, _=None):
+        """Get filter options for planning tasks."""
+        with admin():
             filter_options = [
                 {'id': 'all', 'name': 'All', 'type': 'all'}, 
-                *groups_filter, 
-                *members_filter, 
-                *domain_values
+                *self.get_filter_group_options(), 
+                *self.get_filter_members_options(), 
+                *self.get_filter_council_options()
             ]
             
             return filter_options
@@ -255,7 +284,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 foundGroupRecords = Group.where(resourceinstance__resourceinstanceid=groups[0])
 
                 for _, group in enumerate(groups[1:], start=1):
-                    foundGroupRecords = foundGroupRecords.or_where(resourceinstance__resourceinstanceid=group).get()
+                    foundGroupRecords = foundGroupRecords.or_where(resourceinstance__resourceinstanceid=group)
 
                 return foundGroupRecords.get()
 
