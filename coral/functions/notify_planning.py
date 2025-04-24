@@ -50,7 +50,7 @@ details = {
 }
 class NotifyPlanning(BaseFunction):       
 
-    def save(self, tile, request, context):
+    def post_save(self, tile, request, context):
         from arches_orm.models import Person
 
         if context and context.get('escape_function', False):
