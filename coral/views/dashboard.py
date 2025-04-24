@@ -71,8 +71,11 @@ class Dashboard(View):
                 sort_options = data['sort_options']
                 filter_options = data['filter_options']
                 total_resources = data['total_resources']
-                utilities = Utilities()
-                task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
+                print('CACHE : ', version)
+
+                # ! Why do we need to re-sort the data here?
+                # utilities = Utilities()
+                # task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
             else:
                 key = f"groups_{user_id}"
                 data_cache = cache.get(key)

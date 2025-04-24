@@ -14,7 +14,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         from arches_orm.models import License
 
         licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
-        queryBuilder = License.where(**licencesDefaultWhereConditions)
+        queryBuilder = License.where(**licencesDefaultWhereConditions).where()
 
         def apply_filters(queryBuilder):
             if filter == 'All':
