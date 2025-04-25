@@ -2,6 +2,7 @@ from arches.app.models.tile import Resource
 from datetime import datetime
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
+# from arches_orm.arches_django.query_builder.query_builder import QueryBuilder
 import copy
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
@@ -51,8 +52,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         queryBuilder = apply_order_by(queryBuilder)
 
         resources = get_paginated_resources(queryBuilder)
-        total_resources = get_count(queryBuilder)
-        
+        total_resources = get_count(queryBuilder)   
         tasks = build_tasks(resources)
         counters = []
 
@@ -108,7 +108,9 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         # convert date format
         if valid_until_date:
-            valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+            date_obj = datetime.fromisoformat(str(valid_until_date))
+            valid_until_date = date_obj.strftime("%d-%m-%Y")
+            # valid_until_date = datetime.strptime(str(valid_until_date), "%Y-%m-%d %H:%M:%S%z").strftime("%d-%m-%Y")
 
         resource_data = {
             'id': str(licence.id),
