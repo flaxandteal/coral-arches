@@ -53,17 +53,16 @@ class DesignationTaskStrategy(TaskStrategy):
             tasks = []
 
             def _setup_default_conditions_and_get_count():
-                monumentDefaultWhereConditions = { 'status_type_n1__not_equal': APPROVED }
+                monumentDefaultWhereConditions = { 'status_type_n1__not_equal': 'Approved' }
+                # ! Strangly enough when using isnull on a resource list this doesn't work. This is due to internal SQL methods not casting Null or None properly
+                # ! towards the backend within the annotations/expressions
+                # ! https://github.com/flaxandteal/arches-orm/blob/emerald/0.3.2/arches_orm/arches_django/query_builder/annotations/expressions/expressions_postgresql.py#L21
                 monumentRevisionDefaultWhereConditions = { 'desg_approved_by': None }
-                consultationDefaultWhereConditions = { 'resourceid__startswith': 'EVM/', 'start_date': None }
+                consultationDefaultWhereConditions = { 'resourceid__startswith': 'EVM/', 'start_date__isnull': True }
 
                 self.heritage_assets = Monument.where(**monumentDefaultWhereConditions)
                 self.heritage_asset_revisions = MonumentRevision.where(**monumentRevisionDefaultWhereConditions)
                 self.evaluation_meetings = Consultation.where(**consultationDefaultWhereConditions)
-
-                # self.heritage_assets_total_count = self.heritage_assets.count()
-                # self.heritage_asset_revisions_total_count = self.heritage_asset_revisions.count()
-                # self.evaluation_meetings_total_count = self.evaluation_meetings.count()
 
             def _apply_filters():
                 """
@@ -81,8 +80,8 @@ class DesignationTaskStrategy(TaskStrategy):
                     self.evaluation_meetings = self.evaluation_meetings.where(council=filter)
 
                 elif filter_type == 'date': 
-                    self.heritage_assets = self.heritage_assets.where(statutory_consultee_notification_date_value__not_equal=None)
-                    self.heritage_asset_revisions = None;
+                    self.heritage_asset_revisions = self.heritage_asset_revisions.where(statutory_consultee_notification_date_value__isnull=False)
+                    self.heritage_assets = self.heritage_assets.where(statutory_consultee_notification_date_value__isnull=False)
                     self.evaluation_meetings = None;
 
                 elif filter_type == 'heritage_asset':
@@ -116,9 +115,7 @@ class DesignationTaskStrategy(TaskStrategy):
 
             _setup_default_conditions_and_get_count()
             _apply_filters()
-            # _apply_order_by()
             _apply_selectors()
-
             total_resources = len(resources)
 
             start_index = (page -1) * page_size
@@ -132,8 +129,6 @@ class DesignationTaskStrategy(TaskStrategy):
 
  
             indexed_resources = sorted_resources[start_index:end_index]
-
-            print('page_size : ', page_size)
 
             for resource in indexed_resources:
                 if isinstance(resource, Consultation):
@@ -164,7 +159,7 @@ class DesignationTaskStrategy(TaskStrategy):
             node_alias = Monument._._node_objects_by_alias()
             domain_options = node_alias['council'].config['options']
 
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+            domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
 
             return [
                 {'id': 'all', 'name': 'All', 'type': 'default'},

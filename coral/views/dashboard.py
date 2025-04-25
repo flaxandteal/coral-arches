@@ -65,14 +65,17 @@ class Dashboard(View):
             cache_key = f'dashboard_{user_id}_{version}_{page}'
             cache_data = cache.get(cache_key)
             if not update and cache_data:
+                print('USING CACHE DATA HERE')
                 data = json.loads(cache_data)
                 task_resources = data['task_resources']
                 counters = data['counters']
                 sort_options = data['sort_options']
                 filter_options = data['filter_options']
                 total_resources = data['total_resources']
-                utilities = Utilities()
-                task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
+
+                # ! Could cause issues but shouldn't
+                # utilities = Utilities()
+                # task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
             else:
                 key = f"groups_{user_id}"
                 data_cache = cache.get(key)
