@@ -10,17 +10,15 @@ define([
     const openWorkflowViewModel = function (params) {
       OpenWorkflow.apply(this, [params]);
       this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
-      this.evmTiles = ko.observableArray();
-      this.selectedEvaluationMeeting = ko.observable();
-      this.selectedBuilding = ko.observable();
-
-      this.buildingString = `/search/resources?advanced-search=[{"op":"and","b37552be-9527-11ea-9213-f875a44e0e11":{"op":"~","lang":"en","val":"SMC"},"b37552bf-9527-11ea-9c87-f875a44e0e11":{"op":"~","lang":"en","val":""},"b37552bd-9527-11ea-97f4-f875a44e0e11":{"op":"eq","val":""}}]`;
+      this.smcTiles = ko.observableArray();
+      this.selectedSMC = ko.observable();
+      this.selectedHA = ko.observable();
 
       this.configKeys = ko.observable({ placeholder: 0 });
   
       this.addtionalConfigData = ko.observable({
         parentTileIds: {},
-        buildingId: [{}],
+        haId: [{}],
         resourceInstanceId: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
       });
   
@@ -35,16 +33,16 @@ define([
         return data.tiles;
       };
   
-      this.searchSiteVisits = async (resourceId) => {
+      this.searchSMCs = async (resourceId) => {
         const searchResponse = await window.fetch(
-            arches.urls.search_results + '?advanced-search=[{"op":"and","b37552be-9527-11ea-9213-f875a44e0e11":{"op":"~","lang":"en","val":"SMC"},"b37552bf-9527-11ea-9c87-f875a44e0e11":{"op":"~","lang":"en","val":""},"b37552bd-9527-11ea-97f4-f875a44e0e11":{"op":"eq","val":""}}]'
+            arches.urls.search_results + `?advanced-search=[{"op":"and","b37552be-9527-11ea-9213-f875a44e0e11":{"op":"~","lang":"en","val":"SMC"},"b37552bf-9527-11ea-9c87-f875a44e0e11":{"op":"~","lang":"en","val":""},"b37552bd-9527-11ea-97f4-f875a44e0e11":{"op":"eq","val":""}},{"op":"and","58a2b98f-a255-11e9-9a30-00224800b26d":{"op":"","val":["${resourceId}"]}}]`
         )
         const data = await searchResponse.json()
         return data.results.hits.hits;
       };
   
       this.getParentTileOptions = async (resourceId) => {
-        const tiles = await this.searchSiteVisits(resourceId);
+        const tiles = await this.searchSMCs(resourceId);
         this.parentTileOptions(
           tiles.map((tile, idx) => {
             return {
@@ -62,8 +60,8 @@ define([
 
       this.startNew = async () => {
         const associatedBuilding = {
-            data: {"bc64746e-cf4a-11ef-997c-0242ac120007":this.addtionalConfigData().buildingId},
-            nodegroup_id: 'bc64746e-cf4a-11ef-997c-0242ac120007',
+            data: {"58a2b98f-a255-11e9-9a30-00224800b26d":this.addtionalConfigData().haId},
+            nodegroup_id: '58a2b98f-a255-11e9-9a30-00224800b26d',
             parenttile_id: null,
             resourceinstance_id: "",
             tileid: null,
@@ -81,7 +79,7 @@ define([
           const response = await associatedBuildingTile.json()
           this.selectedResource(response.resourceinstance_id)
       }
-      this.selectedBuilding.subscribe((resourceId) => {
+      this.selectedHA.subscribe((resourceId) => {
 
         if (!resourceId) {
           this.parentTileOptions([]);
@@ -89,7 +87,7 @@ define([
           return;
         }
         this.getParentTileOptions(resourceId);
-        this.addtionalConfigData()['buildingId'] = [{"resourceId":resourceId}]
+        this.addtionalConfigData()['haId'] = [{"resourceId":resourceId}]
         this.setAdditionalOpenConfigData()
       });
   
@@ -100,7 +98,7 @@ define([
         }
         this.addtionalConfigData()['resourceInstanceId'] = resourceId;
         const tileData = await this.fetchTileData(resourceId)
-        this.evmTiles(tileData)
+        this.smcTiles(tileData)
         this.setAdditionalOpenConfigData();
       });
     };
