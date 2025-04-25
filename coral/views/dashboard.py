@@ -34,7 +34,7 @@ class Dashboard(View):
         from arches_orm.models import Person
         with admin():
             user_id = request.user.id                     
-            person_resource = Person.where(user_account=user_id).first()
+            person_resource = Person.where(user_account=user_id).get()
             if not person_resource:
                 return JsonResponse({"error": "User not found"}, status=404)
             
@@ -80,7 +80,7 @@ class Dashboard(View):
                 if data_cache:
                     user_group_ids = json.loads(data_cache)
                 else:
-                    user_group_ids = self.get_groups(person_resource.id)
+                    user_group_ids = self.get_groups(person_resource[0].id)
                     cache.set(key, json.dumps(user_group_ids), 60 * 15) 
        
                 strategies = []
@@ -101,7 +101,7 @@ class Dashboard(View):
                     
                 task_params = {
                     'groupId': groupId,
-                    'userResourceId': person_resource.id,
+                    'userResourceId': person_resource[0].id,
                     'page': page,
                     'page_size': items_per_page
                 }
