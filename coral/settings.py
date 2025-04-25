@@ -245,6 +245,10 @@ CONTENT_SECURITY_POLICY = {
     },
 }
 
+X_FRAME_OPTIONS = 'DENY'
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     MIDDLEWARE.append("debug_toolbar_force.middleware.ForceDebugToolbarMiddleware")
