@@ -2,6 +2,7 @@ from arches.app.models.tile import Resource
 from datetime import datetime
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
+from arches_orm.arches_django.query_builder.query_builder import QueryBuilder
 import copy
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
@@ -16,25 +17,62 @@ class ExcavationTaskStrategy(TaskStrategy):
         licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
         queryBuilder = License.where(**licencesDefaultWhereConditions)
 
-        def apply_filters(queryBuilder):
+        def apply_filters(queryBuilder: "QueryBuilder") -> "QueryBuilder":
+            """
+            Method applys on filters if any was selected
+
+            Args:
+                queryBuilder (QueryBuilder): The query builder instance 
+
+            Returns:
+                QueryBuilder: The query builder instance 
+            """
             if filter == 'All':
                 return queryBuilder;
     
             return queryBuilder.where(report_classification_type=filter);
         
-        def apply_order_by(queryBuilder):
+        def apply_order_by(queryBuilder: "QueryBuilder") -> "QueryBuilder":
+            """
+            Method applies the order by modifier towards the sort order on the frontend
+
+            Args:
+                queryBuilder (QueryBuilder): The query builder instance 
+
+            Returns:
+                QueryBuilder: The query builder instance 
+            """
             direction = '-'
-            if (sort_order == 'desc'): direction = ''
+            if (sort_order == 'asc'): direction = ''
 
             return queryBuilder.order_by(f'{direction}{sort_by}')
 
-        def get_paginated_resources(queryBuilder):
+        def get_paginated_resources(queryBuilder: "QueryBuilder") -> "QueryBuilder":
+            """
+            Method gets results by setting an offset (range), therefore the records are paginated
+
+            Args:
+                queryBuilder (QueryBuilder): The query builder instance 
+
+            Returns:
+                QueryBuilder: The query builder instance 
+            """
             copyQueryBuilder = copy.deepcopy(queryBuilder)
             start_index = (page -1) * page_size
             end_index = (page * page_size)
             return copyQueryBuilder.offset(start_index, end_index)
     
-        def get_count(queryBuilder):
+    
+        def get_count(queryBuilder: "QueryBuilder") -> "QueryBuilder":
+            """
+            Method gets the count of total records, since we paginated the resource
+
+            Args:
+                queryBuilder (QueryBuilder): The query builder instance 
+
+            Returns:
+                QueryBuilder: The query builder instance 
+            """
             copyQueryBuilder = copy.deepcopy(queryBuilder)
             return copyQueryBuilder.count()
         
@@ -108,7 +146,7 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         # convert date format
         if valid_until_date:
-            valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+            valid_until_date = datetime.strptime(str(valid_until_date), "%Y-%m-%d %H:%M:%S%z").strftime("%d-%m-%Y")
 
         resource_data = {
             'id': str(licence.id),
