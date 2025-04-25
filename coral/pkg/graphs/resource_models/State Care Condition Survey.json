@@ -1102,7 +1102,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "completed_by",
+                    "alias": "completed_by_group",
                     "config": {
                         "en": ""
                     },
@@ -1116,7 +1116,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Completed by",
+                    "name": "Completed by group",
                     "nodegroup_id": "5a955770-532c-11ef-9d2a-0242ac120006",
                     "nodeid": "365b9c42-1b78-11f0-82fe-e2231a6d3ec2",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
@@ -1654,7 +1654,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "completed_by_value",
+                    "alias": "completed_by",
                     "config": {
                         "graphs": [
                             {
@@ -1675,7 +1675,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Completed by value",
+                    "name": "Completed by",
                     "nodegroup_id": "5a955770-532c-11ef-9d2a-0242ac120006",
                     "nodeid": "924abf1a-1b78-11f0-af7b-e2231a6d3ec2",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
