@@ -5,29 +5,25 @@ describe('Going through the Add Garden Workflow', function () {
         cy.visit('/plugins/init-workflow');
     });
 
-    it('Go through the workflow and populate all fields', function () {
-        cy.contains('Workflows');
+    it('Create new HA and Go through the workflow and populate all fields', function () {
+        cy.contains('Workflows').should('be.visible');
         cy.contains('Add Garden').click();
         cy.wait(2000);
 
         // Add Garden 1st page
-        cy.get('[aria-label="Start new or please select from below"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
         cy.get('.btn-success').contains('Start New').click();
-        cy.wait(2000);
 
         // Start tab
-        cy.wait(4000);
-        cy.get('.card_component.resourceid').contains('HA Number');
+        cy.wait(2500);
+        cy.get('.card_component.resourceid').contains('HA Number').should('be.visible');
         cy.get('.form-control').should('be.disabled');
         cy.get('.btn-success').contains('Save and Continue').click();
 
         // Heritage Asset Details tab
-        cy.contains('Site Name');
+        cy.contains('Site Name').should('be.visible');
         cy.get('[aria-label="Site Name"]').click().type('Testing');
 
-        cy.contains('Heritage Asset Type');
+        cy.contains('Heritage Asset Type').should('be.visible');
         cy.get('[aria-label="Heritage Asset Type"]').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
@@ -44,16 +40,16 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('.select2-results__option').contains('Test Bibliographic').click();
 
-        cy.contains('Source Number');
+        cy.contains('Source Number').should('be.visible');
         cy.get('[aria-label="Source Number"]').click().type('123456');
 
-        cy.contains('Page(s)');
+        cy.contains('Page(s)').should('be.visible');
         cy.get('[aria-label="Page(s)"]').click().type('12');
 
-        cy.contains('Figs.');
+        cy.contains('Figs.').should('be.visible');
         cy.get('[aria-label="Figs."]').click().type('123');
 
-        cy.contains('Plate(s)');
+        cy.contains('Plate(s)').should('be.visible');
         cy.get('[aria-label="Plate(s)"]').click().type('1');
 
         cy.contains('Comment').scrollIntoView();
@@ -70,7 +66,7 @@ describe('Going through the Add Garden Workflow', function () {
 
         cy.get('.btn-success').contains('Add').click();
 
-        cy.wait(5000);
+        cy.wait(2500);
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
 
@@ -78,16 +74,16 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('[aria-label="Building Name"]').click().type('Testing Labs');
         cy.wait(2000);
-        cy.get('[aria-label="Building Number"]').first().click().type('Testing Labs');
-        cy.wait(2000);
         cy.get('[aria-label="Street"]').first().click().type('Testing Labs');
         cy.wait(2000);
         cy.get('[aria-label="Town or City"]').first().click().type('Testing Labs');
         cy.wait(2000);
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
         cy.wait(2000);
-        cy.get('.county_selected').contains('Select an option').scrollIntoView().click();
-        cy.get('.townland').contains('Select an option').click();
+        // missing concepts 
+        // cy.get('[aria-label="County, Select an option"]').contains('Select an option').click().contains('Down').click();
+        // cy.wait(2000);
+        // cy.get('[aria-label="Townland, Select an option"]').contains('Select an option').click().contains(" LITTLE MINNIS'S ISLAND").click();
         cy.wait(2000);
         cy.get('.council').contains('Select an option').click();
         cy.wait(2000);
@@ -146,7 +142,7 @@ describe('Going through the Add Garden Workflow', function () {
 
         // cy.get('#formatType')
 
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+        cy.get('.btn').contains('Next Step').click();
 
         // Documentation tab
         cy.get('.bord-top > .btn').contains('Select Files').click();
@@ -154,23 +150,19 @@ describe('Going through the Add Garden Workflow', function () {
 
         // Finish tab
         cy.wait(2000);
-        cy.get('[aria-label="Input Date Value"]').click();
+        cy.get('.form-control.input-lg').first().click();
         cy.get('.card_component.input_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-        cy.get('.input_by_value').contains('Add new Relationship').click();
+        cy.get('.input_by_value').should('be.visible');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('[aria-label="Approved Date Value"]').click();
+        cy.get('.form-control.input-lg').eq(1).click();
         cy.get('.card_component.gar_approved_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-        cy.get('.gar_approved_by_value').contains('Add new Relationship').click();
+        cy.get('.gar_approved_by_value').should('be.visible');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('.status_type_n1').contains('Select an option').scrollIntoView().click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('[aria-label="Provisional"]').click();
+        cy.get('.select2-results__option').contains('Approved').click();
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click()
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
-
     })
 
     it('Heritage Asset Details tab specific tests', function () {
@@ -182,122 +174,99 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
         cy.get('.select2-results__option').contains('HA/01').click();
-        cy.get('.btn-success').contains('Start New').click();
         cy.wait(2000);
+        cy.get('.btn-primary').contains('Open Selected').click();
 
         // Start tab
-        cy.wait(4000);
-        cy.get('.card_component.resourceid').contains('HA Number');
+        cy.wait(2500);
+        cy.get('.card_component.resourceid').contains('HA Number').should('be.visible');
         cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-success').contains('Save and Continue').click();
+        cy.get('.btn-primary').contains('Next Step').click();
 
         // Heritage Asset Details tab
         cy.contains('Site Name');
         cy.get('[aria-label="Site Name"]').click().type('Testing');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Site Name"]').click().clear();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
-        cy.contains('Heritage Asset Type');
+        cy.contains('Heritage Asset Type').should('be.visible');
         cy.get('[aria-label="Heritage Asset Type"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('.card_component.monument_type > .row > .form-group > .col-xs-12 > .select2 > .selection > .select2-selection > .select2-selection__rendered > .select2-selection__clear').first().click({force:true});
-        cy.wait(2000);
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
-        cy.get('.select2-results__option').first().click();
-        cy.get('[aria-label="Heritage Asset Type"]').first().click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('Bee House').click();
+        cy.get('.select2-results__option').eq(2).click();
         cy.wait(2000)
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         cy.contains('Land Use Classification').scrollIntoView();
         cy.get('[aria-label="Land Use Classification"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('.card_component.land_use_classification > .row > .form-group > .col-xs-12 > .select2 > .selection > .select2-selection > .select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        cy.get('.select2-results__option').eq(1).click();
         cy.wait(2000);
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
-        cy.get('.select2-results__option').first().click();
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Land Use Classification"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('Coastland 1').click();
+        cy.get('.select2-results__option').eq(3).click();
         cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
 
         cy.contains('Bibliographic Source').scrollIntoView();
         cy.wait(2000)
         cy.get(':nth-child(1) > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
-        cy.wait(2000);
-        cy.get('.rr-table-row-initial > :nth-child(3) > button').click()
-        cy.get('.close-new-step').contains('Return').click();
-        cy.wait(2000);
-        cy.get('.rr-table-row-initial > :nth-child(2) > button').click()
 
-        cy.contains('Source Number');
+        cy.contains('Source Number').should('be.visible');
         cy.get('[aria-label="Source Number"]').click().type('123456');
 
-        cy.contains('Page(s)');
+        cy.contains('Page(s)').should('be.visible');
         cy.get('[aria-label="Page(s)"]').click().type('12');
 
-        cy.contains('Figs.');
+        cy.contains('Figs.').should('be.visible');
         cy.get('[aria-label="Figs."]').click().type('123');
 
-        cy.contains('Plate(s)');
+        cy.contains('Plate(s)').should('be.visible');
         cy.get('[aria-label="Plate(s)"]').click().type('1');
 
         cy.contains('Comment').scrollIntoView();
         cy.get('[aria-label="Comment"]').click().type('1');
 
-        cy.get('.btn-success').contains('Add');
-        cy.get('.btn-danger').contains('Clear');
+        cy.get('.btn-success').contains('Add').should('be.visible');
+        cy.get('.btn-danger').contains('Clear').should('be.visible');
         cy.get('.btn-success').contains('Add').click();
 
         cy.get(':nth-child(1) > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
-        cy.wait(2000);
-        cy.get('.rr-table-row-initial > :nth-child(3) > button').click()
-        cy.get('.close-new-step').contains('Return').click();
-        cy.wait(2000);
-        cy.get('.rr-table-row-initial > :nth-child(2) > button').click()
 
-        cy.contains('Source Number');
+        cy.contains('Source Number').should('be.visible');
         cy.get('[aria-label="Source Number"]').click().type('123456');
 
-        cy.contains('Page(s)');
+        cy.contains('Page(s)').should('be.visible');
         cy.get('[aria-label="Page(s)"]').click().type('12');
 
-        cy.contains('Figs.');
+        cy.contains('Figs.').should('be.visible');
         cy.get('[aria-label="Figs."]').click().type('123');
 
-        cy.contains('Plate(s)');
+        cy.contains('Plate(s)').should('be.visible');
         cy.get('[aria-label="Plate(s)"]').click().type('1');
 
-        cy.contains('Comment').scrollIntoView();
+        cy.contains('Comment').scrollIntoView().should  ;
         cy.get('[aria-label="Comment"]').click().type('1');
          
         cy.get('.btn-danger').contains('Clear').click();
-
 
         cy.get('.card_component.description_type').contains('Description Type').scrollIntoView();
         cy.get('.card_component.description_type').contains('Select an option').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
 
-        cy.get('.control-label').contains('Description');
         cy.type_ckeditor('editor3', 'test, Description');
 
         cy.get('.btn-success').contains('Add').click();
@@ -312,14 +281,15 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
         cy.get('.select2-results__option').contains('HA/01').click();
-        cy.get('.btn-success').contains('Start New').click();
+        cy.wait(2000);
+        cy.get('.btn-primary').contains('Open Selected').click();
         cy.wait(2000);
 
         // Start tab
-        cy.wait(4000);
-        cy.get('.card_component.resourceid').contains('HA Number');
+        cy.wait(2500);
+        cy.get('.card_component.resourceid').contains('HA Number').should('be.visible');
         cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-success').contains('Save and Continue').click();
+        cy.get('.btn-primary').contains('Next Step').click();
 
         // Heritage Asset Details tab
         cy.wait(2000);
@@ -332,75 +302,66 @@ describe('Going through the Add Garden Workflow', function () {
         // Building Name
         cy.get('[aria-label="Building Name"]').first().click().type('Testing Labs');
         cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Building Name"]').first().click().clear();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
-
-        // Building Number
-        cy.get('[aria-label="Building Number"]').first().click().type('Testing Labs');
-        cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
-        cy.get('[aria-label="Building Number"]').first().click().clear();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // Street
         cy.get('[aria-label="Street"]').first().click().type('Testing Labs');
         cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Street"]').first().click().clear();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // Town or City
         cy.get('[aria-label="Town or City"]').first().click().type('Testing Labs');
         cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Town or City"]').first().click().clear();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // Postcode
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
         cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Postcode"]').first().click().clear();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // County
-        cy.get('.county_selected').contains('Select an option').scrollIntoView().click();
+        // concept missing
+        // cy.get('.county_selected').contains('Select an option').scrollIntoView().click();
 
         // Townland
-        cy.get('.townland').contains('Select an option').click();
-        cy.wait(2000);
+        // concept missing
+        // cy.get('.townland').contains('Select an option').click();
+        // cy.wait(2000);
 
         // Council
-        cy.get('.council').contains('Select an option').click();
+        cy.get('[aria-label="LA01 - Causeway Coast and Glens Borough Council"]').click({force: true});
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('37: Ards and North Down');
-        cy.get('.select2-results__option').contains('36: Newry Mourne and Down');
-        cy.get('.select2-results__option').contains('35: Mid Ulster');
-        cy.get('.select2-results__option').contains('34: Mid and East Antrim');
-        cy.get('.select2-results__option').contains('33: Lisburn and Castlereagh');
-        cy.get('.select2-results__option').contains('32: Fermanagh and Omagh').scrollIntoView();
-        cy.get('.select2-results__option').contains('31: Derry City and Strabane');
-        cy.get('.select2-results__option').contains('30: Causeway Coast and Glens');
-        cy.get('.select2-results__option').contains('29: Belfast');
-        cy.get('.select2-results__option').contains('28: Armagh City Banbridge and Craigavon');
-        cy.get('.select2-results__option').contains('27: Antrim and Newtownabbey');
-        cy.get('.select2-results__option').contains('31: Derry City and Strabane').click();
+        cy.get('.select2-results__option').contains('LA01 - Causeway Coast and Glens Borough Council').scrollIntoView();
+        cy.get('.select2-results__option').contains('LA02 - Mid and East Antrim Borough Council');
+        cy.get('.select2-results__option').contains('LA03 - Antrim and Newtownabbey Borough Council');
+        cy.get('.select2-results__option').contains('LA04 - Belfast City Council');
+        cy.get('.select2-results__option').contains('LA05 - Lisburn and Castlereagh City Council');
+        cy.get('.select2-results__option').contains('LA06 - Ards and North Down Borough Council').scrollIntoView();
+        cy.get('.select2-results__option').contains('LA07 - Newry, Mourne and Down District Council');
+        cy.get('.select2-results__option').contains('LA08 - Armagh City, Banbridge and Craigavon Borough Council');
+        cy.get('.select2-results__option').contains('LA09 - Mid Ulster District Council');
+        cy.get('.select2-results__option').contains('LA10 - Fermanagh and Omagh District Council').scrollIntoView();
+        cy.get('.select2-results__option').contains('LA11 - Derry City and Strabane District Council');
         cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
         
         // Area type
@@ -413,7 +374,7 @@ describe('Going through the Add Garden Workflow', function () {
 
         // Location Description
         cy.get('.control-label').contains('Location Description');
-        cy.type_ckeditor('editor1', 'test, Location Description');
+        cy.type_ckeditor('editor4', 'test, Location Description');
 
         // Unique Building ID
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
@@ -531,14 +492,15 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
         cy.get('.select2-results__option').contains('HA/01').click();
-        cy.get('.btn-success').contains('Start New').click();
+        cy.wait(2000);
+        cy.get('.btn-primary').contains('Open Selected').click();
         cy.wait(2000);
 
         // Start tab
-        cy.wait(4000);
+        cy.wait(2500);
         cy.get('.card_component.resourceid').contains('HA Number');
         cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-success').contains('Save and Continue').click();
+        cy.get('.btn-primary').contains('Next Step').click();
 
         // Heritage Asset Details tab
         cy.wait(2000);
@@ -547,26 +509,24 @@ describe('Going through the Add Garden Workflow', function () {
 
         // Finish tab
         cy.wait(2000);
-        cy.get('[aria-label="Input Date Value"]').click();
+        cy.get('.form-control.input-lg').first().click();
         cy.get('.card_component.input_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-        cy.get('.input_by_value').contains('Input By');
-        cy.get('.input_by_value').contains('Add new Relationship').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('[aria-label="Approved Date Value"]').click();
+        // cy.get('.input_by_value').contains('Input By');
+        // cy.get('.input_by_value').contains('Add new Relationship').click();
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').first().click();
+        cy.get('.form-control.input-lg').eq(1).click();
         cy.get('.card_component.gar_approved_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-        cy.get('.gar_approved_by_value').contains('Approved By Value');
-        cy.get('.gar_approved_by_value').contains('Add new Relationship').click();
+        // cy.get('.gar_approved_by_value').contains('Approved By Value');
+        // cy.get('.gar_approved_by_value').contains('Add new Relationship').click();
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').first().click();
+        cy.get('[aria-label="Provisional"]').contains('Provisional').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('.status_type_n1').contains('Status');
-        cy.get('.status_type_n1').contains('Select an option').scrollIntoView().click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').contains('Approved').click();
         cy.wait(2000);
 
-        cy.get('.reference_number_n1').contains('Reference Code');
-
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click()
+        cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click();
+        cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
     })
 })
