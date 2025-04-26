@@ -1,0 +1,1484 @@
+{
+  "models": {
+    "b9e0701e-5463-11e9-b5f5-000d3ab1e588": {
+      "author": "Phil Carlisle",
+      "cards": 45,
+      "cards_x_nodes_x_widgets": 261,
+      "color": "rgba(204,112,109,1)",
+      "description": {
+        "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on ‘how we know what we know’ (for example investigative activities or research and analysis) or on how a particular Heritage Asset or Area has been managed through time (management activities)."
+      },
+      "edges": 337,
+      "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+      "iconclass": "fa fa-cogs",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Activity"
+      },
+      "nodegroups": 45,
+      "nodes": 338,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+        "notes": null,
+        "publicationid": "3f4c71e2-3eaa-11ef-812e-0242ac120006",
+        "published_time": "2024-07-10T10:50:39.911"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "activity",
+        "config": {
+          "fillColor": "rgba(233,112,111,0.8)"
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Activity",
+        "nodegroup_id": null,
+        "nodeid": "b9e0705b-5463-11e9-9368-000d3ab1e588",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record events relating to a particular Heritage Resource. Activities can be used to give context and meaning to the records of heritage assets or areas. They provide information on ‘how we know what we know’ (for example investigative activities or research and analysis) or on how a particular Heritage Asset or Area has been managed through time (management activities)."
+      },
+      "version": ""
+    },
+    "42ce82f6-83bf-11ea-b1e8-f875a44e0e11": {
+      "author": " Phil Carlisle",
+      "cards": 25,
+      "cards_x_nodes_x_widgets": 181,
+      "color": "rgba(91,16,19,1)",
+      "description": {
+        "en": "An area of land which is subject to a planning application and as such may have an impact on the historic environment or the setting of monuments."
+      },
+      "edges": 227,
+      "graphid": "42ce82f6-83bf-11ea-b1e8-f875a44e0e11",
+      "iconclass": "fa fa-square-o",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Application Area"
+      },
+      "nodegroups": 25,
+      "nodes": 228,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "42ce82f6-83bf-11ea-b1e8-f875a44e0e11",
+        "notes": null,
+        "publicationid": "a4598a6c-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:38:55.335",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "application_area",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "42ce82f6-83bf-11ea-b1e8-f875a44e0e11",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Application Area",
+        "nodegroup_id": null,
+        "nodeid": "42ce5bc0-83bf-11ea-a7d5-f875a44e0e11",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "An area of land which is subject to a planning application."
+      },
+      "version": ""
+    },
+    "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a": {
+      "author": "Phil Weir ",
+      "cards": 2,
+      "cards_x_nodes_x_widgets": 2,
+      "color": null,
+      "description": {
+        "en": "Basic structure to represent an (Arches) workflow"
+      },
+      "edges": 2,
+      "graphid": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+      "iconclass": "fa fa-plug",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Arches Plugin"
+      },
+      "nodegroups": 2,
+      "nodes": 3,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+        "notes": null,
+        "publicationid": "b26ae79e-69ca-11ef-8193-0242ac120005",
+        "published_time": "2024-09-03T08:01:16.943"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "e828f30f-f4ef-4e9b-aeb0-3998bcb7678a",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Arches Plugin",
+        "nodegroup_id": null,
+        "nodeid": "d993e67e-677f-11ef-9f42-0242ac120006",
+        "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Workflows, etc."
+      },
+      "version": ""
+    },
+    "b07cfa6f-894d-11ea-82aa-f875a44e0e11": {
+      "author": " Phil Carlisle",
+      "cards": 23,
+      "cards_x_nodes_x_widgets": 153,
+      "color": "rgba(162,127,115,1)",
+      "description": {
+        "en": "Used to record references to non-bibliographic sources of information held in external repositories."
+      },
+      "edges": 202,
+      "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+      "iconclass": "fa fa-archive",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Archive Source"
+      },
+      "nodegroups": 23,
+      "nodes": 203,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+        "notes": null,
+        "publicationid": "1fcb0d2e-442c-11ef-a57a-0242ac120002",
+        "published_time": "2024-07-17T11:02:57.442"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "archive_source",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Archive Source",
+        "nodegroup_id": null,
+        "nodeid": "b07cfa6e-894d-11ea-ac45-f875a44e0e11",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record references to non-bibliographic sources of information held in external repositories."
+      },
+      "version": ""
+    },
+    "979aaf0b-7042-11ea-9674-287fcf6a5e72": {
+      "author": " Phil Carlisle",
+      "cards": 36,
+      "cards_x_nodes_x_widgets": 337,
+      "color": "rgba(119,169,66,1)",
+      "description": {
+        "en": "Used to record complex human-made, or human conceived, sites, areas or landscapes. Areas can be anything from a simple prehistoric settlement site (evidenced by a few flint-working fragments) to large-scale, urban conservation areas incorporating multiple assets within a city. The use of Area or Heritage Asset will be a question of granularity.\n\nFor building complexes such as castles, prisons and airfields, Area may be used to record the footprint of the site, eg. the curtain wall and outer defences of a castle. This Area can then be used as the parent for multiple Heritage Asset records."
+      },
+      "edges": 427,
+      "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+      "iconclass": "fa fa-map-marker",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Area"
+      },
+      "nodegroups": 36,
+      "nodes": 428,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+        "notes": null,
+        "publicationid": "0b028f14-0c4d-11ef-826b-0242ac170006",
+        "published_time": "2024-05-07T08:37:30.850"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "area",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Area",
+        "nodegroup_id": null,
+        "nodeid": "979aaf0a-7042-11ea-8a93-287fcf6a5e72",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E27_Site",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record complex human-made, or human conceived, sites, areas or landscapes. Areas can be anything from a simple prehistoric settlement site (evidenced by a few flint-working fragments) to large-scale, urban conservation areas incorporating multiple assets within a city. The use of Area or Heritage Asset will be a question of granularity."
+      },
+      "version": ""
+    },
+    "343cc20c-2c5a-11e8-90fa-0242ac120005": {
+      "author": "Phil Carlisle",
+      "cards": 37,
+      "cards_x_nodes_x_widgets": 327,
+      "color": "rgba(187,212,169,1)",
+      "description": {
+        "en": "Defines information relating to the character of man made items of heritage significance as identified by the Portable Antiquities Scheme\nIncludes individual artefacts, architectural items, artefact assemblages, individual ecofacts and ecofact assemblages, and environmental samples."
+      },
+      "edges": 415,
+      "graphid": "343cc20c-2c5a-11e8-90fa-0242ac120005",
+      "iconclass": "fa fa-beer",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Artefact"
+      },
+      "nodegroups": 37,
+      "nodes": 416,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "343cc20c-2c5a-11e8-90fa-0242ac120005",
+        "notes": null,
+        "publicationid": "a560e8a6-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:38:57.061",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "artefact",
+        "config": {
+          "fillColor": "rgba(216,111,233,0.8)"
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "343cc20c-2c5a-11e8-90fa-0242ac120005",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Artefact",
+        "nodegroup_id": null,
+        "nodeid": "343dbb80-2c5a-11e8-90fa-0242ac120005",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E22_Human-Made_Object",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Defines information relating to the character of man made items of heritage significance as identified by the Portable Antiquities Scheme"
+      },
+      "version": ""
+    },
+    "24d7b54f-5464-11e9-a86b-000d3ab1e588": {
+      "author": "Phil",
+      "cards": 15,
+      "cards_x_nodes_x_widgets": 108,
+      "color": "rgba(143,59,51,1)",
+      "description": {
+        "en": "Describes how to document the sources used in the compilation or enhancement of heritage assets. This information provides authority for the entries without which the entries have no substantiating evidence. The information also allows future users to trace the origin of a given entry and to avoid the inefficiency of re-examining sources that have already been checked."
+      },
+      "edges": 144,
+      "graphid": "24d7b54f-5464-11e9-a86b-000d3ab1e588",
+      "iconclass": "fa fa-file-text",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Bibliographic Source"
+      },
+      "nodegroups": 15,
+      "nodes": 145,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "24d7b54f-5464-11e9-a86b-000d3ab1e588",
+        "notes": null,
+        "publicationid": "a7837446-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:00.643",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "bibliographic_source",
+        "config": {
+          "fillColor": "rgba(12,52,112,0.8)"
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "24d7b54f-5464-11e9-a86b-000d3ab1e588",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Bibliographic Source",
+        "nodegroup_id": null,
+        "nodeid": "24d7b584-5464-11e9-8e43-000d3ab1e588",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Covers documentation of references to bibliographic sources of information held outside of the information system."
+      },
+      "version": ""
+    },
+    "8d41e49e-a250-11e9-9eab-00224800b26d": {
+      "author": " FGI",
+      "cards": 79,
+      "cards_x_nodes_x_widgets": 421,
+      "color": "rgba(159,29,34,1)",
+      "description": {
+        "en": "Version 0.1; A model to represent activities and information related to the review and evaluation of proposed developments or alterations to a structure.  This model supposes that an official of a government agency must review proposed construction activities and determine whether the activities require conditions/mitigations to conform with local requirements.  This model allows for formal application review and informal (e.g.: pre-application) consultations."
+      },
+      "edges": 571,
+      "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+      "iconclass": "fa fa-briefcase",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Consultation"
+      },
+      "nodegroups": 78,
+      "nodes": 570,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "notes": null,
+        "publicationid": "e1067d62-5989-11ef-af2d-0242ac120006",
+        "published_time": "2024-08-13T15:36:59.246"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "consultation",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Consultation",
+        "nodegroup_id": null,
+        "nodeid": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record activities relating to the provision of advice with regards to planning applications which may affect the historic environment."
+      },
+      "version": ""
+    },
+    "a535a235-8481-11ea-a6b9-f875a44e0e11": {
+      "author": " Phil Carlisle",
+      "cards": 10,
+      "cards_x_nodes_x_widgets": 72,
+      "color": "rgba(191,79,68,1)",
+      "description": {
+        "en": "Used to record 'born digital' files, images and documents which provide information relating to a resource."
+      },
+      "edges": 91,
+      "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+      "iconclass": "fa fa-file",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Digital Object"
+      },
+      "nodegroups": 10,
+      "nodes": 92,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+        "notes": null,
+        "publicationid": "a9f4624e-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:04.738",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "digital_object",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Digital Object",
+        "nodegroup_id": null,
+        "nodeid": "a535a234-8481-11ea-860b-f875a44e0e11",
+        "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record 'born digital' files, images and documents which provide information relating to a resource."
+      },
+      "version": ""
+    },
+    "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84": {
+      "author": " Taylor North",
+      "cards": 13,
+      "cards_x_nodes_x_widgets": 56,
+      "color": null,
+      "description": {
+        "en": ""
+      },
+      "edges": 72,
+      "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+      "iconclass": "fa fa-asterisk",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Enforcement"
+      },
+      "nodegroups": 13,
+      "nodes": 73,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+        "notes": null,
+        "publicationid": "ea6c8258-2a4e-11ef-9b1d-0242ac160006",
+        "published_time": "2024-06-14T13:06:30.057"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Enforcement",
+        "nodegroup_id": null,
+        "nodeid": "8f30b1ba-b551-11ee-94ee-0242ac120006",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E28_Conceptual_Object",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Reference resource that is assigned resources that need to be enforced by the delegated department"
+      },
+      "version": ""
+    },
+    "fa47c72c-ec07-11ed-b9ad-72d420f37f11": {
+      "author": " FGI",
+      "cards": 39,
+      "cards_x_nodes_x_widgets": 242,
+      "color": "rgba(159,29,34,1)",
+      "description": {
+        "en": "Version 0.1; A model to represent activities and information related to the review and evaluation of proposed developments or alterations to a structure.  This model supposes that an official of a government agency must review proposed construction activities and determine whether the activities require conditions/mitigations to conform with local requirements.  This model allows for formal application review and informal (e.g.: pre-application) consultations."
+      },
+      "edges": 313,
+      "graphid": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
+      "iconclass": "fa fa-briefcase",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Grant"
+      },
+      "nodegroups": 40,
+      "nodes": 314,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
+        "notes": null,
+        "publicationid": "568573ac-fffb-11ed-81ae-9aaeb45f758d",
+        "published_time": "2023-05-31T21:37:27.181",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "grant",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "fa47c72c-ec07-11ed-b9ad-72d420f37f11",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Grant",
+        "nodegroup_id": null,
+        "nodeid": "fa4a4484-ec07-11ed-b9ad-72d420f37f11",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record activities relating to the provision of advice with regards to planning applications which may affect the historic environment."
+      },
+      "version": ""
+    },
+    "07883c9e-b25c-11e9-975a-a4d18cec433a": {
+      "author": " From AfS via Flax & Teal",
+      "cards": 10,
+      "cards_x_nodes_x_widgets": 14,
+      "color": "rgba(231,111,81,0.75)",
+      "description": {
+        "en": "One or more people, potentially sub-divided into further groups, that can act collectively. For example a research team, a department or an organization."
+      },
+      "edges": 21,
+      "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+      "iconclass": "fa fa-users",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
+      "name": {
+        "en": "Group"
+      },
+      "nodegroups": 10,
+      "nodes": 22,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+        "notes": null,
+        "publicationid": "bcaac244-1158-11ef-a6e2-0242ac170006",
+        "published_time": "2024-05-13T18:43:49.187"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "group",
+        "config": {},
+        "datatype": "semantic",
+        "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Group",
+        "nodegroup_id": null,
+        "nodeid": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": "group",
+      "subtitle": {
+        "en": "One or more people or sub-groups that act collectively"
+      },
+      "version": ""
+    },
+    "65b1be1a-dfa4-49cf-a736-a1a88c0bb289": {
+      "author": " ",
+      "cards": 86,
+      "cards_x_nodes_x_widgets": 544,
+      "color": "rgba(59,84,33,1)",
+      "description": {
+        "en": ""
+      },
+      "edges": 706,
+      "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+      "iconclass": "fa fa-copy",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Heritage Asset Revision"
+      },
+      "nodegroups": 86,
+      "nodes": 707,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+        "notes": null,
+        "publicationid": "f5770dba-3f68-11ef-bdc5-0242ac140006",
+        "published_time": "2024-07-11T09:35:49.914"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "monument",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Heritage Asset Revision",
+        "nodegroup_id": null,
+        "nodeid": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Heritage Asset or Area will be a question of granularity. "
+      },
+      "version": ""
+    },
+    "076f9381-7b00-11e9-8d6b-80000b44d1d9": {
+      "author": " ",
+      "cards": 86,
+      "cards_x_nodes_x_widgets": 552,
+      "color": "rgba(59,84,33,1)",
+      "description": {
+        "en": ""
+      },
+      "edges": 708,
+      "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+      "iconclass": "fa fa-bank",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Heritage Asset"
+      },
+      "nodegroups": 84,
+      "nodes": 709,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "notes": null,
+        "publicationid": "3c1b6160-3f75-11ef-80c6-0242ac140006",
+        "published_time": "2024-07-11T11:03:42.392"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "monument",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Heritage Asset",
+        "nodegroup_id": null,
+        "nodeid": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Heritage Asset or Area will be a question of granularity. "
+      },
+      "version": ""
+    },
+    "0add0e11-99aa-11ea-9ab8-f875a44e0e11": {
+      "author": " Phil Carlisle",
+      "cards": 27,
+      "cards_x_nodes_x_widgets": 171,
+      "color": "rgba(143,59,51,1)",
+      "description": {
+        "en": "Used to record  thematic stories (usually associated with an historic event or period) which can provide more detailed background to the heritage assets, areas and artefact. The Heritage Story creates a user-friendly story which helps place the assets in their context within the historic environment."
+      },
+      "edges": 217,
+      "graphid": "0add0e11-99aa-11ea-9ab8-f875a44e0e11",
+      "iconclass": "fa fa-book",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Heritage Story"
+      },
+      "nodegroups": 27,
+      "nodes": 218,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "0add0e11-99aa-11ea-9ab8-f875a44e0e11",
+        "notes": null,
+        "publicationid": "af324294-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:13.533",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "heritage_story",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "0add0e11-99aa-11ea-9ab8-f875a44e0e11",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Heritage Story",
+        "nodegroup_id": null,
+        "nodeid": "0add0e10-99aa-11ea-b882-f875a44e0e11",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record  thematic stories (usually associated with an historic event or period) which can provide more detailed background to the heritage assets, areas and artefact. The Heritage Story creates a user-friendly story which helps place the assets in their context within the historic environment."
+      },
+      "version": ""
+    },
+    "b8032b00-594d-11e9-9cf0-18cf5eb368c4": {
+      "author": " Phil Carlisle",
+      "cards": 39,
+      "cards_x_nodes_x_widgets": 373,
+      "color": "rgba(50,162,219,1)",
+      "description": {
+        "en": "Last Updated 1st May 2019"
+      },
+      "edges": 471,
+      "graphid": "b8032b00-594d-11e9-9cf0-18cf5eb368c4",
+      "iconclass": "fa fa-plane",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Historic Aircraft"
+      },
+      "nodegroups": 39,
+      "nodes": 472,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "b8032b00-594d-11e9-9cf0-18cf5eb368c4",
+        "notes": null,
+        "publicationid": "b041bf2a-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:15.312",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "historic_aircraft",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "b8032b00-594d-11e9-9cf0-18cf5eb368c4",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Historic Aircraft",
+        "nodegroup_id": null,
+        "nodeid": "b803a051-594d-11e9-bc1f-18cf5eb368c4",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E24_Physical_Human-Made_Thing",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record the details of historic aircraft which are either retained as heritage assets (eg. Museum exhibits or Gate Guardians) or have been identified through the discovery of associated crash sites. A heritage asset record should be created for the crash site where known. "
+      },
+      "version": ""
+    },
+    "934cd7f0-480a-11ea-9240-c4d9877d154e": {
+      "author": " Phil Carlisle",
+      "cards": 21,
+      "cards_x_nodes_x_widgets": 173,
+      "color": "rgba(64,144,127,1)",
+      "description": {
+        "en": "Used to record areas of the historic landscape. Historic Landscape Characterization is a method of identifying and interpreting the varying historic character within an area that looks beyond individual heritage assets as it brings together an understanding of the whole landscape and townscape."
+      },
+      "edges": 217,
+      "graphid": "934cd7f0-480a-11ea-9240-c4d9877d154e",
+      "iconclass": "fa fa-picture-o",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Historic Landscape Characterization"
+      },
+      "nodegroups": 21,
+      "nodes": 218,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
+        "notes": null,
+        "publicationid": "b27169d0-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:18.980",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "historic_landscape_characterization",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "934cd7f0-480a-11ea-9240-c4d9877d154e",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Historic Landscape Characterization",
+        "nodegroup_id": null,
+        "nodeid": "934cc466-480a-11ea-9b79-c4d9877d154e",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record areas of the historic landscape. Historic Landscape Characterization is a method of identifying and interpreting the varying historic character within an area that looks beyond individual heritage assets as it brings together an understanding of the whole landscape and townscape."
+      },
+      "version": ""
+    },
+    "cc5da227-24e7-4088-bb83-a564c4331efd": {
+      "author": "Taylor North and Owen McEvoy",
+      "cards": 23,
+      "cards_x_nodes_x_widgets": 193,
+      "color": null,
+      "description": {
+        "en": ""
+      },
+      "edges": 265,
+      "graphid": "cc5da227-24e7-4088-bb83-a564c4331efd",
+      "iconclass": "fa fa-lock",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Licence"
+      },
+      "nodegroups": 23,
+      "nodes": 266,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+        "notes": null,
+        "publicationid": "3d52d102-2d51-11ef-bbfd-0242ac120006",
+        "published_time": "2024-06-18T09:00:41.621"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Licence",
+        "nodegroup_id": null,
+        "nodeid": "957cf8ec-48b1-11ee-abd1-0242ac140007",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Designed to support fields required to manage the creation of Licences, including their dates, communications and people involved"
+      },
+      "version": ""
+    },
+    "5b8b4084-9687-11ee-8782-0242ac140006": {
+      "author": " Phil Weir",
+      "cards": 2,
+      "cards_x_nodes_x_widgets": 1,
+      "color": "#798031",
+      "description": {
+        "en": "A grouping of resources, possibly nested, for purposes of co-management."
+      },
+      "edges": 3,
+      "graphid": "5b8b4084-9687-11ee-8782-0242ac140006",
+      "iconclass": "fa fa-cubes",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Logical Set"
+      },
+      "nodegroups": 2,
+      "nodes": 4,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "5b8b4084-9687-11ee-8782-0242ac140006",
+        "notes": null,
+        "publicationid": "6d9d83c6-9688-11ee-a81e-0242ac140006",
+        "published_time": "2023-12-09T11:45:19.382"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "5b8b4084-9687-11ee-8782-0242ac140006",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Logical Set",
+        "nodegroup_id": null,
+        "nodeid": "5b8b475a-9687-11ee-8782-0242ac140006",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E78_Collection",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": "logical_set",
+      "subtitle": {
+        "en": "Nestable collection of subject resources on which actors may have permissions."
+      },
+      "version": ""
+    },
+    "49bac32e-5464-11e9-a6e2-000d3ab1e588": {
+      "author": " ",
+      "cards": 41,
+      "cards_x_nodes_x_widgets": 390,
+      "color": "rgba(33,59,134,1)",
+      "description": {
+        "en": ""
+      },
+      "edges": 495,
+      "graphid": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+      "iconclass": "fa fa-ship",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Maritime Vessel"
+      },
+      "nodegroups": 41,
+      "nodes": 496,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+        "notes": null,
+        "publicationid": "b377ffce-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:20.700",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "maritime_vessel",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Maritime Vessel",
+        "nodegroup_id": null,
+        "nodeid": "49bac387-5464-11e9-8cb8-000d3ab1e588",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E24_Physical_Human-Made_Thing",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record the details of historic vessels which are either retained as heritage assets (eg. Museum Ships or Memorials) or have been identified through the discovery of associated wreck sites. A Heritage Asset record should be created for the wreck site where known."
+      },
+      "version": ""
+    },
+    "d9318eb6-f28d-427c-b061-6fe3021ce8aa": {
+      "author": " Taylor North",
+      "cards": 7,
+      "cards_x_nodes_x_widgets": 26,
+      "color": null,
+      "description": {
+        "en": ""
+      },
+      "edges": 31,
+      "graphid": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+      "iconclass": "fa fa-copy",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Merge Resource Tracker"
+      },
+      "nodegroups": 7,
+      "nodes": 32,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+        "notes": null,
+        "publicationid": "b310c69c-f1c9-11ee-ad6c-0242ac170006",
+        "published_time": "2024-04-03T14:51:49.000"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "d9318eb6-f28d-427c-b061-6fe3021ce8aa",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Merge Resource Tracker",
+        "nodegroup_id": null,
+        "nodeid": "33f78634-ccdf-11ee-af2a-0242ac180006",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E24_Physical_Human-Made_Thing",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to track information required when merging two resources together."
+      },
+      "version": ""
+    },
+    "d4a88461-5463-11e9-90d9-000d3ab1e588": {
+      "author": "Phil Carlisle",
+      "cards": 17,
+      "cards_x_nodes_x_widgets": 145,
+      "color": "rgba(186,77,129,1)",
+      "description": {
+        "en": "Used to describe a group, institution or organization associated with a heritage resource. Organizations can either be current (eg. owners, developers etc) or historic (eg. former companies, regiments etc.)."
+      },
+      "edges": 183,
+      "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+      "iconclass": "fa fa-users",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Organization"
+      },
+      "nodegroups": 17,
+      "nodes": 184,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+        "notes": null,
+        "publicationid": "b5f501ca-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:24.875",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "organization",
+        "config": {
+          "fillColor": "rgba(233,112,111,0.8)"
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "d4a88461-5463-11e9-90d9-000d3ab1e588",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Organization",
+        "nodegroup_id": null,
+        "nodeid": "d4a8847e-5463-11e9-9e98-000d3ab1e588",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to describe a group, institution or organization associated with a heritage resource. Organizations can either be current (eg. owners, developers etc) or historic (eg. former companies, regiments etc.)."
+      },
+      "version": ""
+    },
+    "f9045867-8861-11ea-b06f-f875a44e0e11": {
+      "author": " Phil Carlisle",
+      "cards": 19,
+      "cards_x_nodes_x_widgets": 139,
+      "color": "rgba(238,102,37,1)",
+      "description": {
+        "en": "Used to record the details of historic and cultural periods which a heritage resource may be associated with. \nA period is a spatio-temporal extent so where you are influences the period."
+      },
+      "edges": 174,
+      "graphid": "f9045867-8861-11ea-b06f-f875a44e0e11",
+      "iconclass": "fa fa-calendar",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Period"
+      },
+      "nodegroups": 19,
+      "nodes": 175,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "f9045867-8861-11ea-b06f-f875a44e0e11",
+        "notes": null,
+        "publicationid": "aa73e6b8-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:05.574",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "period",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "f9045867-8861-11ea-b06f-f875a44e0e11",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Period",
+        "nodegroup_id": null,
+        "nodeid": "f9045866-8861-11ea-80fa-f875a44e0e11",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E4_Period",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record the details of historic and cultural periods which a heritage resource may be associated with. A period is a spatio-temporal extent."
+      },
+      "version": ""
+    },
+    "22477f01-1a44-11e9-b0a9-000d3ab1e588": {
+      "author": " Phil Carlisle",
+      "cards": 19,
+      "cards_x_nodes_x_widgets": 175,
+      "color": "rgba(236,109,155,1)",
+      "description": {
+        "en": "Used to describe individuals associated with a heritage resource. \nA person can either be current (eg. owners, developers etc) or a person of historic interest (eg. an author who formerly lived in a heritage resource)."
+      },
+      "edges": 226,
+      "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+      "iconclass": "fa fa-user",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Person"
+      },
+      "nodegroups": 19,
+      "nodes": 227,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+        "notes": null,
+        "publicationid": "c0d91b6c-115e-11ef-a0a7-0242ac170006",
+        "published_time": "2024-05-13T19:26:53.182"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "person",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": "",
+        "graph_id": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Person",
+        "nodegroup_id": null,
+        "nodeid": "22477f00-1a44-11e9-a60e-000d3ab1e588",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to describe individuals associated with a heritage resource. A person can either be current (eg. owners, developers etc) or a person of historic interest (eg. an author who formerly lived in a heritage resource)."
+      },
+      "version": ""
+    },
+    "78b32d8c-b6f2-11ea-af42-f875a44e0e11": {
+      "author": " Phil Carlisle",
+      "cards": 18,
+      "cards_x_nodes_x_widgets": 160,
+      "color": "rgba(85,85,85,1)",
+      "description": {
+        "en": ""
+      },
+      "edges": 201,
+      "graphid": "78b32d8c-b6f2-11ea-af42-f875a44e0e11",
+      "iconclass": "fa fa-map-marker",
+      "is_editable": true,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Place"
+      },
+      "nodegroups": 18,
+      "nodes": 202,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "78b32d8c-b6f2-11ea-af42-f875a44e0e11",
+        "notes": null,
+        "publicationid": "b6d14a40-06d9-11ed-ad22-acde48001122",
+        "published_time": "2022-07-18T15:39:26.319",
+        "user_id": 1
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": "place",
+        "config": {},
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "78b32d8c-b6f2-11ea-af42-f875a44e0e11",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Place",
+        "nodegroup_id": null,
+        "nodeid": "78b30634-b6f2-11ea-9a17-f875a44e0e11",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+        "sortorder": 0
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Used to record places as resources. Currently unused."
+      },
+      "version": ""
+    },
+    "b16832e8-dfc9-4fc8-9c07-0c0b980ed220": {
+      "author": " Phil Weir",
+      "cards": 3,
+      "cards_x_nodes_x_widgets": 3,
+      "color": "#798031",
+      "description": {
+        "en": "A grouping of resources, possibly nested, for purposes of co-management."
+      },
+      "edges": 4,
+      "graphid": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+      "iconclass": "fa fa-cubes",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Set"
+      },
+      "nodegroups": 3,
+      "nodes": 5,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+        "notes": null,
+        "publicationid": "06640308-3497-11ef-9c38-0242ac150006",
+        "published_time": "2024-06-27T15:07:52.369"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Set",
+        "nodegroup_id": null,
+        "nodeid": "bd768bae-6f41-11ee-9192-0242ac140008",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E78_Collection",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": "set",
+      "subtitle": {
+        "en": "Nestable collection of subject resources on which actors may have permissions."
+      },
+      "version": ""
+    },
+    "c0098070-d052-4449-982b-952507306c03": {
+      "author": " Owen McEvoy",
+      "cards": 6,
+      "cards_x_nodes_x_widgets": 23,
+      "color": null,
+      "description": {
+        "en": ""
+      },
+      "edges": 25,
+      "graphid": "c0098070-d052-4449-982b-952507306c03",
+      "iconclass": "",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "State Care Condition Survey"
+      },
+      "nodegroups": 6,
+      "nodes": 26,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "c0098070-d052-4449-982b-952507306c03",
+        "notes": null,
+        "publicationid": "dc82443e-532f-11ef-9d2a-0242ac120006",
+        "published_time": "2024-08-05T13:37:29.986"
+      },
+      "relatable_resource_model_ids": [],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "c0098070-d052-4449-982b-952507306c03",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "State Care Condition Survey",
+        "nodegroup_id": null,
+        "nodeid": "b5a5b14c-501f-11ef-b77e-0242ac120006",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E63_Beginning_of_Existence",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": ""
+      },
+      "version": ""
+    }
+  }
+}
