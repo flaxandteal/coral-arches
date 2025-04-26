@@ -2354,6 +2354,33 @@
                     "nodegroup_id": "fc6b6b0b-5118-11eb-b342-f875a44e0e11",
                     "sortorder": 14,
                     "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "a4c4d65b-18b5-496e-96bf-992c9932162b",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Extent of Designation or Protection"
+                    },
+                    "nodegroup_id": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "sortorder": null,
+                    "visible": true
                 }
             ],
             "cards_x_nodes_x_widgets": [
@@ -15475,6 +15502,33 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "edgeid": "c8e67ad5-0405-44b4-aa96-21fadca8ae48",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
+                    "rangenode_id": "518a8bc8-1201-43a9-815a-95212bd77e63"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "edgeid": "dcefb773-2fff-4a35-91cb-b7715bb684a6",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P129_is_about",
+                    "rangenode_id": "c90df538-5c76-4805-a50e-1a5470b57fac"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
+                    "edgeid": "18435f1d-6ea6-40b2-900c-27f16abe07e9",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
+                    "rangenode_id": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
                     "edgeid": "98bd23cd-a04f-4eeb-8dff-7b6190c0c267",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -21991,6 +22045,12 @@
                 "en": "Heritage Asset"
             },
             "nodegroups": [
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "parentnodegroup_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba"
+                },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
@@ -28909,6 +28969,96 @@
                     "nodeid": "6af2b6a1-efc5-11eb-bd62-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P17_was_motivated_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "extent_of_designation_or_protection",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "semantic",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Extent of Designation or Protection",
+                    "nodegroup_id": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "nodeid": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMgeo/SP5_Geometric_Place_Expression",
+                    "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54_is_same-as",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "description_of_extent",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Description of Extent",
+                    "nodegroup_id": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "nodeid": "c90df538-5c76-4805-a50e-1a5470b57fac",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129_is_about",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "geospatial_extent",
+                    "config": {
+                        "addToMap": false,
+                        "advancedStyle": "",
+                        "advancedStyling": false,
+                        "clusterDistance": 20,
+                        "clusterMaxZoom": 5,
+                        "clusterMinPoints": 3,
+                        "fillColor": "rgba(130, 130, 130, 0.5)",
+                        "haloRadius": 4,
+                        "haloWeight": 4,
+                        "layerActivated": true,
+                        "layerIcon": "",
+                        "layerLegend": "",
+                        "layerName": "",
+                        "lineColor": "rgba(130, 130, 130, 0.7)",
+                        "lineHaloColor": "rgba(200, 200, 200, 0.5)",
+                        "outlineColor": "rgba(200, 200, 200, 0.7)",
+                        "outlineWeight": 2,
+                        "pointColor": "rgba(130, 130, 130, 0.7)",
+                        "pointHaloColor": "rgba(200, 200, 200, 0.5)",
+                        "radius": 2,
+                        "simplification": 0.3,
+                        "weight": 2
+                    },
+                    "datatype": "geojson-feature-collection",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Geospatial Extent",
+                    "nodegroup_id": "7c25996e-a4c2-4ae2-b4db-7f2c018d83a1",
+                    "nodeid": "518a8bc8-1201-43a9-815a-95212bd77e63",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E36_Visual_Item",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
