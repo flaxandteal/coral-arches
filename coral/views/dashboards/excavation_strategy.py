@@ -17,26 +17,65 @@ class ExcavationTaskStrategy(TaskStrategy):
         licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
         queryBuilder = License.where(**licencesDefaultWhereConditions)
 
-        def apply_filters(queryBuilder):
+        def apply_filters(queryBuilder: QueryBuilder) -> "QueryBuilder":
+            """
+            Method can apply a where condition to the query builder
+
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
+
+            Returns:
+                QueryBuilder: The query builder object
+            """
+                    
             if filter == 'All':
                 return queryBuilder;
     
             return queryBuilder.where(report_classification_type=filter);
         
-        def apply_order_by(queryBuilder):
+        def apply_order_by(queryBuilder: QueryBuilder) -> "QueryBuilder":
+            """
+            Method applies order by modifier to the query builder object
+
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
+
+            Returns:
+                QueryBuilder: The query builder object
+            """
             direction = '-'
-            if (sort_order == 'desc'): direction = ''
+            if (sort_order == 'asc'): direction = ''
 
             return queryBuilder.order_by(f'{direction}{sort_by}')
 
-        def get_paginated_resources(queryBuilder):
-            copyQueryBuilder = copy.deepcopy(queryBuilder)
+        def get_paginated_resources(queryBuilder: QueryBuilder) -> any:
+            """
+            Method applies a offset to the query builder to get the records from a certain range and it returns the WKRM with the range of records
+            inside
+            
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
+
+            Returns:
+                Any: The WKRM
+            """
+            copyQueryBuilder = copy.deepcopy(queryBuilder) # ? We copy to not reference the main data as we can only apply 1 selector onto the query builder
             start_index = (page -1) * page_size
             end_index = (page * page_size)
             return copyQueryBuilder.offset(start_index, end_index)
     
-        def get_count(queryBuilder):
-            copyQueryBuilder = copy.deepcopy(queryBuilder)
+        def get_count(queryBuilder: QueryBuilder) -> int:
+            """
+            Method gets the total count of records based on the query and this returns just the number of queries. Count doesn't return a instance of
+            WKRM
+            
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
+
+            Returns:
+                int: The count of records
+            """
+            copyQueryBuilder = copy.deepcopy(queryBuilder) # ? We copy to not reference the main data as we can only apply 1 selector onto the query builder
             return copyQueryBuilder.count()
         
         def build_tasks(resources):
@@ -127,12 +166,3 @@ class ExcavationTaskStrategy(TaskStrategy):
             'responseslug': response_slug
         }
         return resource_data
-    
-    # def is_valid_license(self, licence, filter):
-    #     from arches_orm.models import License
-    #     utilities = Utilities()
-    #     classification_type = utilities.node_check(lambda:licence.application_details.report_classification_type)
-    #     if not classification_type:
-    #         return False
-    #     string_value = utilities.domain_value_string_lookup(License, 'report_classification_type', classification_type)
-    #     return string_value.lower() == filter
