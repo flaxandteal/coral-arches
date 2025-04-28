@@ -53,9 +53,12 @@ class DesignationTaskStrategy(TaskStrategy):
             tasks = []
 
             def _setup_default_conditions_and_get_count():
-                monumentDefaultWhereConditions = { 'status_type_n1__not_equal': APPROVED }
+                monumentDefaultWhereConditions = { 'status_type_n1__not_equal': 'Approved' }
+                # ! Strangly enough when using isnull on a resource list this doesn't work. This is due to internal SQL methods not casting Null or None properly
+                # ! towards the backend within the annotations/expressions
+                # ! https://github.com/flaxandteal/arches-orm/blob/emerald/0.3.2/arches_orm/arches_django/query_builder/annotations/expressions/expressions_postgresql.py#L21
                 monumentRevisionDefaultWhereConditions = { 'desg_approved_by': None }
-                consultationDefaultWhereConditions = { 'resourceid__startswith': 'EVM/', 'start_date': None }
+                consultationDefaultWhereConditions = { 'resourceid__startswith': 'EVM/', 'start_date__isnull': True }
 
                 self.heritage_assets = Monument.where(**monumentDefaultWhereConditions)
                 self.heritage_asset_revisions = MonumentRevision.where(**monumentRevisionDefaultWhereConditions)
@@ -77,8 +80,8 @@ class DesignationTaskStrategy(TaskStrategy):
                     self.evaluation_meetings = self.evaluation_meetings.where(council=filter)
 
                 elif filter_type == 'date': 
-                    self.heritage_assets = self.heritage_assets.where(statutory_consultee_notification_date_value__not_equal=None)
-                    self.heritage_asset_revisions = None;
+                    self.heritage_asset_revisions = self.heritage_asset_revisions.where(statutory_consultee_notification_date_value__isnull=False)
+                    self.heritage_assets = self.heritage_assets.where(statutory_consultee_notification_date_value__isnull=False)
                     self.evaluation_meetings = None;
 
                 elif filter_type == 'heritage_asset':
