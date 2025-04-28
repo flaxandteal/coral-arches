@@ -192,7 +192,6 @@ class PersonConfirmSignupView(View):
                     if form.is_valid():
                         user = form.save()
                         person.user_account = user.pk
-                        print('PERSON HERE : ', person)
                         try:
                             person.save()
                         except django.db.utils.ProgrammingError:
