@@ -96,14 +96,6 @@ class DesignationTaskStrategy(TaskStrategy):
                     self.heritage_assets = None;
                     self.heritage_asset_revisions = None;
 
-            # def _apply_order_by():
-            #     direction = '-'
-            #     if (sort_order == 'desc'): direction = ''
-
-            #     if (self.heritage_assets != None): self.heritage_assets = self.heritage_assets.order_by(f'{direction}{sort_by}')
-            #     if (self.heritage_asset_revisions != None): self.heritage_asset_revisions = self.heritage_asset_revisions.order_by(f'{direction}{sort_by}')
-            #     if (self.evaluation_meetings != None): self.evaluation_meetings = self.evaluation_meetings.order_by(f'{direction}{sort_by}')
-
             def _apply_selectors():
                 self.heritage_assets = self.heritage_assets.get() if self.heritage_assets != None else []
                 self.heritage_asset_revisions = self.heritage_asset_revisions.get() if self.heritage_asset_revisions != None else []
@@ -116,6 +108,7 @@ class DesignationTaskStrategy(TaskStrategy):
             _setup_default_conditions_and_get_count()
             _apply_filters()
             _apply_selectors()
+
             total_resources = len(resources)
 
             start_index = (page -1) * page_size
@@ -334,12 +327,3 @@ class DesignationTaskStrategy(TaskStrategy):
         # ? The issue here is that the parse expects a string not a DateViewModel, therefore we convert it to a string
         date_obj = parser.parse(str(date_str))
         return date_obj.strftime("%d-%m-%Y")
-    
-    # def filter_by_date_value(self, resource):
-    #     utilities = Utilities()
-    #     approvals = utilities.node_check(lambda:resource.approvals)
-    #     for approval in approvals:
-    #         match = utilities.node_check(approval.statutory_consultee_notification_date.statutory_consultee_notification_date_value) == None
-    #         if match:
-    #             return True
-    #     return False
