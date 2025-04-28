@@ -2,7 +2,7 @@ from arches.app.models.tile import Resource
 from datetime import datetime
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
-# from arches_orm.arches_django.query_builder.query_builder import QueryBuilder
+from arches_orm.arches_django.query_builder.query_builder import QueryBuilder
 import copy
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"

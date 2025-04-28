@@ -53,6 +53,9 @@ class DesignationTaskStrategy(TaskStrategy):
             tasks = []
 
             def _setup_default_conditions_and_get_count():
+                """
+                Method applies default class values to the proper ORM models with the default where conditions to grab proper data
+                """
                 monumentDefaultWhereConditions = { 'status_type_n1__not_equal': APPROVED }
                 monumentRevisionDefaultWhereConditions = { 'desg_approved_by': None }
                 consultationDefaultWhereConditions = { 'resourceid__startswith': 'EVM/', 'start_date': None }
@@ -67,7 +70,7 @@ class DesignationTaskStrategy(TaskStrategy):
 
             def _apply_filters():
                 """
-                Method apply there where conditions onto  
+                Method apply there where conditions onto global define HA, HAR and EM for filterings
                 """
                 if filter == 'all':
                     return;
@@ -97,15 +100,10 @@ class DesignationTaskStrategy(TaskStrategy):
                     self.heritage_assets = None;
                     self.heritage_asset_revisions = None;
 
-            # def _apply_order_by():
-            #     direction = '-'
-            #     if (sort_order == 'desc'): direction = ''
-
-            #     if (self.heritage_assets != None): self.heritage_assets = self.heritage_assets.order_by(f'{direction}{sort_by}')
-            #     if (self.heritage_asset_revisions != None): self.heritage_asset_revisions = self.heritage_asset_revisions.order_by(f'{direction}{sort_by}')
-            #     if (self.evaluation_meetings != None): self.evaluation_meetings = self.evaluation_meetings.order_by(f'{direction}{sort_by}')
-
             def _apply_selectors():
+                """
+                Method apply GET selectors to get the records from the models queries
+                """
                 self.heritage_assets = self.heritage_assets.get() if self.heritage_assets != None else []
                 self.heritage_asset_revisions = self.heritage_asset_revisions.get() if self.heritage_asset_revisions != None else []
                 self.evaluation_meetings = self.evaluation_meetings.get() if self.evaluation_meetings != None else []
@@ -116,7 +114,6 @@ class DesignationTaskStrategy(TaskStrategy):
 
             _setup_default_conditions_and_get_count()
             _apply_filters()
-            # _apply_order_by()
             _apply_selectors()
 
             total_resources = len(resources)
