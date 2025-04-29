@@ -47,27 +47,6 @@ class Utilities():
         elif id == None:
             return 'None'
         
-    def domain_value_string_lookup(self, resource, node_alias, value_id):
-        """
-        Looks up the string representation of a domain value.
-
-        Args:
-            resource (Resource): The resource instance. Use The ORM model eg. Consultation.
-            node_alias (str): The alias of the node.
-            value_id (str): The ID of the value to look up. Use the node variable.
-
-        Returns:
-            str: The string representation of the domain value.
-        """
-        node = models.Node.objects.filter(
-            alias = node_alias,
-            graph_id = resource.graphid
-        ).first()
-        options = node.config.get("options")
-        for option in options:
-            if option.get("id") == value_id:
-                return option.get("text").get("en")
-        
     def get_count(self, resources, counter):
         counts = defaultdict(int)
         for resource in resources:
