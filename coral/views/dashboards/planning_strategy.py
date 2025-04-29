@@ -237,7 +237,6 @@ class PlanningTaskStrategy(TaskStrategy):
             tasks = []
 
             for resource in resources:
-                print('classification_type : ', resource.classification_type)
                 task = self.build_data(resource, groupId)
                 tasks.append(task)
                 
