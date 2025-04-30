@@ -161,7 +161,7 @@ class ExcavationTaskStrategy(TaskStrategy):
             'validuntildate': valid_until_date,
             'employingbody': employing_body_name_list,
             'nominateddirectors': nominated_directors_name_list,
-            'reportstatus': utilities.domain_value_string_lookup(License, 'report_classification_type', report_status), ## will need changed after Taiga #2199 is complete
+            'reportstatus': report_status,
             'licencenumber': licence_number,
             'responseslug': response_slug
         }
