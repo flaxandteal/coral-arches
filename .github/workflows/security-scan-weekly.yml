@@ -31,5 +31,5 @@ jobs:
       - name: Scan with Trivy
         uses: ./.github/actions/security
         with:
-          image-ref: ghcr.io/${{ github.repository_owner }}/arches_coral:latest
+          image-ref: ghcr.io/${{ github.repository_owner }}/arches_coral:v7.11.40-RELEASE #sji - sort!
           sarif-output: trivy-results.sarif
