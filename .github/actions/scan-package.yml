@@ -33,6 +33,6 @@ runs:
       with:
         image-ref: ${{ inputs.image-ref }}
         scan-type: image
-        format: cyclonedx
+        format: cyclonedx #maybe change this to alternative?
         output: sbom-results.json
       shell: bash

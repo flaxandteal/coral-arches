@@ -25,6 +25,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Checkout repository
+            uses: actions/checkout@v4
+    
       - name: Scan with Trivy
         uses: ./.github/actions/scan-package
         with:
