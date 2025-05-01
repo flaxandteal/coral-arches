@@ -180,14 +180,17 @@
                       "component": "user-to-model-select",
                       "signOffGroups": [
                         "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
-                        "6d1ef40d-e524-4541-af21-9bb8880bc5a2"
+                        "6d1ef40d-e524-4541-af21-9bb8880bc5a2",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512",
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a"
                       ],
                       "allowInstanceCreation": false
                     },
                     "af2087a6-532c-11ef-9d2a-0242ac120006": {
                       "component": "user-to-model-select",
                       "signOffGroups": [
-                        "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
                       ],
                       "conflictNode": ["924abf1a-1b78-11f0-af7b-e2231a6d3ec2"],
                       "conflictAllowBlank": false,
