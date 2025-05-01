@@ -1,0 +1,38 @@
+name: Scan Package using Trivy
+description: Scans a Docker image from GitHub Packages with Trivy
+inputs:
+  image-ref:
+    description: Reference to the Docker image (e.g., ghcr.io/owner/repo/image:tag)
+    required: true
+  sarif-output:
+    description: Path for the SARIF output file
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@0.28.0
+      with:
+        image-ref: ${{ inputs.image-ref }}
+        scan-type: image
+        format: sarif
+        output: ${{ inputs.sarif-output }}
+        severity: CRITICAL,HIGH #enough? or med also??
+        exit-code: 1
+        ignore-unfixed: true
+      shell: bash
+
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: ${{ inputs.sarif-output }}
+      shell: bash
+
+    - name: Generate SBOM # sweet! does it do licensing also? hmm
+      uses: aquasecurity/trivy-action@0.28.0
+      with:
+        image-ref: ${{ inputs.image-ref }}
+        scan-type: image
+        format: cyclonedx
+        output: sbom-results.json
+      shell: bash
