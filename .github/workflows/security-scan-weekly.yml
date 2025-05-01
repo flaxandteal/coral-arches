@@ -28,8 +28,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
     
-      - name: Scan with Trivy
+      - name: Scan package with Trivy - arches_coral
         uses: ./.github/actions/security
         with:
           image-ref: ghcr.io/${{ github.repository_owner }}/arches_coral:v7.11.40-RELEASE #sji - sort!
           sarif-output: trivy-results.sarif
+
+      # - name: Scan package with Trivy - arches_coral_static
+      #   uses: ./.github/actions/security
+      #   with:
+      #     image-ref: ghcr.io/${{ github.repository_owner }}/arches_coral_static:v7.11.40-RELEASE #sji - sort!
+      #     sarif-output: trivy-results.sarif
+      
+      # - name: Scan package with Trivy - arches_coral_static_py
+      #   uses: ./.github/actions/security
+      #   with:
+      #     image-ref: ghcr.io/${{ github.repository_owner }}/arches_coral_static_py:v7.11.40-RELEASE #sji - sort!
+      #     sarif-output: trivy-results.sarif
