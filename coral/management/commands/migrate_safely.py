@@ -525,11 +525,12 @@ class TransformData():
                 new_value = Value.objects.filter(concept_id=mapping_value, valuetype='prefLabel').first().valueid
             else:
                 # Allows for a null value in the mapping
-                new_value = mapping_value
+                new_value = None
 
           except Exception as e:
               raise ValueError(f"The concept {mapping_value} was not found. Have you imported your new concept and collection?") from e
-          updated_values.append(str(new_value))
+          if new_value:
+            updated_values.append(str(new_value))
 
         if len(updated_values) > 1:
           tile_json['data'][node] = updated_values # this will update the list of concept values
