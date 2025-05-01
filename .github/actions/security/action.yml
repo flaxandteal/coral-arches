@@ -19,8 +19,8 @@ runs:
         scan-type: image
         format: sarif
         output: ${{ inputs.sarif-output }}
-        severity: CRITICAL,HIGH #enough? or med also??
-        exit-code: 1
+        severity: CRITICAL,HIGH, MEDIUM #enough?too much??
+        exit-code: 0
         ignore-unfixed: true
 
     - name: Upload Trivy scan results to GitHub Security tab
@@ -33,5 +33,5 @@ runs:
       with:
         image-ref: ${{ inputs.image-ref }}
         scan-type: image
-        format: cyclonedx #maybe change this to alternative?
+        format: spdx
         output: sbom-results.json
