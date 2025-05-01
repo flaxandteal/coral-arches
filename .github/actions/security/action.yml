@@ -19,7 +19,7 @@ runs:
         scan-type: image
         format: sarif
         output: ${{ inputs.sarif-output }}
-        severity: CRITICAL,HIGH, MEDIUM #enough?too much??
+        severity: CRITICAL,HIGH,MEDIUM #enough?too much??
         exit-code: 0
         ignore-unfixed: true
 
