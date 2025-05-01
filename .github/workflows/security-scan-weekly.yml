@@ -1,11 +1,7 @@
 name: Scan Docker Image in GitHub Packages with Trivy
-#on:
-#  schedule:
-#    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight UTC
 on:
-  push:
-    branches:
-      - '**'
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight UTC
   workflow_dispatch:
   
 permissions:
