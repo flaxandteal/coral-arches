@@ -1,9 +1,9 @@
 ### Types of Changes
 
-- [ ] Model Changes
+- [x] Model Changes
 - [ ] Added Functions
 - [ ] Added Concepts
-- [ ] Workflows Updated
+- [x] Workflows Updated
 - [ ] Reports Updated
 - [ ] Added/Updated Dependencies
 - [x] Features Added
@@ -19,3 +19,6 @@
 - [ ] Bug Fix
 
 | Feat: Add X Frame Option and Security Content nosniff | #661 | feat/security-headers | @StuCM |
+- [ ] Features Added
+
+| #3055: Add completed by field to SCC workflow  | #655 | feat/#3055-Add-Completed-by | @babou212 |
