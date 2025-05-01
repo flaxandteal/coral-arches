@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Scan with Trivy
-        uses: ./.github/actions/scan-trivy-package
+        uses: ./.github/actions/scan-package.yml
         with:
           image-ref: ghcr.io/${{ github.repository_owner }}/arches_coral:${{ github.sha }}
           sarif-output: trivy-results.sarif
