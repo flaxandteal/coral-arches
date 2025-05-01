@@ -19,7 +19,7 @@ runs:
         scan-type: image
         format: sarif
         output: ${{ inputs.sarif-output }}
-        severity: CRITICAL,HIGH,MEDIUM #enough?too much??
+        severity: CRITICAL,HIGH
         exit-code: 0
         ignore-unfixed: true
 
@@ -28,13 +28,17 @@ runs:
       with:
         sarif_file: ${{ inputs.sarif-output }}
 
-    - name: Generate SBOM # sweet! does it do licensing also? hmm
+    - name: Generate SBOM
       uses: aquasecurity/trivy-action@0.28.0
       with:
         image-ref: ${{ inputs.image-ref }}
         scan-type: image
         format: spdx
         output: sbom-results.json
+    
+    - name: Debug SBOM file exists
+      run: ls -l sbom-results.json
+      shell: bash
 
     - name: Upload SBOM as artifact
       uses: actions/upload-artifact@v4
