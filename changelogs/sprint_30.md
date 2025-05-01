@@ -16,9 +16,13 @@
 | PR Title | PR # | Branch | Committed By |
 |----------|------|--------|--------------|
 | fix: #3096 update cookie params in settings.py | #662 | fix/#3096-update-cookie-params | @babou212 |
-- [ ] Bug Fix
+- [x] Bug Fix
 
 | Feat: Add X Frame Option and Security Content nosniff | #661 | feat/security-headers | @StuCM |
 - [ ] Features Added
 
 | #3055: Add completed by field to SCC workflow  | #655 | feat/#3055-Add-Completed-by | @babou212 |
+- [ ] Model Changes
+- [ ] Workflows Updated
+
+| Fix: Migration Tool - Concept conversion and Group hydration | #656 | fix/migration-tool-members-and-concepts | @StuCM |
