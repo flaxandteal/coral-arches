@@ -15,6 +15,9 @@ permissions:
 
 jobs:
   security-scans:
+    permissions:
+      actions: write
+      contents: read
     name: Scan Docker Image
     runs-on: ubuntu-latest
     steps:

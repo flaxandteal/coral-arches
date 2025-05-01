@@ -36,6 +36,12 @@ runs:
         format: spdx
         output: sbom-results.json
 
+    - name: Upload SBOM as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sbom-results
+        path: sbom-results.json
+        retention-days: 10
 
 #maybe?? sji and also maybe generate github issues for CVE's?  mikepenz/action-jira-github-issue-sync (github.rest.issues.create)
 #- name: Comment Trivy results on PR
