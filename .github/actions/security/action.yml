@@ -38,7 +38,7 @@ runs:
     
     - name: Debug SBOM file exists
       run: ls -l sbom-results.json
-#      shell: bash
+      shell: bash
 
     - name: Upload SBOM as artifact
       uses: actions/upload-artifact@v4
