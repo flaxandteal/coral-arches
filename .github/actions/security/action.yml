@@ -35,3 +35,35 @@ runs:
         scan-type: image
         format: spdx
         output: sbom-results.json
+
+
+#maybe?? sji and also maybe generate github issues for CVE's?  mikepenz/action-jira-github-issue-sync (github.rest.issues.create)
+#- name: Comment Trivy results on PR
+#  if: github.event_name == 'pull_request'
+#  uses: actions/github-script@v7
+#  with:
+#    script: |
+#      const fs = require('fs');
+#      const sarif = JSON.parse(fs.readFileSync('trivy-results.sarif', 'utf8'));
+
+#      const results = sarif.runs?.[0]?.results || [];
+#      if (results.length === 0) {
+#        core.info("No vulnerabilities found.");
+#        return;
+#      }
+
+#      const summary = results.map(result => {
+#        const level = result.level.toUpperCase();
+#        const msg = result.message?.text || '';
+#        const ruleId = result.ruleId || '';
+#        return `- **[${level}]** ${ruleId}: ${msg}`;
+#      }).slice(0, 10).join('\n'); // Limit to 10 results
+
+#      const body = `### 🛡️ Trivy Vulnerability Scan Report\n${summary}\n\n_See full report in SARIF artifact._`;
+
+#      await github.rest.issues.createComment({
+#        issue_number: context.issue.number,
+#        owner: context.repo.owner,
+#        repo: context.repo.repo,
+#        body,
+#      });
