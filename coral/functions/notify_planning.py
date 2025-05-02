@@ -55,7 +55,7 @@ class NotifyPlanning(BaseFunction):
 
         if context and context.get('escape_function', False):
             return
-
+        
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         nodegroup_id = str(tile.nodegroup_id)
         existing_notification = models.Notification.objects.filter(
@@ -129,17 +129,7 @@ class NotifyPlanning(BaseFunction):
 
         data = tile.data
 
-        # check if re-assigned triggered the function and send a notification
-        if nodegroup_id == ASSIGNMENT_NODEGROUP:
-            assigned_users_list = []
-
-            for user in tile.data[REASSIGNED_TO]:
-                assigned_users_list.append(user)
-            
-            self.notify_users(assigned_users_list, notification)
-            return
-        
-        elif nodegroup_id == RESPONSE_NODEGROUP:
+        if nodegroup_id == RESPONSE_NODEGROUP:
             response_group_uuid = tile.data[RESPONSE_TEAM]
             response_group = ""
             if response_group_uuid == RESPONSE_HM:
@@ -150,22 +140,8 @@ class NotifyPlanning(BaseFunction):
             response_slug = 'assign-consultation-workflow'
             self.notify_group(PLANNING_ADMIN, PLANNING_ADMIN, notification, response_slug)
             return
-
-        # fetch re-assigned to data from a seperate nodegroup
-        try:
-            assignment_tile = Tile.objects.filter(
-                resourceinstance_id = resource_instance_id,
-                nodegroup_id = ASSIGNMENT_NODEGROUP
-            ).first()
-        except Tile.DoesNotExist:
-            assignment_tile = None
-
-        if assignment_tile:
-            re_assignment_node = assignment_tile.data.get(REASSIGNED_TO, None) 
-        else:
-            re_assignment_node = None
         
-        is_assigned_to_a_user = data[ASSIGNED_TO] != None or re_assignment_node != None
+        is_assigned_to_a_user = data.get(ASSIGNED_TO, None) != None
 
         action_type_conditions = [STATUS_OPEN, EXTENSION_REQUESTED]
 
@@ -199,15 +175,12 @@ class NotifyPlanning(BaseFunction):
                 with admin():
                     assigned_users_list = []
                     
-                    if re_assignment_node:
-                        return
-                    else:
-                        for user in tile.data[ASSIGNED_TO]:
-                            team = self.find_user_team(user)
-                            assigned_users_list.append({
-                                'user': user,
-                                'team': team
-                            })
+                    for user in tile.data[ASSIGNED_TO]:
+                        team = self.find_user_team(user)
+                        assigned_users_list.append({
+                            'user': user,
+                            'team': team
+                        })
 
                     self.notify_users(assigned_users_list, notification)
 
