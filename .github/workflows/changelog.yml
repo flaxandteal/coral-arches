@@ -1,94 +1,103 @@
 name: Generate Changelog on PR Merge to Release
 
 on:
-    pull_request:
-        types: [closed]
-        branches:
-            - 'release/**'  # Only for release branches
+  pull_request:
+    types: [closed]
+    branches:
+      - 'release/**'  # Only for release branches
 
 jobs:
-    changelog:
-        if: github.event.pull_request.merged == true
-        runs-on: ubuntu-latest
+  changelog:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
 
-        steps:
-          - name: Checkout repo
-            uses: actions/checkout@v3
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-          - name: Setup Variables
-            id: vars
-            run: |
-                echo "pr_title=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
-                echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
-                echo "pr_user=${{ github.event.pull_request.user.login }}" >> $GITHUB_OUTPUT
-                echo "pr_body=$(echo "${{ github.event.pull_request.body }}" | base64 -w 0)" >> $GITHUB_OUTPUT
-                echo "pr_head_branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
-                echo "branch_name=$(echo '${{ github.event.pull_request.base.ref }}' | sed 's|release/||')" >> $GITHUB_OUTPUT
+      - name: Setup Variables
+        id: vars
+        run: |
+          echo "pr_title=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+          echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          echo "pr_user=${{ github.event.pull_request.user.login }}" >> $GITHUB_OUTPUT
+          echo "pr_body=$(echo "${{ github.event.pull_request.body }}" | base64 -w 0)" >> $GITHUB_OUTPUT
+          echo "pr_head_branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
+          echo "branch_name=$(echo '${{ github.event.pull_request.base.ref }}' | sed 's|release/||')" >> $GITHUB_OUTPUT
 
-          - name: Generate Changelog
-            run: |
-                PR_BODY="$(echo "${{ steps.vars.outputs.pr_body }}" | base64 -d)"
-                FILE="changelogs/${{ steps.vars.outputs.branch_name }}.md"
+      - name: Generate Changelog
+        run: |
+          PR_BODY="$(echo "${{ steps.vars.outputs.pr_body }}" | base64 -d)"
+          FILE="changelogs/${{ steps.vars.outputs.branch_name }}.md"
 
-                mkdir -p changelogs
-                touch "$FILE"
+          mkdir -p changelogs
+          touch "$FILE"
 
-                declare -A CHECKED_MAP
-                SECTIONS=("Model Changes" "Added Functions" "Added Concepts" "Workflows Updated" "Reports Updated")
+          declare -A CHECKED_MAP
+          SECTIONS=("Model Changes" "Added Functions" "Added Concepts" "Workflows Updated" "Reports Updated")
 
-                # 1. Parse Types of Changes block
-                TOC=$(echo "$PR_BODY" | awk '/### Types of Changes/{flag=1; next} /### /{flag=0} flag' | sed '/^\s*$/d')
-                if ! grep -q "### Types of Changes" "$FILE"; then
-                echo -e "### Types of Changes\n" >> "$FILE"
+          # 1. Parse Types of Changes block and mark ticked items
+          TOC=$(echo "$PR_BODY" | awk '/### Types of Changes/{flag=1; next} /### /{flag=0} flag' | sed '/^\s*$/d')
+          if ! grep -q "### Types of Changes" "$FILE"; then
+            echo -e "### Types of Changes\n" >> "$FILE"
+          fi
+
+          echo "$TOC" | while read -r line; do
+            CLEAN=$(echo "$line" | sed -E 's/^\s*[-*]\s*\[.\]\s*//')
+            if [[ "$line" =~ \[x\] || "$line" =~ \[X\] ]]; then
+              CHECKED_MAP["$CLEAN"]=1
+              # Upgrade existing line or add new
+              if grep -q "\[ \] $CLEAN" "$FILE"; then
+                sed -i "s/\[ \] $CLEAN/\[x] $CLEAN/" "$FILE"
+              elif ! grep -q "\[x\] $CLEAN" "$FILE"; then
+                echo "- [x] $CLEAN" >> "$FILE"
+              fi
+            else
+              # Add unchecked only if not present
+              if [[ -z "${CHECKED_MAP[$CLEAN]}" ]] && ! grep -q "\[ \] $CLEAN" "$FILE"; then
+                echo "- [ ] $CLEAN" >> "$FILE"
+              fi
+            fi
+          done
+
+          echo "" >> "$FILE"
+
+          # 2. For each section, if ticked, then grab its content from the PR body
+          # and write/appending under a single section header.
+          for section in "${SECTIONS[@]}"; do
+            if [[ "${CHECKED_MAP[$section]}" == "1" ]]; then
+              CONTENT=$(echo "$PR_BODY" | awk '/^### '"$section"'$/ {flag=1; next} /^### / && flag {exit} flag' | sed '/^\s*$/d')
+              if [[ -n "$CONTENT" ]]; then
+                # Only create the section header once
+                if ! grep -q "^## $section\$" "$FILE"; then
+                  echo -e "## $section\n" >> "$FILE"
                 fi
-
-                echo "$TOC" | while read -r line; do
-                CLEAN=$(echo "$line" | sed -E 's/^\s*[-*]\s*\[.\]\s*//')
-                if [[ "$line" =~ \[x\] || "$line" =~ \[X\] ]]; then
-                    CHECKED_MAP["$CLEAN"]=1
-                    # Upgrade existing line or add new
-                    if grep -q "\[ \] $CLEAN" "$FILE"; then
-                    sed -i "s/\[ \] $CLEAN/\[x] $CLEAN/" "$FILE"
-                    elif ! grep -q "\[x\] $CLEAN" "$FILE"; then
-                    echo "- [x] $CLEAN" >> "$FILE"
+                # Append each change under the section if not already present
+                echo "$CONTENT" | while read -r line; do
+                  if [[ -n "$line" ]]; then
+                    if ! grep -q -F "$line" "$FILE"; then
+                      echo "- $line" >> "$FILE"
                     fi
-                else
-                    # Add unchecked only if not present
-                    if [[ -z "${CHECKED_MAP[$CLEAN]}" ]] && ! grep -q "\[ \] $CLEAN" "$FILE"; then
-                    echo "- [ ] $CLEAN" >> "$FILE"
-                    fi
-                fi
+                  fi
                 done
-
                 echo "" >> "$FILE"
+              fi
+            fi
+          done
 
-                # 2. Parse and write each section only if it was ticked
-                for section in "${SECTIONS[@]}"; do
-                if [[ "${CHECKED_MAP[$section]}" == "1" ]]; then
-                    CONTENT=$(echo "$PR_BODY" | awk "/### $section/{flag=1; next} /### /{flag=0} flag" | sed '/^\s*$/d')
-                    if [[ ! -z "$CONTENT" ]]; then
-                    if ! grep -q "## $section" "$FILE"; then
-                        echo -e "## $section\n" >> "$FILE"
-                    fi
-                    echo "$CONTENT" >> "$FILE"
-                    echo "" >> "$FILE"
-                    fi
-                fi
-                done
+          # 3. Now add the PR summary table after all sections
+          if ! grep -q "### PRs Included in this Release" "$FILE"; then
+            echo -e "\n### PRs Included in this Release\n" >> "$FILE"
+            echo "| PR Title | PR # | Branch | Committed By |" >> "$FILE"
+            echo "|----------|------|--------|--------------|" >> "$FILE"
+          fi
 
-                # 3. Add PR summary table
-                if ! grep -q "### PRs Included in this Release" "$FILE"; then
-                echo -e "\n### PRs Included in this Release\n" >> "$FILE"
-                echo "| PR Title | PR # | Branch | Committed By |" >> "$FILE"
-                echo "|----------|------|--------|--------------|" >> "$FILE"
-                fi
+          echo "| ${{ steps.vars.outputs.pr_title }} | #${{ steps.vars.outputs.pr_number }} | ${{ steps.vars.outputs.pr_head_branch }} | @${{ steps.vars.outputs.pr_user }} |" >> "$FILE"
 
-                echo "| ${{ steps.vars.outputs.pr_title }} | #${{ steps.vars.outputs.pr_number }} | ${{ steps.vars.outputs.pr_head_branch }} | @${{ steps.vars.outputs.pr_user }} |" >> "$FILE"
-
-          - name: Commit Changelog
-            run: |
-                git config user.name github-actions
-                git config user.email github-actions@github.com
-                git add changelogs/
-                git commit -m "Update changelog for release: ${{ steps.vars.outputs.branch_name }}" || echo "No changes to commit"
-                git push
+      - name: Commit Changelog
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add changelogs/
+          git commit -m "Update changelog for release: ${{ steps.vars.outputs.branch_name }}" || echo "No changes to commit"
+          git push
