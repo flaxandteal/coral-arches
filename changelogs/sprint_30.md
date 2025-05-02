@@ -26,3 +26,5 @@
 - [ ] Workflows Updated
 
 | Fix: Migration Tool - Concept conversion and Group hydration | #656 | fix/migration-tool-members-and-concepts | @StuCM |
+
+| Fix: Change Notify Planning function save to post save | #659 | fix/bug-notify-planning | @StuCM |
