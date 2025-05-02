@@ -22,11 +22,14 @@
 - [ ] Features Added
 
 | #3055: Add completed by field to SCC workflow  | #655 | feat/#3055-Add-Completed-by | @babou212 |
-- [ ] Model Changes
-- [ ] Workflows Updated
+- [x] Model Changes
+- [x] Workflows Updated
 
 | Fix: Migration Tool - Concept conversion and Group hydration | #656 | fix/migration-tool-members-and-concepts | @StuCM |
 
 | Fix: Change Notify Planning function save to post save | #659 | fix/bug-notify-planning | @StuCM |
 
 | Fix: Dashboards - Filter name duplication and task card overflow  | #660 | fix/dashboard-issues | @StuCM |
+- [ ] Bug Fix
+
+| Feat/3058 smc to consultation | #663 | feat/3058-smc-to-consultation | @StuCM |
