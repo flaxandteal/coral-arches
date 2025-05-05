@@ -386,7 +386,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
 
-# Additional cookie security params 
+# Additional cookie security params
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_SECURE = True
