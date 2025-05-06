@@ -1,27 +1,22 @@
-import logging
+import json
+import os
 import uuid
-import base64
-from PIL import Image
 from django.utils.translation import gettext as _
 from django.views.generic import View
-from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from arches.app.models.models import File, TempFile
+from arches.app.models.models import TempFile
 from arches.app.models.system_settings import settings
-from django.core.exceptions import PermissionDenied
-from django.core.files.storage import storages
-from arches.app.models.tile import Tile as TileProxyModel, TileValidationError
-
+from arches.app.models.tile import Tile as TileProxyModel
+from arches.app.views.tile import TileData
 
 from django.core.files.storage import default_storage    
-from django.core.files.base import ContentFile
 
 from arches.app.utils.response import JSONResponse
 from arches.app.datatypes.datatypes import FileListDataType
 from arches.app.models.system_settings import settings
 
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 
 from mimetypes import MimeTypes
 
@@ -47,129 +42,75 @@ class TempFileView(View):
         return response
     
     def post(self, request: Request):
-        print("IT DEFO HAS UPDATED")
-        tileid = request.POST.get("tileid", uuid.uuid4())
-        print("tileid",tileid)
-        fileid = request.POST.get("file_id", uuid.uuid4())
-        print("fileid",fileid)
-        nodeid = request.POST.get("nodeid", uuid.uuid4())
-        print("nodeid",nodeid)
-        file_name = request.POST.get("file_name", "temp.jpg")
-        """
-        >>> storages.backends
-        {'default': {'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage', 'OPTIONS': {}}, 'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'}}
-        """
-        """
-        >>> default_storage.size('/uploadedfiles/04-04-2025-12-12_planning-response-combined.docx')
-        83365
-        """
+        host = request.get_host()
+        transaction_id = request.POST.get("transaction_id", uuid.uuid1())
 
+        file_list_node_id = "96f8830a-8490-11ea-9aba-f875a44e0e11"  # Digital Object
+        tileid = request.GET.get("tileid", None)
+        resourceid = request.GET.get("resourceid", "")
         file = request.FILES.get("file", None)
         paths = []
-        paths_string = ","
-        tiles = []
+        if tileid and tileid != "":
+            tile = TileProxyModel.objects.get(pk=tileid)
+        else:
+            tile = TileProxyModel.get_blank_tile_from_nodegroup_id("7db68c6c-8490-11ea-a543-f875a44e0e11",resourceid=resourceid)
+
+        fileNames = list(map(lambda fileObject: str(fileObject),request.FILES.values()))
+        paths = list(map(lambda name:  "%s/%s" % (settings.UPLOADED_FILES_DIR, name), fileNames))
+        tile_json = FileListDataType().transform_value_for_tile(",".join(paths))
+        processedTile = tile.data[file_list_node_id] if tile.data[file_list_node_id] else []
         for filename, file in request.FILES.items():
-            print("IN THE LOOP")
             # name = request.FILES[filename].name
             file_path = "%s/%s" % (settings.UPLOADED_FILES_DIR, str(file))
-            paths.append(str(file))
-            print(paths)
+            # stat = os.stat(os.path.join(settings.APP_ROOT, file_path))
 
             default_storage.save(file_path, file)
-            try:
-                print("TRY")
-                print(File)
-                print(fileid)
-                print("file again", file)
-                image_file, file_created = File.objects.get_or_create(pk=fileid)
-                print("Created FILE", image_file, file_created)
-                print("path", image_file.path.readable())
-                print("FILE vars", vars(image_file))
-                print("read", vars(file))
-                print("saving", str(file))
-                print("file.file", file.file)
-                print("read1", file.file.read1())
-                print("read", file.file.read())
-                image_file.path.save(str(file), file.file.read())
-                print("SAVED")
+            tiledata = next((x for x in tile_json if x['name'] == str(file)), None)
+            processedTile.append({
+                "accepted": tiledata['accepted'],
+                "content": "blob:" + host + "/{0}".format(uuid.uuid4()),
+                "description": None,
+                "file_id": str(tiledata['file_id']) if tiledata and tiledata['file_id'] else None,
+                "index": 0,
+                "lastModified": None,
+                "name": str(file),
+                "path": file_path,
+                "size": file.size,
+                "status": tiledata['status'] or "queued",
+                "type": tiledata['type'],
+                "url": tiledata['url']
+            })
 
-                tile = TileProxyModel.objects.get(pk=tileid)
-                print("TILE just created", tile)
-                tile_data = tile.get_tile_data(request.user.pk)
-                print("TILE data", tile_data)
+        tile = json.dumps(
+            {
+                "tileid": str(tileid) if tileid else None,
+                "data": {
+                    file_list_node_id: processedTile
+                },
+                "nodegroup_id": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                "parenttile_id": None,
+                "resourceinstance_id": str(resourceid) if resourceid else "",
+                "sortorder": 0,
+                "tiles": {},
+            }
+        )
 
-                for image in tile_data[nodeid]:
-                    print("image loop", image)
-                    if image["file_id"] == fileid:
-                        image["url"] = image_file.path.url
-                        image["size"] = image_file.path.size
-                        # I don't really want to run all the code TileProxyModel.save(),
-                        # so I just call it's super class
-                        super(TileProxyModel, tile).save()
-                        tile.index()
+        new_req = HttpRequest()
+        new_req.method = "POST"
+        new_req.user = request.user
+        new_req.POST["data"] = tile
+        new_req.POST["transaction_id"] = transaction_id
+        # new_req.FILES["file-list_" + file_list_node_id] = UploadedFile(file)
+        new_tile = TileData()
+        new_tile.action = "update_tile"
+        response = TileData.post(new_tile, new_req)
+        if response.status_code == 200:
+            tile = json.loads(response.content)
+            return JSONResponse({"tile": tile, "status": "success"})
 
-                print("TILE AFTER EVERYTHING", tile)
-                tiles.append(tile)
-            except Exception as e:
-                return JSONResponse(status=500)
-            
-        paths_string.join(paths)
-
-        print("paths string", paths_string)
-        """
-        Takes a comma separated string of paths.
-        """
-        tile_json = FileListDataType().transform_value_for_tile(paths_string)
-
-        print("tile_json", tile_json)
-
-        print("file_name",file_name)
-        file_data = request.FILES.get("data")
-        print("file_data",file_data)
-        
-        # temp_file = TempFile.objects.create(fileid=file_id, path=file)
-        # temp_file.save()
-
-        # response_dict = {
-        #     "file_id": file_id
-        # }
+        return HttpResponseNotFound(response.status_code)
 
 
-        # file_objs = request.data.getlist("files")
-        # for file_obj in file_objs:
-        #     path = default_storage.save(settings.MEDIA_ROOT, ContentFile(file_obj.read()))
 
-        """
-        for file_data in files:
-                file_model = models.File()
-                file_model.path = file_data
-                file_model.tile = tile
-                if tile_exists:
-                    file_model.save()
-                if current_tile_data[nodeid] is not None:
-                    resave_tile = False
-                    updated_file_records = []
-                    for file_json in current_tile_data[nodeid]:
-                        if file_json["name"] == file_data.name and file_json["url"] is None:
-                            file_json["file_id"] = str(file_model.pk)
-                            file_json["url"] = settings.MEDIA_URL + str(file_model.fileid)
-                            file_json["path"] = file_model.path.name
-                            file_json["status"] = "uploaded"
-                            resave_tile = True
-                        updated_file_records.append(file_json)
-                    if resave_tile is True:
-                        # resaving model to assign url from file_model
-                        # importing proxy model errors, so cannot use super on the proxy model to save
-                        if previously_saved_tile.count() == 1:
-                            tile_to_update = previously_saved_tile[0]
-                            if user_is_reviewer:
-                                tile_to_update.data[nodeid] = updated_file_records
-                            else:
-                                tile_to_update.provisionaledits[str(user.id)]["value"][nodeid] = updated_file_records
-                            tile_to_update.save()
-        """
-
-
-        return JSONResponse(tiles)
     
 
