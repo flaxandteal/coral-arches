@@ -77,7 +77,9 @@ define([
           this.getMonumentDetails(id);
         })
         this.selectedMonuments(currentResources);
+        console.log("I add", this.selectedMonuments)
       } else {
+        console.log("I Deleted")
         this.selectedMonuments([])
       }
     }, this);
@@ -202,8 +204,12 @@ define([
               bFile : bFile(),
               townlandValue : townlandValue()
             }})
-          
-  }}
+  }
+
+  // This will force a refresh to generate the tile if it already exists - not ideal
+  this.tile.data[this.dataNode](this.tile.data[this.dataNode]())
+
+}
 
   ko.components.register('get-selected-monument-details', {
     viewModel: viewModel,
