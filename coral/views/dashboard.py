@@ -21,7 +21,7 @@ HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
-EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+EXCAVATION_USER_GROUP = "801c124e-acb8-484d-890b-212545e44293"
 EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
@@ -36,7 +36,7 @@ class Dashboard(View):
         from arches_orm.models import Person
         with admin():
             user_id = request.user.id                     
-            person_resource = Person.where(user_account=user_id).first()
+            person_resource = Person.where(user_account=user_id).get()
             if not person_resource:
                 return JsonResponse({"error": "User not found"}, status=404)
             
@@ -85,7 +85,7 @@ class Dashboard(View):
                 if data_cache:
                     user_group_ids = json.loads(data_cache)
                 else:
-                    user_group_ids = self.get_groups(person_resource.id)
+                    user_group_ids = self.get_groups(person_resource[0].id)
                     cache.set(key, json.dumps(user_group_ids), 60 * 15) 
        
                 strategies = []
@@ -106,7 +106,7 @@ class Dashboard(View):
                     
                 task_params = {
                     'groupId': groupId,
-                    'userResourceId': person_resource.id,
+                    'userResourceId': person_resource[0].id,
                     'page': page,
                     'page_size': items_per_page
                 }

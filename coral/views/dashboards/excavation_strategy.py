@@ -2,6 +2,8 @@ from arches.app.models.tile import Resource
 from datetime import datetime
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
+from arches_orm.arches_django.query_builder.query_builder import QueryBuilder
+import copy
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
 EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
@@ -9,59 +11,107 @@ EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='createdat', sort_order='desc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceinstance__createdtime', sort_order='desc', filter='All'):
         from arches_orm.models import License
-        utilities = Utilities()
 
-        sort_options = ['createdat', 'validuntil']
+        licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
+        queryBuilder = License.where(**licencesDefaultWhereConditions)
 
-        licences_all = License.all()
+        def apply_filters(queryBuilder: QueryBuilder) -> "QueryBuilder":
+            """
+            Method can apply a where condition to the query builder
 
-        licences =[l for l in licences_all if l.system_reference_numbers.uuid.resourceid.startswith('EL/')]
-        if filter != 'all':
-            # Checks the report status against the filter value
-            licences = [l for l in licences if self.is_valid_license(l, filter)]
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
+
+            Returns:
+                QueryBuilder: The query builder object
+            """
+                    
+            if filter == 'All':
+                return queryBuilder;
+    
+            return queryBuilder.where(report_classification_type=filter);
         
-        sort_nodes = {
-            'validuntildate': lambda resource: resource.decision[0].licence_valid_timespan.valid_until_date,
-            'createdat': lambda resource: resource._.resource.createdtime
-        }
+        def apply_order_by(queryBuilder: QueryBuilder) -> "QueryBuilder":
+            """
+            Method applies order by modifier to the query builder object
 
-        # Sort nodes allow us to access the model node value for sorting
-        sorted_resources = utilities.sort_resources_date(licences, sort_nodes, sort_by, sort_order)
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
 
-        # Get total number of resources
-        total_resources = len(licences)
+            Returns:
+                QueryBuilder: The query builder object
+            """
+            direction = '-'
+            if (sort_order == 'asc'): direction = ''
 
-        # Build data only for the current page
-        start_index = (page -1) * page_size
-        end_index = (page * page_size)
-        indexed_resources = sorted_resources[start_index:end_index]
+            return queryBuilder.order_by(f'{direction}{sort_by}')
 
-        tasks = []
+        def get_paginated_resources(queryBuilder: QueryBuilder) -> any:
+            """
+            Method applies a offset to the query builder to get the records from a certain range and it returns the WKRM with the range of records
+            inside
+            
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
 
-        for resource in indexed_resources:
-            task = self.build_data(resource, groupId)
-            tasks.append(task)
+            Returns:
+                Any: The WKRM
+            """
+            copyQueryBuilder = copy.deepcopy(queryBuilder) # ? We copy to not reference the main data as we can only apply 1 selector onto the query builder
+            start_index = (page -1) * page_size
+            end_index = (page * page_size)
+            return copyQueryBuilder.offset(start_index, end_index)
+    
+        def get_count(queryBuilder: QueryBuilder) -> int:
+            """
+            Method gets the total count of records based on the query and this returns just the number of queries. Count doesn't return a instance of
+            WKRM
+            
+            Args:
+                queryBuilder (QueryBuilder): The query builder object
 
+            Returns:
+                int: The count of records
+            """
+            copyQueryBuilder = copy.deepcopy(queryBuilder) # ? We copy to not reference the main data as we can only apply 1 selector onto the query builder
+            return copyQueryBuilder.count()
+        
+        def build_tasks(resources):
+            tasks = []
+
+            for resource in resources:
+                task = self.build_data(resource, groupId)
+                tasks.append(task)
+
+            return tasks
+
+        queryBuilder = apply_filters(queryBuilder)
+        queryBuilder = apply_order_by(queryBuilder)
+
+        resources = get_paginated_resources(queryBuilder)
+        total_resources = get_count(queryBuilder)   
+        tasks = build_tasks(resources)
         counters = []
 
         return tasks, total_resources, counters
 
     def get_sort_options(self):
         return [
-            {'id': 'createdat', 'name': 'Created At'}, 
-            {'id': 'validuntildate', 'name': 'Valid Until'}
+            {'id': 'resourceinstance__createdtime', 'name': 'Created At'}, 
+            {'id': 'valid_until_date', 'name': 'Valid Until'}
         ]
     
     def get_filter_options(self, groupId=None):
         return [
-            {'id': 'all', 'name': 'All'},
-            {'id': 'final', 'name': 'Final'}, 
-            {'id': 'preliminary', 'name': 'Preliminary'}, 
-            {'id': 'interim', 'name': 'Interim'}, 
-            {'id': 'unclassified', 'name': 'Unclassified'}, 
-            {'id': 'summary', 'name': 'Summary'}
+            {'id': 'All', 'name': 'All'},
+            {'id': 'Final', 'name': 'Final'}, 
+            {'id': 'Preliminary', 'name': 'Preliminary'}, 
+            {'id': 'Interim', 'name': 'Interim'}, 
+            {'id': 'Unclassified', 'name': 'Unclassified'}, 
+            {'id': 'Summary', 'name': 'Summary'},
+            {'id': 'Not Received', 'name': 'Not Received'}
         ]
     
     def build_data(self, licence, groupId):
@@ -98,7 +148,9 @@ class ExcavationTaskStrategy(TaskStrategy):
 
         # convert date format
         if valid_until_date:
-            valid_until_date = datetime.strptime(valid_until_date, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
+            date_obj = datetime.fromisoformat(str(valid_until_date))
+            valid_until_date = date_obj.strftime("%d-%m-%Y")
+            # valid_until_date = datetime.strptime(str(valid_until_date), "%Y-%m-%d %H:%M:%S%z").strftime("%d-%m-%Y")
 
         resource_data = {
             'id': str(licence.id),
@@ -115,12 +167,3 @@ class ExcavationTaskStrategy(TaskStrategy):
             'responseslug': response_slug
         }
         return resource_data
-    
-    def is_valid_license(self, licence, filter):
-        from arches_orm.models import License
-        utilities = Utilities()
-        classification_type = utilities.node_check(lambda:licence.application_details.report_classification_type)
-        if not classification_type:
-            return False
-        string_value = utilities.domain_value_string_lookup(License, 'report_classification_type', classification_type)
-        return string_value.lower() == filter
