@@ -37,3 +37,5 @@
 - [ ] Workflows Updated
 
 | Feat/128 refactor designation dashboard | #675 | feat/128-refactor-designation-dashboardD | @StuCM |
+
+| Feat/129 refactor excavaton dashboard | #676 | feat/129_refactor-excavaton-dashboard | @StuCM |
