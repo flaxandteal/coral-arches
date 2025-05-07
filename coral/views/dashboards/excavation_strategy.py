@@ -110,7 +110,8 @@ class ExcavationTaskStrategy(TaskStrategy):
             {'id': 'Preliminary', 'name': 'Preliminary'}, 
             {'id': 'Interim', 'name': 'Interim'}, 
             {'id': 'Unclassified', 'name': 'Unclassified'}, 
-            {'id': 'Summary', 'name': 'Summary'}
+            {'id': 'Summary', 'name': 'Summary'},
+            {'id': 'Not Received', 'name': 'Not Received'}
         ]
     
     def build_data(self, licence, groupId):

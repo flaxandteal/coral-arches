@@ -1072,8 +1072,8 @@ span.rp-tile-title {
 
 .dashboard-counter-card {
     width: 300px;
-    min-height: 120px;
-    margin:2rem 5rem;
+    max-height: 120px;
+    margin:1.22rem 5rem;
     padding: 0 1rem 1rem 1rem;
 }
 
