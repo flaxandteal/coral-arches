@@ -160,7 +160,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 groups_filter = [
                     {'id': TYPE_ASSIGN_HB, 'name': 'HB Group', 'type': 'group'}, 
                     {'id': TYPE_ASSIGN_HM, 'name': 'HM Group', 'type': 'group'}
-                ]       
+                ]     
 
             filter_options = [
                 {'id': 'all', 'name': 'All', 'type': 'all'}, 
@@ -175,16 +175,18 @@ class PlanningTaskStrategy(TaskStrategy):
     def get_group_members(self, groups):
         from arches_orm.models import Group
         with admin():
-            members_filter = []
+            members_filter = {}
             for group in groups:
                     group_resource = Group.find(group)
-                    members = [
-                        {'id': str(member.id), 'name': member.name[0].full_name, 'type': 'person'}
-                        for member in group_resource.members
-                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel'
-                    ]
-                    members_filter.extend(members)
-            return members_filter
+                    for member in group_resource.members:
+                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel':
+                            members_key = str(member.id)
+                            members_filter[members_key] = {
+                                'id': str(member.id), 
+                                'name': member.name[0].full_name, 
+                                'type': 'person'
+                            }
+            return list(members_filter.values())
     
     def build_data(self, consultation, groupId):
         from arches_orm.models import Consultation

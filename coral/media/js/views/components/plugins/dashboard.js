@@ -159,15 +159,6 @@ define([
         }
       })
 
-      window.addEventListener('resize', debounce(async () => {
-          const prevItemsPerPage = this.itemsPerPage();
-          updateItemsPerPage();
-          if (prevItemsPerPage === this.itemsPerPage()){
-            return
-          }
-          await getTasks('true');
-      }, 200));
-
       this.newPage = async (pageNumber) => {
           this.currentPage(pageNumber);
           await getTasks('false');
