@@ -16,6 +16,7 @@ import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
 from csp.constants import SELF, NONE
+from csp.constants import SELF, NONE, NONCE
 
 try:
     from arches.settings import *
@@ -23,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=10, patch=39)
+APP_VERSION = semantic_version.Version(major=7, minor=11, patch=41)
 
 GROUPINGS = {
     "groups": {
@@ -387,7 +388,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 SESSION_COOKIE_NAME = 'coral'
 
 # Additional cookie security params 
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
@@ -587,4 +588,3 @@ if __name__ == "__main__":
         static_url=STATIC_URL,
         webpack_development_server_port=WEBPACK_DEVELOPMENT_SERVER_PORT,
     )
-
