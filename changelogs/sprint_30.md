@@ -39,6 +39,8 @@
 | Feat/128 refactor designation dashboard | #675 | feat/128-refactor-designation-dashboardD | @StuCM |
 
 | Feat/129 refactor excavaton dashboard | #676 | feat/129_refactor-excavaton-dashboard | @StuCM |
-- [ ] Features Added
+- [x] Features Added
 
 | Feat/130 refactor planning dashboard | #677 | feat/130_refactor-planning-dashboard | @StuCM |
+
+| Feat/132 domain values | #678 | feat/132_domain-values | @StuCM |
