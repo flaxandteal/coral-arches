@@ -348,7 +348,6 @@ class PlanningTaskStrategy(TaskStrategy):
             return transform_group_members(foundGroupRecords)
     
     def build_data(self, consultation, groupId):
-        from arches_orm.models import Consultation
         utilities = Utilities()
 
         action_status = utilities.node_check(lambda: consultation.action[0].action_status)
@@ -385,20 +384,17 @@ class PlanningTaskStrategy(TaskStrategy):
         if assigned_to:
             assigned_to_names = list(map(lambda person: person.name[0].full_name,  assigned_to))
 
-        if classification:
-            classification = utilities.domain_value_string_lookup(Consultation, 'classification_type', classification)
-
         # Initialise the team responses
         responded = {
             'HB': False,
             'HM': False,
-            'type': utilities.domain_value_string_lookup(Consultation, 'action_type', action_type)
+            'type': action_type
         }
 
         # Look up for either te
         if responses:
             for response in responses:
-                team = utilities.domain_value_string_lookup(Consultation, 'response_team', response.response_team)
+                team = response.response_team
                 if team in responded:
                     responded[team] = True
 
@@ -413,7 +409,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
         deadline_message = None
         if deadline:
-            deadline_date = datetime.strptime(deadline, "%Y-%m-%dT%H:%M:%S.%f%z")
+            deadline_date = datetime.strptime(str(deadline), "%Y-%m-%dT%H:%M:%S.%f%z")
             deadline_message = utilities.create_deadline_message(deadline_date)
             deadline = deadline_date.strftime("%d-%m-%Y")
 
