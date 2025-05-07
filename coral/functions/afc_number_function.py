@@ -16,7 +16,8 @@ details = {
     "component": "",
 }
 class AfcNumberFunction(BaseFunction):
-    def post_save(self, tile, request, context):
+
+    def save(self, tile, request, context):
         if context and context.get('escape_function', False):
             return
 
@@ -25,17 +26,24 @@ class AfcNumberFunction(BaseFunction):
 
         id_number_string = id_number.get("en").get("value")
 
+        daera_num = AilNumber()
+        afcn = AfcNumber()
+        if id_number_string.startswith("extrados-agriculture"):
+            id_number = afcn.generate_id_number()
+            tile.data[SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID] = { "en": {"direction": "ltr", "value": id_number}}
+            tile.save()
+        elif id_number_string.startswith("extrados-daera"):
+            id_number = daera_num.generate_id_number()
+            tile.data[SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID] = { "en": {"direction": "ltr", "value": id_number}}
+            tile.save()
         if id_number_string.startswith("AIL"):
-            daera_num = AilNumber()
             if daera_num.validate_id(id_number, resource_instance_id):
                 print("AIL ID is valid: ", id_number)
                 return
             raise ValueError(
                 'This ID number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please refresh and save again.'
                 )
-
         elif id_number_string.startswith("AFC"):
-            afcn = AfcNumber()
             if afcn.validate_id(id_number, resource_instance_id):
                 print("AFC ID is valid: ", id_number)
                 return
