@@ -361,7 +361,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def _django_group_to_ri(django_group: DjangoGroup):
         # TODO: a more robust mapping
-        group = Group.where(name={"en": {"value": django_group.name, "direction": "ltr"}})
+        group = Group.where(name=django_group.name).get()
         if not group:
             group = Group.create()
             basic_info = group.basic_info.append()

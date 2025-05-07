@@ -25,8 +25,10 @@ EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
-SECOND_SURVEY_GROUP = '1ce90bd5-4063-4984-931a-cc971414d7db'
-DESIGNATIONS_GROUP = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
+SECOND_SURVEY_GROUP_USER = '1ce90bd5-4063-4984-931a-cc971414d7db'
+DESIGNATIONS_GROUP_USER = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
+SECOND_SURVEY_GROUP_MANAGER = '7679f42b-56ad-4b18-8b2c-cc6de1b16537'
+DESIGNATIONS_GROUP_MANAGER = 'e778f4a1-97c6-446f-b1c4-418a81c3212e'
 
 class Dashboard(View):
 
@@ -34,7 +36,7 @@ class Dashboard(View):
         from arches_orm.models import Person
         with admin():
             user_id = request.user.id                     
-            person_resource = Person.where(user_account = user_id)
+            person_resource = Person.where(user_account=user_id).first()
             if not person_resource:
                 return JsonResponse({"error": "User not found"}, status=404)
             
@@ -65,14 +67,17 @@ class Dashboard(View):
             cache_key = f'dashboard_{user_id}_{version}_{page}'
             cache_data = cache.get(cache_key)
             if not update and cache_data:
+                print('USING CACHE DATA HERE')
                 data = json.loads(cache_data)
                 task_resources = data['task_resources']
                 counters = data['counters']
                 sort_options = data['sort_options']
                 filter_options = data['filter_options']
                 total_resources = data['total_resources']
-                utilities = Utilities()
-                task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
+
+                # ! Could cause issues but shouldn't
+                # utilities = Utilities()
+                # task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
             else:
                 key = f"groups_{user_id}"
                 data_cache = cache.get(key)
@@ -80,7 +85,7 @@ class Dashboard(View):
                 if data_cache:
                     user_group_ids = json.loads(data_cache)
                 else:
-                    user_group_ids = self.get_groups(person_resource[0].id)
+                    user_group_ids = self.get_groups(person_resource.id)
                     cache.set(key, json.dumps(user_group_ids), 60 * 15) 
        
                 strategies = []
@@ -101,7 +106,7 @@ class Dashboard(View):
                     
                 task_params = {
                     'groupId': groupId,
-                    'userResourceId': person_resource[0].id,
+                    'userResourceId': person_resource.id,
                     'page': page,
                     'page_size': items_per_page
                 }
@@ -166,7 +171,7 @@ class Dashboard(View):
             return { id: groupId, 'name': 'Planning Dashboard', 'strategy': PlanningTaskStrategy() }
         elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
             return { id: groupId, 'name': 'Excavation Dashboard', 'strategy': ExcavationTaskStrategy() }
-        elif groupId in [SECOND_SURVEY_GROUP, DESIGNATIONS_GROUP]:
+        elif groupId in [SECOND_SURVEY_GROUP_USER, DESIGNATIONS_GROUP_USER, SECOND_SURVEY_GROUP_MANAGER, DESIGNATIONS_GROUP_MANAGER]:
             return { id: groupId, 'name': 'Records and Designation Dashboard', 'strategy': DesignationTaskStrategy() }
         return
 
@@ -177,5 +182,3 @@ class Dashboard(View):
         
     
 
-
-        
