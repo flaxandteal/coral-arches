@@ -19,7 +19,7 @@
 - [x] Bug Fix
 
 | Feat: Add X Frame Option and Security Content nosniff | #661 | feat/security-headers | @StuCM |
-- [ ] Features Added
+- [x] Features Added
 
 | #3055: Add completed by field to SCC workflow  | #655 | feat/#3055-Add-Completed-by | @babou212 |
 - [x] Model Changes
@@ -33,3 +33,7 @@
 - [ ] Bug Fix
 
 | Feat/3058 smc to consultation | #663 | feat/3058-smc-to-consultation | @StuCM |
+- [ ] Model Changes
+- [ ] Workflows Updated
+
+| Feat/128 refactor designation dashboard | #675 | feat/128-refactor-designation-dashboardD | @StuCM |
