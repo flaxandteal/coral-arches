@@ -16,6 +16,7 @@ import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
 from csp.constants import SELF, NONE
+from csp.constants import SELF, NONE, NONCE
 
 try:
     from arches.settings import *
@@ -23,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=11, patch=40)
+APP_VERSION = semantic_version.Version(major=7, minor=11, patch=41)
 
 GROUPINGS = {
     "groups": {
@@ -245,6 +246,10 @@ CONTENT_SECURITY_POLICY = {
     },
 }
 
+X_FRAME_OPTIONS = 'DENY'
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     MIDDLEWARE.append("debug_toolbar_force.middleware.ForceDebugToolbarMiddleware")
@@ -381,6 +386,14 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
+
+# Additional cookie security params 
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = "Strict"
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_SECURE = True
 
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
 CACHES = {
@@ -575,4 +588,3 @@ if __name__ == "__main__":
         static_url=STATIC_URL,
         webpack_development_server_port=WEBPACK_DEVELOPMENT_SERVER_PORT,
     )
-
