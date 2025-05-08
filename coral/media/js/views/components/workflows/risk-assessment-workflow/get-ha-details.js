@@ -37,8 +37,6 @@ define([
 
       this.COUNCIL = "447973ce-d7e2-11ee-a4a1-0242ac120006";
 
-      this.RECORDS_NI = "";
-
       this.RECOMMENDED_DESIGNATION_NODE = "74ef37e0-37b5-11ef-9263-0242ac150006"
       this.SCHEDULED_MONUMENT_CONCEPT = "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9"
 
