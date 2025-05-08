@@ -1,0 +1,217 @@
+{
+  "pluginid": "077d4b0a-4c77-416e-993e-60041c1e855f",
+  "name": "Ranger Inspection",
+  "icon": "fa fa-binoculars",
+  "component": "views/components/plugins/workflow-builder-loader",
+  "componentname": "workflow-builder-loader",
+  "config": {
+    "show": false,
+    "graphId": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
+    "stepConfig": [
+      {
+        "name": "initial-step-step",
+        "title": "Initial Step",
+        "required": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
+                  "hiddenNodes": [
+                    "8ae95962-2a8b-11f0-b334-0242ac120006",
+                    "8ae955fc-2a8b-11f0-b334-0242ac120006",
+                    "8ae94da0-2a8b-11f0-b334-0242ac120006"
+                  ],
+                  "nodegroupid": "8ae92ba4-2a8b-11f0-b334-0242ac120006",
+                  "semanticName": "System Reference Numbers",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "64702682-2a57-11f0-88da-0242ac120006"
+                    }
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "workflow-builder-initial-step",
+                "uniqueInstanceName": "835839dd-ec4a-4732-ba9c-a7c6be4ea832"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
+      },
+      {
+        "name": "details-step",
+        "title": "Details",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
+                  "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "59c1f78a-2a55-11f0-b2d3-0242ac120006",
+                  "node": "59c1f78a-2a55-11f0-b2d3-0242ac120006",
+                  "nodeOptions": {
+                    "59c1f78a-2a55-11f0-b2d3-0242ac120006" : {
+                      "allowInstanceCreation": false
+                    }
+                  }
+                },
+                "tilesManaged": "one",
+                "componentName": "get-selected-monument-details",
+                "uniqueInstanceName": "monument-select"
+              },
+              {
+                "parameters": {
+                  "graphid": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
+                  "nodegroupid": "fc1e5e88-2a55-11f0-b2d3-0242ac120006",
+                  "semanticName": "Details",
+                  "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']"
+
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "6d9578ba-a813-4db4-bad6-0611273fa1ed"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
+      },
+      {
+        "name": "map-step",
+        "title": "Map",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
+                  "nodegroupid": "8b23ad9e-2a57-11f0-8d35-0242ac120006",
+                  "parenttileid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['locationData']",
+                  "semanticName": "Geometry",
+                  "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "5b0b233b-8406-4bd8-9346-3e5b40418d9d"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
+      },
+      {
+        "name": "inspection-step",
+        "title": "Inspection",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
+                  "nodegroupid": "d62157f0-2a58-11f0-8d35-0242ac120006",
+                  "semanticName": "Inspection",
+                  "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']"
+                },
+                "tilesManaged": "many",
+                "componentName": "default-card",
+                "uniqueInstanceName": "51cf5f07-fef9-4b65-97fa-5757df5b441c"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
+      },
+      {
+        "name": "documentation-step",
+        "title": "Documentation",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "a535a235-8481-11ea-a6b9-f875a44e0e11",
+                  "nodegroupid": "7db68c6c-8490-11ea-a543-f875a44e0e11",
+                  "resourceModelId": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']",
+                  "resourceModelDigitalObjectNodeGroupId": "bc6625ca-2a5d-11f0-88da-0242ac120006"
+                },
+                "tilesManaged": "one",
+                "componentName": "related-document-upload",
+                "uniqueInstanceName": "92ec3a0a-f874-4696-be19-af035df2a0db"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "sign-off-step",
+        "title": "Sign Off",
+        "required": false,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+                "parameters": {
+                  "graphid": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
+                  "nodegroupid": "ce7640e2-2a5d-11f0-88da-0242ac120006",
+                  "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']",
+                  "semanticName": "Sign Off",
+                  "nodeOptions": {
+                    "f82e1ac2-2a5d-11f0-88da-0242ac120006": {
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": ["cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"]
+                    },
+                    "20f9b984-2a5e-11f0-8d35-0242ac120006": {
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": ["cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"]
+                    },
+                    "e39c76b2-2a5d-11f0-8d35-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    },
+                    "0e7e8de8-2a5e-11f0-8d35-0242ac120006": {
+                      "config":{
+                        "maxDate":"today"
+                      }
+                    }
+                  }
+                },
+                "tilesManaged": "one",
+                "componentName": "default-card",
+                "uniqueInstanceName": "cb8ffd11-ccab-4616-9f36-980ea3af456c"
+              }
+            ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": []
+      }
+    ],
+    "initWorkflow": {
+      "desc": "Workflow for completing ranger inspections",
+      "icon": "fa fa-binoculars",
+      "name": "Ranger Inspection Workflow",
+      "show": true,
+      "bgColor": "#617099",
+      "slugPrefix": "",
+      "circleColor": "#4a5e94"
+    }
+  },
+  "slug": "ranger-inspection-workflow",
+  "sortorder": 0
+}
