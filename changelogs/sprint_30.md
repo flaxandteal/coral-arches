@@ -44,3 +44,13 @@
 | Feat/130 refactor planning dashboard | #677 | feat/130_refactor-planning-dashboard | @StuCM |
 
 | Feat/132 domain values | #678 | feat/132_domain-values | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| Fix/issue pagination sprint 30 | #683 | fix/issue-pagination-sprint_30 | @aidan-galvia |
