@@ -95,11 +95,20 @@
                   "graphid": "eded3b45-42d1-4bb7-938e-2bc69ad82dab",
                   "nodegroupid": "8b23ad9e-2a57-11f0-8d35-0242ac120006",
                   "parenttileid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['locationData']",
+                  "related_heritage_node_id": "59c1f78a-2a55-11f0-b2d3-0242ac120006",
+                  "geo_node_id": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
+                  "geo_coords_node_id": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba",
+                  "geo_coords_input_node": "8b23eaca-2a57-11f0-8d35-0242ac120006",
                   "semanticName": "Geometry",
-                  "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']"
+                  "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']",
+                  "nodeOptions": {
+                    "8b23eaca-2a57-11f0-8d35-0242ac120006": {
+                      "disableEdit": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "related-heritage-asset-map",
                 "uniqueInstanceName": "5b0b233b-8406-4bd8-9346-3e5b40418d9d"
               }
             ]
