@@ -25,8 +25,10 @@ EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
-SECOND_SURVEY_GROUP = '1ce90bd5-4063-4984-931a-cc971414d7db'
-DESIGNATIONS_GROUP = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
+SECOND_SURVEY_GROUP_USER = '1ce90bd5-4063-4984-931a-cc971414d7db'
+DESIGNATIONS_GROUP_USER = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
+SECOND_SURVEY_GROUP_MANAGER = '7679f42b-56ad-4b18-8b2c-cc6de1b16537'
+DESIGNATIONS_GROUP_MANAGER = 'e778f4a1-97c6-446f-b1c4-418a81c3212e'
 
 class Dashboard(View):
 
@@ -166,7 +168,7 @@ class Dashboard(View):
             return { id: groupId, 'name': 'Planning Dashboard', 'strategy': PlanningTaskStrategy() }
         elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
             return { id: groupId, 'name': 'Excavation Dashboard', 'strategy': ExcavationTaskStrategy() }
-        elif groupId in [SECOND_SURVEY_GROUP, DESIGNATIONS_GROUP]:
+        elif groupId in [SECOND_SURVEY_GROUP_USER, DESIGNATIONS_GROUP_USER, SECOND_SURVEY_GROUP_MANAGER, DESIGNATIONS_GROUP_MANAGER]:
             return { id: groupId, 'name': 'Records and Designation Dashboard', 'strategy': DesignationTaskStrategy() }
         return
 
