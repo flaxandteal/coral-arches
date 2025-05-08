@@ -177,7 +177,9 @@
                     "20f9b984-2a5e-11f0-8d35-0242ac120006": {
                       "allowInstanceCreation": false,
                       "component": "user-to-model-select",
-                      "signOffGroups": ["f94d02a2-cdf5-4dde-9d95-46fc2085db76"]
+                      "signOffGroups": ["f94d02a2-cdf5-4dde-9d95-46fc2085db76"],
+                      "conflictNode": ["f82e1ac2-2a5d-11f0-88da-0242ac120006"],
+                      "conflictAllowBlank": false
                     },
                     "e39c76b2-2a5d-11f0-8d35-0242ac120006": {
                       "config":{
