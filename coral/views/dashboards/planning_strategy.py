@@ -164,7 +164,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 """
                 copyQueryBuilder = copy.deepcopy(queryBuilder)
                 start_index = (page -1) * page_size
-                
+
                 return copyQueryBuilder.offset(start_index, page_size)
             
             def get_counters(queryBuilder: "QueryBuilder") -> Dict[str, Dict[str, int | None]]:
@@ -233,8 +233,6 @@ class PlanningTaskStrategy(TaskStrategy):
 
             total_resources = get_count(queryBuilder)
             resources = get_paginated_resources(queryBuilder)
-
-            print('LENGTH OF RESOURCES : ', len(resources))
 
             tasks = []
 
