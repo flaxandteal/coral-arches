@@ -1080,3 +1080,15 @@ span.rp-tile-title {
 .planning-card {
     min-height: 258px;
 }
+
+.response-container div {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 1rem
+}
+
+.response-container div input[type=checkbox] {
+    pointer-events: none;
+    cursor: not-allowed;
+    margin-left: 2rem;
+}
