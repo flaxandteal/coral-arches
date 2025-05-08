@@ -30,7 +30,8 @@ define([
   'views/components/workflows/agriculture-and-forestry-consultation-workflow/generate-afc-number',
   'views/components/workflows/update-deadline',
   'views/components/workflows/daera-workflow/generate-ail-number',
-  'views/components/workflows/get-selected-monument-details-with-count'
+  'views/components/workflows/get-selected-monument-details-with-count',
+  'views/components/workflows/risk-assessment-workflow/get-ha-details',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
     viewModel: function (params) {
