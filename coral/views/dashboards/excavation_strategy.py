@@ -61,8 +61,8 @@ class ExcavationTaskStrategy(TaskStrategy):
             """
             copyQueryBuilder = copy.deepcopy(queryBuilder) # ? We copy to not reference the main data as we can only apply 1 selector onto the query builder
             start_index = (page -1) * page_size
-            end_index = (page * page_size)
-            return copyQueryBuilder.offset(start_index, end_index)
+                
+            return copyQueryBuilder.offset(start_index, page_size)
     
         def get_count(queryBuilder: QueryBuilder) -> int:
             """
