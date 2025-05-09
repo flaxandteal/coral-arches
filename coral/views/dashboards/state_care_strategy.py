@@ -1,6 +1,7 @@
 from coral.views.dashboards.base_strategy import TaskStrategy
 from arches_orm.adapter import admin 
 from typing import List
+import pdb
 
 class StateCareTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter='all'):
@@ -13,7 +14,7 @@ class StateCareTaskStrategy(TaskStrategy):
             def _setup_default_query():
                 curatorial_default_query = { 'resourceid__startswith': 'CIN/', 'sign_off_date_value': None}
                 state_care_default_query = {'signed_off_date': None}
-                risk_assessment_default_query = {'sign_off_date': None}  
+                risk_assessment_default_query = {'sign_off_date__isnull': False}  
                 ranger_inspection_default_query = {'reviewed_date': None}
 
                 self.curatorial_inspections = Consultation.where(**curatorial_default_query)
@@ -182,8 +183,8 @@ class StateCareTaskStrategy(TaskStrategy):
                         ]     
                 },
                 RiskAssessment: {
-                    'models': 'Risk Assessment',
-                    'slugs': 'risk-assessment-workflow',
+                    'model': 'Risk Assessment',
+                    'slug': 'risk-assessment-workflow',
                     'nodes': 
                     [
                         ('associated_heritage_assets', 'related_ha'),
@@ -193,8 +194,8 @@ class StateCareTaskStrategy(TaskStrategy):
                     ]
                 },
                 RangerInspection: {
-                    'models': 'Ranger Inspection',
-                    'slugs': 'ranger-inspection-workflow',
+                    'model': 'Ranger Inspection',
+                    'slug': 'ranger-inspection-workflow',
                     'nodes': 
                     [
                         ('related_heritage_assets', 'related_ha'),
@@ -204,7 +205,7 @@ class StateCareTaskStrategy(TaskStrategy):
                     ]
                 },
                 Consultation: {
-                    'models': 'Curatorial Inspection',
+                    'model': 'Curatorial Inspection',
                     'slug': 'curatorial-inspection-workflow',
                     'nodes': 
                     [
@@ -217,23 +218,23 @@ class StateCareTaskStrategy(TaskStrategy):
             }
 
             def fetch_heritage_asset_data(heritage_asset):
-                from arches_orm.models import Monument
-                with admin():
-                    # ha = Monument.find(heritage_asset[0].id) # currently only looking at the first if a list
+                monument_nodes = [
+                    'townland',
+                    'council',
+                    'smr_number'
+                ]
 
-                    monument_nodes = [
-                        'townland',
-                        'council',
-                        'smr_number'
-                    ]
+                monument_values = get_values(monument_nodes, heritage_asset[0])
 
-                    monument_values = get_values(monument_nodes, heritage_asset[0])
-
-                    return monument_values
+                return monument_values
 
             
             def get_values(nodes: List, resource):
                 values = resource._._values
+                if isinstance(resource, RiskAssessment):
+                    print("A Test ", resource.details.property_status)
+                    print("MY VALUES", values)
+                    pdb.set_trace()
                 resource_values = {}
                 for node in nodes:
                     key = str(node).replace('_', '')
@@ -248,11 +249,7 @@ class StateCareTaskStrategy(TaskStrategy):
                         if len(value) == 1:
                             resource_values[key] = value[0].value
                         else:
-                            resource_values[key] = [item.value for item in value] 
-                    else:
-                        if value:
-                            resource_values[key] = value.value              
-
+                            resource_values[key] = [item.value for item in value]            
                 return resource_values 
 
             for graph, config in CONFIG_MAPPING.items():
@@ -260,7 +257,8 @@ class StateCareTaskStrategy(TaskStrategy):
                 if isinstance(resource, graph):
                     node_values = get_values(config.get('nodes', []), resource)
                     node_values['model'] = config.get('model')
-                    node_values['slugs'] = config.get('slug')
+                    node_values['slug'] = config.get('slug')
+                    node_values['state'] = 'statecare'
                 
                     # Set common values
                     node_values['id'] = str(resource.id)
