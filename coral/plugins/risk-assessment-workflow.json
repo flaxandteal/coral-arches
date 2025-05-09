@@ -121,10 +121,19 @@
                   "resourceid": "['initial-step-step']['heritage-asset'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "efe1f480-2a83-11f0-87fa-d29b2aa90d5e",
                   "parenttileid": "['initial-step-step']['heritage-asset'][0]['resourceid']['locationData']",
-                  "semanticName": "Geometry"
+                  "related_heritage_node_id": "c3a76082-2a5e-11f0-9637-62d3208fcf53",
+                  "geo_node_id": "efe1ffa2-2a83-11f0-87fa-d29b2aa90d5e",
+                  "geo_coords_node_id": "efe22ab8-2a83-11f0-87fa-d29b2aa90d5e",
+                  "geo_coords_input_node": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba",
+                  "semanticName": "Geometry",
+                  "nodeOptions": {
+                    "efe1ffa2-2a83-11f0-87fa-d29b2aa90d5e": {
+                      "disableEdit": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
-                "componentName": "default-card",
+                "componentName": "related-heritage-asset-map",
                 "uniqueInstanceName": "geometry"
               }
             ]
@@ -147,7 +156,7 @@
                   "semanticName": "Evaluation"
                 },
                 "tilesManaged": "many",
-                "componentName": "default-card",
+                "componentName": "get-calculated-risk",
                 "uniqueInstanceName": "276819c4-a02c-4135-b984-0c6acb88836d"
               }
             ]
@@ -192,7 +201,23 @@
                   "graphid": "eb8e5877-7e36-416d-95a9-d0ff8045fd26",
                   "resourceid": "['initial-step-step']['heritage-asset'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "2f3f5dc8-2a63-11f0-b5c0-62d3208fcf53",
-                  "semanticName": "Sign Off"
+                  "semanticName": "Sign Off",
+                  "nodeOptions": {
+                      "b4bec684-2a66-11f0-9637-62d3208fcf53": {
+                        "component": "user-to-model-select",
+                        "signOffGroups": [
+                          ""
+                        ],
+                        "allowInstanceCreation": false
+                      },
+                      "d9394d68-2a66-11f0-b5c0-62d3208fcf53": {
+                        "component": "user-to-model-select",
+                        "signOffGroups": [
+                          ""
+                        ],
+                        "allowInstanceCreation": false
+                      }
+                    }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
