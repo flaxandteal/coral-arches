@@ -1,7 +1,7 @@
 from coral.views.dashboards.planning_strategy import PlanningTaskStrategy
 from coral.views.dashboards.excavation_strategy import ExcavationTaskStrategy
 from coral.views.dashboards.designation_strategy import DesignationTaskStrategy
-from coral.views.dashboards.designation_strategy import StateCareTaskStrategy
+from coral.views.dashboards.state_care_strategy import StateCareTaskStrategy
 
 
 PLANNING_GROUP = '74afc49c-3c68-4f6c-839a-9bc5af76596b'
@@ -48,6 +48,7 @@ STRATEGY_MAP = {
 
 def get_strategy(groupId):
     config = STRATEGY_MAP.get(groupId)
+
     if config:
         name, strategy_class = config
     return {
