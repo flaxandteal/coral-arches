@@ -280,23 +280,23 @@
     </div>
     <div>
       <h5>Townland</h5>
-      <p data-bind="text: data.townland ?? 'Not Set'"></p>
+      <!-- ko foreach: data.townland -->
+        <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
+      <!-- /ko -->
     </div>
     <div>
       <h5>Council</h5>
-      <p data-bind="text: data.council ?? 'Not Set'"></p>
+      <p style="max-width: 10rem;" data-bind="text: data.council ?? 'Not Set'"></p>
     </div>
   </div>
   <div class="dashboard-card-columns">
     <div style="min-height: 84px;">
-      <h5>Completed Date</h5> 
-        <p data-bind="text: data.completeddate"></p>
+      <h5 data-bind="text: data.dateheading">Completed Date</h5> 
+        <p data-bind="text: data.date ?? 'Not Set'"></p>
     </div>
     <div style="min-height: 84px;">
-      <h5>Completed by</h5> 
-      <!-- ko foreach: data.completedby -->
-        <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
-      <!-- /ko -->
+      <h5 data-bind="text: data.userheading">Completed by</h5> 
+        <p data-bind="text: data.inputby ?? 'Not Set'"></p>
     </div>
   </div>
   <div class="panel-footer dashboard-footer">
