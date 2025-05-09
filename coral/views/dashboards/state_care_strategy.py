@@ -1,7 +1,9 @@
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
+from arches_orm.view_models import ConceptListValueViewModel, ConceptValueViewModel
 from arches_orm.adapter import admin 
 from typing import List
+from datetime import datetime
 import pdb
 
 class StateCareTaskStrategy(TaskStrategy):
@@ -13,15 +15,16 @@ class StateCareTaskStrategy(TaskStrategy):
             tasks = []
 
             def _setup_default_query():
-                curatorial_default_query = { 'resourceid__startswith': 'CIN/', 'sign_off_date_value': None}
-                state_care_default_query = {'signed_off_date': None}
-                risk_assessment_default_query = {'sign_off_date__isnull': False}  
-                ranger_inspection_default_query = {'reviewed_date': None}
+                curatorial_default_query = { 'resourceid__startswith': 'CIN/', 'report_submitted_by_value__isnull': True}
+                state_care_default_query = {'signed_off_by__isnull': True}
+                risk_assessment_default_query = {'sign_off_by__isnull': True}  
+                ranger_inspection_default_query = {'reviewed_by__isnull': True}
 
-                self.curatorial_inspections = Consultation.where(**curatorial_default_query)
-                self.state_care_conditions = StateCareCondition.where(**state_care_default_query)
-                self.risk_assessments = RiskAssessment.where(**risk_assessment_default_query)
-                self.ranger_inspections = RangerInspection.where(**ranger_inspection_default_query)
+                # had to add the or_where due to an issue with null not setting correctly on the node
+                self.curatorial_inspections = Consultation.where(**curatorial_default_query).or_where(resourceid__startswith='CIN/',report_submitted_by_value=None)
+                self.state_care_conditions = StateCareCondition.where(**state_care_default_query).or_where(signed_off_by=None)
+                self.risk_assessments = RiskAssessment.where(**risk_assessment_default_query).or_where(sign_off_by=None)
+                self.ranger_inspections = RangerInspection.where(**ranger_inspection_default_query).or_where(reviewed_by=None)
 
             def _apply_filters():
                 if filter == 'all':
@@ -186,7 +189,9 @@ class StateCareTaskStrategy(TaskStrategy):
         if ha_data:
             data.update(ha_data)
 
-        print("DATA", data)
+        # convert date times
+        if data['date']:
+            data['date'] = datetime.strptime(str(data['date']), "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%d-%m-%Y")
         
         return data
     
@@ -205,8 +210,10 @@ class StateCareTaskStrategy(TaskStrategy):
             'id': str(resource.id),
             'state': 'State',
             'displayname': resource._.resource.descriptors['en']['name'],
-            'reviewedby': reviewed_by,
-            'input_date': input_date,
+            'userheading': 'Assessment done by',
+            'dateheading': 'Assessment Date',
+            'inputby': reviewed_by,
+            'date': input_date,
             'slug': 'curatorial-workflow',
             'model': 'Curatorial Inspection',
             'relatedha': related_ha
@@ -224,8 +231,10 @@ class StateCareTaskStrategy(TaskStrategy):
             'id': str(resource.id),
             'state': 'State',
             'displayname': resource._.resource.descriptors['en']['name'],
-            'assessmentdoneby': assessment_done_by,
-            'assessmentdate': assessment_date,
+            'userheading': 'Assessment done by',
+            'dateheading': 'Assessment date',
+            'inputby': assessment_done_by,
+            'date': assessment_date,
             'slug': 'risk-assessment-workflow',
             'model': 'Risk Assessment',
             'relatedha': related_ha
@@ -243,8 +252,10 @@ class StateCareTaskStrategy(TaskStrategy):
             'id': str(resource.id),
             'state': 'State',
             'displayname': resource._.resource.descriptors['en']['name'],
-            'submittedby': submitted_by,
-            'reportdate': report_date,
+            'userheading': 'Submitted by',
+            'inputby': submitted_by,
+            'dateheading': 'Report Submission Date',
+            'date': report_date,
             'slug': 'ranger-inspection-workflow',
             'model': 'Ranger Inspection',
             'relatedha': related_ha
@@ -262,44 +273,48 @@ class StateCareTaskStrategy(TaskStrategy):
             'id': str(resource.id),
             'state': 'State',
             'displayname': resource._.resource.descriptors['en']['name'],
-            'completedby': completed_by,
-            'completedon': completed_on,
+            'userheading': 'Completed by',
+            'dateheading': 'Completed on date',
+            'inputby': completed_by,
+            'date': completed_on,
             'slug': 'state-care-condition-workflow',
             'model': 'State Care Condition',
             'relatedha': related_ha
         }
 
         return resource_data
+    
+    def extract_value(self, item):
+        """Helper function to extract the value from different datatypes"""
+        if isinstance(item, ConceptListValueViewModel):
+            return [concept.value.value for concept in item]
+        if isinstance(item, ConceptValueViewModel):
+            return item.value.value 
+        else:
+            return item
         
     def fetch_heritage_asset_data(self, resource_list):
                 utilities = Utilities()
 
-                heritage_asset = resource_list
+                heritage_asset = resource_list[0] if resource_list else None
 
                 if not heritage_asset:
                     return None
 
-                townlands = utilities.node_check(lambda: heritage_asset.location_data.addresses[0].townlands)
+                townland_concepts = utilities.node_check(lambda: heritage_asset.location_data.addresses[0].townlands.townland)
+                townlands = self.extract_value(townland_concepts)
                 council = utilities.node_check(lambda: heritage_asset.location_data.council)
-
+            
                 ha_refs = []
-                for ha in heritage_asset:
-                    ihr = ha.heritage_asset_references.ihr_number
-                    hb = ha.heritage_asset_references.hb_number
-                    smr = ha.heritage_asset_references.smr_number
-                    gardens = ha.heritage_asset_references.historic_parks_and_gardens
-
-                    def valid(val):
-                        return val is not None and val.strip() != ''
-
-                    if valid(ihr):
-                        ha_refs.append(ihr)
-                    if valid(hb):
-                        ha_refs.append(hb)
-                    if valid(smr):
-                        ha_refs.append(smr)
-                    if valid(gardens):
-                        ha_refs.append(gardens)
+                
+                for val in (
+                    heritage_asset.heritage_asset_references.ihr_number,
+                    heritage_asset.heritage_asset_references.hb_number,
+                    heritage_asset.heritage_asset_references.smr_number,
+                    heritage_asset.heritage_asset_references.historic_parks_and_gardens
+                ):
+                    if val and val != 'None':
+                        ha_refs.append(val)
 
                 ha_values_dict = {
                     'townland': townlands,
