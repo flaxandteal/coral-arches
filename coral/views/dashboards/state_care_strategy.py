@@ -1,4 +1,5 @@
 from coral.views.dashboards.base_strategy import TaskStrategy
+from coral.views.dashboards.dashboard_utils import Utilities
 from arches_orm.adapter import admin 
 from typing import List
 import pdb
@@ -165,115 +166,153 @@ class StateCareTaskStrategy(TaskStrategy):
                 'Curatorial Inspections': len(self.curatorial_inspections)
             }
         }
-
+    
     def build_data(self, resource, groupId):
         from arches_orm.models import StateCareCondition, RiskAssessment, RangerInspection, Consultation
-        with admin():
+        data = {}
+        if isinstance(resource, StateCareCondition):
+            data = self.build_data_state_care(resource)
+        if isinstance(resource, RiskAssessment):
+            data = self.build_data_risk(resource)
+        if isinstance(resource, RangerInspection):
+            data = self.build_data_ranger(resource)
+        if isinstance(resource, Consultation):
+            data = self.build_data_curatorial(resource)
 
-            CONFIG_MAPPING = {
-                StateCareCondition: {
-                    'model': 'State Care Condition Survey',
-                    'slug': 'state-care-condition-survey-workflow',
-                    'nodes': 
-                        [
-                            ('heritage_asset', 'related_ha'),
-                            'completed_by',
-                            'completed_on',
-                            'resourceid'
-                        ]     
-                },
-                RiskAssessment: {
-                    'model': 'Risk Assessment',
-                    'slug': 'risk-assessment-workflow',
-                    'nodes': 
-                    [
-                        ('associated_heritage_assets', 'related_ha'),
-                        'assessment_date',
-                        'assessment_done_by',
-                        'resourceid'
-                    ]
-                },
-                RangerInspection: {
-                    'model': 'Ranger Inspection',
-                    'slug': 'ranger-inspection-workflow',
-                    'nodes': 
-                    [
-                        ('related_heritage_assets', 'related_ha'),
-                        'report_submission_date',
-                        'submitted_by',
-                        'resourceid'
-                    ]
-                },
-                Consultation: {
-                    'model': 'Curatorial Inspection',
-                    'slug': 'curatorial-inspection-workflow',
-                    'nodes': 
-                    [
-                        'reviewed_by_value',
-                        'log_date',
-                        ('related_mounments_and_areas', 'related_ha'),
-                        'resourceid'
-                    ]
+        related_ha = data.pop('relatedha', [])
+
+        ha_data = self.fetch_heritage_asset_data(related_ha)
+
+        if ha_data:
+            data.update(ha_data)
+
+        print("DATA", data)
+        
+        return data
+    
+    def extract_person_name(self, person):
+        if person:
+            return list(map(lambda p: p.name[0].full_name,  person))
+            
+
+    def build_data_curatorial(self, resource):
+
+        reviewed_by = str(resource.sign_off.reviewed_by.reviewed_by_value)
+        input_date = resource.sign_off.sign_off_date.sign_off_date_value
+        related_ha = resource.related_monuments_and_areas
+        
+        resource_data = {
+            'id': str(resource.id),
+            'state': 'State',
+            'displayname': resource._.resource.descriptors['en']['name'],
+            'reviewedby': reviewed_by,
+            'input_date': input_date,
+            'slug': 'curatorial-workflow',
+            'model': 'Curatorial Inspection',
+            'relatedha': related_ha
+        }
+
+        return resource_data
+    
+    def build_data_risk(self, resource):
+
+        assessment_date = resource.sign_off.assessment_date
+        assessment_done_by = self.extract_person_name(resource.sign_off.assessment_done_by)
+        related_ha = resource.associated_heritage_assets
+        
+        resource_data = {
+            'id': str(resource.id),
+            'state': 'State',
+            'displayname': resource._.resource.descriptors['en']['name'],
+            'assessmentdoneby': assessment_done_by,
+            'assessmentdate': assessment_date,
+            'slug': 'risk-assessment-workflow',
+            'model': 'Risk Assessment',
+            'relatedha': related_ha
+        }
+
+        return resource_data
+        
+    def build_data_ranger(self, resource):
+
+        report_date = resource.sign_off.report_submission_date
+        submitted_by = self.extract_person_name(resource.sign_off.submitted_by)
+        related_ha = resource.related_heritage_assets
+        
+        resource_data = {
+            'id': str(resource.id),
+            'state': 'State',
+            'displayname': resource._.resource.descriptors['en']['name'],
+            'submittedby': submitted_by,
+            'reportdate': report_date,
+            'slug': 'ranger-inspection-workflow',
+            'model': 'Ranger Inspection',
+            'relatedha': related_ha
+        }
+
+        return resource_data
+        
+    def build_data_state_care(self, resource):
+
+        completed_by = self.extract_person_name(resource.sign_off.completed_by_group.completed_by)
+        completed_on = resource.sign_off.completed_on
+        related_ha = resource.heritage_asset
+        
+        resource_data = {
+            'id': str(resource.id),
+            'state': 'State',
+            'displayname': resource._.resource.descriptors['en']['name'],
+            'completedby': completed_by,
+            'completedon': completed_on,
+            'slug': 'state-care-condition-workflow',
+            'model': 'State Care Condition',
+            'relatedha': related_ha
+        }
+
+        return resource_data
+        
+    def fetch_heritage_asset_data(self, resource_list):
+                utilities = Utilities()
+
+                heritage_asset = resource_list
+
+                if not heritage_asset:
+                    return None
+
+                townlands = utilities.node_check(lambda: heritage_asset.location_data.addresses[0].townlands)
+                council = utilities.node_check(lambda: heritage_asset.location_data.council)
+
+                ha_refs = []
+                for ha in heritage_asset:
+                    ihr = ha.heritage_asset_references.ihr_number
+                    hb = ha.heritage_asset_references.hb_number
+                    smr = ha.heritage_asset_references.smr_number
+                    gardens = ha.heritage_asset_references.historic_parks_and_gardens
+
+                    def valid(val):
+                        return val is not None and val.strip() != ''
+
+                    if valid(ihr):
+                        ha_refs.append(ihr)
+                    if valid(hb):
+                        ha_refs.append(hb)
+                    if valid(smr):
+                        ha_refs.append(smr)
+                    if valid(gardens):
+                        ha_refs.append(gardens)
+
+                ha_values_dict = {
+                    'townland': townlands,
+                    'council': council,
+                    'haref': ha_refs
                 }
-            }
 
-            def fetch_heritage_asset_data(heritage_asset):
-                monument_nodes = [
-                    'townland',
-                    'council',
-                    'smr_number'
-                ]
 
-                monument_values = get_values(monument_nodes, heritage_asset[0])
-
-                return monument_values
-
-            
-            def get_values(nodes: List, resource):
-                values = resource._._values
-                if isinstance(resource, RiskAssessment):
-                    print("A Test ", resource.details.property_status)
-                    print("MY VALUES", values)
-                    pdb.set_trace()
-                resource_values = {}
-                for node in nodes:
-                    key = str(node).replace('_', '')
-
-                    if isinstance(node, tuple):
-                        node_alias, key = node
-                        key = str(key).replace('_', '')
-                    else:
-                        node_alias = node
-                    value = values.get(node_alias, None)
-                    if isinstance(value, list) and value:
-                        if len(value) == 1:
-                            resource_values[key] = value[0].value
-                        else:
-                            resource_values[key] = [item.value for item in value]            
-                return resource_values 
-
-            for graph, config in CONFIG_MAPPING.items():
-                # Set model specific nodes from config
-                if isinstance(resource, graph):
-                    node_values = get_values(config.get('nodes', []), resource)
-                    node_values['model'] = config.get('model')
-                    node_values['slug'] = config.get('slug')
-                    node_values['state'] = 'statecare'
-                
-                    # Set common values
-                    node_values['id'] = str(resource.id)
-
-                    # Get Heritage Asset Node details
-                    if node_values.get('relatedha', None):
-                        ha_values = fetch_heritage_asset_data(node_values.get('relatedha'))
-                        node_values.update(ha_values)
-                        node_values.pop('relatedha')
-            
-            return node_values
+                return ha_values_dict
         
     def get_sort_options(self):
         """Return the available sort options for designation tasks."""
         return [
             {'id': 'resourceid', 'name': 'Resource'},
         ]
-    
+
