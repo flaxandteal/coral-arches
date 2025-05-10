@@ -23142,9 +23142,7 @@
                         ]
                     },
                     "datatype": "domain-value",
-                    "description": {
-                        "en": "Legacy category type - intended to be remapped to Characterization"
-                    },
+                    "description": "Legacy category type - intended to be remapped to Characterization",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -23167,9 +23165,7 @@
                         "rdmCollection": "13faee8b-e3ad-4ef3-8968-884d52f24c35"
                     },
                     "datatype": "concept-list",
-                    "description": {
-                        "en": "Characterization, primarily for the purpose of categorization and rule-defined collections"
-                    },
+                    "description": "Characterization, primarily for the purpose of categorization and rule-defined collections",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
