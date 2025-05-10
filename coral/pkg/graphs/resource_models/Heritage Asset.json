@@ -23043,18 +23043,13 @@
                                 "text": {
                                     "en": "Marine"
                                 }
-                            },
-                            {
-                                "id": "45581b54-97ec-4d23-afa5-e0511033f2d2",
-                                "selected": false,
-                                "text": {
-                                    "en": "Vernacular Building"
-                                }
                             }
                         ]
                     },
                     "datatype": "domain-value",
-                    "description": null,
+                    "description": {
+                        "en": "Legacy category type - intended to be remapped to Characterization"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -23066,6 +23061,31 @@
                     "name": "Category Type",
                     "nodegroup_id": "0532349a-1f5d-11ef-a340-0242ac150006",
                     "nodeid": "0532349a-1f5d-11ef-a340-0242ac150006",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "characterization",
+                    "config": {
+                        "rdmCollection": "13faee8b-e3ad-4ef3-8968-884d52f24c35"
+                    },
+                    "datatype": "concept-list",
+                    "description": {
+                        "en": "Characterization, primarily for the purpose of categorization and rule-defined collections"
+                    },
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Characterization",
+                    "nodegroup_id": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
+                    "nodeid": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,

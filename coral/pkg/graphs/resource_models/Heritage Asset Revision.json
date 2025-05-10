@@ -22365,6 +22365,31 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "characterization",
+                    "config": {
+                        "rdmCollection": "13faee8b-e3ad-4ef3-8968-884d52f24c35"
+                    },
+                    "datatype": "concept-list",
+                    "description": {
+                        "en": "Characterization, primarily for the purpose of categorization and rule-defined collections"
+                    },
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Characterization",
+                    "nodegroup_id": "42d77d28-fc65-41c6-b6a4-fe6c5d433aa4",
+                    "nodeid": "42d77d28-fc65-41c6-b6a4-fe6c5d433aa4",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "listing_criteria",
                     "config": {
                         "rdmCollection": "ddb92162-2508-4900-a8d5-92c0ec7769af"
