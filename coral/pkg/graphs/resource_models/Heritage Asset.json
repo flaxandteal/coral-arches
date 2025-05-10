@@ -1395,6 +1395,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "02599861-7309-46e7-8035-26acb057b3d3",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Characterization"
+                    },
+                    "nodegroup_id": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "87d38727-f44f-11eb-83ca-a87eeabdefba",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -5160,6 +5187,50 @@
                         "en": "Monument Metatype"
                     },
                     "node_id": "7bc54a3a-233f-11ef-8b6b-0242ac1a0006",
+                    "sortorder": 1,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "02599861-7309-46e7-8035-26acb057b3d3",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Characterization",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "e8bb7b35-de9c-486b-9a87-b3cfc298df24",
+                    "label": {
+                        "en": "Characterization"
+                    },
+                    "node_id": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "02599861-7309-46e7-8035-26acb057b3d3",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Characterization Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "27746d4b-2f91-4531-824a-134da620a36d",
+                    "label": {
+                        "en": "Characterization Metatype"
+                    },
+                    "node_id": "27746d4b-2f91-4531-824a-134da620a36d",
                     "sortorder": 1,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
@@ -20892,6 +20963,24 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "076f9380-7b00-11e9-88c8-80000b44d1d9",
+                    "edgeid": "1526387c-81d1-4ba0-afce-a4e85d150e9e",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "ca83ad06-cd02-4952-9f69-0812f3c6c94a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
+                    "edgeid": "784201b2-e9e3-4ce5-8cf6-af901e3144f6",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "27746d4b-2f91-4531-824a-134da620a36d"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "7e0533aa-37b7-11ef-9263-0242ac150006",
                     "edgeid": "ab3c2bc4-01de-4c1f-848a-284a261f0c15",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -22090,6 +22179,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "0c43d9de-dbc7-11ee-8835-0242ac120006",
                     "parentnodegroup_id": null
                 },
@@ -23086,6 +23181,29 @@
                     "name": "Characterization",
                     "nodegroup_id": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
                     "nodeid": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "characterization_metatype",
+                    "config": {
+                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Characterization Metatype",
+                    "nodegroup_id": "ca83ad06-cd02-4952-9f69-0812f3c6c94a",
+                    "nodeid": "27746d4b-2f91-4531-824a-134da620a36d",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
