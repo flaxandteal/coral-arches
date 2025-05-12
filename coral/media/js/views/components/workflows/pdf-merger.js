@@ -60,7 +60,6 @@ define([
 
         this.disableGenerate = ko.computed(() => {
             const assigned = this.assignedTo();
-            
             if (assigned === this.TYPE_ASSIGN_BOTH) {
                 return !this.HMSummary() || !this.HBSummary();
             }
@@ -119,12 +118,15 @@ define([
                 }
             }
             for(const tile of fileData){
-                const file = {
-                    'blob': tile.content,
-                    'url': tile.url,
-                    'name': tile.name
-                };
-                observable.push(file);
+                const extension = tile.name.substring(tile.name.lastIndexOf('.') + 1);
+                if (extension == 'pdf'){
+                    const file = {
+                        'blob': tile.content,
+                        'url': tile.url,
+                        'name': tile.name
+                    };
+                    observable.push(file);
+                }
             }
         };
 
