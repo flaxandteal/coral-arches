@@ -37646,7 +37646,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "garden_sign_off",
+                    "alias": "sign_off",
                     "config": {
                         "en": ""
                     },
@@ -37660,7 +37660,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Garden Sign Off",
+                    "name": "Sign Off",
                     "nodegroup_id": "dc5ae88e-1906-11ef-aa9c-0242ac150006",
                     "nodeid": "dc5ae88e-1906-11ef-aa9c-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E31_Document",
