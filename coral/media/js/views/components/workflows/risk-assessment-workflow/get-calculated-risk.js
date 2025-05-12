@@ -62,7 +62,6 @@ define([
 
         severityList[0]['config']['options'].forEach((val) => {
             if (val.id === value) {
-              // console.log(value);
                 SELECTED_SEV_VALUE(val.text);
             }
         });
@@ -91,7 +90,6 @@ define([
 
         likelihoodList[0]['config']['options'].forEach((val) => {
             if (val.id === value) {
-              console.log(val.text);
                 SELECTED_LIKELIHOOD_VALUE(val.text);
             }
         });
