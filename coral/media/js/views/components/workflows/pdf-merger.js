@@ -62,7 +62,7 @@ define([
             const assigned = this.assignedTo();
             
             if (assigned === this.TYPE_ASSIGN_BOTH) {
-                return !this.HMSummary() && !this.HBSummary();
+                return !this.HMSummary() || !this.HBSummary();
             }
             if (assigned === this.TYPE_ASSIGN_HB) {
                 return !this.HBSummary();
