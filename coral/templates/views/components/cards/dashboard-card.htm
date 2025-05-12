@@ -271,14 +271,14 @@
       </div>
     <!-- /ko -->
   </div>
-  <div class="dashboard-card-columns">
+  <div class="dashboard-card-columns card-column-height-m">
     <div>
       <h5>HA Reference</h5>
       <!-- ko foreach: data.haref -->
         <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
       <!-- /ko -->
     </div>
-    <div>
+    <div class="overflow-scroll">
       <h5>Townland</h5>
       <!-- ko foreach: data.townland -->
         <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
@@ -290,11 +290,11 @@
     </div>
   </div>
   <div class="dashboard-card-columns">
-    <div style="min-height: 84px;">
+    <div>
       <h5 data-bind="text: data.dateheading">Completed Date</h5> 
         <p data-bind="text: data.date ?? 'Not Set'"></p>
     </div>
-    <div style="min-height: 84px;">
+    <div>
       <h5 data-bind="text: data.userheading">Completed by</h5> 
         <p data-bind="text: data.inputby ?? 'Not Set'"></p>
     </div>
