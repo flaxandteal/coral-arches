@@ -58,6 +58,8 @@ define([
         const value = this.tile.data[SEV_NODE]();
         const severityList = await this.getValFromTileID(SEV_NODE);
 
+        if (severityList == null || value == null) return;
+
         severityList[0]['config']['options'].forEach((val) => {
             if (val.id === value) {
                 SELECTED_SEV_VALUE(val.text);
@@ -84,6 +86,8 @@ define([
         const value = this.tile.data[LIKELIHOOD_NODE]();
         const likelihoodList = await this.getValFromTileID(LIKELIHOOD_NODE);
 
+        if (likelihoodList == null || value == null) return;
+
         likelihoodList[0]['config']['options'].forEach((val) => {
             if (val.id === value) {
                 SELECTED_LIKELIHOOD_VALUE(val.text);
@@ -109,6 +113,8 @@ define([
       this.calculateRisk = async () => {
         this.severity = await this.getSeverity();
         this.likelihood = await this.getLikelihood();
+
+        if (this.severity == null || this.likelihood == null) return 0;
 
         const riskValue = this.severity * this.likelihood;
         return riskValue;
