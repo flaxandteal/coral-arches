@@ -120,15 +120,20 @@ class StateCareTaskStrategy(TaskStrategy):
             accessors = field_accessors.get(sort_by, {})
             resource_type = type(resource)
             accessor = accessors.get(resource_type)
-            if accessor:
-                try:
-                    return accessor(resource)
-                except Exception:
-                    return ""
-            return ""
+            if not accessor:
+                return ""
+            try:
+                val = accessor(resource)
+            except Exception:
+                return ""
+            if val is None:
+                return ""
+            if isinstance(val, list):
+                return val[0] if val else ""
+            return str(val)
         
         reverse = (sort_order == 'desc')
-        sorted_resources = sorted(resources, key=lambda x: safe_sort_value(x), reverse=reverse)
+        sorted_resources = sorted(resources, key=lambda x: (x is None, safe_sort_value(x)), reverse=reverse)
         return sorted_resources
     
     def get_filter_options(self, groupId=None):
@@ -327,5 +332,7 @@ class StateCareTaskStrategy(TaskStrategy):
         """Return the available sort options for designation tasks."""
         return [
             {'id': 'resourceid', 'name': 'Resource'},
+            {'id': 'completed_on_date', 'name': 'Date Completed/Assessed'},
+            {'id': 'completed_by', 'name': 'Completed/Assessed by'}
         ]
 
