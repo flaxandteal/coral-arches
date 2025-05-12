@@ -473,6 +473,9 @@
                 }, disable: disableGenerate">
                     <span>Generate</span>
                 </button>
+                <!--ko if: loading() -->
+                    <span class='branch-list-loading-mask' style="top: 0.3rem;"></span>
+                <!--/ko-->
             </div>
             <div style="display: flex; flex-direction: column; gap: 8px; padding-right: 8px; overflow-y: scroll; max-height: 200px">
                 <!--ko foreach: {data: uploadedFiles(), as: 'file', noChildContext: true} -->

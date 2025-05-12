@@ -57,8 +57,12 @@ define([
         this.uploadedFiles = ko.observableArray();
         this.configKeys = ko.observable({ placeholder: 0 });
         this.letterOptions = ko.observable(params.letterOptions);
+        this.loading = ko.observable(false);
 
         this.disableGenerate = ko.computed(() => {
+            if (this.loading()){
+                return true;
+            }
             const assigned = this.assignedTo();
             if (assigned === this.TYPE_ASSIGN_BOTH) {
                 return !this.HMSummary() || !this.HBSummary();
@@ -158,7 +162,7 @@ define([
         };
 
         this.retrieveFile = async() => {
-            // this.loading(true);
+            this.loading(true);
             
             await $.ajax({
                 type: 'POST',
@@ -191,7 +195,7 @@ define([
                 }
             });
             
-            // this.loading(false);
+            this.loading(false);
         };
 
         this.saveDigitalResourceName = async(name, resourceId) => {
