@@ -62,6 +62,7 @@ define([
 
         severityList[0]['config']['options'].forEach((val) => {
             if (val.id === value) {
+              // console.log(value);
                 SELECTED_SEV_VALUE(val.text);
             }
         });
@@ -90,6 +91,7 @@ define([
 
         likelihoodList[0]['config']['options'].forEach((val) => {
             if (val.id === value) {
+              console.log(val.text);
                 SELECTED_LIKELIHOOD_VALUE(val.text);
             }
         });
@@ -101,7 +103,7 @@ define([
                 return 2;
             case "Possible":
                 return 3;
-            case "Reasonably Likely":
+            case "Reasonably likely":
                 return 4;
             case "Certain":
                 return 5;
