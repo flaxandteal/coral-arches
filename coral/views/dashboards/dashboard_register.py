@@ -24,6 +24,8 @@ STATECARE_USERS = '2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b'
 STATECARE_CUR_E = '5b8d8413-ee01-465f-9774-e5b247cd205a'
 STATECARE_CUR_D = '6ba1b471-6faf-4f96-9179-94b2a1662512'
 
+RANGER_USER = 'f94d02a2-cdf5-4dde-9d95-46fc2085db76'
+
 STRATEGY_MAP = {
     # Planning Groups
     PLANNING_GROUP: ('planning_dashboard', PlanningTaskStrategy),
@@ -44,6 +46,7 @@ STRATEGY_MAP = {
     STATECARE_USERS: ('state_care_dashboard', StateCareTaskStrategy),
     STATECARE_CUR_E: ('state_care_dashboard', StateCareTaskStrategy),
     STATECARE_CUR_D: ('state_care_dashboard', StateCareTaskStrategy),
+    RANGER_USER: ('state_care_dashboard', StateCareTaskStrategy)
 }
 
 def get_strategy(groupId):
