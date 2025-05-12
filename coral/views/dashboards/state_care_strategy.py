@@ -30,8 +30,8 @@ class StateCareTaskStrategy(TaskStrategy):
                 if filter == 'all':
                     return
                 
-                filter_options = self.get_filter_options
-                filter_type = next((option['type'] for option in filter_options if option['id'] == filter), None)
+                filter_options = self.get_filter_options()
+                filter_type = next((option['id'] for option in filter_options if option['id'] == filter), None)
                 
                 if filter_type == 'state_care':
                     self.curatorial_inspections = None
@@ -53,11 +53,11 @@ class StateCareTaskStrategy(TaskStrategy):
                     self.risk_assessments = None
                     self.ranger_inspections = None
 
-                if filter_type == 'council':
-                    self.curatorial_inspections = self.curatorial_inspections.where(council=filter) 
-                    self.state_care_conditions = None
-                    self.risk_assessments = None
-                    self.ranger_inspections = None
+                # if filter_type == 'council':
+                #     self.curatorial_inspections = self.curatorial_inspections.where(council=filter) 
+                #     self.state_care_conditions = None
+                #     self.risk_assessments = None
+                #     self.ranger_inspections = None
 
             def _apply_selectors():
                 self.curatorial_inspections = self.curatorial_inspections.get() if self.curatorial_inspections != None else []
@@ -136,28 +136,26 @@ class StateCareTaskStrategy(TaskStrategy):
         with admin():
             """Return the available filter options for the state care tasks."""
 
-            # create the entries for the council filter options
-            node_alias = Monument._._node_objects_by_alias()
-            domain_options = node_alias['council'].config['options']
+            # create the entries for the council filter options ! unused until reverse queries available
+            # node_alias = Monument._._node_objects_by_alias()
+            # domain_options = node_alias['council'].config['options']
 
-            council_values = [
-                {
-                    'id': option.get("text").get("en"), 
-                    'name': option.get("text").get("en"), 
-                    'type': 'council'
-                } 
-                for option in domain_options
-            ]
+            # council_values = [
+            #     {
+            #         'id': option.get("text").get("en"), 
+            #         'name': option.get("text").get("en"), 
+            #         'type': 'council'
+            #     } 
+            #     for option in domain_options
+            # ]
 
             return [
                 {'id': 'all', 'name': 'All', 'type': 'default'},
-                {'id': 'heritage_asset', 'name': 'Heritage Assets', 'type': 'heritage_asset'},
                 {'id': 'state_care', 'name': 'State Care Condition Survey', 'type': 'state_care'},
                 {'id': 'risk_assessment', 'name': 'Risk Assessment', 'type': 'risk_assessment'},
                 {'id': 'ranger_inspection', 'name': 'Ranger Inspection', 'type': 'ranger_inspection'},
                 {'id': 'curatorial_inspection', 'name': 'Curatorial Inspection', 'type': 'curatorial_inspection'},
-                {'id': 'completed_by', 'name': 'Completed by', 'type': 'completed_by'},
-                {'id': 'completed_on_date', 'name': 'Completed on date', 'type': 'completed_on'},
+                # *council_values
             ]
 
     def get_counters(self):
