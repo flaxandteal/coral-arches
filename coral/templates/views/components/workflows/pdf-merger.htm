@@ -423,6 +423,16 @@
 
         <div>
             <h3>Responses</h3>
+            <!-- ko if: !assignedTo() -->
+            <div style="padding: 1rem;">
+                <h4>No team has been assigned</h4>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: assignedTo() === TYPE_REJECT -->
+            <div style="padding: 1rem;">
+                <h4>This Consultation has been rejected</h4>
+            </div>
+            <!-- /ko -->
             <!-- ko if: assignedTo() === TYPE_ASSIGN_HM || assignedTo() === TYPE_ASSIGN_BOTH -->
             <div style="padding: 1rem;">
                 <h4>HM Response</h4>

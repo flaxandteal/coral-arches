@@ -43,6 +43,7 @@ define([
         this.TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5';
         this.TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f';
         this.TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f';
+        this.TYPE_REJECT = '4820872f-b74d-4767-984d-2874a076c4b4';
 
         this.DIGITAL_OBJECT_NAME_NODEGROUP = 'c61ab163-9513-11ea-9bb6-f875a44e0e11';
         this.DIGITAL_OBJECT_NAME_NODE = 'c61ab16c-9513-11ea-89a4-f875a44e0e11';
