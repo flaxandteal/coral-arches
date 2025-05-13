@@ -74,3 +74,13 @@
 - [ ] - [ ] Bug Fix
 
 | feat: api_file endpoint | #671 | feat/api-blob-endpoint | @OwenGalvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| Hotfix/agri number generator | #680 | hotfix/agri-number-generator | @StuCM |
