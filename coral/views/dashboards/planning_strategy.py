@@ -164,8 +164,8 @@ class PlanningTaskStrategy(TaskStrategy):
                 """
                 copyQueryBuilder = copy.deepcopy(queryBuilder)
                 start_index = (page -1) * page_size
-                end_index = (page * page_size)
-                return copyQueryBuilder.offset(start_index, end_index)
+
+                return copyQueryBuilder.offset(start_index, page_size)
             
             def get_counters(queryBuilder: "QueryBuilder") -> Dict[str, Dict[str, int | None]]:
                 """
