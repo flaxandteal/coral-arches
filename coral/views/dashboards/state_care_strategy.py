@@ -92,7 +92,7 @@ class StateCareTaskStrategy(TaskStrategy):
                     StateCareCondition: lambda r: r.sign_off.completed_on
                 },
                 'completed_by': {
-                    Consultation: lambda r: r.report_subimtted_by.report_submitted_by_value,
+                    Consultation: lambda r: r.report_submitted_by.report_submitted_by_value,
                     RiskAssessment: lambda r: r.sign_off.assessment_done_by,
                     RangerInspection: lambda r: r.sign_off.submitted_by,
                     StateCareCondition: lambda r: r.sign_off.completed_by_group.completed_by
