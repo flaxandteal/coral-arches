@@ -64,3 +64,13 @@
 - [x] - [x] Bug Fix
 
 | remove no binary from the docker module dependency install | #690 | fix/update-docker-submodule | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [x] - [x] Features Added
+- [ ] - [ ] Bug Fix
+
+| feat: api_file endpoint | #671 | feat/api-blob-endpoint | @OwenGalvia |
