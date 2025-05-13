@@ -17,8 +17,6 @@ define([
         this.resourceId = this.tile.resourceinstance_id;
         this.shouldRender = ko.observable(false);
 
-        console.log("Related Heritage Asset Map component loaded with params: ", params);
-
         this.fetchTileData = async(resourceId, nodeId) => {
             try{
                 const tilesResponse = await window.fetch(
@@ -27,7 +25,6 @@ define([
                 );
                 const data = await tilesResponse.json();
 
-                console.log("Tiles data: ", data);
                 return data.tiles;
             }
             catch (error){
@@ -42,8 +39,6 @@ define([
             if (!this.assets?.length) return;
             this.assets = this.assets[0].data[this.RELATED_HERITAGE_NODE_ID];
 
-            console.log("Related Heritage Assets: ", this.assets);
-      
             let geometries = [];
 
             for (const tile of this.assets) {
@@ -53,7 +48,6 @@ define([
                 }
             }
 
-            console.log("Geometries: ", geometries);
             return geometries;
         };
 
@@ -61,11 +55,8 @@ define([
             try {
                 this.assets = await this.fetchTileData(resourceId, this.GEO_NODE_ID);
 
-                console.log("GeoJSON data: ", this.assets);
-
                 if (this.assets[0] !== undefined) {
                     let featureData = this.assets[0].data[this.GEO_COORDS_NODE_ID]['features'];
-                    console.log("Feature data: ", featureData);
                     return featureData;
                 } else {
                     return;

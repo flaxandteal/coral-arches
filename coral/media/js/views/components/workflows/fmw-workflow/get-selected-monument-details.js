@@ -77,9 +77,7 @@ define([
           this.getMonumentDetails(id);
         })
         this.selectedMonuments(currentResources);
-        console.log("I add", this.selectedMonuments)
       } else {
-        console.log("I Deleted")
         this.selectedMonuments([])
       }
     }, this);

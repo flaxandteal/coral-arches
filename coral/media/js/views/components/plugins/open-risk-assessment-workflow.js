@@ -78,7 +78,6 @@ define([
           });
 
           const response = await associatedBuildingTile.json()
-          console.log("this resp", response)
           this.selectedResource(response.resourceinstance_id)
       }
       this.selectedHA.subscribe((resourceId) => {
@@ -88,7 +87,6 @@ define([
           this.selectedResource(null);
           return;
         }
-        console.log("my id", resourceId)
         this.getParentTileOptions(resourceId);
         this.addtionalConfigData()['haId'] = [{"resourceId":resourceId}]
         this.setAdditionalOpenConfigData()
