@@ -331,17 +331,18 @@ class PlanningTaskStrategy(TaskStrategy):
                 return foundGroupRecords.get()
 
             def transform_group_members(foundGroupRecords):
-                members_filter = []
+                members_filter = {}
 
                 for foundGroupRecord in foundGroupRecords:
-                    members = [
-                        {'id': str(member.id), 'name': member.name[0].full_name, 'type': 'person'}
-                        for member in foundGroupRecord.members
-                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel'
-                    ]
-                    members_filter.extend(members)
-
-                return members_filter
+                    for member in foundGroupRecord.members:
+                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel':
+                            members_key = str(member.id)
+                            members_filter[members_key] = {
+                                'id': str(member.id), 
+                                'name': member.name[0].full_name, 
+                                'type': 'person'
+                            }
+                return list(members_filter.values())
 
             foundGroupRecords = get_groups()
             return transform_group_members(foundGroupRecords)
@@ -415,10 +416,9 @@ class PlanningTaskStrategy(TaskStrategy):
         resource_data = {
             'id': str(consultation.id),
             'state': 'Planning',
-            # 'displayname': consultation._._name, # ! issue with get_discripter 
-            # 'displaydescription': html.unescape(consultation._._description), # ! issue with get_discripter 
-            'status': action_status,
-            'hierarchy_type': hierarchy_type,
+            'displayname': consultation._.resource.descriptors['en']['name'],
+            'status': utilities.convert_id_to_string(action_status),
+            'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
             'assigned_to': assigned_to_names,
             'ha_refs': ha_refs,
             'deadline': deadline,

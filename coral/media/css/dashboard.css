@@ -41,3 +41,11 @@
 .margin-right-10 {
     margin-right: 10px;
 }
+
+.card-column-height-m {
+    height: 75px;
+}
+
+.overflow-scroll {
+    overflow: auto;
+}

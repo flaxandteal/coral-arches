@@ -5,30 +5,7 @@ from django.core.paginator import Paginator
 from django.core.cache import cache
 import json
 from coral.views.dashboards.paginator import get_paginator
-from coral.views.dashboards.planning_strategy import PlanningTaskStrategy
-from coral.views.dashboards.excavation_strategy import ExcavationTaskStrategy
-from coral.views.dashboards.designation_strategy import DesignationTaskStrategy
-from coral.views.dashboards.dashboard_utils import Utilities
-
-
-MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
-ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
-HIERARCHY_NODE_GROUP = '0dd6ccb8-cffe-11ee-8a4e-0242ac180006'
-PLANNING_GROUP = '74afc49c-3c68-4f6c-839a-9bc5af76596b'
-HM_GROUP = '29a43158-5f50-495f-869c-f651adf3ea42'
-HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
-HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
-HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
-
-EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
-EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
-EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
-EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
-
-SECOND_SURVEY_GROUP_USER = '1ce90bd5-4063-4984-931a-cc971414d7db'
-DESIGNATIONS_GROUP_USER = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
-SECOND_SURVEY_GROUP_MANAGER = '7679f42b-56ad-4b18-8b2c-cc6de1b16537'
-DESIGNATIONS_GROUP_MANAGER = 'e778f4a1-97c6-446f-b1c4-418a81c3212e'
+from coral.views.dashboards.dashboard_register import get_strategy
 
 class Dashboard(View):
 
@@ -90,7 +67,7 @@ class Dashboard(View):
        
                 strategies = []
                 for groupId in user_group_ids:
-                    strategy = self.select_strategy(groupId)
+                    strategy = get_strategy(groupId)
                     if strategy:
                         strategies.append(strategy)
 
@@ -98,7 +75,7 @@ class Dashboard(View):
                     return JsonResponse({"error": "No valid strategy found"}, status=404)
                 
                 if dashboard:
-                    strategy = next((s['strategy'] for s in strategies if dashboard == s.id), None)
+                    strategy = next((s['strategy'] for s in strategies if dashboard == s.name), None)
                     if strategy is None:
                         return JsonResponse({"error": "User not in group"}, status=404)
                 else: 
@@ -165,15 +142,6 @@ class Dashboard(View):
                     userGroupIds.append(str(group.id)) #needs to be a string and not uuid
 
         return userGroupIds
-    
-    def select_strategy(self, groupId):
-        if groupId in [PLANNING_GROUP, HM_GROUP, HB_GROUP, HM_MANAGER, HB_MANAGER]:
-            return { id: groupId, 'name': 'Planning Dashboard', 'strategy': PlanningTaskStrategy() }
-        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
-            return { id: groupId, 'name': 'Excavation Dashboard', 'strategy': ExcavationTaskStrategy() }
-        elif groupId in [SECOND_SURVEY_GROUP_USER, DESIGNATIONS_GROUP_USER, SECOND_SURVEY_GROUP_MANAGER, DESIGNATIONS_GROUP_MANAGER]:
-            return { id: groupId, 'name': 'Records and Designation Dashboard', 'strategy': DesignationTaskStrategy() }
-        return
 
 
 

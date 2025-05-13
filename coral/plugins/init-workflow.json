@@ -109,7 +109,7 @@
       },
       {
         "workflowid": "aa66f3d7-1bbb-407a-9447-736cb6d5203c",
-        "slug": "open-scheduled-monument-consent-workflow?workflow-slug=scheduled-monument-consent-workflow",
+        "slug": "open-workflow?workflow-slug=scheduled-monument-consent-workflow",
         "name": "SMC",
         "icon": "fa fa-file-text",
         "bgColor": "#86679c",
@@ -254,6 +254,26 @@
         "slug": "open-workflow?workflow-slug=daera-workflow",
         "circleColor": "#4a5e94",
         "desc": "workflow to help manage and monitor DAERA activities impacting heritage sites"
+      },
+      {
+        "workflowid": "077d4b0a-4c77-416e-993e-60041c1e855f",
+        "desc": "Workflow for completing ranger inspections",
+        "icon": "fa fa-binoculars",
+        "name": "Ranger Inspection Workflow",
+        "show": true,
+        "bgColor": "#617099",
+        "slugPrefix": "",
+        "slug": "open-workflow?workflow-slug=ranger-inspection-workflow",
+        "circleColor": "#4a5e94"
+      },
+      {
+        "workflowid": "367d703c-1d76-43a4-98ce-fa362e7dd0c2",
+        "slug": "open-risk-assessment-workflow?workflow-slug=risk-assessment-workflow",
+        "name": "Risk Assessment",
+        "icon": "fa fa-warning",
+        "bgColor": "#617099",
+        "circleColor": "#4a5e94",
+        "desc": "Start a new risk assessment"
       }
     ],
     "show": true

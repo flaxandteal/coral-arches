@@ -15,6 +15,7 @@ import inspect
 import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
+from csp.constants import SELF, NONE
 from csp.constants import SELF, NONE, NONCE
 
 try:
@@ -238,7 +239,7 @@ CONTENT_SECURITY_POLICY = {
         "default-src": [NONE],
         "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
         "img-src": [SELF, "blob:", "data:"],
-        "font-src": [SELF, "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
+        "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
         "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
         "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
         "worker-src": [SELF, "blob:"],

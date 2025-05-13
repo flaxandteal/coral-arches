@@ -751,6 +751,7 @@ define([
           name: 'ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf',
           title: 'Letter',
           required: false,
+          saveWithoutProgressing: true,
           layoutSections: [
             {
               componentConfigs: [
@@ -782,7 +783,8 @@ define([
               ]
             }
           ],
-          workflowstepclass: 'workflow-form-component'
+          workflowstepclass: 'workflow-form-component',
+          hiddenWorkflowButtons: ["save"]
         },
         {
           title: 'Amendments',
