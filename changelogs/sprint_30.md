@@ -132,3 +132,13 @@
 - [ ] - [ ] Bug Fix
 
 | Feature/risk assessment workflow | #691 | feature/risk-assessment-workflow | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [x] - [x] Features Added
+- [ ] - [ ] Bug Fix
+
+| Feat/2821 State Care Dashboard | #687 | feat/2821-state-care-dashboard | @StuCM |
