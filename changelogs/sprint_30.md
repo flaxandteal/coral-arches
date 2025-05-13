@@ -19,7 +19,7 @@
 - [x] Bug Fix
 
 | Feat: Add X Frame Option and Security Content nosniff | #661 | feat/security-headers | @StuCM |
-- [ ] Features Added
+- [x] Features Added
 
 | #3055: Add completed by field to SCC workflow  | #655 | feat/#3055-Add-Completed-by | @babou212 |
 - [x] Model Changes
@@ -33,3 +33,92 @@
 - [ ] Bug Fix
 
 | Feat/3058 smc to consultation | #663 | feat/3058-smc-to-consultation | @StuCM |
+- [ ] Model Changes
+- [ ] Workflows Updated
+
+| Feat/128 refactor designation dashboard | #675 | feat/128-refactor-designation-dashboardD | @StuCM |
+
+| Feat/129 refactor excavaton dashboard | #676 | feat/129_refactor-excavaton-dashboard | @StuCM |
+- [x] Features Added
+
+| Feat/130 refactor planning dashboard | #677 | feat/130_refactor-planning-dashboard | @StuCM |
+
+| Feat/132 domain values | #678 | feat/132_domain-values | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| Fix/issue pagination sprint 30 | #683 | fix/issue-pagination-sprint_30 | @aidan-galvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+
+| remove no binary from the docker module dependency install | #690 | fix/update-docker-submodule | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [x] - [x] Features Added
+- [ ] - [ ] Bug Fix
+
+| feat: api_file endpoint | #671 | feat/api-blob-endpoint | @OwenGalvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| Hotfix/agri number generator | #680 | hotfix/agri-number-generator | @StuCM |
+- [x] - [x] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| feat: added Ranger inspection, graph, and workflow | #685 | feat/2830/Ranger-Inspection-workflow | @OwenGalvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+
+| fix: Workaround for Restricted IDs (from release 30 branch) | #686 | fix/workaround-for-restricted-ids-es-from-release | @OwenGalvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+
+| fix: add blob directive to font csp | #689 | fix/fix-csp-blocking-font-blob | @babou212 |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [x] - [x] Added/Updated Dependencies
+
+| Feature/#2818 pdf merger | #642 | feature/#2818-pdf-merger | @StuCM |

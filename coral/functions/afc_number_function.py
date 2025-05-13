@@ -15,7 +15,6 @@ details = {
     "classname": "AfcNumberFunction",
     "component": "",
 }
-
 class AfcNumberFunction(BaseFunction):
 
     def save(self, tile, request, context):

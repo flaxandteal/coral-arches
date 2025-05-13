@@ -361,7 +361,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def _django_group_to_ri(django_group: DjangoGroup):
         # TODO: a more robust mapping
-        group = Group.where(name={"en": {"value": django_group.name, "direction": "ltr"}})
+        group = Group.where(name=django_group.name).get()
         if not group:
             group = Group.create()
             basic_info = group.basic_info.append()
@@ -815,6 +815,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 }
             }
         })
+        query.include("_id")
         results = query.search(index=RESOURCES_INDEX, scroll="1m", limit=SEARCH_LIMIT)
         scroll_id = results["_scroll_id"]
         total = results["hits"]["total"]["value"]
@@ -825,6 +826,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         
         print('uncached get_restricted_instances hits length: ', len(results["hits"]["hits"]))
 
+        restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         if total > SEARCH_LIMIT:
             pages = total // SEARCH_LIMIT
 
@@ -833,11 +835,10 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             for page in range(pages):
                 results_scrolled = query.se.es.scroll(scroll_id=scroll_id, scroll="1m")
                 print('uncached results_scrolled total: ', len(results_scrolled["hits"]["hits"]))
-                results["hits"]["hits"] += results_scrolled["hits"]["hits"]
+                restricted_ids += [res["_id"] for res in results_scrolled["hits"]["hits"]]
                 print('uncached new results total: ', len(results_scrolled["hits"]["hits"]))
 
 
-        restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         cache.set("get_restricted_instances--restricted_ids", restricted_ids, 300)
         return restricted_ids
 

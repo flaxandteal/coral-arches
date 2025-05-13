@@ -16,6 +16,7 @@ import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
 from csp.constants import SELF, NONE
+from csp.constants import SELF, NONE, NONCE
 
 try:
     from arches.settings import *
@@ -23,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=10, patch=39)
+APP_VERSION = semantic_version.Version(major=7, minor=12, patch=42)
 
 GROUPINGS = {
     "groups": {
@@ -226,7 +227,7 @@ MIDDLEWARE = [
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    # "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
     # "silk.middleware.SilkyMiddleware",
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
@@ -238,7 +239,7 @@ CONTENT_SECURITY_POLICY = {
         "default-src": [NONE],
         "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
         "img-src": [SELF, "blob:", "data:"],
-        "font-src": [SELF, "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
+        "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
         "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
         "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
         "worker-src": [SELF, "blob:"],
@@ -387,7 +388,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 SESSION_COOKIE_NAME = 'coral'
 
 # Additional cookie security params 
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
@@ -587,4 +588,3 @@ if __name__ == "__main__":
         static_url=STATIC_URL,
         webpack_development_server_port=WEBPACK_DEVELOPMENT_SERVER_PORT,
     )
-
