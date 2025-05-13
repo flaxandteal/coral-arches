@@ -86,7 +86,7 @@ class StateCareTaskStrategy(TaskStrategy):
 
             field_accessors = {
                 'completed_on_date': {
-                    Consultation: lambda r: r.consultation_dates.log_date,
+                    Consultation: lambda r: r.sign_off.sign_off_date.sign_off_date_value,
                     RiskAssessment: lambda r: r.sign_off.assessment_date,
                     RangerInspection: lambda r: r.sign_off.report_submission_date,
                     StateCareCondition: lambda r: r.sign_off.completed_on
@@ -133,7 +133,7 @@ class StateCareTaskStrategy(TaskStrategy):
             return str(val)
         
         reverse = (sort_order == 'desc')
-        sorted_resources = sorted(resources, key=lambda x: (x is None, safe_sort_value(x)), reverse=reverse)
+        sorted_resources = sorted(resources, key=lambda x: safe_sort_value(x) or "", reverse=reverse)
         return sorted_resources
     
     def get_filter_options(self, groupId=None):
