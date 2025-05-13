@@ -715,7 +715,7 @@ class GenericTemplateProvider:
         from arches_orm.adapter import admin
         try:
             with admin():
-                person = Person.where(user_account=self.config["user"].id)
+                person = Person.where(user_account=self.config["user"].id).get()
                 person = person[0] if len(person) else self.config["user"] 
                 # person = person["name"][0]["full_name"]
                 str(person)

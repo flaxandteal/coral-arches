@@ -26,7 +26,7 @@ details = {
 
 
 class HbNumberFunction(BaseFunction):
-    def update_ha_references(self, ri_id, id):
+    def update_ha_references(self, ri_id, id, request):
         references_tile = Tile.objects.filter(
             resourceinstance_id=ri_id,
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -44,7 +44,7 @@ class HbNumberFunction(BaseFunction):
                 }
             }
         references_tile.data[HB_NUMBER_NODE_ID] = id
-        references_tile.save()      
+        references_tile.save(request=request)      
 
     def is_last_char_letter(self, value):
         if isinstance(value, dict):
@@ -65,7 +65,7 @@ class HbNumberFunction(BaseFunction):
             hns = HbNumberSuffix(id_number)
             if hns.validate_id(id_number, resource_instance_id=resource_instance_id):
                 print("HB Number is valid: ", id_number)
-                self.update_ha_references(resource_instance_id, id_number)
+                self.update_ha_references(resource_instance_id, id_number, request)
                 return
 
             raise ValueError('This HB Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
@@ -76,7 +76,7 @@ class HbNumberFunction(BaseFunction):
             
             if not ward_district_text and not id_number:
                 # Clear HB Number
-                self.update_ha_references(resource_instance_id, "")
+                self.update_ha_references(resource_instance_id, "", request)
                 return
             
             if not ward_district_text and id_number:
@@ -86,7 +86,7 @@ class HbNumberFunction(BaseFunction):
 
             if hn.validate_id(id_number, resource_instance_id=resource_instance_id):
                 print("HB Number is valid: ", id_number)
-                self.update_ha_references(resource_instance_id, id_number)
+                self.update_ha_references(resource_instance_id, id_number, request)
                 return
 
             raise ValueError('This HB Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
