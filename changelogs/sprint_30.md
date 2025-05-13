@@ -94,3 +94,13 @@
 - [ ] - [ ] Bug Fix
 
 | feat: added Ranger inspection, graph, and workflow | #685 | feat/2830/Ranger-Inspection-workflow | @OwenGalvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+
+| fix: Workaround for Restricted IDs (from release 30 branch) | #686 | fix/workaround-for-restricted-ids-es-from-release | @OwenGalvia |
