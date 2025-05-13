@@ -24,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=11, patch=42)
+APP_VERSION = semantic_version.Version(major=7, minor=12, patch=42)
 
 GROUPINGS = {
     "groups": {
@@ -227,7 +227,7 @@ MIDDLEWARE = [
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    # "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
     # "silk.middleware.SilkyMiddleware",
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
