@@ -54,3 +54,13 @@
 - [ ] - [ ] Bug Fix
 
 | Fix/issue pagination sprint 30 | #683 | fix/issue-pagination-sprint_30 | @aidan-galvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+
+| remove no binary from the docker module dependency install | #690 | fix/update-docker-submodule | @StuCM |
