@@ -84,3 +84,13 @@
 - [ ] - [ ] Bug Fix
 
 | Hotfix/agri number generator | #680 | hotfix/agri-number-generator | @StuCM |
+- [x] - [x] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| feat: added Ranger inspection, graph, and workflow | #685 | feat/2830/Ranger-Inspection-workflow | @OwenGalvia |
