@@ -168,16 +168,32 @@
               {
                 "parameters": {
                   "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "hiddenNodes": [
+                    "50635666-1b78-11f0-af7b-e2231a6d3ec2",
+                    "6fefcb7c-1b78-11f0-82fe-e2231a6d3ec2"
+                  ],
                   "nodegroupid": "5a955770-532c-11ef-9d2a-0242ac120006",
                   "semanticName": "Sign Off",
                   "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
                   "nodeOptions": {
-                    "af2087a6-532c-11ef-9d2a-0242ac120006": {
+                    "924abf1a-1b78-11f0-af7b-e2231a6d3ec2": {
                       "component": "user-to-model-select",
                       "signOffGroups": [
                         "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
-                        "6d1ef40d-e524-4541-af21-9bb8880bc5a2"
+                        "6d1ef40d-e524-4541-af21-9bb8880bc5a2",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512",
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a"
                       ],
+                      "allowInstanceCreation": false
+                    },
+                    "af2087a6-532c-11ef-9d2a-0242ac120006": {
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                      ],
+                      "conflictNode": ["924abf1a-1b78-11f0-af7b-e2231a6d3ec2"],
+                      "conflictAllowBlank": false,
                       "allowInstanceCreation": false
                     },
                     "85dde816-532c-11ef-9337-0242ac120006": {
