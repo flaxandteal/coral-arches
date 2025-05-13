@@ -122,3 +122,13 @@
 - [x] - [x] Added/Updated Dependencies
 
 | Feature/#2818 pdf merger | #642 | feature/#2818-pdf-merger | @StuCM |
+- [x] - [x] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [x] - [x] Features Added
+- [ ] - [ ] Bug Fix
+
+| Feature/risk assessment workflow | #691 | feature/risk-assessment-workflow | @StuCM |
