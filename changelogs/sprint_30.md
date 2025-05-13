@@ -104,3 +104,13 @@
 - [x] - [x] Bug Fix
 
 | fix: Workaround for Restricted IDs (from release 30 branch) | #686 | fix/workaround-for-restricted-ids-es-from-release | @OwenGalvia |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+
+| fix: add blob directive to font csp | #689 | fix/fix-csp-blocking-font-blob | @babou212 |
