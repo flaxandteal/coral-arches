@@ -114,3 +114,11 @@
 - [x] - [x] Bug Fix
 
 | fix: add blob directive to font csp | #689 | fix/fix-csp-blocking-font-blob | @babou212 |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [x] - [x] Added/Updated Dependencies
+
+| Feature/#2818 pdf merger | #642 | feature/#2818-pdf-merger | @StuCM |
