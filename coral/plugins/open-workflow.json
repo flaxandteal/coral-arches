@@ -126,6 +126,12 @@
         "slug": "ranger-inspection-workflow",
         "name": "Ranger Inspection",
         "graphIds": ["eded3b45-42d1-4bb7-938e-2bc69ad82dab"]
+      },
+      {
+        "slug": "risk-assessment-workflow",
+        "name": "Risk Assessment",
+        "graphIds": ["eb8e5877-7e36-416d-95a9-d0ff8045fd26"],
+        "disableStartNew": false
       }
     ]
   },

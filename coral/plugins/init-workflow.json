@@ -265,6 +265,15 @@
         "slugPrefix": "",
         "slug": "open-workflow?workflow-slug=ranger-inspection-workflow",
         "circleColor": "#4a5e94"
+      },
+      {
+        "workflowid": "367d703c-1d76-43a4-98ce-fa362e7dd0c2",
+        "slug": "open-risk-assessment-workflow?workflow-slug=risk-assessment-workflow",
+        "name": "Risk Assessment",
+        "icon": "fa fa-warning",
+        "bgColor": "#617099",
+        "circleColor": "#4a5e94",
+        "desc": "Start a new risk assessment"
       }
     ],
     "show": true
