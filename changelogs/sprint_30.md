@@ -149,3 +149,21 @@
 | Feature/#2818 pdf merger | #642 | feature/#2818-pdf-merger | @StuCM |
 | Feature/risk assessment workflow | #691 | feature/risk-assessment-workflow | @StuCM |
 | Feat/2821 State Care Dashboard | #687 | feat/2821-state-care-dashboard | @StuCM |
+### Types of Changes
+
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+- [ ] ---
+
+
+### PRs Included in this Release
+
+| PR Title | PR # | Branch | Committed By |
+|----------|------|--------|--------------|
+| Fix: SMC Init Workflow Slug | #694 | fix/smc-init-slug | @StuCM |
