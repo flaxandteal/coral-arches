@@ -71,7 +71,29 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Consultation Name", "Site Name"]],
+                  "label": "Select Heritage Assets",
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
+                  "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "node": "58a2b98f-a255-11e9-9a30-00224800b26d",
+                  "hiddenNodes": [
+                    "58a2b98f-a255-11e9-9a30-00224800b26d"
+                  ],
+                  "nodeOptions": {
+                  "58a2b98f-a255-11e9-9a30-00224800b26d" : {
+                    "searchString": "",
+                    "allowInstanceCreation": false
+                  }
+                },
+                  "semanticName": "Heritage Asseets details"
+                },
+                "tilesManaged": "one",
+                "componentName": "get-ha-smc-details",
+                "uniqueInstanceName": "6cae135a-8a8c-4bbc-92a7-1572a4111bc6"
+              },
+              {
+                "parameters": {
+                  "labels": [["Consultation Name", "Application Reference"]],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4ad66f55-951f-11ea-b2e2-f875a44e0e11",
@@ -83,43 +105,6 @@
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
                 "uniqueInstanceName": "8a8ca544-0e13-40c6-96b5-d21e9dc5ba90"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "8b588eb0-1b89-11f0-93dc-221ffe35e9a4",
-                  "semanticName": "Site Type"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "06ca63f8-85ef-4528-a080-4bce7681b185"
-              },
-              {
-                "parameters": {
-                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "083e825c-ca61-11ee-afca-0242ac180006",
-                    "083e8c16-ca61-11ee-afca-0242ac180006",
-                    "083f97a0-ca61-11ee-afca-0242ac180006",
-                    "083f935e-ca61-11ee-afca-0242ac180006",
-                    "083e8f4a-ca61-11ee-afca-0242ac180006",
-                    "083f8ad0-ca61-11ee-afca-0242ac180006",
-                    "083f45ac-ca61-11ee-afca-0242ac180006",
-                    "083fafe2-ca61-11ee-afca-0242ac180009",
-                    "083f8f26-ca61-11ee-afca-0242ac180006",
-                    "083e6c90-ca61-11ee-afca-0242ac180006",
-                    "083ef3fe-ca61-11ee-afca-0242ac180006",
-                    "083fa088-ca61-11ee-afca-0242ac180006"
-                  ],
-                  "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
-                  "parenttileid": "['start-meeting-step']['building'][0]['resourceid']['locationData']",
-                  "semanticName": "Addresses"
-                },
-                "tilesManaged": "one",
-                "componentName": "default-card-util",
-                "uniqueInstanceName": "0f079fa3-d878-401c-9d45-be856b9a026d"
               },
               {
                 "parameters": {
