@@ -32,6 +32,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "86e0f618-0093-4c55-a157-ad7131581ec3",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": true,
+                    "name": {
+                        "en": "Distinction"
+                    },
+                    "nodegroup_id": "7ed9de0e-30b6-11f0-a4b6-baf4c38851fd",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "b3622915-fef0-4c92-b98e-51ec8f168b51",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -2317,6 +2344,27 @@
                     "sortorder": 6,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "86e0f618-0093-4c55-a157-ad7131581ec3",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Distinction",
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "5b9e1efe-a094-4dbf-97bf-f10c8421b0c0",
+                    "label": {
+                        "en": "Distinction"
+                    },
+                    "node_id": "7ed9de0e-30b6-11f0-a4b6-baf4c38851fd",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000015"
                 },
                 {
                     "card_id": "e599bee0-1f89-11f0-a917-667c62aab752",
@@ -13081,6 +13129,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                    "edgeid": "91f1b1e8-e6a9-40b7-82b6-c9df3bc03d20",
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "7ed9de0e-30b6-11f0-a4b6-baf4c38851fd"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "e599c0f2-1f89-11f0-a917-667c62aab752",
                     "edgeid": "e599e2e4-1f89-11f0-a917-667c62aab752",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -18538,6 +18595,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "7ed9de0e-30b6-11f0-a4b6-baf4c38851fd",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "8b588eb0-1b89-11f0-93dc-221ffe35e9a4",
                     "parentnodegroup_id": null
                 },
@@ -19043,6 +19106,47 @@
                     "nodeid": "e599bd64-1f89-11f0-a917-667c62aab752",
                     "ontologyclass": "http://www.ics.forth.gr/isl/CRMsci/S9_Property_Type",
                     "parentproperty": "http://www.ics.forth.gr/isl/CRMdig/L54i_is_same-as",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "distinction",
+                    "config": {
+                        "i18n_config": {
+                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
+                        },
+                        "options": [
+                            {
+                                "id": "eeaf0667-ce6e-45a0-b471-fa44e3306183",
+                                "selected": false,
+                                "text": {
+                                    "en": "Consent"
+                                }
+                            },
+                            {
+                                "id": "94c3df30-8628-4080-b933-c08fed4e5d2c",
+                                "selected": false,
+                                "text": {
+                                    "en": "Clearance"
+                                }
+                            }
+                        ]
+                    },
+                    "datatype": "domain-value",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Distinction",
+                    "nodegroup_id": "7ed9de0e-30b6-11f0-a4b6-baf4c38851fd",
+                    "nodeid": "7ed9de0e-30b6-11f0-a4b6-baf4c38851fd",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
