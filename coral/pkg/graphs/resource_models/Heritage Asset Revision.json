@@ -15396,6 +15396,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
+                    "edgeid": "ff85858c-f1af-4d49-bca2-f1783b9c2789",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "a605d5d3-0718-48de-be60-00903ef9619c"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "2af35abc-9dee-4438-a127-c0fb69e63124",
                     "edgeid": "1d2a8a5c-bab1-47eb-bd60-7b4488a7a585",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -39699,6 +39708,27 @@
                     "nodeid": "27fb5a7f-66d3-4666-9d33-8f6d3f2040d8",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E36_Visual_Item",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "_legacy_record",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": true,
+                    "fieldname": "LegacyData",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Legacy Record",
+                    "nodegroup_id": "a605d5d3-0718-48de-be60-00903ef9619c",
+                    "nodeid": "a605d5d3-0718-48de-be60-00903ef9619c",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 }

@@ -35320,6 +35320,36 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "related_archive_source",
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "b07cfa6f-894d-11ea-82aa-f875a44e0e11",
+                                "name": "Archive Source"
+                            }
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Related Archive Source",
+                    "nodegroup_id": "95a43755-5cf4-11ec-bba2-a87eeabdefba",
+                    "nodeid": "b0108641-218b-482a-8a9b-78c70818fa39",
+                    "ontologyclass": "http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "sign_off_date",
                     "config": {
                         "en": ""
@@ -39993,7 +40023,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Legacy Record",
+                    "name": "LegacyRecord",
                     "nodegroup_id": "df4f900a-a3bd-4be7-8523-0c8e67e38949",
                     "nodeid": "df4f900a-a3bd-4be7-8523-0c8e67e38949",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
