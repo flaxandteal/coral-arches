@@ -62,7 +62,7 @@ class DesignationTaskStrategy(TaskStrategy):
 
                 self.heritage_assets = Monument.where(**monumentDefaultWhereConditions)
                 self.heritage_asset_revisions = MonumentRevision.where(**monumentRevisionDefaultWhereConditions)
-                self.evaluation_meetings = Consultation.where(**consultationDefaultWhereConditions)
+                self.evaluation_meetings = Consultation.where(**consultationDefaultWhereConditions).or_where(start_date=None, resourceid__startswith='EVM/').or_where(start_date='null', resourceid__startswith='EVM/')
 
             def _apply_filters():
                 """
