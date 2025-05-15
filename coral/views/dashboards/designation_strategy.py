@@ -62,7 +62,7 @@ class DesignationTaskStrategy(TaskStrategy):
 
                 self.heritage_assets = Monument.where(**monumentDefaultWhereConditions)
                 self.heritage_asset_revisions = MonumentRevision.where(**monumentRevisionDefaultWhereConditions)
-                self.evaluation_meetings = Consultation.where(**consultationDefaultWhereConditions)
+                self.evaluation_meetings = Consultation.where(**consultationDefaultWhereConditions).or_where(start_date=None, resourceid__startswith='EVM/').or_where(start_date='null', resourceid__startswith='EVM/')
 
             def _apply_filters():
                 """
@@ -176,99 +176,89 @@ class DesignationTaskStrategy(TaskStrategy):
     
     def build_data(self, resource, groupId):
         from arches_orm.models import Monument, MonumentRevision
-        with admin():
 
-            nodes = [
-                'display_name',
-                'hmc_reference_number',
-                'historic_parks_and_gardens',
-                'ihr_number',
-                'hb_number',
-                'smr_number',
-                'monument_type',
-                'input_date_value',
-                'statutory_consultee_notification_date_value',
-            ]
+        utilities = Utilities()
 
-            node_values = self.get_values(nodes, resource)
+        resource_data = {
+            'id': str(resource.id),
+            'resourceid': resource.system_reference_numbers.uuid.resourceid,
+            'state': 'HeritageAsset',
+            'displayname': resource._.resource.descriptors['en']['name'],
+            'hmcreferencenumber': resource.hmc_reference.hmc_reference_number,
+            'historicparksandgardens': resource.heritage_asset_references.historic_parks_and_gardens,
+            'ihrnumber': resource.heritage_asset_references.ihr_number,
+            'hbnumber': resource.heritage_asset_references.hb_number,
+            'smrnumber': resource.heritage_asset_references.smr_number,
+            'monumenttype': self.extract_value(utilities.node_check(lambda: resource.construction_phases[0].phase_classification.monument_type)),
+            'inputdatevalue': resource.garden_sign_off.input_date.input_date_value,
+            'statutoryconsulteenotificationdatevalue': utilities.node_check(lambda: resource.approvals[0].statutory_consultee_notification_date.statutory_consultee_notification_date_value)
+        }
 
-            # Additional display values
-            node_values['id'] = str(resource.id)
-            node_values['resourceid'] = resource.system_reference_numbers.uuid.resourceid # this is pulled from here as the get values is retunrning a list
-
-            node_values['state'] = 'HeritageAsset'
+        if isinstance(resource, Monument):
+            resource_data['model'] = 'Heritage Asset'
+            resource_data['slugs'] = [
+            {'name': 'Add Building', 'slug': 'add-building-workflow'},
+            {'name': 'Add Monument', 'slug': 'add-monument-workflow'},
+            {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
+            {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
+        ]
+        if isinstance(resource, MonumentRevision):
+            resource_data['model'] = 'Designation'
+            resource_data['slugs'] = [
+            {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
+        ]
             
-            # Resource specific values
-            if isinstance(resource, Monument):
-                node_values['model'] = 'Heritage Asset'
-                node_values['slugs'] = [
-                {'name': 'Add Building', 'slug': 'add-building-workflow'},
-                {'name': 'Add Monument', 'slug': 'add-monument-workflow'},
-                {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
-                {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
-            ]
-            if isinstance(resource, MonumentRevision):
-                node_values['model'] = 'Designation'
-                node_values['slugs'] = [
-                {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
-            ]
+        if resource_data.get('statutoryconsulteenotificationdatevalue') and isinstance(resource_data['statutoryconsulteenotificationdatevalue'], list):
+            dates = []
+            for date in resource_data['statutoryconsulteenotificationdatevalue']:
+                date_obj = parser.parse(date)
+                dates.append(date_obj)
+            resource_data['statutoryconsulteenotificationdatevalue'] = str(max(dates))
 
-            # return the most recent date for this node
-            if node_values.get('statutoryconsulteenotificationdatevalue') and isinstance(node_values['statutoryconsulteenotificationdatevalue'], list):
-                dates = []
-                for date in node_values['statutoryconsulteenotificationdatevalue']:
-                    date_obj = parser.parse(date)
-                    dates.append(date_obj)
-                node_values['statutoryconsulteenotificationdatevalue'] = str(max(dates))
+        # transform returned values
+        date_values = [
+            'statutoryconsulteenotificationdatevalue',
+            'inputdatevalue'
+        ]
+        for value in date_values:
+            if resource_data.get(value):
+                resource_data[value] = self.convert_date_str(resource_data[value])
 
-            # transform returned values
-            date_values = [
-                'statutoryconsulteenotificationdatevalue',
-                'inputdatevalue'
-            ]
-            for value in date_values:
-                if node_values.get(value):
-                    node_values[value] = self.convert_date_str(node_values[value])
-
-            return node_values  
-
+        return resource_data 
+    
     def build_meeting_data(self, resource):
-        from arches_orm.models import Consultation
-        with admin():
+        resource_data = {
+            'id': str(resource.id),
+            'resourceid': resource.system_reference_numbers.uuid.resourceid,
+            'state': 'Meeting',
+            'model': 'Evaluation Meeting',
+            'displaynamevalue': resource.display_name.display_name_value,
+            'logdate': resource.consultation_dates.log_date,
+            'followupmeetingdatevalue': resource.evaluation.follow_up_meeting_date.follow_up_meeting_date_value,
+            'council': resource.location_data.council,
+            'slugs': [{'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'}]
+        }
 
-            nodes = [
-                'display_name_value',
-                'log_date',
-                'follow_up_meeting_date_value',
-                'related_monuments_and_areas',
-                'council'
-            ]
+        # Additional display values
+        related_monuments = resource.related_monuments_and_areas
 
-            node_values = self.get_values(nodes, resource)
+        ha_names = []
+        for ha in related_monuments:
+            ha_name = ha._.resource.descriptors['en']['name']
+            ha_names.append(ha_name)
+        
+        resource_data['relatedmonumentsandareas'] = ha_names
+        
+        # transform returned values
+        date_values = [
+            'logdate',
+            'followupmeetingdatevalue'
+        ]
+        for value in date_values:
+            if resource_data.get(value):
+                resource_data[value] = self.convert_date_str(resource_data[value])
 
-            # Additional display values
-            node_values['id'] = str(resource.id)
-            if node_values.get('relatedmonumentsandareas', None):
-                node_values['relatedmonumentsandareas'] = node_values['relatedmonumentsandareas'][0].display_name
-
-            node_values['state'] = 'Meeting'
-            node_values['model'] = 'Evaluation Meeting'
-            
-            # Resource specific values
-            node_values['slugs'] = [
-            {'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'},
-            ]
-
-            # transform returned values
-            date_values = [
-                'logdate',
-                'followupmeetingdatevalue'
-            ]
-            for value in date_values:
-                if node_values.get(value):
-                    node_values[value] = self.convert_date_str(node_values[value])
-
-            return node_values  
+        return resource_data  
 
     def extract_value(self, item):
         """Helper function to extract the value from different datatypes"""

@@ -77,7 +77,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to
-                    queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId))
+                    queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
 
                 # * The HM user
                 elif (self._user_role.hm_user['is_role']):
@@ -95,7 +95,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to
-                    queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId))
+                    queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
             
                 # * The HB user
                 elif (self._user_role.hb_user['is_role']):
