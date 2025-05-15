@@ -177,3 +177,13 @@
 - [ ] - [ ] Bug Fix
 
 | Fix/ SMC Workflow Updates | #695 | fix/smc-workflow-updates | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [x] - [x] Features Added
+- [ ] - [ ] Bug Fix
+
+| feat: Update Logsets | #696 | feat/add-all-risk-logset | @StuCM |
