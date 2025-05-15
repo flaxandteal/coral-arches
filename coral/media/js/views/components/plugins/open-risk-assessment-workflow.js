@@ -18,7 +18,7 @@ define([
   
       this.addtionalConfigData = ko.observable({
         parentTileIds: {},
-        haId: [{}],
+        haId: [],
         resourceInstanceId: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
       });
   
@@ -81,14 +81,17 @@ define([
           this.selectedResource(response.resourceinstance_id)
       }
       this.selectedHA.subscribe((resourceId) => {
-
         if (!resourceId) {
           this.parentTileOptions([]);
           this.selectedResource(null);
           return;
         }
-        this.getParentTileOptions(resourceId);
-        this.addtionalConfigData()['haId'] = [{"resourceId":resourceId}]
+        this.addtionalConfigData()['haId'] = [];
+        for (const resource of resourceId){
+          this.getParentTileOptions(resource);
+          this.addtionalConfigData()['haId'].push({"resourceId":resource});
+        }
+        
         this.setAdditionalOpenConfigData()
       });
   
