@@ -167,3 +167,13 @@
 | PR Title | PR # | Branch | Committed By |
 |----------|------|--------|--------------|
 | Fix: SMC Init Workflow Slug | #694 | fix/smc-init-slug | @StuCM |
+- [x] - [x] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| Fix/ SMC Workflow Updates | #695 | fix/smc-workflow-updates | @StuCM |
