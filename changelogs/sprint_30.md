@@ -197,3 +197,13 @@
 - [ ] - [ ] Bug Fix
 
 | fix merging match members back into groups | #697 | fix/hydrate-groups | @StuCM |
+- [x] - [x] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| Fix: Risk Assessment Updates | #698 | fix/risk-assessment-updates | @StuCM |
