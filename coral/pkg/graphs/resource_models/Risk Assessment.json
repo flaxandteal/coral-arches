@@ -6745,35 +6745,35 @@
                                 "id": "c02f9cf9-ad55-4dd1-aa8a-f94e9a8ed38e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Multiple"
+                                    "en": "5 - Multiple"
                                 }
                             },
                             {
                                 "id": "38339246-c36d-4a34-81f8-87d35d591568",
                                 "selected": false,
                                 "text": {
-                                    "en": "Major"
+                                    "en": "4 - Major"
                                 }
                             },
                             {
                                 "id": "916e7633-3fe9-4107-bd11-117ddf32c2cc",
                                 "selected": false,
                                 "text": {
-                                    "en": "Moderate"
+                                    "en": "3 - Moderate"
                                 }
                             },
                             {
                                 "id": "c0b30df9-b5d2-40d3-ad66-06874902034e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Slight"
+                                    "en": "2 - Slight"
                                 }
                             },
                             {
                                 "id": "62155cd7-3a4c-42a7-9fa7-8ac39ebc2117",
                                 "selected": false,
                                 "text": {
-                                    "en": "Negligible"
+                                    "en": "1 - Negligible"
                                 }
                             }
                         ],
@@ -6890,38 +6890,38 @@
                         ],
                         "options": [
                             {
-                                "id": "62155cd7-3a4c-42a7-9fa7-8ac39ebc2117",
+                                "id": "c02f9cf9-ad55-4dd1-aa8a-f94e9a8ed38e",
                                 "selected": false,
                                 "text": {
-                                    "en": "Very Unlikely"
-                                }
-                            },
-                            {
-                                "id": "c0b30df9-b5d2-40d3-ad66-06874902034e",
-                                "selected": false,
-                                "text": {
-                                    "en": "Unlikely"
-                                }
-                            },
-                            {
-                                "id": "916e7633-3fe9-4107-bd11-117ddf32c2cc",
-                                "selected": false,
-                                "text": {
-                                    "en": "Possible"
+                                    "en": "5 - Certain"
                                 }
                             },
                             {
                                 "id": "38339246-c36d-4a34-81f8-87d35d591568",
                                 "selected": false,
                                 "text": {
-                                    "en": "Reasonably likely"
+                                    "en": "4 - Reasonably likely"
                                 }
                             },
                             {
-                                "id": "c02f9cf9-ad55-4dd1-aa8a-f94e9a8ed38e",
+                                "id": "916e7633-3fe9-4107-bd11-117ddf32c2cc",
                                 "selected": false,
                                 "text": {
-                                    "en": "Certain"
+                                    "en": "3 - Possible"
+                                }
+                            },
+                            {
+                                "id": "c0b30df9-b5d2-40d3-ad66-06874902034e",
+                                "selected": false,
+                                "text": {
+                                    "en": "2 - Unlikely"
+                                }
+                            },
+                            {
+                                "id": "62155cd7-3a4c-42a7-9fa7-8ac39ebc2117",
+                                "selected": false,
+                                "text": {
+                                    "en": "1 - Very Unlikely"
                                 }
                             }
                         ],
@@ -7268,24 +7268,10 @@
                         ],
                         "options": [
                             {
-                                "id": "62155cd7-3a4c-42a7-9fa7-8ac39ebc2117",
+                                "id": "c02f9cf9-ad55-4dd1-aa8a-f94e9a8ed38e",
                                 "selected": false,
                                 "text": {
-                                    "en": "1 - Low"
-                                }
-                            },
-                            {
-                                "id": "c0b30df9-b5d2-40d3-ad66-06874902034e",
-                                "selected": false,
-                                "text": {
-                                    "en": "2 - Medium"
-                                }
-                            },
-                            {
-                                "id": "916e7633-3fe9-4107-bd11-117ddf32c2cc",
-                                "selected": false,
-                                "text": {
-                                    "en": "3 - High"
+                                    "en": "5 - Urgent H&S"
                                 }
                             },
                             {
@@ -7296,12 +7282,27 @@
                                 }
                             },
                             {
-                                "id": "c02f9cf9-ad55-4dd1-aa8a-f94e9a8ed38e",
+                                "id": "916e7633-3fe9-4107-bd11-117ddf32c2cc",
                                 "selected": false,
                                 "text": {
-                                    "en": "5 - Urgent H&S"
+                                    "en": "3 - High"
+                                }
+                            },
+                            {
+                                "id": "c0b30df9-b5d2-40d3-ad66-06874902034e",
+                                "selected": false,
+                                "text": {
+                                    "en": "2 - Medium"
+                                }
+                            },
+                            {
+                                "id": "62155cd7-3a4c-42a7-9fa7-8ac39ebc2117",
+                                "selected": false,
+                                "text": {
+                                    "en": "1 - Low"
                                 }
                             }
+                            
                         ],
                         "trueLabel": "Yes"
                     },
