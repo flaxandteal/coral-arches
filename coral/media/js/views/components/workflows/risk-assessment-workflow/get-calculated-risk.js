@@ -67,15 +67,15 @@ define([
         });
 
         switch(SELECTED_SEV_VALUE()) {
-            case "Negligible":
+            case "1 - Negligible":
                 return 1;
-            case "Slight":
+            case "2 - Slight":
                 return 2;
-            case "Moderate":
+            case "3 - Moderate":
                 return 3;
-            case "Major":
+            case "4 - Major":
                 return 4;
-            case "Multiple":
+            case "5 - Multiple":
                 return 5;
             default:
               return 0;
@@ -95,15 +95,15 @@ define([
         });
 
         switch(SELECTED_LIKELIHOOD_VALUE()) {
-            case "Very Unlikely":
+            case "1 - Very Unlikely":
                 return 1;
-            case "Unlikely":
+            case "2 - Unlikely":
                 return 2;
-            case "Possible":
+            case "3 - Possible":
                 return 3;
-            case "Reasonably likely":
+            case "4 - Reasonably likely":
                 return 4;
-            case "Certain":
+            case "5 - Certain":
                 return 5;
             default:
               return 0;
