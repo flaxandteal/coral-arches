@@ -7,7 +7,9 @@ PR_TITLE="$2"
 PR_AUTHOR="$3"
 PR_NUMBER="$4"
 PR_LINK="$5"
-CHANGELOG_FILE="CHANGELOG.md"
+BRANCH_NAME="$6"
+
+CHANGELOG_FILE="Changelog-${BRANCH_NAME}.md"
 TEMP_CHECKED="types_checked.txt"
 ALL_TYPES=(
   "Model Changes"
