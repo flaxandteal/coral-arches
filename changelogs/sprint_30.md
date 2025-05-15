@@ -217,3 +217,13 @@
 - [ ] - [ ] Bug Fix
 
 | fix: remove save from the map on ranger inspection | #699 | fix/ranger-inspection-updates | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [x] - [x] Bug Fix
+
+| Fix/ Designation Dashboard Build Data | #688 | fix/designation-dashboard-data | @StuCM |
