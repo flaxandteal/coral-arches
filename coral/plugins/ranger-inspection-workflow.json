@@ -87,6 +87,8 @@
         "name": "map-step",
         "title": "Map",
         "required": false,
+        "saveWithoutProgressing": true,
+        "hiddenWorkflowButtons": ["save", "undo"],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -114,8 +116,7 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "workflowstepclass": "workflow-form-component"
       },
       {
         "name": "inspection-step",
