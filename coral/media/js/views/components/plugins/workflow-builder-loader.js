@@ -32,6 +32,7 @@ define([
   'views/components/workflows/daera-workflow/generate-ail-number',
   'views/components/workflows/get-selected-monument-details-with-count',
   'views/components/workflows/risk-assessment-workflow/get-ha-details',
+  'views/components/workflows/risk-assessment-workflow/get-ha-smc-details',
   'views/components/workflows/risk-assessment-workflow/get-calculated-risk',
 ], function (ko, arches, OpenableWorkflow, workflowTemplate) {
   return ko.components.register('workflow-builder-loader', {
