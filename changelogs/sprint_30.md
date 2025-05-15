@@ -187,3 +187,13 @@
 - [ ] - [ ] Bug Fix
 
 | feat: Update Logsets | #696 | feat/add-all-risk-logset | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [ ] - [ ] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| fix merging match members back into groups | #697 | fix/hydrate-groups | @StuCM |
