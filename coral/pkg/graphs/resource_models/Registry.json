@@ -51,7 +51,7 @@
                     "instructions": {
                         "en": "Enter the resource name and its respective type."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Names"
                     },
@@ -868,7 +868,7 @@
             "functions_x_graphs": [],
             "graphid": "3a6ce8b9-0357-4a72-b9a9-d8fdced04360",
             "iconclass": "fa fa-file-text-o",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -876,19 +876,19 @@
             },
             "nodegroups": [
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "0234988f-317a-11f0-a90c-091e7dc74dc2",
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "c7407648-3179-11f0-be50-6188ca30a095",
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "e56aa16c-3179-11f0-97a0-6188ca30a095",
                     "parentnodegroup_id": null
@@ -1536,12 +1536,7 @@
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": {
-                "graph_id": "3a6ce8b9-0357-4a72-b9a9-d8fdced04360",
-                "notes": null,
-                "publicationid": "9f90fd00-317b-11f0-b704-091e7dc74dc2",
-                "published_time": "2025-05-15T05:59:07.630"
-            },
+            "publication": null,
             "relatable_resource_model_ids": [
                 "3a6ce8b9-0357-4a72-b9a9-d8fdced04360",
                 "78b32d8c-b6f2-11ea-af42-f875a44e0e11",
