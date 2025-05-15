@@ -207,3 +207,13 @@
 - [ ] - [ ] Bug Fix
 
 | Fix: Risk Assessment Updates | #698 | fix/risk-assessment-updates | @StuCM |
+- [ ] - [ ] Model Changes
+- [ ] - [ ] Added Functions
+- [ ] - [ ] Added Concepts
+- [x] - [x] Workflows Updated
+- [ ] - [ ] Reports Updated
+- [ ] - [ ] Added/Updated Dependencies
+- [ ] - [ ] Features Added
+- [ ] - [ ] Bug Fix
+
+| fix: remove save from the map on ranger inspection | #699 | fix/ranger-inspection-updates | @StuCM |
