@@ -598,14 +598,14 @@ class GroupTransform():
                         members = [{'value': member, 'groupId': resource['resourceinstance']["resourceinstanceid"]} for member in (tile["data"].get(self.MEMBER_NODE)or []) if member['resourceId'] not in group_ids]
                         new_members.extend(members)
         
-        for resource in resource_instances:    
+        for resource in resource_instances:  
             for tile in resource["tiles"]:
                 if self.MEMBER_NODE in tile["data"]:
                     if tile["data"][self.MEMBER_NODE]: 
                         if len(new_members) > 0:
                             match = [item['value'] for item in new_members if item['groupId'] == resource['resourceinstance']["resourceinstanceid"]]
                             if match:
-                                tile["data"][self.MEMBER_NODE].append(match['value'])
+                                tile["data"][self.MEMBER_NODE].extend(match)
                                 
 
 

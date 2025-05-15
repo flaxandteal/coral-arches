@@ -112,6 +112,8 @@
         "name": "map-step",
         "title": "Map",
         "required": false,
+        "saveWithoutProgressing": true,
+        "hiddenWorkflowButtons": ["undo", "save"],
         "layoutSections": [
           {
             "componentConfigs": [
