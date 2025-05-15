@@ -388,13 +388,13 @@
     },
     "8d41e49e-a250-11e9-9eab-00224800b26d": {
       "author": " FGI",
-      "cards": 79,
-      "cards_x_nodes_x_widgets": 421,
+      "cards": 83,
+      "cards_x_nodes_x_widgets": 435,
       "color": "rgba(159,29,34,1)",
       "description": {
         "en": "Version 0.1; A model to represent activities and information related to the review and evaluation of proposed developments or alterations to a structure.  This model supposes that an official of a government agency must review proposed construction activities and determine whether the activities require conditions/mitigations to conform with local requirements.  This model allows for formal application review and informal (e.g.: pre-application) consultations."
       },
-      "edges": 571,
+      "edges": 588,
       "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
       "iconclass": "fa fa-briefcase",
       "is_editable": false,
@@ -403,8 +403,8 @@
       "name": {
         "en": "Consultation"
       },
-      "nodegroups": 78,
-      "nodes": 570,
+      "nodegroups": 82,
+      "nodes": 586,
       "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
       "publication": {
         "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -660,13 +660,13 @@
     },
     "65b1be1a-dfa4-49cf-a736-a1a88c0bb289": {
       "author": " ",
-      "cards": 86,
-      "cards_x_nodes_x_widgets": 544,
+      "cards": 91,
+      "cards_x_nodes_x_widgets": 575,
       "color": "rgba(59,84,33,1)",
       "description": {
         "en": ""
       },
-      "edges": 706,
+      "edges": 753,
       "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
       "iconclass": "fa fa-copy",
       "is_editable": false,
@@ -675,8 +675,8 @@
       "name": {
         "en": "Heritage Asset Revision"
       },
-      "nodegroups": 86,
-      "nodes": 707,
+      "nodegroups": 92,
+      "nodes": 754,
       "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
       "publication": {
         "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -714,13 +714,13 @@
     },
     "076f9381-7b00-11e9-8d6b-80000b44d1d9": {
       "author": " ",
-      "cards": 86,
-      "cards_x_nodes_x_widgets": 552,
+      "cards": 89,
+      "cards_x_nodes_x_widgets": 582,
       "color": "rgba(59,84,33,1)",
       "description": {
         "en": ""
       },
-      "edges": 708,
+      "edges": 754,
       "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
       "iconclass": "fa fa-bank",
       "is_editable": false,
@@ -729,8 +729,8 @@
       "name": {
         "en": "Heritage Asset"
       },
-      "nodegroups": 84,
-      "nodes": 709,
+      "nodegroups": 90,
+      "nodes": 755,
       "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
       "publication": {
         "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -1268,7 +1268,7 @@
       "description": {
         "en": "Used to describe individuals associated with a heritage resource. \nA person can either be current (eg. owners, developers etc) or a person of historic interest (eg. an author who formerly lived in a heritage resource)."
       },
-      "edges": 226,
+      "edges": 227,
       "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
       "iconclass": "fa fa-user",
       "is_editable": false,
@@ -1278,7 +1278,7 @@
         "en": "Person"
       },
       "nodegroups": 19,
-      "nodes": 227,
+      "nodes": 228,
       "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
       "publication": {
         "graph_id": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
@@ -1368,6 +1368,74 @@
       },
       "version": ""
     },
+    "3a6ce8b9-0357-4a72-b9a9-d8fdced04360": {
+      "author": " Phil Weir",
+      "cards": 3,
+      "cards_x_nodes_x_widgets": 23,
+      "color": "#438372",
+      "description": {
+        "en": ""
+      },
+      "edges": 27,
+      "graphid": "3a6ce8b9-0357-4a72-b9a9-d8fdced04360",
+      "iconclass": "fa fa-file-text-o",
+      "is_editable": false,
+      "isresource": true,
+      "jsonldcontext": null,
+      "name": {
+        "en": "Registry"
+      },
+      "nodegroups": 3,
+      "nodes": 28,
+      "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
+      "publication": {
+        "graph_id": "3a6ce8b9-0357-4a72-b9a9-d8fdced04360",
+        "notes": null,
+        "publicationid": "e5ab9430-3188-11f0-8ad3-591414c25307",
+        "published_time": "2025-05-15T07:34:08.702"
+      },
+      "relatable_resource_model_ids": [
+        "3a6ce8b9-0357-4a72-b9a9-d8fdced04360",
+        "78b32d8c-b6f2-11ea-af42-f875a44e0e11",
+        "0add0e11-99aa-11ea-9ab8-f875a44e0e11",
+        "b8032b00-594d-11e9-9cf0-18cf5eb368c4",
+        "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+        "979aaf0b-7042-11ea-9674-287fcf6a5e72",
+        "a535a235-8481-11ea-a6b9-f875a44e0e11",
+        "49bac32e-5464-11e9-a6e2-000d3ab1e588",
+        "343cc20c-2c5a-11e8-90fa-0242ac120005",
+        "22477f01-1a44-11e9-b0a9-000d3ab1e588",
+        "3a6ce8b9-0357-4a72-b9a9-d8fdced04360"
+      ],
+      "resource_2_resource_constraints": [],
+      "root": {
+        "alias": null,
+        "config": {
+          "en": ""
+        },
+        "datatype": "semantic",
+        "description": "",
+        "exportable": false,
+        "fieldname": null,
+        "graph_id": "3a6ce8b9-0357-4a72-b9a9-d8fdced04360",
+        "hascustomalias": false,
+        "is_collector": false,
+        "isrequired": false,
+        "issearchable": true,
+        "istopnode": true,
+        "name": "Registry",
+        "nodegroup_id": null,
+        "nodeid": "3e70ad17-3179-11f0-8536-091e7dc74dc2",
+        "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E78_Collection",
+        "sortorder": 0,
+        "sourcebranchpublication_id": null
+      },
+      "slug": null,
+      "subtitle": {
+        "en": "Record or registry"
+      },
+      "version": ""
+    },
     "b16832e8-dfc9-4fc8-9c07-0c0b980ed220": {
       "author": " Phil Weir",
       "cards": 3,
@@ -1432,7 +1500,7 @@
       "description": {
         "en": ""
       },
-      "edges": 25,
+      "edges": 29,
       "graphid": "c0098070-d052-4449-982b-952507306c03",
       "iconclass": "",
       "is_editable": false,
@@ -1442,7 +1510,7 @@
         "en": "State Care Condition Survey"
       },
       "nodegroups": 6,
-      "nodes": 26,
+      "nodes": 30,
       "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
       "publication": {
         "graph_id": "c0098070-d052-4449-982b-952507306c03",
