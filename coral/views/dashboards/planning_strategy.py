@@ -52,6 +52,7 @@ class PlanningTaskStrategy(TaskStrategy):
             domain_values = self.get_filter_council_options()
             members_filter = self.get_filter_members_options()
             groups_filter = self.get_filter_group_options()
+            applied_queries = {}
 
             consultationsDefaultWhereConditions = { 'resourceid__startswith': 'CON/' }
             queryBuilder = Consultation.where(**consultationsDefaultWhereConditions)
@@ -87,6 +88,8 @@ class PlanningTaskStrategy(TaskStrategy):
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
+                    # * Response
+                    queryBuilder = queryBuilder.where(response_team__not_equal="HM")
 
                 # * The HB manager
                 elif (self._user_role.hb_manager['is_role']):
@@ -96,6 +99,8 @@ class PlanningTaskStrategy(TaskStrategy):
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
+                    # * Response
+                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
             
                 # * The HB user
                 elif (self._user_role.hb_user['is_role']):
