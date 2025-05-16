@@ -11,7 +11,7 @@ EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceinstance__createdtime', sort_order='desc', filter='All'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceinstance__createdtime', sort_order='desc', filter='all'):
         from arches_orm.models import License
 
         licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
@@ -105,7 +105,7 @@ class ExcavationTaskStrategy(TaskStrategy):
     
     def get_filter_options(self, groupId=None):
         return [
-            {'id': 'All', 'name': 'All'},
+            {'id': 'all', 'name': 'All'},
             {'id': 'Final', 'name': 'Final'}, 
             {'id': 'Preliminary', 'name': 'Preliminary'}, 
             {'id': 'Interim', 'name': 'Interim'}, 
