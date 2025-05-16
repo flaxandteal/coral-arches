@@ -7693,6 +7693,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "b9e0705b-5463-11e9-9368-000d3ab1e588",
+                    "edgeid": "e743adc6-37de-4a02-8c8f-271efb125e45",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "rangenode_id": "fdf1636f-f14f-49b7-a5f8-5e8ec78a693f"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "a5416b3d-f121-11eb-85b4-a87eeabdefba",
                     "edgeid": "a541e034-e92d-4603-91f2-bf91f159b2b3",
                     "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
@@ -10796,6 +10805,12 @@
                 "en": "Activity"
             },
             "nodegroups": [
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "fdf1636f-f14f-49b7-a5f8-5e8ec78a693f",
+                    "parentnodegroup_id": null
+                },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
@@ -19028,6 +19043,27 @@
                     "nodeid": "f655eefe-02f5-11ef-927a-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "_legacy_record",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": "LegacyData",
+                    "graph_id": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": false,
+                    "istopnode": false,
+                    "name": "Legacy Data",
+                    "nodegroup_id": "fdf1636f-f14f-49b7-a5f8-5e8ec78a693f",
+                    "nodeid": "fdf1636f-f14f-49b7-a5f8-5e8ec78a693f",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 }
