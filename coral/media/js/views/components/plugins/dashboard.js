@@ -150,6 +150,7 @@ define([
         if (this.initialLoadCompleted && this.filterBy()) {
           this.loadingCards(true);
           getTasks();
+          this.currentPage(1);
         }
       });
 

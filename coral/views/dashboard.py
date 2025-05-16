@@ -90,7 +90,8 @@ class Dashboard(View):
                     
                 if sort_by is not None and sort_order is not None:
                     task_params.update({'sort_by': sort_by, 'sort_order': sort_order})
-                if filter is not None:
+                if filter is not None and filter != 'all':
+                    task_params.update({'page': 1})
                     task_params.update({'filter': filter })
                 resources, total_resources, counters = strategy.get_tasks(**task_params)
                 filter_options = strategy.get_filter_options(groupId)
