@@ -42,7 +42,7 @@ class DesignationTaskStrategy(TaskStrategy):
                     Monument: lambda r: r.heritage_asset_references.ihr_number,
                     MonumentRevision: lambda r: r.heritage_asset_references.ihr_number
                 },
-                'garden_number': {
+                'historic_parks_and_gardens': {
                     Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.historic_parks_and_gardens,
                     Monument: lambda r: r.heritage_asset_references.historic_parks_and_gardens,
                     MonumentRevision: lambda r: r.heritage_asset_references.historic_parks_and_gardens
@@ -52,47 +52,78 @@ class DesignationTaskStrategy(TaskStrategy):
             resources = []
             tasks = []
 
-            ha_all = Monument.all(lazy=True)        
-            self.heritage_assets = [ha for ha in ha_all if ha.garden_sign_off.status_type_n1 != APPROVED]
-            resources.extend(self.heritage_assets)
+            def _setup_default_conditions_and_get_count():
+                monumentDefaultWhereConditions = { 'status_type_n1__not_equal': 'Approved' }
+                # ! Strangly enough when using isnull on a resource list this doesn't work. This is due to internal SQL methods not casting Null or None properly
+                # ! towards the backend within the annotations/expressions
+                # ! https://github.com/flaxandteal/arches-orm/blob/emerald/0.3.2/arches_orm/arches_django/query_builder/annotations/expressions/expressions_postgresql.py#L21
+                monumentRevisionDefaultWhereConditions = { 'desg_approved_by': None }
+                consultationDefaultWhereConditions = { 'resourceid__startswith': 'EVM/', 'start_date__isnull': True }
 
-            har_all = MonumentRevision.all(lazy=True)
-            self.heritage_asset_revisions = [
-                har for har in har_all 
-                if any(approval.desg_approver.desg_approved_by is None for approval in har.approvals)
-            ]
-            resources.extend(self.heritage_asset_revisions)
+                self.heritage_assets = Monument.where(**monumentDefaultWhereConditions)
+                self.heritage_asset_revisions = MonumentRevision.where(**monumentRevisionDefaultWhereConditions)
+                self.evaluation_meetings = Consultation.where(**consultationDefaultWhereConditions).or_where(start_date=None, resourceid__startswith='EVM/').or_where(start_date='null', resourceid__startswith='EVM/')
 
-            consultation_all = Consultation.all(lazy=True)
-            self.evaluation_meetings = [
-                c for c in consultation_all 
-                if (resourceid := c.system_reference_numbers.uuid.resourceid) and 
-                resourceid.startswith('EVM/') and 
-                c.evaluation.sign_off_date_n1.start_date is None
-            ]
-            resources.extend(self.evaluation_meetings)
-
-            if filter != 'all':
+            def _apply_filters():
+                """
+                Method apply there where conditions onto  
+                """
+                if filter == 'all':
+                    return;
+            
                 filter_options = self.get_filter_options(groupId)
                 filter_type = next((option['type'] for option in filter_options if option['id'] == filter), None)
 
-                if filter_type == 'council':
-                    resources = [r for r in resources if self.filter_by_council_value(r, filter)]
-                if filter_type == 'date': 
-                    resources = [r for r in resources if self.filter_by_date_value(r)]
-                if filter_type == 'heritage_asset':
-                    resources = self.heritage_assets
-                if filter_type == 'revision':
-                    resources = self.heritage_asset_revisions
-                if filter_type == 'meetings':
-                    resources = self.evaluation_meetings
+                if filter_type == 'council':        
+                    self.heritage_assets = self.heritage_assets.where(council=filter)
+                    self.heritage_asset_revisions = self.heritage_asset_revisions.where(council=filter)
+                    self.evaluation_meetings = self.evaluation_meetings.where(council=filter)
+
+                elif filter_type == 'date': 
+                    self.heritage_asset_revisions = self.heritage_asset_revisions.where(statutory_consultee_notification_date_value__isnull=False)
+                    self.heritage_assets = self.heritage_assets.where(statutory_consultee_notification_date_value__isnull=False)
+                    self.evaluation_meetings = None;
+
+                elif filter_type == 'heritage_asset':
+                    self.heritage_asset_revisions = None;
+                    self.evaluation_meetings = None;
+                
+                elif filter_type == 'revision':
+                    self.heritage_assets = None;
+                    self.evaluation_meetings = None;
+
+                elif filter_type == 'meetings':
+                    self.heritage_assets = None;
+                    self.heritage_asset_revisions = None;
+
+            def _apply_selectors():
+                self.heritage_assets = self.heritage_assets.get() if self.heritage_assets != None else []
+                self.heritage_asset_revisions = self.heritage_asset_revisions.get() if self.heritage_asset_revisions != None else []
+                self.evaluation_meetings = self.evaluation_meetings.get() if self.evaluation_meetings != None else []
+
+                resources.extend(self.heritage_assets)
+                resources.extend(self.heritage_asset_revisions)
+                resources.extend(self.evaluation_meetings)
+
+            _setup_default_conditions_and_get_count()
+            _apply_filters()
+            _apply_selectors()
 
             total_resources = len(resources)
-            sorted_resources = self.sort_resources(resources, field_accessors, sort_by, sort_order)
 
             start_index = (page -1) * page_size
             end_index = (page * page_size)
+        
+            # ! I can't develop use the sorting or pagination with emerald asuUnfortunately, emerald currently can't handle sorting by combing 
+            # ! three models currently (Monument, MonumentRevision & Consultation)
+            # ! There needs to be a join method in emerald, to allow the join of other models, however I don't have time to create this, therefore
+            # ! the system below is fine and should be fast enough for the customer. 
+            sorted_resources = self.sort_resources(resources, field_accessors, sort_by, sort_order)
+
+ 
             indexed_resources = sorted_resources[start_index:end_index]
+
+            print('page_size : ', page_size)
 
             for resource in indexed_resources:
                 if isinstance(resource, Consultation):
@@ -112,7 +143,7 @@ class DesignationTaskStrategy(TaskStrategy):
             {'id': 'hb_number', 'name': 'HB number'},
             {'id': 'smr_number', 'name': 'SMR number'},
             {'id': 'ihr_number', 'name': 'IHR number'},
-            {'id': 'garden_number', 'name': 'Garden and Parks number'},
+            {'id': 'historic_parks_and_gardens', 'name': 'Garden and Parks number'},
         ]
     
     def get_filter_options(self, groupId=None):
@@ -123,7 +154,7 @@ class DesignationTaskStrategy(TaskStrategy):
             node_alias = Monument._._node_objects_by_alias()
             domain_options = node_alias['council'].config['options']
 
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+            domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
 
             return [
                 {'id': 'all', 'name': 'All', 'type': 'default'},
@@ -145,99 +176,89 @@ class DesignationTaskStrategy(TaskStrategy):
     
     def build_data(self, resource, groupId):
         from arches_orm.models import Monument, MonumentRevision
-        with admin():
 
-            nodes = [
-                'display_name',
-                'hmc_reference_number',
-                'historic_parks_and_gardens',
-                'ihr_number',
-                'hb_number',
-                'smr_number',
-                'monument_type',
-                'input_date_value',
-                'statutory_consultee_notification_date_value',
-            ]
+        utilities = Utilities()
 
-            node_values = self.get_values(nodes, resource)
+        resource_data = {
+            'id': str(resource.id),
+            'resourceid': resource.system_reference_numbers.uuid.resourceid,
+            'state': 'HeritageAsset',
+            'displayname': resource._.resource.descriptors['en']['name'],
+            'hmcreferencenumber': resource.hmc_reference.hmc_reference_number,
+            'historicparksandgardens': resource.heritage_asset_references.historic_parks_and_gardens,
+            'ihrnumber': resource.heritage_asset_references.ihr_number,
+            'hbnumber': resource.heritage_asset_references.hb_number,
+            'smrnumber': resource.heritage_asset_references.smr_number,
+            'monumenttype': self.extract_value(utilities.node_check(lambda: resource.construction_phases[0].phase_classification.monument_type)),
+            'inputdatevalue': resource.garden_sign_off.input_date.input_date_value,
+            'statutoryconsulteenotificationdatevalue': utilities.node_check(lambda: resource.approvals[0].statutory_consultee_notification_date.statutory_consultee_notification_date_value)
+        }
 
-            # Additional display values
-            node_values['id'] = str(resource.id)
-            node_values['resourceid'] = resource.system_reference_numbers.uuid.resourceid # this is pulled from here as the get values is retunrning a list
-
-            node_values['state'] = 'HeritageAsset'
+        if isinstance(resource, Monument):
+            resource_data['model'] = 'Heritage Asset'
+            resource_data['slugs'] = [
+            {'name': 'Add Building', 'slug': 'add-building-workflow'},
+            {'name': 'Add Monument', 'slug': 'add-monument-workflow'},
+            {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
+            {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
+        ]
+        if isinstance(resource, MonumentRevision):
+            resource_data['model'] = 'Designation'
+            resource_data['slugs'] = [
+            {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
+        ]
             
-            # Resource specific values
-            if isinstance(resource, Monument):
-                node_values['model'] = 'Heritage Asset'
-                node_values['slugs'] = [
-                {'name': 'Add Building', 'slug': 'add-building-workflow'},
-                {'name': 'Add Monument', 'slug': 'add-monument-workflow'},
-                {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
-                {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
-            ]
-            if isinstance(resource, MonumentRevision):
-                node_values['model'] = 'Designation'
-                node_values['slugs'] = [
-                {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
-            ]
+        if resource_data.get('statutoryconsulteenotificationdatevalue') and isinstance(resource_data['statutoryconsulteenotificationdatevalue'], list):
+            dates = []
+            for date in resource_data['statutoryconsulteenotificationdatevalue']:
+                date_obj = parser.parse(date)
+                dates.append(date_obj)
+            resource_data['statutoryconsulteenotificationdatevalue'] = str(max(dates))
 
-            # return the most recent date for this node
-            if node_values.get('statutoryconsulteenotificationdatevalue') and isinstance(node_values['statutoryconsulteenotificationdatevalue'], list):
-                dates = []
-                for date in node_values['statutoryconsulteenotificationdatevalue']:
-                    date_obj = parser.parse(date)
-                    dates.append(date_obj)
-                node_values['statutoryconsulteenotificationdatevalue'] = str(max(dates))
+        # transform returned values
+        date_values = [
+            'statutoryconsulteenotificationdatevalue',
+            'inputdatevalue'
+        ]
+        for value in date_values:
+            if resource_data.get(value):
+                resource_data[value] = self.convert_date_str(resource_data[value])
 
-            # transform returned values
-            date_values = [
-                'statutoryconsulteenotificationdatevalue',
-                'inputdatevalue'
-            ]
-            for value in date_values:
-                if node_values.get(value):
-                    node_values[value] = self.convert_date_str(node_values[value])
-
-            return node_values  
-
+        return resource_data 
+    
     def build_meeting_data(self, resource):
-        from arches_orm.models import Consultation
-        with admin():
+        resource_data = {
+            'id': str(resource.id),
+            'resourceid': resource.system_reference_numbers.uuid.resourceid,
+            'state': 'Meeting',
+            'model': 'Evaluation Meeting',
+            'displaynamevalue': resource.display_name.display_name_value,
+            'logdate': resource.consultation_dates.log_date,
+            'followupmeetingdatevalue': resource.evaluation.follow_up_meeting_date.follow_up_meeting_date_value,
+            'council': resource.location_data.council,
+            'slugs': [{'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'}]
+        }
 
-            nodes = [
-                'display_name_value',
-                'log_date',
-                'follow_up_meeting_date_value',
-                'related_monuments_and_areas',
-                'council'
-            ]
+        # Additional display values
+        related_monuments = resource.related_monuments_and_areas
 
-            node_values = self.get_values(nodes, resource)
+        ha_names = []
+        for ha in related_monuments:
+            ha_name = ha._.resource.descriptors['en']['name']
+            ha_names.append(ha_name)
+        
+        resource_data['relatedmonumentsandareas'] = ha_names
+        
+        # transform returned values
+        date_values = [
+            'logdate',
+            'followupmeetingdatevalue'
+        ]
+        for value in date_values:
+            if resource_data.get(value):
+                resource_data[value] = self.convert_date_str(resource_data[value])
 
-            # Additional display values
-            node_values['id'] = str(resource.id)
-            if node_values.get('relatedmonumentsandareas', None):
-                node_values['relatedmonumentsandareas'] = node_values['relatedmonumentsandareas'][0].display_name
-
-            node_values['state'] = 'Meeting'
-            node_values['model'] = 'Evaluation Meeting'
-            
-            # Resource specific values
-            node_values['slugs'] = [
-            {'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'},
-            ]
-
-            # transform returned values
-            date_values = [
-                'logdate',
-                'followupmeetingdatevalue'
-            ]
-            for value in date_values:
-                if node_values.get(value):
-                    node_values[value] = self.convert_date_str(node_values[value])
-
-            return node_values  
+        return resource_data  
 
     def extract_value(self, item):
         """Helper function to extract the value from different datatypes"""
@@ -293,25 +314,6 @@ class DesignationTaskStrategy(TaskStrategy):
         return sorted_resources
 
     def convert_date_str(self, date_str):
-        date_obj = parser.parse(date_str)
+        # ? The issue here is that the parse expects a string not a DateViewModel, therefore we convert it to a string
+        date_obj = parser.parse(str(date_str))
         return date_obj.strftime("%d-%m-%Y")
-    
-    def filter_by_council_value(self, resource, filter):
-        from arches_orm.models import Consultation
-        utilities = Utilities()
-        if isinstance(resource, Consultation):
-            council_value = utilities.node_check(lambda:resource.related_monuments_and_areas[0].location_data.council)
-        else:
-            council_value = utilities.node_check(lambda:resource.location_data.council)
-        if not council_value:
-            return False
-        return council_value == filter
-    
-    def filter_by_date_value(self, resource):
-        utilities = Utilities()
-        approvals = utilities.node_check(lambda:resource.approvals)
-        for approval in approvals:
-            match = utilities.node_check(approval.statutory_consultee_notification_date.statutory_consultee_notification_date_value) == None
-            if match:
-                return True
-        return False

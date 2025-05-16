@@ -257,3 +257,64 @@
   </div>
 </div>
 <!-- /ko -->
+ <!-- ko if: state === 'State'-->
+<div class="card-grid-item" style="margin: 2rem; width:375px">
+  <div class="panel mar-no dashboard-card-panel">
+  <div class="panel-heading" style="height: 38px">
+    <h3 id="f1-name" class="panel-title library-card-panel-title" style="font-weight: bold; font-size: 1.4rem">
+      <span data-bind="text: data.displayname"></span>
+    </h3>
+    <!-- ko if: data.deadlinemessage -->
+      <div class="flex-center title-info-margin">
+        <div><strong data-bind="text: data.deadlinemessage"></strong></div>
+        <i style="color: rgb(197, 2, 2); margin-left: 1rem" class="fa fa-exclamation-circle"></i>
+      </div>
+    <!-- /ko -->
+  </div>
+  <div class="dashboard-card-columns card-column-height-m">
+    <div>
+      <h5>HA Reference</h5>
+      <!-- ko foreach: data.haref -->
+        <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
+      <!-- /ko -->
+    </div>
+    <div class="overflow-scroll">
+      <h5>Townland</h5>
+      <!-- ko foreach: data.townland -->
+        <p style="margin-bottom: 2px; font-size: 1.2rem" data-bind="text: $data"></p>
+      <!-- /ko -->
+    </div>
+    <div>
+      <h5>Council</h5>
+      <p style="max-width: 10rem;" data-bind="text: data.council ?? 'Not Set'"></p>
+    </div>
+  </div>
+  <div class="dashboard-card-columns">
+    <div>
+      <h5 data-bind="text: data.dateheading">Completed Date</h5> 
+        <p data-bind="text: data.date ?? 'Not Set'"></p>
+    </div>
+    <div>
+      <h5 data-bind="text: data.userheading">Completed by</h5> 
+        <p data-bind="text: data.inputby ?? 'Not Set'"></p>
+    </div>
+  </div>
+  <div class="panel-footer dashboard-footer">
+    <div style="height:100%; display:flex; align-items:center">
+      <h5>Model: <span style="font-weight: initial" data-bind="text: data.model"></span></h5>
+    </div>
+    <div>
+      <button
+        id="f1"
+        class="add-function-button btn btn-primary btn-labeled fa fa-link"
+        data-bind="click: () => {
+          openFlagged(data.id, data.slug)
+        } "
+      >
+        <span>Open</span>
+      </button>
+    </div>
+  </div>
+  </div>
+  </div>
+  <!-- /ko -->

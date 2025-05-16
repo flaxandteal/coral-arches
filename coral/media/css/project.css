@@ -1072,11 +1072,23 @@ span.rp-tile-title {
 
 .dashboard-counter-card {
     width: 300px;
-    min-height: 120px;
-    margin:2rem 5rem;
+    max-height: 120px;
+    margin:1.22rem 5rem;
     padding: 0 1rem 1rem 1rem;
 }
 
 .planning-card {
     min-height: 258px;
+}
+
+.response-container div {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 1rem
+}
+
+.response-container div input[type=checkbox] {
+    pointer-events: none;
+    cursor: not-allowed;
+    margin-left: 2rem;
 }
