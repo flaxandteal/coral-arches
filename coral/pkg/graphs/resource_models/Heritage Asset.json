@@ -2441,13 +2441,14 @@
                 {
                     "card_id": "46f25cdb-b6c7-11ea-9c2f-f875a44e0e11",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": null,
-                        "label": "Date of Last Update",
-                        "maxDate": null,
-                        "minDate": null,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Date of Image Creation",
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "528d8579-f8c1-4eb9-9f45-15a2f7b28af4",
                     "label": {
@@ -2456,7 +2457,7 @@
                     "node_id": "f598780b-3940-4c79-a049-2deb12334348",
                     "sortorder": 1,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                    "widget_id": "adfd15ce-dbab-11e7-86d1-0fcf08612b27"
                 },
                 {
                     "card_id": "98bd23cd-347d-4fe3-bb6d-267642607b48",
@@ -26887,8 +26888,16 @@
                 },
                 {
                     "alias": "date_of_image_creation",
-                    "config": {},
-                    "datatype": "string",
+                    "config": {
+                        "fuzzy_day_padding": 1,
+                        "fuzzy_month_padding": 1,
+                        "fuzzy_season_padding": 12,
+                        "fuzzy_year_padding": 1,
+                        "multiplier_if_approximate": 1,
+                        "multiplier_if_both": 1,
+                        "multiplier_if_uncertain": 1
+                    },
+                    "datatype": "edtf",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
