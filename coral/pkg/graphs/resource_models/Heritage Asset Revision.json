@@ -15116,6 +15116,26 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "8812b684-f4d4-4561-9137-ed209932b8d7",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Date of Last Update",
+                        "maxDate": null,
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "58710151-7818-4c53-8d79-4384a8df1744",
+                    "label": {
+                        "en": "Date of Image Creation"
+                    },
+                    "node_id": "40bca8a2-e0ba-4165-a8f1-13f81676ba86",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
                     "card_id": "90caa8ad-741d-420c-9cb4-7d20fbd00b61",
                     "config": {
                         "defaultValue": null,
@@ -30485,6 +30505,27 @@
                     "nodeid": "4c11eb3d-2af8-414a-affe-848195be8927",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "date_of_image_creation",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Caption",
+                    "nodegroup_id": "46f25cd9-b6c7-11ea-8651-f875a44e0e11",
+                    "nodeid": "40bca8a2-e0ba-4165-a8f1-13f81676ba86",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
