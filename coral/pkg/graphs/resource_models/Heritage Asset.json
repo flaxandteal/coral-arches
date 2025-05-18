@@ -24213,7 +24213,7 @@
                         ]
                     },
                     "datatype": "domain-value",
-                    "description": "Legacy category type - intended to be remapped to Characterization",
+                    "description": "Category type - a characterization for SMR",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
@@ -25291,7 +25291,7 @@
                         "en": ""
                     },
                     "datatype": "string",
-                    "description": null,
+                    "description": "Historic Building database number",
                     "exportable": true,
                     "fieldname": "hb_num",
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
