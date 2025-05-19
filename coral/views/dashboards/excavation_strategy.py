@@ -28,7 +28,7 @@ class ExcavationTaskStrategy(TaskStrategy):
                 QueryBuilder: The query builder object
             """
                     
-            if filter == 'All':
+            if filter == 'all':
                 return queryBuilder;
     
             return queryBuilder.where(report_classification_type=filter);
