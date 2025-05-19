@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <skos:Collection rdf:about="http://arches:8000/b3050e35-fc63-5590-789c-2ca09f619334">
+    <skos:prefLabel xml:lang="en">{"id": "2876de4e-48bb-d293-911c-70c22e9828fe", "value": "Ownership"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/b279ffd9-23c7-c163-70c9-a6e02a6ce52e"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5be8adb8-a71a-a992-5e7a-5adbbccbea77"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/ee02bda0-e576-00e1-e4a0-0305ec53e805"/>
+    </skos:member>
+  </skos:Collection>
   <skos:Collection rdf:about="http://arches:8000/e49a01b7-c018-4c35-af8b-5641fe1d25b4">
     <skos:prefLabel xml:lang="en-us">{"id": "33d8c835-6e26-4c8a-babd-a1f41f53712a", "value": "Letters"}</skos:prefLabel>
       <skos:member>

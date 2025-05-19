@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:ConceptScheme rdf:about="http://arches:8000/70ba2520-37e1-35d8-98ad-e2860ab3339d">
+    <skos:prefLabel xml:lang="en">{"id": "a03c6f2f-567b-735a-c327-baddcf906d7c", "value": "Ownership"}</skos:prefLabel>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/b279ffd9-23c7-c163-70c9-a6e02a6ce52e">
+        <skos:prefLabel xml:lang="en">{"id": "260d3aad-9d32-6a53-2092-ed460010486c", "value": "State"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/70ba2520-37e1-35d8-98ad-e2860ab3339d"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/5be8adb8-a71a-a992-5e7a-5adbbccbea77">
+        <skos:prefLabel xml:lang="en">{"id": "0c8b385c-d993-fe5c-6e23-e4aeb040c076", "value": "Private"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/70ba2520-37e1-35d8-98ad-e2860ab3339d"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="http://arches:8000/ee02bda0-e576-00e1-e4a0-0305ec53e805">
+        <skos:prefLabel xml:lang="en">{"id": "d8551b52-c833-9bcb-e5ce-dd6dfb2a177e", "value": "Public"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/70ba2520-37e1-35d8-98ad-e2860ab3339d"/>
+      </skos:Concept>
+    </skos:narrower>
+    <dcterms:title xml:lang="en">{"id": "7f9dafe1-8c0e-7868-d9dd-c9a6a5a61f2a", "value": "Ownership"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "e5470ea0-8027-db23-38ba-5690b114f3fd", "value": "http://arches:8000/70ba2520-37e1-35d8-98ad-e2860ab3339d"}</dcterms:identifier>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/b279ffd9-23c7-c163-70c9-a6e02a6ce52e"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/5be8adb8-a71a-a992-5e7a-5adbbccbea77"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/ee02bda0-e576-00e1-e4a0-0305ec53e805"/>
+  </skos:ConceptScheme>
+</rdf:RDF>
