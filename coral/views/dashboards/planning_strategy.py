@@ -55,7 +55,6 @@ class PlanningTaskStrategy(TaskStrategy):
             applied_queries = {}
 
             consultationsDefaultWhereConditions = { 'resourceid__startswith': 'CON/' }
-            queryBuilder = Consultation.where(**consultationsDefaultWhereConditions)
 
             def apply_default_conditions(queryBuilder: "QueryBuilder") -> "QueryBuilder":
                 """
@@ -155,6 +154,28 @@ class PlanningTaskStrategy(TaskStrategy):
                 if (sort_order == 'asc'): direction = ''
 
                 return queryBuilder.order_by(f'{direction}{sort_by}')
+
+            def build_query(where_conditions=None, with_sorting=False):
+                """
+                Creates a new query builder with all conditions applied from scratch
+
+                Args:
+                    where_conditions (None | Dict[str, any], optional): This is the where conditions, incase we want to count based on a certain
+                        field value. Defaults to None.
+                    with_sorting (bool, optional): This is the sorting condition, if we want to sort the query. Defaults to False.
+                """
+                fresh_query = Consultation.where(**consultationsDefaultWhereConditions)
+                
+                fresh_query = apply_default_conditions(fresh_query)
+                fresh_query = apply_filters(fresh_query)
+                
+                if where_conditions:
+                    fresh_query = fresh_query.where(**where_conditions)
+                    
+                if with_sorting:
+                    fresh_query = apply_order_by(fresh_query)
+                    
+                return fresh_query
             
             def get_paginated_resources(queryBuilder: "QueryBuilder") -> any: # WKRM
                 """
@@ -167,18 +188,15 @@ class PlanningTaskStrategy(TaskStrategy):
                 Returns:
                     any: The WKRM
                 """
-                copyQueryBuilder = copy.deepcopy(queryBuilder)
+
                 start_index = (page -1) * page_size
 
-                return copyQueryBuilder.offset(start_index, page_size)
+                return queryBuilder.offset(start_index, page_size)
             
-            def get_counters(queryBuilder: "QueryBuilder") -> Dict[str, Dict[str, int | None]]:
+            def get_counters() -> Dict[str, Dict[str, int | None]]:
                 """
                 Method returns the count for the hierarchy types and the action status, it takes full advantage of get_count method to get the count
                 of each topic in action status and hierarchy types.
-
-                Args:
-                    queryBuilder (QueryBuilder): This is the class of the query builder which is chainable in the arches orm
 
                 Returns:
                     Dict[str, Dict[str, int | None]]: The counters which is used within the frontend for display
@@ -188,7 +206,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     topics = {}
 
                     for key in keys:
-                        count = get_count(queryBuilder, { 'hierarchy_type': key })
+                        count = get_count({ 'hierarchy_type': key })
                         if (count != 0):
                             topics['None' if (key == None) else key] = count
 
@@ -199,7 +217,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     topics = {}
 
                     for key in keys:
-                        count = get_count(queryBuilder, { 'action_status': key })
+                        count = get_count({ 'action_status': key })
                         if (count != 0):
                             topics['None' if (key == None) else key] = count
 
@@ -210,34 +228,31 @@ class PlanningTaskStrategy(TaskStrategy):
                     'heirarchy_type': _get_counters_hierarchy_type()
                 }
 
-            def get_count(queryBuilder, whereConditions: None | Dict[str, any] =None) -> int:
-                """_summary_
-
+            def get_count(whereConditions: None | Dict[str, any] =None) -> int:
+                """
+                Method that gets the total count of a node or resource
+                
                 Args:
-                    queryBuilder (QueryBuilder): This is the class of the query builder which is chainable in the arches orm
                     whereConditions (None | Dict[str, any], optional): This is the where conditions, incase we want to count based on a certain
                         field value. Defaults to None.
 
                 Returns:
                     int: Returns the count
                 """
-
-                copyQueryBuilder = copy.deepcopy(queryBuilder)
+                queryBuilder = build_query(where_conditions=whereConditions)
 
                 if (whereConditions == None):
-                    return copyQueryBuilder.count()
+                    return queryBuilder.count()
                 else:
-                    return copyQueryBuilder.where(**whereConditions).count()
+                    return queryBuilder.where(**whereConditions).count()
             
-            queryBuilder = apply_default_conditions(queryBuilder)
-            queryBuilder = apply_filters(queryBuilder)
+            base_query = build_query(with_sorting=True)
             
-            counters = get_counters(queryBuilder)
+            resources = get_paginated_resources(base_query)
 
-            queryBuilder = apply_order_by(queryBuilder)
+            counters = get_counters()
 
-            total_resources = get_count(queryBuilder)
-            resources = get_paginated_resources(queryBuilder)
+            total_resources = get_count()
 
             tasks = []
 
