@@ -2735,11 +2735,12 @@
                 {
                     "card_id": "0696fffd-50a0-4fea-af0c-4e9a0de637aa",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": null,
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Ownership",
+                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2751,7 +2752,7 @@
                     "node_id": "5b0a912d-dfde-401d-9a5e-6720a7dbce1f",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000015"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "ae8b24f7-ed3f-49c1-8ace-03e52111d45e",
@@ -31441,34 +31442,9 @@
                 {
                     "alias": "ownership",
                     "config": {
-                        "i18n_config": {
-                            "fn": "arches.app.datatypes.datatypes.DomainDataType"
-                        },
-                        "options": [
-                            {
-                                "id": "f2e9e1b9-8493-4f43-9f49-b6c3ce8be8d9",
-                                "selected": false,
-                                "text": {
-                                    "en": "Public"
-                                }
-                            },
-                            {
-                                "id": "82e54bc3-39df-443b-86a7-40cfc34d13aa",
-                                "selected": false,
-                                "text": {
-                                    "en": "Private"
-                                }
-                            },
-                            {
-                                "id": "91c9d738-2306-4f87-8300-0facfa417f0e",
-                                "selected": false,
-                                "text": {
-                                    "en": "State"
-                                }
-                            }
-                        ]
+                        "rdmCollection": "b3050e35-fc63-5590-789c-2ca09f619334"
                     },
-                    "datatype": "domain-value",
+                    "datatype": "concept",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Ownership",
