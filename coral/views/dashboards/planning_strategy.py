@@ -1,4 +1,5 @@
 from arches.app.models import models
+from collections import defaultdict
 from arches_orm.adapter import admin 
 from datetime import datetime
 import html
@@ -44,7 +45,7 @@ class PlanningTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='desc', filter='all'):
         from arches_orm.models import Consultation
         from arches_orm.models import Group
-        with admin():        
+        with admin():      
             self._user_role = UserRole(groupId)
 
             resources = [] 
@@ -55,7 +56,7 @@ class PlanningTaskStrategy(TaskStrategy):
             applied_queries = {}
 
             consultationsDefaultWhereConditions = { 'resourceid__startswith': 'CON/' }
-
+            
             def apply_default_conditions(queryBuilder: "QueryBuilder") -> "QueryBuilder":
                 """
                 Method applies the default where conditions depending on the user's role, can only see certain fields
@@ -76,8 +77,10 @@ class PlanningTaskStrategy(TaskStrategy):
                     queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
-                    # * Assigned to
-                    queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
+                    # * Assigned to - The is null is not working correctly
+                    # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
+                    # * Response
+                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
 
                 # * The HM user
                 elif (self._user_role.hm_user['is_role']):
@@ -93,11 +96,11 @@ class PlanningTaskStrategy(TaskStrategy):
                 # * The HB manager
                 elif (self._user_role.hb_manager['is_role']):
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status="Open", action_type="Assign To HB").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
-                    # * Assigned to
-                    queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
+                    # * Assigned to - The is null is not working correctly
+                    # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
                     queryBuilder = queryBuilder.where(response_team__not_equal="HB")
             
@@ -109,6 +112,8 @@ class PlanningTaskStrategy(TaskStrategy):
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
+                    # * Response
+                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
                 
                 return queryBuilder
                         
@@ -193,6 +198,22 @@ class PlanningTaskStrategy(TaskStrategy):
 
                 return queryBuilder.offset(start_index, page_size)
             
+            def get_count_groups(resources, count_groups: dict):
+                counters = {}
+
+                for key, func in count_groups.items():
+                    counts = defaultdict(int)
+
+                    for resource in resources:
+                        value = Utilities().node_check(lambda: func(resource), None)
+                        if value is None:
+                            value = 'None'
+                        counts[value] += 1
+
+                    counters[key] = dict(sorted(counts.items()))
+                
+                return counters
+            
             def get_counters() -> Dict[str, Dict[str, int | None]]:
                 """
                 Method returns the count for the hierarchy types and the action status, it takes full advantage of get_count method to get the count
@@ -201,32 +222,17 @@ class PlanningTaskStrategy(TaskStrategy):
                 Returns:
                     Dict[str, Dict[str, int | None]]: The counters which is used within the frontend for display
                 """
-                def _get_counters_hierarchy_type():
-                    keys = ['Statutory', 'Non-statutory', None]
-                    topics = {}
 
-                    for key in keys:
-                        count = get_count({ 'hierarchy_type': key })
-                        if (count != 0):
-                            topics['None' if (key == None) else key] = count
+                resources = build_query().get()
 
-                    return topics;
-                            
-                def _get_counters_action_status():
-                    keys = ['Extension requested', 'Open', 'Closed', 'HB done', 'HM done', None]
-                    topics = {}
-
-                    for key in keys:
-                        count = get_count({ 'action_status': key })
-                        if (count != 0):
-                            topics['None' if (key == None) else key] = count
-
-                    return topics;
-            
-                return {
-                    'status': _get_counters_action_status(),
-                    'heirarchy_type': _get_counters_hierarchy_type()
+                count_nodes = {
+                    'status': lambda resource: resource.action[0].action_status,
+                    'heirarchy_type': lambda resource: resource.hierarchy_type
                 }
+
+                counters = get_count_groups(resources, count_nodes)
+
+                return counters
 
             def get_count(whereConditions: None | Dict[str, any] =None) -> int:
                 """
@@ -241,19 +247,13 @@ class PlanningTaskStrategy(TaskStrategy):
                 """
                 queryBuilder = build_query(where_conditions=whereConditions)
 
-                if (whereConditions == None):
-                    return queryBuilder.count()
-                else:
-                    return queryBuilder.where(**whereConditions).count()
+                return queryBuilder.count()
+                
             
             base_query = build_query(with_sorting=True)
-            
             resources = get_paginated_resources(base_query)
-
             counters = get_counters()
-
             total_resources = get_count()
-
             tasks = []
 
             for resource in resources:
