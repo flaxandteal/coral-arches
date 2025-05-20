@@ -207,8 +207,7 @@ define([
             const enforcements = json.results.hits.hits.map((hit) => {
               return hit._source;
             });
-            
-            this.tasks(enforcements);
+            this.tasks(enforcements.reverse());
             this.updatePaginatedItems();
           });
       }, 
