@@ -96,7 +96,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 # * The HB manager
                 elif (self._user_role.hb_manager['is_role']):
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open", action_type="Assign To HB").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Assigned to - The is null is not working correctly
@@ -437,8 +437,8 @@ class PlanningTaskStrategy(TaskStrategy):
             'id': str(consultation.id),
             'state': 'Planning',
             'displayname': consultation._.resource.descriptors['en']['name'],
-            'status': utilities.convert_id_to_string(action_status),
-            'hierarchy_type': utilities.convert_id_to_string(hierarchy_type),
+            'status': action_status,
+            'hierarchy_type': hierarchy_type,
             'assigned_to': assigned_to_names,
             'ha_refs': ha_refs,
             'deadline': deadline,
