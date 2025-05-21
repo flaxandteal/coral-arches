@@ -3,7 +3,8 @@ from dateutil import parser
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
 from arches_orm.view_models import ConceptListValueViewModel, ConceptValueViewModel
-from coral.views.dashboards.sql_query import build_query
+from coral.views.dashboards.sql_query.builder import build_query
+from coral.views.dashboards.sql_query.config.designation_config import DESIGNATION_SQL_QUERY_CONFIG
 from django.db import connection
 from arches_orm.adapter import admin 
 from typing import List
@@ -23,34 +24,6 @@ class DesignationTaskStrategy(TaskStrategy):
         from arches_orm.models import Monument, MonumentRevision, Consultation
         with admin():
 
-            field_accessors = {
-                'resourceid': {
-                    Consultation: lambda r: r.related_monuments_and_areas[0].system_reference_numbers.uuid.resourceid,
-                    Monument: lambda r: r.system_reference_numbers.uuid.resourceid,
-                    MonumentRevision: lambda r: r.system_reference_numbers.uuid.resourceid
-                },
-                'hb_number': {
-                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.hb_number,
-                    Monument: lambda r: r.heritage_asset_references.hb_number,
-                    MonumentRevision: lambda r: r.heritage_asset_references.hb_number
-                },
-                'smr_number': {
-                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.smr_number,
-                    Monument: lambda r: r.heritage_asset_references.smr_number,
-                    MonumentRevision: lambda r: r.heritage_asset_references.smr_number
-                },
-                'ihr_number': {
-                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.ihr_number,
-                    Monument: lambda r: r.heritage_asset_references.ihr_number,
-                    MonumentRevision: lambda r: r.heritage_asset_references.ihr_number
-                },
-                'historic_parks_and_gardens': {
-                    Consultation: lambda r: r.related_monuments_and_areas[0].heritage_asset_references.historic_parks_and_gardens,
-                    Monument: lambda r: r.heritage_asset_references.historic_parks_and_gardens,
-                    MonumentRevision: lambda r: r.heritage_asset_references.historic_parks_and_gardens
-                }
-            }
-
             resources = []
             tasks = []
 
@@ -62,19 +35,20 @@ class DesignationTaskStrategy(TaskStrategy):
                     page_size=page_size, 
                     count=False
                 ):
-
                 offset = (page-1)*page_size
                 limit = page_size if isinstance(page_size, int) else 8
 
                 filter_options = self.get_filter_options(groupId)
-                filter_type = next((option['type'] for option in filter_options if option['id'] == filter), None)
-                filter_dict = {'id': filter, 'type': filter_type}
+                filter_option = next((option for option in filter_options if option['id'] == filter), None)
+                filter_type = filter_option['type']
+                filter_id = filter_option['id']
+                filter_dict = {'id': filter_id, 'type': filter_type}
 
                 if count:
-                    query = build_query(sort_by, filter=filter_dict, count=True)
+                    query = build_query(sort_by, count=True, filter=filter_dict, config=DESIGNATION_SQL_QUERY_CONFIG)
                 else:
                     reverse = True if sort_order == 'desc' else False
-                    query = build_query(sort_by, reverse=reverse, filter=filter_dict, limit=limit, offset=offset)
+                    query = build_query(sort_by, reverse=reverse, filter=filter_dict, limit=limit, offset=offset, config=DESIGNATION_SQL_QUERY_CONFIG)
 
                 with connection.cursor() as cursor:
                     cursor.execute(query)
@@ -88,60 +62,6 @@ class DesignationTaskStrategy(TaskStrategy):
                 counts['total'] = total
                 return counts
                 
-
-            def _setup_default_conditions_and_get_count():
-                monumentDefaultWhereConditions = { 'status_type_n1': 'Provisional' }
-                # ! Strangly enough when using isnull on a resource list this doesn't work. This is due to internal SQL methods not casting Null or None properly
-                # ! towards the backend within the annotations/expressions
-                # ! https://github.com/flaxandteal/arches-orm/blob/emerald/0.3.2/arches_orm/arches_django/query_builder/annotations/expressions/expressions_postgresql.py#L21
-                monumentRevisionDefaultWhereConditions = { 'desg_approved_by': None }
-                consultationDefaultWhereConditions = { 'resourceid__startswith': 'EVM/', 'start_date__isnull': True }
-
-                self.heritage_assets = Monument.where(**monumentDefaultWhereConditions)
-                self.heritage_asset_revisions = MonumentRevision.where(**monumentRevisionDefaultWhereConditions)
-                self.evaluation_meetings = Consultation.where(**consultationDefaultWhereConditions).or_where(start_date=None, resourceid__startswith='EVM/').or_where(start_date='null', resourceid__startswith='EVM/')
-
-            def _apply_filters():
-                """
-                Method apply there where conditions onto  
-                """
-                if filter == 'all':
-                    return;
-            
-                filter_options = self.get_filter_options(groupId)
-                filter_type = next((option['type'] for option in filter_options if option['id'] == filter), None)
-
-                if filter_type == 'council':        
-                    self.heritage_assets = self.heritage_assets.where(council=filter)
-                    self.heritage_asset_revisions = self.heritage_asset_revisions.where(council=filter)
-                    self.evaluation_meetings = self.evaluation_meetings.where(council=filter)
-
-                elif filter_type == 'date': 
-                    self.heritage_asset_revisions = self.heritage_asset_revisions.where(statutory_consultee_notification_date_value__isnull=False)
-                    self.heritage_assets = self.heritage_assets.where(statutory_consultee_notification_date_value__isnull=False)
-                    self.evaluation_meetings = None;
-
-                elif filter_type == 'heritage_asset':
-                    self.heritage_asset_revisions = None;
-                    self.evaluation_meetings = None;
-                
-                elif filter_type == 'revision':
-                    self.heritage_assets = None;
-                    self.evaluation_meetings = None;
-
-                elif filter_type == 'meetings':
-                    self.heritage_assets = None;
-                    self.heritage_asset_revisions = None;
-
-            def _apply_selectors():
-                self.heritage_assets = self.heritage_assets.get() if self.heritage_assets != None else []
-                self.heritage_asset_revisions = self.heritage_asset_revisions.get() if self.heritage_asset_revisions != None else []
-                self.evaluation_meetings = self.evaluation_meetings.get() if self.evaluation_meetings != None else []
-
-                resources.extend(self.heritage_assets)
-                resources.extend(self.heritage_asset_revisions)
-                resources.extend(self.evaluation_meetings)
-
             results = run_sql_query()
             resources = []
             for item in results:
@@ -157,27 +77,9 @@ class DesignationTaskStrategy(TaskStrategy):
                 if instance:
                     resources.append(instance)
 
-            # _setup_default_conditions_and_get_count()
-            # _apply_filters()
-            # _apply_selectors()
-
             resource_counts = get_counts()
             total_resources = resource_counts.get('total', 0)
             counters = self.get_counters(counts=resource_counts)
-
-            # start_index = (page -1) * page_size
-            # end_index = (page * page_size)
-        
-            # # ! I can't develop use the sorting or pagination with emerald asuUnfortunately, emerald currently can't handle sorting by combing 
-            # # ! three models currently (Monument, MonumentRevision & Consultation)
-            # # ! There needs to be a join method in emerald, to allow the join of other models, however I don't have time to create this, therefore
-            # # ! the system below is fine and should be fast enough for the customer. 
-            # sorted_resources = self.sort_resources(resources, field_accessors, sort_by, sort_order)
-
- 
-            # indexed_resources = sorted_resources[start_index:end_index]
-
-            # print('page_size : ', page_size)
 
             for resource in resources:
                 if isinstance(resource, Consultation):
