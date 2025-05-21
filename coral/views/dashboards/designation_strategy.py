@@ -72,11 +72,10 @@ class DesignationTaskStrategy(TaskStrategy):
             
             def get_counts():
                 results = run_sql_query(sort_by, count=True)
-                total = sum(x[1] for x in results)
-                print("TOTAL", total)
-                return {
-                    'total': total
-                }
+                counts = dict(results)
+                total = sum(counts.values())
+                counts['total'] = total
+                return counts
                 
 
             def _setup_default_conditions_and_get_count():
@@ -152,7 +151,8 @@ class DesignationTaskStrategy(TaskStrategy):
             # _apply_selectors()
 
             resource_counts = get_counts()
-            total_resources = resource_counts['total']
+            total_resources = resource_counts.get('total', 0)
+            counters = self.get_counters(counts=resource_counts)
 
             # start_index = (page -1) * page_size
             # end_index = (page * page_size)
@@ -174,8 +174,6 @@ class DesignationTaskStrategy(TaskStrategy):
                 else:
                     task = self.build_data(resource, groupId)
                 tasks.append(task)
-
-            counters = {} #self.get_counters()
             
             return tasks, total_resources, counters
     
@@ -208,12 +206,12 @@ class DesignationTaskStrategy(TaskStrategy):
                 {'id': 'stat_date', 'name': 'Statutory Consultee Notification Date', 'type': 'date'}
         ]
 
-    def get_counters(self):
+    def get_counters(self, counts):
         return {
             'Resource Types': {
-                'Heritage Assets': len(self.heritage_assets),
-                'Designations': len(self.heritage_asset_revisions),
-                'Evaluation Meetings': len(self.evaluation_meetings)
+                'Heritage Assets': counts.get('Monument', 0),
+                'Designations': counts.get('MonumentRevision', 0),
+                'Evaluation Meetings': counts.get('Consultation', 0)
             }
         }
     
