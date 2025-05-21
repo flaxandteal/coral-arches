@@ -16138,6 +16138,15 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "46f25cd9-b6c7-11ea-8651-f875a44e0e11",
+                    "edgeid": "63a4328d-11bd-414c-977c-c487136ac771",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "rangenode_id": "40bca8a2-e0ba-4165-a8f1-13f81676ba86",
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "a9eeba97-34d4-424e-99cc-586f6b3c626f",
                     "edgeid": "ff85858c-f1af-4d49-bca2-f1783b9c2789",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
@@ -30541,11 +30550,11 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Caption",
+                    "name": "Date of Image Creation",
                     "nodegroup_id": "46f25cd9-b6c7-11ea-8651-f875a44e0e11",
                     "nodeid": "40bca8a2-e0ba-4165-a8f1-13f81676ba86",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
