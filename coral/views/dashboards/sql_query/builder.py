@@ -94,11 +94,8 @@ def _build_query(
     if filter['id'] in base_sort.keys():
         subqueries = [ build_subquery(filter['id']) ]
     else:
-        subqueries = [
-            build_subquery('Monument', filter),
-            build_subquery('MonumentRevision', filter),
-            build_subquery('Consultation', filter),
-        ]
+        model_types = list(base_sort.keys())
+        subqueries = [build_subquery(model, filter) for model in model_types]
 
     if count is True:
         count_query = f"""
