@@ -1,4 +1,4 @@
-def build_query(sort_by, count=False, reverse=False, limit=8, offset=0):
+def build_query(sort_by, count=False, filter={'id':'all', 'type': 'all'}, reverse=False, limit=8, offset=0):
 
     base_sort = {
         'Monument': {
@@ -115,7 +115,48 @@ def build_query(sort_by, count=False, reverse=False, limit=8, offset=0):
         """
     }
 
-    extra_filters = {}
+    extra_filters = {
+        'council': {
+            'Monument': """
+                EXISTS (
+                    SELECT 1 FROM tiles t_filter
+                    WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
+                    AND t_filter.nodegroupid = '447973ce-d7e2-11ee-a4a1-0242ac120006'
+                    AND t_filter.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{council_filter}'
+                )
+                """,
+            'MonumentRevision': """
+                EXISTS (
+                    SELECT 1 FROM tiles t_filter
+                    WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
+                    AND t_filter.nodegroupid = '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3'
+                    AND t_filter.tiledata ->> '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3' = '{council_filter}'
+                )
+                """,
+            'Consultation': """
+                EXISTS (
+                SELECT 1
+                FROM tiles t_rel
+                WHERE
+                    t_rel.resourceinstanceid = t_fixed.resourceinstanceid
+                    AND t_rel.nodegroupid = '58a2b98f-a255-11e9-9a30-00224800b26d'
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tiles t_council
+                        WHERE
+                            t_council.resourceinstanceid IN (
+                                SELECT (value::jsonb->>'resourceId')::uuid
+                                FROM jsonb_array_elements(
+                                    t_rel.tiledata -> '58a2b98f-a255-11e9-9a30-00224800b26d'
+                                ) as value
+                            )
+                            AND t_council.nodegroupid = '447973ce-d7e2-11ee-a4a1-0242ac120006'
+                            AND t_council.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{council_filter}'
+                    )
+            )
+                """,
+        },
+    }
 
     if sort_by not in sort_options:
         raise ValueError(f"Invalid sort option: {sort_by}")
@@ -123,13 +164,18 @@ def build_query(sort_by, count=False, reverse=False, limit=8, offset=0):
     ref_paths = sort_options[sort_by]
     order_direction = "DESC" if reverse else "ASC"
 
-    def build_subquery(model_type):
+    def build_subquery(model_type, filter=None):
         nodegroupid = ref_paths[model_type]['nodegroupid']
         sql_path = ref_paths[model_type]['sql']
         base_filter = base_filters[model_type]
-        extra = extra_filters.get(model_type)
+        if filter and filter['type'] == 'council':
+            council_filter = filter['id']
+            extra = extra_filters['council'][model_type].format(council_filter=council_filter)
+        else:
+            extra = extra_filters.get(model_type)
 
         full_filter = base_filter
+        print("EXTRA", extra)
         if extra:
             full_filter = f"({base_filter}) AND ({extra})"
 
@@ -160,11 +206,14 @@ def build_query(sort_by, count=False, reverse=False, limit=8, offset=0):
             AND {full_filter}
             """
 
-    subqueries = [
-        build_subquery('Monument'),
-        build_subquery('MonumentRevision'),
-        build_subquery('Consultation'),
-    ]
+    if filter['id'] in base_sort.keys():
+        subqueries = [ build_subquery(filter['id']) ]
+    else:
+        subqueries = [
+            build_subquery('Monument', filter),
+            build_subquery('MonumentRevision', filter),
+            build_subquery('Consultation', filter),
+        ]
 
     if count is True:
         count_query = f"""
@@ -182,5 +231,6 @@ def build_query(sort_by, count=False, reverse=False, limit=8, offset=0):
     ORDER BY sort_value IS NULL, sort_value {order_direction}
     LIMIT {limit} OFFSET {offset};
     """
+    print(full_query)
 
     return full_query

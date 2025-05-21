@@ -54,16 +54,27 @@ class DesignationTaskStrategy(TaskStrategy):
             resources = []
             tasks = []
 
-            def run_sql_query(sort_by='resourceid', sort_order='desc', page=1, page_size=8, count=False):
+            def run_sql_query(
+                    sort_by=sort_by, 
+                    sort_order=sort_order, 
+                    filter=filter, 
+                    page=page, 
+                    page_size=page_size, 
+                    count=False
+                ):
 
                 offset = (page-1)*page_size
                 limit = page_size if isinstance(page_size, int) else 8
+
+                filter_options = self.get_filter_options(groupId)
+                filter_type = next((option['type'] for option in filter_options if option['id'] == filter), None)
+                filter_dict = {'id': filter, 'type': filter_type}
 
                 if count:
                     query = build_query(sort_by, count=True)
                 else:
                     reverse = True if sort_order == 'desc' else False
-                    query = build_query(sort_by, reverse=reverse, limit=limit, offset=offset)
+                    query = build_query(sort_by, reverse=reverse, filter=filter_dict, limit=limit, offset=offset)
 
                 with connection.cursor() as cursor:
                     cursor.execute(query)
@@ -71,7 +82,7 @@ class DesignationTaskStrategy(TaskStrategy):
                 return results
             
             def get_counts():
-                results = run_sql_query(sort_by, count=True)
+                results = run_sql_query(count=True)
                 counts = dict(results)
                 total = sum(counts.values())
                 counts['total'] = total
@@ -131,7 +142,7 @@ class DesignationTaskStrategy(TaskStrategy):
                 resources.extend(self.heritage_asset_revisions)
                 resources.extend(self.evaluation_meetings)
 
-            results = run_sql_query(sort_by, sort_order, page=page, page_size=page_size)
+            results = run_sql_query()
             resources = []
             for item in results:
                 model = item[2]
@@ -195,13 +206,13 @@ class DesignationTaskStrategy(TaskStrategy):
             node_alias = Monument._._node_objects_by_alias()
             domain_options = node_alias['council'].config['options']
 
-            domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
 
             return [
                 {'id': 'all', 'name': 'All', 'type': 'default'},
-                {'id': 'heritage_asset', 'name': 'Heritage Assets', 'type': 'heritage_asset'},
-                {'id': 'revision', 'name': 'Designations', 'type': 'revision'},
-                {'id': 'meeting', 'name': 'Evaluation Meetings', 'type': 'meetings'},
+                {'id': 'Monument', 'name': 'Heritage Assets', 'type': 'heritage_asset'},
+                {'id': 'MonumentRevision', 'name': 'Designations', 'type': 'revision'},
+                {'id': 'Consultation', 'name': 'Evaluation Meetings', 'type': 'meetings'},
                 *domain_values,
                 {'id': 'stat_date', 'name': 'Statutory Consultee Notification Date', 'type': 'date'}
         ]
