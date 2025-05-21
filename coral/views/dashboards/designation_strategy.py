@@ -3,6 +3,8 @@ from dateutil import parser
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
 from arches_orm.view_models import ConceptListValueViewModel, ConceptValueViewModel
+from coral.views.dashboards.sql_query import build_query
+from django.db import connection
 from arches_orm.adapter import admin 
 from typing import List
 import pdb
@@ -52,8 +54,17 @@ class DesignationTaskStrategy(TaskStrategy):
             resources = []
             tasks = []
 
+            def run_sql_query(sort_by='resourceid', sort_order='desc'):
+
+                reverse = True if sort_order == 'desc' else False
+                query = build_query(sort_by, reverse=reverse)
+                with connection.cursor() as cursor:
+                    cursor.execute(query)
+                    results = cursor.fetchall()
+                return results
+
             def _setup_default_conditions_and_get_count():
-                monumentDefaultWhereConditions = { 'status_type_n1__not_equal': 'Approved' }
+                monumentDefaultWhereConditions = { 'status_type_n1': 'Provisional' }
                 # ! Strangly enough when using isnull on a resource list this doesn't work. This is due to internal SQL methods not casting Null or None properly
                 # ! towards the backend within the annotations/expressions
                 # ! https://github.com/flaxandteal/arches-orm/blob/emerald/0.3.2/arches_orm/arches_django/query_builder/annotations/expressions/expressions_postgresql.py#L21
@@ -105,34 +116,49 @@ class DesignationTaskStrategy(TaskStrategy):
                 resources.extend(self.heritage_asset_revisions)
                 resources.extend(self.evaluation_meetings)
 
-            _setup_default_conditions_and_get_count()
-            _apply_filters()
-            _apply_selectors()
+            results = run_sql_query(sort_by, sort_order)
+            resources = []
+            for item in results:
+                model = item[2]
+                id = item[0]
+                instance = None
+                if model == 'Monument':
+                    instance = Monument.find(str(id))
+                elif model == 'MonumentRevision':
+                    instance = MonumentRevision.find(str(id))
+                elif model == 'Consultation':
+                    instance = Consultation.find(str(id))
+                if instance:
+                    resources.append(instance)
+
+            # _setup_default_conditions_and_get_count()
+            # _apply_filters()
+            # _apply_selectors()
 
             total_resources = len(resources)
 
-            start_index = (page -1) * page_size
-            end_index = (page * page_size)
+            # start_index = (page -1) * page_size
+            # end_index = (page * page_size)
         
-            # ! I can't develop use the sorting or pagination with emerald asuUnfortunately, emerald currently can't handle sorting by combing 
-            # ! three models currently (Monument, MonumentRevision & Consultation)
-            # ! There needs to be a join method in emerald, to allow the join of other models, however I don't have time to create this, therefore
-            # ! the system below is fine and should be fast enough for the customer. 
-            sorted_resources = self.sort_resources(resources, field_accessors, sort_by, sort_order)
+            # # ! I can't develop use the sorting or pagination with emerald asuUnfortunately, emerald currently can't handle sorting by combing 
+            # # ! three models currently (Monument, MonumentRevision & Consultation)
+            # # ! There needs to be a join method in emerald, to allow the join of other models, however I don't have time to create this, therefore
+            # # ! the system below is fine and should be fast enough for the customer. 
+            # sorted_resources = self.sort_resources(resources, field_accessors, sort_by, sort_order)
 
  
-            indexed_resources = sorted_resources[start_index:end_index]
+            # indexed_resources = sorted_resources[start_index:end_index]
 
-            print('page_size : ', page_size)
+            # print('page_size : ', page_size)
 
-            for resource in indexed_resources:
+            for resource in resources:
                 if isinstance(resource, Consultation):
                     task = self.build_meeting_data(resource)
                 else:
                     task = self.build_data(resource, groupId)
                 tasks.append(task)
 
-            counters = self.get_counters()
+            counters = {} #self.get_counters()
             
             return tasks, total_resources, counters
     
