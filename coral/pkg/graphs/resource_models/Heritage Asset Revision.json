@@ -16138,12 +16138,12 @@
             "edges": [
                 {
                     "description": null,
-                    "domainnode_id": "46f25cd9-b6c7-11ea-8651-f875a44e0e11",
+                    "domainnode_id": "4a259fb5-ecda-474d-b7b5-d2cf57046308",
                     "edgeid": "63a4328d-11bd-414c-977c-c487136ac771",
                     "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                     "name": null,
                     "rangenode_id": "40bca8a2-e0ba-4165-a8f1-13f81676ba86",
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin"
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note"
                 },
                 {
                     "description": null,
@@ -30551,9 +30551,9 @@
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Date of Image Creation",
-                    "nodegroup_id": "46f25cd9-b6c7-11ea-8651-f875a44e0e11",
+                    "nodegroup_id": "4a259fb5-ecda-474d-b7b5-d2cf57046308",
                     "nodeid": "40bca8a2-e0ba-4165-a8f1-13f81676ba86",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null

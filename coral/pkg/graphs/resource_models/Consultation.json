@@ -13180,15 +13180,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
-                    "edgeid": "6a5d4136-e32e-4ef4-a557-0b685b781104",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "ce0f99d2-768f-11ef-9d14-0242ac120006"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "ce0f99d2-768f-11ef-9d14-0242ac120006",
                     "edgeid": "d880ecb2-1072-45d6-9606-d74d30c1293a",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -13217,29 +13208,11 @@
                 {
                     "description": null,
                     "domainnode_id": "31e5ece6-5989-11ef-af2d-0242ac120006",
-                    "edgeid": "6824233a-baa8-4064-9898-98f6f5fc760d",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "rangenode_id": "5d401df8-5989-11ef-9d18-0242ac120006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "31e5ece6-5989-11ef-af2d-0242ac120006",
                     "edgeid": "8a17922e-1c8a-4123-8394-3010fc1b0c19",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "983d73b0-5989-11ef-af2d-0242ac120006"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "083e14f2-ca61-11ee-afca-0242ac180006",
-                    "edgeid": "d033683a-bb5a-45bc-bcc3-f56a0052f5cb",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "083fafe2-345c-11ef-a5b7-0242ac120003"
                 },
                 {
                     "description": null,
@@ -16807,15 +16780,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "31e5ece6-5989-11ef-af2d-0242ac120006",
-                    "edgeid": "8a17922e-1c8a-4123-8394-3010fc1b0c19",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "983d73b0-5989-11ef-af2d-0242ac120006"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
                     "edgeid": "8d4455a1-a250-11e9-a68a-00224800b26d",
                     "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
@@ -17938,15 +17902,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "d7e9d3fc-03ab-11ef-948f-0242ac150003"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "ce0f99d2-768f-11ef-9d14-0242ac120006",
-                    "edgeid": "d880ecb2-1072-45d6-9606-d74d30c1293a",
-                    "graph_id": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "rangenode_id": "e25f6192-768f-11ef-a1f7-0242ac120006"
                 },
                 {
                     "description": null,
