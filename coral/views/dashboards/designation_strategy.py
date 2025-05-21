@@ -71,7 +71,7 @@ class DesignationTaskStrategy(TaskStrategy):
                 filter_dict = {'id': filter, 'type': filter_type}
 
                 if count:
-                    query = build_query(sort_by, count=True)
+                    query = build_query(sort_by, filter=filter_dict, count=True)
                 else:
                     reverse = True if sort_order == 'desc' else False
                     query = build_query(sort_by, reverse=reverse, filter=filter_dict, limit=limit, offset=offset)
