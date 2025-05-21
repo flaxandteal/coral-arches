@@ -16257,7 +16257,7 @@
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "name": null,
                     "rangenode_id": "f598780b-3940-4c79-a049-2deb12334348",
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin"
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note"
                 },
                 {
                     "description": null,
@@ -26924,7 +26924,7 @@
                     "name": "Date of Image Creation",
                     "nodegroup_id": "46f25cd9-b6c7-11ea-8651-f875a44e0e11",
                     "nodeid": "f598780b-3940-4c79-a049-2deb12334348",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
