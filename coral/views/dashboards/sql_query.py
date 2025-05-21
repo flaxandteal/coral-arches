@@ -1,4 +1,4 @@
-def build_query(sort_by, reverse=False, limit=6, offset=0):
+def build_query(sort_by, count=False, reverse=False, limit=8, offset=0):
 
     base_sort = {
         'Monument': {
@@ -165,6 +165,15 @@ def build_query(sort_by, reverse=False, limit=6, offset=0):
         build_subquery('MonumentRevision'),
         build_subquery('Consultation'),
     ]
+
+    if count is True:
+        count_query = f"""
+        SELECT type, COUNT(*) AS count FROM (
+            {' UNION ALL '.join([q for q in subqueries if q])}
+        ) AS main
+        GROUP BY type
+        """
+        return count_query
 
     full_query = f"""
     SELECT * FROM (

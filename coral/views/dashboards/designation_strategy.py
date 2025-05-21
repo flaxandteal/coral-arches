@@ -54,14 +54,30 @@ class DesignationTaskStrategy(TaskStrategy):
             resources = []
             tasks = []
 
-            def run_sql_query(sort_by='resourceid', sort_order='desc'):
+            def run_sql_query(sort_by='resourceid', sort_order='desc', page=1, page_size=8, count=False):
 
-                reverse = True if sort_order == 'desc' else False
-                query = build_query(sort_by, reverse=reverse)
+                offset = (page-1)*page_size
+                limit = page_size if isinstance(page_size, int) else 8
+
+                if count:
+                    query = build_query(sort_by, count=True)
+                else:
+                    reverse = True if sort_order == 'desc' else False
+                    query = build_query(sort_by, reverse=reverse, limit=limit, offset=offset)
+
                 with connection.cursor() as cursor:
                     cursor.execute(query)
                     results = cursor.fetchall()
                 return results
+            
+            def get_counts():
+                results = run_sql_query(sort_by, count=True)
+                total = sum(x[1] for x in results)
+                print("TOTAL", total)
+                return {
+                    'total': total
+                }
+                
 
             def _setup_default_conditions_and_get_count():
                 monumentDefaultWhereConditions = { 'status_type_n1': 'Provisional' }
@@ -116,7 +132,7 @@ class DesignationTaskStrategy(TaskStrategy):
                 resources.extend(self.heritage_asset_revisions)
                 resources.extend(self.evaluation_meetings)
 
-            results = run_sql_query(sort_by, sort_order)
+            results = run_sql_query(sort_by, sort_order, page=page, page_size=page_size)
             resources = []
             for item in results:
                 model = item[2]
@@ -135,7 +151,8 @@ class DesignationTaskStrategy(TaskStrategy):
             # _apply_filters()
             # _apply_selectors()
 
-            total_resources = len(resources)
+            resource_counts = get_counts()
+            total_resources = resource_counts['total']
 
             # start_index = (page -1) * page_size
             # end_index = (page * page_size)
