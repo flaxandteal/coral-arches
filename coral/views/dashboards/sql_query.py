@@ -122,7 +122,7 @@ def build_query(sort_by, count=False, filter={'id':'all', 'type': 'all'}, revers
                     SELECT 1 FROM tiles t_filter
                     WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
                     AND t_filter.nodegroupid = '447973ce-d7e2-11ee-a4a1-0242ac120006'
-                    AND t_filter.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{council_filter}'
+                    AND t_filter.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{filter_value}'
                 )
                 """,
             'MonumentRevision': """
@@ -130,7 +130,7 @@ def build_query(sort_by, count=False, filter={'id':'all', 'type': 'all'}, revers
                     SELECT 1 FROM tiles t_filter
                     WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
                     AND t_filter.nodegroupid = '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3'
-                    AND t_filter.tiledata ->> '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3' = '{council_filter}'
+                    AND t_filter.tiledata ->> '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3' = '{filter_value}'
                 )
                 """,
             'Consultation': """
@@ -151,10 +151,29 @@ def build_query(sort_by, count=False, filter={'id':'all', 'type': 'all'}, revers
                                 ) as value
                             )
                             AND t_council.nodegroupid = '447973ce-d7e2-11ee-a4a1-0242ac120006'
-                            AND t_council.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{council_filter}'
+                            AND t_council.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{filter_value}'
                     )
             )
                 """,
+        },
+        'date': {
+            'Monument': """
+                EXISTS (
+                    SELECT 1 FROM tiles t_filter
+                    WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
+                    AND t_filter.nodegroupid = '7e0533aa-37b7-11ef-9263-0242ac150006'
+                    AND t_filter.tiledata ->> '85396d94-37bc-11ef-9263-0242ac150006' IS NOT NULL
+                )
+                """,
+            'MonumentRevision': """
+                EXISTS (
+                    SELECT 1 FROM tiles t_filter
+                    WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
+                    AND t_filter.nodegroupid = '3c51740c-dbd0-11ee-8835-0242ac120006'
+                    AND t_filter.tiledata ->> 'd70da550-3798-11ef-a167-0242ac150006' IS NOT NULL
+                )
+                """,
+            'Consultation': ""
         },
     }
 
@@ -168,14 +187,14 @@ def build_query(sort_by, count=False, filter={'id':'all', 'type': 'all'}, revers
         nodegroupid = ref_paths[model_type]['nodegroupid']
         sql_path = ref_paths[model_type]['sql']
         base_filter = base_filters[model_type]
-        if filter and filter['type'] == 'council':
-            council_filter = filter['id']
-            extra = extra_filters['council'][model_type].format(council_filter=council_filter)
+        if filter and filter['type'] in extra_filters.keys():
+            filter_value = filter['id']
+            extra = extra_filters[filter['type']][model_type].format(filter_value=filter_value)  
         else:
-            extra = extra_filters.get(model_type)
+            extra = None          
 
         full_filter = base_filter
-        print("EXTRA", extra)
+
         if extra:
             full_filter = f"({base_filter}) AND ({extra})"
 
