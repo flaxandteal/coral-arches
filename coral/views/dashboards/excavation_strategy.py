@@ -11,7 +11,7 @@ EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 class ExcavationTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceinstance__createdtime', sort_order='desc', filter='All'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceinstance__createdtime', sort_order='desc', filter='all'):
         from arches_orm.models import License
 
         licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
@@ -28,7 +28,7 @@ class ExcavationTaskStrategy(TaskStrategy):
                 QueryBuilder: The query builder object
             """
                     
-            if filter == 'All':
+            if filter == 'all':
                 return queryBuilder;
     
             return queryBuilder.where(report_classification_type=filter);
@@ -59,24 +59,20 @@ class ExcavationTaskStrategy(TaskStrategy):
             Returns:
                 Any: The WKRM
             """
-            copyQueryBuilder = copy.deepcopy(queryBuilder) # ? We copy to not reference the main data as we can only apply 1 selector onto the query builder
             start_index = (page -1) * page_size
                 
-            return copyQueryBuilder.offset(start_index, page_size)
+            return queryBuilder.offset(start_index, page_size)
     
-        def get_count(queryBuilder: QueryBuilder) -> int:
+        def get_count() -> int:
             """
             Method gets the total count of records based on the query and this returns just the number of queries. Count doesn't return a instance of
             WKRM
-            
-            Args:
-                queryBuilder (QueryBuilder): The query builder object
 
             Returns:
                 int: The count of records
             """
-            copyQueryBuilder = copy.deepcopy(queryBuilder) # ? We copy to not reference the main data as we can only apply 1 selector onto the query builder
-            return copyQueryBuilder.count()
+            new_query = build_query()
+            return new_query.count()
         
         def build_tasks(resources):
             tasks = []
@@ -86,13 +82,36 @@ class ExcavationTaskStrategy(TaskStrategy):
                 tasks.append(task)
 
             return tasks
+        
+        def build_query(where_conditions=None, with_sorting=False):
+            """
+            Creates a new query builder with all conditions applied from scratch
 
-        queryBuilder = apply_filters(queryBuilder)
-        queryBuilder = apply_order_by(queryBuilder)
+            Args:
+                where_conditions (None | Dict[str, any], optional): This is the where conditions, incase we want to count based on a certain
+                    field value. Defaults to None.
+                with_sorting (bool, optional): This is the sorting condition, if we want to sort the query. Defaults to False.
+            """
+            fresh_query = License.where(**licencesDefaultWhereConditions)
+            
+            fresh_query = apply_filters(fresh_query)
+            
+            if where_conditions:
+                fresh_query = fresh_query.where(**where_conditions)
+                
+            if with_sorting:
+                fresh_query = apply_order_by(fresh_query)
+                
+            return fresh_query
 
-        resources = get_paginated_resources(queryBuilder)
-        total_resources = get_count(queryBuilder)   
+        base_query = build_query(with_sorting=True)
+
+        resources = get_paginated_resources(base_query)
+
+        total_resources = get_count()   
+
         tasks = build_tasks(resources)
+
         counters = []
 
         return tasks, total_resources, counters
@@ -105,7 +124,7 @@ class ExcavationTaskStrategy(TaskStrategy):
     
     def get_filter_options(self, groupId=None):
         return [
-            {'id': 'All', 'name': 'All'},
+            {'id': 'all', 'name': 'All'},
             {'id': 'Final', 'name': 'Final'}, 
             {'id': 'Preliminary', 'name': 'Preliminary'}, 
             {'id': 'Interim', 'name': 'Interim'}, 

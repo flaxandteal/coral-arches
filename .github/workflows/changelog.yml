@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [closed]
     branches:
-      - 'release/**'  # Only for release branches
+      - 'release/**'
 
 jobs:
   changelog:
@@ -24,77 +24,16 @@ jobs:
           echo "pr_body=$(echo "${{ github.event.pull_request.body }}" | base64 -w 0)" >> $GITHUB_OUTPUT
           echo "pr_head_branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
           echo "branch_name=$(echo '${{ github.event.pull_request.base.ref }}' | sed 's|release/||')" >> $GITHUB_OUTPUT
+          echo "pr_link=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
 
       - name: Generate Changelog
         run: |
-          PR_BODY="$(echo "${{ steps.vars.outputs.pr_body }}" | base64 -d)"
           FILE="changelogs/${{ steps.vars.outputs.branch_name }}.md"
-
           mkdir -p changelogs
-          touch "$FILE"
+          echo "${{ steps.vars.outputs.pr_body }}" | base64 -d > "$FILE" 
 
-          declare -A CHECKED_MAP
-          SECTIONS=("Model Changes" "Added Functions" "Added Concepts" "Workflows Updated" "Reports Updated")
-
-          # 1. Parse Types of Changes block and mark ticked items
-          TOC=$(echo "$PR_BODY" | awk '/### Types of Changes/{flag=1; next} /### /{flag=0} flag' | sed '/^\s*$/d')
-          if ! grep -q "### Types of Changes" "$FILE"; then
-            echo -e "### Types of Changes\n" >> "$FILE"
-          fi
-
-          echo "$TOC" | while read -r line; do
-            CLEAN=$(echo "$line" | sed -E 's/^\s*[-*]\s*\[xX ]\s*//')
-            if [[ "$line" =~ \[x\] || "$line" =~ \[X\] ]]; then
-              CHECKED_MAP["$CLEAN"]=1
-              # Upgrade existing line or add new
-              if grep -q "\[ \] $CLEAN" "$FILE"; then
-                sed -i "s/\[ \] $CLEAN/\[x] $CLEAN/" "$FILE"
-              elif ! grep -q "\[x\] $CLEAN" "$FILE"; then
-                echo "- [x] $CLEAN" >> "$FILE"
-              fi
-            else
-              # Add unchecked only if not present
-              if [[ -z "${CHECKED_MAP[$CLEAN]}" ]] && ! grep -q "\[ \] $CLEAN" "$FILE"; then
-                echo "- [ ] $CLEAN" >> "$FILE"
-              fi
-            fi
-          done
-
-          echo "" >> "$FILE"
-
-          # 2. For each section, if its tickbox got checked, extract content from the PR body
-          for section in "${SECTIONS[@]}"; do
-            if [[ "${CHECKED_MAP[$section]}" == "1" ]]; then
-              # Use awk to capture lines after the exact header until another header is found.
-              CONTENT=$(echo "$PR_BODY" | awk -v section="### $section" '
-                BEGIN {flag=0}
-                $0 == section {flag=1; next}
-                /^### / && flag {flag=0}
-                flag {print}' | sed '/^\s*$/d' | grep -v '^\s*[-*]\s*\[[xX ]\]')
-              if [[ -n "$CONTENT" ]]; then
-                # Create the section header if it doesn't exist (using level "##")
-                if ! grep -q "^### $section\$" "$FILE"; then
-                  echo -e "### $section\n" >> "$FILE"
-                fi
-                # Append each change line if not already present
-                echo "$CONTENT" | while read -r line; do
-                  if [[ -n "$line" && ! $(grep -F "$line" "$FILE") ]]; then
-                    echo "- $line" >> "$FILE"
-                  fi
-                done
-                echo "" >> "$FILE"
-              fi
-            fi
-          done
-
-          # 3. Now add the PR summary table after all sections
-          if ! grep -q "### PRs Included in this Release" "$FILE"; then
-            echo -e "\n### PRs Included in this Release\n" >> "$FILE"
-            echo "| PR Title | PR # | Branch | Committed By |" >> "$FILE"
-            echo "|----------|------|--------|--------------|" >> "$FILE"
-          fi
-
-          echo "| ${{ steps.vars.outputs.pr_title }} | #${{ steps.vars.outputs.pr_number }} | ${{ steps.vars.outputs.pr_head_branch }} | @${{ steps.vars.outputs.pr_user }} |" >> "$FILE"
+          chmod +x ./update_changelog.sh
+          ./update_changelog.sh "$FILE" "${{ steps.vars.outputs.pr_title }}" "${{ steps.vars.outputs.pr_user }}" "${{ steps.vars.outputs.pr_number }}" "${{ steps.vars.outputs.pr_link }}" "${{ steps.vars.outputs.branch_name }}"
 
       - name: Commit Changelog
         run: |
