@@ -134,17 +134,17 @@ class DesignationTaskStrategy(TaskStrategy):
         utilities = Utilities()
 
         resource_data = {
-            'id': str(resource.id),
-            'resourceid': resource.system_reference_numbers.uuid.resourceid,
+            'id': utilities.node_check(lambda: str(resource.id)),
+            'resourceid': utilities.node_check(lambda: resource.system_reference_numbers.uuid.resourceid),
             'state': 'HeritageAsset',
-            'displayname': resource._.resource.descriptors['en']['name'],
-            'hmcreferencenumber': resource.hmc_reference.hmc_reference_number,
-            'historicparksandgardens': resource.heritage_asset_references.historic_parks_and_gardens,
-            'ihrnumber': resource.heritage_asset_references.ihr_number,
-            'hbnumber': resource.heritage_asset_references.hb_number,
-            'smrnumber': resource.heritage_asset_references.smr_number,
+            'displayname': utilities.node_check(lambda: resource._.resource.descriptors['en']['name']),
+            'hmcreferencenumber': utilities.node_check(lambda: resource.hmc_reference.hmc_reference_number),
+            'historicparksandgardens': utilities.node_check(lambda: resource.heritage_asset_references.historic_parks_and_gardens),
+            'ihrnumber': utilities.node_check(lambda: resource.heritage_asset_references.ihr_number),
+            'hbnumber': utilities.node_check(lambda: resource.heritage_asset_references.hb_number),
+            'smrnumber': utilities.node_check(lambda: resource.heritage_asset_references.smr_number),
             'monumenttype': self.extract_value(utilities.node_check(lambda: resource.construction_phases[0].phase_classification.monument_type)),
-            'inputdatevalue': resource.garden_sign_off.input_date.input_date_value,
+            'inputdatevalue': utilities.node_check(lambda: resource.garden_sign_off.input_date.input_date_value),
             'statutoryconsulteenotificationdatevalue': utilities.node_check(lambda: resource.approvals[0].statutory_consultee_notification_date.statutory_consultee_notification_date_value)
         }
 
