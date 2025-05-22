@@ -1,24 +1,24 @@
-# PR - MY Heading for Merge 1
+# PR - Second Test PR TITLE
 
 ## Description of the Issue
-
+These are my issues
 
 **Related Task:** []()
 
 ---
 
 ## Changes Proposed
-- This is my proposed change from the first merge
-- Another line for testing
+- Some changes proposed for 2
+- Another 2 change
 
 ### Types of Changes
-- [ ] Model Changes
-- [x] Added Functions
+- [x] Model Changes
+- [ ] Added Functions
 - [ ] Added Concepts
 - [ ] Workflows Updated
 - [ ] Reports Updated
 - [ ] Added/Updated Dependencies
-- [x] Features Added
+- [ ] Features Added
 - [ ] Bug Fix
 
 ---
@@ -26,15 +26,15 @@
 ### Model Changes
 [If any database models have been modified, added, or removed, list them below.]
 
-- (Add more models as needed)
+- Here are some model changes for 2
+- Another 2 model change
 
 ---
 
 ### Added Functions
 [List any new functions or methods added, along with a brief description of their purpose.]
 
-- Hey I added some functions
-- Here is another line
+- (Add functions as needed)
 
 ---
 
