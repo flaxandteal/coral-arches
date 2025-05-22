@@ -143,7 +143,11 @@ DESIGNATION_SQL_QUERY_CONFIG = {
                             t_council.resourceinstanceid IN (
                                 SELECT (value::jsonb->>'resourceId')::uuid
                                 FROM jsonb_array_elements(
-                                    t_rel.tiledata -> '58a2b98f-a255-11e9-9a30-00224800b26d'
+                                    CASE
+                                        WHEN jsonb_typeof(t_rel.tiledata -> '58a2b98f-a255-11e9-9a30-00224800b26d') = 'array'
+                                        THEN t_rel.tiledata -> '58a2b98f-a255-11e9-9a30-00224800b26d'
+                                        ELSE '[]'::jsonb
+                                    END
                                 ) as value
                             )
                             AND t_council.nodegroupid = '447973ce-d7e2-11ee-a4a1-0242ac120006'
