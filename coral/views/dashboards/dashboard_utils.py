@@ -13,7 +13,7 @@ HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
-EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+EXCAVATION_USER_GROUP = "801c124e-acb8-484d-890b-212545e44293"
 EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
@@ -87,7 +87,7 @@ class Utilities():
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
-        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E, EXCAVATION_USER_GROUP]:
             return "licensing-workflow"
     
     def create_deadline_message(self, date):
