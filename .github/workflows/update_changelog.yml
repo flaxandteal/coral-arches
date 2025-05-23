@@ -40,14 +40,14 @@ jobs:
           sed -i '1i # PR - ${{ github.event.pull_request.title }}' tmp/pr_body.md
           
           # Make scripts executable
-          chmod +x ./.github/workflows/update_changelog_modular.sh
+          chmod +x ./.github/workflows/update_changelog.sh
       
       - name: Update changelog
         run: |
           echo "Updating changelog for PR #${{ steps.setup.outputs.pr_number }}: ${{ steps.setup.outputs.pr_title }}"
           
           # Run the changelog update script
-          ./.github/workflows/update_changelog_modular.sh \
+          ./.github/workflows/update_changelog.sh \
             tmp/pr_body.md \
             "${{ steps.setup.outputs.pr_title }}" \
             "${{ steps.setup.outputs.pr_author }}" \
