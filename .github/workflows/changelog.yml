@@ -28,12 +28,21 @@ jobs:
 
       - name: Generate Changelog
         run: |
-          FILE="changelogs/${{ steps.vars.outputs.branch_name }}.md"
+          # Get branch name from base ref - strip "release/" prefix
+          BRANCH_NAME=$(echo '${{ github.event.pull_request.base.ref }}' | sed 's|^release/||')
+          CHANGELOG_FILE="changelogs/$BRANCH_NAME.md"
+          PR_BODY_FILE="pr_body_${{ github.event.pull_request.number }}.md"
+          
+          # Create directories and PR body file
           mkdir -p changelogs
-          echo "${{ steps.vars.outputs.pr_body }}" | base64 -d > "$FILE" 
-
+          echo "${{ steps.vars.outputs.pr_body }}" | base64 -d > "$PR_BODY_FILE"
+          
+          # Create changelog file if it doesn't exist
+          [ -f "$CHANGELOG_FILE" ] || touch "$CHANGELOG_FILE"
+          
+          # Run update script with correct parameters
           chmod +x ./.github/workflows/update_changelog.sh
-          ./.github/workflows/update_changelog.sh "$FILE" "${{ steps.vars.outputs.pr_title }}" "${{ steps.vars.outputs.pr_user }}" "${{ steps.vars.outputs.pr_number }}" "${{ steps.vars.outputs.pr_link }}" "${{ steps.vars.outputs.branch_name }}"
+          ./.github/workflows/update_changelog.sh "$PR_BODY_FILE" "$CHANGELOG_FILE" "${{ steps.vars.outputs.pr_title }}" "${{ steps.vars.outputs.pr_user }}" "${{ steps.vars.outputs.pr_number }}" "${{ steps.vars.outputs.pr_link }}"
 
       - name: Commit Changelog
         run: |
