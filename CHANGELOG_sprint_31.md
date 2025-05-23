@@ -5,7 +5,7 @@
 - [ ] Workflows Updated
 - [x] Reports Updated
 - [ ] Added/Updated Dependencies
-- [ ] Features Added
+- [x] Features Added
 - [x] Bug Fix
 
 ### Proposed Changes
@@ -14,6 +14,10 @@
 - Change HA selector to multi select
 - Added search string to HA drop down to only look for HA's with an SMR number
 - Add additional logsets
+- added a sql query builder
+- refactored designation_strategy to use the sql query builder
+- added validation for the arguments to prevent SQL injection
+- built a config file for the designation tile queries
 
 ### Reports Updated
 - Merge Workflow Report page
@@ -34,4 +38,7 @@
 
 **fix: add curatorial, planning and SMC logsets**
 [711](https://github.com/flaxandteal/coral-arches/pull/711) by @StuCM
+
+**Fix: Dashboard SQL Builder**
+[706](https://github.com/flaxandteal/coral-arches/pull/706) by @StuCM
 
