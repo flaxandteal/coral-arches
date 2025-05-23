@@ -1,14 +1,15 @@
-# PR - ADD PR TITLE
+# PR - [Your PR Title]
 
 ## Description of the Issue
+[Provide a brief description of the issue this PR addresses]
 
-
-**Related Task:** []()
+**Related Task:** [Link to task/issue]
 
 ---
 
 ## Changes Proposed
-- _Add a list of propsed changes_
+- [List the changes you're proposing]
+- [Be specific and concise]
 
 ### Types of Changes
 - [ ] Model Changes
@@ -23,51 +24,55 @@
 ---
 
 ### Model Changes
-[If any database models have been modified, added, or removed, list them below.]
-
-- (Add more models as needed)
+- (Add details here if this change type is checked)
 
 ---
 
 ### Added Functions
-[List any new functions or methods added, along with a brief description of their purpose.]
-
-- (Add functions as needed)
+- (Add details here if this change type is checked)
 
 ---
 
 ### Added Concepts
-[Describe any new concepts or terms introduced, and explain how they integrate with existing concepts.]
-
-- (Concept Name: Concept ID)
+- (Add details here if this change type is checked)
 
 ---
 
 ### Workflows Updated
-[Detail any changes to existing workflows or new workflows added.]
-
-- (Add workflows as needed)
+- (Add details here if this change type is checked)
 
 ---
 
 ### Reports Updated
-[List any reports that have been modified or added, and describe the changes.]
-
-- (Add reports as needed)
+- (Add details here if this change type is checked)
 
 ---
+
+### Added/Updated Dependencies
+- (Add details here if this change type is checked)
+
+---
+
+### Features Added
+- (Add details here if this change type is checked)
+
+---
+
+### Bug Fix
+- (Add details here if this change type is checked)
+
+---
+
 ## Commands
 ```
-make run
-make webpack
+# Add any commands that should be run to test these changes
 ```
 
 ## Tests
-[List any tests that need to be run to verify the changes.]
-
-- (Add tests as needed)
+- [Describe the tests you've added or run]
+- [Include steps to verify the changes]
 
 ---
 
 ## Additional Notes
-[Add any additional context, notes, or information that might be relevant to reviewers or testers.]
+[Any additional information that might be helpful]

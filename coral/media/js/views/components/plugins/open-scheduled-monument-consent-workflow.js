@@ -15,10 +15,12 @@ define([
       this.selectedHA = ko.observable();
 
       this.configKeys = ko.observable({ placeholder: 0 });
+
+      this.smrSearchString = `/search/resources?advanced-search=[{"op":"and","2c2d02fc-3aae-11ef-91fd-0242ac120003":{"op":"~","lang":"en","val":""},"1de9abf0-3aae-11ef-91fd-0242ac120003":{"op":"~","lang":"en","val":""},"158e1ed2-3aae-11ef-a2d0-0242ac120003":{"op":"not_null","lang":"en","val":""},"250002fe-3aae-11ef-91fd-0242ac120003":{"op":"~","lang":"en","val":""}}]`;
   
       this.addtionalConfigData = ko.observable({
         parentTileIds: {},
-        haId: [{}],
+        haId: [],
         resourceInstanceId: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
       });
   
@@ -87,7 +89,10 @@ define([
           return;
         }
         this.getParentTileOptions(resourceId);
-        this.addtionalConfigData()['haId'] = [{"resourceId":resourceId}]
+        this.addtionalConfigData()['haId'] = [];
+        for (const resource of resourceId){
+          this.addtionalConfigData()['haId'].push({"resourceId":resource});
+        }
         this.setAdditionalOpenConfigData()
       });
   

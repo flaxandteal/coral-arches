@@ -59,7 +59,7 @@
       {
         "name": "consultation-step",
         "title": "Consultation",
-        "required": true,
+        "required": false,
         "layoutSections": [
           {
             "componentConfigs": [
@@ -264,7 +264,7 @@
       {
         "name": "sign-off-step",
         "title": "Sign off",
-        "required": true,
+        "required": false,
         "saveWithoutProgressing": true,
         "layoutSections": [
           {
