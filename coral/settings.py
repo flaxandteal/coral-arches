@@ -25,7 +25,7 @@ except ImportError:
 
 APP_NAME = 'coral'
 
-APP_VERSION = semantic_version.Version(major=7, minor=12, patch=102)
+APP_VERSION = semantic_version.Version(major=7, minor=12, patch=103)
 
 GROUPINGS = {
     "groups": {
