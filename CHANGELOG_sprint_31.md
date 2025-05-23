@@ -11,6 +11,8 @@
 ### Proposed Changes
 - Added a new merge workflow report
 - Reverse the fetched tasks
+- Change HA selector to multi select
+- Added search string to HA drop down to only look for HA's with an SMR number
 
 ### Reports Updated
 - Merge Workflow Report page
@@ -22,4 +24,7 @@
 
 **Fix: Reverse the Enforcement tasks so newest is first**
 [705](https://github.com/flaxandteal/coral-arches/pull/705) by @StuCM
+
+**Feat: change the smc to allow multi select HA**
+[707](https://github.com/flaxandteal/coral-arches/pull/707) by @StuCM
 
