@@ -1,4 +1,4 @@
-name: Generate Changelog on PR Merge to Release
+name: Generate Changelog on PR Merge
 
 on:
   pull_request:
@@ -23,7 +23,7 @@ jobs:
           echo "pr_user=${{ github.event.pull_request.user.login }}" >> $GITHUB_OUTPUT
           echo "pr_body=$(echo "${{ github.event.pull_request.body }}" | base64 -w 0)" >> $GITHUB_OUTPUT
           echo "pr_head_branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
-          echo "branch_name=$(echo '${{ github.event.pull_request.base.ref }}' | sed 's|release/||')" >> $GITHUB_OUTPUT
+          echo "branch_name=$(echo '${{ github.event.pull_request.base.ref }}' | sed 's|release/**||')" >> $GITHUB_OUTPUT
           echo "pr_link=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
 
       - name: Generate Changelog
@@ -32,8 +32,8 @@ jobs:
           mkdir -p changelogs
           echo "${{ steps.vars.outputs.pr_body }}" | base64 -d > "$FILE" 
 
-          chmod +x ./update_changelog.sh
-          ./update_changelog.sh "$FILE" "${{ steps.vars.outputs.pr_title }}" "${{ steps.vars.outputs.pr_user }}" "${{ steps.vars.outputs.pr_number }}" "${{ steps.vars.outputs.pr_link }}" "${{ steps.vars.outputs.branch_name }}"
+          chmod +x ./.github/workflows/update_changelog.sh
+          ./.github/workflows/update_changelog.sh "$FILE" "${{ steps.vars.outputs.pr_title }}" "${{ steps.vars.outputs.pr_user }}" "${{ steps.vars.outputs.pr_number }}" "${{ steps.vars.outputs.pr_link }}" "${{ steps.vars.outputs.branch_name }}"
 
       - name: Commit Changelog
         run: |
