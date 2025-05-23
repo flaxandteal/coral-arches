@@ -6,10 +6,11 @@
 - [x] Reports Updated
 - [ ] Added/Updated Dependencies
 - [ ] Features Added
-- [ ] Bug Fix
+- [x] Bug Fix
 
 ### Proposed Changes
 - Added a new merge workflow report
+- Reverse the fetched tasks
 
 ### Reports Updated
 - Merge Workflow Report page
@@ -18,4 +19,7 @@
 
 **feat(merge asset tracker): added custom report showing base and merge…**
 [709](https://github.com/flaxandteal/coral-arches/pull/709) by @babou212
+
+**Fix: Reverse the Enforcement tasks so newest is first**
+[705](https://github.com/flaxandteal/coral-arches/pull/705) by @StuCM
 
