@@ -1,4 +1,6 @@
 name: Update Changelog
+permissions:
+  contents: write
 
 on:
   pull_request:
