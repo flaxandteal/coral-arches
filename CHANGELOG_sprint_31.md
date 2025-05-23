@@ -13,9 +13,13 @@
 - Reverse the fetched tasks
 - Change HA selector to multi select
 - Added search string to HA drop down to only look for HA's with an SMR number
+- Add additional logsets
 
 ### Reports Updated
 - Merge Workflow Report page
+
+### Bug Fix
+- Added SMC, Curatorial and Planning logsets
 
 ## Pull Requests
 
@@ -27,4 +31,7 @@
 
 **Feat: change the smc to allow multi select HA**
 [707](https://github.com/flaxandteal/coral-arches/pull/707) by @StuCM
+
+**fix: add curatorial, planning and SMC logsets**
+[711](https://github.com/flaxandteal/coral-arches/pull/711) by @StuCM
 
