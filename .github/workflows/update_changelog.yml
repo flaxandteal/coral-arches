@@ -1,0 +1,85 @@
+name: Update Changelog
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - 'release/**'
+
+jobs:
+  update-changelog:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Required for branch information
+          token: ${{ secrets.GITHUB_TOKEN }}  # Needed for pushing changes
+      
+      - name: Set up environment
+        id: setup
+        run: |
+          # Extract PR details
+          echo "pr_title=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+          echo "pr_author=${{ github.event.pull_request.user.login }}" >> $GITHUB_OUTPUT
+          echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          echo "pr_link=${{ github.event.pull_request.html_url }}" >> $GITHUB_OUTPUT
+          
+          # Extract branch name (removing 'release/' prefix if present)
+          BRANCH_NAME=$(echo ${{ github.base_ref }} | sed -E 's|^release/||')
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          # Create a temporary PR file from PR body
+          mkdir -p tmp
+          echo "${{ github.event.pull_request.body }}" > tmp/pr_body.md
+          
+          # Add PR title as first line
+          sed -i '1i # PR - ${{ github.event.pull_request.title }}' tmp/pr_body.md
+          
+          # Make scripts executable
+          chmod +x ./.github/workflows/update_changelog.sh
+      
+      - name: Update changelog
+        run: |
+          echo "Updating changelog for PR #${{ steps.setup.outputs.pr_number }}: ${{ steps.setup.outputs.pr_title }}"
+          
+          # Run the changelog update script
+          ./.github/workflows/update_changelog.sh \
+            tmp/pr_body.md \
+            "${{ steps.setup.outputs.pr_title }}" \
+            "${{ steps.setup.outputs.pr_author }}" \
+            "${{ steps.setup.outputs.pr_number }}" \
+            "${{ steps.setup.outputs.pr_link }}" \
+            "${{ steps.setup.outputs.branch_name }}"
+      
+      - name: Commit and push changes
+        run: |
+          # Configure git
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          
+          # Determine which changelog file to add
+          CHANGELOG_FILE="CHANGELOG.md"
+          if [ -n "${{ steps.setup.outputs.branch_name }}" ] && [ "${{ steps.setup.outputs.branch_name }}" != "main" ]; then
+            CHANGELOG_FILE="CHANGELOG_${{ steps.setup.outputs.branch_name }}.md"
+          fi
+          
+          # Check if changelog exists and has changes
+          if [ -f "$CHANGELOG_FILE" ]; then
+            git add "$CHANGELOG_FILE"
+            
+            # Only commit if there are changes
+            if git diff --staged --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "Update changelog for PR #${{ steps.setup.outputs.pr_number }}"
+              git push
+              echo "Changelog updated and pushed to repository"
+            fi
+          else
+            echo "Error: Changelog file not found!"
+            exit 1
+          fi
