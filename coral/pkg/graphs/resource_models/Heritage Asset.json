@@ -14723,7 +14723,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6832-317f-11f0-ae65-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": {
                             "en": {
@@ -14859,7 +14859,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6832-317f-11f0-ae65-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
@@ -14899,7 +14899,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
-                    "card_id": "d56a6961-317f-11f0-b74a-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": "daa4cddc-8636-4842-b836-eb2e10aabe18",
                         "i18n_properties": [
@@ -14921,7 +14921,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6961-317f-11f0-b74a-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
                         "i18n_properties": [
@@ -14997,7 +14997,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6832-317f-11f0-ae65-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": "",
                         "i18n_properties": [
@@ -15019,7 +15019,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6832-317f-11f0-ae65-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
@@ -15126,7 +15126,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6832-317f-11f0-ae65-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": "59a0c936-3f60-44f9-9e37-67b6ed0f4fa4",
                         "i18n_properties": [
@@ -15148,7 +15148,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6961-317f-11f0-b74a-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "i18n_properties": [
                             "url_label_placeholder",
@@ -15173,7 +15173,7 @@
                     "widget_id": "ca0c43ff-af73-4349-bafd-53ff9f22eebd"
                 },
                 {
-                    "card_id": "d56a6961-317f-11f0-b74a-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": {
                             "en": {
@@ -15202,7 +15202,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
                 {
-                    "card_id": "d56a6961-317f-11f0-b74a-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": null,
                         "i18n_properties": [
@@ -15224,7 +15224,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "d56a6961-317f-11f0-b74a-79e862ede2f0",
+                    "card_id": "d56a64ec-317f-11f0-9f35-79e862ede2f0",
                     "config": {
                         "defaultValue": {
                             "en": {
@@ -16257,7 +16257,7 @@
                     "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "name": null,
                     "rangenode_id": "f598780b-3940-4c79-a049-2deb12334348",
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note"
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P94i_was_created_by"
                 },
                 {
                     "description": null,
@@ -26924,8 +26924,8 @@
                     "name": "Date of Image Creation",
                     "nodegroup_id": "46f25cd9-b6c7-11ea-8651-f875a44e0e11",
                     "nodeid": "f598780b-3940-4c79-a049-2deb12334348",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P94i_was_created_by",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E65_Creation",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
