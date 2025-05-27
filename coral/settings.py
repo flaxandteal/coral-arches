@@ -24,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=13, patch=44)
+APP_VERSION = semantic_version.Version(major=7, minor=13, patch=45)
 
 GROUPINGS = {
     "groups": {
@@ -405,6 +405,10 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'user_permission_cache',
     },
+    'dashboard_versioning': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'dashboard_version_cache',
+    }
 }
 
 # Hide nodes and cards in a report that have no data

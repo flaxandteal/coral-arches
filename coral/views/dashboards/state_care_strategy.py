@@ -7,7 +7,7 @@ from datetime import datetime
 import pdb
 
 class StateCareTaskStrategy(TaskStrategy):
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='displayname', sort_order='desc', filter='all'):
         from arches_orm.models import StateCareCondition, RiskAssessment, RangerInspection, Consultation
         with admin():
 
@@ -85,6 +85,12 @@ class StateCareTaskStrategy(TaskStrategy):
             # ! the system below is fine and should be fast enough for the customer. 
 
             field_accessors = {
+                'displayname': {
+                    Consultation: lambda r: r._.resource.descriptors['en']['name'],
+                    RiskAssessment: lambda r: r._.resource.descriptors['en']['name'],
+                    RangerInspection: lambda r: r._.resource.descriptors['en']['name'],
+                    StateCareCondition: lambda r: r._.resource.descriptors['en']['name'],
+                },
                 'completed_on_date': {
                     Consultation: lambda r: r.sign_off.sign_off_date.sign_off_date_value,
                     RiskAssessment: lambda r: r.sign_off.assessment_date,
@@ -280,7 +286,7 @@ class StateCareTaskStrategy(TaskStrategy):
             'dateheading': 'Completed on date',
             'inputby': completed_by,
             'date': completed_on,
-            'slug': 'state-care-condition-workflow',
+            'slug': 'state-care-condition-survey-workflow',
             'model': 'State Care Condition',
             'relatedha': related_ha
         }
@@ -331,7 +337,7 @@ class StateCareTaskStrategy(TaskStrategy):
     def get_sort_options(self):
         """Return the available sort options for designation tasks."""
         return [
-            {'id': 'resourceid', 'name': 'Resource'},
+            {'id': 'displayname', 'name': 'Name'},
             {'id': 'completed_on_date', 'name': 'Date Completed/Assessed'},
             {'id': 'completed_by', 'name': 'Completed/Assessed by'}
         ]

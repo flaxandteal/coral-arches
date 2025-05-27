@@ -107,6 +107,7 @@ DESIGNATION_SQL_QUERY_CONFIG = {
             AND EXISTS (
                 SELECT 1 FROM tiles t2
                 WHERE t2.resourceinstanceid = t_fixed.resourceinstanceid
+                AND t2.nodegroupid = '34959a52-03aa-11ef-948f-0242ac150003'
                 AND t2.tiledata ->> '5ffdc00e-03ad-11ef-948f-0242ac150003' IS NULL
             )
         """
