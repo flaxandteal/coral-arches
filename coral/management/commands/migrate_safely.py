@@ -248,15 +248,17 @@ class ScanForDataRisks():
     for node in list(tile_json['data'].keys()):
       if node in [concept["node_id"] for concept in updated_concepts]:
           try:
-            if self.mapping:
+            if self.mapping and not self.default_mapping:
               mapping = next(value for key, value in self.mapping.items() if key == node)
             else:
-              answer = input(f"No mapping has been provided for {node}. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
-              if answer.lower() == 'y':
-                if self.mapping is None:
-                    self.mapping = {}
-                self.mapping[node] = { 'default': None }
-                mapping = { 'default': None }
+              if self.default_mapping is not True:
+                answer = input(f"No mapping has been provided for {node}. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
+                if answer.lower() == 'y':
+                  self.default_mapping = True
+              if self.mapping is None:
+                  self.mapping = {}
+              self.mapping[node] = { 'default': None }
+              mapping = { 'default': None }
           except Exception as e:
             raise ValueError(f"No mapping could be found in the file for the node {node}") from e
           TransformData().concept_to_concept(tile_json, node, mapping)
@@ -335,6 +337,7 @@ class ScanForDataRisks():
     self.graphid = self.incoming_json['graph'][0]['graphid']
     self.graph = Graph.objects.get(pk=self.graphid)
     self.mapping = mapping
+    self.default_mapping = False
     if self.mapping:
        with open(mapping, 'r') as file:
             self.mapping = json.load(file)
