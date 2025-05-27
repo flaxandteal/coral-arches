@@ -140,7 +140,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 elif is_member_filter:
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=filter)
                 elif is_group_filter:
-                    queryBuilder = queryBuilder.where(action_type=filter)
+                    queryBuilder = queryBuilder.where(action_type=filter).or_where(action_type='Assign To Both HM & HB')
                     
                 return queryBuilder 
 
