@@ -405,6 +405,10 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'user_permission_cache',
     },
+    'dashboard_versioning': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'dashboard_version_cache',
+    }
 }
 
 # Hide nodes and cards in a report that have no data
