@@ -42,7 +42,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
     _user_role: UserRole = None;
 
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='desc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='asc', filter='all'):
         from arches_orm.models import Consultation
         from arches_orm.models import Group
         with admin():      

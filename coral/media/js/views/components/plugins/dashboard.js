@@ -101,6 +101,10 @@ define([
           this.filterOptions(data.filter_options)
           this.loading(false)
           this.loadingCards(false)
+
+          if (this.resources()[0].state == 'Planning'){
+            this.sortOrder('asc');
+          }
         } catch (error) {
           console.error(error)
           return
