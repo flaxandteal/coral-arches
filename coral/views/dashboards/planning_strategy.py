@@ -1,4 +1,5 @@
 from arches.app.models import models
+from arches.app.models.tile import Tile
 from collections import defaultdict
 from arches_orm.adapter import admin 
 from datetime import datetime
@@ -377,10 +378,16 @@ class PlanningTaskStrategy(TaskStrategy):
         hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
         address = utilities.node_check(lambda: consultation.location_data.addresses)
         council = utilities.node_check(lambda: consultation.location_data.council)
-        responses = utilities.node_check(lambda: consultation.response_action)
+        # responses = utilities.node_check(lambda: consultation.response_action)
         classification = utilities.node_check(lambda: consultation.classification_type)
         related_ha = utilities.node_check(lambda: consultation.related_heritage_assets)
 
+        # the orm stopped returning multiple tiles for responses, this is a fall back
+        responses = Tile.objects.filter(
+            resourceinstance_id=consultation.id,
+            nodegroup_id='af7677ba-cfe2-11ee-8a4e-0242ac180006'
+        ).values_list('data__cd77b29c-2ef6-11ef-b1c4-0242ac140006', flat=True)
+        
         ha_refs = []
         for ha in related_ha:
             ihr = ha.heritage_asset_references.ihr_number
@@ -411,10 +418,14 @@ class PlanningTaskStrategy(TaskStrategy):
             'type': action_type
         }
 
-        # Look up for either te
+        # Look up for either team
+        teams = {
+            '2628d62f-c206-4c06-b26a-3511e38ea243': 'HM',
+            '70fddadb-8172-4029-b8fd-87f9101a3a2d': 'HB'
+        }
         if responses:
             for response in responses:
-                team = response.response_team
+                team = teams.get(response, None)
                 if team in responded:
                     responded[team] = True
 
