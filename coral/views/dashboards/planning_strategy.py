@@ -74,10 +74,10 @@ class PlanningTaskStrategy(TaskStrategy):
             
                 # * The HM manager
                 elif (self._user_role.hm_manager['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
@@ -85,10 +85,10 @@ class PlanningTaskStrategy(TaskStrategy):
 
                 # * The HM user
                 elif (self._user_role.hm_user['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
@@ -96,10 +96,10 @@ class PlanningTaskStrategy(TaskStrategy):
 
                 # * The HB manager
                 elif (self._user_role.hb_manager['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
@@ -107,10 +107,10 @@ class PlanningTaskStrategy(TaskStrategy):
             
                 # * The HB user
                 elif (self._user_role.hb_user['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
