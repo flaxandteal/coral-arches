@@ -286,7 +286,7 @@ class StateCareTaskStrategy(TaskStrategy):
             'dateheading': 'Completed on date',
             'inputby': completed_by,
             'date': completed_on,
-            'slug': 'state-care-condition-workflow',
+            'slug': 'state-care-condition-survey-workflow',
             'model': 'State Care Condition',
             'relatedha': related_ha
         }
