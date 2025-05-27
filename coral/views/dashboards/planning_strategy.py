@@ -81,7 +81,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
 
                 # * The HM user
                 elif (self._user_role.hm_user['is_role']):
@@ -92,7 +92,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HM")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
 
                 # * The HB manager
                 elif (self._user_role.hb_manager['is_role']):
@@ -103,7 +103,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
             
                 # * The HB user
                 elif (self._user_role.hb_user['is_role']):
@@ -114,7 +114,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
                 
                 return queryBuilder
                         
