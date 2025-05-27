@@ -2,7 +2,7 @@ from django.views.generic import View
 from django.http import JsonResponse
 from arches_orm.adapter import admin
 from django.core.paginator import Paginator
-from django.core.cache import cache
+from django.core.cache import caches
 import json
 from coral.views.dashboards.paginator import get_paginator
 from coral.views.dashboards.dashboard_register import get_strategy
@@ -12,6 +12,8 @@ class Dashboard(View):
     def get(self, request):
         from arches_orm.models import Person
         with admin():
+            dashboard_cache = caches['dashboard_versioning']
+
             user_id = request.user.id                     
             person_resource = Person.where(user_account=user_id).get()
             if not person_resource:
@@ -21,15 +23,16 @@ class Dashboard(View):
             
             # set a version key for the cache
             version_key = f"dashboard_version_{user_id}"
-            version = cache.get(version_key)
+            version = dashboard_cache.get(version_key)
+
             if version is None:
                 version = 1
-                cache.set(version_key, version, 60 * 15) 
+                dashboard_cache.set(version_key, version, 60 * 15) 
 
             if update:
                 version += 1
-                cache.set(version_key, version, 60 * 60)
-            
+                dashboard_cache.set(version_key, version, 60 * 60)
+
             dashboard = request.GET.get('dashboard', None)
             task_resources = []
             counters = {}
@@ -42,9 +45,8 @@ class Dashboard(View):
             filter_options = []
 
             cache_key = f'dashboard_{user_id}_{version}_{page}'
-            cache_data = cache.get(cache_key)
+            cache_data = dashboard_cache.get(cache_key)
             if not update and cache_data:
-                print('USING CACHE DATA HERE')
                 data = json.loads(cache_data)
                 task_resources = data['task_resources']
                 counters = data['counters']
@@ -57,13 +59,13 @@ class Dashboard(View):
                 # task_resources = utilities.sort_resources(task_resources, sort_by, sort_order)
             else:
                 key = f"groups_{user_id}"
-                data_cache = cache.get(key)
+                data_cache = dashboard_cache.get(key)
 
                 if data_cache:
                     user_group_ids = json.loads(data_cache)
                 else:
                     user_group_ids = self.get_groups(person_resource[0].id)
-                    cache.set(key, json.dumps(user_group_ids), 60 * 15) 
+                    dashboard_cache.set(key, json.dumps(user_group_ids), 60 * 15) 
        
                 strategies = []
                 for groupId in user_group_ids:
@@ -105,7 +107,7 @@ class Dashboard(View):
                     'sort_options': sort_options,
                     'filter_options': filter_options
                     })
-                cache.set(cache_key, cache_data, 60 * 15)
+                dashboard_cache.set(cache_key, cache_data, 60 * 15)
 
             paginator, pages = get_paginator(total_resources, page, items_per_page)
 
