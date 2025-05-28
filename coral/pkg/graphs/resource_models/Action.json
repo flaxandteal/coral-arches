@@ -1389,7 +1389,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "_legacy_data",
+                    "alias": "_legacy_record",
                     "config": {
                         "en": ""
                     },
@@ -1403,7 +1403,7 @@
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Legacy Data",
+                    "name": "Legacy Record",
                     "nodegroup_id": "9595f114-3bb5-11f0-acf8-def280d49c23",
                     "nodeid": "9595f114-3bb5-11f0-acf8-def280d49c23",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
