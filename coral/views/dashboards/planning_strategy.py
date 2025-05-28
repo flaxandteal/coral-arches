@@ -10,6 +10,7 @@ from coral.views.dashboards.dashboard_utils import Utilities
 from coral.utils.user_role import UserRole
 import copy
 from typing import List, Dict, TypedDict
+import pdb
 
 # MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 # ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -77,7 +78,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HM done")
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
@@ -88,7 +89,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HM done")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
@@ -99,7 +100,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HB done")
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
@@ -110,7 +111,7 @@ class PlanningTaskStrategy(TaskStrategy):
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
                     # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HB done")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
