@@ -16,6 +16,9 @@ define([
             this.configType = params.configType || 'header';
             this.report = params.report;
 
+            const baseResourceDetails = ko.observable('None');
+            const mergeResourceDetails = ko.observable('None');
+
             Object.assign(self, reportUtils);
             self.sections = [
                 {id: 'all', title: 'Full Report'},
@@ -51,11 +54,18 @@ define([
 
                 self.cards = self.createCardDictionary(cards);
                 
-                const baseResourceData = JSON.parse(self.cards?.['Base Resource Data']['params']['tiles'][3]['data']['07cf7760-f197-11ee-9b0c-0242ac170006']['en']['value']);
-                const mergeResourceData = JSON.parse(self.cards?.['Merged Resource Data']['params']['tiles'][4]['data']['3d1a1858-f197-11ee-9b0c-0242ac170006']['en']['value']);
+                const baseResourceData = JSON.parse(self.cards?.['Base Resource Data']['params']['tiles'].find(tile =>
+                    tile.data && tile.data['07cf7760-f197-11ee-9b0c-0242ac170006']
+                )['data']['07cf7760-f197-11ee-9b0c-0242ac170006']['en']['value']);
 
-                const baseResourceDetails = 'Base Resource Details: ' +  baseResourceData['business_data']['resources'][0]['resourceinstance']['name'] + ' id: ' + baseResourceData['business_data']['resources'][0]['resourceinstance']['resourceinstanceid'];
-                const mergeResourceDetails = 'Merged Resource Details: ' +  mergeResourceData['business_data']['resources'][1]['resourceinstance']['name'] + ' id: ' + mergeResourceData['business_data']['resources'][1]['resourceinstance']['resourceinstanceid'];
+                const mergeResourceData = JSON.parse(self.cards?.['Merged Resource Data']['params']['tiles'].find(tile =>
+                    tile.data && tile.data['3d1a1858-f197-11ee-9b0c-0242ac170006']
+                )['data']['3d1a1858-f197-11ee-9b0c-0242ac170006']['en']['value']);
+
+                if (baseResourceData && mergeResourceData) {
+                    baseResourceDetails('Base Resource Details: ' +  baseResourceData['business_data']['resources'][0]['resourceinstance']['name'] + ' id: ' + baseResourceData['business_data']['resources'][0]['resourceinstance']['resourceinstanceid']);
+                    mergeResourceDetails('Merged Resource Details: ' +  mergeResourceData['business_data']['resources'][1]['resourceinstance']['name'] + ' id: ' + mergeResourceData['business_data']['resources'][1]['resourceinstance']['resourceinstanceid']);
+                };
 
                 self.descriptionCards = {
                     descriptions: self.cards?.['descriptions'],
