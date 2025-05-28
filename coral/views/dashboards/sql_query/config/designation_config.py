@@ -95,20 +95,20 @@ DESIGNATION_SQL_QUERY_CONFIG = {
             )
         """,
         'MonumentRevision': """
-            EXISTS (
+            NOT EXISTS (
                 SELECT 1 FROM tiles t2
                 WHERE t2.resourceinstanceid = t_fixed.resourceinstanceid
                 AND t2.nodegroupid = '3c51740c-dbd0-11ee-8835-0242ac120006'
-                AND t2.tiledata ->> 'ad22dad6-dbd0-11ee-b0db-0242ac120006' IS NULL
+                AND t2.tiledata ->> 'ad22dad6-dbd0-11ee-b0db-0242ac120006' IS NOT NULL
             )
         """,
         'Consultation': """
             t_fixed.tiledata -> 'b37552be-9527-11ea-9213-f875a44e0e11' -> 'en' ->> 'value' LIKE 'EVM%'
-            AND EXISTS (
+            AND NOT EXISTS (
                 SELECT 1 FROM tiles t2
                 WHERE t2.resourceinstanceid = t_fixed.resourceinstanceid
                 AND t2.nodegroupid = '34959a52-03aa-11ef-948f-0242ac150003'
-                AND t2.tiledata ->> '5ffdc00e-03ad-11ef-948f-0242ac150003' IS NULL
+                AND t2.tiledata ->> '5ffdc00e-03ad-11ef-948f-0242ac150003' IS NOT NULL
             )
         """
     },
