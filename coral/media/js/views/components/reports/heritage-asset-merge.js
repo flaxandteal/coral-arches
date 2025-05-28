@@ -54,18 +54,26 @@ define([
 
                 self.cards = self.createCardDictionary(cards);
                 
-                const baseResourceData = JSON.parse(self.cards?.['Base Resource Data']['params']['tiles'].find(tile =>
+                const baseResourceData = self.cards?.['Base Resource Data']['params']['tiles'].find(tile =>
                     tile.data && tile.data['07cf7760-f197-11ee-9b0c-0242ac170006']
-                )['data']['07cf7760-f197-11ee-9b0c-0242ac170006']['en']['value']);
+                );
 
-                const mergeResourceData = JSON.parse(self.cards?.['Merged Resource Data']['params']['tiles'].find(tile =>
+                const mergeResourceData = self.cards?.['Merged Resource Data']['params']['tiles'].find(tile =>
                     tile.data && tile.data['3d1a1858-f197-11ee-9b0c-0242ac170006']
-                )['data']['3d1a1858-f197-11ee-9b0c-0242ac170006']['en']['value']);
+                );
 
                 if (baseResourceData && mergeResourceData) {
-                    baseResourceDetails('Base Resource Details: ' +  baseResourceData['business_data']['resources'][0]['resourceinstance']['name'] + ' id: ' + baseResourceData['business_data']['resources'][0]['resourceinstance']['resourceinstanceid']);
-                    mergeResourceDetails('Merged Resource Details: ' +  mergeResourceData['business_data']['resources'][1]['resourceinstance']['name'] + ' id: ' + mergeResourceData['business_data']['resources'][1]['resourceinstance']['resourceinstanceid']);
-                };
+                    const baseNameStr = JSON.parse(baseResourceData['data']['07cf7760-f197-11ee-9b0c-0242ac170006']['en']['value'])['business_data']['resources'][0]['resourceinstance']['name'];
+                    const baseIdString = JSON.parse(baseResourceData['data']['07cf7760-f197-11ee-9b0c-0242ac170006']['en']['value'])['business_data']['resources'][0]['resourceinstance']['resourceinstanceid'];
+
+                    const mergeNameStr = JSON.parse(mergeResourceData['data']['3d1a1858-f197-11ee-9b0c-0242ac170006']['en']['value'])['business_data']['resources'][1]['resourceinstance']['name'];
+                    const mergeIdString = JSON.parse(mergeResourceData['data']['3d1a1858-f197-11ee-9b0c-0242ac170006']['en']['value'])['business_data']['resources'][1]['resourceinstance']['resourceinstanceid'];
+
+                    if (baseNameStr && mergeNameStr && baseIdString && mergeIdString) {
+                        baseResourceDetails(`${baseNameStr} id: ${baseIdString}`);
+                        mergeResourceDetails(`${mergeNameStr} id: ${mergeIdString}`);
+                    }
+                }
 
                 self.descriptionCards = {
                     descriptions: self.cards?.['descriptions'],
