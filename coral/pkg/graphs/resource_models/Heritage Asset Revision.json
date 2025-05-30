@@ -5947,7 +5947,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Asssociation Type",
+                        "label": "Association Type",
                         "options": [],
                         "placeholder": {
                             "en": "Select an option"
@@ -5955,7 +5955,7 @@
                     },
                     "id": "3625441a-9329-446c-a365-66b73c44fcb4",
                     "label": {
-                        "en": "Asssociation Type"
+                        "en": "Association Type"
                     },
                     "node_id": "3596a349-5c07-4a22-a455-b478cd80e85e",
                     "sortorder": 7,
@@ -28659,7 +28659,7 @@
                     "sourcebranchpublication_id": null
                 },
                 {
-                    "alias": "asssociation_type",
+                    "alias": "association_type",
                     "config": {
                         "rdmCollection": "93362f59-3658-47d8-8781-253fcf06374e"
                     },
@@ -28673,7 +28673,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Asssociation Type",
+                    "name": "Association Type",
                     "nodegroup_id": "2bcd5add-f92e-47eb-88e8-dc7d18cf7b12",
                     "nodeid": "3596a349-5c07-4a22-a455-b478cd80e85e",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
