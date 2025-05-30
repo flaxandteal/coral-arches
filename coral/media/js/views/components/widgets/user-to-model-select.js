@@ -21,6 +21,8 @@ define([
     this.valueString = ko.observable(this.tile.data[this.node.id]() ? this.tile.data[this.node.id]() : 'loading...')
     this.iconClass = ko.observable(this.permittedToSign() ? (this.isUserAdded() ? 'fa fa-check' : 'fa-plus-circle') : 'fa fa-ban')
     this.textClass = ko.observable(this.isUserAlreadyAdded ? '' : 'cons-type')
+    this.defaultConfigGroups = params.widget.widgetLookup[params.widget.widget_id()].defaultconfig.signOffGroups();
+    this.workflowName = params.form.workflow.componentName;
 
     this.setValue = () => {
       if (this.tile.data[this.node.id]()) {
@@ -43,7 +45,22 @@ define([
       this.iconClass(this.permittedToSign() ? 'fa fa-check' : 'fa fa-code')
     })
 
-    this.signOffGroups = params.signOffGroups ? params.signOffGroups : [] 
+    this.checkConfigNodes = (nodeId) => {
+      console.log(this.defaultConfigGroups)
+        const config = this.defaultConfigGroups.find(node => {
+          const workflowMatch = Array.isArray(node.workflow) 
+            ? node.workflow.includes(this.workflowName)
+            : node.workflow === this.workflowName;
+          return workflowMatch && node.nodeId === nodeId;
+        });
+        if(config){
+          this.groups = config.groups.map(group => group.id);
+        }
+        const nodes = this.groups ?? params.signOffGroups ?? [];
+        return nodes
+    }
+
+    this.signOffGroups = this.checkConfigNodes(this.node.id)
     this.conflictNode = params.conflictNode ?? null; // check if user signed a different node that prevents sign off
     this.conflictAllowBlank = params.conflictAllowBlank ?? true; // allows signoff if the conflict node is not filled in
 
