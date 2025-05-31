@@ -1260,6 +1260,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "0a74c9ca-fef1-4ca0-96ef-d7782eb15fef",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "Statistical Output Areas"
+                    },
+                    "nodegroup_id": "02ce8ce4-0592-4304-8909-cd93eb05f7f1",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "6b8a809f-4f2e-4190-986e-a04e4cfa4d7a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -1834,7 +1861,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Garden Sign Off"
+                        "en": "Sign Off"
                     },
                     "nodegroup_id": "3897b87a-1902-11ef-aa9f-0242ac150006",
                     "sortorder": null,
@@ -16191,6 +16218,28 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
+                        "label": "Statistical Output Areas",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "4776af92-b849-4f3a-9add-e4a831304e67",
+                    "label": {
+                        "en": "Statistical Output Areas"
+                    },
+                    "node_id": "02ce8ce4-0592-4304-8909-cd93eb05f7f1",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "6b8a809f-4f2e-4190-986e-a04e4cfa4d7a",
+                    "config": {
+                        "defaultValue": null,
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Component Damage Type",
                         "options": [],
                         "placeholder": {
@@ -16716,6 +16765,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "919bcb94-345c-11ef-a5b7-0242ac120003"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba",
+                    "edgeid": "c35aa9a4-512f-48cb-8ad0-1145f51b015b",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P89i_contains",
+                    "rangenode_id": "02ce8ce4-0592-4304-8909-cd93eb05f7f1"
                 },
                 {
                     "description": null,
@@ -23314,6 +23372,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "02ce8ce4-0592-4304-8909-cd93eb05f7f1",
+                    "parentnodegroup_id": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "447973ce-d7e2-11ee-a4a1-0242ac120006",
                     "parentnodegroup_id": "87d39b2e-f44f-11eb-9a4a-a87eeabdefba"
                 },
@@ -23733,6 +23797,29 @@
                 }
             ],
             "nodes": [
+                {
+                    "alias": "statistical_output_areas",
+                    "config": {
+                        "rdmCollection": "40e6655a-70c2-2496-1d6f-43f63af233df"
+                    },
+                    "datatype": "concept-list",
+                    "description": "NISRA Statistical Output Areas",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Statistical Output Areas",
+                    "nodegroup_id": "02ce8ce4-0592-4304-8909-cd93eb05f7f1",
+                    "nodeid": "02ce8ce4-0592-4304-8909-cd93eb05f7f1",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P89i_contains",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
                 {
                     "alias": "scheduling_criteria",
                     "config": {
