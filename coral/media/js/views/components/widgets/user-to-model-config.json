@@ -538,7 +538,7 @@
         {
             "workflow": "risk-assessment-workflow",
             "nodeId": "b4bec684-2a66-11f0-9637-62d3208fcf53",
-            "name": "Risk Assessment Input By",
+            "name": "Risk Assessment Signed By",
             "groups": [
                 {
                     "groupName": "State Care Team Users",
@@ -557,7 +557,7 @@
         {
             "workflow": "risk-assessment-workflow",
             "nodeId": "d9394d68-2a66-11f0-b5c0-62d3208fcf53",
-            "name": "Risk Assessment Signed Off By",
+            "name": "Risk Assessment Done By",
             "groups": [
                 {
                     "groupName": "State Care Team Users",
