@@ -101,6 +101,10 @@ define([
           this.filterOptions(data.filter_options)
           this.loading(false)
           this.loadingCards(false)
+
+          if (this.resources()[0].state == 'Planning'){
+            this.sortOrder('asc');
+          }
         } catch (error) {
           console.error(error)
           return
@@ -134,14 +138,14 @@ define([
       this.sortBy.subscribe(async () => {
         if (this.initialLoadCompleted && this.sortBy()) {
           this.loadingCards(true);
-          getTasks();
+          await getTasks();
         }
       });
 
       this.sortOrder.subscribe(async () => {
         if (this.initialLoadCompleted && this.sortOrder()) {
           this.loadingCards(true);
-          getTasks();
+          await getTasks();
         }
       });
 
@@ -149,7 +153,7 @@ define([
         if (this.initialLoadCompleted && this.filterBy()) {
           this.loadingCards(true);
           this.currentPage(1);
-          getTasks();
+          await getTasks();
         }
       });
 
@@ -160,6 +164,8 @@ define([
       })
 
       this.newPage = async (pageNumber) => {
+          this.loadingCards(true);
+          console.log(`Changing to page ${pageNumber}`);
           this.currentPage(pageNumber);
           await getTasks('false');
       };

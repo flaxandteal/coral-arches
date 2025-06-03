@@ -1,4 +1,5 @@
 from arches.app.models import models
+from arches.app.models.tile import Tile
 from collections import defaultdict
 from arches_orm.adapter import admin 
 from datetime import datetime
@@ -9,6 +10,7 @@ from coral.views.dashboards.dashboard_utils import Utilities
 from coral.utils.user_role import UserRole
 import copy
 from typing import List, Dict, TypedDict
+import pdb
 
 # MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
 # ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
@@ -42,7 +44,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
     _user_role: UserRole = None;
 
-    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='desc', filter='all'):
+    def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='asc', filter='all'):
         from arches_orm.models import Consultation
         from arches_orm.models import Group
         with admin():      
@@ -73,47 +75,47 @@ class PlanningTaskStrategy(TaskStrategy):
             
                 # * The HM manager
                 elif (self._user_role.hm_manager['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HM done")
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
 
                 # * The HM user
                 elif (self._user_role.hm_user['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HB done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HM done")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HM")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
 
                 # * The HB manager
                 elif (self._user_role.hb_manager['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HB done")
                     # * Assigned to - The is null is not working correctly
                     # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
             
                 # * The HB user
                 elif (self._user_role.hb_user['is_role']):
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status="Open").or_where(action_status="HM done").or_where(action_status="Extension requested")
                     # * Action Type
                     queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
+                    # * Action Status
+                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HB done")
                     # * Assigned to
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
                     # * Response
-                    queryBuilder = queryBuilder.where(response_team__not_equal="HB")
+                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
                 
                 return queryBuilder
                         
@@ -140,7 +142,7 @@ class PlanningTaskStrategy(TaskStrategy):
                 elif is_member_filter:
                     queryBuilder = queryBuilder.where(assigned_to_n1__contains=filter)
                 elif is_group_filter:
-                    queryBuilder = queryBuilder.where(action_type=filter)
+                    queryBuilder = queryBuilder.where(action_type=filter).or_where(action_type='Assign To Both HM & HB')
                     
                 return queryBuilder 
 
@@ -377,10 +379,16 @@ class PlanningTaskStrategy(TaskStrategy):
         hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
         address = utilities.node_check(lambda: consultation.location_data.addresses)
         council = utilities.node_check(lambda: consultation.location_data.council)
-        responses = utilities.node_check(lambda: consultation.response_action)
+        # responses = utilities.node_check(lambda: consultation.response_action)
         classification = utilities.node_check(lambda: consultation.classification_type)
         related_ha = utilities.node_check(lambda: consultation.related_heritage_assets)
 
+        # the orm stopped returning multiple tiles for responses, this is a fall back
+        responses = Tile.objects.filter(
+            resourceinstance_id=consultation.id,
+            nodegroup_id='af7677ba-cfe2-11ee-8a4e-0242ac180006'
+        ).values_list('data__cd77b29c-2ef6-11ef-b1c4-0242ac140006', flat=True)
+        
         ha_refs = []
         for ha in related_ha:
             ihr = ha.heritage_asset_references.ihr_number
@@ -411,10 +419,14 @@ class PlanningTaskStrategy(TaskStrategy):
             'type': action_type
         }
 
-        # Look up for either te
+        # Look up for either team
+        teams = {
+            '2628d62f-c206-4c06-b26a-3511e38ea243': 'HM',
+            '70fddadb-8172-4029-b8fd-87f9101a3a2d': 'HB'
+        }
         if responses:
             for response in responses:
-                team = response.response_team
+                team = teams.get(response, None)
                 if team in responded:
                     responded[team] = True
 

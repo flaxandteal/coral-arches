@@ -5,7 +5,7 @@ from coral.views.dashboards.dashboard_utils import Utilities
 from arches_orm.view_models import ConceptListValueViewModel, ConceptValueViewModel
 from coral.views.dashboards.sql_query.builder import build_query
 from coral.views.dashboards.sql_query.config.designation_config import DESIGNATION_SQL_QUERY_CONFIG
-from django.db import connection
+from django.db import connection, DatabaseError
 from arches_orm.adapter import admin 
 from typing import List
 import pdb
@@ -49,11 +49,13 @@ class DesignationTaskStrategy(TaskStrategy):
                 else:
                     reverse = True if sort_order == 'desc' else False
                     query = build_query(sort_by, reverse=reverse, filter=filter_dict, limit=limit, offset=offset, config=DESIGNATION_SQL_QUERY_CONFIG)
-
-                with connection.cursor() as cursor:
-                    cursor.execute(query)
-                    results = cursor.fetchall()
-                return results
+                try:
+                    with connection.cursor() as cursor:
+                        cursor.execute(query)
+                        results = cursor.fetchall()
+                    return results
+                except Exception as e:
+                    raise DatabaseError(f"Error executing SQL query: {e}")
             
             def get_counts():
                 results = run_sql_query(count=True)

@@ -1092,3 +1092,13 @@ span.rp-tile-title {
     cursor: not-allowed;
     margin-left: 2rem;
 }
+
+.scrollable {
+    overflow-y: auto;
+}
+
+.h-95vh { height: 95vh; }
+.h-80vh { height: 80vh; }
+.h-75vh { height: 75vh; }
+.h-full { height: 100vh; }
+.h-500 { height: 500px; }

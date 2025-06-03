@@ -1,0 +1,84 @@
+{% extends "views/report-templates/default.htm" %}
+{% load i18n %}
+
+{% block report %}
+    {% block report_title_bar %}
+    <!-- Custom Template Report Title Bar -->
+    <div class="relative">
+
+        <!-- Title Block -->
+        <div class="aher-report-toolbar">
+            <h1 class="aher-report-toolbar-title"><span class="aher-report-name">{% trans "Heritage Asset" %}:</span><span data-bind="text: displayname" class="aher-report-instance-name"></span></h1>
+        </div>
+
+    </div>
+    {% endblock report_title_bar %}
+
+    
+    {% block body %}
+    <!-- Link nav -->
+    <div class="aher-report-anchor-container">
+        <ol class="aher-report-anchors breadcrumb">
+            <!-- ko foreach: {data: sections, as: 'section'} -->
+            <li data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="aher-report-a"></li>
+            <!-- /ko -->
+        </ol>
+    </div>
+    <div class="aher-tabbed-report">
+        <div class="aher-tabbed-report-content">
+            <!-- Names Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'name'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/name',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <div class="rp-card-section" style="padding-bottom: 0; margin: 0 10px;">
+                <div class="h5 rp-tile-title">
+                    <span class="rp-tile-title" >Base Report Details</span>
+                </div>
+                <div class="aher-tabbed-report-content">
+                    <div data-bind="text: descriptionCards.baseResourceDetails"></div>
+                </div>
+            </div>
+            <div class="rp-card-section" style="padding-bottom: 0; margin: 0 10px;">
+                <div class="h5 rp-tile-title">
+                    <span class="rp-tile-title" >Merged Report Details</span>
+                </div>
+                <div class="aher-tabbed-report-content">
+                    <div data-bind="text: descriptionCards.mergeResourceDetails"></div>
+                </div>
+            </div>
+            <!-- Description Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'description'">
+                <div data-bind="text: descriptionCards.baseResourceDetails"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
+                        dataConfig: descriptionDataConfig
+                    }
+                }"></div>
+            </div>
+
+            <!-- All Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'all'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/all',
+                    params: {
+                        report: $data.report,
+                        showCards: true,
+                        showRelated: true,
+                        nodeGroups: null
+                    }
+                }"></div>
+            </div>
+        </div>
+    </div>            
+    {% endblock body %}
+{% endblock report %}

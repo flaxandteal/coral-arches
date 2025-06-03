@@ -24,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=12, patch=44)
+APP_VERSION = semantic_version.Version(major=7, minor=13, patch=47)
 
 GROUPINGS = {
     "groups": {
@@ -233,7 +233,6 @@ MIDDLEWARE = [
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
 ]
 
-
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": [NONE],
@@ -249,6 +248,10 @@ CONTENT_SECURITY_POLICY = {
 X_FRAME_OPTIONS = 'DENY'
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
@@ -405,6 +408,10 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'user_permission_cache',
     },
+    'dashboard_versioning': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'dashboard_version_cache',
+    }
 }
 
 # Hide nodes and cards in a report that have no data
