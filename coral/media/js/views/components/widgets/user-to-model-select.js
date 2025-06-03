@@ -5,8 +5,9 @@ define([
   'uuid',
   'underscore',
   'viewmodels/card-component',
-  'templates/views/components/widgets/user-to-model-select.htm'
-], function ($, ko, arches, uuid, _, CardViewModel, template) {
+  'templates/views/components/widgets/user-to-model-select.htm',
+  './user-to-model-config.json'
+], function ($, ko, arches, uuid, _, CardViewModel, template, userToModelConfig) {
   const viewModel = function (params) {
     const ResourceInstanceSelectViewModel = require('viewmodels/resource-instance-select');
 
@@ -21,8 +22,17 @@ define([
     this.valueString = ko.observable(this.tile.data[this.node.id]() ? this.tile.data[this.node.id]() : 'loading...')
     this.iconClass = ko.observable(this.permittedToSign() ? (this.isUserAdded() ? 'fa fa-check' : 'fa-plus-circle') : 'fa fa-ban')
     this.textClass = ko.observable(this.isUserAlreadyAdded ? '' : 'cons-type')
-    this.defaultConfigGroups = params.widget.widgetLookup[params.widget.widget_id()].defaultconfig.signOffGroups();
+    this.configGroups = params.widget.widgetLookup[params.widget.widget_id()].defaultconfig.signOffGroups;
     this.workflowName = params.form.workflow.componentName;
+
+    // This finds the value of the observable as it differs in depth from a page refresh to pressing next
+    this.defaultConfigGroups = ko.computed(() => {
+      let value = this.configGroups;  
+      while (ko.isObservable(value)) {
+        value = value();
+      }
+      return value || userToModelConfig.signOffGroups;
+    });
 
     this.setValue = () => {
       if (this.tile.data[this.node.id]()) {
@@ -46,18 +56,20 @@ define([
     })
 
     this.checkConfigNodes = (nodeId) => {
-      console.log(this.defaultConfigGroups)
-        const config = this.defaultConfigGroups.find(node => {
+        const config = this.defaultConfigGroups().find(node => {
           const workflowMatch = Array.isArray(node.workflow) 
             ? node.workflow.includes(this.workflowName)
             : node.workflow === this.workflowName;
           return workflowMatch && node.nodeId === nodeId;
         });
+        let nodes = [];
         if(config){
-          this.groups = config.groups.map(group => group.id);
+          nodes = config.groups.map(group => group.id);
         }
-        const nodes = this.groups ?? params.signOffGroups ?? [];
-        return nodes
+        else {
+          nodes = params.signOffGroups;
+        }
+        return nodes;
     }
 
     this.signOffGroups = this.checkConfigNodes(this.node.id)
