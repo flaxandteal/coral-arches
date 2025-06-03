@@ -233,14 +233,19 @@ MIDDLEWARE = [
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://crl-data-store-uat-eu-west-2-prd.storage.googleapis.com"
+]
+
+
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": [NONE],
-        "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
+        "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
         "img-src": [SELF, "blob:", "data:"],
         "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
         "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
-        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in"],
+        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
         "worker-src": [SELF, "blob:"],
     },
 }
