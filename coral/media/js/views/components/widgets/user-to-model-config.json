@@ -1,0 +1,578 @@
+{
+    "signOffGroups": [
+        {
+            "workflow": "merge-workflow",
+            "nodeId": "3ff6232a-cce2-11ee-9264-0242ac180006",
+            "name": "Merge Workflow Approval",
+            "groups": [
+                {
+                    "groupName": "Second Survey Team Users",
+                    "id": "1ce90bd5-4063-4984-931a-cc971414d7db"
+                },
+                {
+                    "groupName": "Second Survey Team Managers",
+                    "id": "7679f42b-56ad-4b18-8b2c-cc6de1b16537"
+                },
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+            ]
+        },
+        {
+            "workflow": "relate-two-monuments-workflow",
+            "nodeId": "e561be82-d7d7-11ee-ade0-0242ac120006",
+            "name": "Relate Two Monuments Signoff",
+            "groups": [
+                {
+                    "groupName": "Second Survey Team Users",
+                    "id": "1ce90bd5-4063-4984-931a-cc971414d7db"
+                },
+                {
+                    "groupName": "Second Survey Team Managers",
+                    "id": "7679f42b-56ad-4b18-8b2c-cc6de1b16537"
+                },
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+            ]
+        },
+        {
+            "workflow": "scheduled-monument-consent-workflow",
+            "nodeId": "e599c070-1f89-11f0-a917-667c62aab752",
+            "name": "Scheduled Monument Decision Signoff ",
+            "groups": [
+                {
+                    "groupName": "Scheduled Monument Management Cur E",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur D",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                }
+            ]
+        },
+        {
+            "workflow": "heritage-asset-designation-workflow",
+            "nodeId": "3b267ffe-dbd1-11ee-b0db-0242ac120006",
+            "name": "Heritage Asset Designation Assessment Done By",
+            "groups": [
+                {
+                    "groupName": "Second Survey Team Users",
+                    "id": "1ce90bd5-4063-4984-931a-cc971414d7db"
+                },
+                {
+                    "groupName": "Second Survey Team Managers",
+                    "id": "7679f42b-56ad-4b18-8b2c-cc6de1b16537"
+                },
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+            ]
+        },
+        {
+            "workflow": "heritage-asset-designation-workflow",
+            "nodeId": "ad22dad6-dbd0-11ee-b0db-0242ac120006",
+            "name": "Heritage Asset Designation Approved By",
+            "groups": [
+                {
+                    "groupName": "Second Survey Team Users",
+                    "id": "1ce90bd5-4063-4984-931a-cc971414d7db"
+                },
+                {
+                    "groupName": "Second Survey Team Managers",
+                    "id": "7679f42b-56ad-4b18-8b2c-cc6de1b16537"
+                },
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+            ]
+        },
+        {
+            "workflow": "fmw-inspection-workflow",
+            "nodeId": "42ec3232-fb26-11ee-838d-0242ac190006",
+            "name": "FMW Report Submitted By",
+            "groups": [
+                {
+                    "groupName": "Scheduled Monument Management Cur E",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur D",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                },
+                {
+                    "groupName": "Field Monument Wardens",
+                    "id": "cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"
+                }
+            ]
+        },
+        {
+            "workflow": "fmw-inspection-workflow",
+            "nodeId": "998d6728-fb26-11ee-838d-0242ac190006",
+            "name": "FMW Report Reviewed By",
+            "groups": [
+                {
+                    "groupName": "Scheduled Monument Management Cur E",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur D",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                },
+                {
+                    "groupName": "Field Monument Wardens",
+                    "id": "cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"
+                }
+            ]
+        },
+        {
+            "workflow": "curatorial-workflow",
+            "nodeId": "42ec3232-fb26-11ee-838d-0242ac190006",
+            "name": "Curatorial Inspection First Signoff",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                }
+            ]
+        },
+        {
+            "workflow": "curatorial-workflow",
+            "nodeId": "998d6728-fb26-11ee-838d-0242ac190006",
+            "name": "Curatorial Inspection Second Signoff",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                }
+            ]
+        },
+        {
+            "workflow": "state-care-condition-survey-workflow",
+            "nodeId": "924abf1a-1b78-11f0-af7b-e2231a6d3ec2",
+            "name": "State Care Completed By",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                }
+            ]
+        },
+        {
+            "workflow": "state-care-condition-survey-workflow",
+            "nodeId": "af2087a6-532c-11ef-9d2a-0242ac120006",
+            "name": "State Care Reviewed By",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                }
+            ]
+        },
+        {
+            "workflow": "add-garden-workflow",
+            "nodeId": "1200e850-1905-11ef-aa9f-0242ac150006",
+            "name": "Add Garden Submitted By",
+            "groups": [
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+            ]
+        },
+        {
+            "workflow": "add-garden-workflow",
+            "nodeId": "9382b7b4-1905-11ef-aa9f-0242ac150006",
+            "name": "Add Garden Signed Off By",
+            "groups": [
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+            ]
+        },
+        {
+            "workflow": ["add-ihr-workflow", "add-monument-workflow" ],
+            "nodeId": "1200e850-1905-11ef-aa9f-0242ac150006",
+            "name": "Add IHR and Monument Input By",
+            "groups": [
+                {
+                    "groupName": "Planning Admin",
+                    "id": "74afc49c-3c68-4f6c-839a-9bc5af76596b"
+                },
+                {
+                    "groupName": "HM Managers",
+                    "id": "905c40e1-430b-4ced-94b8-0cbdab04bc33"
+                },
+                {
+                    "groupName": "HM Users",
+                    "id": "29a43158-5f50-495f-869c-f651adf3ea42"
+                },
+                {
+                    "groupName": "HB Managers",
+                    "id": "9a88b67b-cb12-4137-a100-01a977335298"
+                },
+                {
+                    "groupName": "HB Team User",
+                    "id": "f240895c-edae-4b18-9c3b-875b0bf5b235"
+                },
+                {
+                    "groupName": "Excavation Cur E",
+                    "id": "214900b1-1359-404d-bba0-7dbd5f8486ef"
+                },
+                {
+                    "groupName": "Excavation Cur D",
+                    "id": "751d8543-8e5e-4317-bcb8-700f1b421a90"
+                },
+                {
+                    "groupName": "Excavation Admin Group",
+                    "id": "4fbe3955-ccd3-4c5b-927e-71672c61f298"
+                },
+                {
+                    "groupName": "Excavation User Group",
+                    "id": "801c124e-acb8-484d-890b-212545e44293"
+                },
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur E",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur D",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                },
+                {
+                    "groupName": "Field Monument Wardens",
+                    "id": "cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"
+                },
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+
+            ]
+        },
+        {
+            "workflow": ["add-ihr-workflow", "add-monument-workflow" ],
+            "nodeId": "9382b7b4-1905-11ef-aa9f-0242ac150006",
+            "name": "Add IHR and Monument Signed Off By",
+            "groups": [
+                {
+                    "groupName": "Planning Admin",
+                    "id": "74afc49c-3c68-4f6c-839a-9bc5af76596b"
+                },
+                {
+                    "groupName": "HM Managers",
+                    "id": "905c40e1-430b-4ced-94b8-0cbdab04bc33"
+                },
+                {
+                    "groupName": "HM Users",
+                    "id": "29a43158-5f50-495f-869c-f651adf3ea42"
+                },
+                {
+                    "groupName": "HB Managers",
+                    "id": "9a88b67b-cb12-4137-a100-01a977335298"
+                },
+                {
+                    "groupName": "HB Team User",
+                    "id": "f240895c-edae-4b18-9c3b-875b0bf5b235"
+                },
+                {
+                    "groupName": "Excavation Cur E",
+                    "id": "214900b1-1359-404d-bba0-7dbd5f8486ef"
+                },
+                {
+                    "groupName": "Excavation Cur D",
+                    "id": "751d8543-8e5e-4317-bcb8-700f1b421a90"
+                },
+                {
+                    "groupName": "Excavation Admin Group",
+                    "id": "4fbe3955-ccd3-4c5b-927e-71672c61f298"
+                },
+                {
+                    "groupName": "Excavation User Group",
+                    "id": "801c124e-acb8-484d-890b-212545e44293"
+                },
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur E",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur D",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                },
+                {
+                    "groupName": "Field Monument Wardens",
+                    "id": "cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"
+                },
+                {
+                    "groupName": "Records And Designation Team Users",
+                    "id": "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                },
+                {
+                    "groupName": "Records And Designation Team Managers",
+                    "id": "e778f4a1-97c6-446f-b1c4-418a81c3212e"
+                }
+            ]
+        },
+        {
+            "workflow": "add-building-workflow",
+            "nodeId": "1200e850-1905-11ef-aa9f-0242ac150006",
+            "name": "Add Building First Signoff",
+            "groups": [
+                {
+                    "groupName": "Second Survey Group Managers",
+                    "id": "7679f42b-56ad-4b18-8b2c-cc6de1b16537"
+                },
+                {
+                    "groupName": "Second Survey Team Users",
+                    "id": "1ce90bd5-4063-4984-931a-cc971414d7db"
+                }
+            ]
+        },
+        {
+            "workflow": "add-building-workflow",
+            "nodeId": "9382b7b4-1905-11ef-aa9f-0242ac150006",
+            "groups": [
+                {
+                    "groupName": "Second Survey Group Managers",
+                    "id": "7679f42b-56ad-4b18-8b2c-cc6de1b16537"
+                },
+                {
+                    "groupName": "Second Survey Team Users",
+                    "id": "1ce90bd5-4063-4984-931a-cc971414d7db"
+                }
+            ]
+        },
+        {
+            "workflow": "agriculture-and-forestry-consultation-workflow",
+            "nodeId": "bacad6b8-eedd-11ef-829a-0242ac120006",
+            "name": "Agriculture Forestry Signoff",
+            "groups": [
+                {
+                    "groupName": "Scheduled Monument Management Cur E",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur D",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                }
+            ]
+        },
+        {
+            "workflow": "daera-workflow",
+            "nodeId": "bacad6b8-eedd-11ef-829a-0242ac120006",
+            "name": "DAERA Signoff",
+            "groups": [
+                {
+                    "groupName": "Scheduled Monument Management Cur E",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Cur D",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "Scheduled Monument Management Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                }
+            ]
+        },
+        {
+            "workflow": "ranger-inspection-workflow",
+            "nodeId": "f82e1ac2-2a5d-11f0-88da-0242ac120006",
+            "name": "Ranger Inspection Input By",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                },
+                {
+                    "groupName": "Ranger User",
+                    "id": "f94d02a2-cdf5-4dde-9d95-46fc2085db76"
+                }
+            ]
+        },
+        {
+            "workflow": "ranger-inspection-workflow",
+            "nodeId": "20f9b984-2a5e-11f0-8d35-0242ac120006",
+            "name": "Ranger Inspection Signed Off By",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                },
+                {
+                    "groupName": "Ranger User",
+                    "id": "f94d02a2-cdf5-4dde-9d95-46fc2085db76"
+                }
+            ]
+        },
+        {
+            "workflow": "risk-assessment-workflow",
+            "nodeId": "b4bec684-2a66-11f0-9637-62d3208fcf53",
+            "name": "Risk Assessment Signed By",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                }
+            ]
+        },
+        {
+            "workflow": "risk-assessment-workflow",
+            "nodeId": "d9394d68-2a66-11f0-b5c0-62d3208fcf53",
+            "name": "Risk Assessment Done By",
+            "groups": [
+                {
+                    "groupName": "State Care Team Users",
+                    "id": "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b"
+                },
+                {
+                    "groupName": "State Care Cur E",
+                    "id": "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                },
+                {
+                    "groupName": "State Care Cur D",
+                    "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                }
+            ]
+        }
+    ],
+    "placeholder": "Please confirm you sign off on this work."
+}

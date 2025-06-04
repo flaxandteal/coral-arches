@@ -183,12 +183,22 @@
                     "f82e1ac2-2a5d-11f0-88da-0242ac120006": {
                       "allowInstanceCreation": false,
                       "component": "user-to-model-select",
-                      "signOffGroups": ["f94d02a2-cdf5-4dde-9d95-46fc2085db76"]
+                      "signOffGroups": [
+                        "f94d02a2-cdf5-4dde-9d95-46fc2085db76",
+                        "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                      ]
                     },
                     "20f9b984-2a5e-11f0-8d35-0242ac120006": {
                       "allowInstanceCreation": false,
                       "component": "user-to-model-select",
-                      "signOffGroups": ["f94d02a2-cdf5-4dde-9d95-46fc2085db76"],
+                      "signOffGroups": [
+                        "f94d02a2-cdf5-4dde-9d95-46fc2085db76",
+                        "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                      ],
                       "conflictNode": ["f82e1ac2-2a5d-11f0-88da-0242ac120006"],
                       "conflictAllowBlank": false
                     },
