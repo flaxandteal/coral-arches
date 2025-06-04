@@ -235,7 +235,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://crl-data-store-uat-eu-west-2-prd.storage.googleapis.com"
-
+]
 
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
