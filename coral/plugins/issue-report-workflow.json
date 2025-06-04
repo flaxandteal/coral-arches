@@ -141,21 +141,8 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": [
-                    "20017860-d711-11ee-9dd0-0242ac120006",
-                    "d9bd0504-d643-11ee-8b04-0242ac180006",
-                    "cacc9d20-d62f-11ee-9454-0242ac180006",
-                    "2596ab22-d62d-11ee-8f7b-0242ac180006",
-                    "d0f45bbe-d645-11ee-8b04-0242ac180006",
-                    "9665660e-d646-11ee-8b04-0242ac180006",
-                    "d2592394-d62d-11ee-9454-0242ac180006",
-                    "723aaf3c-d62d-11ee-8f7b-0242ac180006",
-                    "58f177c8-d640-11ee-8b04-0242ac180006",
-                    "a0cb43ee-d62c-11ee-9454-0242ac180006",
-                    "788bf15a-d643-11ee-8b04-0242ac180006",
-                    "a1f0e104-d648-11ee-9a11-0242ac180006"
-                  ],
-                  "nodegroupid": "d3ff3fe6-d62b-11ee-9454-0242ac180006",
+                  "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
+                  "nodegroupid": "b5df3df2-4143-11f0-873e-2a478649f0ed",
                   "semanticName": "CM References"
                 },
                 "tilesManaged": "one",
