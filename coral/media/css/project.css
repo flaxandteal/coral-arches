@@ -1102,3 +1102,9 @@ span.rp-tile-title {
 .h-75vh { height: 75vh; }
 .h-full { height: 100vh; }
 .h-500 { height: 500px; }
+
+.mh-95vh { max-height: 95vh; }
+.mh-80vh { max-height: 80vh; }
+.mh-75vh { max-height: 75vh; }
+.mh-full { max-height: 100vh; }
+.mh-500 { max-height: 500px; }
