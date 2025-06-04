@@ -1,8 +1,8 @@
 ### Types of Changes
-- [ ] Model Changes
+- [x] Model Changes
 - [ ] Added Functions
 - [ ] Added Concepts
-- [ ] Workflows Updated
+- [x] Workflows Updated
 - [ ] Reports Updated
 - [ ] Added/Updated Dependencies
 - [x] Features Added
@@ -15,6 +15,13 @@
 - Updated user-to-model to use the config
 - Fixed the risk assessment workflow which had an incorrect node set up
 - Fixed the risk assessment search string for HA's
+- Added CM reference to the issue reports in a HA
+
+### Model Changes
+- Heritage Asset
+
+### Workflows Updated
+- Issue report
 
 ## Pull Requests
 
@@ -23,4 +30,7 @@
 
 **Feat: UI config for sign off nodes**
 [731](https://github.com/flaxandteal/coral-arches/pull/731) by @StuCM
+
+**fix: fix issue with cm ref being pulled from ha**
+[727](https://github.com/flaxandteal/coral-arches/pull/727) by @babou212
 
