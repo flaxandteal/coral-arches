@@ -500,6 +500,33 @@
                 },
                 {
                     "active": true,
+                    "cardid": "8bac7a71-25e1-4d9d-b121-a1ff05869b3e",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "helpenabled": false,
+                    "helptext": {
+                        "en": ""
+                    },
+                    "helptitle": {
+                        "en": ""
+                    },
+                    "instructions": {
+                        "en": ""
+                    },
+                    "is_editable": false,
+                    "name": {
+                        "en": "CM Reference"
+                    },
+                    "nodegroup_id": "5456a330-d0a8-4020-b858-783b837f1288",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "295ddb45-4207-415a-91a7-3b3666a71511",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -15251,6 +15278,33 @@
                     "sortorder": 9,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "8bac7a71-25e1-4d9d-b121-a1ff05869b3e",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "CM Reference",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Enter text"
+                        }
+                    },
+                    "id": "e55d05a4-9847-4556-9250-6c016d5cc9ba",
+                    "label": {
+                        "en": "CM Reference"
+                    },
+                    "node_id": "5456a330-d0a8-4020-b858-783b837f1288",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 }
             ],
             "color": "rgba(59,84,33,1)",
@@ -15304,6 +15358,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P141_assigned",
                     "rangenode_id": "0cc38683-b771-4caa-b452-874a7ec20ca6"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "b3ff1a04-c274-4ad9-ac69-1b23dd826ff9",
+                    "edgeid": "082be573-a782-4df7-a065-9eebccb33e01",
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "5456a330-d0a8-4020-b858-783b837f1288"
                 },
                 {
                     "description": null,
@@ -21742,6 +21805,12 @@
                     "legacygroupid": null,
                     "nodegroupid": "9e59e355-07f0-4b13-86c8-7aa12c04a5e3",
                     "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "5456a330-d0a8-4020-b858-783b837f1288",
+                    "parentnodegroup_id": "b3ff1a04-c274-4ad9-ac69-1b23dd826ff9"
                 },
                 {
                     "cardinality": "1",
@@ -34623,6 +34692,27 @@
                     "nodeid": "b3ff1a04-c274-4ad9-ac69-1b23dd826ff9",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E14_Condition_Assessment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P34i_was_assessed_by",
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
+                },
+                {
+                    "alias": "cm_reference",
+                    "config": {},
+                    "datatype": "string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "hascustomalias": false,
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "CM Reference",
+                    "nodegroup_id": "5456a330-d0a8-4020-b858-783b837f1288",
+                    "nodeid": "5456a330-d0a8-4020-b858-783b837f1288",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0,
                     "sourcebranchpublication_id": null
                 },
