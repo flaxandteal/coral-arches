@@ -572,7 +572,46 @@
                     "id": "6ba1b471-6faf-4f96-9179-94b2a1662512"
                 }
             ]
+        },
+        {
+            "workflow": "issue-report-workflow",
+            "nodeId": "a1a755d0-d64c-11ee-8b04-0242ac180006",
+            "name": "Worked proposed",
+            "groups": [
+                {
+                    "groupName": "SMM Managers",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "SMM Users",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "SMM Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                }
+            ]
+        },
+        {
+            "workflow": "issue-report-workflow",
+            "nodeId": "6037c630-d646-11ee-8b04-0242ac180006",
+            "name": "Signed off by",
+            "groups": [
+                {
+                    "groupName": "SMM Managers",
+                    "id": "b23161e0-070c-466f-a4de-6330fa8dc5a3"
+                },
+                {
+                    "groupName": "SMM Users",
+                    "id": "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                },
+                {
+                    "groupName": "SMM Admin",
+                    "id": "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                }
+            ]
         }
+        
     ],
     "placeholder": "Please confirm you sign off on this work."
 }
