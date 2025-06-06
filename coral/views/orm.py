@@ -17,10 +17,24 @@ class ORM(View):
         wkrm = arches_orm.wkrm.get_resource_models_for_adapter("arches-django")["by-graph-id"][str(graphid)]
         wkri = wkrm.find(str(resourceid))
 
-
         response = {}
         for node in data["show_nodes[]"]:
             try:
+                if node == "street_value":
+                    response[node] = wkri.location_data.addresses[0].street.street_value
+                elif node == "county_value":
+                    response[node] = wkri.location_data.addresses[0].county.county_value
+                elif node == "postcode_value":
+                    response[node] = wkri.location_data.addresses[0].postcode.postcode_value
+                elif node == "town_or_city_value":
+                    response[node] = wkri.location_data.addresses[0].town_or_city.town_or_city_value
+                elif node == "townland":
+                    response[node] = wkri.location_data.addresses[0].townlands.townland
+                elif node == "irish_grid_reference_tm65_":
+                    response[node] = wkri.location_data.national_grid_references.irish_grid_reference_tm65_
+                elif node == "location_description":
+                    response[node] = wkri.location_data.location_descriptions[0].location_description
+
                 if node in wkri._._values_list.keys():
                     response[node] = str(wkri._._values_list[node][0]).replace('{', '').replace('}', '')
                 else:
