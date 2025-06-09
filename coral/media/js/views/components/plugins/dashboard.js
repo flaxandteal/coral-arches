@@ -102,9 +102,10 @@ define([
           this.loading(false)
           this.loadingCards(false)
 
-          if (this.resources()[0].state == 'Planning'){
-            this.sortOrder('asc');
+          if(!this.initialLoadCompleted){
+            this.sortOrder(data.sort_order)
           }
+
         } catch (error) {
           console.error(error)
           return
@@ -165,7 +166,6 @@ define([
 
       this.newPage = async (pageNumber) => {
           this.loadingCards(true);
-          console.log(`Changing to page ${pageNumber}`);
           this.currentPage(pageNumber);
           await getTasks('false');
       };
