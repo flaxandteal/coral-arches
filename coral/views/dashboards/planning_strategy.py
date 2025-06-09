@@ -269,6 +269,9 @@ class PlanningTaskStrategy(TaskStrategy):
             {'id': 'target_date_n1', 'name': 'Deadline'}, 
         ]
     
+    def get_default_sort_order(self):
+        return 'asc'
+
     def get_filter_council_options(self) -> List[SingleFilterDictInterface]:
         """
         Method gets a filter list towards members the council domain values options

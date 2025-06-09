@@ -93,11 +93,12 @@ class Dashboard(View):
                 if sort_by is not None and sort_order is not None:
                     task_params.update({'sort_by': sort_by, 'sort_order': sort_order})
                 if filter is not None and filter != 'all':
-                    task_params.update({'page': 1})
+                    task_params.update({'page': page})
                     task_params.update({'filter': filter })
                 resources, total_resources, counters = strategy.get_tasks(**task_params)
                 filter_options = strategy.get_filter_options(groupId)
                 sort_options = strategy.get_sort_options()
+                sort_order = strategy.get_default_sort_order()
                 task_resources.extend(resources)
 
                 cache_data = json.dumps({
@@ -129,6 +130,7 @@ class Dashboard(View):
                 },
                 'counters': counters,
                 'sort_options': sort_options,
+                'sort_order': sort_order,
                 'filter_options': filter_options,
             })
     
