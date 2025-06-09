@@ -61,7 +61,7 @@ class Dashboard(View):
                 key = f"groups_{user_id}"
                 data_cache = dashboard_cache.get(key)
 
-                if False:
+                if data_cache:
                     user_group_ids = json.loads(data_cache)
                 else:
                     user_group_ids = self.get_groups(person_resource[0].id)
