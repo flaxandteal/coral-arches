@@ -244,7 +244,7 @@ define([
         });
       });
       return resourceIdPaths;
-    });
+    }).extend({ rateLimit: 500 });
 
     this.stepIdx = (stepId) => {
       return ko.computed(() => {
