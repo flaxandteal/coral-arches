@@ -21,7 +21,7 @@ class DjangoGroupProcessor:
     
     def _process_single_group(self, django_group: DjangoGroup) -> None:
         """Process a single django group to build the permissions"""
-        from .casbin import CasbinPermissionFramework
+        from ..casbin import CasbinPermissionFramework
         group_key = CasbinPermissionFramework._subj_to_str(django_group)
 
         self._add_group_naming_policy(django_group, group_key)
@@ -34,7 +34,7 @@ class DjangoGroupProcessor:
 
     def _process_nodegroup_permissions(self, django_group: DjangoGroup, group_key: str) -> None:
         """Process the arches nodegroup permissions and convert them into graph permissions"""
-        from .casbin import CasbinPermissionFramework
+        from ..casbin import CasbinPermissionFramework
         nodegroups = {
                 str(nodegroup.pk): set(perms) if perms else set(CasbinPermissionFramework.GRAPH_REMAPPINGS.values())
                 for nodegroup, perms in
