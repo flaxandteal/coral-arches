@@ -208,16 +208,15 @@
                   "semanticName": "Show Location Nodes",
                   "title": "Heritage Asset",
                   "showNodes": [
-                    ["Building Name", "building_name_value"],
-                    ["Street", "street_value"],
-                    ["Town or City", "town_or_city_value"],
-                    ["County", "county_value"],
-                    ["Postcode", "postcode_value"],
+                    ["Street", "location_data.addresses.0.street.street_value"],
+                    ["Town or City", "location_data.addresses.0.town_or_city.town_or_city_value"],
+                    ["County", "location_data.addresses.0.county.county_value"],
+                    ["Postcode", "location_data.addresses.0.postcode.postcode_value"],
                     ["Wards and District", "wards_and_district_type"],
-                    ["Council", "council"],
-                    ["Townland", "townland"],
-                    ["Irish Grid Reference (TM65)", "irish_grid_reference_tm65_"],
-                    ["Location Description", "location_description"]
+                    ["Council", "location_data.council"],
+                    ["Townland", "location_data.addresses.0.townlands.townland"],
+                    ["Irish Grid Reference (TM65)", "location_data.national_grid_references.irish_grid_reference_tm65_"],
+                    ["Location Description", "location_data.location_descriptions.0.location_description"]
                   ]
                 },
                 "tilesManaged": "one",
