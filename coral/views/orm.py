@@ -8,6 +8,30 @@ import json
 from django.urls import reverse
 
 
+# Function to get nested attributes from an object using a string path
+# Example: location_data.addresses.0.street.street_value  0 being list index
+def multi_getattr(obj, attr, default=None):
+    attributes = attr.split(".")
+    for i in attributes:
+        try:
+            idx = int(i)
+            obj = obj[idx]
+        except (ValueError, TypeError):
+            try:
+                obj = getattr(obj, i)
+            except AttributeError:
+                if default is not None:
+                    return default
+                else:
+                    raise
+        except (IndexError, KeyError):
+            if default is not None:
+                return default
+            else:
+                raise
+    return obj
+
+
 class ORM(View):
     def post(self, request):
         data = parse_qs(request.body.decode())
@@ -20,25 +44,7 @@ class ORM(View):
         response = {}
         for node in data["show_nodes[]"]:
             try:
-                if node == "street_value":
-                    response[node] = wkri.location_data.addresses[0].street.street_value
-                elif node == "county_value":
-                    response[node] = wkri.location_data.addresses[0].county.county_value
-                elif node == "postcode_value":
-                    response[node] = wkri.location_data.addresses[0].postcode.postcode_value
-                elif node == "town_or_city_value":
-                    response[node] = wkri.location_data.addresses[0].town_or_city.town_or_city_value
-                elif node == "townland":
-                    response[node] = wkri.location_data.addresses[0].townlands.townland
-                elif node == "irish_grid_reference_tm65_":
-                    response[node] = wkri.location_data.national_grid_references.irish_grid_reference_tm65_
-                elif node == "location_description":
-                    response[node] = wkri.location_data.location_descriptions[0].location_description
-
-                if node in wkri._._values_list.keys():
-                    response[node] = str(wkri._._values_list[node][0]).replace('{', '').replace('}', '')
-                else:
-                    response[node] = ""
+                response[node] = str(multi_getattr(wkri, node, ""))
 
             except:
                 response[node] = ""
