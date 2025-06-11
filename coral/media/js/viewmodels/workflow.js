@@ -490,8 +490,6 @@ define([
         this.next = async function(){
             var activeStep = self.activeStep();
 
-            console.log("ACTIVE STEP", self.activeStep().complete(), self.activeStep() && self.activeStep().required())
-
             if (activeStep.stepInjectionConfig) {
                 await self.updateStepPath();
             }
