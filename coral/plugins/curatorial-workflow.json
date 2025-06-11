@@ -238,15 +238,19 @@
                       "component": "user-to-model-select",
                       "signOffGroups": [
                         "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
-                        "6d1ef40d-e524-4541-af21-9bb8880bc5a2"
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
                       ],
                       "allowInstanceCreation": false
                     },
                     "998d6728-fb26-11ee-838d-0242ac190006": {
                       "signOffGroups": [
                         "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
-                        "6d1ef40d-e524-4541-af21-9bb8880bc5a2"
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
                       ],
+                      "conflictNode": ["998d6728-fb26-11ee-838d-0242ac190006"],
+                      "conflictAllowBlank": false,
                       "allowInstanceCreation": false
                     },
                     "24d00d86-fb27-11ee-b5d2-0242ac190006": {
