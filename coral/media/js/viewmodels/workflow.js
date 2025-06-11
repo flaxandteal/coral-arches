@@ -86,6 +86,8 @@ define([
             });
         };
 
+        
+
         this.updatePan = function(val){
             if (this.pan() !== val) {
                 this.pan(val);
@@ -272,6 +274,9 @@ define([
 
             /* furthest completed step index */ 
             self.steps().forEach(function(step) {
+                if(step.title === 'Map'){
+                    return;
+                }
                 if (ko.unwrap(step.complete)) {
                     startIdx = step._index;
                 }
@@ -484,6 +489,8 @@ define([
 
         this.next = async function(){
             var activeStep = self.activeStep();
+
+            console.log("ACTIVE STEP", self.activeStep().complete(), self.activeStep() && self.activeStep().required())
 
             if (activeStep.stepInjectionConfig) {
                 await self.updateStepPath();
