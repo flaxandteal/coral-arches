@@ -274,7 +274,7 @@ define([
 
             /* furthest completed step index */ 
             self.steps().forEach(function(step) {
-                if(step.title === 'Map'){
+                if(step.ignoreComplete){
                     return;
                 }
                 if (ko.unwrap(step.complete)) {
