@@ -13,8 +13,7 @@ define([
     this.SELECTED_LICENCE_NODEGROUP_AND_NODE = '879fc326-02f6-11ef-927a-0242ac150006';
 
     this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE = 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11';
-    this.SITE_NAME_NODEGROUP_AND_NODE = 'a9f53f00-48b6-11ee-85af-0242ac140007';
-
+    this.LICENCE_ASSOCIATED_ACTIVITY = 'a9f53f00-48b6-11ee-85af-0242ac140007';
 
     this.CM_REFERENCE_NODEGROUP = 'b84fa9c6-bad2-11ee-b3f2-0242ac180006';
     this.CM_REFERENCE_NODE = 'b84fb182-bad2-11ee-b3f2-0242ac180006';
@@ -36,7 +35,7 @@ define([
     this.siteName = ko.observable();
     this.licensee = ko.observable();
     this.licenceNumber = ko.observable();
-
+    this.relatedActivityId = null;
     this.form
       .card()
       ?.widgets()
@@ -77,6 +76,9 @@ define([
         if (tile.nodegroup === this.CM_REFERENCE_NODEGROUP) {
           this.cmNumber(tile.data[this.CM_REFERENCE_NODE]?.en?.value || 'N/A');
         }
+        if(tile.nodegroup === this.LICENCE_ASSOCIATED_ACTIVITY) {
+          this.relatedActivityId = tile.data[this.LICENCE_ASSOCIATED_ACTIVITY][0].resourceId
+        }
 
         if (tile.nodegroup === this.CONTACTS_NODEGROUP) {
           for (const dv of tile.display_values) {
@@ -89,7 +91,6 @@ define([
     };
 
     this.findLicence = async function (siteResourceId) {
-
       const tiles = await this.fetchTileData(siteResourceId)
       for (const tile of tiles) {
         if (tile.nodegroup === this.ACTIVITY_NAME_NODEGROUP) {
@@ -109,8 +110,9 @@ define([
       for (const tile of tiles) {
         if (tile.nodegroup === this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE) {
           const preFilled = tile.data[this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE]
-          this.selectedResource(preFilled[0].resourceId)
-          this.getDetails(preFilled[0].resourceId)
+          await this.selectedResource(preFilled[0].resourceId)
+          await this.getDetails(preFilled[0].resourceId)
+          await this.findLicence(this.relatedActivityId)
         }
       }
     }
