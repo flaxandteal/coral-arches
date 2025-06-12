@@ -1,6 +1,7 @@
 import yaml
 import logging
 import datetime
+import uuid
 from pathlib import Path
 from celery import shared_task
 from coral.utils.merge_resources import MergeResources
@@ -10,6 +11,7 @@ from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from django.db import transaction
+from django.core.exceptions import ValidationError
 from coral.utils.casbin import SetApplicator
 from tempfile import NamedTemporaryFile
 
@@ -74,9 +76,10 @@ def remap_monument_to_revision(user_id, target_resource_id):
         rr = RemapResources(
             target_graph_id=MONUMENT_GRAPH_ID,
             destination_graph_id=MONUMENT_REVISION_GRAPH_ID,
-            excluded_aliases=["monument", "monument_revision"],
+            excluded_aliases=["monument", "monument_revision", "soft_deleted"],
             target_resource_id=target_resource_id,
         )
+
         result = rr.remap_resources(user)
 
         if not result['remapped']:
@@ -107,6 +110,17 @@ def remap_monument_to_revision(user_id, target_resource_id):
         )
         parent_target_tile.save()
 
+        # Create the soft delete tile for the revision
+        tile_data = {
+            'tileid': str(uuid.uuid4()),
+            'resourceinstance_id': destination_resource.resourceinstanceid,
+            'nodegroup_id': "9e59e355-07f0-4b13-86c8-7aa12c04a5e3",
+            'data': {"9e59e355-07f0-4b13-86c8-7aa12c04a5e3": False}
+        }
+        soft_delete_tile = Tile(tile_data)
+        soft_delete_tile.save(context={"escape_function": True})
+
+            
         notification = models.Notification(
             message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
             context={
@@ -138,7 +152,7 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
         rr = RemapResources(
             target_graph_id=MONUMENT_REVISION_GRAPH_ID,
             destination_graph_id=MONUMENT_GRAPH_ID,
-            excluded_aliases=["monument", "monument_revision", "parent_monument", "heritage_asset_references"],
+            excluded_aliases=["monument", "monument_revision", "parent_monument", "heritage_asset_references", "soft_delete"],
             target_resource_id=target_resource_id,
         )
         result = rr.remap_resources(user)
