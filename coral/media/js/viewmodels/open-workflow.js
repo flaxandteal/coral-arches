@@ -20,6 +20,7 @@ define([
     this.workflowSlug = ko.observable();
     this.workflow = ko.observable();
     this.graphIds = ko.observable();
+    this.alert = ko.observable();
 
     this.searchString = ko.observable();
 
@@ -74,7 +75,9 @@ define([
           console.log(response, status, error);
         }
       });
-      if (response.started) {
+      const { started, ...message } = response;
+      this.alert({...message});
+      if (started) {
         this.selectedResource(null);
       } 
     };
@@ -86,15 +89,17 @@ define([
       await this.setupWorkflow();
       if (!this.selectedResource()) {
         this.loading(false);
+        console.log("alert", this.alert);
         params.alert(
           new AlertViewModel(
-            'ep-alert-blue',
-            `Build Process Started`,
-            `The Monument Revision is currently building. This process takes a few minutes. 
-            \n You will receive a notification when the process is complete.`,
+            this.alert().alert,
+            this.alert().title,
+            this.alert().message,
             null,
             () => { 
-              window.window.location = arches.urls.plugin('init-workflow'); 
+              if(this.alert().alert === 'ep-alert-blue'){
+                window.window.location = arches.urls.plugin('init-workflow'); 
+              }
             }
           )
         );
