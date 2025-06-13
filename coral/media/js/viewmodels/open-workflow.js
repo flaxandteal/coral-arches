@@ -60,36 +60,12 @@ define([
         : 'Please select from below';
     }, this);
 
-    this.setupMonumentRevision = async () => {
-      const monumentResourceId = this.selectedResource();
-      console.log("graph", this.graphIds())
-      const response = await $.ajax({
-        type: 'POST',
-        url: '/remap-monument-to-revision',
-        dataType: 'json',
-        data: JSON.stringify({
-          targetResourceId: monumentResourceId
-        }),
-        context: this,
-        error: (response, status, error) => {
-          console.log(response, status, error);
-        }
-      });
-      const { started, ...message } = response;
-      this.alert({...message});
-      if (started) {
-        this.selectedResource(null);
-      } 
-    };
-
-    this.openWorkflow = async () => {
+    this.openWorkflow = async() => {
       if (!this.selectedResource()) return;
       this.loading(true);
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
-      await this.setupWorkflow();
-      if (!this.selectedResource()) {
+      if (this.alert()) {
         this.loading(false);
-        console.log("alert", this.alert);
         params.alert(
           new AlertViewModel(
             this.alert().alert,
@@ -103,6 +79,7 @@ define([
             }
           )
         );
+        this.alert(null);
         return;
       }
       this.workflowUrl(
