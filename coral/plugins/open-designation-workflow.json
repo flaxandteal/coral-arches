@@ -1,0 +1,20 @@
+{
+    "pluginid": "3907dab7-0f30-4433-a011-a1007c41ecc2",
+    "name": "Open Heritage Asset Designation Workflow",
+    "icon": "fa fa-edit",
+    "component": "views/components/plugins/open-designation-workflow",
+    "componentname": "open-designation-workflow",
+    "config": {
+      "show": false,
+      "openableWorkflows": [
+        {
+          "slug": "heritage-asset-designation-workflow",
+          "name": "Heritage Asset Designation",
+          "graphIds": ["65b1be1a-dfa4-49cf-a736-a1a88c0bb289"],
+          "hideRecents": true
+        }
+      ]
+    },
+    "slug": "open-designation-workflow",
+    "sortorder": 0
+  }
