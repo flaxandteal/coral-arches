@@ -146,6 +146,9 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         print("RECALC", 2)
         for django_group in DjangoGroup.objects.all():
             print(django_group.name)
+            # Remove access to the resource editor for users
+            if django_group.name == 'Resource Editor': 
+                continue
             group_key = self._subj_to_str(django_group)
             self._enforcer.add_named_grouping_policy("g", group_key, f"dgn:{django_group.name}")
             # The default permissions are (still) all perms, if the nodegroup perms set is empty
