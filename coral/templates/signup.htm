@@ -99,23 +99,23 @@
                                             <div style="color:darkred">{{ error|escape }}</div>
                                         {% endfor %}
                                         {% endif %}
+                                        {% if not form.password2.errors %}
+                                            <li class="password-rule mt-1" id="rule-confirm"><i class="ion-checkmark-circled"></i><span>Passwords do not match</span></li>
+                                        {% endif%}
                                     </div>
     
                                     <div class="form-group">
                                         <div class="arches-signin-btn" style="padding-bottom: 0px;">
                                             {% if showform %}
-                                            <button class="btn btn-primary btn-lg btn-block" type="submit">{% trans "Signup" %}</button>
+                                            <button class="btn btn-primary btn-lg btn-block" id="signup-btn" type="submit" disabled>{% trans "Signup" %}</button>
                                             {% endif %}
                                         </div>
                                     </div>
     
                                     <div class="password-rules" style="text-align: start;">
-                                        {% trans 'Your password must:' %}
-                                        <ul class="list-unstyled">
-                                            {% for message in validation_help %}
-                                            <li class="password-rule"><i class="ion-checkmark-circled"></i><span>{{ message }}</span></li>
-                                            {% endfor %}
-                                        </ul>
+                                        {% for message in validation_help %}
+                                            <li class="password-rule" id="rule-{{ forloop.counter0 }}"><i class="ion-checkmark-circled"></i><span>{{ message }}</span></li>
+                                        {% endfor %}
                                     </div>
     
                                     {% if enable_captcha %}
@@ -144,4 +144,5 @@
 
 </div>
 
+<script src="{% static 'js/signup.js' %}"></script>
 {% endblock body %}
