@@ -1,5 +1,6 @@
 @import url(report_templates.css);
 @import url(dashboard.css);
+@import url(signup.css);
 
 .workflow-panel.navbarclosed {
     min-width: 50px;
@@ -1108,3 +1109,5 @@ span.rp-tile-title {
 .mh-75vh { max-height: 75vh; }
 .mh-full { max-height: 100vh; }
 .mh-500 { max-height: 500px; }
+
+.mt-1 { margin-top: 0.5rem }
