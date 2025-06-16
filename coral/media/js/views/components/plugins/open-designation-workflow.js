@@ -73,7 +73,6 @@ define([
                 return;
             }
             const haRefNumber = await this.getHaNumber(resourceId);
-            console.log("REF", haRefNumber);
             this.haRefNum(haRefNumber);
             this.selectedResource(resourceId);
             this.revisionSearchString();
