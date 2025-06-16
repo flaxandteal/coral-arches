@@ -66,15 +66,16 @@ define([
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
       if (this.alert()) {
         this.loading(false);
+        const alertData = this.alert();
         params.alert(
           new AlertViewModel(
-            this.alert().alert,
-            this.alert().title,
-            this.alert().message,
+            alertData.alert,
+            alertData.title,
+            alertData.message,
             null,
             () => { 
-              if(this.alert().alert === 'ep-alert-blue'){
-                window.window.location = arches.urls.plugin('init-workflow'); 
+              if(alertData.alert === 'ep-alert-blue'){
+                window.location = arches.urls.plugin('init-workflow'); 
               }
             }
           )
