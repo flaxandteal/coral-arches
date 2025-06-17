@@ -18,6 +18,10 @@
 - Sent back error messages from the backend to allow for different messages to be displayed
 - Created an open workflow page for designation
 - Built 2 drop downs to separate the revisions from the HA's
+- Added a default sort order to the base strategy
+- Updated the dashboard.py to send the default sort order to the front end
+- Frontend sets the new default sort order on initialization of the page
+- Corrected the filter param that was passed that was hard coded to 1 for the page
 
 ### Workflows Updated
 - Issue Report
@@ -34,4 +38,7 @@
 
 **fix: updated orm view to look for location details nodes**
 [735](https://github.com/flaxandteal/coral-arches/pull/735) by @babou212
+
+**Fix: Dashboard Pagination on Filters and Default Sort Order**
+[736](https://github.com/flaxandteal/coral-arches/pull/736) by @StuCM
 
