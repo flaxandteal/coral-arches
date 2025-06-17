@@ -1,0 +1,23 @@
+.password-rule {
+    color: #dc3545;
+    transition: color 0.3s ease;
+}
+.password-rule.valid {
+    color: #28a745;
+}
+.password-rule.valid i {
+    color: #28a745;
+}
+.password-rule i {
+    color: #dc3545;
+}
+.form-control.invalid {
+    border: 2px solid #dc3545;
+}
+.form-control.valid {
+    border: 2px solid #28a745;
+}
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
