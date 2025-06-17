@@ -8,8 +8,8 @@
     "show": false,
     "openableWorkflows": [
       {
-        "slug": "flag-for-enforcement-workflow",
-        "name": "Flag for Enforcement",
+        "slug": "respond-to-enforcement-workflow",
+        "name": "Respond to Enforcement",
         "graphIds": ["8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84"],
         "description": "",
         "disableStartNew": true,
@@ -80,7 +80,6 @@
           "076f9381-7b00-11e9-8d6b-80000b44d1d9",
           "65b1be1a-dfa4-49cf-a736-a1a88c0bb289"
         ],
-        "setupFunction": "setupMonumentRevision",
         "disableStartNew": true,
         "hideRecents": true
       },
