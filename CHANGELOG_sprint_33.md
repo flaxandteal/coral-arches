@@ -22,6 +22,7 @@
 - Updated the dashboard.py to send the default sort order to the front end
 - Frontend sets the new default sort order on initialization of the page
 - Corrected the filter param that was passed that was hard coded to 1 for the page
+- Update the sign off nodes - user-to-model-config
 
 ### Workflows Updated
 - Issue Report
@@ -41,4 +42,7 @@
 
 **Fix: Dashboard Pagination on Filters and Default Sort Order**
 [736](https://github.com/flaxandteal/coral-arches/pull/736) by @StuCM
+
+**Fix: Sign off config update**
+[737](https://github.com/flaxandteal/coral-arches/pull/737) by @StuCM
 
