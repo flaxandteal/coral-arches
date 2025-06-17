@@ -31,6 +31,8 @@
 - Updated the signup.htm to use a js script
 - Created a static js script to validate the password before submitting
 - Added CSS classes for validation
+- Removed date consulted from pc summary
+- added building name and townland to the address details
 
 ### Model Changes
 - Enforcement
@@ -75,4 +77,7 @@
 
 **Feat: 2065 Add colour indicators when the password criteria is met on signup**
 [746](https://github.com/flaxandteal/coral-arches/pull/746) by @StuCM
+
+**Fix: 2432 Consultation Response Summary Nodes**
+[750](https://github.com/flaxandteal/coral-arches/pull/750) by @StuCM
 
