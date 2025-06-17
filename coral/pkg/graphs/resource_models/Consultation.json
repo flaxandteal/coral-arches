@@ -7440,7 +7440,7 @@
                     },
                     "id": "4ea4c88a-184f-11eb-aa29-f875a44e0e11",
                     "label": {
-                        "en": "Owner"
+                        "en": "Owner(s)"
                     },
                     "node_id": "4ea4c885-184f-11eb-b4d5-f875a44e0e11",
                     "sortorder": 11,
@@ -9976,12 +9976,12 @@
                     },
                     "id": "8bee0e4f-070e-49b1-b593-89690cee4def",
                     "label": {
-                        "en": "FM Warden"
+                        "en": "FM Warden(s)"
                     },
                     "node_id": "ecbda08c-fb2d-11ee-838d-0242ac190006",
                     "sortorder": 26,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "8d41e4a4-a250-11e9-9163-00224800b26d",
@@ -12641,12 +12641,12 @@
                     },
                     "id": "e8f542c5-676a-43ad-976c-2eed526f3f8f",
                     "label": {
-                        "en": "Occupier"
+                        "en": "Occupier(s)"
                     },
                     "node_id": "4c00b292-fb2d-11ee-838d-0242ac190006",
                     "sortorder": 23,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "0f7b971a-fcd9-468d-8de4-ff2454b06e0e",
@@ -26370,7 +26370,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -26380,7 +26380,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Occupier",
+                    "name": "Occupier(s)",
                     "nodegroup_id": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
                     "nodeid": "4c00b292-fb2d-11ee-838d-0242ac190006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
@@ -33351,7 +33351,7 @@
                         "searchDsl": "",
                         "searchString": ""
                     },
-                    "datatype": "resource-instance",
+                    "datatype": "resource-instance-list",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -33361,7 +33361,7 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "FM Warden",
+                    "name": "FM Warden(s)",
                     "nodegroup_id": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
                     "nodeid": "ecbda08c-fb2d-11ee-838d-0242ac190006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
