@@ -28,6 +28,9 @@
 - Add Activity and Consultation to the associated resources for an enforcement
 - Change resource instance select summary to false
 - Updated system settings to hide empty nodes in reports
+- Updated the signup.htm to use a js script
+- Created a static js script to validate the password before submitting
+- Added CSS classes for validation
 
 ### Model Changes
 - Enforcement
@@ -69,4 +72,7 @@
 
 **Fix: 2261 Report Summary Resource Instance Select - Licence**
 [749](https://github.com/flaxandteal/coral-arches/pull/749) by @StuCM
+
+**Feat: 2065 Add colour indicators when the password criteria is met on signup**
+[746](https://github.com/flaxandteal/coral-arches/pull/746) by @StuCM
 
