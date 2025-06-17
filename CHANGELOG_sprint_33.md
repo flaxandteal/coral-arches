@@ -23,11 +23,13 @@
 - Frontend sets the new default sort order on initialization of the page
 - Corrected the filter param that was passed that was hard coded to 1 for the page
 - Update the sign off nodes - user-to-model-config
+- Update State Care Workflow to disable delete
 
 ### Workflows Updated
 - Issue Report
 - Evaluation Meeting
 - Designation workflow - new open workflow page
+- State Care Condition Survey
 
 ## Pull Requests
 
@@ -45,4 +47,7 @@
 
 **Fix: Sign off config update**
 [737](https://github.com/flaxandteal/coral-arches/pull/737) by @StuCM
+
+**fix: disabled delete in ha select**
+[743](https://github.com/flaxandteal/coral-arches/pull/743) by @babou212
 
