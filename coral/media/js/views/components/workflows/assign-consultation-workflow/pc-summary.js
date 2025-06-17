@@ -71,11 +71,6 @@ define([
           '4ea4c884-184f-11eb-b64d-f875a44e0e11'
         ]
       },
-      consultationDates: {
-        label: 'Date Consulted',
-        nodegroupId: '40eff4c9-893a-11ea-ac3a-f875a44e0e11',
-        renderNodeIds: [{ nodeId: '40eff4cd-893a-11ea-b0cc-f875a44e0e11', label: 'Date' }]
-      },
       consultationDescriptions: {
         label: 'Application Reason',
         nodegroupId: '82f8a163-951a-11ea-b58e-f875a44e0e11',
@@ -90,11 +85,12 @@ define([
         label: 'Address Details',
         nodegroupId: '083e14f2-ca61-11ee-afca-0242ac180006',
         renderNodeIds: [
-          { nodeId: '083e6c90-ca61-11ee-afca-0242ac180006', label: 'Full Address' },
+          { nodeId: '083f97a0-ca61-11ee-afca-0242ac180006', label: 'Building Name' },
           { nodeId: '083e8f4a-ca61-11ee-afca-0242ac180006', label: 'Street' },
           { nodeId: '083f8ad0-ca61-11ee-afca-0242ac180006', label: 'Town or City' },
           { nodeId: '083fafe2-ca61-11ee-afca-0242ac180009', label: 'County' },
-          { nodeId: '083f8f26-ca61-11ee-afca-0242ac180006', label: 'Postcode' }
+          { nodeId: '083f8f26-ca61-11ee-afca-0242ac180006', label: 'Postcode' },
+          { nodeId: '083fafe2-345c-11ef-a5b7-0242ac120003', label: 'Townland' }
         ]
       },
       council: {
