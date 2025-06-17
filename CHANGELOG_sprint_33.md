@@ -1,5 +1,5 @@
 ### Types of Changes
-- [ ] Model Changes
+- [x] Model Changes
 - [ ] Added Functions
 - [ ] Added Concepts
 - [x] Workflows Updated
@@ -25,6 +25,10 @@
 - Update the sign off nodes - user-to-model-config
 - Update State Care Workflow to disable delete
 - Updated the get-selected-licence.js to call the method to fetch the licence info
+- Add Activity and Consultation to the associated resources for an enforcement
+
+### Model Changes
+- Enforcement
 
 ### Workflows Updated
 - Issue Report
@@ -54,4 +58,7 @@
 
 **fix: 3122 show site name on the excavation site visit workflow**
 [742](https://github.com/flaxandteal/coral-arches/pull/742) by @StuCM
+
+**fix: added activity and consultation graphs back to resource list node**
+[748](https://github.com/flaxandteal/coral-arches/pull/748) by @babou212
 
