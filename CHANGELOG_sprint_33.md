@@ -36,6 +36,9 @@
 
 ### Model Changes
 - Enforcement
+- Consultation -
+-     -  Updated occupier node datatype to resource-instance-list
+-     - Updated FM Warden node datatype to resource-instance-list
 
 ### Workflows Updated
 - Issue Report
@@ -80,4 +83,7 @@
 
 **Fix: 2432 Consultation Response Summary Nodes**
 [750](https://github.com/flaxandteal/coral-arches/pull/750) by @StuCM
+
+**fix: can add multiple users to occupier and FM Warden fields**
+[740](https://github.com/flaxandteal/coral-arches/pull/740) by @babou212
 
