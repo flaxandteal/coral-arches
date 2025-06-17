@@ -32,3 +32,6 @@
 **Feat: 2889 Designation Workflow Update - Descriptions not transferring**
 [744](https://github.com/flaxandteal/coral-arches/pull/744) by @StuCM
 
+**fix: updated orm view to look for location details nodes**
+[735](https://github.com/flaxandteal/coral-arches/pull/735) by @babou212
+
