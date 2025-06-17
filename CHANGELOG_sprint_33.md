@@ -3,7 +3,7 @@
 - [ ] Added Functions
 - [ ] Added Concepts
 - [x] Workflows Updated
-- [ ] Reports Updated
+- [x] Reports Updated
 - [ ] Added/Updated Dependencies
 - [x] Features Added
 - [x] Bug Fix
@@ -26,6 +26,8 @@
 - Update State Care Workflow to disable delete
 - Updated the get-selected-licence.js to call the method to fetch the licence info
 - Add Activity and Consultation to the associated resources for an enforcement
+- Change resource instance select summary to false
+- Updated system settings to hide empty nodes in reports
 
 ### Model Changes
 - Enforcement
@@ -35,6 +37,9 @@
 - Evaluation Meeting
 - Designation workflow - new open workflow page
 - State Care Condition Survey
+
+### Reports Updated
+- All summary reports for instance select should be changed
 
 ## Pull Requests
 
@@ -61,4 +66,7 @@
 
 **fix: added activity and consultation graphs back to resource list node**
 [748](https://github.com/flaxandteal/coral-arches/pull/748) by @babou212
+
+**Fix: 2261 Report Summary Resource Instance Select - Licence**
+[749](https://github.com/flaxandteal/coral-arches/pull/749) by @StuCM
 
