@@ -24,6 +24,7 @@
 - Corrected the filter param that was passed that was hard coded to 1 for the page
 - Update the sign off nodes - user-to-model-config
 - Update State Care Workflow to disable delete
+- Updated the get-selected-licence.js to call the method to fetch the licence info
 
 ### Workflows Updated
 - Issue Report
@@ -50,4 +51,7 @@
 
 **fix: disabled delete in ha select**
 [743](https://github.com/flaxandteal/coral-arches/pull/743) by @babou212
+
+**fix: 3122 show site name on the excavation site visit workflow**
+[742](https://github.com/flaxandteal/coral-arches/pull/742) by @StuCM
 
