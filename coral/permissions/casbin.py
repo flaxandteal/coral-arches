@@ -39,32 +39,32 @@ from arches_orm.arches_django.datatypes.django_group import MissingDjangoGroupVi
 from arches_orm.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from django.core.cache import cache
+from .casbin_policy_builder import CasbinPolicyBuilder
 
 logger = logging.getLogger(__name__)
-REMAPPINGS = {
-    "809598ac-6dc5-498e-a7af-52b1381942a4": ["change_resourceinstance"],
-    "33a0218b-b1cc-42d8-9a79-31a6b2147893": ["delete_resourceinstance"],
-    "70415d03-b11b-48a6-b989-933d788ffc88": ["view_resourceinstance"],
-    "45d54859-bf3c-48f2-a387-55a0050ff572": ["execute_resourceinstance"],
-}
-GRAPH_REMAPPINGS = {
-    "809598ac-6dc5-498e-a7af-52b1381942a4": "models.write_nodegroup",
-    "33a0218b-b1cc-42d8-9a79-31a6b2147893": "models.write_nodegroup",
-    "70415d03-b11b-48a6-b989-933d788ffc88": "models.read_nodegroup",
-    "45d54859-bf3c-48f2-a387-55a0050ff572": "models.write_nodegroup",
-}
-REV_GRAPH_REMAPPINGS = {v: k for k, v in GRAPH_REMAPPINGS.items()}
-RESOURCE_TO_GRAPH_REMAPPINGS = {v[0]: GRAPH_REMAPPINGS[k] for k, v in REMAPPINGS.items()}
-
-
 class NoSubjectError(RuntimeError):
     pass
 
 class CasbinPermissionFramework(ArchesStandardPermissionFramework):
-    @property
-    def _enforcer(self):
+
+    REMAPPINGS = {
+        "809598ac-6dc5-498e-a7af-52b1381942a4": ["change_resourceinstance"],
+        "33a0218b-b1cc-42d8-9a79-31a6b2147893": ["delete_resourceinstance"],
+        "70415d03-b11b-48a6-b989-933d788ffc88": ["view_resourceinstance"],
+        "45d54859-bf3c-48f2-a387-55a0050ff572": ["execute_resourceinstance"],
+    }
+    GRAPH_REMAPPINGS = {
+        "809598ac-6dc5-498e-a7af-52b1381942a4": "models.write_nodegroup",
+        "33a0218b-b1cc-42d8-9a79-31a6b2147893": "models.write_nodegroup",
+        "70415d03-b11b-48a6-b989-933d788ffc88": "models.read_nodegroup",
+        "45d54859-bf3c-48f2-a387-55a0050ff572": "models.write_nodegroup",
+    }
+    REV_GRAPH_REMAPPINGS = {v: k for k, v in GRAPH_REMAPPINGS.items()}
+
+    def __init__(self):
         from dauthz.core import enforcer
-        return enforcer
+        self._enforcer = enforcer
+        self.policy_builder = CasbinPolicyBuilder(self._enforcer)
 
     @context_free
     def get_perms_for_model(self, cls):
@@ -132,199 +132,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
     @context_free
     def recalculate_table(self):
-        with transaction.atomic():
-            self._recalculate_table_real()
-
-    def _recalculate_table_real(self):
-        print("RECALC", 1)
-        groups = settings.GROUPINGS["groups"]
-        root_group = Group.find(groups["root_group"])
-        self._enforcer.clear_policy()
-
-        # We bank permissions for all Django groups for nodegroups,
-        # (implicitly resource models) and map layers, but nothing else.
-        print("RECALC", 2)
-        for django_group in DjangoGroup.objects.all():
-            print(django_group.name)
-            group_key = self._subj_to_str(django_group)
-            self._enforcer.add_named_grouping_policy("g", group_key, f"dgn:{django_group.name}")
-            # The default permissions are (still) all perms, if the nodegroup perms set is empty
-            nodegroups = {
-                str(nodegroup.pk): set(perms) if perms else set(GRAPH_REMAPPINGS.values())
-                for nodegroup, perms in
-                get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True).items()
-            }
-            print("RECALC", 2, 1)
-            print("RECALC", 2, 2)
-            nodes = Node.objects.filter(nodegroup__in=nodegroups).select_related("graph").only("graph__graphid", "nodegroup_id")
-            print("RECALC", 2, 3)
-            graphs = {}
-            graph_perms = {}
-            for node in nodes:
-                key = f"gp:{node.graph.graphid}"
-                graph_perms.setdefault(key, set())
-                graph_perms[key] |= set(nodegroups[str(node.nodegroup_id)])
-                graphs[key] = node.graph
-            print("RECALC", 2, 4)
-            for graph, perms in graph_perms.items():
-                if graphs[graph].isresource and str(graph[3:]) != SystemSettings.SYSTEM_SETTINGS_RESOURCE_MODEL_ID:
-                    for perm in perms:
-                        self._enforcer.add_policy(group_key, graph, str(perm))
-            print("RECALC", 2, 5)
-            map_layer_perms = ObjectPermissionChecker(django_group)
-            for map_layer in MapLayer.objects.all():
-                perms = set(map_layer_perms.get_perms(map_layer))
-                map_layer_key = self._obj_to_str(map_layer)
-                for perm in perms:
-                    self._enforcer.add_policy(group_key, map_layer_key, str(perm))
-            print("RECALC", 2, 6)
-        print("RECALC", 3)
-
-        groups_seen = dict()
-        sets = []
-        def _fill_group(group, ancestors):
-            group_key = self._subj_to_str(group)
-            if group_key in ancestors:
-                try:
-                    group_name = str(group)
-                except Exception as e:
-                    group_name = "(name error)"
-                    logging.exception("Name to string casting for a group: %s", str(e))
-                logging.warn("There is a circular reference - %s for %s", group_key, group_name)
-                return []
-            if group_key in groups_seen:
-                return groups_seen[group_key]
-            users = []
-            print(" " * len(ancestors), len(group.members), "members")
-            for n, member in enumerate(group.members):
-                if isinstance(member, Group):
-                    member_key = self._subj_to_str(member)
-                    print(" " * (1 + len(ancestors)), n, "/", len(group.members), member_key)
-                    # This is the reverse of what might be expected, as the more deeply
-                    # nested a group is, the _fewer_ permissions it has. Conversely, the
-                    # top groups gather all the permissions from the groups below them,
-                    # which fits Casbin's transitivity when top groups are _Casbin members of_
-                    # the groups below them.
-                    self._enforcer.add_named_grouping_policy("g", group_key, member_key)
-                    ancestors = list(ancestors)
-                    ancestors.append(group_key)
-                    users += _fill_group(member, ancestors)
-                elif member.user_account:
-                    member_key = self._subj_to_str(member)
-                    self._enforcer.add_role_for_user(member_key, group_key)
-                    users.append(member.user_account)
-                else:
-                    logger.warn("A membership rule was not added as no User was attached %s", member.id)
-            # This is a workaround for now, to avoid losing nodegroup restriction entirely.
-            # The (RI) Group names will be matched to Django groups, and those used to build the nodegroup
-            # permissions.
-            # for django_group in self._ri_to_django_groups(group):
-            #     nodegroups = get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True)
-            #     for nodegroup, perms in nodegroups.items():
-            #         for act in perms:
-            #             obj_key = self._obj_to_str(nodegroup)
-            #             self._enforcer.add_policy(group_key, obj_key, str(act))
-            try:
-                arches_plugins = group.arches_plugins
-                print(arches_plugins, "Arches Plugins #1")
-                for arches_plugin in arches_plugins:
-                    if not isinstance(arches_plugin, ArchesPlugin):
-                        try:
-                            logger.warn("A non-plugin resource was listed as an Arches plugin in a group: %s in %s", arches_plugin.id, group.id)
-                        except Exception as exc:
-                            logger.warn("A non-plugin resource was listed as an Arches plugin in a group: %s", str(exc))
-                        continue
-                    print(arches_plugin, "Arches Plugins #2")
-                    try:
-                        identifier = uuid.UUID(arches_plugin.plugin_identifier)
-                        plugin = Plugin.objects.get(pk=identifier)
-                    except ValueError:
-                        plugin = Plugin.objects.get(slug=arches_plugin.plugin_identifier)
-                    for obj_key in (f"pl:{key}" for key in (plugin.pk, plugin.slug) if key):
-                        self._enforcer.add_policy(group_key, obj_key, "view_plugin")
-                        print("Arches Plugins #3", group_key, obj_key)
-            except Exception as exc:
-                print("Could not get Arches Plugins", exc)
-            for permission in group.permissions:
-                if not permission.action:
-                    logging.warn("Permission action is missing: %s: %s on %s", group_key, str(permission.action), str(permission.object))
-                    continue
-                for act in permission.action:
-                    if not permission.object:
-                        logging.warn("Permission object is missing: %s %s", group_key, str(permission.object))
-                        continue
-                    for obj in permission.object:
-                        obj_key = self._obj_to_str(obj)
-                        if obj_key.startswith("g2"):
-                            sets.append(obj_key)
-                        self._enforcer.add_policy(group_key, obj_key, str(act.conceptid))
-            if len(group.django_group) == 0:
-                self._ri_to_django_groups(group)
-            for gp in group.django_group:
-                if not gp or gp.pk is None or isinstance(gp, MissingDjangoGroupViewModel):
-                    logging.warn("Missing Django Group in a group: %s for %s", group_key, str(gp.pk) if gp else str(gp))
-                    continue
-                if list(gp.user_set.all()) != users:
-                    gp.user_set.set(users)
-                    gp.save()
-            groups_seen[group_key] = users
-            return users
-
-        sets = []
-
-        print("RECALC", 4)
-        _fill_group(root_group, list())
-        print("RECALC", 5)
-
-        for user in User.objects.all():
-            user_key = self._subj_to_str(user)
-            for group in user.groups.all():
-                group_key = self._subj_to_str(group)
-                self._enforcer.add_named_grouping_policy("g", user_key, group_key)
-        print("RECALC", 6)
-
-        def _fill_set(st, ancestors):
-            set_key = self._obj_to_str(st)
-            if set_key in ancestors:
-                try:
-                    set_name = str(st)
-                except Exception as e:
-                    set_name = "(name error)"
-                    logging.exception("Name to string casting for a set: %s", str(e))
-                logging.warn("There is a circular nested set reference - %s for %s", set_key, set_name)
-                return
-            if set_key in sets:
-                sets.remove(set_key)
-            # We do not currently handle nesting of logical sets
-            if isinstance(st, Set):
-                if st.nested_sets:
-                    for nst in st.nested_sets:
-                        nested_set_key = self._obj_to_str(nst)
-                        self._enforcer.add_named_grouping_policy("g2", nested_set_key, set_key)
-                        ancestors = list(ancestors)
-                        ancestors.append(set_key)
-                        _fill_set(nst, ancestors)
-                if st.members:
-                    for member in st.members:
-                        member_key = self._obj_to_str(member)
-                        self._enforcer.add_named_grouping_policy("g2", member_key, set_key)
-
-        while sets:
-            obj_key = sets[0]
-            if obj_key.startswith("g2l:"):
-                root_set = LogicalSet.find(obj_key.split(":")[1])
-            else:
-                root_set = Set.find(obj_key.split(":")[1])
-            _fill_set(root_set, [])
-        print("RECALC", 7)
-
-        self._enforcer.save_policy()
-        self._enforcer.load_policy()
-        print("RECALC", 8)
-
-        if os.getenv("CASBIN_LISTEN", False):
-            trigger.request_reload()
-        print("RECALC", 9)
+        self.policy_builder.rebuild_policies()
 
     @context_free
     def update_permissions_for_user(self, user):

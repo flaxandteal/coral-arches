@@ -30,7 +30,7 @@ class ArchesGroupProcessor:
         group_key = CasbinPermissionFramework._subj_to_str(group)
         self.users = []
         self._check_for_circular_reference(group, group_key, ancestors)
-        self._process_group_members(group, group_key)
+        self._process_group_members(group, group_key, ancestors)
         self.plugin_processor.process_group_plugins(group, group_key)
         self.sets.extend(self.permission_processor.process_group_permissions(group, group_key))
         self._sync_django_groups(group, group_key, self.users)
@@ -49,20 +49,21 @@ class ArchesGroupProcessor:
         if group_key in self.groups_seen:
             return self.groups_seen[group_key]
         
-    def _process_group_members(self, group: Group, group_key: str) -> None:
+    def _process_group_members(self, group: Group, group_key: str, ancestors: List[Group]) -> None:
         """Traverse the tree structure and add grouping policy or user roles based on the type"""
-        from .casbin import CasbinPermissionFramework
+        from ..casbin import CasbinPermissionFramework
  
         for n, member in enumerate(group.members):
-            member_key = CasbinPermissionFramework._subj_to_str(member)
             if isinstance(member, Group):
-                self._add_policy_for_child_group_member(member, member_key, group_key)
+                member_key = CasbinPermissionFramework._subj_to_str(member)
+                self._add_policy_for_child_group_member(member, member_key, group_key, ancestors)
             elif member.user_account:
+                member_key = CasbinPermissionFramework._subj_to_str(member)
                 self._add_role_for_user_member(member, member_key, group_key)
             else:
                 logger.warning("A membership rule was not added as no User was attached %s", member.id)
 
-    def _add_policy_for_child_group_member(self, member: Group, member_key: str, group_key:str) -> None:
+    def _add_policy_for_child_group_member(self, member: Group, member_key: str, group_key:str, ancestors: List[Group]) -> None:
         """Adds a policy to the enforcer for the group, updates the ancestor list and checks for any further child groups"""
         # This is the reverse of what might be expected, as the more deeply
         # nested a group is, the _fewer_ permissions it has. Conversely, the
@@ -70,9 +71,9 @@ class ArchesGroupProcessor:
         # which fits Casbin's transitivity when top groups are _Casbin members of_
         # the groups below them.
         self._enforcer.add_named_grouping_policy("g", group_key, member_key)
-        ancestors = list(ancestors)
-        ancestors.append(group_key)
-        self.users += self._process_group(member, ancestors)
+        ancestor_list = list(ancestors)
+        ancestor_list.append(group_key)
+        self.users += self.process_group(member, ancestor_list)
 
     def _add_role_for_user_member(self, member: User, member_key: str, group_key: str) -> None:
         """Adds a role to the enforcerfor the user"""
@@ -81,7 +82,7 @@ class ArchesGroupProcessor:
 
     def _sync_django_groups(self, group: Group, group_key: str, users: List[User]) -> None:
         """Synchronize users between Arches group and associated Django groups"""
-        from .casbin import CasbinPermissionFramework
+        from ..casbin import CasbinPermissionFramework
         
         if len(group.django_group) == 0:
             CasbinPermissionFramework._ri_to_django_groups(group)

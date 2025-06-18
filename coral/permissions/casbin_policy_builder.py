@@ -31,27 +31,36 @@ class CasbinPolicyBuilder:
         
         self.django_processor.process_all_groups()
 
+        print("Django Groups Processed")
+
         groups = settings.GROUPINGS["groups"]
         root_group = Group.find(groups["root_group"])
         
         self.arches_group_processor.process_group(root_group, [])
 
+        print("Arches Groups Processed")
+
         self.sets = self.arches_group_processor.sets
    
         self._process_django_user_groups()
+
+        print("Django User Groups Processed")
         
         self.set_processor.process_sets(self.sets)
         
         self._finalize_policies()
 
         self._trigger_reload_if_needed()
+
+        print("Process Complete")
     
     def _process_django_user_groups(self):
+        from .casbin import CasbinPermissionFramework
         """Process Django user groups and add casbin policies"""
         for user in User.objects.all():
-            user_key = self._subj_to_str(user)
+            user_key = CasbinPermissionFramework._subj_to_str(user)
             for group in user.groups.all():
-                group_key = self._subj_to_str(group)
+                group_key = CasbinPermissionFramework._subj_to_str(group)
                 self._enforcer.add_named_grouping_policy("g", user_key, group_key)
     
     def _finalize_policies(self):

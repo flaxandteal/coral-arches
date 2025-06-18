@@ -40,7 +40,7 @@ class DjangoGroupProcessor:
                 for nodegroup, perms in
                 get_nodegroups_by_perm_for_user_or_group(django_group, ignore_perms=True).items()
             }
-        graph_perms = self._build_graph_permissions(nodegroups, group_key)
+        graph_perms = self._build_graph_permissions(nodegroups)
         self._add_graph_policies(graph_perms, group_key)
         
     def _build_graph_permissions(self, nodegroups: Dict[str, Set[str]]) -> GraphPermData:
@@ -70,11 +70,12 @@ class DjangoGroupProcessor:
                     self._enforcer.add_policy(group_key, graph, str(perm))
 
     def _process_map_layer_permissions(self, django_group: DjangoGroup, group_key: str) -> None:
+        from ..casbin import CasbinPermissionFramework
         """Process the map layers and add each layer to the enforcer"""
         map_layer_perms = ObjectPermissionChecker(django_group)
 
         for map_layer in MapLayer.objects.all():
             perms = set(map_layer_perms.get_perms(map_layer))
-            map_layer_key = self._obj_to_str(map_layer)
+            map_layer_key = CasbinPermissionFramework._obj_to_str(map_layer)
             for perm in perms:
                 self._enforcer.add_policy(group_key, map_layer_key, str(perm))
