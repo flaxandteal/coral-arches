@@ -25,6 +25,7 @@
                     "07428674-5020-11ef-b77e-0242ac120006": {
                       "disabled": true,
                       "allowInstanceCreation": false,
+                      "disableDelete": true,
                       "config": {
                         "disabled": true,
                         "label": "SMR Number"

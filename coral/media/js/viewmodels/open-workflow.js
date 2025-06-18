@@ -20,6 +20,7 @@ define([
     this.workflowSlug = ko.observable();
     this.workflow = ko.observable();
     this.graphIds = ko.observable();
+    this.alert = ko.observable();
 
     this.searchString = ko.observable();
 
@@ -59,45 +60,27 @@ define([
         : 'Please select from below';
     }, this);
 
-    this.setupMonumentRevision = async () => {
-      const monumentResourceId = this.selectedResource();
-      console.log("graph", this.graphIds())
-      const response = await $.ajax({
-        type: 'POST',
-        url: '/remap-monument-to-revision',
-        dataType: 'json',
-        data: JSON.stringify({
-          targetResourceId: monumentResourceId
-        }),
-        context: this,
-        error: (response, status, error) => {
-          console.log(response, status, error);
-        }
-      });
-      if (response.started) {
-        this.selectedResource(null);
-      } 
-    };
-
-    this.openWorkflow = async () => {
+    this.openWorkflow = async() => {
       if (!this.selectedResource()) return;
       this.loading(true);
       localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
-      await this.setupWorkflow();
-      if (!this.selectedResource()) {
+      if (this.alert()) {
         this.loading(false);
+        const alertData = this.alert();
         params.alert(
           new AlertViewModel(
-            'ep-alert-blue',
-            `Build Process Started`,
-            `The Monument Revision is currently building. This process takes a few minutes. 
-            \n You will receive a notification when the process is complete.`,
+            alertData.alert,
+            alertData.title,
+            alertData.message,
             null,
             () => { 
-              window.window.location = arches.urls.plugin('init-workflow'); 
+              if(alertData.alert === 'ep-alert-blue'){
+                window.location = arches.urls.plugin('init-workflow'); 
+              }
             }
           )
         );
+        this.alert(null);
         return;
       }
       this.workflowUrl(

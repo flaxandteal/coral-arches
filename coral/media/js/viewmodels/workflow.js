@@ -86,6 +86,8 @@ define([
             });
         };
 
+        
+
         this.updatePan = function(val){
             if (this.pan() !== val) {
                 this.pan(val);
@@ -272,6 +274,9 @@ define([
 
             /* furthest completed step index */ 
             self.steps().forEach(function(step) {
+                if(step.ignoreComplete){
+                    return;
+                }
                 if (ko.unwrap(step.complete)) {
                     startIdx = step._index;
                 }

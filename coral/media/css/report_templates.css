@@ -165,7 +165,8 @@ li, .aher-report-a.active:hover {
     flex-direction: column;
     margin-top: 95px;
     flex: 1;
-    flex-direction: column
+    flex-direction: column;
+    max-height: calc(100vh - 195px)
 }
 
 .aher-tab-container {
