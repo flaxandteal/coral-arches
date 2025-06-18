@@ -33,6 +33,7 @@
 - Added CSS classes for validation
 - Removed date consulted from pc summary
 - added building name and townland to the address details
+- In migrate tool allow many, add a check if the node value is already a list
 
 ### Model Changes
 - Enforcement
@@ -86,4 +87,7 @@
 
 **fix: can add multiple users to occupier and FM Warden fields**
 [740](https://github.com/flaxandteal/coral-arches/pull/740) by @babou212
+
+**fix: Migration Tool Many Select Conversion**
+[752](https://github.com/flaxandteal/coral-arches/pull/752) by @StuCM
 
