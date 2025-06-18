@@ -37,6 +37,7 @@
 - Fix the HA model issues in the JSON
 - Fix the HA Revision issues in the JSON
 - Add max-height css property for the reports
+- Add loading icon to the letter generate and disable the button when loading
 
 ### Model Changes
 - Enforcement
@@ -98,4 +99,7 @@
 
 **Fix: 3046 scheduling criteria not showing**
 [753](https://github.com/flaxandteal/coral-arches/pull/753) by @StuCM
+
+**feat: add loading icon when a letter is generating**
+[754](https://github.com/flaxandteal/coral-arches/pull/754) by @StuCM
 
