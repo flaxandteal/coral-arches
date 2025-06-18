@@ -42,7 +42,8 @@ define([
     this.uploadedFiles = ko.observableArray();
     this.document = ko.observable();
     this.configKeys = ko.observable({ placeholder: 0 });
-    this.letterOptions = ko.observable(params.letterOptions)
+    this.letterOptions = ko.observable(params.letterOptions);
+    this.loading = ko.observable(false);
 
     if(!ko.isObservable(this.tile.data[this.LETTER_TYPE_NODE])){
       this.tile.data[this.LETTER_TYPE_NODE] = ko.observable(this.tile.data[this.LETTER_TYPE_NODE]);
@@ -57,7 +58,7 @@ define([
     }, this)
 
     this.retrieveFile = async () => {
-      // this.loading(true);
+      this.loading(true);
       if (this.selectedLetterType()) {
         await $.ajax({
           type: 'POST',
@@ -90,7 +91,7 @@ define([
           }
         });
       }
-      // this.loading(false);
+      this.loading(false);
     };
 
     this.saveDigitalResourceName = async (name, resourceId) => {
