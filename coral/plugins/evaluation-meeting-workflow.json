@@ -209,6 +209,8 @@
                   "semanticName": "Show Location Nodes",
                   "title": "Heritage Asset",
                   "showNodes": [
+                    ["Building Name", "location_data.addresses.0.building_name.building_name_value"],
+                    ["Barony", "location_data.addresses.0.localities_administrative_areas.area_names.area_name"],
                     ["Street", "location_data.addresses.0.street.street_value"],
                     ["Town or City", "location_data.addresses.0.town_or_city.town_or_city_value"],
                     ["County", "location_data.addresses.0.county.county_value"],
