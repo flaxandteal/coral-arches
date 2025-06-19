@@ -165,7 +165,7 @@ define([
         new AlertViewModel(
           'ep-alert-blue',
           `Application status is "Granted". Licence Number: ${licenceNumber}. Click "Ok" to continue.`,
-          `This application's status has been moved to "Granted". With that a licence number has been genereated that will now be used to identify this application. Example 'Excavation Licence ${licenceNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
+          `This application's status has been moved to "Granted". With that a licence number has been generated that will now be used to identify this application. Example 'Excavation Licence ${licenceNumber}', please use this to find the file in the future. The old application ID will still work on the search page.`,
           null,
           () => {
             params.form.complete(true);
