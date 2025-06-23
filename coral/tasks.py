@@ -1,6 +1,9 @@
 import yaml
 import logging
 import datetime
+import subprocess
+from pathlib import Path
+import os
 from pathlib import Path
 from celery import shared_task
 from coral.utils.merge_resources import MergeResources
@@ -26,6 +29,22 @@ logging.basicConfig()
 def export_public_resources(output_dir):
     from coral.utils.export_public import export_public
     export_public(output_dir)
+
+@shared_task
+def full_reset(lock_code_enc):
+    if check_upgrade_window(lock_code_enc):
+        coral_path = Path(os.environ['WEB_ROOT'])
+        print("[[[[Resetting the database]]]]")
+        subprocess.run(["./entrypoint.sh", "setup_arches"], cwd=str(coral_path))
+        print("[[[[Reset]]]]")
+        reset_database(lock_code_enc)
+    else:
+        logging.error(
+            "[Full Reset] Not currently in an upgrade window, check %s",
+            settings.CORAL_UPGRADE_WINDOW_FILE
+        )
+        return
+
 
 @shared_task
 def recalculate_permissions_table():
@@ -310,9 +329,12 @@ def setup_merge_resource_tracker(user):
 
     return str(merge_tracker_resource.resourceinstanceid)
 
-@shared_task
-def reset_database(lock_code_enc):
-    lock_code = AES.decrypt(lock_code_enc)
+def check_upgrade_window(lock_code_enc):
+    AES = AESCipher(settings.SECRET_KEY)
+    # We reverse this so we can get two nontrivial decryptable strings to match
+    # We wish to ensure that the user was able to encrypt (assumes it is non-trivial
+    # to get the encrypted key of a reverse string without decrypting to get the original)
+    lock_code = AES.decrypt(lock_code_enc)[::-1]
 
     if not hasattr(settings, "CORAL_UPGRADE_WINDOW_FILE"):
         logging.error(
@@ -321,12 +343,11 @@ def reset_database(lock_code_enc):
         return
 
     with Path(settings.CORAL_UPGRADE_WINDOW_FILE).open() as uwf:
-        upgrade_windows = yaml.load(uwf)
+        upgrade_windows = yaml.safe_load(uwf)
 
     in_window = False
     now = datetime.datetime.now()
-    AES = AESCipher(settings.SECRET_KEY)
-    for fm, to, window_code_enc in upgrade_windows:
+    for note, fm, to, window_code_enc in upgrade_windows:
         fm = datetime.datetime.fromisoformat(fm)
         to = datetime.datetime.fromisoformat(to)
         if fm <= now <= to:
@@ -334,15 +355,19 @@ def reset_database(lock_code_enc):
             try:
                 unlock = AES.decrypt(window_code_enc) == lock_code
             except Exception as exc:
-                logging.error("%s: Could not decrypt window lock for %s:%s", str(exc), fm, to)
+                logging.error("%s: Could not decrypt window lock for %s -> %s (%s)", str(exc), fm, to, note)
             if unlock:
                 in_window = True
+                logging.info("Matched window: %s -> %s (%s)", fm, to, note)
                 break
             else:
-                logging.error("Could not match window lock after %s", fm)
-                return
+                logging.error("Could not match window lock in %s -> %s (%s)", fm, to, note)
+    return in_window
 
-    if in_window:
+
+@shared_task
+def reset_database(lock_code_enc):
+    if check_upgrade_window(lock_code_enc):
         command = PackageCommand()
         with NamedTemporaryFile() as tf:
             # This is a workaround for the fact that we cannot pass a flag to
@@ -354,7 +379,8 @@ def reset_database(lock_code_enc):
                 setup_db=True,
                 defer_indexing=False,
                 is_application=False,
-                include_business_data=True
+                include_business_data=True,
+                yes=True
             )
             settings.SYSTEM_SETTINGS_LOCAL_PATH = sslp
         logging.info(
@@ -362,7 +388,7 @@ def reset_database(lock_code_enc):
         )
     else:
         logging.error(
-            "Not currently in an upgrade window, check %s",
+            "[Reset Database] Not currently in an upgrade window, check %s",
             settings.CORAL_UPGRADE_WINDOW_FILE
         )
         return

@@ -57,7 +57,7 @@ WEBPACK_LOADER = {
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
 CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
 
-CORAL_UPGRADE_WINDOW_FILE = os.getenv("CORAL_UPGRADE_WINDOW_FILE", "")
+CORAL_UPGRADE_WINDOW_FILE = os.getenv("CORAL_UPGRADE_WINDOW_FILE", os.path.join(APP_ROOT, '..', '_upgrade_window', 'window.yaml'))
 
 DAUTHZ = {
     # DEFAULT Dauthz enforcer
@@ -106,7 +106,7 @@ FILENAME_GENERATOR = "arches.app.utils.storage_filename_generator.generate_filen
 UPLOADED_FILES_DIR = "uploadedfiles"
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 ###
