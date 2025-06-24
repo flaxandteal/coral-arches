@@ -815,6 +815,9 @@ define([
                         "allowInstanceCreation": false
                       },
                       "43ec68d6-c445-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "label": "Transfer of Licence"
+                        },
                         "allowInstanceCreation": false
                       },
                       "6bc892c8-c44d-11ee-94bf-0242ac180006": {
@@ -855,6 +858,7 @@ define([
                           "maxDate":"today"
                         }
                       },
+
                       "c6f09242-c4d2-11ee-b171-0242ac180006": {
                         "config":{
                           "maxDate":"today"
@@ -936,6 +940,7 @@ define([
                       },
                       "c6f09242-c4d2-11ee-b171-0242ac180006": {
                         "config":{
+                          "label": "Extension of Licence",
                           "maxDate":"today"
                         }
                       },

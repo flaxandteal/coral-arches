@@ -122,7 +122,14 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['f100407e-3c79-459d-bf91-21b4358c17f6'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba"
+                  "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba",
+                  "nodeOptions": {
+                    "a1d4ee93-efc5-11eb-b117-a87eeabdefba": {
+                      "config": {
+                        "label": "Citations"
+                      }
+                    }
+                }
                 },
                 "tilesManaged": "many",
                 "componentName": "default-card",
