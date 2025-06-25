@@ -28,10 +28,6 @@ define([
 
     this.limit = ko.observable(params.config().limit);
 
-    if(this.totalLicences() === 0) {
-      this.currentState(null);
-    }
-
     this.limit.subscribe((value) => {
       this.config({
         ...this.config(),
