@@ -28,6 +28,10 @@ define([
 
     this.limit = ko.observable(params.config().limit);
 
+    if(this.totalLicences() === 0) {
+      this.currentState(null);
+    }
+
     this.limit.subscribe((value) => {
       this.config({
         ...this.config(),
@@ -126,6 +130,14 @@ define([
       }, true);
 
     this.value.subscribe(async (value) => {
+      if (!value || value.length === 0) {
+        this.applicationData(null);
+        this.totalOpenApplications(null);
+        this.totalLicences(null);
+        this.currentState(null);
+        return;
+      }
+
       await this.loadApplicationData(value);
     }, this);
 
