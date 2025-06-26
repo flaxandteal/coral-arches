@@ -17,7 +17,7 @@ define([
           workflowstepclass: 'workflow-form-component',
           informationboxdata: {
             heading: 'Target Heritage Asset',
-            text: 'The monument selected here will be the Heritage Asset that is related to. The Heritage Asset selected on the second page will appear on this Heritage Asset.'
+            text: 'The monument selected here will be the Heritage Asset that it is related to. The Heritage Asset selected on the second page will appear on this Heritage Asset.'
           },
           layoutSections: [
             {
