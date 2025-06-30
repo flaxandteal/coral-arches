@@ -25,7 +25,7 @@ from django.db import transaction
 from guardian.models import GroupObjectPermission
 
 from arches.app.models.models import *
-from arches.app.models.models import ResourceInstance, MapLayer, Plugin
+from arches.app.models.models import ResourceInstance, MapLayer, Plugin, Node
 from arches.app.models.graph import Graph
 from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
@@ -924,7 +924,14 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             if group.startswith("dg:") and
             (not perms or act in perms or act == "__all__")
         }
-        return bool(group_ids & {str(group.pk) for group in user.groups.all()})
+        user_ids = {
+            user[2:] for user, _, act in groups
+            if user.startswith("u:") and
+            (not perms or act in perms or act == "__all__")
+        }
+        graph_perm_ids = group_ids | user_ids
+
+        return bool(graph_perm_ids & {str(group.pk) for group in user.groups.all()})
 
 
     @context_free
@@ -1023,6 +1030,17 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                     return None
         return False
 
+    def user_can_read_graph(self, user: User, graph_id: str) -> bool:
+        """
+        returns a boolean denoting if a user has permission to read a model's nodegroups
+
+        Arguments:
+        user -- the user to check
+        graph_id -- a graph id to check if a user has permissions to that graph's type specifically
+
+        """
+
+        return bool(self.user_has_resource_model_permissions(user, ["models.read_nodegroup"], graph_id=graph_id))
 
     @context_free
     def user_can_read_concepts(self, user):
