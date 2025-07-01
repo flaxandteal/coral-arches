@@ -61,6 +61,11 @@ define([
         nodegroupId: 'ac823b90-b555-11ee-805b-0242ac120006',
         renderNodeIds: ['c9711ef6-b555-11ee-baf6-0242ac120006']
       },
+      cMRef: {
+        label: 'CM Reference',
+        nodegroupId: '25e2611c-b557-11ee-805b-0242ac120006',
+        renderNodeIds: ['25e26afe-b557-11ee-805b-0242ac120006']
+      },
       crimeRef: {
         label: 'Crime References',
         nodegroupId: '0674ff12-b5e6-11ee-a372-0242ac120006',

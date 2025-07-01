@@ -37,6 +37,9 @@ details = {
 
 class NotifyEnforcement(BaseFunction):
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+        
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         existing_notification = models.Notification.objects.filter(
