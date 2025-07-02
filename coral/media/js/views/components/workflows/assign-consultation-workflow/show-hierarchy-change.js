@@ -42,7 +42,7 @@ define([
       }
     }, this);
 
-    if (this.STATUTORY_VALUES.includes(this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']())) {
+    if (this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']()) {
       if (this.STATUTORY_VALUES.includes(this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']())) {
         this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
       } else {
