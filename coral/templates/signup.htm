@@ -1,4 +1,4 @@
-{% extends "base.htm" %} {% load static %} {% load i18n %} {% block loading_mask %} {% endblock loading_mask %} {% block body %}
+{% extends "base.htm" %} {% load static %} {% load i18n %} {% block loading_mask %} {% endblock loading_mask %} {% block body %} {% load webpack_static from webpack_loader %}
 
 <div id="container" class="cls-container arches-login">
 
@@ -144,5 +144,5 @@
 
 </div>
 
-<script src="{% static 'js/signup.js' %}"></script>
+<script src="{% webpack_static 'node_modules/requirejs/require.js' %}" data-main="{% webpack_static 'js/signup' %}"></script>
 {% endblock body %}
