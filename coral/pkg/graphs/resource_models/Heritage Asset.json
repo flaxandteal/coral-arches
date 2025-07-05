@@ -42345,7 +42345,6 @@
                 },
                 {
                     "alias": "component_description",
-                    "config": null,
                     "datatype": "string",
                     "description": null,
                     "exportable": false,
@@ -42366,7 +42365,6 @@
                 },
                 {
                     "alias": "rar_descriptions",
-                    "config": null,
                     "datatype": "semantic",
                     "description": "Descriptions specific to this record or registry",
                     "exportable": false,
@@ -42387,7 +42385,6 @@
                 },
                 {
                     "alias": "rar_description",
-                    "config": null,
                     "datatype": "string",
                     "description": null,
                     "exportable": false,
