@@ -1,5 +1,5 @@
 ### Types of Changes
-- [ ] Model Changes
+- [x] Model Changes
 - [ ] Added Functions
 - [ ] Added Concepts
 - [ ] Workflows Updated
@@ -14,6 +14,10 @@
 - Added Dashboard to the nav bar home page
 - moved the signup.js to the media/js location
 - updating signup.htm to import require.js
+- Change county type in Organization model to a concept
+
+### Model Changes
+- Organization
 
 ## Pull Requests
 
@@ -22,4 +26,7 @@
 
 **Fix: 2065 Password Criteria static build fix**
 [771](https://github.com/flaxandteal/coral-arches/pull/771) by @StuCM
+
+**fix(Organization): change county data type to a concept**
+[774](https://github.com/flaxandteal/coral-arches/pull/774) by @StuCM
 
