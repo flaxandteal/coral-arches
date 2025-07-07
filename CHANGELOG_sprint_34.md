@@ -18,9 +18,12 @@
 - Add else statement to update planning name function to stop the reference number being used
 - Update the Planning Response open workflow descriptions
 - Updated a typo in the Licence, open workflow description
+- update check against application type in the show-hierarchy-change
+- make the application type card visible in the resource instance
 
 ### Model Changes
 - Organization
+- Consultation - Made Application Type card visible
 
 ### Workflows Updated
 - HM Response
@@ -46,4 +49,7 @@
 
 **fix: fixed typo in license workflow notification banner**
 [757](https://github.com/flaxandteal/coral-arches/pull/757) by @babou212
+
+**fix: check application type data on load to set hierarchy type**
+[768](https://github.com/flaxandteal/coral-arches/pull/768) by @StuCM
 
