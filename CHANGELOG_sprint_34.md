@@ -17,6 +17,7 @@
 - Change county type in Organization model to a concept
 - Add else statement to update planning name function to stop the reference number being used
 - Update the Planning Response open workflow descriptions
+- Updated a typo in the Licence, open workflow description
 
 ### Model Changes
 - Organization
@@ -24,6 +25,7 @@
 ### Workflows Updated
 - HM Response
 - HB Response
+- Licence Workflow
 
 ## Pull Requests
 
@@ -41,4 +43,7 @@
 
 **fix: fixed typo in consultation response workflow descriptions**
 [756](https://github.com/flaxandteal/coral-arches/pull/756) by @babou212
+
+**fix: fixed typo in license workflow notification banner**
+[757](https://github.com/flaxandteal/coral-arches/pull/757) by @babou212
 
