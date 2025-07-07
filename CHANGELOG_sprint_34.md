@@ -24,11 +24,13 @@
 - Update plural labels for licence
 - Update curatiorial inspection workflow labels
 - remove info message when check application is null
+- remove organization from the application node
 
 ### Model Changes
 - Organization
 - Consultation - Made Application Type card visible
 - Licence
+- Consultation
 
 ### Workflows Updated
 - HM Response
@@ -76,4 +78,7 @@
 
 **fix: fixed director many select not clearing**
 [762](https://github.com/flaxandteal/coral-arches/pull/762) by @babou212
+
+**fix: removed organisation from select in consultation graph**
+[763](https://github.com/flaxandteal/coral-arches/pull/763) by @babou212
 
