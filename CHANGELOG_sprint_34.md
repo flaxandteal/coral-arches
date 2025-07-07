@@ -88,3 +88,6 @@
 **fix: fixed typo in relate ha workflow**
 [764](https://github.com/flaxandteal/coral-arches/pull/764) by @babou212
 
+**fix: added time zone details in coral settings.py**
+[765](https://github.com/flaxandteal/coral-arches/pull/765) by @babou212
+
