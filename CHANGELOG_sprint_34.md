@@ -21,10 +21,12 @@
 - update check against application type in the show-hierarchy-change
 - make the application type card visible in the resource instance
 - add escape_function context to notify_enforcement
+- Update plural labels for licence
 
 ### Model Changes
 - Organization
 - Consultation - Made Application Type card visible
+- Licence
 
 ### Workflows Updated
 - HM Response
@@ -56,4 +58,7 @@
 
 **fix: add escape function to notify enforcement**
 [767](https://github.com/flaxandteal/coral-arches/pull/767) by @StuCM
+
+**chore: relabled fields in excavation workflow**
+[759](https://github.com/flaxandteal/coral-arches/pull/759) by @babou212
 
