@@ -2,7 +2,7 @@
 - [x] Model Changes
 - [ ] Added Functions
 - [ ] Added Concepts
-- [ ] Workflows Updated
+- [x] Workflows Updated
 - [ ] Reports Updated
 - [ ] Added/Updated Dependencies
 - [x] Features Added
@@ -16,9 +16,14 @@
 - updating signup.htm to import require.js
 - Change county type in Organization model to a concept
 - Add else statement to update planning name function to stop the reference number being used
+- Update the Planning Response open workflow descriptions
 
 ### Model Changes
 - Organization
+
+### Workflows Updated
+- HM Response
+- HB Response
 
 ## Pull Requests
 
@@ -33,4 +38,7 @@
 
 **Fix: 2782 - Update Consultation Display Name**
 [772](https://github.com/flaxandteal/coral-arches/pull/772) by @StuCM
+
+**fix: fixed typo in consultation response workflow descriptions**
+[756](https://github.com/flaxandteal/coral-arches/pull/756) by @babou212
 
