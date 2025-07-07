@@ -27,6 +27,7 @@
 - remove organization from the application node
 - Fix typo in related HA workflow description
 - Update the placeholder for evaluation meeting dropdown
+- Disable HA name in Issue Report
 
 ### Model Changes
 - Organization
@@ -41,6 +42,7 @@
 - Curatorial Inspection
 - Related HA
 - Evaluation Meeting
+- Issue Report
 
 ### Bug Fix
 - add null check to the check open application
@@ -96,4 +98,7 @@
 
 **fix: fix typo in eval wf select**
 [770](https://github.com/flaxandteal/coral-arches/pull/770) by @babou212
+
+**fix: disable name field in issue report wf**
+[775](https://github.com/flaxandteal/coral-arches/pull/775) by @babou212
 
