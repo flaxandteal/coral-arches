@@ -31,12 +31,19 @@
 - Updated casbin to check against the user permissions as well as the Django Group permissions
 - Added additional logical sets for the digital objects
 - Updated the planning groups with the new logical sets 
+- Updated map markers for several models
 
 ### Model Changes
 - Organization
 - Consultation - Made Application Type card visible
 - Licence
 - Consultation
+- HA
+- HA Revision
+- Consultation
+- Activity
+- Ranger Inspection
+- Risk Assessment
 
 ### Workflows Updated
 - HM Response
@@ -115,4 +122,7 @@
 
 **Fix: 2818 PDF Merge Files not showing for Users**
 [766](https://github.com/flaxandteal/coral-arches/pull/766) by @StuCM
+
+**feat (Multiple Models): Change Map Marker Colours**
+[776](https://github.com/flaxandteal/coral-arches/pull/776) by @StuCM
 
