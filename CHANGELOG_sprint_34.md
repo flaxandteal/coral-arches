@@ -67,3 +67,6 @@
 **chore: relabeled fields in curatorial workflow**
 [760](https://github.com/flaxandteal/coral-arches/pull/760) by @babou212
 
+**chore: updated field names for various many selects in various workflows**
+[761](https://github.com/flaxandteal/coral-arches/pull/761) by @babou212
+
