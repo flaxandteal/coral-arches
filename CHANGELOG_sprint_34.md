@@ -23,6 +23,7 @@
 - add escape_function context to notify_enforcement
 - Update plural labels for licence
 - Update curatiorial inspection workflow labels
+- remove info message when check application is null
 
 ### Model Changes
 - Organization
@@ -34,6 +35,9 @@
 - HB Response
 - Licence Workflow
 - Curatorial Inspection
+
+### Bug Fix
+- add null check to the check open application
 
 ## Pull Requests
 
@@ -69,4 +73,7 @@
 
 **chore: updated field names for various many selects in various workflows**
 [761](https://github.com/flaxandteal/coral-arches/pull/761) by @babou212
+
+**fix: fixed director many select not clearing**
+[762](https://github.com/flaxandteal/coral-arches/pull/762) by @babou212
 
