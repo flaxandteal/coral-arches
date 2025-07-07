@@ -26,6 +26,7 @@
 - remove info message when check application is null
 - remove organization from the application node
 - Fix typo in related HA workflow description
+- Update the placeholder for evaluation meeting dropdown
 
 ### Model Changes
 - Organization
@@ -39,10 +40,12 @@
 - Licence Workflow
 - Curatorial Inspection
 - Related HA
+- Evaluation Meeting
 
 ### Bug Fix
 - add null check to the check open application
 - Update description in related HA
+- Update the placeholder for evaluation meeting dropdown
 
 ## Pull Requests
 
@@ -90,4 +93,7 @@
 
 **fix: added time zone details in coral settings.py**
 [765](https://github.com/flaxandteal/coral-arches/pull/765) by @babou212
+
+**fix: fix typo in eval wf select**
+[770](https://github.com/flaxandteal/coral-arches/pull/770) by @babou212
 
