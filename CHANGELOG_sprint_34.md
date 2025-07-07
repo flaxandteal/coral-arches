@@ -15,6 +15,7 @@
 - moved the signup.js to the media/js location
 - updating signup.htm to import require.js
 - Change county type in Organization model to a concept
+- Add else statement to update planning name function to stop the reference number being used
 
 ### Model Changes
 - Organization
@@ -29,4 +30,7 @@
 
 **fix(Organization): change county data type to a concept**
 [774](https://github.com/flaxandteal/coral-arches/pull/774) by @StuCM
+
+**Fix: 2782 - Update Consultation Display Name**
+[772](https://github.com/flaxandteal/coral-arches/pull/772) by @StuCM
 
