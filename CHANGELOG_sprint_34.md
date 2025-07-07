@@ -22,6 +22,7 @@
 - make the application type card visible in the resource instance
 - add escape_function context to notify_enforcement
 - Update plural labels for licence
+- Update curatiorial inspection workflow labels
 
 ### Model Changes
 - Organization
@@ -32,6 +33,7 @@
 - HM Response
 - HB Response
 - Licence Workflow
+- Curatorial Inspection
 
 ## Pull Requests
 
@@ -61,4 +63,7 @@
 
 **chore: relabled fields in excavation workflow**
 [759](https://github.com/flaxandteal/coral-arches/pull/759) by @babou212
+
+**chore: relabeled fields in curatorial workflow**
+[760](https://github.com/flaxandteal/coral-arches/pull/760) by @babou212
 
