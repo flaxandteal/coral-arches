@@ -25,6 +25,7 @@
 - Update curatiorial inspection workflow labels
 - remove info message when check application is null
 - remove organization from the application node
+- Fix typo in related HA workflow description
 
 ### Model Changes
 - Organization
@@ -37,9 +38,11 @@
 - HB Response
 - Licence Workflow
 - Curatorial Inspection
+- Related HA
 
 ### Bug Fix
 - add null check to the check open application
+- Update description in related HA
 
 ## Pull Requests
 
@@ -81,4 +84,7 @@
 
 **fix: removed organisation from select in consultation graph**
 [763](https://github.com/flaxandteal/coral-arches/pull/763) by @babou212
+
+**fix: fixed typo in relate ha workflow**
+[764](https://github.com/flaxandteal/coral-arches/pull/764) by @babou212
 
