@@ -20,6 +20,7 @@
 - Updated a typo in the Licence, open workflow description
 - update check against application type in the show-hierarchy-change
 - make the application type card visible in the resource instance
+- add escape_function context to notify_enforcement
 
 ### Model Changes
 - Organization
@@ -52,4 +53,7 @@
 
 **fix: check application type data on load to set hierarchy type**
 [768](https://github.com/flaxandteal/coral-arches/pull/768) by @StuCM
+
+**fix: add escape function to notify enforcement**
+[767](https://github.com/flaxandteal/coral-arches/pull/767) by @StuCM
 
