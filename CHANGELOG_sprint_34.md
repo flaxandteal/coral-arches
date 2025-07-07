@@ -28,6 +28,9 @@
 - Fix typo in related HA workflow description
 - Update the placeholder for evaluation meeting dropdown
 - Disable HA name in Issue Report
+- Updated casbin to check against the user permissions as well as the Django Group permissions
+- Added additional logical sets for the digital objects
+- Updated the planning groups with the new logical sets 
 
 ### Model Changes
 - Organization
@@ -43,6 +46,14 @@
 - Related HA
 - Evaluation Meeting
 - Issue Report
+
+### Features Added
+- Logical sets data set has been updated to include
+-     - All digital objects
+-     - HM Response Digital Objects
+-     - HB Response Digital Objects 
+- Casbin permissions check against user permissions
+- Extra function added to check for permissions against graph access 
 
 ### Bug Fix
 - add null check to the check open application
@@ -101,4 +112,7 @@
 
 **fix: disable name field in issue report wf**
 [775](https://github.com/flaxandteal/coral-arches/pull/775) by @babou212
+
+**Fix: 2818 PDF Merge Files not showing for Users**
+[766](https://github.com/flaxandteal/coral-arches/pull/766) by @StuCM
 
