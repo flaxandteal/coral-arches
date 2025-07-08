@@ -209,17 +209,17 @@
                   "semanticName": "Show Location Nodes",
                   "title": "Heritage Asset",
                   "showNodes": [
-                    ["Building Name", "location_data.addresses.0.building_name.building_name_value"],
-                    ["Barony", "location_data.localities_administrative_areas.area_names.area_name"],
-                    ["Street", "location_data.addresses.0.street.street_value"],
-                    ["Town or City", "location_data.addresses.0.town_or_city.town_or_city_value"],
-                    ["County", "location_data.addresses.0.county.county_value"],
-                    ["Postcode", "location_data.addresses.0.postcode.postcode_value"],
+                    ["Building Name", "location_data.addresses.building_name.building_name_value"],
+                    ["Street", "location_data.addresses.street.street_value"],
+                    ["Town or City", "location_data.addresses.town_or_city.town_or_city_value"],
+                    ["County", "location_data.addresses.county.county_value"],
+                    ["Postcode", "location_data.addresses.postcode.postcode_value"],
                     ["Wards and District", "wards_and_district_type"],
                     ["Council", "location_data.council"],
-                    ["Townland", "location_data.addresses.0.townlands.townland"],
+                    ["Townland", "location_data.addresses.townlands.townland"],
+                    ["Barony", "location_data.localities_administrative_areas.area_names.area_name"],
                     ["Irish Grid Reference (TM65)", "location_data.national_grid_references.irish_grid_reference_tm65_"],
-                    ["Location Description", "location_data.location_descriptions.0.location_description"]
+                    ["Location Description", "location_data.location_descriptions.location_description"]
                   ]
                 },
                 "tilesManaged": "one",
