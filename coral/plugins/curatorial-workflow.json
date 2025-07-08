@@ -144,6 +144,21 @@
                   "nodeOptions": {
                     "db45aa50-24ce-11ef-97ad-0242ac130006": {
                       "allowInstanceCreation": false
+                    },
+                    "936fdbc8-24cf-11ef-97ad-0242ac130006": {
+                    "config": {
+                        "label": "CWT Area Manager(s)"
+                      }
+                    },
+                    "54131242-24cf-11ef-a3a4-0242ac130006": {
+                      "config": {
+                        "label": "Archaeologist(s)"
+                      }
+                    },
+                     "53388daa-24d1-11ef-a3a4-0242ac130006": {
+                      "config": {
+                        "label": "CWT Area Supervisor(s)"
+                      }
                     }
                   }
                 },

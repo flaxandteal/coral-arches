@@ -2594,7 +2594,7 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Nominated Excavation Director",
+                        "label": "Nominated Excavation Director(s)",
                         "limit": 6,
                         "placeholder": {
                             "en": ""
@@ -2602,7 +2602,7 @@
                     },
                     "id": "6d294e00-5891-11ee-a624-0242ac120004",
                     "label": {
-                        "en": "Nominated Excavation Director"
+                        "en": "Nominated Excavation Director(s)"
                     },
                     "node_id": "6d294784-5891-11ee-a624-0242ac120004",
                     "sortorder": 3,
@@ -2876,14 +2876,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Applicant",
+                        "label": "New Applicant",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "721328b6-046a-480f-9a82-0113dd2ac7c8",
                     "label": {
-                        "en": "Applicant"
+                        "en": "New Applicant"
                     },
                     "node_id": "f870c35e-c447-11ee-8be7-0242ac180006",
                     "sortorder": 3,
@@ -3114,7 +3114,7 @@
                     },
                     "id": "8d4976f6-280b-4227-ac71-c2bb3173df36",
                     "label": {
-                        "en": "Excavation Reason"
+                        "en": "Excavation Reason(s)"
                     },
                     "node_id": "ba8aab44-2d4d-11ef-bbfd-0242ac120006",
                     "sortorder": 4,
@@ -3745,7 +3745,7 @@
                     },
                     "id": "a3f221cf-230e-4754-965f-6ddff1bd8139",
                     "label": {
-                        "en": "Excavation Type"
+                        "en": "Excavation Type(s)"
                     },
                     "node_id": "8f87fdae-2d50-11ef-bbfd-0242ac120006",
                     "sortorder": 8,
@@ -4264,14 +4264,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Employing Body",
+                        "label": "Employing Body/Bodies",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "c1836c15-8a16-440d-a65a-fb2a2eaf6fd5",
                     "label": {
-                        "en": "Employing Body"
+                        "en": "Employing Body/Bodies"
                     },
                     "node_id": "07d3905c-d58b-11ee-a02f-0242ac180006",
                     "sortorder": 9,
@@ -4604,15 +4604,15 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Nominated Excavation Director",
+                        "label": "Nominated Excavation Director(s)",
                         "limit": 6,
                         "placeholder": {
-                            "en": ""
+                            "en": "Nominated Excavation Director(s)"
                         }
                     },
                     "id": "dad1f0c1-5f9b-43d1-9de5-0b0782797eca",
                     "label": {
-                        "en": "Nominated Excavation Director"
+                        "en": "Nominated Excavation Director(s)"
                     },
                     "node_id": "ab2db0ec-c448-11ee-94bf-0242ac180006",
                     "sortorder": 6,
@@ -4677,14 +4677,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Employing Body",
+                        "label": "Employing Body/Bodies",
                         "placeholder": {
-                            "en": ""
+                            "en": "Employing Body/Bodies"
                         }
                     },
                     "id": "de95faaa-767d-4748-9079-cce905db25e1",
                     "label": {
-                        "en": "Employing Body"
+                        "en": "Employing Body/Bodies"
                     },
                     "node_id": "29b2355e-c44a-11ee-94bf-0242ac180006",
                     "sortorder": 9,

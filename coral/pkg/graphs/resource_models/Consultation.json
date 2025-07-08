@@ -1269,7 +1269,7 @@
                     },
                     "nodegroup_id": "54de6acc-8895-11ea-9067-f875a44e0e11",
                     "sortorder": 5,
-                    "visible": false
+                    "visible": true
                 },
                 {
                     "active": true,
@@ -22582,20 +22582,20 @@
                         "clusterDistance": 20,
                         "clusterMaxZoom": 5,
                         "clusterMinPoints": 3,
-                        "fillColor": "rgba(130, 130, 130, 0.5)",
-                        "haloRadius": 4,
+                        "fillColor": "rgba(77,175,74,0.5)",
+                        "haloRadius": 6,
                         "haloWeight": 4,
                         "layerActivated": true,
                         "layerIcon": "",
                         "layerLegend": "",
                         "layerName": "",
-                        "lineColor": "rgba(130, 130, 130, 0.7)",
-                        "lineHaloColor": "rgba(200, 200, 200, 0.5)",
-                        "outlineColor": "rgba(200, 200, 200, 0.7)",
+                        "lineColor": "rgba(77,175,74,0.7)",
+                        "lineHaloColor": "rgba(161,217,155,0.5)",
+                        "outlineColor": "rgba(161,217,155,0.7)",
                         "outlineWeight": 2,
-                        "pointColor": "rgba(130, 130, 130, 0.7)",
-                        "pointHaloColor": "rgba(200, 200, 200, 0.5)",
-                        "radius": 2,
+                        "pointColor": "rgba(77,175,74,0.8)",
+                        "pointHaloColor": "rgba(161,217,155,0.5)",
+                        "radius": 4,
                         "simplification": 0.3,
                         "weight": 2
                     },
@@ -26772,10 +26772,6 @@
                             "22477f01-1a44-11e9-b0a9-000d3ab1e588"
                         ],
                         "graphs": [
-                            {
-                                "graphid": "d4a88461-5463-11e9-90d9-000d3ab1e588",
-                                "name": "Organization"
-                            },
                             {
                                 "graphid": "22477f01-1a44-11e9-b0a9-000d3ab1e588",
                                 "name": "Person"

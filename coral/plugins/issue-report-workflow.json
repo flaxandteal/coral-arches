@@ -90,6 +90,11 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
+                  "nodeOptions": {
+                    "676d47ff-9c1c-11ea-b07f-f875a44e0e11": {
+                      "disabled": true
+                    }
+                  },
                   "hiddenNodes": [
                     "676d47fd-9c1c-11ea-9d73-f875a44e0e11",
                     "676d47fc-9c1c-11ea-b5b0-f875a44e0e11"
