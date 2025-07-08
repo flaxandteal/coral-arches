@@ -126,3 +126,6 @@
 **feat (Multiple Models): Change Map Marker Colours**
 [776](https://github.com/flaxandteal/coral-arches/pull/776) by @StuCM
 
+**fix: added building name and barony to eval wf location details**
+[758](https://github.com/flaxandteal/coral-arches/pull/758) by @babou212
+
