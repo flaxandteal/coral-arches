@@ -1,4 +1,5 @@
 import os, glob
+from typing import List
 import uuid
 from arches.app.models.graph import Graph
 from arches.app.models.models import FunctionXGraph
@@ -500,7 +501,8 @@ class TransformData():
         print(f"An error occurred: {e}")
 
   def allow_many(self, tile_json, nodeid):
-    if tile_json['data'][nodeid]:
+    value = tile_json['data'][nodeid]
+    if value and not isinstance(value, List):
       tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
     return tile_json
   

@@ -913,33 +913,6 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
-                    "name": {
-                        "en": "Approvals"
-                    },
-                    "nodegroup_id": "7e0533aa-37b7-11ef-9263-0242ac150006",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "55d8a0f4-049c-11eb-8965-f875a44e0e11",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": null,
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "helpenabled": false,
-                    "helptext": {
-                        "en": ""
-                    },
-                    "helptitle": {
-                        "en": ""
-                    },
-                    "instructions": {
-                        "en": ""
-                    },
                     "is_editable": false,
                     "name": {
                         "en": "Components"
@@ -2448,6 +2421,35 @@
                     "sortorder": 21,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "6af2a0cd-efc5-11eb-bfc2-a87eeabdefba",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Scheduling Criteria",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Select an option"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "f5c2aa7b-b476-41e3-8d79-f4f0d18b5f59",
+                    "label": {
+                        "en": "Scheduling Criteria"
+                    },
+                    "node_id": "7c639efc-fa6b-11ef-b578-ae394b224c56",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "6af2a0cd-efc5-11eb-bfc2-a87eeabdefba",
@@ -15613,14 +15615,6 @@
                     "rangenode_id": "9b884c9c-49a4-11ef-8345-0242ac120007"
                 },
                 {
-                    "domainnode_id": "a05d0dd0-1f4b-11ef-ac74-0242ac150006",
-                    "edgeid": "3642ac0f-3893-497f-ba93-25b21dfca6e4",
-                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P19i_was_made_for",
-                    "rangenode_id": "fa70c068-3ea5-11ef-9023-0242ac140007"
-                },
-                {
                     "description": null,
                     "domainnode_id": "d0f45bbe-d645-11ee-8b04-0242ac180006",
                     "edgeid": "002d5a57-e2ff-43a3-b804-1d28544d4909",
@@ -22638,7 +22632,7 @@
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Listing Criteria",
-                    "nodegroup_id": "6af2b6a1-efc5-11eb-bd62-a87eeabdefba",
+                    "nodegroup_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
                     "nodeid": "74ef37e0-37b5-11ef-9263-a1a88c0bb289",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
@@ -22654,14 +22648,14 @@
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
-                    "graph_id": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
+                    "graph_id": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                     "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Land Use Site",
-                    "nodegroup_id": "6af2b6a1-efc5-11eb-bd62-a87eeabdefba",
+                    "nodegroup_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
                     "nodeid": "5782bd48-6aa6-11ef-b483-5e5ea193fa45",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E15_Identifier_Assignment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P15i_influenced",
@@ -29187,7 +29181,7 @@
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Recommended designation, identification and protection",
-                    "nodegroup_id": "6af2b6a1-efc5-11eb-bd62-a87eeabdefba",
+                    "nodegroup_id": "6af2a0cb-efc5-11eb-8436-a87eeabdefba",
                     "nodeid": "74ef37e0-37b5-11ef-9263-0242ac150006",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
@@ -33244,19 +33238,19 @@
                         "clusterDistance": 20,
                         "clusterMaxZoom": 5,
                         "clusterMinPoints": 3,
-                        "fillColor": "rgba(130, 130, 130, 0.5)",
-                        "haloRadius": 4,
+                        "fillColor": "rgba(228,26,28,0.5)",
+                        "haloRadius": 6,
                         "haloWeight": 4,
                         "layerActivated": true,
                         "layerIcon": "",
                         "layerLegend": "",
                         "layerName": "",
-                        "lineColor": "rgba(130, 130, 130, 0.7)",
-                        "lineHaloColor": "rgba(200, 200, 200, 0.5)",
-                        "outlineColor": "rgba(200, 200, 200, 0.7)",
+                        "lineColor": "rgba(228,26,28,0.7)",
+                        "lineHaloColor": "rgba(252,146,114,0.5)",
+                        "outlineColor": "rgba(252,146,114,0.7)",
                         "outlineWeight": 2,
-                        "pointColor": "rgba(130, 130, 130, 0.7)",
-                        "pointHaloColor": "rgba(200, 200, 200, 0.5)",
+                        "pointColor": "rgba(228,26,28,0.8)",
+                        "pointHaloColor": "rgba(252,146,114,0.5)",
                         "radius": 2,
                         "simplification": 0.3,
                         "weight": 2

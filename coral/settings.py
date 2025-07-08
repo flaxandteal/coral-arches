@@ -24,7 +24,10 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=13, patch=52)
+APP_VERSION = semantic_version.Version(major=7, minor=15, patch=52)
+
+TIME_ZONE = "Europe/London"
+USE_TZ = True
 
 GROUPINGS = {
     "groups": {

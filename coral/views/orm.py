@@ -1,38 +1,60 @@
 from django.views.generic import View
 from django.http import JsonResponse
 from urllib.parse import parse_qs
-from uuid import UUID
 import arches_orm
-import requests
-import json 
-from django.urls import reverse
+from arches_orm.view_models.node_list import NodeListViewModel
+from arches_orm.view_models import ConceptListValueViewModel
 
-
-# Function to get nested attributes from an object using a string path
-# Example: location_data.addresses.0.street.street_value  0 being list index
 def multi_getattr(obj, attr, default=None):
-    attributes = attr.split(".")
-    for i in attributes:
+    """
+    Takes a string chain and gets the value attribute from the node
+    Handles instances where NodeListViewModels are returned and does not need to be indexed in chain
+
+    Args:
+        obj (wkri): Arches orm well known resource instance where the data is being called from
+        attr (str or list): a string or list of the nodes that need to be accessed for the data
+    Returns:
+        list: a list of the values from the nodes 
+    """
+    if isinstance(attr, str):
+        attributes = attr.split(".")
+    else:
+        attributes = attr
+    values = []
+    for idx, i in enumerate(attributes):
         try:
-            idx = int(i)
-            obj = obj[idx]
-        except (ValueError, TypeError):
-            try:
-                obj = getattr(obj, i)
-            except AttributeError:
-                if default is not None:
-                    return default
-                else:
-                    raise
-        except (IndexError, KeyError):
+            obj = getattr(obj, i)
+            if isinstance(obj, NodeListViewModel):
+                # TODO: should be handling multiple values but only seems to have one in when multiple tiles are present
+                remaining_attr = attributes[idx + 1:]
+                for tile in obj:
+                    result = multi_getattr(tile, remaining_attr)
+                    values.extend(result)
+                return values
+        except AttributeError:
             if default is not None:
                 return default
             else:
-                raise
-    return obj
-
-
+                raise     
+    return [obj]
 class ORM(View):
+    def handle_datatypes(self, data):
+        """
+        Handles the conversion of orm view models into their string value
+
+        Args:
+            data: Arches ORM datatype: The data to be converted, any Arches ORM data type can be passed
+
+        Returns:
+            str or list: string representation of the value of the node
+        """
+        if isinstance(data, ConceptListValueViewModel):
+            values = []
+            for concept in data:
+                values.append(str(concept))
+            return values
+        return str(data)
+            
     def post(self, request):
         data = parse_qs(request.body.decode())
         graphid = data["graphid"][0]
@@ -43,21 +65,12 @@ class ORM(View):
 
         response = {}
         for node in data["show_nodes[]"]:
-            try:
-                response[node] = str(multi_getattr(wkri, node, ""))
+            output_values = []
+            values = multi_getattr(wkri, node, "")
+            for value in values:
+                output_value = self.handle_datatypes(value)
+                output_values.append(output_value)
+            response[node] = output_values
 
-            except:
-                response[node] = ""
-            
-            try:
-                UUID(str(wkri._._values_list[node][0]).replace('{', '').replace('}', ''))
-
-                nodeid = str(wkri._._values_list[node][0].node.nodeid)
-                request = requests.get(request.build_absolute_uri(reverse('api_nodes',args=[nodeid])))
-                request_response = json.loads(request.text)
-                response[node] = [option for option in request_response[0]["config"]["options"] if option["id"] == str(wkri._._values_list[node][0]).replace('{', '').replace('}', '')][0]["text"]
-
-            except Exception as e:
-                print(e)
         return JsonResponse(dict(response))
     
