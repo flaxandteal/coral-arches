@@ -38,7 +38,7 @@ class UpdateReportClassificationType(BaseFunction):
 
             context : represents the context in which this function has been called.
         """
-        if context and not context['escape_function']:
+        if context and context.get('escape_function', False):
             return
 
 
