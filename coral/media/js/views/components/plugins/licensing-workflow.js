@@ -798,7 +798,7 @@ define([
                   componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
-                  manyTitle: 'Transfers',
+                  manyTitle: 'Transfer of Licence',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -891,6 +891,7 @@ define([
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Extension of Licence',
                   parameters: {
                     title: 'Extension of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
