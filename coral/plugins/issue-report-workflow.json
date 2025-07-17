@@ -148,7 +148,12 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "nodegroupid": "52f3230c-0051-4ff1-b0bb-eca887b1fba4",
-                  "semanticName": "CM References"
+                  "semanticName": "CM References",
+                  "nodeOptions": {
+                    "52f3230c-0051-4ff1-b0bb-eca887b1fba4": {
+                      "disabled": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
