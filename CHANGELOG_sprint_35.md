@@ -14,9 +14,13 @@
 - Create a custom file.js and file.htm to make these changes
 - Create a separate download function to fetch the blob of the file
 - Changed the uploader download button to always download the file
+- Update the context if function to work correctly
 
 ## Pull Requests
 
 **Fix/3138 File Uploader Files**
 [782](https://github.com/flaxandteal/coral-arches/pull/782) by @StuCM
+
+**Fix: Context Update Statement**
+[779](https://github.com/flaxandteal/coral-arches/pull/779) by @StuCM
 
