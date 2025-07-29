@@ -157,7 +157,7 @@ define([
 
         // ctrl+S to save any edited/dirty tiles in resource view 
         var keyListener = function(e) {
-            if (e.ctrlKey && e.key === "s") {
+            if (e.ctrlKey && e.key === "s" || e.key === "Enter") {
                 e.preventDefault();
                 if (self?.tile?.dirty() == true && 
                     self?.tile?.parent?.isWritable === true) {
