@@ -24,3 +24,6 @@
 **Fix: Context Update Statement**
 [779](https://github.com/flaxandteal/coral-arches/pull/779) by @StuCM
 
+**fix: disable cm ref node in issue report workflow**
+[783](https://github.com/flaxandteal/coral-arches/pull/783) by @StuCM
+
