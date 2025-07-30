@@ -15,6 +15,9 @@
 - Create a separate download function to fetch the blob of the file
 - Changed the uploader download button to always download the file
 - Update the context if function to work correctly
+- Update the many tile titles for all HA workflows
+- Update the many tile titles for HA Designation
+- Update the many tile titles for Licensing
 
 ## Pull Requests
 
@@ -26,4 +29,7 @@
 
 **fix: disable cm ref node in issue report workflow**
 [783](https://github.com/flaxandteal/coral-arches/pull/783) by @StuCM
+
+**fix: updated many select labels**
+[780](https://github.com/flaxandteal/coral-arches/pull/780) by @babou212
 
