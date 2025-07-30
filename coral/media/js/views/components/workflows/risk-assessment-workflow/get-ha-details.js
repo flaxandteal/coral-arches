@@ -40,7 +40,9 @@ define([
       this.RECOMMENDED_DESIGNATION_NODE = "74ef37e0-37b5-11ef-9263-0242ac150006"
       this.SCHEDULED_MONUMENT_CONCEPT = "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9"
 
-      this.MONUMENT_TYPE_NODEGROUP = "0b5b3430-233f-11ef-89fe-0242ac1a0006";
+      // Switched out for Heritage Asset Type node under constrcution phases nodegroup
+      // Monument Type seems to be a duplicate node 
+      this.MONUMENT_TYPE_NODEGROUP = "77e90834-efdc-11eb-b2b9-a87eeabdefba";
       
       this.haRefStrings = {
         '158e1ed2-3aae-11ef-a2d0-0242ac120003': 'SMR Number',

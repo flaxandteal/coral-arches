@@ -36,7 +36,9 @@ define([
 
         this.COUNCIL = "447973ce-d7e2-11ee-a4a1-0242ac120006";
 
-        this.MONUMENT_TYPE_NODEGROUP = "0b5b3430-233f-11ef-89fe-0242ac1a0006";
+        // Switched out for Heritage Asset Type node under constrcution phases nodegroup
+        // Monument Type seems to be a duplicate node 
+        this.MONUMENT_TYPE_NODEGROUP = "77e90834-efdc-11eb-b2b9-a87eeabdefba";
 
         this.haRefStrings = {
             "158e1ed2-3aae-11ef-a2d0-0242ac120003": "SMR Number",
