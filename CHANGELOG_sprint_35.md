@@ -19,6 +19,8 @@
 - Update the many tile titles for HA Designation
 - Update the many tile titles for Licensing
 - Added key listener check for enter key and if detected action e.preventDefault
+- Switched Monument type node in get-ha-details comp for HA type node
+- Switched Monument type node in get-ha-smc-details comp for HA type node
 
 ## Pull Requests
 
@@ -36,4 +38,7 @@
 
 **fix: no longer refreshing wf when enter key pressed in text boxes**
 [785](https://github.com/flaxandteal/coral-arches/pull/785) by @babou212
+
+**fix: switched monument type node for HA type node**
+[784](https://github.com/flaxandteal/coral-arches/pull/784) by @babou212
 
