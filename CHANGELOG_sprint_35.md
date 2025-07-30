@@ -18,6 +18,7 @@
 - Update the many tile titles for all HA workflows
 - Update the many tile titles for HA Designation
 - Update the many tile titles for Licensing
+- Added key listener check for enter key and if detected action e.preventDefault
 
 ## Pull Requests
 
@@ -32,4 +33,7 @@
 
 **fix: updated many select labels**
 [780](https://github.com/flaxandteal/coral-arches/pull/780) by @babou212
+
+**fix: no longer refreshing wf when enter key pressed in text boxes**
+[785](https://github.com/flaxandteal/coral-arches/pull/785) by @babou212
 
