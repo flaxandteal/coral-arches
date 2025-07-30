@@ -24,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=15, patch=52)
+APP_VERSION = semantic_version.Version(major=7, minor=15, patch=53)
 
 TIME_ZONE = "Europe/London"
 USE_TZ = True
@@ -243,7 +243,7 @@ CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": [NONE],
         "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
-        "img-src": [SELF, "blob:", "data:"],
+        "img-src": [SELF, "blob:", "data:", "mo.ev.openindustry.in"],
         "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
         "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
         "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
