@@ -17,7 +17,7 @@ define([
     this.SMR_NUMBER_NODE = '158e1ed2-3aae-11ef-a2d0-0242ac120003';
 
     this.DESIGNATIONS_NODEGROUP = '6af2a0cb-efc5-11eb-8436-a87eeabdefba';
-    this.DESIGNATIONS_TYPE_NODE = '6af2a0ce-efc5-11eb-88d1-a87eeabdefba';
+    this.DESIGNATIONS_TYPE_NODE = '74ef37e0-37b5-11ef-9263-0242ac150006';
 
     this.MONUMENT_NAMES_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11';
     this.MONUMENT_NAMES_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11';
@@ -193,6 +193,8 @@ define([
         }
       }
       await Promise.all(additionalPromises);
+
+      console.log('designation type ', designationType());
         
     this.cards({...this.cards(), [resourceId]: {
               designationType : designationType(),
