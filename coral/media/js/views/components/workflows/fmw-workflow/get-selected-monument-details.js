@@ -194,8 +194,6 @@ define([
       }
       await Promise.all(additionalPromises);
 
-      console.log('designation type ', designationType());
-        
     this.cards({...this.cards(), [resourceId]: {
               designationType : designationType(),
               monumentName : monumentName(),
