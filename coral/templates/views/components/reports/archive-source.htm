@@ -26,6 +26,15 @@
     </div>
     <div class="aher-tabbed-report">
         <div class="aher-tabbed-report-content">
+             <!-- All Tab -->
+            <div class="aher-report-page" data-bind="if: activeSection() === 'all'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/all',
+                    params: {
+                        report: $data.report
+                    }
+                }"></div>
+            </div>
             <!-- Names Tab -->
             <div class="aher-report-page" data-bind="if: activeSection() === 'name'">
                 <div data-bind="component: {
@@ -119,15 +128,6 @@
                         data: resource,
                         cards: resourcesCards,
                         dataConfig: resourceDataConfig
-                    }
-                }"></div>
-            </div>
-            <!-- All Tab -->
-            <div class="aher-report-page" data-bind="if: activeSection() === 'all'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/all',
-                    params: {
-                        report: $data.report
                     }
                 }"></div>
             </div>
