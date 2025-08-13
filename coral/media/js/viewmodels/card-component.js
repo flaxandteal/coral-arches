@@ -303,10 +303,11 @@ define([
               });
             }
             if (options?.node) {
-                options.node = {
-                  ...params.form.nodeLookup[nodeId],
-                  ...options.node
-                };
+                const originalNode = params.form.nodeLookup[nodeId];
+                options.node = Object.assign(
+                    originalNode,
+                    options.node
+                );
             }
             const nodeOptions = {...options}
             if(options?.asObservable) {
