@@ -87,23 +87,27 @@ define([
                     const currentValues = this.currentValues();
                     currentValues[node] = newValue;
                     this.currentValues(currentValues);
-                })
-            })
+                });
+            });
             
             this.hasNullValue = (obj) => {
                 // recursively check values, allows for strings but not currently arrays
-                if (obj === null || obj === ""){
-                    return true;
+                const value = ko.unwrap(obj);
+                if (!value)return true;
+                
+                if (Array.isArray(value)){
+                    return !value.length > 0;
                 }
-                if (typeof obj === 'object'){
-                    return Object.values(obj).some(value => this.hasNullValue(value));
+                
+                if (typeof value === 'object'){
+                    return Object.values(obj).some(item => this.hasNullValue(item));
                 }
-                return false
-            }
+                return false;
+            };
 
             this.checkNullValues = ko.computed(() => {
                 const values = this.currentValues();
-                params.form.disableAdd(this.hasNullValue(values))
+                params.form.disableAdd(this.hasNullValue(values));
             });
         }        
     }
