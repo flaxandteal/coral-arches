@@ -3203,6 +3203,9 @@ arches-dev-dependencies@archesproject/arches-dev-dependencies#dev/7.6.x:
     "@babel/preset-env" "^7.16.8"
     "@typescript-eslint/eslint-plugin" "^6.18.1"
     "@typescript-eslint/parser" "^6.18.1"
+    "@vitejs/plugin-vue" "^5.0.4"
+    "@vitest/coverage-v8" "^1.4.0"
+    "@vue/test-utils" "^2.4.5"
     babel-loader "^8.2.3"
     clean-webpack-plugin "^4.0.0"
     copy-webpack-plugin "^10.2.0"
@@ -3214,6 +3217,7 @@ arches-dev-dependencies@archesproject/arches-dev-dependencies#dev/7.6.x:
     file-loader "^6.2.0"
     html-loader "^3.1.0"
     html-webpack-plugin "^5.5.0"
+    jsdom "^24.0.0"
     mini-css-extract-plugin "^2.5.1"
     nodemon "^3.0.2"
     postcss "^8.4.14"
@@ -3229,6 +3233,7 @@ arches-dev-dependencies@archesproject/arches-dev-dependencies#dev/7.6.x:
     text-loader "^0.0.1"
     ts-loader "^9.5.1"
     typescript "^5.3.3"
+    vitest "^1.4.0"
     vue-loader "^17.2.2"
     vue-template-compiler "^2.7.14"
     vue-tsc "^2.0.6"
@@ -4633,10 +4638,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-docx-preview@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/docx-preview/-/docx-preview-0.3.5.tgz#9e26e52dbad334d0d0f312308d68c5dc5f944f91"
-  integrity sha512-nod1jG5PkvzDIiZAcgAY4gSFQzgmAAChcuZH4Hj9dj7oCzscY3Hn8NfbUv7X7Jk4xL1lfKO113JLDhWKOt6fYw==
+docx-preview@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/docx-preview/-/docx-preview-0.3.6.tgz#ce38b70ec078d5615955df4dc17df85c6af467ac"
+  integrity sha512-gKVPE18hlpfuhQHiptsw1rbOwzQeGSwK10/w7hv1ZMEqHmjtCuTpz6AUMfu1twIPGxgpcsMXThKI6B6WsP3L1w==
   dependencies:
     jszip ">=3.0.0"
 
