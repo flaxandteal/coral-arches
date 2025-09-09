@@ -244,9 +244,11 @@
                     { "text": "Daera Consultation Response Letter", "id": "daera-consultation-response-template.docx"}
                   ],
                 "config": {
+                    "expand": ["related_heritage_assets_n1"],
                     "special": {
                       "today": "today",
-                      "user": "user"
+                      "user": "user",
+                      "ref_number": "ref_number"
                     }
                   }
               },

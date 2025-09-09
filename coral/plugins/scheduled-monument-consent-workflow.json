@@ -278,6 +278,7 @@
                     { "text": "SMC-CL Final Letter", "id": "smc-cl-final-template.docx"}
                   ],
                   "config": {
+                    "expand": ["related_monuments_and_areas"],
                     "special": {
                       "today": "today",
                       "user": "user"
