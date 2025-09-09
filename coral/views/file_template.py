@@ -629,12 +629,24 @@ class GenericTemplateProvider:
         #      semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
 
         mapping = self.extract(semantic_node_list)  
+        print("MAPPING", mapping)
         if "special" in self.config:
             for special_case in self.config["special"].items():
                 if special_case[1] == 'today':
                     mapping[special_case[0]] = datetime.today().strftime("%d/%m/%Y")
                 elif special_case[1] == 'user':
                      mapping = self.get_user(mapping, special_case[0])
+                elif special_case[1] == 'ref_number':
+                     print("MAPPING", mapping)
+                     ref_strings = [
+                          "smr_number",
+                          "ihr_number",
+                          "hb_number",
+                          "historic_parks_and_gardens"
+                     ]
+                     ref_value = next((mapping.get(key) for key in ref_strings if mapping.get(key)), None)
+                     if ref_value:
+                        mapping[special_case[0]] = ref_value
 
         return self.processDatatypes(mapping)         
 
@@ -661,6 +673,7 @@ class GenericTemplateProvider:
             if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):             
                 if "expand" in self.config and alias in self.config["expand"] and len(value) > 0:
                     for related_resource in value:
+                        print("THE EXPAND", related_resource)
                         mapping = mapping | self.extract_from_related_resource(alias, related_resource)
                         mapping[alias] = str(related_resource)
                 else:
