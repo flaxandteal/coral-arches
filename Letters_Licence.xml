@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+  <skos:ConceptScheme rdf:about="http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb">
+    <skos:prefLabel xml:lang="en">{"id": "725e5d04-7ae5-c66f-9880-e6ebea7d8573", "value": "Letters Licence"}</skos:prefLabel>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/024aef5e-7cac-bc66-e4bb-ed3ca35f2fa5">
+        <skos:prefLabel xml:lang="en">{"id": "64865b40-1ab8-d59e-aacf-668b077f0e9a", "value": "Licence Cover Letter"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/a81e9843-5379-aacc-650a-db41650b14e7">
+        <skos:prefLabel xml:lang="en">{"id": "e3a1469c-ae0e-7a59-2e25-09c036647e89", "value": "Final Report Letter"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/5faadd4f-7d73-77f9-6396-b60c7c4e4762">
+        <skos:prefLabel xml:lang="en">{"id": "a346c0f8-7be6-4a7c-da2c-aef42b02ee26", "value": "Extra Name on Licence Letter"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/c177c7cd-fd3b-7aeb-07b2-6d0b217a04db">
+        <skos:prefLabel xml:lang="en">{"id": "28e3fbdd-8dc8-4fb9-e378-91df6776e065", "value": "Extension of Licence Letter"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/34ba34f1-e4c3-a9d8-687f-f7f2f5dafacf">
+        <skos:prefLabel xml:lang="en">{"id": "28faad65-2403-b0b9-3ba8-bbbc99efd175", "value": "Overdue Excavations Report Letter"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <skos:hasTopConcept>
+      <skos:Concept rdf:about="http://arches:8000/d37e88e6-4f15-4a85-d04b-0674dfece04f">
+        <skos:prefLabel xml:lang="en">{"id": "f08c5baf-4434-ac59-a02c-e692ae79d455", "value": "Transfer of Licence Letter"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb"/>
+      </skos:Concept>
+    </skos:hasTopConcept>
+    <dcterms:title xml:lang="en">{"id": "00b50aeb-44ee-affc-3405-8e49f723582b", "value": "Letters Licence"}</dcterms:title>
+    <dcterms:identifier xml:lang="en">{"id": "06553ac6-9d1f-b385-5ac9-8cd5986d8807", "value": "http://arches:8000/9ec5e4a4-546d-597f-2a75-2a5b14cc9abb"}</dcterms:identifier>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/024aef5e-7cac-bc66-e4bb-ed3ca35f2fa5"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/a81e9843-5379-aacc-650a-db41650b14e7"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/5faadd4f-7d73-77f9-6396-b60c7c4e4762"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/c177c7cd-fd3b-7aeb-07b2-6d0b217a04db"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/34ba34f1-e4c3-a9d8-687f-f7f2f5dafacf"/>
+    <skos:hasTopConcept rdf:resource="http://arches:8000/d37e88e6-4f15-4a85-d04b-0674dfece04f"/>
+  </skos:ConceptScheme>
+</rdf:RDF>

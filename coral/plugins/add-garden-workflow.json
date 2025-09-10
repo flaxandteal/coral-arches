@@ -125,8 +125,19 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['12645f4a-6638-4f80-b020-c7dd7f886163'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba"
+                  "nodegroupid": "a1d4ee93-efc5-11eb-b117-a87eeabdefba",
+                  "nodeOptions": {
+                    "a1d4ee93-efc5-11eb-b117-a87eeabdefba": {
+                      "config": {
+                        "label": "Citations"
+                      },
+                      "node": {
+                        "isrequired": true
+                      }
+                    }
+                }
                 },
+                "manyTitle": "Citations",
                 "tilesManaged": "many",
                 "componentName": "default-card",
                 "uniqueInstanceName": "e0da378f-ea20-44d7-8d8a-05b46f8d54c0"
@@ -364,28 +375,15 @@
                     "1200e850-1905-11ef-aa9f-0242ac150006": {
                       "component": "user-to-model-select",
                       "signOffGroups": [
-                        "17e044ca4-96cd-4550-8f0c-a2c860f99f6b",
-                        "e778f4a1-97c6-446f-b1c4-418a81c3212e",
-
-                        "801c124e-acb8-484d-890b-212545e44293",
-                        "4fbe3955-ccd3-4c5b-927e-71672c61f298",
-                        "751d8543-8e5e-4317-bcb8-700f1b421a90",
-                        "214900b1-1359-404d-bba0-7dbd5f8486ef",
-                        "9a88b67b-cb12-4137-a100-01a977335298",
-                        "74afc49c-3c68-4f6c-839a-9bc5af76596b",
-                        "f240895c-edae-4b18-9c3b-875b0bf5b235",
-                        "905c40e1-430b-4ced-94b8-0cbdab04bc33",
-                        "29a43158-5f50-495f-869c-f651adf3ea42",
-                        "6ba1b471-6faf-4f96-9179-94b2a1662512",
-                        "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
-                        "5b8d8413-ee01-465f-9774-e5b247cd205a"
+                        "7e044ca4-96cd-4550-8f0c-a2c860f99f6b",
+                        "e778f4a1-97c6-446f-b1c4-418a81c3212e"
                       ],
                       "allowInstanceCreation": false
                     },
                     "9382b7b4-1905-11ef-aa9f-0242ac150006": {
                       "component": "user-to-model-select",
                       "signOffGroups": [
-                        "17e044ca4-96cd-4550-8f0c-a2c860f99f6b",
+                        "7e044ca4-96cd-4550-8f0c-a2c860f99f6b",
                         "e778f4a1-97c6-446f-b1c4-418a81c3212e"
                       ],
                       "conflictNode": ["1200e850-1905-11ef-aa9f-0242ac150006"],

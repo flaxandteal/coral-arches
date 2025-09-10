@@ -84,7 +84,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
                         </li>
                         {% if user|can_create_resource_instance and user.username != 'anonymous' %}
                             <li>
-                                <a href="{% url 'resource' %}" target="_blank">{% trans "Manage" %}</a>
+                                <a href="plugins/dashboard" target="_blank">{% trans "Dashboard" %}</a>
                             </li>
                             <li>
                                 <a href="plugins/init-workflow">{% trans "Workflows" %}</a>

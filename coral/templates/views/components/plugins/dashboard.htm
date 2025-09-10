@@ -1,4 +1,4 @@
-<div style="margin: 15px; display: flex; flex-direction: column; flex-wrap: wrap; width: 100%">
+<div style="margin: 15px; display: flex; flex-direction: column; width: 100%; height: 100vh; padding-bottom: 115px">
   <!--ko if: loading() -->
     <div class='loading-mask'></div>
   <!--/ko-->
@@ -55,7 +55,7 @@
       </select>
     <!--/ko-->
   </div>
-  <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; flex-grow: 1;">
+  <div style="display: flex; width: 100%; align-items: flex-start; justify-content: center; overflow: auto; flex-grow: 1;">
       <!--ko if: loadingCards() -->
         <div class='branch-list-loading-mask'></div>
       <!--/ko-->
@@ -74,7 +74,7 @@
   <!--ko if: resources().length -->
     <div id="paginator" data-bind="with: paginator" style="position: absolute; bottom: 0px; width: 100%">
       <nav class="text-center" aria-label="paginator">
-          <ul class="pagination" role="menubar">
+          <ul class="pagination" role="menubar" style="margin: 10px 0">
               <li><a data-bind="css: {'disabled': !has_previous()}, onEnterkeyClick, click: $parent.newPage.bind($parent, previous_page_number()), 
                   attr: {'aria-label': $root.translations.previousPage, 'aria-disabled': !has_previous(), 'role': 'menuitem'}" href="#">«</a></li>
               <!-- ko foreach: { data: pages, as: 'page' } -->

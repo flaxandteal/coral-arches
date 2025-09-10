@@ -1,5 +1,6 @@
 @import url(report_templates.css);
 @import url(dashboard.css);
+@import url(signup.css);
 
 .workflow-panel.navbarclosed {
     min-width: 50px;
@@ -1072,11 +1073,41 @@ span.rp-tile-title {
 
 .dashboard-counter-card {
     width: 300px;
-    min-height: 120px;
-    margin:2rem 5rem;
+    max-height: 120px;
+    margin:1.22rem 5rem;
     padding: 0 1rem 1rem 1rem;
 }
 
 .planning-card {
     min-height: 258px;
 }
+
+.response-container div {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 1rem
+}
+
+.response-container div input[type=checkbox] {
+    pointer-events: none;
+    cursor: not-allowed;
+    margin-left: 2rem;
+}
+
+.scrollable {
+    overflow-y: auto;
+}
+
+.h-95vh { height: 95vh; }
+.h-80vh { height: 80vh; }
+.h-75vh { height: 75vh; }
+.h-full { height: 100vh; }
+.h-500 { height: 500px; }
+
+.mh-95vh { max-height: 95vh; }
+.mh-80vh { max-height: 80vh; }
+.mh-75vh { max-height: 75vh; }
+.mh-full { max-height: 100vh; }
+.mh-500 { max-height: 500px; }
+
+.mt-1 { margin-top: 0.5rem }

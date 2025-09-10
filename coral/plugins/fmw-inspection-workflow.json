@@ -380,15 +380,27 @@
                     "bacad6b8-eedd-11ef-829a-0242ac120006"
                   ],
                   "nodeOptions": {
-                    "998d6728-fb26-11ee-838d-0242ac190006": {
-                      "allowInstanceCreation": false,
-                      "component": "user-to-model-select",
-                      "signOffGroups": ["cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"]
-                    },
                     "42ec3232-fb26-11ee-838d-0242ac190006": {
                       "allowInstanceCreation": false,
                       "component": "user-to-model-select",
-                      "signOffGroups": ["cf72ebb4-d31f-480f-a334-a5c2aeb2b9da"]
+                      "signOffGroups": [
+                        "cf72ebb4-d31f-480f-a334-a5c2aeb2b9da",
+                        "cfa32a35-3c50-4245-83d0-71c04d8abf49",
+                        "b23161e0-070c-466f-a4de-6330fa8dc5a3",
+                        "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                      ]
+                    },
+                    "998d6728-fb26-11ee-838d-0242ac190006": {
+                      "allowInstanceCreation": false,
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "cf72ebb4-d31f-480f-a334-a5c2aeb2b9da",
+                        "cfa32a35-3c50-4245-83d0-71c04d8abf49",
+                        "b23161e0-070c-466f-a4de-6330fa8dc5a3",
+                        "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
+                      ],
+                      "conflictNode": ["42ec3232-fb26-11ee-838d-0242ac190006"],
+                      "conflictAllowBlank": false
                     },
                     "24d00d86-fb27-11ee-b5d2-0242ac190006": {
                       "config":{

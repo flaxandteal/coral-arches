@@ -1,0 +1,11 @@
+{
+    "name": "Heritage Asset Merge Template",
+    "component": "views/components/reports/heritage-asset-merge",
+    "defaultconfig": {
+        "uncompacted_reporting": true
+    },
+    "description": "Heritage Asset merge report",
+    "componentname": "heritage-asset-merge",
+    "templateid": "e79672ec-8713-4c52-9e87-c90f6cee92cb",
+    "preload_resource_data": true
+}

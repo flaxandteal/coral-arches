@@ -338,14 +338,12 @@ define([
           closeOnSelect: true,
           allowClear: self.displayOntologyTable ? false : true,
           onSelect: function(item) {
-            console.log('item selected: ', item)
               self.selectedItem(item);
               if (item._source) {
                   if (self.onlyManageResourceIds){
                       self.value(item._id);
                   } else {
                       var ret = self.makeObject(item._id, item._source);
-                      console.log('after make object: ', ret)
                       self.setValue(ret);
                       window.setTimeout(function() {
                           if(self.displayOntologyTable){

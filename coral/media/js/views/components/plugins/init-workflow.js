@@ -7,6 +7,7 @@ define([
   var InitWorkflow = function(params) {
       const allowedWorkflows = ko.observableArray([]);
       this.workflows = allowedWorkflows;
+
       $.ajax({
           dataType: "json",
           //url: url,
@@ -29,6 +30,12 @@ define([
           }
       });
   };
+
+  window.addEventListener('pageshow', function(event) {
+      if (event.persisted) {
+          window.location.reload();
+      }
+  });
 
   return ko.components.register('init-workflow', {
       viewModel: InitWorkflow,

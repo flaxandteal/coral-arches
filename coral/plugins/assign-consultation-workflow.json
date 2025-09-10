@@ -303,7 +303,6 @@
         "name": "action-step",
         "title": "Action",
         "required": false,
-        "saveWithoutProgressing": true,
         "layoutSections": [
           {
             "componentConfigs": [
@@ -340,6 +339,45 @@
           }
         ],
         "workflowstepclass": "workflow-form-component"
+      },
+      {
+        "name": "response",
+        "title": "Responses",
+        "required": false,
+        "saveWithoutProgressing": true,
+        "layoutSections": [
+          {
+            "componentConfigs": [
+              {
+              "parameters": {
+                "graphid": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                "hiddenNodes": ["b15ee596-e53d-11ef-8521-0242ac120004"],
+                "nodegroupid": "31e5ece6-5989-11ef-af2d-0242ac120006",
+                "responseFileNode": "5d401df8-5989-11ef-9d18-0242ac120006",
+                "responseTeamNode": "b15ee596-e53d-11ef-8521-0242ac120004",
+                "letterOptions": [
+                    { "text": "DAERA AIL Consultation", "id": "daera-ail-consultation-template.docx"}
+                  ],
+                "config": {
+                    "many_tiles": [ "response_summary_value" ],
+                    "extract_pdf": true,
+                    "special": {
+                      "today": "today",
+                      "user": "user"
+                    }
+                  }
+              },
+              "noTileSidebar": true,
+              "tilesManaged": "many",
+              "componentName": "pdf-merger",
+              "uniqueInstanceName": "pdf-merger"
+            }
+          ]
+          }
+        ],
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": ["save"]
       }
     ],
     "initWorkflow": {

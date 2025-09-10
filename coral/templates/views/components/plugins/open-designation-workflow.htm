@@ -1,0 +1,73 @@
+<div class="card-component" style="width: 100%">
+  <div class="row widget-wrapper">
+    <h4 data-bind="text: workflow().name"></h4>
+  </div>
+  <div class="row widget-wrapper">
+    <div class="form-group">
+      <label class="control-label widget-input-label">
+        Select Heritage Asset
+      </label>
+      <div
+        data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+          graphids: ['076f9381-7b00-11e9-8d6b-80000b44d1d9'],
+          config: {
+            label: 'Select Heritage Asset',
+            placeholder: 'Please select a Heritage Asset',
+          },
+          label: 'Select Heritage Asset',
+          renderContext: 'workflow',
+          value: selectedHA,
+          searchString: haSearchString,
+        }
+      }"
+      ></div>
+    </div>
+    <div style="max-width: 620px !important">
+      <div class="form-group">
+        <label class="control-label widget-input-label">
+          Select Heritage Asset Revision
+        </label>
+        <div
+          data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+          graphids: ['65b1be1a-dfa4-49cf-a736-a1a88c0bb289'],
+          config: {
+            label: 'Select Heritage Asset Revision',
+            placeholder: 'Please select a Heritage Asset Revision',
+          },
+          renderContext: 'workflow',
+          value: selectedRevision,
+          searchString: revisionSearchString(),
+          label: 'Select Heritage Asset Revision',
+        }
+      }"
+        ></div>
+      </div>
+    </div>
+  </div>
+  <div class="row widget-wrapper" style="display: flex">
+    <!-- ko if: !workflow().disableStartNew -->
+    <button
+      class="btn btn-shim btn-labeled btn-lg fa fa-check btn-success"
+      style="min-height: 40.56px"
+      data-bind="click: () => startRemapAndOpen(),
+        disable: !selectedHA() || selectedRevision()"
+    >
+      <span>Start New</span>
+    </button>
+    <!-- /ko -->
+
+    <button
+      class="btn btn-shim btn-labeled btn-lg btn-primary"
+      style="min-height: 40.56px"
+      data-bind="click: async () => {
+        await openWorkflow();
+      }, disable: !selectedRevision()"
+    >
+      <span>Open Selected</span>
+    </button>
+  </div>
+</div>

@@ -19,7 +19,7 @@ ASSOCIATED_ACTOR_NODE = "f0b9edd4-b551-11ee-805b-0242ac120006"
 FLAGGED_DATE_NODEGROUP = "229501c2-b552-11ee-805b-0242ac120006"
 FLAGGED_DATE_NODE = "2295085c-b552-11ee-805b-0242ac120006"
 
-ENFORCEMENT_GROUP = "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8"
+ENFORCEMENT_GROUP = "0134acdc-bcfc-4e96-9d2b-c3ed2a396cfc"
 
 
 details = {
@@ -37,6 +37,9 @@ details = {
 
 class NotifyEnforcement(BaseFunction):
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+        
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
         existing_notification = models.Notification.objects.filter(

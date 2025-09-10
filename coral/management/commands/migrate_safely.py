@@ -1,4 +1,5 @@
 import os, glob
+from typing import List
 import uuid
 from arches.app.models.graph import Graph
 from arches.app.models.models import FunctionXGraph
@@ -248,12 +249,17 @@ class ScanForDataRisks():
     for node in list(tile_json['data'].keys()):
       if node in [concept["node_id"] for concept in updated_concepts]:
           try:
-            if self.mapping:
+            if self.mapping and not self.default_mapping:
               mapping = next(value for key, value in self.mapping.items() if key == node)
             else:
-              answer = input("No mapping has been provided. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
-              if answer.lower() == 'y':
-                 mapping = { 'default': None }
+              if self.default_mapping is not True:
+                answer = input(f"No mapping has been provided for {node}. Do you want to continue with the default mapping setting the value to null? [y/N]: ")
+                if answer.lower() == 'y':
+                  self.default_mapping = True
+              if self.mapping is None:
+                  self.mapping = {}
+              self.mapping[node] = { 'default': None }
+              mapping = { 'default': None }
           except Exception as e:
             raise ValueError(f"No mapping could be found in the file for the node {node}") from e
           TransformData().concept_to_concept(tile_json, node, mapping)
@@ -332,6 +338,7 @@ class ScanForDataRisks():
     self.graphid = self.incoming_json['graph'][0]['graphid']
     self.graph = Graph.objects.get(pk=self.graphid)
     self.mapping = mapping
+    self.default_mapping = False
     if self.mapping:
        with open(mapping, 'r') as file:
             self.mapping = json.load(file)
@@ -494,34 +501,46 @@ class TransformData():
         print(f"An error occurred: {e}")
 
   def allow_many(self, tile_json, nodeid):
-    if tile_json['data'][nodeid]:
+    value = tile_json['data'][nodeid]
+    if value and not isinstance(value, List):
       tile_json['data'][nodeid] = [tile_json['data'][nodeid]]
     return tile_json
   
   def concept_to_concept(self, tile_json, node, mapping):
-        current_value = None
+        current_value = []
         if tile_json['data'][node]:
-          current_value = ConceptValue().get(tile_json['data'][node]).conceptid
-
-        if current_value in mapping:
-            mapping_value = mapping[current_value]
-        elif 'default' in mapping:
-            mapping_value = mapping['default']
-        else:
-            raise KeyError(f"The node {current_value} was not found in the mapping file, and no 'default' key exists.")
-
-        try:
-          if mapping_value:
-              new_value = Value.objects.filter(concept_id=mapping_value, valuetype='prefLabel').first().valueid
+          if isinstance(tile_json['data'][node], list):
+            for item in tile_json['data'][node]:
+               concept_value = ConceptValue().get(item).conceptid
+               current_value.append(concept_value)
           else:
-              # Allows for a null value in the mapping
-              new_value = mapping_value
+            current_value.append(ConceptValue().get(tile_json['data'][node]).conceptid)
 
-        except Exception as e:
-            raise ValueError(f"The concept {mapping_value} was not found. Have you imported your new concept and collection?") from e
-        
-        if new_value:
-          tile_json['data'][node] = str(new_value)
+        updated_values = []
+        for value in current_value:
+          if value in mapping:
+              mapping_value = mapping[value]
+          elif 'default' in mapping:
+              mapping_value = mapping['default']
+          else:
+              raise KeyError(f"The node {current_value} was not found in the mapping file, and no 'default' key exists.")
+
+          try:
+            if mapping_value:
+                new_value = Value.objects.filter(concept_id=mapping_value, valuetype='prefLabel').first().valueid
+            else:
+                # Allows for a null value in the mapping
+                new_value = None
+
+          except Exception as e:
+              raise ValueError(f"The concept {mapping_value} was not found. Have you imported your new concept and collection?") from e
+          if new_value:
+            updated_values.append(str(new_value))
+
+        if len(updated_values) > 1:
+          tile_json['data'][node] = updated_values # this will update the list of concept values
+        elif len(updated_values) == 1:
+          tile_json['data'][node] = updated_values[0] # allows for a single conept value 
         else:
           tile_json['data'][node] = None
       
@@ -584,14 +603,14 @@ class GroupTransform():
                         members = [{'value': member, 'groupId': resource['resourceinstance']["resourceinstanceid"]} for member in (tile["data"].get(self.MEMBER_NODE)or []) if member['resourceId'] not in group_ids]
                         new_members.extend(members)
         
-        for resource in resource_instances:    
+        for resource in resource_instances:  
             for tile in resource["tiles"]:
                 if self.MEMBER_NODE in tile["data"]:
                     if tile["data"][self.MEMBER_NODE]: 
                         if len(new_members) > 0:
-                            match = next((item for item in new_members if item['groupId'] == resource['resourceinstance']["resourceinstanceid"]), None)
+                            match = [item['value'] for item in new_members if item['groupId'] == resource['resourceinstance']["resourceinstanceid"]]
                             if match:
-                                tile["data"][self.MEMBER_NODE].append(match['value'])
+                                tile["data"][self.MEMBER_NODE].extend(match)
                                 
 
 

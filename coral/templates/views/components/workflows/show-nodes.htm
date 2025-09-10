@@ -8,12 +8,15 @@
     <table data-bind="style: {'margin-left': `2ch`}">
         <tbody data-bind="foreach: {data: showNodes, as: 'labelValue'}">
         <tr>
-                    <td>
-            <h4 class="summary-value" style="color: #2b547c; font-size: 14px;" data-bind="text: labelValue[0]"></h4>
-        </td>
-        <td>
-        <span class="summary-value" data-bind="text: labelValue[1], style: {'margin-left': `4ch`}"></span>
-        </td>
+            <td>
+                <h4 class="summary-value" style="color: #2b547c; font-size: 14px;" data-bind="text: labelValue[0]"></h4>
+            </td>
+            <td>
+                <!-- Iterate over remaining values in labelValue -->
+                <span class="summary-value" data-bind="foreach: labelValue.slice(1)">
+                    <span data-bind="text: $data, style: {'margin-left': `4ch`}"></span>
+                </span>
+            </td>
         </tr>
         </tbody>
     </table>

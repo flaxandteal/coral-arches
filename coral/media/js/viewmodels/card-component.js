@@ -156,10 +156,12 @@ define([
         };
 
         // ctrl+S to save any edited/dirty tiles in resource view 
+        // prevents workflow refresh if enter is pressed
         var keyListener = function(e) {
-            if (e.ctrlKey && e.key === "s") {
+            if (e.ctrlKey && e.key === "s" || e.key === "Enter") {
                 e.preventDefault();
-                if (self?.tile?.dirty() == true && 
+                if (e.ctrlKey && e.key === "s" && 
+                    self?.tile?.dirty() == true && 
                     self?.tile?.parent?.isWritable === true) {
                         self.saveTile();
                 }
@@ -301,10 +303,11 @@ define([
               });
             }
             if (options?.node) {
-                options.node = {
-                  ...params.form.nodeLookup[nodeId],
-                  ...options.node
-                };
+                const originalNode = params.form.nodeLookup[nodeId];
+                options.node = Object.assign(
+                    originalNode,
+                    options.node
+                );
             }
             const nodeOptions = {...options}
             if(options?.asObservable) {

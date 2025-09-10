@@ -93,7 +93,6 @@ define([
             this.loading(false);
             throw new Error(`HTTP error! status: ${data.error}`)
           }
-          console.log("response", data.paginator.response)
           koMapping.fromJS(data.paginator, this.paginator)
           this.resources(data.paginator.response)
           this.total(data.paginator.total)
@@ -102,6 +101,11 @@ define([
           this.filterOptions(data.filter_options)
           this.loading(false)
           this.loadingCards(false)
+
+          if(!this.initialLoadCompleted){
+            this.sortOrder(data.sort_order)
+          }
+
         } catch (error) {
           console.error(error)
           return
@@ -135,21 +139,22 @@ define([
       this.sortBy.subscribe(async () => {
         if (this.initialLoadCompleted && this.sortBy()) {
           this.loadingCards(true);
-          getTasks();
+          await getTasks();
         }
       });
 
       this.sortOrder.subscribe(async () => {
         if (this.initialLoadCompleted && this.sortOrder()) {
           this.loadingCards(true);
-          getTasks();
+          await getTasks();
         }
       });
 
       this.filterBy.subscribe(async () => {
         if (this.initialLoadCompleted && this.filterBy()) {
           this.loadingCards(true);
-          getTasks();
+          this.currentPage(1);
+          await getTasks();
         }
       });
 
@@ -159,16 +164,8 @@ define([
         }
       })
 
-      window.addEventListener('resize', debounce(async () => {
-          const prevItemsPerPage = this.itemsPerPage();
-          updateItemsPerPage();
-          if (prevItemsPerPage === this.itemsPerPage()){
-            return
-          }
-          await getTasks('true');
-      }, 200));
-
       this.newPage = async (pageNumber) => {
+          this.loadingCards(true);
           this.currentPage(pageNumber);
           await getTasks('false');
       };

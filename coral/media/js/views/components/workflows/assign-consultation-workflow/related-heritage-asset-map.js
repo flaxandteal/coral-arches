@@ -9,8 +9,10 @@ define([
 ], function(_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
     function viewModel(params) {
         CardComponentViewModel.apply(this, [params]);
-        this.RELATED_HERITAGE_NODE_ID = 'bc64746e-cf4a-11ef-997c-0242ac120007';
-        this.GEO_NODE_ID = '87d3872b-f44f-11eb-bd0c-a87eeabdefba';
+        this.RELATED_HERITAGE_NODE_ID = params.related_heritage_node_id ?? 'bc64746e-cf4a-11ef-997c-0242ac120007';
+        this.GEO_NODE_ID = params.geo_node_id ?? '87d3872b-f44f-11eb-bd0c-a87eeabdefba'; // Geometry node of the related heritage asset graph
+        this.GEO_COORDS_NODE_ID = params.geo_coords_node_id ?? "87d3d7dc-f44f-11eb-bee9-a87eeabdefba"; // Co-ordinates node id for the related heritage asset graph
+        this.GEO_COORDS_INPUT_NODE = params.geo_coords_input_node ?? '083f3c7e-ca61-11ee-afca-0242ac180006'; // Node id for the graph that is displaying the map
         this.tileId = this.tile.tileid;
         this.resourceId = this.tile.resourceinstance_id;
         this.shouldRender = ko.observable(false);
@@ -36,7 +38,7 @@ define([
             this.assets = await this.fetchTileData(params.resourceid, this.RELATED_HERITAGE_NODE_ID);
             if (!this.assets?.length) return;
             this.assets = this.assets[0].data[this.RELATED_HERITAGE_NODE_ID];
-      
+
             let geometries = [];
 
             for (const tile of this.assets) {
@@ -45,6 +47,7 @@ define([
                     geometries = [...geometries, ...data];
                 }
             }
+
             return geometries;
         };
 
@@ -53,7 +56,7 @@ define([
                 this.assets = await this.fetchTileData(resourceId, this.GEO_NODE_ID);
 
                 if (this.assets[0] !== undefined) {
-                    let featureData = this.assets[0].data['87d3d7dc-f44f-11eb-bee9-a87eeabdefba']['features'];
+                    let featureData = this.assets[0].data[this.GEO_COORDS_NODE_ID]['features'];
                     return featureData;
                 } else {
                     return;
@@ -96,11 +99,11 @@ define([
                     geom.features.forEach( feature => {
                         feature.properties.nodeId = params.resourceid;
                     });
-                    this.setValue(geom, '083f3c7e-ca61-11ee-afca-0242ac180006');
+                    this.setValue(geom, this.GEO_COORDS_INPUT_NODE);
                 }
                 // Checking if the HA geometries match the number of saved geometries
-                else if (tiles[0].data['083f3c7e-ca61-11ee-afca-0242ac180006'] && geom){
-                    const existingGeom = tiles[0].data['083f3c7e-ca61-11ee-afca-0242ac180006'];
+                else if (tiles[0].data[this.GEO_COORDS_INPUT_NODE] && geom){
+                    const existingGeom = tiles[0].data[this.GEO_COORDS_INPUT_NODE];
                     const savedHAPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && ('fromHeritageAsset' in feature.properties));
                     const haPoints = geom.features.filter(feature => feature.geometry.type === 'Point');
                     const consultationPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && !('fromHeritageAsset' in feature.properties));
@@ -134,7 +137,7 @@ define([
                             });
                         }
                     }
-                    this.setValue(existingGeom, '083f3c7e-ca61-11ee-afca-0242ac180006'); 
+                    this.setValue(existingGeom, this.GEO_COORDS_INPUT_NODE); 
                 }
                 // Return the existing saved tiles for the consultation
                 else {

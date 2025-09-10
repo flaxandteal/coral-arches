@@ -56,46 +56,15 @@ define([
           return false
       }
 
-      this.getLatestTile = async () => {
-        try {
-          const tiles = await this.fetchTileData(this.tile.resourceinstance_id);
-  
-          if (!tiles?.length) return;
-  
-          const tile = tiles[0];
+      this.init = async() => {
+        const bool = await this.withinDeadline();
+        this.tile.data[DEADLINE_NODE](bool);
+      }
       
-          if (!tile) return;
-  
-          Object.keys(tile.data).forEach((nodeId) => {
-            this.setValue(tile.data[nodeId], nodeId);
-          });
-  
-          this.tile.tileid = tile.tileid;
+      this.init();
 
-          const bool = await this.withinDeadline();
-          this.tile.data[DEADLINE_NODE](bool)
-
-          // Reset dirty state
-          this.tile._tileData(koMapping.toJSON(this.tile.data));
-        } catch (err) {
-          console.error('failed fetching tile: ', err);
-        }
-      };
-  
-      this.setValue = (value, nodeId) => {
-        if (ko.isObservable(this.tile.data[nodeId])) {
-          this.tile.data[nodeId](value);
-        } else {
-          this.tile.data[nodeId] = ko.observable();
-          this.tile.data[nodeId](value);
-        }
-      };
-  
-      this.getLatestTile();
     }
 
-    
-  
     ko.components.register('update-deadline', {
       viewModel: viewModel,
       template: componentTemplate

@@ -1,0 +1,20 @@
+{
+    "pluginid": "290948a3-265a-4bdf-927e-1d1dda8f5d8e",
+    "name": "Open SMC Workflow",
+    "icon": "fa fa-edit",
+    "component": "views/components/plugins/open-scheduled-monument-consent-workflow",
+    "componentname": "open-scheduled-monument-consent-workflow",
+    "config": {
+      "show": false,
+      "openableWorkflows": [
+        {
+          "slug": "scheduled-monument-consent-workflow",
+          "name": "Scheduled Monument Consent",
+          "graphIds": ["8d41e49e-a250-11e9-9eab-00224800b26d"],
+          "hideRecents": true
+        }
+      ]
+    },
+    "slug": "open-scheduled-monument-consent-workflow",
+    "sortorder": 0
+  }

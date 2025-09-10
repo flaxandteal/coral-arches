@@ -16,8 +16,6 @@ define([
     this.labels = params.labels || [];
     this.title = ko.observable(params?.title || '')
 
-    console.log("in the default util", this)
-
     if (this.form.componentData.parameters.prefilledNodes) {
       this.form.componentData.parameters.prefilledNodes?.forEach((prefill) => {
         Object.keys(this.form.tile().data).forEach((node) => {

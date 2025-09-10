@@ -13,7 +13,7 @@ HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
-EXCAVATION_USER_GROUP = "751d8543-8e5e-4317-bcb8-700f1b421a90"
+EXCAVATION_USER_GROUP = "801c124e-acb8-484d-890b-212545e44293"
 EXCAVATION_CUR_D = "751d8543-8e5e-4317-bcb8-700f1b421a90"
 EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
@@ -46,27 +46,6 @@ class Utilities():
             return 'Non-statutory'
         elif id == None:
             return 'None'
-        
-    def domain_value_string_lookup(self, resource, node_alias, value_id):
-        """
-        Looks up the string representation of a domain value.
-
-        Args:
-            resource (Resource): The resource instance. Use The ORM model eg. Consultation.
-            node_alias (str): The alias of the node.
-            value_id (str): The ID of the value to look up. Use the node variable.
-
-        Returns:
-            str: The string representation of the domain value.
-        """
-        node = models.Node.objects.filter(
-            alias = node_alias,
-            graph_id = resource.graphid
-        ).first()
-        options = node.config.get("options")
-        for option in options:
-            if option.get("id") == value_id:
-                return option.get("text").get("en")
         
     def get_count(self, resources, counter):
         counts = defaultdict(int)
@@ -108,7 +87,7 @@ class Utilities():
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
-        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E]:
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E, EXCAVATION_USER_GROUP]:
             return "licensing-workflow"
     
     def create_deadline_message(self, date):

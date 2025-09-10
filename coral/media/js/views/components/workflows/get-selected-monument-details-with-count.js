@@ -11,9 +11,6 @@ define([
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
-    this.SYSTEM_REFERENCE_NODEGROUP = '325a2f2f-efe4-11eb-9b0c-a87eeabdefba';
-    this.SYSTEM_REFERENCE_RESOURCE_ID_NODE = '325a430a-efe4-11eb-810b-a87eeabdefba';
-
     this.HERRITAGE_ASSET_REFERENCES_NODEGROUP = 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
     this.SMR_NUMBER_NODE = '158e1ed2-3aae-11ef-a2d0-0242ac120003';
 
@@ -141,41 +138,6 @@ define([
       return 0;
     }
        
-    
-    this.getLatestTile = async () => {
-      try {
-        const tiles = await this.fetchTileData(this.tile.resourceinstance_id);
-
-        if (!tiles?.length) return;
-
-        const tile = tiles[0];
-
-        if (!tile) return;
-
-        Object.keys(tile.data).forEach((nodeId) => {
-          this.setValue(tile.data[nodeId], nodeId);
-        });
-
-        this.tile.tileid = tile.tileid;
-
-        // Reset dirty state
-        this.tile._tileData(koMapping.toJSON(this.tile.data));
-      } catch (err) {
-        console.error('failed fetching tile: ', err);
-      }
-    };
-
-    this.setValue = (value, nodeId) => {
-      if (ko.isObservable(this.tile.data[nodeId])) {
-        this.tile.data[nodeId](value);
-      } else {
-        this.tile.data[nodeId] = ko.observable();
-        this.tile.data[nodeId](value);
-      }
-    };
-
-    this.getLatestTile();
-
     this.getMonumentDetails = async (resourceId) => {
       const tiles = await this.fetchTileData(resourceId);
       const countyValue = ko.observable('None');

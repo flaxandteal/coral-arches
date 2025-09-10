@@ -13,7 +13,7 @@ class UserToModel(View):
         name = None
 
         with admin():
-            person = Person.where(user_account=int(user.id))
+            person = Person.where(user_account=int(user.id)).get()
             if person:
                 person = person[0] if len(person) else None 
                 # descriptor was returning as None on arches-orm release/0.2 even though they worked on emerald.

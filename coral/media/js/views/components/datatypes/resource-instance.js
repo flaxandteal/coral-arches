@@ -11,7 +11,6 @@ define([
     var name = 'resource-instance-datatype-config';
     const viewModel = function(params) {
         var self = this;
-        console.log("this stupid resource instance has loaded")
         const defaultRelationshipCollection = '00000000-0000-0000-0000-000000000005';
         const defaultRelationshipConceptValue = 'ac41d9be-79db-4256-b368-2f4559cfbe55';
         this.search = params.search;

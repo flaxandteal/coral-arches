@@ -25,7 +25,7 @@ from django.db import transaction
 from guardian.models import GroupObjectPermission
 
 from arches.app.models.models import *
-from arches.app.models.models import ResourceInstance, MapLayer, Plugin
+from arches.app.models.models import ResourceInstance, MapLayer, Plugin, Node
 from arches.app.models.graph import Graph
 from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query
@@ -361,7 +361,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
     @context_free
     def _django_group_to_ri(django_group: DjangoGroup):
         # TODO: a more robust mapping
-        group = Group.where(name={"en": {"value": django_group.name, "direction": "ltr"}})
+        group = Group.where(name=django_group.name).get()
         if not group:
             group = Group.create()
             basic_info = group.basic_info.append()
@@ -815,6 +815,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                 }
             }
         })
+        query.include("_id")
         results = query.search(index=RESOURCES_INDEX, scroll="1m", limit=SEARCH_LIMIT)
         scroll_id = results["_scroll_id"]
         total = results["hits"]["total"]["value"]
@@ -825,6 +826,7 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         
         print('uncached get_restricted_instances hits length: ', len(results["hits"]["hits"]))
 
+        restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         if total > SEARCH_LIMIT:
             pages = total // SEARCH_LIMIT
 
@@ -833,11 +835,10 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             for page in range(pages):
                 results_scrolled = query.se.es.scroll(scroll_id=scroll_id, scroll="1m")
                 print('uncached results_scrolled total: ', len(results_scrolled["hits"]["hits"]))
-                results["hits"]["hits"] += results_scrolled["hits"]["hits"]
+                restricted_ids += [res["_id"] for res in results_scrolled["hits"]["hits"]]
                 print('uncached new results total: ', len(results_scrolled["hits"]["hits"]))
 
 
-        restricted_ids = [res["_id"] for res in results["hits"]["hits"]]
         cache.set("get_restricted_instances--restricted_ids", restricted_ids, 300)
         return restricted_ids
 
@@ -923,7 +924,14 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
             if group.startswith("dg:") and
             (not perms or act in perms or act == "__all__")
         }
-        return bool(group_ids & {str(group.pk) for group in user.groups.all()})
+        user_ids = {
+            user[2:] for user, _, act in groups
+            if user.startswith("u:") and
+            (not perms or act in perms or act == "__all__")
+        }
+        graph_perm_ids = group_ids | user_ids
+
+        return bool(graph_perm_ids & {str(group.pk) for group in user.groups.all()})
 
 
     @context_free
@@ -1022,6 +1030,17 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
                     return None
         return False
 
+    def user_can_read_graph(self, user: User, graph_id: str) -> bool:
+        """
+        returns a boolean denoting if a user has permission to read a model's nodegroups
+
+        Arguments:
+        user -- the user to check
+        graph_id -- a graph id to check if a user has permissions to that graph's type specifically
+
+        """
+
+        return bool(self.user_has_resource_model_permissions(user, ["models.read_nodegroup"], graph_id=graph_id))
 
     @context_free
     def user_can_read_concepts(self, user):

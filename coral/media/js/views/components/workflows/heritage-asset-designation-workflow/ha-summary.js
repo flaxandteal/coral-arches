@@ -40,8 +40,8 @@ define([
       },
       monumentType: {
         label: 'Monument Type',
-        nodegroupId: '8b94df3e-233f-11ef-89fe-0242ac1a0006',
-        renderNodeIds: [{nodeId: '8b94df3e-233f-11ef-89fe-0242ac1a0006', label: 'Type'}]
+        nodegroupId: 'aca05d09-b52d-4ee7-ab17-f31134131a1c',
+        renderNodeIds: [{nodeId: 'abf06e3f-1044-4e28-86de-724726adce4c', label: 'Type'}]
       },
       historicalPeriod: {
         label: 'Historical Period',

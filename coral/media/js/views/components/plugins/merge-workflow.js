@@ -182,7 +182,9 @@ define([
                         "component": "user-to-model-select",
                         "signOffGroups":[
                           "1ce90bd5-4063-4984-931a-cc971414d7db",
-                          "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
+                          "7e044ca4-96cd-4550-8f0c-a2c860f99f6b",
+                          "7679f42b-56ad-4b18-8b2c-cc6de1b16537",
+                          "e778f4a1-97c6-446f-b1c4-418a81c3212e"
                         ],
                         "allowInstanceCreation": false
                       }

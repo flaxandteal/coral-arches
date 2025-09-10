@@ -136,31 +136,36 @@ class UpdateAssignedTo(BaseFunction):
         if tile.nodegroup_id == ASSIGNMENT:
             if not tile.data[REASSIGNED_TO]:
                 return
-            current_assigned = tile.data[ASSIGNMENT_ASSIGNED_TO]
-            reassigned_users = tile.data[REASSIGNED_TO]
-            team = tile.data[ASSIGNMENT_TEAM]
-            tile.data[ASSIGNMENT_ASSIGNED_TO] = reassigned_users
-            tile.data[REASSIGNED_TO] = None
-            tile.save()    
+            current_assigned = tile.data.get(ASSIGNMENT_ASSIGNED_TO, None)
+            reassigned_users = tile.data.get(REASSIGNED_TO, None)
+            team = tile.data.get(ASSIGNMENT_TEAM, None)
+            if reassigned_users:
+                tile.data[ASSIGNMENT_ASSIGNED_TO] = reassigned_users
+                tile.data[REASSIGNED_TO] = None
+                tile.save()    
 
-            for person in reassigned_users:
-                self.is_user_in_team(person['resourceId'], team)
+                for person in reassigned_users:
+                    self.is_user_in_team(person['resourceId'], team)
 
-            try:
-                filter_params = {
-                    'resourceinstance_id': str(tile.resourceinstance.resourceinstanceid),
-                    'nodegroup_id': ACTION,
-                }
-                action_tile = Tile.objects.filter(**filter_params).first()
-            except:
-                raise Exception("Users could not be re-assigned as no users are currently assigned")
+                try:
+                    filter_params = {
+                        'resourceinstance_id': str(tile.resourceinstance.resourceinstanceid),
+                        'nodegroup_id': ACTION,
+                    }
+                    action_tile = Tile.objects.filter(**filter_params).first()
+                except:
+                    raise Exception("Users could not be re-assigned as no users are currently assigned")
 
-            assigned_node = action_tile.data[ACTION_ASSIGNED_TO]
-            for person in current_assigned:
-                assigned_node = [user for user in assigned_node if user['resourceId'] != person['resourceId']]
-
-            action_tile.data[ACTION_ASSIGNED_TO] = assigned_node + reassigned_users
-            action_tile.save()            
+                assigned_node = action_tile.data.get(ACTION_ASSIGNED_TO, None)
+                if current_assigned and assigned_node:
+                    for person in current_assigned:
+                        assigned_node = [user for user in assigned_node if user['resourceId'] != person['resourceId']]
+                        action_tile.data[ACTION_ASSIGNED_TO] = assigned_node + reassigned_users
+                else:
+                    action_tile.data[ACTION_ASSIGNED_TO] = reassigned_users   
+                    tile.data[ASSIGNMENT_ASSIGNED_TO] = reassigned_users           
+                
+                action_tile.save()            
 
         if str(tile.nodegroup_id) == ACTION:
             action_type = tile.data[ACTION_TYPE]

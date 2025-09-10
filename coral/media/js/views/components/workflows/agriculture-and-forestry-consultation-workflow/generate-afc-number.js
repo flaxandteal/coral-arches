@@ -15,7 +15,7 @@ define([
 
     if (ko.isObservable(this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID])) {
       this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID].subscribe((val) => {
-        if (val.en.value !== this.afcValue()) {
+        if (val.en.value.startsWith("CON")) {
           this.tile().data[this.SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID]({en: { direction: 'ltr', value: this.afcValue()}})
         }
       })

@@ -751,6 +751,7 @@ define([
           name: 'ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf',
           title: 'Letter',
           required: false,
+          saveWithoutProgressing: true,
           layoutSections: [
             {
               componentConfigs: [
@@ -782,7 +783,8 @@ define([
               ]
             }
           ],
-          workflowstepclass: 'workflow-form-component'
+          workflowstepclass: 'workflow-form-component',
+          hiddenWorkflowButtons: ["save"]
         },
         {
           title: 'Amendments',
@@ -796,7 +798,7 @@ define([
                   componentName: 'transfer-of-licence',
                   uniqueInstanceName: 'transfer-of-licence',
                   tilesManaged: 'many',
-                  manyTitle: 'Transfers',
+                  manyTitle: 'Transfer of Licence',
                   parameters: {
                     title: 'Transfer of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -813,6 +815,9 @@ define([
                         "allowInstanceCreation": false
                       },
                       "43ec68d6-c445-11ee-8be7-0242ac180006": {
+                        "config":{
+                          "label": "Transfer of Licence"
+                        },
                         "allowInstanceCreation": false
                       },
                       "6bc892c8-c44d-11ee-94bf-0242ac180006": {
@@ -853,6 +858,7 @@ define([
                           "maxDate":"today"
                         }
                       },
+
                       "c6f09242-c4d2-11ee-b171-0242ac180006": {
                         "config":{
                           "maxDate":"today"
@@ -885,6 +891,7 @@ define([
                   componentName: 'default-card-util',
                   uniqueInstanceName: 'extension-of-licence',
                   tilesManaged: 'many',
+                  manyTitle: 'Extension of Licence',
                   parameters: {
                     title: 'Extension of Licence',
                     graphid: 'cc5da227-24e7-4088-bb83-a564c4331efd',
@@ -934,6 +941,7 @@ define([
                       },
                       "c6f09242-c4d2-11ee-b171-0242ac180006": {
                         "config":{
+                          "label": "Extension of Licence",
                           "maxDate":"today"
                         }
                       },

@@ -90,8 +90,8 @@ class UpdatePlanningNameFunction(BaseFunction):
             resource_id_value = self.get_localised_string_value(
                 system_reference_tile, SYSTEM_REFERENCE_RESOURCE_NODE_ID
             )
+
             if resource_id_value.startswith('extrados'):
-                print("DEBUG PLANNING NAME UPDATE: ", resource_id_value)
                 def generateID (prefix="CON", length=6):
                     base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
                     current_date = date.today()
@@ -131,10 +131,8 @@ class UpdatePlanningNameFunction(BaseFunction):
             display_name_tile.data[DISPLAY_NAME_NODE_ID] = (
                 self.value_as_localised_string(planning_ref_value)
             )
-            display_name_tile.save()
-            return
-
-        display_name_tile.data[DISPLAY_NAME_NODE_ID] = self.value_as_localised_string(
-            resource_id_value
-        )
+        else:
+            display_name_tile.data[DISPLAY_NAME_NODE_ID] = self.value_as_localised_string(
+                resource_id_value
+            )
         display_name_tile.save()
