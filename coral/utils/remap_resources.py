@@ -38,6 +38,13 @@ class RemapResources:
         self.destination_graph_id = destination_graph_id
         self.excluded_aliases = excluded_aliases
         self.target_resource_id = target_resource_id
+        self.target_resource = None
+        self.destination_resource = None
+        self.nodes = {"target": {}, "destination": {}}
+        self.node_mapping = {}
+        self.excluded_nodegroup_ids = []
+        self.parent_nodegroup_ids = []
+        self.created_parent_tiles = {}
         pass
 
     def get_resource(self, resource_id):
@@ -153,12 +160,13 @@ class RemapResources:
             data={},
             nodegroup=destination_parent_nodegroup,
         )
-        parent_tile.save()
+        parent_tile.save(context={"escape_function": True})
         self.created_parent_tiles[target_parent_tile_id] = parent_tile
 
         return parent_tile
 
     def remap_resources(self, user):
+        import pdb
         with transaction.atomic():
             self.target_resource = self.get_resource(self.target_resource_id)
 
@@ -256,25 +264,26 @@ class RemapResources:
                 # resource (had a case where a function was creating a tile). This will find
                 # it and update it rather than create it.
                 # 
-                # FIXME: this is only needed for cardinality 1 tiles. Many tiles should just create a new tile
+                # This checks the cardinality of the nodegroup, if it is one and tile exists it 
+                # will replace it. If the cardinality is n it will create a new tile and add it
                 #
-                destination_tile = Tile.objects.filter(
+                destination_tile = Tile.objects.select_related('nodegroup').filter(
                     resourceinstance=self.destination_resource,
                     nodegroup=destination_nodegroup,
                 ).first()
 
-                if destination_tile:
+                if destination_tile and destination_tile.nodegroup.cardinality == 1:
                     destination_tile.data = data
+                    destination_tile.save(context={"escape_function": True})
                 else:
-                    destination_tile = Tile(
+                    new_tile = Tile(
                         tileid=uuid.uuid4(),
                         resourceinstance=self.destination_resource,
                         parenttile=parent_tile,
                         data=data,
                         nodegroup=destination_nodegroup,
                     )
-
-                destination_tile.save()
+                    new_tile.save(context={"escape_function": True})
 
                 # If this is true, it means the parent tile had data and needed
                 # that data to be remapped. We then add into the created parent

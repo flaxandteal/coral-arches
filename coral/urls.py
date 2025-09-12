@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
 from arches.app.views.user import UserManagerView
+from coral.views.api_file import TempFileView
 from coral.views.group_manager import GroupManagerView
 from coral.views.person_user import PersonUserSignupView
 from arches.app.views.plugin import PluginView
@@ -14,11 +15,15 @@ from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResourcesView
 from coral.views.monument_revision_remap import RemapMonumentToRevision, RemapRevisionToMonument
 from coral.views.dashboard import Dashboard
+from coral.views.orm import ORM
 from coral.views.file_template import FileTemplateView
 from coral.views.ha_number import HaNumberView
 from coral.views.smr_number import SmrNumberView
 from coral.views.garden_number import GardenNumberView
 from coral.views.hb_number import HbNumberView
+from coral.views.user_to_model import UserToModel
+from coral.views.afc_number import AfcNumberView
+from coral.views.ail_number import AilNumberView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -54,6 +59,8 @@ urlpatterns = [
     # Dashboard
     #
     re_path(r"^dashboard/resources", Dashboard.as_view(), name="dashboard"),
+    re_path(r"^orm/resources", ORM.as_view(), name="orm"),
+
 
     #
     # Open Workflow
@@ -78,6 +85,26 @@ urlpatterns = [
     re_path(r"^generate-smr-number", SmrNumberView.as_view(), name="generate_smr_number"),
     re_path(r"^generate-garden-number", GardenNumberView.as_view(), name="generate_garden_number"),
     re_path(r"^generate-hb-number", HbNumberView.as_view(), name="generate_hb_number"),
+
+    #
+    # Agriculture and forestry consultation number
+    #
+    re_path(r"^generate-afc-number", AfcNumberView.as_view(), name="generate_afc_number"),
+
+    #
+    # DAERA consultation number
+    #
+    re_path(r"^generate-ail-number", AilNumberView.as_view(), name="generate_ail_number"),
+
+    #
+    # User to Model
+    #
+    re_path(r"^user-to-model", UserToModel.as_view(), name="user_to_model"),
+
+    #
+    # api upload
+    #
+    re_path(r"^api/temp_file$", TempFileView.as_view(), name="api_temp_file"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

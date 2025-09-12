@@ -8,7 +8,8 @@ define([
   'viewmodels/card-component',
   'viewmodels/alert',
   'templates/views/components/workflows/file-template.htm',
-  'docx-preview'
+  'docx-preview',
+  'native-file-system-adapter'
 ], function (
   _,
   $,
@@ -19,7 +20,8 @@ define([
   CardComponentViewModel,
   AlertViewModel,
   template,
-  docxPreview
+  docxPreview,
+  NativeFileSystemAdapter
 ) {
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
@@ -38,20 +40,33 @@ define([
 
     this.selectedLetterType = ko.observable();
     this.uploadedFiles = ko.observableArray();
+    this.document = ko.observable();
+    this.configKeys = ko.observable({ placeholder: 0 });
+    this.letterOptions = ko.observable(params.letterOptions);
+    this.loading = ko.observable(false);
 
+    if(!ko.isObservable(this.tile.data[this.LETTER_TYPE_NODE])){
+      this.tile.data[this.LETTER_TYPE_NODE] = ko.observable(this.tile.data[this.LETTER_TYPE_NODE]);
+    }
     this.tile.data[this.LETTER_TYPE_NODE].subscribe((value) => {
       this.selectedLetterType(value);
     }, this);
 
+    this.document.subscribe((value) => {
+      console.log("value will be", value)
+      this.selectedLetterType(value);
+    }, this)
+
     this.retrieveFile = async () => {
-      // this.loading(true);
+      this.loading(true);
       if (this.selectedLetterType()) {
         await $.ajax({
           type: 'POST',
           url: arches.urls.root + 'filetemplate',
           data: JSON.stringify({
             resourceinstance_id: params.resourceid,
-            template_id: this.selectedLetterType()
+            template_id: this.selectedLetterType(),
+            config: params.config
           }),
           context: this,
           success: async (responseText, status, response) => {
@@ -76,7 +91,7 @@ define([
           }
         });
       }
-      // this.loading(false);
+      this.loading(false);
     };
 
     this.saveDigitalResourceName = async (name, resourceId) => {
@@ -119,7 +134,7 @@ define([
     this.saveRelationship = async (resourceId) => {
       const id = uuid.generate();
 
-      this.tile.data[this.LETTER_TYPE_NODE] = this.selectedLetterType();
+      this.tile.data[this.LETTER_TYPE_NODE] = "08bb630d-a27b-45bc-a13f-567b428018c5";
       this.tile.data[this.LETTER_METATYPE] = '956f9779-3524-448e-b2de-eabf2de95d51';
       this.tile.data[this.LETTER_RESOURCE_NODE] = [
         {
@@ -133,7 +148,7 @@ define([
       const fileTileTemplate = {
         tileid: '',
         data: {
-          [this.LETTER_TYPE_NODE]: this.selectedLetterType(),
+          [this.LETTER_TYPE_NODE]: "08bb630d-a27b-45bc-a13f-567b428018c5",
           [this.LETTER_METATYPE]: '956f9779-3524-448e-b2de-eabf2de95d51',
           [this.LETTER_RESOURCE_NODE]: [
             {
@@ -170,12 +185,16 @@ define([
      */
     params.form.save = () => {};
 
+    this.form.workflow.finishWorkflow = () => {
+      window.location.assign(this.form.workflow.quitUrl);
+    };
+
     this.getFileTiles = async (resourceId) => {
       const fileTiles = [];
 
       await Promise.all(
         this.form.tiles().map((tile) => {
-          const digitalObjectResourceId = ko.toJS(tile.data)[this.LETTER_RESOURCE_NODE][0]
+          const digitalObjectResourceId = ko.toJS(tile.data)[this.LETTER_RESOURCE_NODE]?.[0]
             .resourceId;
           if (!digitalObjectResourceId) return;
           return $.ajax({
@@ -215,11 +234,22 @@ define([
 
     this.getFileTiles();
 
-    this.downloadFile = (url, name) => {
-      var link = document.createElement('a');
-      link.href = url;
-      link.download = name; // Extracting file name from path
-      link.click();
+    this.downloadFile = async (url, name) => {
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      const handle = await NativeFileSystemAdapter.showSaveFilePicker({
+        suggestedName: name,
+        types: [
+          {
+            description: 'Files'
+          }
+        ]
+      });
+
+      const writableStream = await handle.createWritable();
+      await writableStream.write(blob);
+      await writableStream.close();
     };
 
     this.form.saveMultiTiles = async (newTileId) => {

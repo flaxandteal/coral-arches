@@ -29,6 +29,16 @@ define([
                 ]
             };
 
+            self.designationDescriptionTableConfig = {
+                ...self.defaultTableConfig,
+                "columns": [
+                    { "width": "50%" },
+                    { "width": "20%" },
+                    { "width": "20%" },
+                    null,
+                ]
+            };
+
             self.citationTableConfig = {
                 ...self.defaultTableConfig,
                 "columns": [
@@ -52,14 +62,19 @@ define([
             self.add = params.addTile || self.addNewTile;
             self.citations = ko.observableArray();
             self.descriptions = ko.observableArray();
+            self.designationDescriptions = ko.observableArray();
             self.audience = ko.observableArray();
             self.subjectData = ko.observable();
             self.visible = {
                 descriptions: ko.observable(true),
                 citation: ko.observable(true),
-                audience: ko.observable(true)
+                audience: ko.observable(true),
+                designationDescriptions: ko.observable(true)
             }
             Object.assign(self.dataConfig, params.dataConfig || {});
+
+
+            // bba34790-37b4-11ef-9263-0242ac150006
 
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
             if(params?.compiled){
@@ -127,6 +142,27 @@ define([
                             ]
                     });
                 }
+            }
+
+            const designationDescriptions = self.getRawNodeValue(params.data(), {
+                testPaths: [
+                    ["designation descriptions"]
+                ]
+            });
+            console.log('designationDescriptions: ', designationDescriptions)
+            
+            if(designationDescriptions) {
+                designationDescriptions.forEach((description) => {
+                  const designationDescription = {};
+                  designationDescription.description = self.getNodeValue(
+                    description,
+                    'designation description'
+                  );
+                  designationDescription.type = self.getNodeValue(description, 'designation description type');
+                  designationDescription.recommendation = self.getNodeValue(description, 'recommended designation type');
+                  self.designationDescriptions.push(designationDescription);
+                });
+                console.log('self.designationDescriptions: ', self.designationDescriptions());
             }
 
         },

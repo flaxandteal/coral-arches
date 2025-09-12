@@ -15,6 +15,8 @@ import inspect
 import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
+from csp.constants import SELF, NONE
+from csp.constants import SELF, NONE, NONCE
 
 try:
     from arches.settings import *
@@ -22,7 +24,10 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=5, minor=0, patch=7)
+APP_VERSION = semantic_version.Version(major=7, minor=15, patch=53)
+
+TIME_ZONE = "Europe/London"
+USE_TZ = True
 
 GROUPINGS = {
     "groups": {
@@ -46,7 +51,6 @@ APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe(
 MIN_ARCHES_VERSION = arches.__version__
 MAX_ARCHES_VERSION = arches.__version__
 
-
 WEBPACK_LOADER = {
     "DEFAULT": {
         "STATS_FILE": os.path.join(APP_ROOT, 'webpack/webpack-stats.json'),
@@ -55,6 +59,8 @@ WEBPACK_LOADER = {
 
 CASBIN_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'permissions', 'casbin.conf')
 CASBIN_RELOAD_QUEUE = os.getenv("CASBIN_RELOAD_QUEUE", "reloadQueue")
+
+CORAL_UPGRADE_WINDOW_FILE = os.getenv("CORAL_UPGRADE_WINDOW_FILE", "")
 
 DAUTHZ = {
     # DEFAULT Dauthz enforcer
@@ -182,6 +188,7 @@ DATABASES = {
 SEARCH_THUMBNAILS = False
 
 INSTALLED_APPS = (
+    "csp",
     "webpack_loader",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -199,7 +206,6 @@ INSTALLED_APPS = (
     "corsheaders",
     "oauth2_provider",
     "django_celery_results",
-    "compressor",
     "dauthz.apps.DauthzConfig",
     # "silk",
     "coral",
@@ -211,6 +217,7 @@ if DEBUG:
 ARCHES_APPLICATIONS = ()
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -222,18 +229,42 @@ MIDDLEWARE = [
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    # "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
     # "silk.middleware.SilkyMiddleware",
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://crl-data-store-uat-eu-west-2-prd.storage.googleapis.com"
+]
+
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "default-src": [NONE],
+        "script-src": [SELF, "'unsafe-inline'", "'unsafe-eval'", "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
+        "img-src": [SELF, "blob:", "data:", "mo.ev.openindustry.in"],
+        "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
+        "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
+        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
+        "worker-src": [SELF, "blob:"],
+    },
+}
+
+X_FRAME_OPTIONS = 'DENY'
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     MIDDLEWARE.append("debug_toolbar_force.middleware.ForceDebugToolbarMiddleware")
     import socket
     hostname, __, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
-
 
 AWS_STORAGE_BUCKET_NAME=os.environ.get("AWS_STORAGE_BUCKET_NAME", None)
 AWS_S3_ENDPOINT_URL=os.environ.get("AWS_S3_ENDPOINT_URL", None)
@@ -295,6 +326,13 @@ FORCE_SCRIPT_NAME = None
 FORCE_USER_SIGNUP_EMAIL_AUTHENTICATION = False
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, 'logs', 'resource_import.log')
 DEFAULT_RESOURCE_IMPORT_USER = {'username': 'admin', 'userid': 1}
+
+USER_SIGNUP_GROUP = "Crowdsource Editor"
+ALLOWED_SIGNUP_GROUPS = [
+    "Crowdsource Editor",
+    "Resource Editor",
+    "Resource Reviewer",
+]
 
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
 if USE_CASBIN:
@@ -358,6 +396,14 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
 
+# Additional cookie security params 
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = "Strict"
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_SECURE = True
+
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
 CACHES = {
     'default': {
@@ -368,10 +414,14 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'user_permission_cache',
     },
+    'dashboard_versioning': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'dashboard_version_cache',
+    }
 }
 
 # Hide nodes and cards in a report that have no data
-HIDE_EMPTY_NODES_IN_REPORT = False
+HIDE_EMPTY_NODES_IN_REPORT = True
 
 BYPASS_UNIQUE_CONSTRAINT_TILE_VALIDATION = False
 BYPASS_REQUIRED_VALUE_TILE_VALIDATION = False
@@ -408,14 +458,14 @@ if DEBUG is True:
     SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  #<-- Only need to uncomment this for testing without an actual email server
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = "xxxx@xxx.com"
-# EMAIL_HOST_PASSWORD = 'xxxxxxx'
-# EMAIL_PORT = 587
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", 'django.core.mail.backends.console.EmailBackend')
+EMAIL_USE_TLS = str(os.getenv("EMAIL_USE_TLS", "1")).lower() in ("1", "true")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "xxxx@xxx.com")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "xxxxxxx")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
 # If True, allows for user self creation via the signup view. If False, users can only be created via the Django admin view.
 ENABLE_USER_SIGNUP = False
@@ -551,4 +601,3 @@ if __name__ == "__main__":
         static_url=STATIC_URL,
         webpack_development_server_port=WEBPACK_DEVELOPMENT_SERVER_PORT,
     )
-

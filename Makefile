@@ -6,7 +6,7 @@ TOOLKIT_RELEASE = main
 ARCHES_PROJECT ?= $(shell ls -1 */__init__.py | head -n 1 | sed 's/\/.*//g')
 ARCHES_BASE = ghcr.io/flaxandteal/arches-base:coral-7.6
 ARCHES_PROJECT_ROOT = $(shell pwd)/
-DOCKER_COMPOSE_COMMAND = ARCHES_PROJECT_ROOT=$(ARCHES_PROJECT_ROOT) ARCHES_BASE=$(ARCHES_BASE) ARCHES_PROJECT=$(ARCHES_PROJECT) docker-compose -p $(ARCHES_PROJECT) -f docker/docker-compose.yml
+DOCKER_COMPOSE_COMMAND = ARCHES_PROJECT_ROOT=$(ARCHES_PROJECT_ROOT) ARCHES_BASE=$(ARCHES_BASE) ARCHES_PROJECT=$(ARCHES_PROJECT) docker compose --profile api -p $(ARCHES_PROJECT) -f docker/docker-compose.yml
 CMD ?=
 
 create: docker
@@ -67,9 +67,12 @@ build: docker
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
 	if [ -z $(ARCHES_PROJECT)/media/node_modules/jquery-validation ]; then rm -rf $(ARCHES_PROJECT)/media/node_modules; fi
 	$(DOCKER_COMPOSE_COMMAND) stop
+	echo "installing yarn"
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
+	echo "installing bootstrap"
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
 
+	echo "installing past bootstrap"
 	if [ -d $(ARCHES_PROJECT)/pkg ]; then $(TOOLKIT_FOLDER)/act.py . load_package --yes; fi
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_yarn_build_development
 	$(DOCKER_COMPOSE_COMMAND) stop
@@ -94,7 +97,7 @@ run: docker
 .PHONY: web
 web: docker
 	$(DOCKER_COMPOSE_COMMAND) stop arches
-	$(DOCKER_COMPOSE_COMMAND) run --service-ports arches
+	$(DOCKER_COMPOSE_COMMAND) run --service-ports --remove-orphans arches
 
 .PHONY: yarn-development
 yarn-development: docker

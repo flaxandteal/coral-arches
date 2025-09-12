@@ -1,0 +1,12 @@
+{
+    "widgetid": "0d779887-6b4f-44de-8c92-69add1ecd719",
+    "name": "custom-select-widget",
+    "component": "views/components/widgets/custom-select-widget",
+    "defaultconfig": {
+      "placeholder": "",
+      "label": "Select an Option",
+      "defaultValue": { "en": { "value": "<strong>Renders HTML</strong>" } }
+    },
+    "helptext": null,
+    "datatype": "string"
+  }

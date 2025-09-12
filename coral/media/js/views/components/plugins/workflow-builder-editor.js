@@ -36,7 +36,8 @@ define([
         informationBox: {
           heading: stepConfig?.informationboxdata?.heading,
           text: stepConfig?.informationboxdata?.text
-        }
+        },
+        hiddenWorkflowButtons: stepConfig?.hiddenWorkflowButtons
       });
       this.workflowSteps().push(step);
       this.workflowSteps.valueHasMutated();

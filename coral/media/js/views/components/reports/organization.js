@@ -16,6 +16,8 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
+            this.summary = params.summary;
 
             Object.assign(self, reportUtils);
             self.sections = [
@@ -26,12 +28,24 @@ define([
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'contact', title: 'Biography and Contact Details'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+
+            self.fullReportConfig = {
+                id: 'organization',
+                label: 'Organization',
+                summaryNodeGroups: [
+                    "e8431c5d-8098-11ea-8348-f875a44e0e11",
+                    "af3b0116-29a9-11eb-8333-f875a44e0e11",
+                    "1b6f9cb4-51ae-11eb-a1fe-f875a44e0e11"
+                ],
+                ignoreNodes: []
+            };
 
             self.nameDataConfig = {
                 name: 'names',
@@ -76,7 +90,7 @@ define([
             if(params.report.cards){
                 const cards = params.report.cards;
 
-                self.cards = self.createCardDictionary(cards)
+                self.cards = self.createCardDictionary(cards);
 
                 self.nameCards = {
                     name: self.cards?.names,

@@ -14,28 +14,6 @@ class HaNumberView(View):
         data = json.loads(request.body.decode("utf-8"))
         resource_instance_id = data.get("resourceInstanceId")
 
-        if resource_instance_id:
-            sys_ref_tile = Tile.objects.filter(
-                resourceinstance_id=resource_instance_id,
-                nodegroup_id=SYSTEM_REFERENCE_NODEGROUP,
-            ).first()
-
-            if sys_ref_tile and sys_ref_tile.data.get(
-                SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None
-            ):
-                id = (
-                    sys_ref_tile.data.get(SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID, None)
-                    .get("en")
-                    .get("value")
-                )
-                print("Heritage Asset ID has already been generated: ", id)
-                return JSONResponse(
-                    {
-                        "message": "Heritage Asset ID has already been generated",
-                        "haNumber": id,
-                    }
-                )
-
         hn = HaNumber()
         ha_number = hn.generate_id_number(resource_instance_id)
 

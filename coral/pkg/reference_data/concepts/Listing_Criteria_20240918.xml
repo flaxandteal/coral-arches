@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-e10ddcc4c5ae">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-34b97dcdba5a", "value": "A. Style"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f">
+        <dcterms:title xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-c023f1566c09", "value": "Listing Criteria"}</dcterms:title>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-7a49732a45ec"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-bf0ee8126e94"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7a32ac3c36"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-de8a99b26647"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-3223af0c0615"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-8ef6cec4a1b7"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-78c8da89b1b5"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-e10ddcc4c5ae"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7ae8126e94"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7a99b26647"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7a732a45ec"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7acec4a1b7"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7aaf0c0615"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7ada89b1b5"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-061532ab735f"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-061599b26647"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-0615732a45ec"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-2645bea49be2"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-0615af0c0615"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-0615da89b1b5"/>
+        <skos:hasTopConcept rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-0615da89b1b6"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-bf0ee8126e94">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-3b483b301e7a", "value": "B. Proportion"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-de8a99b26647">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-f7284105212f", "value": "C. Ornamentation"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-7a49732a45ec">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-87c893b603f7", "value": "D. Plan Form"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-8ef6cec4a1b7">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-ca5bb0a117e6", "value": "E. Spatial Organisation"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-3223af0c0615">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-7466d83e9ca7", "value": "F. Structural System"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-78c8da89b1b5">
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-e07627136d50", "value": "G. Innovatory Qualities"}</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7a32ac3c36">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-4b5fc844dcf6", "value": "H+. Alterations enhancing the building"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+    <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7ae8126e94">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-3b483b302c1e", "value": "H-. Alterations detracting from building"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7a99b26647">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-1e7a4105212f", "value": "I. Quality and survival of Interior"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7a732a45ec">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-1e7a93b603f7", "value": "J. Setting"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7acec4a1b7">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-1e7ab0a117e6", "value": "K. Group value"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7aaf0c0615">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-1e7ad83e9ca7", "value": "R. Age"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-1e7ada89b1b5">
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-1e7a27136d50", "value": "S. Authenticity"}</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-0615da89b1b6">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-0615c844dcf6", "value": "T. Historic Importance"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+ <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-061599b26647">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-06154105212f", "value": "U. Historic Associations"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-0615732a45ec">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-061593b603f7", "value": "V. Authorship"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-2645bea49be2">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-0615b0a117e6", "value": "W. Northern Ireland / International interest"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-0615af0c0615">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-0615d83e9ca7", "value": "X. Local Interest"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-0615da89b1b5">
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-061527136d50", "value": "Y. Social, cultural or economic importance"}</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://localhost:8000/ddb92162-2508-4900-a8d5-061532ab735f">
+    <skos:prefLabel xml:lang="en">{"id": "ddb92162-2508-4900-a8d5-061532ab735e", "value": "Z. Rarity"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://localhost:8000/ddb92162-2508-4900-a8d5-886837eb735f"/>
+  </skos:Concept>
+
+</rdf:RDF>

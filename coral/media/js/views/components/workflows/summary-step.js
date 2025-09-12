@@ -24,6 +24,13 @@ define([
     this.resourceData = ko.observable();
     this.relatedResources = ko.observableArray();
 
+    this.decodeHtmlEntities = (text) => {
+      if (!text || typeof text !== 'string') return text;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = text;
+      return tempDiv.textContent || tempDiv.innerText || '';
+    };
+
     this.getResourceData = function () {
       window
         .fetch(this.urls.api_resources(this.resourceid) + '?format=json&compact=false')
@@ -119,8 +126,13 @@ define([
              * This is the object notation path that allows you to
              * provide values such as: label, defaultValue, related
              */
-            if (!(nodeIdObject.nodeId in t.data)) continue;
-            const node = t.data[nodeIdObject.nodeId];
+            if (!(nodeIdObject.nodeId in t.data) && !nodeIdObject?.defaultValue) continue;
+            const node = t.data[nodeIdObject.nodeId] || {
+              displayValue: null,
+              label: null,
+              nodeId: nodeIdObject.nodeId,
+              value: null
+            };
             if (nodeIdObject.label) {
               node.label = nodeIdObject.label;
             }
@@ -210,14 +222,14 @@ define([
             formatted[tile.nodegroup]['data'][display.nodeid] = {
               nodeId: display.nodeid,
               label: display.label,
-              displayValue: display.value,
+              displayValue: this.decodeHtmlEntities(display.value),
               value: tile.data[display.nodeid]
             };
           } else {
             formatted[tile.nodegroup][cardinalityIdx]['data'][display.nodeid] = {
               nodeId: display.nodeid,
               label: display.label,
-              displayValue: display.value,
+              displayValue: this.decodeHtmlEntities(display.value),
               value: tile.data[display.nodeid]
             };
           }

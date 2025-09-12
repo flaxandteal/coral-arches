@@ -2246,7 +2246,7 @@
                     "node_id": "9e791cfe-eff3-11eb-9c35-a87eeabdefba",
                     "sortorder": 27,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "af3b0118-29a9-11eb-8e7b-f875a44e0e11",
@@ -8714,8 +8714,10 @@
                 },
                 {
                     "alias": "county_value",
-                    "config": {},
-                    "datatype": "string",
+                    "config": {
+                        "rdmCollection": "763ba635-3800-324a-8d54-c1427bcaa5aa"
+                    },
+                    "datatype": "concept",
                     "description": null,
                     "exportable": true,
                     "fieldname": "County",

@@ -17,6 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import time
+import logging
+import json
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
 from django.views.generic import View
@@ -38,7 +40,7 @@ from arches.app.utils.arches_crypto import AESCipher
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 from arches.app.views.auth import *
 from arches_orm.adapter import admin
-import logging
+from coral.models.models import RegistrationLink
 
 logger = logging.getLogger(__name__)
 
@@ -50,16 +52,27 @@ def _person_decrypt(person):
 
     AES = AESCipher(settings.SECRET_KEY)
     try:
-        person_id = AES.decrypt(person)
+        person_str = AES.decrypt(person)
     except Exception:
         raise (Exception(("User can only be signed up by linking to a pre-known Person with encrypted ID.")))
 
+    person_id, link_id = person_str.split(":")
     person = Person.find(person_id)
 
     if not person:
         raise (Exception(("User can only be signed up by linking to a pre-known resource.")))
 
-    return person
+    link = RegistrationLink.objects.get(pk=link_id)
+    if not link:
+        raise (Exception(("This link has been used or is no longer present.")))
+
+    if link.used:
+        raise (Exception(("This link has been used.")))
+
+    if str(link.person_id) != str(person_id):
+        raise (Exception(("This link does not match the requested person.")))
+
+    return person, link
 
 @method_decorator(never_cache, name="dispatch")
 class PersonSignupView(View):
@@ -167,7 +180,7 @@ class PersonConfirmSignupView(View):
 
         person = userinfo["person_enc"]
         with admin():
-            person = _person_decrypt(person)
+            person, link = _person_decrypt(person)
             del userinfo["person_enc"]
 
             form = CoralUserCreationForm(userinfo)
@@ -184,8 +197,11 @@ class PersonConfirmSignupView(View):
                         except django.db.utils.ProgrammingError:
                             form.errors["ts"] = [("This sign-up link is no longer valid, please re-request a link.")]
                         else:
-                            crowdsource_editor_group = Group.objects.get(name=settings.USER_SIGNUP_GROUP)
-                            user.groups.add(crowdsource_editor_group)
+                            for group in link.metadata["groups"]:
+                                signup_group = Group.objects.get(name=group)
+                                user.groups.add(signup_group)
+                            link.used = datetime.now()
+                            link.save()
                             return redirect(reverse("auth") + "?registration_success=true")
                     else:
                         try:

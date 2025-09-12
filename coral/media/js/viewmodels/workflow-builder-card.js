@@ -14,8 +14,10 @@ define([
   'views/components/workflows/enforcement-workflow/enforcement-summary-step',
   'views/components/workflows/related-document-upload',
   'views/components/workflows/file-template',
+  'views/components/workflows/pdf-merger',
   'views/components/workflows/fmw-workflow/get-selected-monument-details',
-  'views/components/workflows/excavation-site-visit-workflow/get-selected-license-details',
+  'views/components/workflows/excavation-site-visit-workflow/get-selected-licence-details',
+  'views/components/workflows/evaluation-meeting-workflow/get-designation-details',
   'views/components/workflows/fmw-workflow/calculate-composite-score',
 ], function ($, _, ko, koMapping, arches, template, WorkflowComponentAbstract, AlertViewModel) {
   const WorkflowBuilderCard = function (params) {

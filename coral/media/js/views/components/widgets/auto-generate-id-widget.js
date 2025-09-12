@@ -3,9 +3,9 @@ define([
   'arches',
   'uuid',
   'underscore',
-  'viewmodels/widget',
+  'views/components/widgets/text',
   'templates/views/components/widgets/auto-generate-id-widget.htm'
-], function (ko, arches, uuid, _, WidgetViewModel, autoGenerateIdTemplate) {
+], function (ko, arches, uuid, _, TextViewModel, autoGenerateIdTemplate) {
   /**
    * registers a text-widget component for use in forms
    * @function external:"ko.components".text-widget
@@ -18,45 +18,56 @@ define([
   return ko.components.register('auto-generate-id-widget', {
     viewModel: function (params) {
       params.configKeys = ['id_placeholder', 'label', 'disabled', 'prefix'];
-      WidgetViewModel.apply(this, [params]);
+      TextViewModel.apply(this, [params]);
 
-      const self = this;
-
-      self.prefixStatic = ko.isObservable(params.config) ?  params.config()?.prefix : params.config?.prefix;
-      if (self.form?.componentData?.parameters?.prefix) {
-        self.prefixStatic = self.form?.componentData?.parameters?.prefix
+      this.prefixStatic = ko.isObservable(params.config)
+        ? params.config()?.prefix
+        : params.config?.prefix;
+      if (this.form?.componentData?.parameters?.prefix) {
+        this.prefixStatic = this.form?.componentData?.parameters?.prefix;
       }
 
-      self.currentLanguage = ko.observable({ code: arches.activeLanguage });
+      this.setValue = (value) => {
+        const localisedValue = {
+          en: {
+            direction: 'ltr',
+            value: value
+          }
+        };
+        if (ko.isObservable(this.value)) {
+          this.value(localisedValue);
+        } else {
+          this.value = ko.observable();
+          this.value(localisedValue);
+        }
+      };
 
-      self.enDisplayValue = ko.computed(() => {
-        return ko.unwrap(ko.unwrap(this.displayValue)[ko.unwrap(arches.activeLanguage)]['value']);
-      }, self);
+      this.getValue = () => {
+        return ko.unwrap(ko.unwrap(this.value)?.['en']?.['value']) || '';
+      };
 
-      self.idValue = ko.observable();
-
-      self.newId = (length = 6) => {
+      this.newId = (prefix = null, length = 6) => {
         const year = new Date().getFullYear();
         const base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         let id = '';
         for (let i = 0; i < length; i++) {
           id += base62chars[Math.floor(Math.random() * 62)];
         }
-        return `${self.prefixStatic}/${year}/${id}`;
+        return `${prefix || this.prefixStatic}/${year}/${id}`;
       };
 
-      self.prefix.subscribe((value) => {
-        console.log('idValue changed: ', value);
-        self.value({
+      this.prefix.subscribe((value) => {
+        this.currentText(this.newId(value))
+        this.value({
           [arches.activeLanguage]: {
-            value: self.idValue(),
+            value: this.currentText(),
             direction: 'ltr'
           }
         });
-      }, self);
+      }, this);
 
       this.createId = async () => {
-        let id = self.newId();
+        let id = this.newId();
 
         let unique = false;
         let attempts = 0;
@@ -96,7 +107,7 @@ define([
             },
             complete: function (request, status) {
               if (!unique) {
-                id = self.newId();
+                id = this.newId();
               }
             }
           });
@@ -104,31 +115,16 @@ define([
         return id;
       };
 
-      (async () => {
-        if (ko.isObservable(self.value)) {
-          self.idValue(
-            ko.isObservable(self.value()[arches.activeLanguage]?.value)
-              ? ko.unwrap(self.value()[arches.activeLanguage]?.value)
-              : self.value()[arches.activeLanguage]?.value
-          );
-        } else {
-          self.idValue(
-            ko.isObservable(self.value[arches.activeLanguage]?.value)
-              ? ko.unwrap(self.value[arches.activeLanguage]?.value)
-              : self.value[arches.activeLanguage]?.value
-          );
+      this.init = async () => {
+        if (!this.currentText()) {
+          this.currentText(await this.createId());
         }
+        if (!this.placeholder() !== this.id_placeholder()) {
+          this.placeholder(this.id_placeholder());
+        }
+      };
 
-        if (!self.idValue()) {
-          self.idValue(await this.createId());
-          self.value({
-            [arches.activeLanguage]: {
-              value: self.idValue(),
-              direction: 'ltr'
-            }
-          });
-        }
-      })();
+      this.init()
     },
     template: autoGenerateIdTemplate
   });

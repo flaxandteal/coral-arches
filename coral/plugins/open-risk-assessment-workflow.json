@@ -1,0 +1,20 @@
+{
+    "pluginid": "22852815-17c9-4076-bc42-4fdfc9b1eae4",
+    "name": "Open Risk Assessment Workflow",
+    "icon": "fa fa-edit",
+    "component": "views/components/plugins/open-risk-assessment-workflow",
+    "componentname": "open-risk-assessment-workflow",
+    "config": {
+      "show": false,
+      "openableWorkflows": [
+        {
+          "slug": "risk-assessment-workflow",
+          "name": "Risk Assessment",
+          "graphIds": ["eb8e5877-7e36-416d-95a9-d0ff8045fd26"],
+          "hideRecents": true
+        }
+      ]
+    },
+    "slug": "open-risk-assessment-workflow",
+    "sortorder": 0
+  }

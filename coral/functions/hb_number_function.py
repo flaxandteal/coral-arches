@@ -4,6 +4,8 @@ from arches.app.models.tile import Tile
 from arches.app.models import models
 from coral.utils.smr_number import SmrNumber
 from coral.utils.hb_number import HbNumber
+from coral.utils.hb_number_suffix import HbNumberSuffix
+import re
 
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
 HB_NUMBER_NODE_ID = "250002fe-3aae-11ef-91fd-0242ac120003"
@@ -24,7 +26,7 @@ details = {
 
 
 class HbNumberFunction(BaseFunction):
-    def update_ha_references(self, ri_id, id):
+    def update_ha_references(self, ri_id, id, request):
         references_tile = Tile.objects.filter(
             resourceinstance_id=ri_id,
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
@@ -42,29 +44,49 @@ class HbNumberFunction(BaseFunction):
                 }
             }
         references_tile.data[HB_NUMBER_NODE_ID] = id
-        references_tile.save()
+        references_tile.save(request=request)      
+
+    def is_last_char_letter(self, value):
+        if isinstance(value, dict):
+            string = value.get('en', {}).get('value', None)
+        else:
+            string = value
+        if not string:
+            return ValueError("No ID number present")
+        return string[-1].isalpha() if string else False
 
     def post_save(self, tile, request, context):
+        if context and context.get('escape_function', False):
+            return
+
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(GENERATED_HB_NODE_ID, None)
+        if self.is_last_char_letter(id_number):
+            hns = HbNumberSuffix(id_number)
+            if hns.validate_id(id_number, resource_instance_id=resource_instance_id):
+                print("HB Number is valid: ", id_number)
+                self.update_ha_references(resource_instance_id, id_number, request)
+                return
 
-        if not id_number:
-            return
+            raise ValueError('This HB Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
+        else:
+            ward_district_text = models.Value.objects.filter(
+                valueid=tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
+            ).first()
+            
+            if not ward_district_text and not id_number:
+                # Clear HB Number
+                self.update_ha_references(resource_instance_id, "", request)
+                return
+            
+            if not ward_district_text and id_number:
+                raise ValueError('No selected Ward and District Numbering selected but a generated ID was provided.')
 
-        ward_district_text = models.Value.objects.filter(
-            valueid=tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
-        ).first()
+            hn = HbNumber(ward_distict_text=ward_district_text.value)
 
-        hn = HbNumber(ward_distict_text=ward_district_text.value)
+            if hn.validate_id(id_number, resource_instance_id=resource_instance_id):
+                print("HB Number is valid: ", id_number)
+                self.update_ha_references(resource_instance_id, id_number, request)
+                return
 
-        if hn.validate_id(id_number):
-            print("HB Number is valid: ", id_number)
-            self.update_ha_references(resource_instance_id, id_number)
-            return
-
-        id_number = hn.generate_id_number(resource_instance_id)
-        if not id_number:
-            return
-        self.update_ha_references(resource_instance_id, id_number)
-
-        return
+            raise ValueError('This HB Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')

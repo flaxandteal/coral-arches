@@ -15,6 +15,7 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
+            this.report = params.report;
 
             Object.assign(self, reportUtils);
             self.sections = [
@@ -29,8 +30,15 @@ define([
                 {id: 'journey', title: 'Journey Details'},
                 {id: 'people', title: 'Associated People and Organizations'},
                 {id: 'resources', title: 'Associated Resources'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
+
+            self.fullReportConfig = {
+                id: 'maritime-vessel',
+                label: 'Maritime Vessel',
+                ignoreNodes: []
+            }
 
             self.nationalitiesTableConfig = {
                 ...self.defaultTableConfig,

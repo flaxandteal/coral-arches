@@ -11,10 +11,12 @@ define([
       OpenWorkflow.apply(this, [params]);
       this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
   
-      this.incidentTiles = ko.observableArray();
+      this.issueTiles = ko.observableArray();
       this.selectedActivity = ko.observable();
   
       this.configKeys = ko.observable({ placeholder: 0 });
+
+      this.licenceString = `/search/resources?advanced-search=[{"op"%3A"and"%2C"9a9e198c-c502-11ee-af34-0242ac180006"%3A{"op"%3A"not_null"%2C"lang"%3A"en"%2C"val"%3A""}%2C"c57348bc-c502-11ee-86cf-0242ac180006"%3A{"op"%3A"eq"%2C"val"%3A""}}]`
   
       this.addtionalConfigData = ko.observable({
         parentTileIds: {},
@@ -97,7 +99,7 @@ define([
         }
         this.addtionalConfigData()['resourceInstanceId'] = resourceId;
         const tileData = await this.fetchTileData(resourceId)
-        this.incidentTiles(tileData)
+        this.issueTiles(tileData)
         this.setAdditionalOpenConfigData();
       });
     };

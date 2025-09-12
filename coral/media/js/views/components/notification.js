@@ -22,7 +22,6 @@ define([
     this.link = params.link;
     this.message = params.message;
     this.files = params.files;
-    console.log("STATE", this.state)
     this.dismiss = function (parent) {
       $.ajax({
         type: 'POST',

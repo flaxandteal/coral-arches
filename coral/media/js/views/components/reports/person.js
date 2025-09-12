@@ -13,27 +13,38 @@ define([
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
+            this.report = params.report;
             this.configForm = params.configForm || false;
             this.configType = params.configType || 'header';
-
+            this.print = ko.observable(false)
+            if (window.location.href.indexOf("?print") > -1) {
+                this.print(true)
+              }
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
+                {id: 'all', title: 'Full Report'},
                 {id: 'person-name', title: 'Person Name and Identifiers'},
                 {id: 'user-account', title: 'User Account'},
-                {id: 'description', title: 'Descriptions and Citations'},
-                {id: 'location', title: 'Location Data'},
-                {id: 'images', title: 'Images'},
-                {id: 'people', title: 'Associated People and Organizations'},
-                {id: 'contact', title: 'Biography and Contact Details'},
-                {id: 'resources', title: 'Associated Resources'},
-                {id: 'json', title: 'JSON'},
+                {id: 'related', title: 'Related Resources'},
+                // {id: 'name', title: 'Names and Classifications'},
+                // {id: 'description', title: 'Descriptions and Citations'},
+                // {id: 'location', title: 'Location Data'},
+                // {id: 'images', title: 'Images'},
+                // {id: 'people', title: 'Associated People and Organizations'},
+                // {id: 'contact', title: 'Biography and Contact Details'},
+                // {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('name');
+            self.activeSection = ko.observable('all');
             self.names = ko.observableArray();
+
+            self.fullReportConfig = {
+                id: 'person',
+                label: 'Person',
+                ignoreNodes: []
+            }
 
             self.contactPointsTable = {
                 ...self.defaultTableConfig,
@@ -78,7 +89,8 @@ define([
             };
 
             self.userAccountDataConfig = {
-                userSignupLink: 'user signup link'
+                canIssueUserSignupLink: 'can issue user signup link',
+                issueUserSignupLink: 'issue user signup link'
             };
 
             self.descriptionDataConfig = {
@@ -119,7 +131,6 @@ define([
                 self.userAccountCards = {
                     userAccount: self.cards?.['user account']
                 };
-                console.log(self.userAccountCards, "CARDS");
 
                 self.descriptionCards = {
                     descriptions: self.cards?.['descriptions'],
@@ -134,14 +145,13 @@ define([
                     contactPoints: self.cards?.['contact information for person'],
                 };
 
-                console.log(self.cards, "CARDS");
                 self.imagesCards = {
                     images: self.cards?.['images']
                 }
 
                 self.peopleCards = {
                     people: self.cards?.['associated people and organizations']
-                };
+                }
 
                 self.locationCards = {
                     cards: self.cards,
@@ -161,7 +171,7 @@ define([
                     activities: self.cards?.['associated activities'],
                     consultations: self.cards?.['associated consultations'],
                     files: self.cards?.['associated digital file(s)'],
-                    assets: self.cards?.['associated monuments, areas and artefacts']
+                    assets: self.cards?.['associated heritage assets, areas and artefacts']
                 };
             }
 
@@ -180,7 +190,23 @@ define([
                 }));
             }
 
-            self.getUserAccountSignupURL = function(){
+            self.issueUserAccountSignupURL = function(){
+                return $.ajax({
+                    url: arches.urls.root + 'person/signup-link',
+                    context: this,
+                    method: 'POST',
+                    data: { personId: self.reportMetadata()?.resourceinstanceid },
+                    dataType: 'json'
+                })
+                    .done(function(data) {
+                        console.log('User signup link request succeeded', data);
+                        return data.userSignupLink;
+                    })
+                    .fail(function(data) {
+                        console.log('User signup link request failed', data);
+                    });
+            };
+            self.canIssueUserAccountSignupURL = function(){
                 return $.ajax({
                     url: arches.urls.root + 'person/signup-link',
                     context: this,
@@ -189,13 +215,17 @@ define([
                     dataType: 'json'
                 })
                     .done(function(data) {
-                        console.log('User signup link request succeeded');
+                        if (data.success) {
+                            console.log('Can request signup links for this person');
+                        }
+                        return data.success;
                     })
                     .fail(function(data) {
-                        console.log('User signup link request failed', data);
+                        console.log('User signup link check failed', data);
                     });
             };
-            self.userAccountDataConfig.userSignupLink = self.getUserAccountSignupURL;
+            self.userAccountDataConfig.canIssueUserSignupLink = self.canIssueUserAccountSignupURL;
+            self.userAccountDataConfig.issueUserSignupLink = self.issueUserAccountSignupURL;
 
 
             self.lifeData = ko.observable({

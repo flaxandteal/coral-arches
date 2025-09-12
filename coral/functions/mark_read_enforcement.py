@@ -33,5 +33,6 @@ class MarkReadEnforcement(BaseFunction):
         user_x_notification = models.UserXNotification.objects.filter(
             notif=existing_notification
         ).first()
-        user_x_notification.isread = True
-        user_x_notification.save()
+        if user_x_notification:
+            user_x_notification.isread = True
+            user_x_notification.save()

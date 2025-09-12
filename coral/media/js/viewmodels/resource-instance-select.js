@@ -59,6 +59,8 @@ define([
       this.resourceTypesToDisplayInDropDown = ko.observableArray(!!params.graphids ? ko.toJS(params.graphids) : []);
       this.graphIds = ko.observableArray();
       this.searchString = params.searchString || ko.unwrap(params.node?.config.searchString);
+      this.showEdit = ko.observable(params.showEdit ?? false);
+      this.disableDelete = ko.observable(params.disableDelete ?? false);
       
       if (!!params.configForm) {
           this.allowInstanceCreation = false;
@@ -191,11 +193,15 @@ define([
       
       this.setValue = function(valueObject) {
           if (self.multiple) {
+              const valueResourceId = ko.unwrap(valueObject.resourceId)
+              const found = self.value()?.find((i) => ko.unwrap(i.resourceId) === valueResourceId);
               valueObject = [valueObject];
               if (self.value() !== null) {
-                  valueObject = valueObject.concat(self.value());
+                    valueObject = valueObject.concat(self.value());
               }
-              self.value(valueObject);
+              if (!found) {
+                self.value(valueObject);
+              }
           } else {
               self.value([valueObject]);
           }

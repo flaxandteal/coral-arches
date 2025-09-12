@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='ASCII'?>
+<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:Collection rdf:about="http://arches:8000/75ba554a-9a0b-10fd-73d2-24c89b821e57">
+    <skos:prefLabel xml:lang="en">{"id": "23d0a641-3c52-1574-e51f-05fe13869ee5", "value": "Letters Licence"}</skos:prefLabel>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/024aef5e-7cac-bc66-e4bb-ed3ca35f2fa5"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/a81e9843-5379-aacc-650a-db41650b14e7"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/5faadd4f-7d73-77f9-6396-b60c7c4e4762"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/c177c7cd-fd3b-7aeb-07b2-6d0b217a04db"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/34ba34f1-e4c3-a9d8-687f-f7f2f5dafacf"/>
+    </skos:member>
+    <skos:member>
+      <skos:Concept rdf:about="http://arches:8000/d37e88e6-4f15-4a85-d04b-0674dfece04f"/>
+    </skos:member>
+  </skos:Collection>
+</rdf:RDF>

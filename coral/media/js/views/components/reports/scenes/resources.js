@@ -14,18 +14,18 @@ define([
             //Related Resource 2 column table configuration
             self.relatedResourceTwoColumnTableConfig = {
                 ...self.defaultTableConfig,
-                paging: true,
-                searching: true,
+                paging: false,
+                searching: false,
                 scrollY: "250px",
                 columns: Array(2).fill(null)
             };
 
-
+            console.log("PARAMS", params)
             //Related Resource 2 column table configuration
             self.archiveHolderTableConfig = {
                 ...self.defaultTableConfig,
-                paging: true,
-                searching: true,
+                paging: false,
+                searching: false,
                 scrollY: "250px",
                 columns: Array(4).fill(null)
             };
@@ -34,8 +34,8 @@ define([
             //Related Resource 3 column table configuration
             self.relatedResourceThreeColumnTableConfig = {
                 ...self.defaultTableConfig,
-                paging: true,
-                searching: true,
+                paging: false,
+                searching: false,
                 scrollY: "250px",
                 columns: Array(3).fill(null)
             };
