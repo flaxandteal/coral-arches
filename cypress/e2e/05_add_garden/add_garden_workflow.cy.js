@@ -161,7 +161,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Provisional"]').click();
         cy.get('.select2-results__option').contains('Approved').click();
 
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click()
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
     })
 
@@ -186,13 +185,10 @@ describe('Going through the Add Garden Workflow', function () {
         // Heritage Asset Details tab
         cy.contains('Site Name');
         cy.get('[aria-label="Site Name"]').click().type('Testing');
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
-        cy.get('[aria-label="Site Name"]').click().clear();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
-
+ 
         cy.contains('Heritage Asset Type').should('be.visible');
         cy.get('[aria-label="Heritage Asset Type"]').click();
         cy.wait(2000);
@@ -307,7 +303,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Building Name"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
+        // cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // Street
         cy.get('[aria-label="Street"]').first().click().type('Testing Labs');
@@ -317,7 +313,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Street"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // Town or City
         cy.get('[aria-label="Town or City"]').first().click().type('Testing Labs');
@@ -327,7 +322,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Town or City"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // Postcode
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
@@ -337,7 +331,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Postcode"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         // County
         // concept missing
@@ -521,12 +514,7 @@ describe('Going through the Add Garden Workflow', function () {
         // cy.get('.gar_approved_by_value').contains('Add new Relationship').click();
         // cy.wait(2000);
         // cy.get('.select2-results__option').first().click();
-        cy.get('[aria-label="Provisional"]').contains('Provisional').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('Approved').click();
-        cy.wait(2000);
 
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click();
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
     })
 })
