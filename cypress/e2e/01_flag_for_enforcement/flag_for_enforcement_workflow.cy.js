@@ -1,8 +1,5 @@
 describe('Going through the Flag For Enforcement Workflow', function () {
 
-    const date = new Date();
-    const day = date.getDate();
-
     beforeEach(() => {
         cy.login();
         cy.visit('/plugins/init-workflow');
