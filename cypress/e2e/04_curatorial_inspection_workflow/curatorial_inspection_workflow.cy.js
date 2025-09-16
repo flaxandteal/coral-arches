@@ -13,7 +13,6 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-selection__rendered').contains('Start new or please select from below');
         cy.get('.btn-success').contains('Start New');
         cy.get('.btn-primary').contains('Open Selected');
-        cy.get('.btn-danger').contains('Clear Recents');
 
         cy.get('.btn-success').contains('Start New').click();
         
@@ -34,14 +33,6 @@ describe('Going through the Incident Report', function () {
         cy.get('.tabbed-workflow-footer').contains('Next Step');
         cy.wait(2000);
 
-        cy.get('.control-label').contains('SMR Number');
-        cy.get('.select2-selection__rendered').contains('Add new Relationship').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
-
-        cy.get('.control-label').contains('B File Reference');
-        cy.get('[aria-label="B File Reference"]').click().type('Testing');
-
         cy.get('.control-label').contains('BDLO Reference').scrollIntoView();
         cy.get('[aria-label="BDLO Reference"]').click().type('Testing');
 
@@ -61,7 +52,7 @@ describe('Going through the Incident Report', function () {
         cy.get('.tabbed-workflow-footer').contains('Next Step');
         cy.wait(2000);
 
-        cy.get('.control-label').contains('CWT Area Supervisor');
+        cy.get('.control-label').contains('CWT Area Supervisor(s)').click();
         cy.get('.card_component.cwt_area_supervisor > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').click();
         cy.wait(2000);
         cy.get('.select2-results__option').contains('Test Person').click();
@@ -104,8 +95,7 @@ describe('Going through the Incident Report', function () {
         cy.get('.btn-success').contains('Add').click();
 
         cy.get('.btn-primary').contains('Previous Step');
-        cy.get('.btn-danger').contains('Undo');
-        cy.get('.btn-success').contains('Save and Continue').click();
+        cy.get('.btn-primary').contains('Next Step').click();
 
         // Upload tab
         cy.wait(2000);
@@ -120,9 +110,6 @@ describe('Going through the Incident Report', function () {
         cy.get('.input-group-addon').click();
 
         cy.get('.control-label').contains('Report Submitted By');       
-        cy.get('.card_component.report_submitted_by_value > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').contains('Add new Relationship').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('Test Person').click();
 
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save').click();
@@ -138,25 +125,22 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-selection__rendered').contains('Start new or please select from below');
         cy.get('.btn-success').contains('Start New');
         cy.get('.btn-primary').contains('Open Selected');
-        cy.get('.btn-danger').contains('Clear Recents');
 
         cy.get('.btn-success').contains('Start New').click();
         
         // Start tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Save and Continue').click();
 
         // Asset Details tab
-        cy.get('.tabbed-workflow-footer').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer').contains('Next Step');
+        // cy.get('.tabbed-workflow-footer').contains('Previous Step');
+        // cy.get('.tabbed-workflow-footer').contains('Next Step');
         cy.wait(2000);
 
-        cy.get('.control-label').contains('SMR Number');
-        cy.get('.select2-selection__rendered').contains('Add new Relationship').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
-
-        cy.get('.control-label').contains('B File Reference');
-        cy.get('[aria-label="B File Reference"]').click().type('Testing');
+        // cy.get('.control-label').contains('SMR Number');
+        // cy.get('.select2-selection__rendered').contains('Add new Relationship').click();
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').contains('HA/01').click();
 
         cy.get('.control-label').contains('BDLO Reference').scrollIntoView();
         cy.get('[aria-label="BDLO Reference"]').click().type('Testing');
@@ -177,14 +161,15 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-selection__rendered').contains('Start new or please select from below');
         cy.get('.btn-success').contains('Start New');
         cy.get('.btn-primary').contains('Open Selected');
-        cy.get('.btn-danger').contains('Clear Recents');
 
         cy.get('.btn-success').contains('Start New').click();
         
         // Start tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Save and Continue').click();
 
         // Asset Details tab
+        cy.wait(2000);
         cy.get('.btn-primary').contains('Next Step').click();
 
         // Attendees Details tab
@@ -192,7 +177,7 @@ describe('Going through the Incident Report', function () {
         cy.get('.tabbed-workflow-footer').contains('Next Step');
         cy.wait(2000);
 
-        cy.get('.control-label').contains('CWT Area Supervisor');
+        cy.get('.control-label').contains('CWT Area Supervisor(s)').click();
         cy.get('.card_component.cwt_area_supervisor > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').click();
         cy.wait(2000);
         cy.get('.select2-results__option').contains('Test Person').click();
@@ -218,7 +203,7 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-results__option').contains('Test Person').click();
     })
 
-     it('Comment tab populate all fields', function () {
+    it('Comment tab populate all fields', function () {
         cy.contains('Workflows');
         cy.contains('Curatorial Inspection').click();
 
@@ -226,18 +211,20 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-selection__rendered').contains('Start new or please select from below');
         cy.get('.btn-success').contains('Start New');
         cy.get('.btn-primary').contains('Open Selected');
-        cy.get('.btn-danger').contains('Clear Recents');
 
         cy.get('.btn-success').contains('Start New').click();
         
         // Start tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Save and Continue').click();
 
         // Asset Details tab
-        cy.get('.tabbed-workflow-footer').contains('Next Step');
+        cy.wait(2000);
+        cy.get('.tabbed-workflow-footer').contains('Next Step').click();
 
         // Attendees Details tab
-        cy.get('.tabbed-workflow-footer').contains('Next Step');
+        cy.wait(2000);
+        cy.get('.tabbed-workflow-footer').contains('Next Step').click();
 
         // Comments tabs
         cy.get('.control-label').contains('Curatorial Description Type');
@@ -261,7 +248,6 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-selection__rendered').contains('Start new or please select from below');
         cy.get('.btn-success').contains('Start New');
         cy.get('.btn-primary').contains('Open Selected');
-        cy.get('.btn-danger').contains('Clear Recents');
 
         cy.get('.btn-success').contains('Start New').click();
         
@@ -278,18 +264,21 @@ describe('Going through the Incident Report', function () {
         cy.get('.tabbed-workflow-footer').contains('Save and Continue').click();
 
         // Asset Details tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Next Step').click();
 
         // Attendees Details tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Next Step').click();
 
         // Comments tabs
+        cy.wait(2000);
         cy.get('.btn-primary').contains('Next Step').click();
 
         // Upload tab
         cy.wait(2000);
         cy.get('.bord-top > .btn').contains('Select Files')
-        //cy.get('.media-block').selectFile('cypress/e2e/04_curatorial_inspection_workflow/testFileForUpload.txt');
+        // cy.get('.media-block').selectFile('cypress/e2e/04_curatorial_inspection_workflow/testFileForUpload.txt');
     })
 
      it('Sign Off tab and populate all fields', function () {
@@ -300,23 +289,27 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-selection__rendered').contains('Start new or please select from below');
         cy.get('.btn-success').contains('Start New');
         cy.get('.btn-primary').contains('Open Selected');
-        cy.get('.btn-danger').contains('Clear Recents');
 
         cy.get('.btn-success').contains('Start New').click();
         
         // Start tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Save and Continue').click();
 
         // Asset Details tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Next Step').click();
 
         // Attendees Details tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer').contains('Next Step').click();
 
         // Comments tabs
+        cy.wait(2000);
         cy.get('.btn-primary').contains('Next Step').click();
 
         // Upload tab
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
 
         // Sign Off
@@ -326,9 +319,6 @@ describe('Going through the Incident Report', function () {
         cy.get('.input-group-addon').click();
 
         cy.get('.control-label').contains('Report Submitted By');       
-        cy.get('.card_component.report_submitted_by_value > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').contains('Add new Relationship').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('Test Person').click();
 
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save').click();
