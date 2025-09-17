@@ -30,6 +30,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
+        cy.wait(2000);
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
         cy.contains('Case Reference Number:').siblings().should('have.text', 'Case Ref');
@@ -113,6 +114,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
+        cy.wait(2000);
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
         cy.contains('Description:').siblings().should('have.text', 'test reason for enforcement');
