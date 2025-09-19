@@ -24,7 +24,7 @@ describe('Going through the HA Designation Workflow', function () {
         cy.wait(2000);
         cy.contains('Open Selected').click();
 
-        cy.wait(2000);
+        cy.wait(8000);
         cy.contains('Next Step').click();
         cy.wait(2000);
         cy.contains('Next Step').click();
@@ -41,14 +41,15 @@ describe('Going through the HA Designation Workflow', function () {
         cy.get('.select2-search__field').click();
         cy.get(':nth-child(2) > .workflow-component').click();
         cy.get('[aria-label="LA01 - Causeway Coast and Glens Borough Council"]').click({force: true});
-        cy.get(':nth-child(2) > .verbose').click();
-        cy.contains('Next Step').click();
+        cy.contains('Save and Continue').click();
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container > :nth-child(2)').click();
         cy.contains('Next Step').click();
         cy.wait(2000);
         cy.contains('Next Step').click();
-        cy.wait(2000);
+        cy.wait(4000);
+        cy.contains('Next Step').click();
+        cy.wait(4000);
         cy.contains('Next Step').click();
         cy.wait(4000);
         cy.get('.card_component.assessment_date_value > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click();
