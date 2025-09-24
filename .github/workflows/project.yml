@@ -282,6 +282,8 @@ jobs:
           echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
   Test-Arches:
     runs-on: [self-hosted]
+    permissions:
+      contents: read
     needs: [Build-Arches-Final]
     container:
       image: cypress/included:12.3.0
