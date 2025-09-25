@@ -28,8 +28,23 @@ define([
         this.selectedNodegroups = ko.observableArray([]);
         this.selectedNodes = ko.observableArray([]);
         this.nodeList = ko.observableArray([]);
+        this.stringTemplate = ko.observable("");
 
         this.isUpdating = false;
+
+        this.updateTemplate = (key) => {
+            if (!ko.isObservable(this.currentProperty()[key].string_template)) {
+                this.currentProperty()[key].string_template = ko.observable(this.currentProperty()[key].string_template || "");
+            }
+            
+            this.currentProperty()[key].nodes = this.selectedNodes();
+            this.currentProperty()[key].string_template(this.stringTemplate());
+            this.selectedNodes([]);
+            this.selectedNodegroups([]);
+            this.stringTemplate("");
+
+            console.log("template updated", this.currentProperty()[key]);
+        }
 
         this.updateInputs = () => {
             const property = this.currentProperty();
@@ -147,11 +162,11 @@ define([
                 this.selectedNodes(filteredSelectedNodes);
 
                 // Remove from currentProperty().nodes
-                const currentNodes = this.currentProperty().nodes() || [];
-                const filteredNodes = currentNodes.filter(node => 
-                    ko.unwrap(node.nodegroupId) !== selection.value.nodegroup_id
-                );
-                this.currentProperty().nodes(filteredNodes);
+                // const currentNodes = this.currentProperty().nodes() || [];
+                // const filteredNodes = currentNodes.filter(node => 
+                //     ko.unwrap(node.nodegroupId) !== selection.value.nodegroup_id
+                // );
+                // this.currentProperty().nodes(filteredNodes);
             }
         });
 
@@ -165,28 +180,27 @@ define([
             const dropdown = this.getChangedValue(nodeValue, this.previousNodes, 'nodeId');
             if (!dropdown) return;
             if (dropdown.add){
-                if (this.currentProperty().string_template()){
-                    const updatedString = this.currentProperty().string_template().concat(' ', dropdown.value.nodeString);
-                    this.currentProperty().string_template(updatedString);
+                if (this.stringTemplate()){
+                    const updatedString = this.stringTemplate().concat(' ', dropdown.value.nodeString);
+                    this.stringTemplate(updatedString);
                 } else {
-                    this.currentProperty().string_template(dropdown.value.nodeString);
+                    this.stringTemplate(dropdown.value.nodeString);
                 }
-                const currentNodes = this.currentProperty().nodes() || [];
-                this.currentProperty().nodes([...currentNodes, dropdown.value]);
-                console.log(this.currentProperty().nodes());
+                // const currentNodes = this.currentProperty().nodes() || [];
+                // this.currentProperty().nodes([...currentNodes, dropdown.value]);
+                // console.log(this.currentProperty().nodes());
             } else {
-                if(this.currentProperty().string_template()){
-                    const updatedString = this.currentProperty().string_template().replace(dropdown.value.nodeString, "").trim();
-                    this.currentProperty().string_template(updatedString);
+                if(this.stringTemplate()){
+                    const updatedString = this.stringTemplate().replace(dropdown.value.nodeString, "").trim();
+                    this.stringTemplate(updatedString);
                 }
-                const index = this.currentProperty().nodes().findIndex(node => node.nodeId === dropdown.value.nodeId);
-                if (index !== -1) {
-                    const currentNodes = this.currentProperty().nodes() || [];
-                    currentNodes.splice(index, 1);
-                    this.currentProperty().nodes([...currentNodes]);
-                }
+                // const index = this.currentProperty().nodes().findIndex(node => node.nodeId === dropdown.value.nodeId);
+                // if (index !== -1) {
+                //     const currentNodes = this.currentProperty().nodes() || [];
+                //     currentNodes.splice(index, 1);
+                //     this.currentProperty().nodes([...currentNodes]);
+                // }
             }
-            this.oldNodeValue = nodeValue;
         });
 
         // Get the old array value of the selectedNodes

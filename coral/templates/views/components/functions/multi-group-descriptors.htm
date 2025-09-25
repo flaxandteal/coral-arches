@@ -86,10 +86,32 @@
                         class="form-control input-lg widget-input" 
                         data-bind="
                             attr: {placeholder: $root.translations.useBracketedNodeNames},
-                            textInput: name.string_template
+                            textInput: stringTemplate
                         "
                     >
                 </div>
+            </div>
+        </div>
+        <div class="row widget-container">
+            <div class="form-group">
+                <div class="relative">
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span data-bind="text: $root.translations.primaryNameTemplate"></span>
+                    </label>
+                </div>
+                <div>
+                    <div class="col-xs-12">
+                        <input 
+                            class="form-control input-lg widget-input" 
+                            data-bind="
+                                attr: {placeholder: $root.translations.useBracketedNodeNames},
+                                textInput: name.template_1.string_template || ''
+                            "
+                        >
+                    </div>
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-plus" data-bind="click: updateTemplate('template_1')"></button>
+                </div>
+                
             </div>
         </div>
     </div>

@@ -16,16 +16,46 @@ details = {
     'defaultconfig': {
             "descriptor_types": {
                 "name": {
-                "nodes": [],
-                "string_template": ""
-                },
-                "map_popup": {
-                "nodes": [],
-                "string_template": ""
+                    "template_1": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
+                    "template_2": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
+                    "template_3": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
                 },
                 "description": {
-                "nodes": [],
-                "string_template": ""
+                    "template_1": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
+                    "template_2": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
+                    "template_3": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
+                },
+                "map_popup": {
+                    "template_1": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
+                    "template_2": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
+                    "template_3": {
+                        "nodes": [],
+                        "string_template": ""
+                    },
                 }
             }
 
@@ -49,74 +79,108 @@ class MultiNodegroupDescriptorFunction(AbstractPrimaryDescriptorsFunction):
 
         datatype_factory = None
         language = context['language'] if (context is not None and 'language' in context) else None
-        result = config["string_template"]
-        print("CONFIG", config)
-        updated = False
+        config_list = sorted(
+            [
+                {
+                    "template_key": key,
+                    "nodes": value["nodes"],
+                    "string_template": value["string_template"]
+                }
+                for key, value in config.items()
+                if value["nodes"] or value["string_template"].strip()
+            ],
+            key=lambda x: x["template_key"]
+        )
+        
         tile_cache = {}
         node_cache = {}
-        nodes = config["nodes"]
 
-        try:
-            for config in nodes:
-                if context:
-                    tile = context.get('tile')
-                print("HERE2", tile, config)
-                if not tile or tile.sortorder != 0:
-                    print("ID", config['nodegroupId'], resource.resourceinstanceid)
-                    tile = tile_cache.get(config["nodegroupId"], None)
-                    if not tile:
-                        tile = models.TileModel.objects.filter(nodegroup_id=uuid.UUID(config["nodegroupId"])).filter(
-                            resourceinstance_id=resource.resourceinstanceid
-                        ).order_by('sortorder').first()
-                        print("MY TILE", tile)
-                        tile_cache[config["nodegroupId"]] = tile
+        for template_index, template in enumerate(config_list):
+            result = template["string_template"]
+            nodes = template["nodes"]
+            is_last_template = template_index == len(config_list) - 1
+            has_empty_node = False
 
-                node_list = node_cache.get(config["nodegroupId"], None)
-                print("HERE3", node_list)
-                if not node_list:
-                    node_list = models.Node.objects.filter(nodegroup_id=uuid.UUID(config["nodegroupId"]))
-                    node_cache[config["nodegroupId"]] = node_list
-                print("wwwwwwwwwwwwwwwwwwwwwwwww", tile)
-                if not tile:
-                    continue
-                print('4444444444444444444444444444444')
-
-                for node in node_list:
-                    data = {}
-                    if tile.data and len(list(tile.data.keys())) > 0:
-                        data = tile.data
-                    elif tile.provisionaledits is not None and len(list(tile.provisionaledits.keys())) == 1:
-                        userid = list(tile.provisionaledits.keys())[0]
-                        data = tile.provisionaledits[userid]["value"]
-                    print("DDDDDDDDDDDDD", data)
-                    if str(node.nodeid) in data:
-                        if not datatype_factory:
-                            datatype_factory = DataTypeFactory()
-                        datatype = datatype_factory.get_instance(node.datatype)
-                        value = datatype.get_display_value(tile, node, language=language)
-                        if value is None:
-                            value = ""
-                        if str(node.nodeid) == config["nodeId"]:
-                            print("addding STRING", config)
-                            config["result"] = value
-                            print("AAAHHHHH", config["result"])
-
-            for node_config in nodes:
-                if "result" in node_config:
-                    print("5555555", config)
-                    # placeholder = "<" + node_config["value"] + ">"
-                    result = result.replace(config["nodeString"], node_config["result"])
-                    print("RREESSUULLLTT", result)
-                    updated = True
-                    
-        except ValueError:
-            logger.error(_("Invalid nodegroupid, {0}, participating in descriptor function.").format(config["nodegroup_id"]))
-        if result.strip() == "":
-            result = _("Undefined")
-        if not updated:
             try:
-                result = resource.descriptors[language][descriptor]
-            except KeyError:
-                pass
-        print("IN THE RESULT", result)
+                for config_item in nodes:
+                    if context:
+                        tile = context.get('tile')
+                    
+                    if not tile or tile.sortorder != 0:
+                        tile = tile_cache.get(config_item["nodegroupId"], None)
+                        if not tile:
+                            tile = models.TileModel.objects.filter(nodegroup_id=uuid.UUID(config_item["nodegroupId"])).filter(
+                                resourceinstance_id=resource.resourceinstanceid
+                            ).order_by('sortorder').first()
+                            tile_cache[config_item["nodegroupId"]] = tile
+
+                    node_list = node_cache.get(config_item["nodegroupId"], None)
+                    if not node_list:
+                        node_list = models.Node.objects.filter(nodegroup_id=uuid.UUID(config_item["nodegroupId"]))
+                        node_cache[config_item["nodegroupId"]] = node_list
+                    
+                    if not tile:
+                        if not is_last_template:
+                            has_empty_node = True
+                            break
+                        else:
+                            config_item["result"] = config_item["nodeString"]
+                        continue
+
+                    for node in node_list:
+                        data = {}
+                        if tile.data and len(list(tile.data.keys())) > 0:
+                            data = tile.data
+                        elif tile.provisionaledits is not None and len(list(tile.provisionaledits.keys())) == 1:
+                            userid = list(tile.provisionaledits.keys())[0]
+                            data = tile.provisionaledits[userid]["value"]
+                        
+                        if str(node.nodeid) in data:
+                            if not datatype_factory:
+                                datatype_factory = DataTypeFactory()
+                            datatype = datatype_factory.get_instance(node.datatype)
+                            value = datatype.get_display_value(tile, node, language=language)
+                            
+                            if str(node.nodeid) == config_item["nodeId"]:
+                                if value is None or str(value).strip() == "":
+                                    if not is_last_template:
+                                        has_empty_node = True
+                                        break
+                                    else:
+                                        config_item["result"] = config_item["nodeString"]
+                                else:
+                                    config_item["result"] = value
+                        else:
+                            if str(node.nodeid) == config_item["nodeId"]:
+                                if not is_last_template:
+                                    has_empty_node = True
+                                    break
+                                else:
+                                    config_item["result"] = config_item["nodeString"]
+
+                # If we found an empty node and it's not the last template, skip to next template
+                if has_empty_node and not is_last_template:
+                    continue
+
+                # Process the results for this template
+                for node_config in nodes:
+                    if "result" in node_config:
+                        result = result.replace(node_config["nodeString"], node_config["result"])
+                
+                # If we reach here, we have a complete template result
+                if result.strip() == "":
+                    result = _("Undefined")
+                
+                return result
+
+            except ValueError:
+                logger.error(_("Invalid nodegroupid, {0}, participating in descriptor function.").format(config_item.get("nodegroupId", "unknown")))
+                continue
+
+        # Fallback if no template worked
+        try:
+            result = resource.descriptors[language][descriptor]
+        except (KeyError, AttributeError):
+            result = _("Undefined")
+        
         return result
