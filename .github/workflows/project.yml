@@ -377,7 +377,7 @@ jobs:
           ESPORT: "9200"
           CELERY_BROKER_URL: "amqp://rabbitmq"
           DJANGO_MODE: "PROD"
-          DJANGO_DEBUG: "False"
+          DJANGO_DEBUG: "True"
           DOMAIN_NAMES: "arches"
           PYTHONUNBUFFERED: "0"
           TZ: "PST"
