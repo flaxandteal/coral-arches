@@ -47,6 +47,17 @@ define([
 
         this.isUpdating = false;
 
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            var target = $(e.target).attr("href");
+            if (target === "#primary-descriptors-name") {
+                this.currentProperty(this.name);
+            } else if (target === "#primary-descriptors-description") {
+                this.currentProperty(this.description);
+            } else if (target === "#primary-descriptors-map-popup") {
+                this.currentProperty(this.map_popup);
+            }
+        }.bind(this));
+
         this.updateTemplate = (key) => {
             if (!ko.isObservable(this.currentProperty()[key].string_template)) {
                 this.currentProperty()[key].string_template = ko.observable(this.currentProperty()[key].string_template || "");

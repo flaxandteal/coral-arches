@@ -4,17 +4,17 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs card-nav-container flex pad-no" role="tablist">
     <li role="presentation" class="active">
-        <a href="#primary-descriptors-name" aria-controls="primary-descriptors-name" role="tab" data-toggle="tab" data-bind="click: () => currentProperty(name)">
+        <a href="#primary-descriptors-name" aria-controls="primary-descriptors-name" role="tab" data-toggle="tab">
             <span data-bind="text: $root.translations.displayName"></span>
         </a>
     </li>
     <li role="presentation">
-        <a href="#primary-descriptors-description" aria-controls="primary-descriptors-description" role="tab" data-toggle="tab" data-bind="click: () => currentProperty(description)">
+        <a href="#primary-descriptors-description" aria-controls="primary-descriptors-description" role="tab" data-toggle="tab">
             <span data-bind="text: $root.translations.displayDescription"></span>
         </a>
     </li>
     <li role="presentation">
-        <a href="#primary-descriptors-map-popup" aria-controls="primary-descriptors-description" role="tab" data-toggle="tab" data-bind="click: () => currentProperty(map_popup)">
+        <a href="#primary-descriptors-map-popup" aria-controls="primary-descriptors-map-popup" role="tab" data-toggle="tab">
             <span data-bind="text: $root.translations.mapPopup"></span>
         </a>
     </li>
@@ -153,7 +153,7 @@
                     </label>
                 </div>
 
-                <div class="col-xs-12">
+                <div class="col-xs-12 descriptor-input-group">
                     <select 
                         multiple
                         data-bind="
@@ -166,8 +166,6 @@
                     ></select>
                 </div>
             </div>
-        </div>
-        <div class="row widget-container">
             <div class="form-group">
                 <div class="relative">
                     <label class="col-xs-12 control-label widget-input-label">
@@ -175,37 +173,89 @@
                     </label>
                 </div>
 
-                <div class="row widget-container">
-                    <div class="col-xs-12">
-                        <select multiple 
-                            class="form-control"
-                            data-bind="
-                                options: nodeList,
-                                optionsText: 'name',
-                                selectedOptions: selectedNodes,
-                                chosen: { width: '100%', placeholder_text_multiple: 'Select nodes...' }
-                            ">
-                        </select>
-                    </div>
+                <div class="col-xs-12 descriptor-input-group">
+                    <select multiple 
+                        class="form-control"
+                        data-bind="
+                            options: nodeList,
+                            optionsText: 'name',
+                            selectedOptions: selectedNodes,
+                            chosen: { width: '100%', placeholder_text_multiple: 'Select nodes...' }
+                        ">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="relative">
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Display Name Template</span>
+                    </label>
+                </div>
+
+                <div class="col-xs-12 descriptor-input-group">
+                    <input 
+                        class="form-control" 
+                        data-bind="
+                            attr: {placeholder: $root.translations.useBracketedNodeNames},
+                            textInput: stringTemplate
+                        "
+                    >
                 </div>
             </div>
         </div>
         <div class="row widget-container">
             <div class="form-group">
                 <div class="relative">
-                    <label class="col-xs-12 control-label widget-input-label descriptor-input-label">
-                        <span>Description Template</span>
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Base Display Name</span>
                     </label>
                 </div>
-
                 <div class="col-xs-12 descriptor-input-group">
                     <input 
                         class="form-control input-lg widget-input descriptor-input-field" 
                         data-bind="
                             attr: {placeholder: $root.translations.useBracketedNodeNames},
-                            textInput: description.string_template
+                            textInput: description.template_1.string_template || ''
                         "
                     >
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-plus " data-bind="click: () => updateTemplate('template_1')"></button>
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-trash" data-bind="click: () => deleteTemplate('template_1')"></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="relative">
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Override 1</span>
+                    </label>
+                </div>
+                <div class="col-xs-12 descriptor-input-group">
+                    <input 
+                        class="form-control input-lg widget-input descriptor-input-field" 
+                        data-bind="
+                            attr: {placeholder: $root.translations.useBracketedNodeNames},
+                            textInput: description.template_2.string_template || ''
+                        "
+                    >
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-plus " data-bind="click: () => updateTemplate('template_2')"></button>
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-trash" data-bind="click: () => deleteTemplate('template_2')"></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="relative">
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Override 2</span>
+                    </label>
+                </div>
+                <div class="col-xs-12 descriptor-input-group">
+                    <input 
+                        class="form-control input-lg widget-input descriptor-input-field" 
+                        data-bind="
+                            attr: {placeholder: $root.translations.useBracketedNodeNames},
+                            textInput: description.template_3.string_template || ''
+                        "
+                    >
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-plus " data-bind="click: () => updateTemplate('template_3')"></button>
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-trash" data-bind="click: () => deleteTemplate('template_3')"></button>
                 </div>
             </div>
         </div>
@@ -216,11 +266,11 @@
             <div class="form-group">
                 <div class="relative">
                     <label class="col-xs-12 control-label widget-input-label">
-                        <span >Nodegroups</span>
+                        <span>Nodegroups</span>
                     </label>
                 </div>
 
-                <div class="col-xs-12">
+                <div class="col-xs-12 descriptor-input-group">
                     <select 
                         multiple
                         data-bind="
@@ -233,8 +283,6 @@
                     ></select>
                 </div>
             </div>
-        </div>
-        <div class="row widget-container">
             <div class="form-group">
                 <div class="relative">
                     <label class="col-xs-12 control-label widget-input-label">
@@ -242,37 +290,89 @@
                     </label>
                 </div>
 
-                <div class="row widget-container">
-                    <div class="col-xs-12">
-                        <select multiple 
-                            class="form-control"
-                            data-bind="
-                                options: nodeList,
-                                optionsText: 'name',
-                                selectedOptions: selectedNodes,
-                                chosen: { width: '100%', placeholder_text_multiple: 'Select nodes...' }
-                            ">
-                        </select>
-                    </div>
+                <div class="col-xs-12 descriptor-input-group">
+                    <select multiple 
+                        class="form-control"
+                        data-bind="
+                            options: nodeList,
+                            optionsText: 'name',
+                            selectedOptions: selectedNodes,
+                            chosen: { width: '100%', placeholder_text_multiple: 'Select nodes...' }
+                        ">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="relative">
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Display Name Template</span>
+                    </label>
+                </div>
+
+                <div class="col-xs-12 descriptor-input-group">
+                    <input 
+                        class="form-control" 
+                        data-bind="
+                            attr: {placeholder: $root.translations.useBracketedNodeNames},
+                            textInput: stringTemplate
+                        "
+                    >
                 </div>
             </div>
         </div>
         <div class="row widget-container">
             <div class="form-group">
                 <div class="relative">
-                    <label class="col-xs-12 control-label widget-input-label descriptor-input-label">
-                        <span>Map Popup Template</span>
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Base Display Name</span>
                     </label>
                 </div>
-
                 <div class="col-xs-12 descriptor-input-group">
                     <input 
                         class="form-control input-lg widget-input descriptor-input-field" 
                         data-bind="
                             attr: {placeholder: $root.translations.useBracketedNodeNames},
-                            textInput: map_popup.string_template
+                            textInput: map_popup.template_1.string_template || ''
                         "
                     >
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-plus " data-bind="click: () => updateTemplate('template_1')"></button>
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-trash" data-bind="click: () => deleteTemplate('template_1')"></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="relative">
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Override 1</span>
+                    </label>
+                </div>
+                <div class="col-xs-12 descriptor-input-group">
+                    <input 
+                        class="form-control input-lg widget-input descriptor-input-field" 
+                        data-bind="
+                            attr: {placeholder: $root.translations.useBracketedNodeNames},
+                            textInput: map_popup.template_2.string_template || ''
+                        "
+                    >
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-plus " data-bind="click: () => updateTemplate('template_2')"></button>
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-trash" data-bind="click: () => deleteTemplate('template_2')"></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="relative">
+                    <label class="col-xs-12 control-label widget-input-label">
+                        <span>Override 2</span>
+                    </label>
+                </div>
+                <div class="col-xs-12 descriptor-input-group">
+                    <input 
+                        class="form-control input-lg widget-input descriptor-input-field" 
+                        data-bind="
+                            attr: {placeholder: $root.translations.useBracketedNodeNames},
+                            textInput: map_popup.template_3.string_template || ''
+                        "
+                    >
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-plus " data-bind="click: () => updateTemplate('template_3')"></button>
+                    <button class="btn btn-sm btn-primary btn-labeled fa fa-trash" data-bind="click: () => deleteTemplate('template_3')"></button>
                 </div>
             </div>
         </div>
