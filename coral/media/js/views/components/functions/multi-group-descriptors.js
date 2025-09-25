@@ -19,9 +19,24 @@ define([
             nodegroups[card.nodegroup_id] = true;
         }, this);
 
+        this.initializeObservables = () => {
+            [this.name, this.description, this.map_popup].forEach(descriptor => {
+                const templateKeys = Object.keys(descriptor).filter(key => key.startsWith('template_'));
+                templateKeys.forEach(key => {
+                    if (!ko.isObservable(descriptor[key].string_template)) {
+                        descriptor[key].string_template = ko.observable(descriptor[key].string_template || "");
+                    }
+                });
+            });
+        };
+
         this.name = params.config.descriptor_types.name;
         this.description = params.config.descriptor_types.description;
         this.map_popup = params.config.descriptor_types.map_popup;
+
+        // this.initializeObservables();
+
+        console.log("THIS", this.name.template_2.string_template)
 
         this.currentProperty = ko.observable();
         
@@ -46,60 +61,11 @@ define([
             console.log("template updated", this.currentProperty()[key]);
         }
 
-        this.updateInputs = () => {
-            const property = this.currentProperty();
-            console.log("props", ko.mapping.toJS(property));
-
-            // Find and set selectedNodegroups based on the nodes
-            const nodeGroupIds = new Set();
-            (ko.unwrap(property.nodes) || []).forEach(node => {
-                if (ko.unwrap(node.nodegroupId)) {
-                    nodeGroupIds.add(ko.unwrap(node.nodegroupId));
-                }
-            });
-            
-            const selectedCards = this.cards().filter(card => 
-                nodeGroupIds.has(card.nodegroup_id)
-            );
-            this.selectedNodegroups(selectedCards);
-
-            // Rebuild nodeList from all selected nodegroups
-            const allNodes = [];
-            selectedCards.forEach(card => {
-                const nodes = this.graph.nodes.filter(node => 
-                    node.nodegroup_id === card.nodegroup_id && node.datatype !== 'semantic'
-                );
-                nodes.forEach(node => {
-                    allNodes.push({
-                        'name': node.name,
-                        'nodegroupName': card.name,
-                        'nodegroupId': card.nodegroup_id,
-                        'nodeId': node.nodeid,
-                        'nodeString': '<' + card.name + ':' + node.name + '>'
-                    });
-                });
-            });
-            this.nodeList(allNodes);
-
-            // Get each node from the list of nodes to populate selectedNodes
-            const matchedNodes = [];
-            (ko.unwrap(property.nodes) || []).forEach(node => {
-                const matchingNode = this.nodeList().find(listNode => 
-                    listNode.nodeId === ko.unwrap(node.nodeId)
-                );
-                if (matchingNode) {
-                    matchedNodes.push(matchingNode);
-                }
-            });
-            this.selectedNodes(matchedNodes);
-            
-            this.isUpdating = false;                
-        };
-
-        this.currentProperty.subscribe(() => {
-            this.isUpdating = true;
-            this.updateInputs();
-        });
+        this.deleteTemplate = (key) => {
+            let template = this.currentProperty()[key];
+            template.string_template("");
+            template.nodes = [];
+        }
 
         this.getChangedValue = (newValue, oldValue, key) => {
             // Find the newest value in an array

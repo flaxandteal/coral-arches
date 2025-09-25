@@ -47,6 +47,24 @@
     z-index: 100;
 }
 
+/* Multi Group Descriptors Input Styles */
+.descriptor-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.descriptor-input-field {
+    flex: 1;
+}
+
+/* Single input fields without buttons */
+.descriptor-input-group .descriptor-input-field:only-child {
+    flex: 1;
+    margin-right: 0;
+}
+
 .plugin-main {
     background: #f9f9f9;
 }
@@ -1111,3 +1129,11 @@ span.rp-tile-title {
 .mh-500 { max-height: 500px; }
 
 .mt-1 { margin-top: 0.5rem }
+
+/* Ensure form-group wraps its contents */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}

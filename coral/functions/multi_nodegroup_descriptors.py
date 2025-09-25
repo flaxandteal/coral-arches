@@ -89,11 +89,13 @@ class MultiNodegroupDescriptorFunction(AbstractPrimaryDescriptorsFunction):
                 for key, value in config.items()
                 if value["nodes"] or value["string_template"].strip()
             ],
-            key=lambda x: x["template_key"]
+            key=lambda x: x["template_key"],
+            reverse=True
         )
         
         tile_cache = {}
         node_cache = {}
+        print("CONF", config_list)
 
         for template_index, template in enumerate(config_list):
             result = template["string_template"]
@@ -102,7 +104,7 @@ class MultiNodegroupDescriptorFunction(AbstractPrimaryDescriptorsFunction):
             has_empty_node = False
 
             try:
-                for config_item in nodes:
+                for config_item in nodes:                   
                     if context:
                         tile = context.get('tile')
                     
@@ -124,6 +126,7 @@ class MultiNodegroupDescriptorFunction(AbstractPrimaryDescriptorsFunction):
                             has_empty_node = True
                             break
                         else:
+                            # Only set nodeString as result for last template when no tile
                             config_item["result"] = config_item["nodeString"]
                         continue
 
@@ -162,14 +165,10 @@ class MultiNodegroupDescriptorFunction(AbstractPrimaryDescriptorsFunction):
                 if has_empty_node and not is_last_template:
                     continue
 
-                # Process the results for this template
                 for node_config in nodes:
+                    print("RESULT", node_config["result"])
                     if "result" in node_config:
                         result = result.replace(node_config["nodeString"], node_config["result"])
-                
-                # If we reach here, we have a complete template result
-                if result.strip() == "":
-                    result = _("Undefined")
                 
                 return result
 
