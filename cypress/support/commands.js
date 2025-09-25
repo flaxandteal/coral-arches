@@ -21,6 +21,9 @@ Cypress.Commands.add("login", () => {
 
     cy.get('.input-group > .floating-label-group > input[name="username"].form-control').type(`admin{enter}`);
     cy.get('.input-group > .floating-label-group > input[name="password"].form-control').type(`admin{enter}`);
+
+    cy.getCookie("csrftoken").should("exist");
+    cy.getCookie("coral").should("exist");
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
