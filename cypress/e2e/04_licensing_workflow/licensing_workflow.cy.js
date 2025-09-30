@@ -5,7 +5,7 @@ describe('Going through the licensing Workflow', function () {
         cy.visit('/plugins/init-workflow');
     });
 
-    it('Run through licensing workflow', function () {
+    it('Run through all licensing workflow fields', function () {
         cy.get('[href="/plugins/open-workflow?workflow-slug=licensing-workflow"] > .workflow-select-card > .workflow-select-wf-circle').click();
         cy.wait(2000);
         cy.get('[style="display: flex"] > .fa > span').click();
@@ -156,5 +156,130 @@ describe('Going through the licensing Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').click({force: true}, { multiple: true });
         cy.wait(2000);
         cy.get('.btn-success').click({force: true}, { multiple: true });
+    })
+
+    it('Should transfer licence', function () {
+        cy.get('[href="/plugins/open-workflow?workflow-slug=licensing-workflow"] > .workflow-select-card > .workflow-select-wf-circle').click();
+        cy.wait(2000);
+        cy.get('[style="display: flex"] > .fa > span').click();
+        cy.wait(4000);
+        cy.contains('Save and Continue').click();
+
+        cy.get(':nth-child(1) > .workflow-component > .workflow-component-element > .card-component > .new-provisional-edit-card-container > .card > .widgets > :nth-child(1) > :nth-child(1) > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('s');
+        cy.get(':nth-child(1) > .workflow-component > .workflow-component-element > .card-component > .new-provisional-edit-card-container > .card > .widgets > :nth-child(1) > :nth-child(1) > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('site test');
+        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('t');
+        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('test ref');
+        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('c');
+        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('cm num');
+        cy.get('[aria-label="Applicant, Add new Relationship"]').click();
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[aria-label="Nominated Excavation Director(s), Add new Relationship"]').click();
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[aria-label="Employing Body/Bodies, Add new Relationship"]').click();
+        cy.wait(2000);
+        cy.get('.select2-results__option').first().click();
+        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+
+        cy.get('[aria-label="Transfer of Licence, Add new Relationship"]').click();
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.wait(2000);
+        cy.get('[aria-label="New Applicant, Add new Relationship"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('Test Person').click();
+        cy.get('[aria-label="Nominated Excavation Director(s), Nominated Excavation Director(s)"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[aria-label="Former Employing Body, Add new Relationship"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').first().click();
+        cy.get('[aria-label="Employing Body/Bodies, Employing Body/Bodies"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').first().click();
+        cy.get('.card_component.date_requested_value > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click({force: true});
+        cy.get('.card_component.date_requested_value > .row').click({force: true});
+        cy.get('[aria-label="Cur Grade E Decision, Do not approve transfer"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('Approve transfer of licence').click();
+        cy.get('[aria-label="Made By, Add new Relationship"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').first().click();
+        cy.get('[aria-label="Cur Grade D Decision, Decline"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('Approved').click();
+        cy.get('[aria-label="Made By, Add new Relationship"]').click({ multiple: true }, {force: true});
+        cy.wait(2000);
+        cy.get('.select2-results__option').first().click();
+        cy.get('[aria-label="Made By, Add new Relationship"]').click({ multiple: true }, {force: true});
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[aria-label="Made By, Add new Relationship"]').click({ multiple: true }, {force: true});
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[style="display: flex; justify-content: flex-end; padding: 0 18px;"] > .btn-success').contains('Add').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible').click({force: true});
+    })
+
+    it('Should extend licence', function () {
+        cy.get('[href="/plugins/open-workflow?workflow-slug=licensing-workflow"] > .workflow-select-card > .workflow-select-wf-circle').click();
+        cy.wait(2000);
+        cy.get('[style="display: flex"] > .fa > span').click();
+        cy.wait(4000);
+        cy.contains('Save and Continue').click();
+
+        cy.get(':nth-child(1) > .workflow-component > .workflow-component-element > .card-component > .new-provisional-edit-card-container > .card > .widgets > :nth-child(1) > :nth-child(1) > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('s');
+        cy.get(':nth-child(1) > .workflow-component > .workflow-component-element > .card-component > .new-provisional-edit-card-container > .card > .widgets > :nth-child(1) > :nth-child(1) > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('site test');
+        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('t');
+        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('test ref');
+        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('c');
+        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('cm num');
+        cy.get('[aria-label="Applicant, Add new Relationship"]').click();
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[aria-label="Nominated Excavation Director(s), Add new Relationship"]').click();
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[aria-label="Employing Body/Bodies, Add new Relationship"]').click();
+        cy.wait(2000);
+        cy.get('.select2-results__option').first().click();
+        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+        cy.get(':nth-child(2) > .verbose').click();
+
+
+        cy.get(':nth-child(1) > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click();
+        cy.get(':nth-child(2) > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click( {force: true});
+        cy.get(':nth-child(2) > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"]').click( {force: true});
+        cy.get('[aria-label="Cur Grade E Decision, Approve extension"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('Approve extension').click();
+        cy.get('[aria-label="Made By, Add new Relationship"]').click({ multiple: true }, {force: true});
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('[aria-label="Cur Grade D Decision, Declined"]').click({ multiple: true });
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('Approved').click();
+        cy.get('[aria-label="Made By, Add new Relationship"]').click({ multiple: true }, {force: true});
+        cy.wait(2000);
+        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get(':nth-child(19) > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click( {force: true});
+        cy.get(':nth-child(19) > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"]').click( {force: true});
+        cy.get(':nth-child(20) > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click( {force: true});
+        cy.get(':nth-child(2) > .workflow-component > .workflow-component-element > .card-component > .new-provisional-edit-card-container > .card > .widgets > :nth-child(1) > :nth-child(20) > .row > .form-group').click( {force: true});
+        cy.get(':nth-child(2) > .workflow-component > [style="display: flex; justify-content: flex-end; padding: 0 18px;"] > .btn-success').click();
+        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
     })
 })
