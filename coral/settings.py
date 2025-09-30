@@ -24,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=15, patch=53)
+APP_VERSION = semantic_version.Version(major=7, minor=15, patch=53, build="dev")
 
 TIME_ZONE = "Europe/London"
 USE_TZ = True
