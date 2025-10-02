@@ -299,9 +299,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
-          browser: firefox
+          record: true
+          browser: chrome
           install: false
           wait-on: 'http://arches:8000'
           wait-on-timeout: 6000
