@@ -1,6 +1,7 @@
 describe('Going through the Add Garden Workflow', function () {
 
     beforeEach(() => {
+        cy.rewriteHeaders();
         cy.login();
         cy.visit('/plugins/init-workflow');
     });

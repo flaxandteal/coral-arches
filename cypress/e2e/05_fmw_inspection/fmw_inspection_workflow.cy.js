@@ -1,6 +1,7 @@
 describe('Going through the FWM Inspection Workflow', function () {
 
     beforeEach(() => {
+        cy.rewriteHeaders();
         cy.login();
         cy.visit('/plugins/init-workflow');
     });

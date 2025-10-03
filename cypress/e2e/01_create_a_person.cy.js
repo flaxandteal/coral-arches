@@ -1,5 +1,6 @@
 describe('Creating a person named Test Person and a person named John Doe if they dont exist', function () {
     beforeEach(() => {
+        cy.rewriteHeaders();
         cy.login();
     });
 

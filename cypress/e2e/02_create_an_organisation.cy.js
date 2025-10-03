@@ -1,5 +1,6 @@
 describe('Creating a organisation named Test Organisation if one doesnt exist', function () {
     beforeEach(() => {
+        cy.rewriteHeaders();
         cy.login();
         cy.visit('/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=125&language=*&term-filter=%5B%7B%22context%22%3A%22%22%2C%22context_label%22%3A%22Organization%20-%20Names%22%2C%22id%22%3A%22termTest%20OrganisationOrganization%20-%20Names%22%2C%22text%22%3A%22Test%20Organisation%22%2C%22type%22%3A%22term%22%2C%22value%22%3A%22Test%20Organisation%22%2C%22inverted%22%3Afalse%2C%22selected%22%3Atrue%7D%5D');
     });

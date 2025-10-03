@@ -1,8 +1,7 @@
 describe('Going through the Archive Cataloguing Workflow', function () {
 
     beforeEach(() => {
-        // Add this wait here to avoid rate limiting on the login
-        cy.wait(1000);
+        cy.rewriteHeaders();
         cy.login();
         cy.visit('http://localhost:8000/plugins/init-workflow');
     });
