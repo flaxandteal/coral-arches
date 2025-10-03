@@ -16,24 +16,6 @@
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 
-Cypress.Commands.add("rewriteHeaders", () => {
-  cy.intercept("*", (req) =>
-    req.on("response", (res) => {
-      const setCookies = res.headers["set-cookie"]
-      res.headers["set-cookie"] = (
-        Array.isArray(setCookies) ? setCookies : [setCookies]
-      )
-        .filter((x) => x)
-        .map((headerContent) =>
-          headerContent.replace(
-            /samesite=(lax|strict)/gi,
-            "secure; samesite=none"
-          )
-        )
-    })
-  )
-})
-
 Cypress.Commands.add("login", () => {
     cy.visit('/auth/');
 

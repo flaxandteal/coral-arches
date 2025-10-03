@@ -1,7 +1,6 @@
 describe('Going through the Archive Cataloguing Workflow', function () {
 
     beforeEach(() => {
-        cy.rewriteHeaders();
         cy.login();
         cy.visit('http://localhost:8000/plugins/init-workflow');
     });

@@ -1,7 +1,6 @@
 describe('Going through the Incident Report', function () {
 
     beforeEach(() => {
-        cy.rewriteHeaders();
         cy.login();
         cy.visit('/plugins/init-workflow');
     });

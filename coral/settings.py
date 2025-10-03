@@ -398,10 +398,10 @@ SESSION_COOKIE_NAME = 'coral'
 
 # Additional cookie security params 
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = "Strict"
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = "Strict"
+CSRF_COOKIE_SAMESITE = "Strict" if DEBUG else "'None'"
+CSRF_COOKIE_SECURE = True if DEBUG else False
+SESSION_COOKIE_HTTPONLY = True 
+SESSION_COOKIE_SAMESITE = "Strict" if DEBUG else "'None'"
 SESSION_COOKIE_SECURE = True
 
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
