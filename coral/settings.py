@@ -396,12 +396,17 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
 
+cookie_var = "Strict"
+
+if DEBUG:
+    cookie_var = "Lax"
+
 # Additional cookie security params 
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = "Strict" if DEBUG else "'None'"
-CSRF_COOKIE_SECURE = True if DEBUG else False
+CSRF_COOKIE_SAMESITE = cookie_var
+CSRF_COOKIE_SECURE = True 
 SESSION_COOKIE_HTTPONLY = True 
-SESSION_COOKIE_SAMESITE = "Strict" if DEBUG else "'None'"
+SESSION_COOKIE_SAMESITE = cookie_var
 SESSION_COOKIE_SECURE = True
 
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
