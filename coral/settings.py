@@ -396,26 +396,15 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
 
-cookie_samesite_var = "Strict"
-cookie_secure_var = True
-cookie_http_var = True
-secure_cross_origin_value = "same-origin"
-
-if DEBUG:
-    cookie_samesite_var = "Lax"
-    cookie_secure_var = False
-    cookie_http_var = False
-    secure_cross_origin_value = None
-
-SECURE_CROSS_ORIGIN_OPENER_POLICY = secure_cross_origin_value
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "unsafe-none"
 
 # Additional cookie security params 
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = cookie_samesite_var
-CSRF_COOKIE_SECURE = cookie_secure_var 
-SESSION_COOKIE_HTTPONLY = cookie_http_var
-SESSION_COOKIE_SAMESITE = cookie_samesite_var
-SESSION_COOKIE_SECURE = cookie_secure_var
+CSRF_COOKIE_SAMESITE = "Strict" 
+CSRF_COOKIE_SECURE = True 
+SESSION_COOKIE_HTTPONLY = True 
+SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_SECURE = True
 
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
 CACHES = {
