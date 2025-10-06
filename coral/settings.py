@@ -401,16 +401,16 @@ cookie_secure_var = True
 cookie_http_var = True
 
 if DEBUG:
-    cookie_var = "Lax"
+    cookie_samesite_var = "Lax"
     cookie_secure_var = False
     cookie_http_var = False
 
 # Additional cookie security params 
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = cookie_var
+CSRF_COOKIE_SAMESITE = cookie_samesite_var
 CSRF_COOKIE_SECURE = cookie_secure_var 
 SESSION_COOKIE_HTTPONLY = cookie_http_var
-SESSION_COOKIE_SAMESITE = cookie_var
+SESSION_COOKIE_SAMESITE = cookie_samesite_var
 SESSION_COOKIE_SECURE = cookie_secure_var
 
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
