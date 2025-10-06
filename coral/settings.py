@@ -399,11 +399,15 @@ SESSION_COOKIE_NAME = 'coral'
 cookie_samesite_var = "Strict"
 cookie_secure_var = True
 cookie_http_var = True
+secure_cross_origin_value = "same-origin"
 
 if DEBUG:
     cookie_samesite_var = "Lax"
     cookie_secure_var = False
     cookie_http_var = False
+    secure_cross_origin_value = None
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = secure_cross_origin_value
 
 # Additional cookie security params 
 CSRF_COOKIE_HTTPONLY = False
