@@ -302,6 +302,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
+          headed: true
           install: false
           wait-on: 'http://arches:8000'
           wait-on-timeout: 6000
