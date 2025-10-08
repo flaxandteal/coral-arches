@@ -17,15 +17,14 @@
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 
 Cypress.Commands.add("login", () => {
-    cy.origin('http://arches:8000', () => {
-        cy.visit('/auth/');
+    cy.visit('/auth/');
 
-        cy.get('.input-group > .floating-label-group > input[name="username"].form-control').type(`admin{enter}`);
-        cy.get('.input-group > .floating-label-group > input[name="password"].form-control').type(`admin{enter}`);
+    cy.get('.input-group > .floating-label-group > input[name="username"].form-control').type(`admin{enter}`);
+    cy.get('.input-group > .floating-label-group > input[name="password"].form-control').type(`admin{enter}`);
 
-        cy.getCookie("csrftoken").should("exist");
-        cy.getCookie("coral").should("exist");
-    });
+    cy.getCookie("csrftoken").should("exist");
+    cy.getCookie("coral").should("exist");
+    console.log(Cypress.config('chromeWebSecurity'));
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
