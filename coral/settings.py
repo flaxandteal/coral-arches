@@ -397,12 +397,12 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 SESSION_COOKIE_NAME = 'coral'
 
 # Additional cookie security params 
-CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = "Strict" 
-CSRF_COOKIE_SECURE = True 
-SESSION_COOKIE_HTTPONLY = True 
-SESSION_COOKIE_SAMESITE = "Strict"
-SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_HTTPONLY = False
+# CSRF_COOKIE_SAMESITE = "Strict" 
+# CSRF_COOKIE_SECURE = True 
+# SESSION_COOKIE_HTTPONLY = True 
+# SESSION_COOKIE_SAMESITE = "Strict"
+# SESSION_COOKIE_SECURE = True
 
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
 CACHES = {
