@@ -67,7 +67,6 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.get('[aria-label="End Date"]').scrollIntoView().should('be.visible').click({force: true});
         cy.get('[aria-label="End Date"]').siblings('.bootstrap-datetimepicker-widget').contains(dd).click({force: true});
         cy.get('.workflow-component-element').get('.btn.btn-workflow-tile.btn-success').should('be.visible').contains('Add').click();
-        cy.get('[style="display: flex; justify-content: flex-end; padding: 0 18px;"] > .btn-success').click();
         cy.get('.workflow-top-control > .btn-success > .verbose').click();
     });
 });
