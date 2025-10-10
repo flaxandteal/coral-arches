@@ -27,52 +27,49 @@ describe('Going through the Incident Report', function () {
         // Record of the incident
         cy.wait(4000)
 
-        cy.get('aria-label="Damage Type"').contains('Select an option').click({force: true}); // Damage type dropdown
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        // cy.get('aria-label="Damage Type"').contains('Select an option').click({force: true}); // Damage type dropdown
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').first().click();
 
-        cy.get('.card_component.material_fabric_damage_type').contains('Select an option').click({force: true}); // Material/ fabric damage type dropdown
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
+        // cy.get('.card_component.material_fabric_damage_type').contains('Select an option').click({force: true}); // Material/ fabric damage type dropdown
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').first().click({force: true});
 
-        cy.get('.card_component.component_damage_type').contains('Select an option').click({force: true}); // Component damage type
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
-
-        cy.get('[aria-label="CM Reference"]').click({force: true}); // CM Reference textfield should be prefilled and disbaled
+        // cy.get('.card_component.component_damage_type').contains('Select an option').click({force: true}); // Component damage type
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').first().click({force: true});
 
         /*
             section for notes rich text editor
         */
 
-        cy.get('.card_component.issue_identifier').contains('Add new Relationship').scrollIntoView().click() // Issue identified by dropdown
+        // cy.get('[aria-label="Issue Identified By, Add new Relationship"]').click();
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').contains('John Smith').click();
+
+        // cy.get('[aria-label="Area Archaeologist(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Area Archaeologist dropdown
+        // cy.wait(4000);
+        // cy.get('.select2-results__option').contains('John Smith').click();
+        // cy.wait(4000);
+
+        cy.get('[aria-label="CWT Area Supervisor(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // CWT Area Supervisor dropdown
         cy.wait(4000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').contains('John Smith').click();
         cy.wait(4000);
 
-        cy.get('.card_component.area_archaeologist').contains('Add new Relationship').scrollIntoView().click(); // Area Archaeologist dropdown
+        cy.get('[aria-label="Occupier(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Occupier dropdown
         cy.wait(4000);
-        cy.get('.select2-results__option').first().click();
-        cy.wait(4000);
-
-        cy.get('.card_component.cwt_area_supervisor').contains('Add new Relationship').scrollIntoView().click(); // CWT Area Supervisor dropdown
-        cy.wait(4000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').contains('John Smith').click();
         cy.wait(4000);
 
-        cy.get('.card_component.occupier').contains('Add new Relationship').scrollIntoView().click(); // Occupier dropdown
+        cy.get('[aria-label="Field Worker(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Field worker dropdown
         cy.wait(4000);
-        cy.get('.select2-results__option').first().click();
-        cy.wait(4000);
-
-        cy.get('.card_component.field_worker').contains('Add new Relationship').scrollIntoView().click(); // Field worker dropdown
-        cy.wait(4000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').contains('John Smith').click();
         cy.wait(4000);
 
-        cy.get('.card_component.owner').contains('Add new Relationship').scrollIntoView().click(); // Owner dropdown
+        cy.get('[aria-label="Owner(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Owner dropdown
         cy.wait(4000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').contains('John Smith').click();
         cy.wait(4000);
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
