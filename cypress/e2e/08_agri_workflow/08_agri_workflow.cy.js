@@ -2,7 +2,7 @@ describe('Going through the Agri Workflow', function () {
 
     beforeEach(() => {
         cy.login();
-        cy.visit('http://localhost:8000/plugins/init-workflow');
+        cy.visit('/plugins/init-workflow');
     });
 
     it('Start new and go through the workflow and populate all fields', function () {
@@ -10,7 +10,6 @@ describe('Going through the Agri Workflow', function () {
         cy.get('[style="display: flex"] > .fa > span').click();
         cy.get('.tabbed-workflow-footer-button-container > .btn').click();
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
-
 
         cy.wait(4000);
         cy.get('[aria-label="Related Heritage Assets, Add new Relationship"]').click();

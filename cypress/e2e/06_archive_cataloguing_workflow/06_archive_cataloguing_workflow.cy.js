@@ -2,7 +2,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
 
     beforeEach(() => {
         cy.login();
-        cy.visit('http://localhost:8000/plugins/init-workflow');
+        cy.visit('/plugins/init-workflow');
     });
 
     it('Start new and go through the workflow and populate all fields', function () {
