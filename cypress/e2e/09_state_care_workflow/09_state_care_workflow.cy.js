@@ -32,8 +32,7 @@ describe('Going through the state care Workflow', function () {
         cy.wait(4000);
         cy.get('.workflow-component-element').get('.btn.btn-workflow-tile.btn-success').should('be.visible').contains('Add').click();
 
-        cy.get('.form-control').clear('t');
-        cy.get('.form-control').type('test{enter}');
+        cy.type_ckeditor('editor1', 'test');
         cy.get(':nth-child(2) > .workflow-component > .workflow-component-element > .card-component').click();
         cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
         cy.get('.tabbed-workflow-footer-button-container > :nth-child(2)').click();

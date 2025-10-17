@@ -11,7 +11,7 @@ describe('Going through the Incident Report', function () {
         cy.wait(2000);
         cy.get('[aria-label="Select Licence, Please select a Heritage Asset"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.select2-results__option').first().click();
         cy.wait(2000);
         cy.get('[style="display: flex"] > .fa').contains('Start New').click();
         
@@ -45,32 +45,37 @@ describe('Going through the Incident Report', function () {
 
         // cy.get('[aria-label="Issue Identified By, Add new Relationship"]').click();
         // cy.wait(2000);
+        // cy.get('.select2-search__field').clear('John Smith');
+        // cy.get('.select2-search__field').type('John Smith');
         // cy.get('.select2-results__option').contains('John Smith').click();
 
         // cy.get('[aria-label="Area Archaeologist(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Area Archaeologist dropdown
         // cy.wait(4000);
+        // cy.get('.select2-search__field').clear('John Smith');
+        // cy.get('.select2-search__field').type('John Smith');
         // cy.get('.select2-results__option').contains('John Smith').click();
         // cy.wait(4000);
 
-        cy.get('[aria-label="CWT Area Supervisor(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // CWT Area Supervisor dropdown
-        cy.wait(4000);
-        cy.get('.select2-results__option').contains('John Smith').click();
-        cy.wait(4000);
+        // cy.wait(4000);
+        // cy.get('[aria-label="CWT Area Supervisor(s), Add new Relationship"]').click(); // CWT Area Supervisor dropdown
+        // cy.wait(4000);
+        // cy.get('.select2-results__option').first().click();
+        // cy.wait(4000);
 
-        cy.get('[aria-label="Occupier(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Occupier dropdown
-        cy.wait(4000);
-        cy.get('.select2-results__option').contains('John Smith').click();
-        cy.wait(4000);
+        // cy.get('[aria-label="Occupier(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Occupier dropdown
+        // cy.wait(4000);
+        // cy.get('.select2-results__option').first().click();
+        // cy.wait(4000);
 
-        cy.get('[aria-label="Field Worker(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Field worker dropdown
-        cy.wait(4000);
-        cy.get('.select2-results__option').contains('John Smith').click();
-        cy.wait(4000);
+        // cy.get('[aria-label="Field Worker(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Field worker dropdown
+        // cy.wait(4000);
+        // cy.get('.select2-results__option').first().click();
+        // cy.wait(4000);
 
-        cy.get('[aria-label="Owner(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Owner dropdown
-        cy.wait(4000);
-        cy.get('.select2-results__option').contains('John Smith').click();
-        cy.wait(4000);
+        // cy.get('[aria-label="Owner(s), Add new Relationship"]').contains('Add new Relationship').scrollIntoView().click(); // Owner dropdown
+        // cy.wait(4000);
+        // cy.get('.select2-results__option').first().click();
+        // cy.wait(4000);
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
 

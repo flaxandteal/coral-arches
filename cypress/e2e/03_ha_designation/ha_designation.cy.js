@@ -10,10 +10,11 @@ describe('Going through the HA Designation Workflow', function () {
         cy.wait(2000);
         cy.get('[aria-label="Select Heritage Asset, Please select a Heritage Asset"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.select2-search__field').clear('Testing');
+        cy.get('.select2-search__field').type('Testing');
+        cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);
-        cy.contains('Start New').click();
-
+        cy.contains('Start New').click({ force: true });
         cy.wait(2000);
         cy.get('.ep-form-alert-buttons > .btn > span').click({ multiple: true });
         cy.get('[href="/plugins/open-designation-workflow?workflow-slug=heritage-asset-designation-workflow"] > .workflow-select-card').click();

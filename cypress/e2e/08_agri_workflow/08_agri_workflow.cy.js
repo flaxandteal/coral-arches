@@ -11,9 +11,9 @@ describe('Going through the Agri Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container > .btn').click();
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
 
+        cy.wait(8000);
+        cy.get('[aria-label="Related Heritage Assets, Add new Relationship"]').click({force: true});
         cy.wait(4000);
-        cy.get('[aria-label="Related Heritage Assets, Add new Relationship"]').click();
-        cy.wait(2000);
         cy.get('.select2-results__option').first().click({force: true});
         cy.wait(2000);
         cy.get('[aria-label="Referred to, Add new Relationship"]').click();

@@ -61,7 +61,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.wait(500);
         cy.get('[aria-label="Person or Organization, Add new Relationship"]').click({ multiple: true });
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('John Smith').click();
+        cy.get('.select2-results__option').first().click();
         cy.get('[aria-label="Start Date"]').scrollIntoView().should('be.visible').click({force: true});
         cy.get('[aria-label="Start Date"]').siblings('.bootstrap-datetimepicker-widget').contains(dd).click({force: true});
         cy.get('[aria-label="End Date"]').scrollIntoView().should('be.visible').click({force: true});

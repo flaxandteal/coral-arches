@@ -43,22 +43,23 @@ describe('Going through the FWM Inspection Workflow', function () {
         // Owner dropdown
         cy.get('[aria-label="Owner(s), Add new Relationship"]').click({ multiple: true });
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('John Smith').click({force: true});
+        cy.get('.select2-results__option').first().click({force: true});
         cy.wait(2000);
 
         // Occupier dropdown
         cy.get('[aria-label="Occupier(s), Add new Relationship"]').click({ multiple: true });
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('John Smith').click({force: true});
+        cy.get('.select2-results__option').first().click({force: true});
 
         // fm warden dropdown
         cy.wait(2000);
         cy.get('[aria-label="FM Warden(s), Add new Relationship"]').click({ multiple: true });
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('John Smith').click({force: true});
+        cy.get('.select2-results__option').first().click({force: true});
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click()
 
+        cy.wait(4000);
         cy.get('.irish_grid_tm65_ > .row > .form-group > :nth-child(3) > span > ul > :nth-child(1)').click();
         cy.get('.irish_grid_tm65_ > .row > .form-group > :nth-child(3) > #coordinatePoint').clear('J1025169962');
         cy.get('.irish_grid_tm65_ > .row > .form-group > :nth-child(3) > #coordinatePoint').type('J1025169962{enter}');

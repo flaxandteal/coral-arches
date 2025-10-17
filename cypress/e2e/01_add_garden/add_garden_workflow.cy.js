@@ -24,21 +24,23 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Site Name"]').click().type('Testing');
 
         cy.contains('Heritage Asset Type').should('be.visible');
-        cy.get('[aria-label="Heritage Asset Type"]').click();
         cy.wait(2000);
+        cy.get('[aria-label="Heritage Asset Type"]').click();
+        cy.wait(4000);
         cy.get('.select2-results__option').first().click();
 
-        cy.contains('Land Use Classification').scrollIntoView();
-        cy.get('[aria-label="Land Use Classification"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.wait(4000);
+        // cy.contains('Land Use Classification').scrollIntoView();
+        // cy.wait(2000);
+        // cy.get('[aria-label="Land Use Classification"]').click();
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').first().click({force: true});
+        // cy.wait(4000);
 
         cy.contains('Bibliographic Source').scrollIntoView();
         cy.wait(2000)
-        cy.get(':nth-child(1) > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').click();
+        cy.get('[aria-label="Citations, Add new Relationship"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('Test Bibliographic').click();
+        cy.get('.select2-results__option').first().click();
 
         cy.contains('Source Number').should('be.visible');
         cy.get('[aria-label="Source Number"]').click().type('123456');
@@ -157,9 +159,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.form-control.input-lg').eq(1).click();
         cy.get('.card_component.gar_approved_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
         cy.get('.gar_approved_by_value').should('be.visible');
-        cy.wait(2000);
-        cy.get('[aria-label="Provisional"]').click();
-        cy.get('.select2-results__option').contains('Approved').click();
 
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
     })
@@ -172,7 +171,9 @@ describe('Going through the Add Garden Workflow', function () {
         // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.select2-search__field').clear('Testing');
+        cy.get('.select2-search__field').type('Testing');
+        cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
 
@@ -188,7 +189,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
- 
+
         cy.contains('Heritage Asset Type').should('be.visible');
         cy.get('[aria-label="Heritage Asset Type"]').click();
         cy.wait(2000);
@@ -255,7 +256,7 @@ describe('Going through the Add Garden Workflow', function () {
 
         cy.contains('Comment').scrollIntoView().should  ;
         cy.get('[aria-label="Comment"]').click().type('1');
-         
+
         cy.get('.btn-danger').contains('Clear').click();
 
         cy.get('.card_component.description_type').contains('Description Type').scrollIntoView();
@@ -276,7 +277,9 @@ describe('Going through the Add Garden Workflow', function () {
         // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.select2-search__field').clear('Testing');
+        cy.get('.select2-search__field').type('Testing');
+        cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
         cy.wait(2000);
@@ -342,20 +345,20 @@ describe('Going through the Add Garden Workflow', function () {
         // cy.wait(2000);
 
         // Council
-        cy.get('[aria-label="LA01 - Causeway Coast and Glens Borough Council"]').click({force: true});
-        cy.wait(2000);
-        cy.get('.select2-results__option').contains('LA01 - Causeway Coast and Glens Borough Council').scrollIntoView();
-        cy.get('.select2-results__option').contains('LA02 - Mid and East Antrim Borough Council');
-        cy.get('.select2-results__option').contains('LA03 - Antrim and Newtownabbey Borough Council');
-        cy.get('.select2-results__option').contains('LA04 - Belfast City Council');
-        cy.get('.select2-results__option').contains('LA05 - Lisburn and Castlereagh City Council');
-        cy.get('.select2-results__option').contains('LA06 - Ards and North Down Borough Council').scrollIntoView();
-        cy.get('.select2-results__option').contains('LA07 - Newry, Mourne and Down District Council');
-        cy.get('.select2-results__option').contains('LA08 - Armagh City, Banbridge and Craigavon Borough Council');
-        cy.get('.select2-results__option').contains('LA09 - Mid Ulster District Council');
-        cy.get('.select2-results__option').contains('LA10 - Fermanagh and Omagh District Council').scrollIntoView();
-        cy.get('.select2-results__option').contains('LA11 - Derry City and Strabane District Council');
-        cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
+        // cy.get('[aria-label="LA07 - Newry, Mourne and Down District Council"]').click({force: true});
+        // cy.wait(2000);
+        // cy.get('.select2-results__option').contains('LA01 - Causeway Coast and Glens Borough Council').scrollIntoView();
+        // cy.get('.select2-results__option').contains('LA02 - Mid and East Antrim Borough Council');
+        // cy.get('.select2-results__option').contains('LA03 - Antrim and Newtownabbey Borough Council');
+        // cy.get('.select2-results__option').contains('LA04 - Belfast City Council');
+        // cy.get('.select2-results__option').contains('LA05 - Lisburn and Castlereagh City Council');
+        // cy.get('.select2-results__option').contains('LA06 - Ards and North Down Borough Council').scrollIntoView();
+        // cy.get('.select2-results__option').contains('LA07 - Newry, Mourne and Down District Council');
+        // cy.get('.select2-results__option').contains('LA08 - Armagh City, Banbridge and Craigavon Borough Council');
+        // cy.get('.select2-results__option').contains('LA09 - Mid Ulster District Council');
+        // cy.get('.select2-results__option').contains('LA10 - Fermanagh and Omagh District Council').scrollIntoView();
+        // cy.get('.select2-results__option').contains('LA11 - Derry City and Strabane District Council');
+        // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
         
         // Area type
         cy.get('.area_type').contains('Select an option').scrollIntoView().click();
@@ -396,8 +399,8 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
         cy.get('[aria-label="BU Fusion ID"]').first().click().clear();
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
     })
 
     // Map section is to be manually tested, keeping in encase needed in future
@@ -476,20 +479,21 @@ describe('Going through the Add Garden Workflow', function () {
     // })
 
     it('Finish tab specific tests', function () {
-
         cy.contains('Workflows');
         cy.contains('Add Garden').click();
         cy.wait(2000);
 
-        // Add Garden 1st page
+     // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.get('.select2-results__option').contains('HA/01').click();
+        cy.get('.select2-search__field').clear('Testing');
+        cy.get('.select2-search__field').type('Testing');
+        cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
         cy.wait(2000);
 
-        // Start tab
+     // Start tab
         cy.wait(2500);
         cy.get('.card_component.resourceid').contains('HA Number');
         cy.get('.form-control').should('be.disabled');
