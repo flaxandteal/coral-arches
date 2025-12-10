@@ -14,6 +14,7 @@
 - Updated the disable add null check
 - Changed the index for tab items in the archive source report js comp
 - Changed the HTM order for full report 
+- Hide undo button from the user in the finish step of add HA workflows
 
 ### Workflows Updated
 - Add IHR
@@ -28,4 +29,7 @@
 
 **fix: full report now showing on first tab for archive source**
 [790](https://github.com/flaxandteal/coral-arches/pull/790) by @babou212
+
+**fix: hidden undo button from add ha wf finish steps**
+[789](https://github.com/flaxandteal/coral-arches/pull/789) by @babou212
 
