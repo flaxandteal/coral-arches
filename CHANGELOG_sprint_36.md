@@ -15,6 +15,7 @@
 - Changed the index for tab items in the archive source report js comp
 - Changed the HTM order for full report 
 - Hide undo button from the user in the finish step of add HA workflows
+- Update the get-selected-monument-details js comp with the correct designation type node id
 
 ### Workflows Updated
 - Add IHR
@@ -32,4 +33,7 @@
 
 **fix: hidden undo button from add ha wf finish steps**
 [789](https://github.com/flaxandteal/coral-arches/pull/789) by @babou212
+
+**fix: designation type now displays in info tab**
+[788](https://github.com/flaxandteal/coral-arches/pull/788) by @babou212
 
