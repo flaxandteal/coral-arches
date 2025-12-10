@@ -16,6 +16,7 @@
 - Changed the HTM order for full report 
 - Hide undo button from the user in the finish step of add HA workflows
 - Update the get-selected-monument-details js comp with the correct designation type node id
+- remove duplicate csp import from settings.py
 
 ### Workflows Updated
 - Add IHR
@@ -36,4 +37,7 @@
 
 **fix: designation type now displays in info tab**
 [788](https://github.com/flaxandteal/coral-arches/pull/788) by @babou212
+
+**chore: remove duplicate csp import from settings.py**
+[793](https://github.com/flaxandteal/coral-arches/pull/793) by @babou212
 
