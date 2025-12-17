@@ -155,7 +155,7 @@ jobs:
           discovery.type: "single-node"
           discovery.seed_hosts: "[]"
           xpack.security.enabled: "false"
-          ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+          ES_JAVA_OPTS: "-Xms2g -Xmx2g"
         options: >-
           --health-cmd "curl -s --fail http://localhost:9200/_cat/health || exit 1"
           --health-interval 10s
