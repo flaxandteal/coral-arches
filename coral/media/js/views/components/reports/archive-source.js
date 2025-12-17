@@ -19,12 +19,12 @@ define([
 
             Object.assign(self, reportUtils);
             self.sections = [
+                {id: 'all', title: 'Full Report'},
                 {id: 'name', title: 'Names and Identifiers'},
                 {id: 'description', title: 'Descriptions and Citations'},
                 {id: 'images', title: 'Images'},
                 {id: 'archive', title: 'Archive Holding'},
                 {id: 'resources', title: 'Associated Resources'},
-                {id: 'all', title: 'Full Report'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);

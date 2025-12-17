@@ -16,7 +16,6 @@ import semantic_version
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
 from csp.constants import SELF, NONE
-from csp.constants import SELF, NONE, NONCE
 
 try:
     from arches.settings import *
@@ -24,7 +23,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=15, patch=53, build="dev")
+APP_VERSION = semantic_version.Version(major=7, minor=15, patch=53)
 
 TIME_ZONE = "Europe/London"
 USE_TZ = True

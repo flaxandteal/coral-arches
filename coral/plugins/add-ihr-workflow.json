@@ -461,7 +461,7 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": ["undo"]
       }
     ],
     "initWorkflow": {
