@@ -76,6 +76,10 @@ jobs:
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/elasticsearch/data
+
       - name: Check out repository code
         uses: actions/checkout@v3
         with:
