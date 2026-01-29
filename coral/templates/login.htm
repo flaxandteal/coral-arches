@@ -94,9 +94,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 <script>
-	// Prevent form submission until both username and password are filled
-	// This handles the case where browser password managers show a "Continue" button
-	// that submits the form prematurely with only the username filled
 	(function() {
 		var form = document.getElementById('login-form');
 		var usernameInput = document.getElementById('username');
@@ -106,12 +103,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			var username = usernameInput.value.trim();
 			var password = passwordInput.value.trim();
 			
-			// Only allow submission if BOTH fields are filled
 			if (!username || !password) {
 				e.preventDefault();
 				e.stopPropagation();
 				
-				// Focus the empty field
 				if (!username) {
 					usernameInput.focus();
 				} else if (!password) {

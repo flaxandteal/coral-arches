@@ -51,12 +51,7 @@ import qrcode
 logger = logging.getLogger(__name__)
 
 
-class SetupView(BaseSetupView):
-    """
-    Custom 2FA setup view that works without requiring the user to be logged in first.
-    This allows us to keep the user logged out until they complete 2FA setup.
-    """
-    
+class SetupView(BaseSetupView):    
     def get(self, request, *args, **kwargs):
         user_id = request.session.get('2fa_pending_user_id')
         
@@ -168,13 +163,7 @@ class SetupView(BaseSetupView):
 
 
 @method_decorator(never_cache, name="dispatch")
-class LoginView(View):
-    """
-    Custom login view that integrates 2FA directly into the login flow.
-    Users must verify OTP (if they have 2FA enabled) before being logged in.
-    If they don't have 2FA enabled, they're redirected to setup.
-    """
-    
+class LoginView(View):    
     def get(self, request):
         next = request.GET.get("next", reverse("home"))
         registration_success = request.GET.get("registration_success")
@@ -300,7 +289,6 @@ class LoginView(View):
             request.session.pop('2fa_pending_next', None)
             request.session.pop('2fa_timestamp', None)
             
-            # Set backend attribute on user object before login (required by Arches)
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             user.password = ""
