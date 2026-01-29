@@ -1,0 +1,101 @@
+<!--
+ARCHES - a program developed to inventory and manage immovable cultural heritage.
+Copyright (C) 2013 J. Paul Getty Trust and World Monuments Fund
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+{% extends "base.htm" %}
+{% load static %}
+{% load i18n %}
+
+{% block loading_mask %}
+{% endblock loading_mask %}
+
+{% block body %}
+
+<div id="container" class="cls-container arches-login">
+
+	<!-- 2FA SETUP FORM -->
+	<div class="cls-content arches-signin">
+		<div class="cls-content-sm panel login-panel" style="width: 450px; max-height: 90vh; overflow-y: auto;">
+			<div class="panel-body" style="padding: 20px 15px;">
+				<h3 class="login-panel-header arches-signin" style="margin-bottom: 10px;">{% trans "Set Up Two-Factor Authentication" %}</h3>
+				<p class="arches-signin-subtext" style="margin-bottom: 15px; font-size: 13px;">
+					{% trans "Two-factor authentication is required to access this system." %}
+				</p>
+
+				<div class="form-group" style="margin-top: 10px; margin-bottom: 15px;">
+					<h4 style="font-size: 14px; margin-bottom: 8px;">{% trans "Step 1: Scan QR Code" %}</h4>
+					<p style="font-size: 12px; margin-bottom: 10px;">{% trans "Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.):" %}</p>
+					<div style="text-align: center; margin: 10px 0;">
+						{{ qr_code|safe }}
+					</div>
+				</div>
+
+				<div class="form-group" style="margin-bottom: 15px;">
+					<h4 style="font-size: 14px; margin-bottom: 8px;">{% trans "Or enter this key manually" %}</h4>
+					<p style="font-size: 12px; margin-bottom: 8px;">{% trans "If you can't scan the QR code, enter this key manually in your authenticator app:" %}</p>
+					<div class="well" style="text-align: center; font-family: monospace; font-size: 12px; word-break: break-all; padding: 8px; margin-bottom: 0;">
+						{{ secret_key }}
+					</div>
+				</div>
+
+				<div class="form-group" style="margin-bottom: 10px;">
+					<h4 style="font-size: 14px; margin-bottom: 8px;">{% trans "Step 2: Enter verification code" %}</h4>
+					<p style="font-size: 12px; margin-bottom: 10px;">{% trans "Enter the 6-digit code from your authenticator app to complete setup:" %}</p>
+				</div>
+
+				<form id="setup-form" action="" method='POST'>
+					{% csrf_token %}
+					<input type="hidden" name="next" value="{{ next }}" />
+					<div class="form-group" style="margin-bottom: 10px;">
+						<div class="input-group">
+							<div class="input-group-addon"><i class="fa fa-key"></i></div>
+							<input type="text" 
+								   class="form-control input-lg" 
+								   placeholder="{% trans 'Enter 6-digit code' %}" 
+								   name='token' 
+								   autocomplete="one-time-code"
+								   inputmode="numeric"
+								   pattern="[0-9]*"
+								   maxlength="6"
+								   autofocus>
+						</div>
+					</div>
+					<div class="form-group" style="margin-bottom: 10px;">
+						<div class="arches-signin-btn">
+							<button class="btn btn-primary btn-lg btn-block" type="submit">{% trans "Verify and Complete Setup" %}</button>
+						</div>
+					</div>
+					<div class="row" style="padding-top:5px; margin: -10px 0px 5px 0px;">
+						<div style="{% if not error %}display:none;{% endif %}" id="setup-failed-alert" class="alert alert-danger fade in" role="alert">
+							<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans "Close" %}</span></button>
+							<h4 style="font-size: 14px;">{% trans "Setup verification failed" %}</h4>
+							<span style="font-size: 12px;">{{ error|default:"Invalid code. Please try again." }}</span>
+						</div>
+					</div>
+				</form>
+				<div class="row account-management" style="margin-top: 5px;">
+					<a href="{% url 'auth' %}?logout=true" class="btn btn-link account-link" style="font-size: 12px;">{% trans "Cancel and return to login" %}</a>
+				</div>
+			</div>
+
+			<div class="panel-footer" style="padding: 10px 15px; font-size: 11px;">
+				<strong>{% trans "Important:" %}</strong> {% trans "Keep your authenticator app secure. You'll need it every time you log in." %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock body %}
