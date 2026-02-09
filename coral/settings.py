@@ -207,6 +207,10 @@ INSTALLED_APPS = (
     "oauth2_provider",
     "django_celery_results",
     "dauthz.apps.DauthzConfig",
+    "django_otp",
+    "django_otp.plugins.otp_static",
+    "django_otp.plugins.otp_totp",
+    "two_factor",
     # "silk",
     "coral",
     "arches_orm.arches_django.apps.ArchesORMConfig",
@@ -231,6 +235,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
+    "django_otp.middleware.OTPMiddleware",
+    # "coral.middleware.TwoFactorAuthMiddleware",  # DISABLED - 2FA now integrated into LoginView
     # "silk.middleware.SilkyMiddleware",
     "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
 ]
@@ -403,6 +409,16 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_SECURE = True
+
+LOGIN_URL = 'auth'
+LOGIN_REDIRECT_URL = 'two_factor:profile'
+TWO_FACTOR_PATCH_ADMIN = True
+TWO_FACTOR_TOTP_DIGITS = 6
+TWO_FACTOR_LOGIN_TIMEOUT = 600  # seconds
+TWO_FACTOR_LOGIN_URL = 'two_factor:login'
+
+ENABLE_TWO_FACTOR_AUTHENTICATION = False
+FORCE_TWO_FACTOR_AUTHENTICATION = False
 
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
 CACHES = {
