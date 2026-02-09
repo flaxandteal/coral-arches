@@ -417,6 +417,9 @@ TWO_FACTOR_TOTP_DIGITS = 6
 TWO_FACTOR_LOGIN_TIMEOUT = 600  # seconds
 TWO_FACTOR_LOGIN_URL = 'two_factor:login'
 
+ENABLE_TWO_FACTOR_AUTHENTICATION = False
+FORCE_TWO_FACTOR_AUTHENTICATION = False
+
 # For more info on configuring your cache: https://docs.djangoproject.com/en/2.2/topics/cache/
 CACHES = {
     'default': {

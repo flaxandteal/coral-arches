@@ -5,12 +5,12 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
 from two_factor.urls import urlpatterns as tf_urls
-from arches.app.views.user import UserManagerView
+from coral.views.user import UserManagerView
 from coral.views.api_file import TempFileView
 from coral.views.group_manager import GroupManagerView
 from coral.views.person_user import PersonUserSignupView
 from arches.app.views.plugin import PluginView
-from coral.views.auth import PersonSignupView, PersonConfirmSignupView, SetupView, LoginView
+from coral.views.auth import PersonSignupView, PersonConfirmSignupView, SetupView, LoginView, Reset2FAView, BackupCodesView
 from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport, WorkflowBuilderUpdateInitWorkflow
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResourcesView
@@ -32,7 +32,9 @@ uuid_regex = settings.UUID_REGEX
 
 urlpatterns = [
     re_path(r"^auth/", LoginView.as_view(), name="auth"),
-    path('account/two_factor/setup/', SetupView.as_view(), name='two_factor:setup'),
+    path('account/two_factor/setup/', SetupView.as_view(), name='two_factor_setup_pending'),
+    path('account/two_factor/reset/', Reset2FAView.as_view(), name='two_factor_reset'),
+    path('account/two_factor/backup-codes/', BackupCodesView.as_view(), name='two_factor_backup_codes'),
     path('', include(tf_urls)),
     path('', include('arches.urls')),
     re_path(r'^user$', UserManagerView.as_view(), name="user_profile_manager"),

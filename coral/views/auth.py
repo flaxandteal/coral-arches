@@ -21,7 +21,7 @@ import logging
 import json
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
-from django.views.generic import View
+from django.views.generic import View, FormView
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils.html import strip_tags
@@ -42,13 +42,81 @@ from arches_orm.adapter import admin
 from coral.models.models import RegistrationLink
 from django_otp import user_has_device
 from django_otp.plugins.otp_totp.models import TOTPDevice
+from django_otp.plugins.otp_static.models import StaticDevice, StaticToken
 from django.contrib.auth import authenticate, login as auth_login, logout
-from two_factor.views import SetupView as BaseSetupView
+from two_factor.views import SetupView as BaseSetupView, BackupTokensView
 from two_factor.forms import TOTPDeviceForm
 from qrcode.image.svg import SvgPathImage
 import qrcode
 
 logger = logging.getLogger(__name__)
+
+
+class Reset2FAView(View):
+    """View to reset user's 2FA - deletes devices and logs user out"""
+    
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return redirect('auth')
+        
+        TOTPDevice.objects.filter(user=request.user).delete()
+        StaticDevice.objects.filter(user=request.user).delete()
+        
+        logout(request)
+        
+        return redirect('auth')
+
+
+BACKUP_CODE_COUNT = 10
+
+
+class BackupCodesView(BackupTokensView):
+    template_name = 'two_factor_backup_codes.htm'
+    success_url = 'two_factor_backup_codes'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('auth')
+        
+        if not TOTPDevice.objects.filter(user=request.user, confirmed=True).exists():
+             return redirect('user_profile_manager')
+
+        self.device, created = StaticDevice.objects.get_or_create(
+            user=request.user,
+            name='backup',
+        )
+
+        return FormView.dispatch(self, request, *args, **kwargs)
+
+    def form_valid(self, form):
+        self.device.token_set.all().delete()
+        
+        import random
+        import string
+        codes = []
+        for _ in range(BACKUP_CODE_COUNT):
+             code = ''.join(random.choices(string.digits, k=8))
+             StaticToken.objects.create(device=self.device, token=code)
+             codes.append(code)
+        
+        return render(
+            self.request,
+            self.template_name,
+            {
+                'codes': codes,
+                'has_codes': True,
+                'just_generated': True,
+                'remaining_count': len(codes),
+            }
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.device:
+             count = self.device.token_set.count()
+             context['remaining_count'] = count
+             context['has_codes'] = count > 0
+        return context
 
 
 class SetupView(BaseSetupView):    
@@ -238,7 +306,7 @@ class LoginView(View):
                 request.session['2fa_pending_next'] = next
                 request.session['2fa_timestamp'] = time.time()
                 
-                return redirect('two_factor:setup')
+                return redirect('two_factor_setup_pending')
 
         return render(
             request, 
@@ -284,7 +352,15 @@ class LoginView(View):
             return redirect("auth")
 
         device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
-        if device and device.verify_token(otp_token):
+        verified = device and device.verify_token(otp_token)
+        
+        if not verified:
+            # Check backup codes
+            static_device = StaticDevice.objects.filter(user=user).first()
+            if static_device and static_device.verify_token(otp_token):
+                verified = True
+
+        if verified:
             request.session.pop('2fa_pending_user_id', None)
             request.session.pop('2fa_pending_next', None)
             request.session.pop('2fa_timestamp', None)

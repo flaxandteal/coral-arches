@@ -32,7 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			<div class="panel-body">
 				<h3 class="login-panel-header arches-signin">{% trans "Two-Factor Authentication" %}</h3>
 				<p class="arches-signin-subtext">
-					{% trans "Please enter the verification code from your authenticator app." %}
+					{% trans "Please enter the verification code from your authenticator app or a backup code." %}
 				</p>
 
 				<form id="totp-form" action="?next={{ next }}" method='POST'>
@@ -48,7 +48,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 								   autocomplete="one-time-code"
 								   inputmode="numeric"
 								   pattern="[0-9]*"
-								   maxlength="6"
+								   maxlength="8"
 								   autofocus>
 						</div>
 					</div>

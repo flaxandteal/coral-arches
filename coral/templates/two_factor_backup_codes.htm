@@ -1,0 +1,63 @@
+{% extends "base.htm" %}
+{% load i18n %}
+
+{% block loading_mask %}
+{% endblock loading_mask %}
+
+{% block body %}
+<div id="container" class="cls-container arches-login">
+    <div class="cls-content arches-signin">
+        <div class="cls-content-sm panel login-panel" style="width: 500px; max-height: 90vh; overflow-y: auto;">
+            <div class="panel-body" style="padding: 30px;">
+                <h3 class="login-panel-header arches-signin" style="margin-bottom: 20px;">{% trans 'Backup Codes' %}</h3>
+
+                {% if just_generated %}
+                <div class="alert alert-warning" style="margin-bottom: 20px;">
+                    <strong>{% trans 'Important!' %}</strong>
+                    {% trans 'Save these backup codes in a secure place. Each code can only be used once.' %}
+                </div>
+
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 4px; margin-bottom: 20px; font-family: monospace; font-size: 16px; line-height: 2; text-align: center;">
+                    {% for code in codes %}
+                    <div style="display: inline-block; width: 45%; margin: 2px;">{{ code }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {% if has_codes %}
+                <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
+                    {% trans 'You have' %} {{ remaining_count }} {% trans 'backup codes remaining.' %}
+                </p>
+                {% else %}
+                <p style="color: #666; margin-bottom: 20px;">
+                    {% trans 'You have no backup codes. Generate new codes below.' %}
+                </p>
+                {% endif %}
+
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <form method="post" style="display: block; margin-bottom: 10px;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-active-purple btn-lg btn-block"
+                            style="font-size: 14px; font-weight: 500;"
+                            {% if has_codes %}
+                            onclick="return confirm('{% trans "This will invalidate all existing backup codes and generate new ones. Continue?" %}');"
+                            {% endif %}
+                        >
+                            <i class="fa fa-refresh" style="margin-right: 5px;"></i>
+                            {% if has_codes %}
+                                {% trans 'Regenerate Codes' %}
+                            {% else %}
+                                {% trans 'Generate Backup Codes' %}
+                            {% endif %}
+                        </button>
+                    </form>
+                    
+                    <a href="{% url 'user_profile_manager' %}" class="btn btn-primary btn-active-purple btn-lg btn-block" style="font-size: 14px; font-weight: 500;">
+                        <i class="fa fa-arrow-left" style="margin-right: 5px;"></i> {% trans 'Back to Profile' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
