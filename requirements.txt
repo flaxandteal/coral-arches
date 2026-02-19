@@ -40,3 +40,7 @@ sqlparse>=0.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
 zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
 PyMuPDF
 django-debug-toolbar==5.2.0
+
+# Two-Factor Authentication (TOTP)
+django-two-factor-auth
+qrcode
