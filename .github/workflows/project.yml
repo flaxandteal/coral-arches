@@ -146,7 +146,7 @@ jobs:
           echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
     services:
       elasticsearch:
-        image: elasticsearch:8.4.0
+        image: elasticsearch:8.15.3
         ports:
           - "9200:9200"
           - "9300:9300"
@@ -315,7 +315,7 @@ jobs:
   #         path: cypress/videos
   #   services:
   #     elasticsearch:
-  #       image: elasticsearch:8.4.0
+  #       image: elasticsearch:8.15.3
   #       ports:
   #         - "9200:9200"
   #         - "9300:9300"
