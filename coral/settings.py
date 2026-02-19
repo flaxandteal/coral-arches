@@ -24,7 +24,7 @@ except ImportError:
     pass
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=15, patch=53, build="dev")
+APP_VERSION = semantic_version.Version(major=7, minor=16, patch=53)
 
 TIME_ZONE = "Europe/London"
 USE_TZ = True
@@ -486,9 +486,6 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 # If True, allows for user self creation via the signup view. If False, users can only be created via the Django admin view.
 ENABLE_USER_SIGNUP = False
 ENABLE_PERSON_USER_SIGNUP = True
-
-ENABLE_TWO_FACTOR_AUTHENTICATION = True
-FORCE_TWO_FACTOR_AUTHENTICATION = False
 
 CELERY_BROKER_URL = "" # RabbitMQ --> "amqp://guest:guest@localhost",  Redis --> "redis://localhost:6379/0"
 CELERY_ACCEPT_CONTENT = ['json']
