@@ -1,6 +1,6 @@
 from arches.app.search.elasticsearch_dsl_builder import Query
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
-from arches.app.views.search import RESOURCES_INDEX
+from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile

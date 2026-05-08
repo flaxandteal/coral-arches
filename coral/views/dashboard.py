@@ -1,6 +1,6 @@
 from django.views.generic import View
 from django.http import JsonResponse
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 from django.core.paginator import Paginator
 from django.core.cache import caches
 import json
@@ -10,7 +10,7 @@ from coral.views.dashboards.dashboard_register import get_strategy
 class Dashboard(View):
 
     def get(self, request):
-        from arches_orm.models import Person
+        from alizarin_django.models import Person
         with admin():
             dashboard_cache = caches['dashboard_versioning']
 
@@ -135,7 +135,7 @@ class Dashboard(View):
             })
     
     def get_groups(self, userId):
-        from arches_orm.models import Group
+        from alizarin_django.models import Group
 
         groups = Group.all()
 

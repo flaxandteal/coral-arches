@@ -1,99 +1,98 @@
-define([
-    'arches',
-    'knockout'
-], function(arches, ko) {
-    const standardizeNode = (obj) => {
-        if(obj){
-            const keys = Object.keys(obj);
-            keys.forEach(x => {
-                obj[x.toLowerCase().trim()] = obj[x];
-            });
+import arches from 'arches';
+import ko from 'knockout';
+
+const standardizeNode = (obj) => {
+    if(obj){
+        const keys = Object.keys(obj);
+        keys.forEach(x => {
+            obj[x.toLowerCase().trim()] = obj[x];
+        });
+    }
+};
+
+const getRawNodeValue = (resource, ...args) => {
+    let rootNode = resource;
+    let testPaths = undefined;
+
+    if(typeof(args?.[0]) == 'object'){
+        testPaths = args[0]?.testPaths;
+    } else {
+        testPaths = [args];
+    }
+
+    for(path of testPaths){
+        let node = rootNode;
+        for(let i = 0; i < path.length; ++i){
+            standardizeNode(node);
+            const pathComponent = path[i];
+            node = node?.[pathComponent];
         }
-    };
+        if(node){
+            return node;
+        }
+    }
+};
 
-    const getRawNodeValue = (resource, ...args) => {
-        let rootNode = resource;
-        let testPaths = undefined;
+const deleteTile = async (tileid, card) => {
+    const tile = card.tiles().find(y => tileid == y.tileid);
+    if(tile){
+        return $.ajax({
+            type: "DELETE",
+            url: arches.urls.tile,
+            data: JSON.stringify(tile.getData())
+        }).success(() => {
+            const tiles = card.tiles();
+            const tileIndex = tiles.indexOf(tile);
+            tiles.splice(tileIndex, 1);
+            card.tiles(tiles);
+        });
+    }
+    throw Error("Couldn't delete; tile was not found.")
+};
+const removedTiles = ko.observableArray();
 
-        if(typeof(args?.[0]) == 'object'){
-            testPaths = args[0]?.testPaths;
+const checkNestedData = (resource, ...args) => {
+    if(!resource) { return false; }
+    for (key of Object.keys(resource)){
+        if(args.includes(key)){ continue; }
+        const rawValue = getRawNodeValue(resource, key);
+        if(!rawValue || (typeof (rawValue) !== 'object')) { continue; }
+        if(processRawNodeValue(rawValue) != '--'){
+            return true;
         } else {
-            testPaths = [args];
-        }
-
-        for(path of testPaths){
-            let node = rootNode;
-            for(let i = 0; i < path.length; ++i){
-                standardizeNode(node);
-                const pathComponent = path[i];
-                node = node?.[pathComponent];
-            }
-            if(node){
-                return node;
-            }
-        }
-    };
-
-    const deleteTile = async (tileid, card) => {
-        const tile = card.tiles().find(y => tileid == y.tileid);
-        if(tile){
-            return $.ajax({
-                type: "DELETE",
-                url: arches.urls.tile,
-                data: JSON.stringify(tile.getData())
-            }).success(() => {
-                const tiles = card.tiles();
-                const tileIndex = tiles.indexOf(tile);
-                tiles.splice(tileIndex, 1);
-                card.tiles(tiles);
-            });
-        }
-        throw Error("Couldn't delete; tile was not found.")
-    };
-    const removedTiles = ko.observableArray();
-
-    const checkNestedData = (resource, ...args) => {
-        if(!resource) { return false; }
-        for (key of Object.keys(resource)){
-            if(args.includes(key)){ continue; }
-            const rawValue = getRawNodeValue(resource, key);
-            if(!rawValue || (typeof (rawValue) !== 'object')) { continue; }
-            if(processRawNodeValue(rawValue) != '--'){
+            try{
+            if(checkNestedData(rawValue)) {
                 return true;
-            } else {
-                try{
-                if(checkNestedData(rawValue)) {
-                    return true;
-                }}
-                catch(e){
-                    console.log(e);
-                }
+            }}
+            catch(e){
+                console.log(e);
             }
         }
-        return false;
-    };
+    }
+    return false;
+};
 
-    const processRawNodeValue = (rawValue) => {
-        if(typeof rawValue === 'string') {
-            return rawValue;
-        } else if(!rawValue) {
-            return '--';
-        }
-        const nodeValue = rawValue?.['@display_value'] || rawValue?.['display_value'];
-        const geojson = rawValue?.geojson;
-        if(geojson){
-            return geojson;
-        }
-        
-        //strict checks here because some nodeValues (0, false, etc.) should be rendered differently.
-        if(nodeValue !== undefined && nodeValue !== null && nodeValue !== ''){
-            return $(`<span>${nodeValue}</span>`).text();
-        } else {
-            return '--';
-        }
-    };
+const processRawNodeValue = (rawValue) => {
+    if(typeof rawValue === 'string') {
+        return rawValue;
+    } else if(!rawValue) {
+        return '--';
+    }
+    const nodeValue = rawValue?.['@display_value'] || rawValue?.['display_value'];
+    const geojson = rawValue?.geojson;
+    if(geojson){
+        return geojson;
+    }
 
-    return {
+    //strict checks here because some nodeValues (0, false, etc.) should be rendered differently.
+    if(nodeValue !== undefined && nodeValue !== null && nodeValue !== ''){
+        return $(`<span>${nodeValue}</span>`).text();
+    } else {
+        return '--';
+    }
+};
+
+export default {
         // default table configuration - used for display
         defaultTableConfig: {
             responsive: {
@@ -215,5 +214,4 @@ define([
         // see if there's any node with a valid displayable value.  If yes, return true.
         // potentially useful for deeply nested resources
         nestedDataExists: checkNestedData
-    } 
-});
+    };

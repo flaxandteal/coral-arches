@@ -1,12 +1,11 @@
-define([
-  'knockout',
-  'arches',
-  'viewmodels/openable-workflow',
-  'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/select-resource-id',
-  'views/components/workflows/default-card-util'
-], function (ko, arches, OpenableWorkflow, workflowTemplate) {
-  return ko.components.register('relate-two-monuments-workflow', {
+import ko from 'knockout';
+import arches from 'arches';
+import OpenableWorkflow from 'viewmodels/openable-workflow';
+import workflowTemplate from 'templates/views/components/plugins/default-workflow.htm';
+import selectResourceId from 'views/components/workflows/select-resource-id';
+import defaultCardUtil from 'views/components/workflows/default-card-util';
+
+export default ko.components.register('relate-two-monuments-workflow', {
     viewModel: function (params) {
       this.componentName = 'relate-two-monuments-workflow';
       this.stepConfig = [
@@ -240,4 +239,3 @@ define([
     },
     template: workflowTemplate
   });
-});

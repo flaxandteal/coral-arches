@@ -1,11 +1,10 @@
-define([
-    'knockout',
-    'underscore',
-    'arches',
-    'viewmodels/alert',
-    'bindings/scrollTo'
-], function(ko, _, arches, AlertViewModel) {
-    return function(params) {
+import ko from 'knockout';
+import _ from 'underscore';
+import arches from 'arches';
+import AlertViewModel from 'viewmodels/alert';
+import scrollto from 'bindings/scrollTo';
+
+export default function(params) {
         var self = this;
 
         if (!params.card && ko.unwrap(params.form.card)) {
@@ -321,4 +320,3 @@ define([
 
         this.initialize();
     };
-});

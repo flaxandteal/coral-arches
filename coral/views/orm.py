@@ -1,9 +1,9 @@
 from django.views.generic import View
 from django.http import JsonResponse
 from urllib.parse import parse_qs
-import arches_orm
-from arches_orm.view_models.node_list import NodeListViewModel
-from arches_orm.view_models import ConceptListValueViewModel
+import alizarin_django
+from alizarin_django.view_models.node_list import NodeListViewModel
+from alizarin_django.view_models import ConceptListValueViewModel
 
 def multi_getattr(obj, attr, default=None):
     """
@@ -60,7 +60,7 @@ class ORM(View):
         graphid = data["graphid"][0]
         resourceid = data["resourceid"][0]
 
-        wkrm = arches_orm.wkrm.get_resource_models_for_adapter("arches-django")["by-graph-id"][str(graphid)]
+        wkrm = alizarin_django.wkrm.get_resource_models_for_adapter("arches-django")["by-graph-id"][str(graphid)]
         wkri = wkrm.find(str(resourceid))
 
         response = {}

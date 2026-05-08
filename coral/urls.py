@@ -37,6 +37,8 @@ urlpatterns = [
     path('account/two_factor/backup-codes/', BackupCodesView.as_view(), name='two_factor_backup_codes'),
     path('', include(tf_urls)),
     path('', include('arches.urls')),
+    path('', include('arches_controlled_lists.urls')),
+    path('', include('arches_component_lab.urls')),
     re_path(r'^user$', UserManagerView.as_view(), name="user_profile_manager"),
     re_path(r'^person/signup-link$', PersonUserSignupView.as_view(), name="person_user_signup"),
     re_path(r'^plugins/group-manager', PluginView.as_view(), name='group-manager'),
@@ -121,7 +123,12 @@ if settings.DEBUG or settings.SERVE_STATIC:
     urlpatterns += [
         re_path(r'^static/(?P<path>.*)$', views.serve),
     ]
-    if settings.DEBUG:
+    if settings.DEBUG and "debug_toolbar" in settings.INSTALLED_APPS:
         urlpatterns += [
             re_path("__debug__/", include("debug_toolbar.urls")),
         ]
+
+handler400 = "arches.app.views.main.custom_400"
+handler403 = "arches.app.views.main.custom_403"
+handler404 = "arches.app.views.main.custom_404"
+handler500 = "arches.app.views.main.custom_500"

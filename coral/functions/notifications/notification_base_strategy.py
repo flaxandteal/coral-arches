@@ -1,6 +1,6 @@
 from arches.app.models import models
 from arches.app.models.resource import Resource
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 import logging
 
 class NotificationStrategy():
@@ -62,7 +62,7 @@ class NotificationStrategy():
         return notification
     
     def notify_groups(self):
-        from arches_orm.models import Group, Person
+        from alizarin_django.models import Group, Person
         with admin():
             group_list = self.config.get('groups_to_notify', None)
             for group_id in group_list:

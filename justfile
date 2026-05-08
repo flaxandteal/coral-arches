@@ -2,7 +2,7 @@
 TOOLKIT_FOLDER := "docker"
 # set TOOLKIT_RELEASE := main
 ARCHES_PROJECT := `ls -1 */__init__.py | head -n 1 | sed 's/\/.*//g'`
-ARCHES_BASE := "ghcr.io/flaxandteal/arches-base:coral-7.6"
+ARCHES_BASE := "ghcr.io/flaxandteal/arches-base:docker-8.1.0-release"
 ARCHES_PROJECT_ROOT := `pwd`
 VENV := "../ENV"
 
@@ -17,7 +17,7 @@ help:
 	@echo "=========================="
 	@echo
 	@echo "This Justfile should be present in the top level directory of an Arches project, where manage.py lives. We make some"
-	@echo "assumptions based on standard Arches project layout, as set up by 'arches-project create'. Running any other just"
+	@echo "assumptions based on standard Arches project layout, as set up by 'arches-admin startproject'. Running any other just"
 	@echo "command should check whether there is a ./docker/ subfolder, and if not attempt to add the container tools as a submodule"
 	@echo "if your project it versioned in git, or download a released copy to ./docker/ if not."
 	@echo

@@ -1,151 +1,96 @@
 /*!
- * JavaScript Cookie v2.1.1
- * https://github.com/js-cookie/js-cookie
+ * Vanilla cookie helper used in place of the legacy js-cookie 2.1.1 shim.
  *
- * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
- * Released under the MIT license
+ * Returns a Cookies-like object with .get(name), .set(name, value, opts), and
+ * .remove(name). The previous bundled shim was occasionally returning the
+ * wrong value for the csrftoken cookie (header length neither 32 nor 64),
+ * which Django then rejected with REASON_INCORRECT_LENGTH. This module
+ * resolves cookie values directly from document.cookie, scanning *every*
+ * matching entry and returning the longest non-empty value (so a stale
+ * empty-string duplicate cookie does not shadow the real one).
  */
-;(function (factory) {
-	if (typeof define === 'function' && define.amd) {
-		define(factory);
-	} else if (typeof exports === 'object') {
-		module.exports = factory();
-	} else {
-		var OldCookies = window.Cookies;
-		var api = window.Cookies = factory();
-		api.noConflict = function () {
-			window.Cookies = OldCookies;
-			return api;
-		};
-	}
-}(function () {
-	function extend () {
-		var i = 0;
-		var result = {};
-		for (; i < arguments.length; i++) {
-			var attributes = arguments[ i ];
-			for (var key in attributes) {
-				result[key] = attributes[key];
-			}
-		}
-		return result;
-	}
 
-	function init (converter) {
-		function api (key, value, attributes) {
-			var result;
-			if (typeof document === 'undefined') {
-				return;
-			}
+function _readAll(name) {
+    if (typeof document === 'undefined' || !document.cookie) {
+        return [];
+    }
+    const target = encodeURIComponent(String(name));
+    const matches = [];
+    const parts = document.cookie.split(';');
+    for (let i = 0; i < parts.length; i++) {
+        const raw = parts[i];
+        const eqIdx = raw.indexOf('=');
+        if (eqIdx < 0) continue;
+        const rawKey = raw.slice(0, eqIdx).trim();
+        if (rawKey !== name && rawKey !== target) continue;
+        let value = raw.slice(eqIdx + 1).trim();
+        if (value.length >= 2 && value.charAt(0) === '"' && value.charAt(value.length - 1) === '"') {
+            value = value.slice(1, -1);
+        }
+        try { value = decodeURIComponent(value); } catch (e) { /* keep raw */ }
+        matches.push(value);
+    }
+    return matches;
+}
 
-			// Write
+function get(name) {
+    if (name == null) {
+        const out = {};
+        if (typeof document === 'undefined' || !document.cookie) return out;
+        const parts = document.cookie.split(';');
+        for (let i = 0; i < parts.length; i++) {
+            const raw = parts[i];
+            const eqIdx = raw.indexOf('=');
+            if (eqIdx < 0) continue;
+            const k = raw.slice(0, eqIdx).trim();
+            let v = raw.slice(eqIdx + 1).trim();
+            if (v.length >= 2 && v.charAt(0) === '"' && v.charAt(v.length - 1) === '"') {
+                v = v.slice(1, -1);
+            }
+            try { v = decodeURIComponent(v); } catch (e) { /* keep raw */ }
+            let kDecoded = k;
+            try { kDecoded = decodeURIComponent(k); } catch (e) { /* keep raw */ }
+            out[kDecoded] = v;
+        }
+        return out;
+    }
+    const matches = _readAll(name);
+    if (matches.length === 0) return undefined;
+    let best = matches[0];
+    for (let i = 1; i < matches.length; i++) {
+        if (matches[i].length > best.length) best = matches[i];
+    }
+    return best;
+}
 
-			if (arguments.length > 1) {
-				attributes = extend({
-					path: '/'
-				}, api.defaults, attributes);
+function set(name, value, attributes) {
+    if (typeof document === 'undefined') return;
+    attributes = Object.assign({ path: '/' }, attributes || {});
+    if (typeof attributes.expires === 'number') {
+        const d = new Date();
+        d.setTime(d.getTime() + attributes.expires * 864e5);
+        attributes.expires = d;
+    }
+    let serialised = encodeURIComponent(String(name)) + '=' + encodeURIComponent(String(value));
+    if (attributes.expires instanceof Date) {
+        serialised += '; expires=' + attributes.expires.toUTCString();
+    }
+    if (attributes.path) serialised += '; path=' + attributes.path;
+    if (attributes.domain) serialised += '; domain=' + attributes.domain;
+    if (attributes.secure) serialised += '; secure';
+    if (attributes.samesite) serialised += '; samesite=' + attributes.samesite;
+    document.cookie = serialised;
+}
 
-				if (typeof attributes.expires === 'number') {
-					var expires = new Date();
-					expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
-					attributes.expires = expires;
-				}
+function remove(name, attributes) {
+    set(name, '', Object.assign({}, attributes || {}, { expires: -1 }));
+}
 
-				try {
-					result = JSON.stringify(value);
-					if (/^[\{\[]/.test(result)) {
-						value = result;
-					}
-				} catch (e) {}
+const Cookies = { get, set, remove };
+Cookies.getJSON = function(name) {
+    const v = get(name);
+    if (v == null) return v;
+    try { return JSON.parse(v); } catch (e) { return v; }
+};
 
-				if (!converter.write) {
-					value = encodeURIComponent(String(value))
-						.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
-				} else {
-					value = converter.write(value, key);
-				}
-
-				key = encodeURIComponent(String(key));
-				key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
-				key = key.replace(/[\(\)]/g, escape);
-
-				return (document.cookie = [
-					key, '=', value,
-					attributes.expires && '; expires=' + attributes.expires.toUTCString(), // use expires attribute, max-age is not supported by IE
-					attributes.path    && '; path=' + attributes.path,
-					attributes.domain  && '; domain=' + attributes.domain,
-					attributes.secure ? '; secure' : ''
-				].join(''));
-			}
-
-			// Read
-
-			if (!key) {
-				result = {};
-			}
-
-			// To prevent the for loop in the first place assign an empty array
-			// in case there are no cookies at all. Also prevents odd result when
-			// calling "get()"
-			var cookies = document.cookie ? document.cookie.split('; ') : [];
-			var rdecode = /(%[0-9A-Z]{2})+/g;
-			var i = 0;
-
-			for (; i < cookies.length; i++) {
-				var parts = cookies[i].split('=');
-				var name = parts[0].replace(rdecode, decodeURIComponent);
-				var cookie = parts.slice(1).join('=');
-
-				if (cookie.charAt(0) === '"') {
-					cookie = cookie.slice(1, -1);
-				}
-
-				try {
-					cookie = converter.read ?
-						converter.read(cookie, name) : converter(cookie, name) ||
-						cookie.replace(rdecode, decodeURIComponent);
-
-					if (this.json) {
-						try {
-							cookie = JSON.parse(cookie);
-						} catch (e) {}
-					}
-
-					if (key === name) {
-						result = cookie;
-						break;
-					}
-
-					if (!key) {
-						result[name] = cookie;
-					}
-				} catch (e) {}
-			}
-
-			return result;
-		}
-
-		api.set = api;
-		api.get = function (key) {
-			return api(key);
-		};
-		api.getJSON = function () {
-			return api.apply({
-				json: true
-			}, [].slice.call(arguments));
-		};
-		api.defaults = {};
-
-		api.remove = function (key, attributes) {
-			api(key, '', extend(attributes, {
-				expires: -1
-			}));
-		};
-
-		api.withConverter = init;
-
-		return api;
-	}
-
-	return init(function () {});
-}));
+export default Cookies;

@@ -1,9 +1,8 @@
-define([
-    'knockout',
-    'underscore',
-    'cytoscape',
-    'cytoscape-elk'
-], function(ko, _, cytoscape, elk) {
+import ko from 'knockout';
+import _ from 'underscore';
+import cytoscape from 'cytoscape';
+import elk from 'cytoscape-elk';
+
     cytoscape.use(elk);
     ko.bindingHandlers.cytoscape = {
         init: function(element, valueAccessor) {
@@ -25,5 +24,6 @@ define([
             }
         },
     };
-    return ko.bindingHandlers.cytoscape;
-});
+ko.bindingHandlers.cytoscape.init = ko.bindingHandlers.cytoscape.init.bind(ko.bindingHandlers.cytoscape);
+
+export default ko.bindingHandlers.cytoscape;

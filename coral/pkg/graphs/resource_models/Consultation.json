@@ -2213,8 +2213,7 @@
                     "nodegroup_id": "e26ffc04-fb16-11ee-b5d2-0242ac190006",
                     "sortorder": null,
                     "visible": true
-                }
-                ,
+                },
                 {
                     "active": true,
                     "cardid": "e8e923c2-a79f-4e50-9f69-f959033a49e0",
@@ -27287,110 +27286,152 @@
                         },
                         "options": [
                             {
-                                "text": { "en": "Z. Rarity" },
+                                "text": {
+                                    "en": "Z. Rarity"
+                                },
                                 "selected": false,
                                 "id": "3f45cd02-102f-4ba5-94d6-a55478a57241"
-                              },
-                              {
-                                "text": { "en": "Y. Social, cultural or economic importance" },
+                            },
+                            {
+                                "text": {
+                                    "en": "Y. Social, cultural or economic importance"
+                                },
                                 "selected": false,
                                 "id": "3f45cd02-102f-4ba5-b1b7-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "X. Local Interest" },
+                            },
+                            {
+                                "text": {
+                                    "en": "X. Local Interest"
+                                },
                                 "selected": false,
                                 "id": "3f45cd02-102f-4b60-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "W. Northern Ireland / International interest" },
+                            },
+                            {
+                                "text": {
+                                    "en": "W. Northern Ireland / International interest"
+                                },
                                 "selected": false,
                                 "id": "3f45cd02-d2f6-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "V. Authorship" },
+                            },
+                            {
+                                "text": {
+                                    "en": "V. Authorship"
+                                },
                                 "selected": false,
                                 "id": "e261478a-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "U. Historic Associations" },
+                            },
+                            {
+                                "text": {
+                                    "en": "U. Historic Associations"
+                                },
                                 "selected": false,
                                 "id": "4a14cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "T. Historic Importance" },
+                            },
+                            {
+                                "text": {
+                                    "en": "T. Historic Importance"
+                                },
                                 "selected": false,
                                 "id": "5555cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "S. Authenticity" },
+                            },
+                            {
+                                "text": {
+                                    "en": "S. Authenticity"
+                                },
                                 "selected": false,
                                 "id": "349fcd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "R. Age" },
+                            },
+                            {
+                                "text": {
+                                    "en": "R. Age"
+                                },
                                 "selected": false,
                                 "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "K. Group value" },
+                            },
+                            {
+                                "text": {
+                                    "en": "K. Group value"
+                                },
                                 "selected": false,
                                 "id": "7241cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "J. Setting" },
+                            },
+                            {
+                                "text": {
+                                    "en": "J. Setting"
+                                },
                                 "selected": false,
                                 "id": "78a5cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "I. Quality and survival of Interior" },
+                            },
+                            {
+                                "text": {
+                                    "en": "I. Quality and survival of Interior"
+                                },
                                 "selected": false,
                                 "id": "b1b7cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "H-. Alterations detracting from building" },
+                            },
+                            {
+                                "text": {
+                                    "en": "H-. Alterations detracting from building"
+                                },
                                 "selected": false,
                                 "id": "4b60cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "H+. Alterations enhancing the building" },
+                            },
+                            {
+                                "text": {
+                                    "en": "H+. Alterations enhancing the building"
+                                },
                                 "selected": false,
                                 "id": "d2f6cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "G. Innovatory Qualities" },
+                            },
+                            {
+                                "text": {
+                                    "en": "G. Innovatory Qualities"
+                                },
                                 "selected": false,
                                 "id": "9999cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "F. Structural System" },
+                            },
+                            {
+                                "text": {
+                                    "en": "F. Structural System"
+                                },
                                 "selected": false,
                                 "id": "5678cd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "E. Spatial Organisation" },
+                            },
+                            {
+                                "text": {
+                                    "en": "E. Spatial Organisation"
+                                },
                                 "selected": false,
                                 "id": "abcdcd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "D. Plan Form" },
+                            },
+                            {
+                                "text": {
+                                    "en": "D. Plan Form"
+                                },
                                 "selected": false,
                                 "id": "32fbcd02-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "C. Ornamentation" },
+                            },
+                            {
+                                "text": {
+                                    "en": "C. Ornamentation"
+                                },
                                 "selected": false,
                                 "id": "3f456666-102f-4ba5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "B. Proportion" },
+                            },
+                            {
+                                "text": {
+                                    "en": "B. Proportion"
+                                },
                                 "selected": false,
                                 "id": "3f45cd03-4ba5-5ca5-94d6-99dd3522fa23"
-                              },
-                              {
-                                "text": { "en": "A. Style" },
+                            },
+                            {
+                                "text": {
+                                    "en": "A. Style"
+                                },
                                 "selected": false,
                                 "id": "3f45cd02-102f-4ba5-94d6-99dd3522fa23"
-                              }
+                            }
                         ],
                         "rdmCollection": null
                     },
@@ -28658,7 +28699,7 @@
                                 "text": {
                                     "en": "LA07 - Newry, Mourne and Down District Council"
                                 }
-                            },  
+                            },
                             {
                                 "id": "61b1e8b1-8bc1-4bfc-a7c6-13f554f6f239",
                                 "selected": false,
@@ -28693,7 +28734,7 @@
                                 "text": {
                                     "en": "LA02 - Mid and East Antrim Borough Council"
                                 }
-                            },                          
+                            },
                             {
                                 "id": "c1fda31a-5fcc-45f4-b73c-75db4555284b",
                                 "selected": false,
@@ -33962,7 +34003,7 @@
                 "sortorder": 0,
                 "sourcebranchpublication_id": null
             },
-            "slug": null,
+            "slug": "consultation",
             "subtitle": {
                 "en": "Used to record activities relating to the provision of advice with regards to planning applications which may affect the historic environment."
             },

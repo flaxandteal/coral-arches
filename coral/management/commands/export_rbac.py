@@ -30,8 +30,8 @@ from arches.app.utils.permission_backend import get_sets_for_user
 from arches.app.search.elasticsearch_dsl_builder import Bool, Nested, Terms
 from arches.app.search.mappings import RESOURCES_INDEX
 
-from arches_orm.models import Group, Person
-from arches_orm.adapter import context_free
+from alizarin_django.models import Group, Person
+from alizarin_django.adapter import context_free
 from coral import settings
 
 logging.basicConfig()

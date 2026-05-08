@@ -1,13 +1,12 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'templates/views/components/reports/scenes/protection.htm',
-    'bindings/datatable',
-    'views/components/reports/scenes/map'
-], function(_, ko, arches, reportUtils, protectionReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/protection', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import protectionReportTemplate from 'templates/views/components/reports/scenes/protection.htm';
+import datatable from 'bindings/datatable';
+import map from 'views/components/reports/scenes/map';
+
+export default ko.components.register('views/components/reports/scenes/protection', {
         viewModel: function(params) {
             const self = this;
             Object.assign(self, reportUtils);
@@ -190,4 +189,3 @@ define([
         },
         template: protectionReportTemplate
     });
-});

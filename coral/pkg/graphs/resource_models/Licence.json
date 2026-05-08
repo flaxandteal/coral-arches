@@ -5029,50 +5029,50 @@
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
                     "rangenode_id": "477e4950-7044-11ef-831e-0242ac120006"
                 },
-               {
-                   "description": null,
-                   "domainnode_id": "6397b05c-c443-11ee-94bf-0242ac180006",
-                   "edgeid": "c7167b13-eacf-4bfa-834d-aa894affa7cf",
-                   "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                   "name": null,
-                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115_finishes",
-                   "rangenode_id": "1938e0ac-703d-11ef-934d-0242ac120006"
-               },
-               {
-                   "description": null,
-                   "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
-                   "edgeid": "18b3da89-ac65-4223-9332-aed5c2501a42",
-                   "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                   "name": null,
-                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
-                   "rangenode_id": "87bdb8d8-3927-11ef-ab34-0242ac140006"
-               },
-               {
-                   "description": null,
-                   "domainnode_id": "56364572-3928-11ef-b242-0242ac140006",
-                   "edgeid": "8be79bbf-3f9a-45e8-8c0d-53eb2764a928",
-                   "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                   "name": null,
-                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                   "rangenode_id": "976e49fe-3928-11ef-ab34-0242ac140006"
-               },
-               {
-                   "description": null,
-                   "domainnode_id": "87bdb8d8-3927-11ef-ab34-0242ac140006",
-                   "edgeid": "b6eadbf5-4ae4-4466-a2ec-f28d23816398",
-                   "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                   "name": null,
-                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                   "rangenode_id": "56364572-3928-11ef-b242-0242ac140006"
-               },
-               {
-                   "description": null,
-                   "domainnode_id": "87bdb8d8-3927-11ef-ab34-0242ac140006",
-                   "edgeid": "ff9d2989-1ca5-4f15-9cc9-4e45c76f1909",
-                   "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
-                   "name": null,
-                   "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P165i_is_incorporated_in",
-                   "rangenode_id": "21319570-3928-11ef-b242-0242ac140006"
+                {
+                    "description": null,
+                    "domainnode_id": "6397b05c-c443-11ee-94bf-0242ac180006",
+                    "edgeid": "c7167b13-eacf-4bfa-834d-aa894affa7cf",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115_finishes",
+                    "rangenode_id": "1938e0ac-703d-11ef-934d-0242ac120006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "957cf8ec-48b1-11ee-abd1-0242ac140007",
+                    "edgeid": "18b3da89-ac65-4223-9332-aed5c2501a42",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
+                    "rangenode_id": "87bdb8d8-3927-11ef-ab34-0242ac140006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "56364572-3928-11ef-b242-0242ac140006",
+                    "edgeid": "8be79bbf-3f9a-45e8-8c0d-53eb2764a928",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "976e49fe-3928-11ef-ab34-0242ac140006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "87bdb8d8-3927-11ef-ab34-0242ac140006",
+                    "edgeid": "b6eadbf5-4ae4-4466-a2ec-f28d23816398",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "56364572-3928-11ef-b242-0242ac140006"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "87bdb8d8-3927-11ef-ab34-0242ac140006",
+                    "edgeid": "ff9d2989-1ca5-4f15-9cc9-4e45c76f1909",
+                    "graph_id": "cc5da227-24e7-4088-bb83-a564c4331efd",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P165i_is_incorporated_in",
+                    "rangenode_id": "21319570-3928-11ef-b242-0242ac140006"
                 },
                 {
                     "description": null,
@@ -14432,7 +14432,7 @@
                 "sortorder": 0,
                 "sourcebranchpublication_id": null
             },
-            "slug": null,
+            "slug": "licence",
             "subtitle": {
                 "en": "Designed to support fields required to manage the creation of Licences, including their dates, communications and people involved"
             },

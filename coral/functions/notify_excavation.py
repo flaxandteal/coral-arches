@@ -1,5 +1,5 @@
 from arches.app.functions.base import BaseFunction
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 from arches.app.models.models import EditLog 
 from django.db.models import F
 from coral.functions.notifications.notification_base_strategy import NotificationStrategy
@@ -157,7 +157,7 @@ class CurDDecisionStrategy(NotificationStrategy):
 
 class ReportStrategy(NotificationStrategy):
     def send_notification(self):
-        from arches_orm.models import Group
+        from alizarin_django.models import Group
         with admin():
             is_admin = False
             is_cur_d = False

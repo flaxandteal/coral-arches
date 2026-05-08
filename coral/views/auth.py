@@ -38,7 +38,7 @@ from coral.utils.forms import CoralUserCreationForm
 from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 from coral.models.models import RegistrationLink
 from django_otp import user_has_device
 from django_otp.plugins.otp_totp.models import TOTPDevice
@@ -382,7 +382,7 @@ class LoginView(View):
 
 
 def _person_decrypt(person):
-    from arches_orm.models import Person
+    from alizarin_django.models import Person
 
     if not person:
         raise (Exception(("User can only be signed up by linking to a pre-known Person.")))

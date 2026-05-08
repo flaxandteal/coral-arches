@@ -35,13 +35,9 @@ DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'coral.settings')
 django.setup()
 
-def create_app():
-    from arches_orm.graphql._asgi import app
-    from arches_orm.graphql import auth
-    auth.ALLOW_ANONYMOUS = True
-    return app
+from django.core.asgi import get_asgi_application
 
-application = create_app()
+application = get_asgi_application()
 
 from arches.app.models.system_settings import settings
 settings.update_from_db()

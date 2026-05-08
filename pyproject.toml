@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=77", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coral-arches"
+version = "8.0.0"
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+requires-python = ">=3.11"
+description = "HED CORAL - Heritage Data Management built on Arches"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Django",
+    "Framework :: Django :: 5.2",
+]
+dependencies = [
+    "arches>=8.1.0,<8.2.0",
+    "arches_controlled_lists @ git+https://github.com/archesproject/arches-controlled-lists.git@dev/1.1.x",
+    "cachetools",
+    "django-recaptcha>=4.0.0",
+    "django-hosts>=6.0",
+    "django-pgtrigger>=4.11",
+    "django-storages>=1.14",
+    "boto3>=1.24.70",
+    "django-storages[google]",
+    "google-auth",
+    "google-cloud-storage",
+    "colorama>=0.4.5",
+    "tabulate",
+    "asciitree",
+    "starlette>=0.40.0",
+    "typing_extensions",
+    "starlette-graphene3",
+    "starlette-context",
+    "uvicorn>=0.15.0",
+    "graphene_file_upload",
+    "aiodataloader<0.3.0",
+    "python-multipart",
+    "semantic_version",
+    "python-docx",
+    "django-csp>=4.0",
+    "pika",
+    "django-authorization",
+    "casbin-django-orm-adapter",
+    "websockets",
+    "geojson",
+    "PyYAML",
+    "anyio>=4.4.0",
+    "requests>=2.32.2",
+    "sqlparse>=0.5.0",
+    "zipp>=3.19.1",
+    "PyMuPDF",
+    "django-two-factor-auth",
+    "qrcode",
+]
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar>=5.2.0",
+    "django-debug-toolbar-force",
+]
+
+[tool.setuptools.packages.find]
+exclude = ["*.tests", "*.tests.*", "tests.*", "tests"]
+namespaces = false

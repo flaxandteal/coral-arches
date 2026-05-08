@@ -1,7 +1,8 @@
 import logging
+import os
 import pika
 import uuid
-import time
+import time as _time
 import threading
 from typing import Iterable
 from contextlib import contextmanager
@@ -13,6 +14,7 @@ logging.disable(logging.NOTSET)
 logging.getLogger("casbin_adapter").setLevel(logging.ERROR)
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.contenttypes.models import ContentType
 from arches.app.models.system_settings import settings, SystemSettings
 from django.contrib.auth.models import User, Permission, Group as DjangoGroup
 import logging
@@ -28,15 +30,20 @@ from arches.app.models.models import *
 from arches.app.models.models import ResourceInstance, MapLayer, Plugin, Node
 from arches.app.models.graph import Graph
 from arches.app.models.resource import Resource
-from arches.app.search.elasticsearch_dsl_builder import Query
+from arches.app.search.elasticsearch_dsl_builder import Query, Bool, Terms, Nested
+from arches.app.search.search import SearchEngine
 from arches.app.search.mappings import RESOURCES_INDEX
-from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup
-from arches.app.permissions.arches_standard import get_nodegroups_by_perm_for_user_or_group, assign_perm, ArchesStandardPermissionFramework
-from arches.app.models.resource import UnindexedError
-from arches_orm.models import Person, Organization, Set, LogicalSet, Group, ArchesPlugin
-from arches_orm.view_models import ResourceInstanceViewModel
-from arches_orm.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
-from arches_orm.adapter import context_free
+from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup, assign_perm
+from arches.app.permissions.arches_permission_base import get_nodegroups_by_perm_for_user_or_group, ArchesPermissionBase
+try:
+    from arches.app.models.resource import UnindexedError
+except ImportError:
+    class UnindexedError(Exception):
+        pass
+from alizarin_django.models import Person, Organization, Set, LogicalSet, Group, ArchesPlugin
+from alizarin_django.view_models import ResourceInstanceViewModel
+from alizarin_django.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
+from alizarin_django.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from django.core.cache import cache
 
@@ -60,7 +67,9 @@ RESOURCE_TO_GRAPH_REMAPPINGS = {v[0]: GRAPH_REMAPPINGS[k] for k, v in REMAPPINGS
 class NoSubjectError(RuntimeError):
     pass
 
-class CasbinPermissionFramework(ArchesStandardPermissionFramework):
+class CasbinPermissionFramework(ArchesPermissionBase):
+    is_exclusive = False  # DRAFT v8 port: matches ArchesDefaultAllowPermissionFramework. Set True if Casbin policy is exclusive (default-deny).
+
     @property
     def _enforcer(self):
         from dauthz.core import enforcer
@@ -692,11 +701,14 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         return DjangoGroup.objects.filter(pk__in=groups)
 
     @context_free
-    def get_restricted_users(self, resource):
+    def get_restricted_users(self, resource, *, all_users=None):
         """
         Takes a resource instance and identifies which users are explicitly restricted from
         reading, editing, deleting, or accessing it.
 
+        v8 callers pass `all_users` as a precomputed iterable; the casbin
+        implementation iterates `get_users_with_perms` directly, so the kwarg
+        is accepted for compatibility and ignored.
         """
 
         logger.debug(f"Getting restricted users: {resource}")
@@ -772,7 +784,9 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
 
     @context_free
-    def get_restricted_instances(self, user, search_engine=None, allresources=False):
+    def get_restricted_instances(self, user, search_engine=None, allresources=False, resources=None):
+        # `resources` accepted for v8 compatibility; casbin returns the full
+        # restricted set regardless of caller-supplied filter.
         logger.debug(f"Getting restricted instances: {user}")
 
         print('get_restricted_instances called')
@@ -935,11 +949,13 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
 
     @context_free
-    def user_can_read_resource(self, user, resourceid=None):
+    def user_can_read_resource(self, user, resourceid=None, *, resource=None):
         """
         Requires that a user be able to read an instance and read a single nodegroup of a resource
 
         """
+        if resourceid in (None, "") and resource is not None:
+            resourceid = getattr(resource, "resourceinstanceid", None) or getattr(resource, "pk", None)
         if user.is_authenticated:
             if user.is_superuser:
                 return True
@@ -979,11 +995,13 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         return list(allowed)
 
     @context_free
-    def user_can_edit_resource(self, user, resourceid=None):
+    def user_can_edit_resource(self, user, resourceid=None, *, resource=None):
         """
         Requires that a user be able to edit an instance and delete a single nodegroup of a resource
 
         """
+        if resourceid in (None, "") and resource is not None:
+            resourceid = getattr(resource, "resourceinstanceid", None) or getattr(resource, "pk", None)
         if user.is_authenticated:
             if user.is_superuser:
                 return True
@@ -1004,11 +1022,13 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
 
 
     @context_free
-    def user_can_delete_resource(self, user, resourceid=None):
+    def user_can_delete_resource(self, user, resourceid=None, *, resource=None):
         """
         Requires that a user be permitted to delete an instance
 
         """
+        if resourceid in (None, "") and resource is not None:
+            resourceid = getattr(resource, "resourceinstanceid", None) or getattr(resource, "pk", None)
         if user.is_authenticated:
             if user.is_superuser:
                 return True
@@ -1099,6 +1119,176 @@ class CasbinPermissionFramework(ArchesStandardPermissionFramework):
         roles = self._enforcer.get_implicit_roles_for_user(subj)
         return any(f"dgn:{name}" in roles for name in names)
 
+    # ============================================================
+    # DRAFT v8 PORT — copied verbatim from arches.app.permissions.arches_default_allow
+    # in Arches 8.1.0. Each of these is an abstract method on the v8 ArchesPermissionBase
+    # that didn't exist (or wasn't abstract) in the v7 base CasbinPermissionFramework was
+    # written against. Review each one and decide whether the default-allow body is
+    # correct for casbin, or whether casbin needs its own logic.
+    #
+    # Likely casbin-specific candidates (don't merge default-allow as-is):
+    #   - get_filtered_instances:  uses is_exclusive — confirm casbin's policy semantics
+    #   - has_group_perm:          delegates to self.get_perms — verify casbin's get_perms
+    #                              honours guardian/casbin policy correctly
+    #   - get_index_values / get_permission_search_filter / get_search_ui_permissions:
+    #                              all read 'permissions.users_without_*_perm' from the
+    #                              ES index. If casbin doesn't write those keys at index
+    #                              time, search filtering will silently no-op.
+    # Probably safe to keep as default-allow:
+    #   - get_default_settable_permissions, get_permission_inclusions, update_mappings
+    # ============================================================
+
+    def get_default_settable_permissions(self) -> list[str]:
+        """
+        Get default settable permissions for a resource instance that will be displayed in the permissions designer.
+        """
+        return [
+            "view_resourceinstance",
+            "change_resourceinstance",
+            "delete_resourceinstance",
+            "no_access_to_resourceinstance",
+        ]
+
+    def get_filtered_instances(
+        self,
+        user: User,
+        search_engine: SearchEngine | None = None,
+        allresources: bool = False,
+        resources: list[str] | None = None,
+    ):
+        allowed_instances = self.get_restricted_instances(
+            user, search_engine, allresources, resources
+        )
+
+        return (self.__class__.is_exclusive, allowed_instances)
+
+    def get_index_values(
+        self, resource: Resource, *, all_users: Iterable[User] = User.objects.none()
+    ):
+        restrictions = self.get_restricted_users(resource, all_users=all_users)
+        permissions = {}
+        permissions["users_without_read_perm"] = list(restrictions["cannot_read"])
+        permissions["users_without_edit_perm"] = list(restrictions["cannot_write"])
+        permissions["users_without_delete_perm"] = list(restrictions["cannot_delete"])
+        permissions["users_with_no_access"] = list(restrictions["no_access"])
+        return permissions
+
+    def get_permission_inclusions(self) -> list:
+        return [
+            "permissions.users_without_read_perm",
+            "permissions.users_without_edit_perm",
+            "permissions.users_without_delete_perm",
+            "permissions.users_with_no_access",
+            "permissions.principal_user",
+        ]
+
+    def get_permission_search_filter(self, user: User) -> Bool:
+        has_access = Bool()
+        terms = Terms(field="permissions.users_with_no_access", terms=[str(user.id)])
+        nested_term_filter = Nested(path="permissions", query=terms)
+        has_access.must_not(nested_term_filter)
+        return has_access
+
+    def get_search_ui_permissions(
+        self, user: User, search_result: dict, groups
+    ) -> dict:
+        """
+        Determintes whether or not read/edit buttons show up in search results.
+        """
+        result = {}
+        if user.is_superuser:
+            result["can_read"] = True
+            result["can_edit"] = True
+            result["is_principal"] = (
+                "permissions" in search_result["_source"]
+                and "principal_user" in search_result["_source"]["permissions"]
+                and user.id in search_result["_source"]["permissions"]["principal_user"]
+            )
+            return result
+
+        user_read_permissions = self.get_resource_types_by_perm(
+            user,
+            [
+                "models.write_nodegroup",
+                "models.delete_nodegroup",
+                "models.read_nodegroup",
+            ],
+        )
+
+        user_can_read = len(user_read_permissions) > 0
+
+        deny_read_exists = (
+            "permissions" in search_result["_source"]
+            and "users_without_read_perm" in search_result["_source"]["permissions"]
+        )
+        deny_edit_exists = (
+            "permissions" in search_result["_source"]
+            and "users_without_edit_perm" in search_result["_source"]["permissions"]
+        )
+
+        if not deny_read_exists or not deny_edit_exists:
+            logger.warning(
+                """
+                PROBLEM WITH INDEX - it appears that your index permissions are malformed.
+                This can happen when switching permission frameworks and may cause search
+                results to appear incorrectly or with invalid permissions.  You can correct it by reindexing arches.
+                """
+            )
+
+        result["can_read"] = (
+            deny_read_exists
+            and (
+                user.id
+                not in search_result["_source"]["permissions"][
+                    "users_without_read_perm"
+                ]
+            )
+        ) and user_can_read
+
+        user_can_edit = len(self.get_editable_resource_types(user)) > 0
+
+        result["can_edit"] = (
+            deny_edit_exists
+            and (
+                user.id
+                not in search_result["_source"]["permissions"][
+                    "users_without_edit_perm"
+                ]
+            )
+        ) and user_can_edit
+
+        result["is_principal"] = (
+            "permissions" in search_result["_source"]
+            and "principal_user" in search_result["_source"]["permissions"]
+            and user.id in search_result["_source"]["permissions"]["principal_user"]
+        )
+        return result
+
+    def has_group_perm(self, group, perm, obj):
+        explicitly_defined_perms = self.get_perms(group, obj)
+        if len(explicitly_defined_perms) > 0:
+            if "no_access_to_nodegroup" in explicitly_defined_perms:
+                return False
+            else:
+                return perm in explicitly_defined_perms
+        else:
+            for permission in group.permissions.all():
+                if perm in permission.codename:
+                    return True
+            return False
+
+    def update_mappings(self):
+        mappings = {}
+        mappings["users_without_read_perm"] = {"type": "integer"}
+        mappings["users_without_edit_perm"] = {"type": "integer"}
+        mappings["users_without_delete_perm"] = {"type": "integer"}
+        mappings["users_with_no_access"] = {"type": "integer"}
+        return mappings
+
+    # ============================================================
+    # END DRAFT v8 PORT
+    # ============================================================
+
 _PROCESS_KEY = str(uuid.uuid4())
 
 class CasbinTrigger:
@@ -1179,7 +1369,7 @@ class CasbinTrigger:
 
     @context_free
     def request_reload(self):
-        timestamp = time.time()
+        timestamp = _time.time()
         with self.connect() as channel:
             channel.basic_publish(
                 exchange=settings.CASBIN_RELOAD_QUEUE,

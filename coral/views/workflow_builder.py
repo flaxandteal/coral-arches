@@ -142,7 +142,7 @@ class WorkflowBuilderCardOverride(api.Card):
             ):
                 displayname = _("System Settings")
 
-            tiles = resource_instance.tilemodel_set.order_by("sortorder").filter(
+            tiles = resource_instance.tiles.order_by("sortorder").filter(
                 nodegroup__in=nodegroups
             )
             provisionaltiles = []
