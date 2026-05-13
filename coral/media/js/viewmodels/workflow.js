@@ -20,6 +20,12 @@ define([
         this.id = ko.observable();
         this.workflowName = ko.observable();
 
+        self._workflowHistoryCache = null;
+
+        self.invalidateWorkflowHistoryCache = function() {
+            self._workflowHistoryCache = null;
+        };
+
         this.hiddenWorkflowButtons = ko.observableArray();
 
         this.pan = ko.observable();
@@ -399,29 +405,37 @@ define([
             history.pushState(null, '', newRelativePathQuery);
         };
 
-        this.getWorkflowHistoryData = async function(key) {
-            const workflowid = self.id();
-            const response = await fetch(arches.urls.workflow_history + workflowid, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    "X-CSRFToken": Cookies.get('csrftoken')
-                },
-            });
-            if (response.ok) {
-                const data = await response.json(); 
-                return data;
-            } else {
-                self.alert(
-                    new AlertViewModel(
-                        'ep-alert-red',
-                        response.statusText,
-                        response.responseText,
-                        null,
-                        function(){},
-                    )
-                );
+        this.getWorkflowHistoryData = function(key) {
+            if (self._workflowHistoryCache) {
+                return self._workflowHistoryCache;
             }
+            const workflowid = self.id();
+            const request = (async function() {
+                const response = await fetch(arches.urls.workflow_history + workflowid, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        "X-CSRFToken": Cookies.get('csrftoken')
+                    },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    return data;
+                } else {
+                    self._workflowHistoryCache = null;
+                    self.alert(
+                        new AlertViewModel(
+                            'ep-alert-red',
+                            response.statusText,
+                            response.responseText,
+                            null,
+                            function(){},
+                        )
+                    );
+                }
+            })();
+            self._workflowHistoryCache = request;
+            return request;
         };
 
         this.getWorkflowMetaData = function(pluginJsonFileName) {
@@ -437,6 +451,7 @@ define([
         };
 
         this.reverseWorkflowTransactions = function() {
+            self.invalidateWorkflowHistoryCache();
             config.loading(true);
             $.ajax({
                 type: "POST",
@@ -448,6 +463,7 @@ define([
         };
 
         this.markWorkflowComplete = function() {
+            self.invalidateWorkflowHistoryCache();
             const workflowid = self.id();
             const workflowHistory = {
                 workflowid,
@@ -501,8 +517,10 @@ define([
 
         this.back = async function(){
             var activeStep = self.activeStep();
-            
-            await self.updateStepPath();
+
+            if (activeStep && activeStep.stepInjectionConfig) {
+                await self.updateStepPath();
+            }
 
             if (activeStep && activeStep._index > 0) {
                 self.activeStep(self.steps()[activeStep._index - 1]);
@@ -510,7 +528,9 @@ define([
         };
 
         this.updateStep = async function(step){
-            await self.updateStepPath();
+            if (step.stepInjectionConfig) {
+                await self.updateStepPath();
+            }
             self.activeStep(self.steps()[step._index]);
         };
 
