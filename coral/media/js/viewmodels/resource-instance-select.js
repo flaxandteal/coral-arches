@@ -59,6 +59,7 @@ var ResourceInstanceSelectViewModel = function(params) {
     this.searchString = params.searchString || ko.unwrap(params.node?.config.searchString);
     this.showEdit = ko.observable(params.showEdit ?? false);
     this.disableDelete = ko.observable(params.disableDelete ?? false);
+    this.resourceLookup = {};
 
     if (!!params.configForm) {
         this.allowInstanceCreation = false;
@@ -227,7 +228,7 @@ var ResourceInstanceSelectViewModel = function(params) {
                         if(!val.iconClass) {
                             Object.defineProperty(val, 'iconClass', {value: ko.observable()});
                         }
-                        resourceUtils.lookupResourceInstanceData(ko.unwrap(val.resourceId))
+                        resourceUtils.lookupResourceInstanceData(ko.unwrap(val.resourceId), self.resourceLookup)
                             .then(function(resourceInstance) {
                                 if (resourceInstance) {
                                     names.push(resourceInstance["_source"].displayname);
@@ -536,7 +537,7 @@ var ResourceInstanceSelectViewModel = function(params) {
                         resourceId = ko.unwrap(val.resourceId);
                     }
 
-                    var resourceInstance = resourceUtils.lookupResourceInstanceData(resourceId).then(
+                    var resourceInstance = resourceUtils.lookupResourceInstanceData(resourceId, self.resourceLookup).then(
                         function(resourceInstance) { return resourceInstance; }
                     );
 

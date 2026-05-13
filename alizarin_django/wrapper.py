@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import uuid
 from typing import (
     Any,
@@ -185,29 +186,65 @@ def _wrap_value(value: Any, path: str) -> Any:
     or {"en": "foo"}) and returns a StringViewModel — a `str` subclass — so the
     value works in both string contexts (.encode(), concatenation) and i18n
     contexts (.lang("fr")).
+
+    Also detects resource-instance reference shape (a dict containing
+    "resourceId") and returns a ResourceInstanceViewModel so callers iterating
+    over related-resource lists can use `.id` to get the referenced UUID.
     """
     if value is None:
         return None
-    if isinstance(value, dict) and _is_i18n_string_shape(value):
-        from .view_models.string import StringViewModel
+    if isinstance(value, dict):
+        if _is_resource_instance_reference(value):
+            from .view_models.resources import ResourceInstanceViewModel
 
-        return StringViewModel(value)
+            return ResourceInstanceViewModel(
+                resource_id=value.get("resourceId"),
+                graph_id=value.get("ontologyProperty"),
+                display_value=str(value.get("resourceId") or ""),
+            )
+        if _is_i18n_string_shape(value):
+            from .view_models.string import StringViewModel
+
+            return StringViewModel(value)
     if isinstance(value, (dict, list)):
         return _SemanticNode(value, path)
     return value
 
 
+_LANG_CODE_RE = re.compile(r"^[a-z]{2,3}(-[A-Za-z0-9]{2,8})?$")
+
+
 def _is_i18n_string_shape(data: dict) -> bool:
-    """Recognize Arches localized-string shapes."""
+    """Recognize Arches localized-string shapes.
+
+    A dict is treated as an i18n string only when every key looks like a
+    language code (e.g. "en", "en-US") and every value is either a string or
+    a dict with a "value" key. This avoids collapsing non-i18n dicts that
+    happen to have a string in their first value (notably resource-instance
+    reference dicts like {"resourceId": "<uuid>"}) into a StringViewModel.
+    """
     if not data:
         return False
+    for key in data.keys():
+        if not (isinstance(key, str) and _LANG_CODE_RE.match(key)):
+            return False
     for v in data.values():
         if isinstance(v, str):
-            return True
+            continue
         if isinstance(v, dict) and "value" in v:
-            return True
+            continue
         return False
-    return False
+    return True
+
+
+def _is_resource_instance_reference(data: dict) -> bool:
+    """Recognize the resource-instance reference shape produced by alizarin.
+
+    Tile data for resource-instance / resource-instance-list datatypes serializes
+    each reference as a dict containing at least a `resourceId` field (alongside
+    optional `ontologyProperty`, `inverseOntologyProperty`, `resourceXresourceId`).
+    """
+    return "resourceId" in data
 
 
 class QueryBuilder:
