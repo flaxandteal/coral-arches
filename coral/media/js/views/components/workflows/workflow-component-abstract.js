@@ -88,12 +88,12 @@ function TileBasedComponent() {
         });
     };
 
-    this.initialize = function() {
+    this.initialize = async function() {
         if (self.componentData.tilesManaged === "one") {
             self.tile.subscribe(function(tile) {
                 if (!self.tiles()) {
                     self.tiles([tile]);
-                } 
+                }
             });
 
             self.tiles.subscribe(function(tiles) {
@@ -109,135 +109,142 @@ function TileBasedComponent() {
             });
         }
 
-        $.getJSON(( arches.urls.api_card + this.getCardResourceIdOrGraphId() ), function(data) {
-            var handlers = {
-                'after-update': [],
-                'tile-reset': []
-            };
-            var displayname = ko.observable(data.displayname);
-            var createLookup = function(list, idKey) {
-                return _.reduce(list, function(lookup, item) {
-                    lookup[item[idKey]] = item;
-                    return lookup;
-                }, {});
-            };
-
-            self.reviewer = data.userisreviewer;
-            self.provisionalTileViewModel = new ProvisionalTileViewModel({
-                tile: self.tile,
-                reviewer: data.userisreviewer
-            });
-
-            var graphModel = new GraphModel({
-                data: {
-                    nodes: data.nodes,
-                    nodegroups: data.nodegroups,
-                    edges: []
-                },
-                datatypes: data.datatypes
-            });
-
-            self.graphModel = graphModel;
-
-            self.topCards = _.filter(data.cards, function(card) {
-                var nodegroup = _.find(data.nodegroups, function(group) {
-                    return group.nodegroupid === card.nodegroup_id;
-                });
-                return !nodegroup || !nodegroup.parentnodegroup_id;
-            }).map(function(card) {
-                self.componentData.parameters.nodegroupid = self.componentData.parameters.nodegroupid || card.nodegroup_id;
-                return new CardViewModel({
-                    card: card,
-                    graphModel: graphModel,
-                    tile: null,
-                    resourceId: self.resourceId,
-                    displayname: displayname,
-                    handlers: handlers,
-                    cards: data.cards,
-                    tiles: data.tiles,
-                    provisionalTileViewModel: self.provisionalTileViewModel,
-                    cardwidgets: data.cardwidgets,
-                    userisreviewer: data.userisreviewer,
-                    loading: self.loading
-                });
-            });
-
-            var applyHiddenNodes = function(card) {
-                var hiddenNodes = self.componentData.parameters.hiddenNodes;
-                if (!card || !hiddenNodes) return;
-                var widgets = ko.unwrap(card.widgets);
-                if (!widgets) return;
-                widgets.forEach(function(widget) {
-                    if (hiddenNodes.indexOf(widget.node_id()) > -1) {
-                        widget.visible(false);
-                    }
-                });
-            };
-
-            self.card.subscribe(function(card) {
-                applyHiddenNodes(card);
-                /* Re-apply when widgets array mutates — parseNodes runs again
-                   on a throttled nodes subscription and can push widgets in
-                   after the initial hide pass. */
-                if (card && ko.isObservable(card.widgets)) {
-                    card.widgets.subscribe(function() {
-                        applyHiddenNodes(card);
-                    });
-                }
-            });
-
-            self.topCards.forEach(function(topCard) {
-                topCard.topCards = self.topCards;
-            });
-
-            self.widgetLookup = createLookup(
-                data.widgets,
-                'widgetid'
-            );
-            self.cardComponentLookup = createLookup(
-                data['card_components'],
-                'componentid'
-            );
-            self.nodeLookup = createLookup(
-                graphModel.get('nodes')(),
-                'nodeid'
-            );
-            self.on = function(eventName, handler) {
-                if (handlers[eventName]) {
-                    handlers[eventName].push(handler);
-                }
-            };
-
-            self.flattenTree(self.topCards, []).forEach(function(item) {
-                if (item.constructor.name === 'CardViewModel' && item.nodegroupid === ko.unwrap(self.componentData.parameters.nodegroupid)) {
-                    if (ko.unwrap(self.componentData.parameters.parenttileid) && item.parent && ko.unwrap(self.componentData.parameters.parenttileid) !== item.parent.tileid) {
-                        return;
-                    }
-                    if (self.customCardLabel) item.model.name(ko.unwrap(self.customCardLabel));
-                    self.card(item);
-                    if (ko.unwrap(self.componentData.parameters.tileid)) {
-                        ko.unwrap(item.tiles).forEach(function(tile) {
-                            if (tile.tileid === ko.unwrap(self.componentData.parameters.tileid)) {
-                                self.tile(tile);
-                            }
-                        });
-                    } else if (ko.unwrap(self.componentData.parameters.createTile) !== false) {
-                        self.tile(item.getNewTile());
-                    }
-                }
-            });
-
-            self.componentData.parameters.card = self.card();
-            self.componentData.parameters.tile = self.tile();
-            self.componentData.parameters.loading = self.loading;
-            self.componentData.parameters.provisionalTileViewModel = self.provisionalTileViewModel;
-            self.componentData.parameters.reviewer = data.userisreviewer;
-            self.componentData.parameters.dirty = self.dirty;
-            self.componentData.parameters.save = self.save;
-            self.componentData.parameters.tiles = self.tiles;
-
-            self.loading(false);
+        var data = await new Promise(function(resolve) {
+            $.getJSON(arches.urls.api_card + self.getCardResourceIdOrGraphId(), resolve);
         });
+
+        var handlers = {
+            'after-update': [],
+            'tile-reset': []
+        };
+        var displayname = ko.observable(data.displayname);
+        var createLookup = function(list, idKey) {
+            return _.reduce(list, function(lookup, item) {
+                lookup[item[idKey]] = item;
+                return lookup;
+            }, {});
+        };
+
+        self.reviewer = data.userisreviewer;
+        self.provisionalTileViewModel = new ProvisionalTileViewModel({
+            tile: self.tile,
+            reviewer: data.userisreviewer
+        });
+
+        var graphModel = new GraphModel({
+            data: {
+                nodes: data.nodes,
+                nodegroups: data.nodegroups,
+                edges: []
+            },
+            datatypes: data.datatypes
+        });
+
+        self.graphModel = graphModel;
+
+        self.topCards = _.filter(data.cards, function(card) {
+            var nodegroup = _.find(data.nodegroups, function(group) {
+                return group.nodegroupid === card.nodegroup_id;
+            });
+            return !nodegroup || !nodegroup.parentnodegroup_id;
+        }).map(function(card) {
+            self.componentData.parameters.nodegroupid = self.componentData.parameters.nodegroupid || card.nodegroup_id;
+            return new CardViewModel({
+                card: card,
+                graphModel: graphModel,
+                tile: null,
+                resourceId: self.resourceId,
+                displayname: displayname,
+                handlers: handlers,
+                cards: data.cards,
+                tiles: data.tiles,
+                provisionalTileViewModel: self.provisionalTileViewModel,
+                cardwidgets: data.cardwidgets,
+                userisreviewer: data.userisreviewer,
+                loading: self.loading
+            });
+        });
+
+        var applyHiddenNodes = function(card) {
+            var hiddenNodes = self.componentData.parameters.hiddenNodes;
+            if (!card || !hiddenNodes) return;
+            var widgets = ko.unwrap(card.widgets);
+            if (!widgets) return;
+            widgets.forEach(function(widget) {
+                if (hiddenNodes.indexOf(widget.node_id()) > -1) {
+                    widget.visible(false);
+                }
+            });
+        };
+
+        var widgetsSub = null;
+        self.card.subscribe(function(card) {
+            if (widgetsSub) {
+                widgetsSub.dispose();
+                widgetsSub = null;
+            }
+            applyHiddenNodes(card);
+            /* Re-apply when widgets array mutates — parseNodes runs again
+               on a throttled nodes subscription and can push widgets in
+               after the initial hide pass. */
+            if (card && ko.isObservable(card.widgets)) {
+                widgetsSub = card.widgets.subscribe(function() {
+                    applyHiddenNodes(card);
+                });
+            }
+        });
+
+        self.topCards.forEach(function(topCard) {
+            topCard.topCards = self.topCards;
+        });
+
+        self.widgetLookup = createLookup(
+            data.widgets,
+            'widgetid'
+        );
+        self.cardComponentLookup = createLookup(
+            data['card_components'],
+            'componentid'
+        );
+        self.nodeLookup = createLookup(
+            graphModel.get('nodes')(),
+            'nodeid'
+        );
+        self.on = function(eventName, handler) {
+            if (handlers[eventName]) {
+                handlers[eventName].push(handler);
+            }
+        };
+
+        self.flattenTree(self.topCards, []).forEach(function(item) {
+            if (item.constructor.name === 'CardViewModel' && item.nodegroupid === ko.unwrap(self.componentData.parameters.nodegroupid)) {
+                if (ko.unwrap(self.componentData.parameters.parenttileid) && item.parent && ko.unwrap(self.componentData.parameters.parenttileid) !== item.parent.tileid) {
+                    return;
+                }
+                if (self.customCardLabel) item.model.name(ko.unwrap(self.customCardLabel));
+                self.card(item);
+                if (ko.unwrap(self.componentData.parameters.tileid)) {
+                    ko.unwrap(item.tiles).forEach(function(tile) {
+                        if (tile.tileid === ko.unwrap(self.componentData.parameters.tileid)) {
+                            self.tile(tile);
+                        }
+                    });
+                } else if (ko.unwrap(self.componentData.parameters.createTile) !== false) {
+                    self.tile(item.getNewTile());
+                }
+            }
+        });
+
+        self.componentData.parameters.card = self.card();
+        self.componentData.parameters.tile = self.tile();
+        self.componentData.parameters.loading = self.loading;
+        self.componentData.parameters.provisionalTileViewModel = self.provisionalTileViewModel;
+        self.componentData.parameters.reviewer = data.userisreviewer;
+        self.componentData.parameters.dirty = self.dirty;
+        self.componentData.parameters.save = self.save;
+        self.componentData.parameters.tiles = self.tiles;
+
+        self.loading(false);
     };
 
     this.onSaveSuccess = function(savedData) {  // LEGACY -- DO NOT USE
@@ -297,88 +304,87 @@ function AbstractCardAdapter() {  // CURRENTLY IN DEVLEOPMENT, USE AT YOUR OWN R
     var self = this;
     this.cardinality = ko.observable();
 
-    this.initialize = function() {
+    this.initialize = async function() {
         self.loading(true);
 
-        $.getJSON(( arches.urls.api_nodegroup(self.componentData.parameters['nodegroupid']) ), function(nodegroupData) {
-            self.cardinality(nodegroupData.cardinality);
+        var nodegroupId = self.componentData.parameters['nodegroupid'];
+        var resourceInstanceId = self.componentData.parameters['resourceid'];
 
-            const resourceInstanceDataPromise = new Promise(function(resolve, _reject) {
-                const resourceInstanceId = self.componentData.parameters['resourceid'];
-
-                if (resourceInstanceId) {
-                    $.getJSON(
-                        ( arches.urls.resource + `/${resourceInstanceId}/tiles?nodeid=${self.componentData.parameters['nodegroupid']}`),
-                        function(data) {
-                            resolve(data);
-                        }
-                    );
-                }
-                else {
-                    resolve(null);
-                }
-            });
-
-            resourceInstanceDataPromise.then( function(data) {
-                if (self.cardinality() === '1') {
-                    if (data && data['tiles'].length) {
-                        self.componentData.parameters['tileid'] = data['tiles'][0]['tileid'];
-                        self.complete(true);
-                    }
-                    TileBasedComponent.apply(self);
-                }
-                else if (self.cardinality() === 'n') {
-                    MultipleTileBasedComponent.apply(self);
-                    if (data && data['tiles'].length) {
-                        self.complete(true);
-                    }
-
-                    self.card.subscribe(function(card) {
-                        if (!card.selected()) {
-                            card.selected(card.tiles().length);
-                        }
-                    });
-
-                    self.onSaveSuccess = function(savedData) {  // LEGACY -- DO NOT USE
-                        if (!(savedData instanceof Array)) { savedData = [savedData]; }
-
-                        let previouslySavedData = self.savedData();
-                        if (!previouslySavedData) {
-                            previouslySavedData = [];
-                        }
-
-                        self.savedData(
-                            previouslySavedData.concat(
-                                savedData.map(function(savedDatum) {
-                                    return {
-                                        tileData: savedDatum._tileData(),
-                                        tileId: savedDatum.tileid,
-                                        nodegroupId: savedDatum.nodegroup_id,
-                                        resourceInstanceId: savedDatum.resourceinstance_id,
-                                    };
-                                })
-                            )
-                        );
-
-                        self.value(self.savedData());
-
-                        self.componentData.parameters.dirty(false);
-                        self.card().getNewTile(true);  // `true` is forceNewTile
-                        self.card().selected(true);
-                        self.dirty(false);
-                        self.saving(false);
-                        self.complete(true);
-
-                        /**
-                         * TODO: this is a hack to get around previous data autofilling forms when creating a new tile in cardinality n cards
-                         * It should be removed when we're able to figure out how to prevent that logic
-                         * */ 
-                        window.location.reload();  
-                    };
-                }
-            });
-
+        var nodegroupDataPromise = new Promise(function(resolve) {
+            $.getJSON(arches.urls.api_nodegroup(nodegroupId), resolve);
         });
+
+        var resourceInstanceDataPromise = new Promise(function(resolve) {
+            if (resourceInstanceId) {
+                $.getJSON(
+                    arches.urls.resource + `/${resourceInstanceId}/tiles?nodeid=${nodegroupId}`,
+                    resolve
+                );
+            }
+            else {
+                resolve(null);
+            }
+        });
+
+        var [nodegroupData, data] = await Promise.all([nodegroupDataPromise, resourceInstanceDataPromise]);
+
+        self.cardinality(nodegroupData.cardinality);
+
+        if (self.cardinality() === '1') {
+            if (data && data['tiles'].length) {
+                self.componentData.parameters['tileid'] = data['tiles'][0]['tileid'];
+                self.complete(true);
+            }
+            TileBasedComponent.apply(self);
+        }
+        else if (self.cardinality() === 'n') {
+            MultipleTileBasedComponent.apply(self);
+            if (data && data['tiles'].length) {
+                self.complete(true);
+            }
+
+            self.card.subscribe(function(card) {
+                if (!card.selected()) {
+                    card.selected(card.tiles().length);
+                }
+            });
+
+            self.onSaveSuccess = function(savedData) {  // LEGACY -- DO NOT USE
+                if (!(savedData instanceof Array)) { savedData = [savedData]; }
+
+                let previouslySavedData = self.savedData();
+                if (!previouslySavedData) {
+                    previouslySavedData = [];
+                }
+
+                self.savedData(
+                    previouslySavedData.concat(
+                        savedData.map(function(savedDatum) {
+                            return {
+                                tileData: savedDatum._tileData(),
+                                tileId: savedDatum.tileid,
+                                nodegroupId: savedDatum.nodegroup_id,
+                                resourceInstanceId: savedDatum.resourceinstance_id,
+                            };
+                        })
+                    )
+                );
+
+                self.value(self.savedData());
+
+                self.componentData.parameters.dirty(false);
+                self.card().selected(true);
+                self.dirty(false);
+                self.saving(false);
+                self.complete(true);
+
+                /* Reset local state so the next add starts on a clean tile
+                   without prefilled values (replaces previous full-page reload). */
+                self.tile(self.card().getNewTile(true));
+                self.previouslyPersistedComponentData = undefined;
+                self.tiles([]);
+            };
+        }
     };
 
     this.initialize();
@@ -394,12 +400,12 @@ function MultipleTileBasedComponent(title) {
 
     this.itemName = ko.observable(ko.unwrap(title) ? ko.unwrap(title) : 'Items');
 
-    this.hasDirtyTiles = ko.computed(function() {
+    this.hasDirtyTiles = ko.pureComputed(function() {
         var tiles = self.tiles();
         var hasDirtyTiles = false;
 
-        if (!tiles) { 
-            hasDirtyTiles = true; 
+        if (!tiles) {
+            hasDirtyTiles = true;
         }
         else if (self.savedData() ) {
             if (self.savedData().length !== tiles.length) {
@@ -440,8 +446,12 @@ function MultipleTileBasedComponent(title) {
                 }
             });
         }
-        self.multiTileUpdated(hasDirtyTiles);
         return hasDirtyTiles;
+    });
+
+    self.multiTileUpdated(this.hasDirtyTiles());
+    this.hasDirtyTiles.subscribe(function(val) {
+        self.multiTileUpdated(val);
     });
 
     this.initialize = function() {
@@ -753,7 +763,7 @@ function WorkflowComponentAbstract(params) {
     });
 
     this.multiTileUpdated = ko.observable();
-    this.hasUnsavedData = ko.computed(function() {
+    this.hasUnsavedData = ko.pureComputed(function() {
         var hasUnsavedData = false;
 
         if (self.componentData.tilesManaged === "many") {
