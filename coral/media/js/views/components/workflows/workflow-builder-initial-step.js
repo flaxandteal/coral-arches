@@ -13,7 +13,7 @@ function viewModel(params) {
 
   _.extend(self, params.form);
   self.parentTiles = ko.observable(params.form.savedData()?.parentTiles || {});
-  self.tile().dirty.subscribe(function (val) {
+  const dirtySubscription = self.tile().dirty.subscribe(function (val) {
     self.dirty(val);
   });
   self.params = params
@@ -36,13 +36,25 @@ function viewModel(params) {
     });
   };
 
+  let widgetsSubscription;
   const card = params.form.card();
   if (card) {
     applyWidgetCustomisations(card.widgets());
     if (ko.isObservable(card.widgets)) {
-      card.widgets.subscribe(applyWidgetCustomisations);
+      widgetsSubscription = card.widgets.subscribe(applyWidgetCustomisations);
     }
   }
+
+  let disposed = false;
+  this.dispose = function () {
+    if (disposed) return;
+    disposed = true;
+    dirtySubscription.dispose();
+    if (widgetsSubscription) {
+      widgetsSubscription.dispose();
+    }
+  };
+
   params.form.save = async () => {
     const txnId = uuid.generate();
     try {
