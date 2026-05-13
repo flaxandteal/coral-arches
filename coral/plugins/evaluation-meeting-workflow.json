@@ -12,18 +12,31 @@
         "name": "start-meeting-step",
         "title": "Start Meeting",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Consultation ID", "Meeting ID"]],
+                  "labels": [
+                    [
+                      "Consultation ID",
+                      "Meeting ID"
+                    ]
+                  ],
                   "prefix": "EVM",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11",
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
                   ],
                   "nodeOptions": {
                     "b37552be-9527-11ea-9213-f875a44e0e11": {
@@ -71,7 +84,12 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Listing Query", "LQ"]],
+                  "labels": [
+                    [
+                      "Listing Query",
+                      "LQ"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4254be30-03b3-11ef-b0e2-0242ac150003",
@@ -83,7 +101,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Monument or Area", "HB"]],
+                  "labels": [
+                    [
+                      "Monument or Area",
+                      "HB"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
@@ -129,7 +152,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Date Consulted", "Meeting Date"]],
+                  "labels": [
+                    [
+                      "Date Consulted",
+                      "Meeting Date"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -146,8 +174,14 @@
               {
                 "parameters": {
                   "labels": [
-                    ["Architect", "Architect Present"],
-                    ["Historian", "Historian Present"]
+                    [
+                      "Architect",
+                      "Architect Present"
+                    ],
+                    [
+                      "Historian",
+                      "Historian Present"
+                    ]
                   ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
@@ -176,7 +210,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Application Reason", "Reason"]],
+                  "labels": [
+                    [
+                      "Application Reason",
+                      "Reason"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
@@ -203,23 +242,58 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
+                  "hiddenNodes": [
+                    "c9e13300-386b-11ef-8caf-0242ac120006"
+                  ],
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
                   "tileid": "['start-meeting-step']['building'][0]['resourceid']['tileId']",
                   "semanticName": "Show Location Nodes",
                   "title": "Heritage Asset",
                   "showNodes": [
-                    ["Building Name", "location_data.addresses.building_name.building_name_value"],
-                    ["Street", "location_data.addresses.street.street_value"],
-                    ["Town or City", "location_data.addresses.town_or_city.town_or_city_value"],
-                    ["County", "location_data.addresses.county.county_value"],
-                    ["Postcode", "location_data.addresses.postcode.postcode_value"],
-                    ["Wards and District", "wards_and_district_type"],
-                    ["Council", "location_data.council"],
-                    ["Townland", "location_data.addresses.townlands.townland"],
-                    ["Barony", "location_data.localities_administrative_areas.area_names.area_name"],
-                    ["Irish Grid Reference (TM65)", "location_data.national_grid_references.irish_grid_reference_tm65_"],
-                    ["Location Description", "location_data.location_descriptions.location_description"]
+                    [
+                      "Building Name",
+                      "location_data.addresses.building_name.building_name_value"
+                    ],
+                    [
+                      "Street",
+                      "location_data.addresses.street.street_value"
+                    ],
+                    [
+                      "Town or City",
+                      "location_data.addresses.town_or_city.town_or_city_value"
+                    ],
+                    [
+                      "County",
+                      "location_data.addresses.county.county_value"
+                    ],
+                    [
+                      "Postcode",
+                      "location_data.addresses.postcode.postcode_value"
+                    ],
+                    [
+                      "Wards and District",
+                      "wards_and_district_type"
+                    ],
+                    [
+                      "Council",
+                      "location_data.council"
+                    ],
+                    [
+                      "Townland",
+                      "location_data.addresses.townlands.townland"
+                    ],
+                    [
+                      "Barony",
+                      "location_data.localities_administrative_areas.area_names.area_name"
+                    ],
+                    [
+                      "Irish Grid Reference (TM65)",
+                      "location_data.national_grid_references.irish_grid_reference_tm65_"
+                    ],
+                    [
+                      "Location Description",
+                      "location_data.location_descriptions.location_description"
+                    ]
                   ]
                 },
                 "tilesManaged": "one",
@@ -241,7 +315,12 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Monument or Area", "HB"]],
+                  "labels": [
+                    [
+                      "Monument or Area",
+                      "HB"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
@@ -260,8 +339,8 @@
                   "semanticName": "Evaluation",
                   "nodeOptions": {
                     "5ffdc00e-03ad-11ef-948f-0242ac150003": {
-                      "config":{
-                        "maxDate":"today",
+                      "config": {
+                        "maxDate": "today",
                         "label": "Sign Off Date"
                       }
                     }

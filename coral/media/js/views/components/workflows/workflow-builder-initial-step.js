@@ -18,16 +18,31 @@ function viewModel(params) {
   });
   self.params = params
   this.labels = params.labels || [];
-  params.form
-    .card()
-    ?.widgets()
-    .forEach((widget) => {
+
+  const hiddenNodes =
+    params.hiddenNodes ?? params.form.componentData?.parameters?.hiddenNodes ?? [];
+
+  const applyWidgetCustomisations = (widgets) => {
+    if (!widgets) return;
+    widgets.forEach((widget) => {
+      if (hiddenNodes.indexOf(widget.node_id()) > -1) {
+        widget.visible(false);
+      }
       this.labels?.forEach(([prevLabel, newLabel]) => {
         if (widget.label() === prevLabel) {
           widget.label(newLabel);
         }
       });
     });
+  };
+
+  const card = params.form.card();
+  if (card) {
+    applyWidgetCustomisations(card.widgets());
+    if (ko.isObservable(card.widgets)) {
+      card.widgets.subscribe(applyWidgetCustomisations);
+    }
+  }
   params.form.save = async () => {
     const txnId = uuid.generate();
     try {

@@ -12,7 +12,9 @@
         "name": "start-step",
         "title": "Start",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -22,7 +24,13 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
                     "b37552bd-9527-11ea-97f4-f875a44e0e11",
-                    "b37552bf-9527-11ea-9c87-f875a44e0e11"
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
                   ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
                   "nodeOptions": {
@@ -38,7 +46,10 @@
                     }
                   ],
                   "labels": [
-                    ["Consultation ID", "Report ID"]
+                    [
+                      "Consultation ID",
+                      "Report ID"
+                    ]
                   ]
                 },
                 "tilesManaged": "one",
@@ -59,14 +70,19 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Monument or Area", "SMR Number(s)"]],
+                  "labels": [
+                    [
+                      "Monument or Area",
+                      "SMR Number(s)"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
                   "node": "58a2b98f-a255-11e9-9a30-00224800b26d",
                   "searchString": "/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=16472&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22158e1ed2-3aae-11ef-a2d0-0242ac120003%22%3A%7B%22op%22%3A%22not_null%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%221de9abf0-3aae-11ef-91fd-0242ac120003%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22250002fe-3aae-11ef-91fd-0242ac120003%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%222c2d02fc-3aae-11ef-91fd-0242ac120003%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%7D%5D",
                   "nodeOptions": {
-                    "58a2b98f-a255-11e9-9a30-00224800b26d" : {
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
                       "allowInstanceCreation": false
                     }
                   }
@@ -77,7 +93,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Land Use Classification", "Land Use"]],
+                  "labels": [
+                    [
+                      "Land Use Classification",
+                      "Land Use"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -91,53 +112,53 @@
                   "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
-                    "config":{
-                      "maxDate":"today"
-                    }
+                      "config": {
+                        "maxDate": "today"
+                      }
                     },
                     "083e9df0-ca61-11ee-afca-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "083eed32-ca61-11ee-afca-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "083ef872-ca61-11ee-afca-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "1cf746f6-1853-11eb-a9df-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "62463959-3ee4-11eb-9488-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "62463948-3ee4-11eb-9c38-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "c4413ac8-69b6-11ee-908a-0242ac120002": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "ac905d54-ca65-11ee-b83c-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "caf5bff5-a3d7-11e9-8c7e-00224800b26d": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -148,7 +169,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Date Consulted", "Date of Visit"]],
+                  "labels": [
+                    [
+                      "Date Consulted",
+                      "Date of Visit"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -158,53 +184,53 @@
                   "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
-                    "config":{
-                      "maxDate":"today"
-                    }
+                      "config": {
+                        "maxDate": "today"
+                      }
                     },
                     "083e9df0-ca61-11ee-afca-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "083eed32-ca61-11ee-afca-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "083ef872-ca61-11ee-afca-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "1cf746f6-1853-11eb-a9df-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "62463959-3ee4-11eb-9488-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "62463948-3ee4-11eb-9c38-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "c4413ac8-69b6-11ee-908a-0242ac120002": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "ac905d54-ca65-11ee-b83c-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "caf5bff5-a3d7-11e9-8c7e-00224800b26d": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -217,7 +243,9 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["a1daff8e-0c52-11ef-a9bf-0242ac140006"],
+                  "hiddenNodes": [
+                    "a1daff8e-0c52-11ef-a9bf-0242ac140006"
+                  ],
                   "nodegroupid": "eabbfd96-0c4f-11ef-a9bf-0242ac140006",
                   "semanticName": "Composite Score"
                 },
@@ -241,7 +269,10 @@
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "e26ffc04-fb16-11ee-b5d2-0242ac190006",
                   "labels": [
-                    ["Description", "Recommendations"]
+                    [
+                      "Description",
+                      "Recommendations"
+                    ]
                   ]
                 },
                 "tilesManaged": "one",
@@ -250,7 +281,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Application Reason", "Notes"]],
+                  "labels": [
+                    [
+                      "Application Reason",
+                      "Notes"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "82f8a163-951a-11ea-b58e-f875a44e0e11",
@@ -300,7 +336,9 @@
                 "parameters": {
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["c9e13300-386b-11ef-8caf-0242ac120006"],
+                  "hiddenNodes": [
+                    "c9e13300-386b-11ef-8caf-0242ac120006"
+                  ],
                   "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Irish Grid Reference"
@@ -399,12 +437,14 @@
                         "b23161e0-070c-466f-a4de-6330fa8dc5a3",
                         "c78e1dca-7e14-4d17-8a88-60aa4e1640b5"
                       ],
-                      "conflictNode": ["42ec3232-fb26-11ee-838d-0242ac190006"],
+                      "conflictNode": [
+                        "42ec3232-fb26-11ee-838d-0242ac190006"
+                      ],
                       "conflictAllowBlank": false
                     },
                     "24d00d86-fb27-11ee-b5d2-0242ac190006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }

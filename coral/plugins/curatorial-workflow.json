@@ -12,7 +12,9 @@
         "name": "start-step",
         "title": "Start",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -22,7 +24,13 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
                     "b37552bd-9527-11ea-97f4-f875a44e0e11",
-                    "b37552bf-9527-11ea-9c87-f875a44e0e11"
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
                   ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
                   "nodeOptions": {
@@ -56,7 +64,12 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Monument or Area", "SMR Number"]],
+                  "labels": [
+                    [
+                      "Monument or Area",
+                      "SMR Number"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "58a2b98f-a255-11e9-9a30-00224800b26d",
@@ -146,7 +159,7 @@
                       "allowInstanceCreation": false
                     },
                     "936fdbc8-24cf-11ef-97ad-0242ac130006": {
-                    "config": {
+                      "config": {
                         "label": "CWT Area Manager(s)"
                       }
                     },
@@ -155,7 +168,7 @@
                         "label": "Archaeologist(s)"
                       }
                     },
-                     "53388daa-24d1-11ef-a3a4-0242ac130006": {
+                    "53388daa-24d1-11ef-a3a4-0242ac130006": {
                       "config": {
                         "label": "CWT Area Supervisor(s)"
                       }
@@ -184,12 +197,12 @@
                   "nodegroupid": "75d950a6-24d6-11ef-bb69-0242ac130006",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodeOptions": {
-                    "08064f9c-24d7-11ef-a3a4-0242ac130006":{
+                    "08064f9c-24d7-11ef-a3a4-0242ac130006": {
                       "node": {
                         "isrequired": true
                       }
                     },
-                    "bcf243ee-24d6-11ef-a3a4-0242ac130006":{
+                    "bcf243ee-24d6-11ef-a3a4-0242ac130006": {
                       "node": {
                         "isrequired": true
                       }
@@ -264,13 +277,15 @@
                         "5b8d8413-ee01-465f-9774-e5b247cd205a",
                         "6ba1b471-6faf-4f96-9179-94b2a1662512"
                       ],
-                      "conflictNode": ["998d6728-fb26-11ee-838d-0242ac190006"],
+                      "conflictNode": [
+                        "998d6728-fb26-11ee-838d-0242ac190006"
+                      ],
                       "conflictAllowBlank": false,
                       "allowInstanceCreation": false
                     },
                     "24d00d86-fb27-11ee-b5d2-0242ac190006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }

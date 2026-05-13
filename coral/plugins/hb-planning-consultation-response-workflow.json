@@ -19,8 +19,14 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11",
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
                   ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
                   "semanticName": "System Reference Numbers",
@@ -59,9 +65,14 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
                   "semanticName": "Assignment",
-                  "hiddenNodes": ["6b8f5866-2f0d-11ef-b37c-0242ac140006"],
+                  "hiddenNodes": [
+                    "6b8f5866-2f0d-11ef-b37c-0242ac140006"
+                  ],
                   "prefilledNodes": [
-                    ["6b8f5866-2f0d-11ef-b37c-0242ac140006", "18b628c9-149f-4c37-bc27-e8e0d714a037"]
+                    [
+                      "6b8f5866-2f0d-11ef-b37c-0242ac140006",
+                      "18b628c9-149f-4c37-bc27-e8e0d714a037"
+                    ]
                   ],
                   "nodeOptions": {
                     "fbdd2304-cfda-11ee-8cc1-0242ac180006": {
@@ -158,9 +169,14 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
                   "semanticName": "Response Action",
-                  "hiddenNodes": ["cd77b29c-2ef6-11ef-b1c4-0242ac140006"],
+                  "hiddenNodes": [
+                    "cd77b29c-2ef6-11ef-b1c4-0242ac140006"
+                  ],
                   "prefilledNodes": [
-                    ["cd77b29c-2ef6-11ef-b1c4-0242ac140006", "70fddadb-8172-4029-b8fd-87f9101a3a2d"]
+                    [
+                      "cd77b29c-2ef6-11ef-b1c4-0242ac140006",
+                      "70fddadb-8172-4029-b8fd-87f9101a3a2d"
+                    ]
                   ]
                 },
                 "tilesManaged": "one",
@@ -189,7 +205,10 @@
                   "resourceModelDigitalObjectNodeGroupId": "31e5ece6-5989-11ef-af2d-0242ac120006",
                   "resourceModelDigitalObjectNodeId": "5d401df8-5989-11ef-9d18-0242ac120006",
                   "prefilledNodes": [
-                    ["983d73b0-5989-11ef-af2d-0242ac120006", "b66e5025-7695-43b3-b931-e67f1222ec43"]
+                    [
+                      "983d73b0-5989-11ef-af2d-0242ac120006",
+                      "b66e5025-7695-43b3-b931-e67f1222ec43"
+                    ]
                   ]
                 },
                 "tilesManaged": "one",

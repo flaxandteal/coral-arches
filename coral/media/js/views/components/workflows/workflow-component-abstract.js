@@ -162,12 +162,26 @@ function TileBasedComponent() {
                 });
             });
 
-            self.card.subscribe(function(card){
-                if (ko.unwrap(card.widgets) && self.componentData.parameters.hiddenNodes) {
-                    card.widgets().forEach(function(widget){
-                        if (self.componentData.parameters.hiddenNodes.indexOf(widget.node_id()) > -1) {
-                            widget.visible(false);
-                        }
+            var applyHiddenNodes = function(card) {
+                var hiddenNodes = self.componentData.parameters.hiddenNodes;
+                if (!card || !hiddenNodes) return;
+                var widgets = ko.unwrap(card.widgets);
+                if (!widgets) return;
+                widgets.forEach(function(widget) {
+                    if (hiddenNodes.indexOf(widget.node_id()) > -1) {
+                        widget.visible(false);
+                    }
+                });
+            };
+
+            self.card.subscribe(function(card) {
+                applyHiddenNodes(card);
+                /* Re-apply when widgets array mutates — parseNodes runs again
+                   on a throttled nodes subscription and can push widgets in
+                   after the initial hide pass. */
+                if (card && ko.isObservable(card.widgets)) {
+                    card.widgets.subscribe(function() {
+                        applyHiddenNodes(card);
                     });
                 }
             });
