@@ -11,21 +11,26 @@ logger = logging.getLogger(__name__)
 
 
 class OpenWorkflow(View):
-    workflow_step_data = {}
-    workflow_component_data = {}
-    step_mapping = []
-    step_config = []
-    grouped_tiles = {}
-    nodes = {}
-    nodegroups = {}
     setup_workflows = {
         "licensing-workflow": "setup_licensing_workflow",
         "hb-planning-consultation-response-workflow": "setup_planning_consultation",
         "hm-planning-consultation-response-workflow": "setup_planning_consultation",
         "heritage-asset-designation-workflow": "setup_designation",
     }
-    workflow_slug = None
-    resource_id = None
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.workflow_step_data = {}
+        self.workflow_component_data = {}
+        self.step_mapping = []
+        self.step_config = []
+        self.grouped_tiles = {}
+        self.nodes = {}
+        self.nodegroups = {}
+        self.additional_saved_values = {}
+        self.open_config = {}
+        self.workflow_slug = None
+        self.resource_id = None
 
     def get_plugin(self, plugin_slug):
         plugin = None
@@ -350,20 +355,6 @@ class OpenWorkflow(View):
         )
 
     def post(self, request):
-        # For some reason I need to reset the class defaults every time
-        # a request is sent. It will persist the data and add it onto the
-        # next workflow generation?
-        self.workflow_step_data = {}
-        self.workflow_component_data = {}
-        self.step_mapping = []
-        self.step_config = []
-        self.grouped_tiles = {}
-        self.additional_saved_values = {}
-        self.open_config = {}
-        self.nodes = {}
-        self.nodegroups = {}
-        self.resource_id = None
-
         data = json.loads(request.body.decode("utf-8"))
         step_config = data.get("stepConfig")
         self.resource_id = data.get("resourceId")
@@ -383,7 +374,7 @@ class OpenWorkflow(View):
         # Get all the resources tiles
 
         self.resource = self.get_resource(self.resource_id)
-        resource_tiles = Tile.objects.filter(resourceinstance=self.resource)
+        resource_tiles = Tile.objects.filter(resourceinstance=self.resource).prefetch_related('nodegroup', 'parenttile', 'parenttile__nodegroup', 'resourceinstance')
 
         # Loop through tiles and add them to the component data lookup
 
@@ -456,7 +447,6 @@ class OpenWorkflow(View):
                 # if the cardinality allows for multiple how do we
                 # decide which tile is the one that should be displayed
                 tile = tiles[0]
-                print('tile before into comp data: ', tile)
                 component_data = {
                     "nodegroupId": nodegroup_id,
                     "resourceInstanceId": self.resource_id,
