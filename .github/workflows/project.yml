@@ -162,14 +162,14 @@ jobs:
           --health-timeout 5s
           --health-retries 10
       db:
-        image: flaxandteal/arches_coral_postgres
+        image: ghcr.io/flaxandteal/arches-postgis:docker-8.1
         #volumes:
         #    - ${{ github.workspace }}/scripts/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
         ports:
           - '5432:5432'
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASS: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
           POSTGRES_MULTIPLE_EXTENSIONS: postgis,postgis_topology
           TZ: PST
@@ -205,8 +205,8 @@ jobs:
           ESHOST: "elasticsearch"
           ESPORT: "9200"
           CELERY_BROKER_URL: "amqp://rabbitmq"
-          DJANGO_MODE: "PROD"
-          DJANGO_DEBUG: "False"
+          DJANGO_MODE: "DEV"
+          DJANGO_DEBUG: "True"
           DOMAIN_NAMES: "localhost"
           PYTHONUNBUFFERED: "0"
           STATIC_URL: "/static/"
