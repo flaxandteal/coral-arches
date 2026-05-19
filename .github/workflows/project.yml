@@ -6,7 +6,7 @@ on:
       - '**'
   workflow_dispatch:
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:coral-7.6
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:docker-8.1.0-release
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:
