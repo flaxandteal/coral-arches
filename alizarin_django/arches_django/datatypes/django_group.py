@@ -27,4 +27,6 @@ class DjangoGroupViewModel(Group, ViewModel):
 
 class MissingDjangoGroupViewModel(Group, ViewModel):
     class Meta:
+        proxy = True
         app_label = "alizarin_django"
+        db_table = Group.objects.model._meta.db_table
