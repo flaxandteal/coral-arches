@@ -22,6 +22,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
+          path: ${{ env.ARCHES_PROJECT }}
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
@@ -55,9 +56,9 @@ jobs:
         id: build
         uses: docker/build-push-action@v5
         with:
-          context: ..
+          context: .
           push: true
-          file: docker/Dockerfile
+          file: ${{ env.ARCHES_PROJECT }}/docker/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
@@ -81,6 +82,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
+          path: ${{ env.ARCHES_PROJECT }}
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
@@ -115,7 +117,7 @@ jobs:
         with:
           context: .
           push: true
-          file: docker/Dockerfile.static
+          file: ${{ env.ARCHES_PROJECT }}/docker/Dockerfile.static
           network: host
           allow: network.host
           tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
@@ -138,7 +140,7 @@ jobs:
           cache-name: cache-model-db
         with:
           path: ~/coral-db.sql
-          key: db-${{ hashFiles('coral/pkg/**') }}
+          key: db-${{ hashFiles('coral/coral/pkg/**') }}
       - name: Extract image name
         id: extract_image_name
         run: |
@@ -232,6 +234,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
+          path: ${{ env.ARCHES_PROJECT }}
       # name: Build docker backend image
       # run: |
       #   docker build --build-arg VERSION=feature-ci --build-arg ARCHES_BASE=${{ env.ARCHES_BASE }} --build-arg ARCHES_PROJECT=${{ env.ARCHES_PROJECT }} -f Dockerfile.static . -t arches_${{ env.ARCHES_PROJECT }}_static
@@ -264,7 +267,7 @@ jobs:
         with:
           context: .
           push: true
-          file: docker/Dockerfile.static-py
+          file: ${{ env.ARCHES_PROJECT }}/docker/Dockerfile.static-py
           network: host
           allow: network.host
           tags: ${{ steps.meta.outputs.tags }}-${{ github.run_id }},${{ steps.meta.outputs.tags }}-commit-${{ github.sha }}
