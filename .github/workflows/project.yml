@@ -115,7 +115,7 @@ jobs:
         id: buildx
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ${{ env.ARCHES_PROJECT }}
           push: true
           file: ${{ env.ARCHES_PROJECT }}/docker/Dockerfile.static
           network: host
@@ -265,7 +265,7 @@ jobs:
         id: buildx
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ${{ env.ARCHES_PROJECT }}
           push: true
           file: ${{ env.ARCHES_PROJECT }}/docker/Dockerfile.static-py
           network: host
