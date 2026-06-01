@@ -59,6 +59,7 @@ dependencies = [
     "PyMuPDF",
     "django-two-factor-auth",
     "qrcode",
+    "alizarin",
 ]
 
 [dependency-groups]
