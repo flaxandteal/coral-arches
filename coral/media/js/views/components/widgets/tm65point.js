@@ -249,7 +249,7 @@ export default ko.components.register('tm65point', {
           Z: [4, 0]
         };
 
-        pre = this.tm65Val();
+        var pre = this.tm65Val();
         var gridLettersValueArray = Object.keys(gridSquare);
         if (this.isSelected() === true) {
           this.errorMessage('');
