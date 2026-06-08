@@ -60,10 +60,13 @@ endif
 
 .PHONY: rebuild-images
 rebuild-images: docker
+	@[ -e "../$(ARCHES_PROJECT)" ] || ln -s $(notdir $(CURDIR)) ../$(ARCHES_PROJECT)
 	$(DOCKER_COMPOSE_COMMAND) build
 
 .PHONY: build
 build: docker
+	# Ensure the parent directory has a symlink matching ARCHES_PROJECT for the Docker build context
+	@[ -e "../$(ARCHES_PROJECT)" ] || ln -s $(notdir $(CURDIR)) ../$(ARCHES_PROJECT)
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
 	if [ -z $(ARCHES_PROJECT)/media/node_modules/jquery-validation ]; then rm -rf $(ARCHES_PROJECT)/media/node_modules; fi
 	$(DOCKER_COMPOSE_COMMAND) stop

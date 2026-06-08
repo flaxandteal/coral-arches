@@ -190,7 +190,7 @@ class WorkflowBuilderCardOverride(api.Card):
                 widget
                 for widget in models.CardXNodeXWidget.objects.filter(
                     pk__in=[
-                        widget_dict["id"] for widget_dict in serialized_graph["widgets"]
+                        widget_dict["id"] for widget_dict in serialized_graph["cards_x_nodes_x_widgets"]
                     ]
                 )
             ]
@@ -201,13 +201,9 @@ class WorkflowBuilderCardOverride(api.Card):
                 .prefetch_related("cardxnodexwidget_set")
             )
             serialized_cards = JSONSerializer().serializeToPython(cards)
-            cardwidgets = [
-                widget
-                for widget in [
-                    card.cardxnodexwidget_set.order_by("sortorder").all()
-                    for card in cards
-                ]
-            ]
+            cardwidgets = []
+            for card in cards:
+                cardwidgets += card.cardxnodexwidget_set.order_by("sortorder").all()
 
         editable_nodegroup_ids = [
             str(nodegroup.pk) for nodegroup in editable_nodegroups
