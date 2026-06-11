@@ -189,12 +189,14 @@ export default ko.components.register('person-report', {
                 }));
             }
 
+            const personResourceId = self.report?.attributes?.resourceid || self.reportMetadata()?.resourceinstanceid;
+
             self.issueUserAccountSignupURL = function(){
                 return $.ajax({
                     url: arches.urls.root + 'person/signup-link',
                     context: this,
                     method: 'POST',
-                    data: { personId: self.reportMetadata()?.resourceinstanceid },
+                    data: { personId: personResourceId },
                     dataType: 'json'
                 })
                     .done(function(data) {
@@ -210,7 +212,7 @@ export default ko.components.register('person-report', {
                     url: arches.urls.root + 'person/signup-link',
                     context: this,
                     method: 'GET',
-                    data: { personId: self.reportMetadata()?.resourceinstanceid },
+                    data: { personId: personResourceId },
                     dataType: 'json'
                 })
                     .done(function(data) {
