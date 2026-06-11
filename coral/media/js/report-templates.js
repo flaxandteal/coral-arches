@@ -21,6 +21,28 @@ import 'views/components/reports/person';
 import 'views/components/reports/place';
 import 'views/components/reports/state-care-condition-survey';
 
+import 'views/components/reports/scenes/all';
+import 'views/components/reports/scenes/archive';
+import 'views/components/reports/scenes/assessments';
+import 'views/components/reports/scenes/audit';
+import 'views/components/reports/scenes/classifications';
+import 'views/components/reports/scenes/contact';
+import 'views/components/reports/scenes/copyright';
+import 'views/components/reports/scenes/default';
+import 'views/components/reports/scenes/description';
+import 'views/components/reports/scenes/django-group';
+import 'views/components/reports/scenes/enforcements';
+import 'views/components/reports/scenes/images';
+import 'views/components/reports/scenes/json';
+import 'views/components/reports/scenes/keyvalue';
+import 'views/components/reports/scenes/location';
+import 'views/components/reports/scenes/map';
+import 'views/components/reports/scenes/name';
+import 'views/components/reports/scenes/people';
+import 'views/components/reports/scenes/protection';
+import 'views/components/reports/scenes/resources';
+import 'views/components/reports/scenes/user-account';
+
 function removeTrailingCommaFromObject(string) {
     return string.replace(/,\s*}*$/, "}");
 }
