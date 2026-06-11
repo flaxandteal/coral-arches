@@ -20,7 +20,7 @@ const getRawNodeValue = (resource, ...args) => {
         testPaths = [args];
     }
 
-    for(path of testPaths){
+    for(const path of testPaths){
         let node = rootNode;
         for(let i = 0; i < path.length; ++i){
             standardizeNode(node);
@@ -53,7 +53,7 @@ const removedTiles = ko.observableArray();
 
 const checkNestedData = (resource, ...args) => {
     if(!resource) { return false; }
-    for (key of Object.keys(resource)){
+    for (const key of Object.keys(resource)){
         if(args.includes(key)){ continue; }
         const rawValue = getRawNodeValue(resource, key);
         if(!rawValue || (typeof (rawValue) !== 'object')) { continue; }
@@ -173,7 +173,7 @@ export default {
                 return;
             }
             const dictionary = {};
-            for(card of cards){
+            for(const card of cards){
                 dictionary[card.model.name()] = card;
             }
             standardizeNode(dictionary)
