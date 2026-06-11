@@ -49,7 +49,7 @@ function viewModel(params) {
 
         const regex = /\[.*\]/
         let returnArray = []
-        for (entry of entries) {
+        for (let entry of entries) {
             entry = entry[0] == "[" ? entry.slice(1) : entry
             entry = entry.replace("]]", "]")
             let match = entry.match(regex)
