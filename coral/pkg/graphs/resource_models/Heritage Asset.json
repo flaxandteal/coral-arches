@@ -11772,28 +11772,6 @@
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
-                    "card_id": "61db5a71-d293-4617-ba7f-8affa3a1849a",
-                    "config": {
-                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Reference Number Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "8d9c4a2b-b565-4040-a89b-3eee746acdf7",
-                    "label": {
-                        "en": "Reference Number Type"
-                    },
-                    "node_id": "2001a574-d711-11ee-9dd0-0242ac120006",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
                     "card_id": "c5cfa310-ff51-48cd-85ab-4f2a8e56b2c5",
                     "config": {
                         "defaultValue": null,
@@ -13095,28 +13073,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "247943ca-f089-4a5f-ae1a-cbae18436e15",
-                    "config": {
-                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Reference Number Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "a60e6339-d2d9-44a9-b26e-4bb5a0895fe2",
-                    "label": {
-                        "en": "Reference Number Metatype"
-                    },
-                    "node_id": "2001a6f0-d711-11ee-9dd0-0242ac120006",
-                    "sortorder": null,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
                     "card_id": "934dd001-f1df-4634-8420-c0d735099488",
                     "config": {
                         "defaultValue": "",
@@ -14103,35 +14059,6 @@
                     },
                     "node_id": "ce8a6282-0edb-11ef-a2cd-0242ac140006",
                     "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "61db5a71-d293-4617-ba7f-8affa3a1849a",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Reference Number",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%%"
-                    },
-                    "id": "c0e2cb11-a002-40fa-a880-3dfc7f22e972",
-                    "label": {
-                        "en": "Reference Number"
-                    },
-                    "node_id": "2001a33a-d711-11ee-9dd0-0242ac120006",
-                    "sortorder": null,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -39809,7 +39736,82 @@
                 "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Heritage Asset or Area will be a question of granularity. "
             },
             "template_id": "523a5a7f-006b-4caf-a801-a1621967a88b",
-            "version": ""
+            "version": "",
+            "_duplicate_cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "61db5a71-d293-4617-ba7f-8affa3a1849a",
+                    "config": {
+                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Reference Number Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "8d9c4a2b-b565-4040-a89b-3eee746acdf7",
+                    "label": {
+                        "en": "Reference Number Type"
+                    },
+                    "node_id": "2001a574-d711-11ee-9dd0-0242ac120006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "247943ca-f089-4a5f-ae1a-cbae18436e15",
+                    "config": {
+                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Reference Number Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "a60e6339-d2d9-44a9-b26e-4bb5a0895fe2",
+                    "label": {
+                        "en": "Reference Number Metatype"
+                    },
+                    "node_id": "2001a6f0-d711-11ee-9dd0-0242ac120006",
+                    "sortorder": null,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "61db5a71-d293-4617-ba7f-8affa3a1849a",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Reference Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "c0e2cb11-a002-40fa-a880-3dfc7f22e972",
+                    "label": {
+                        "en": "Reference Number"
+                    },
+                    "node_id": "2001a33a-d711-11ee-9dd0-0242ac120006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                }
+            ]
         }
     ],
     "metadata": {
