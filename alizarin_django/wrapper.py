@@ -634,6 +634,7 @@ class ResourceModel:
                 json.dumps(self._tree, default=str),
                 str(self.id),
                 str(self._graphid),
+                strict=False,
             )
             payload = (
                 json.loads(new_tiles_str)
