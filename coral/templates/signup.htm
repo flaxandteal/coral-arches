@@ -1,4 +1,4 @@
-{% extends "base.htm" %} {% load static %} {% load i18n %} {% block loading_mask %} {% endblock loading_mask %} {% block body %} {% load webpack_static from webpack_loader %}
+{% extends "base.htm" %} {% load static %} {% load i18n %} {% load render_bundle from webpack_loader %} {% block loading_mask %} {% endblock loading_mask %} {% block body %}
 
 <div id="container" class="cls-container arches-login">
 
@@ -144,5 +144,5 @@
 
 </div>
 
-<script type="module" src="{% webpack_static 'js/signup' %}"></script>
+{% render_bundle 'signup' 'js' %}
 {% endblock body %}
