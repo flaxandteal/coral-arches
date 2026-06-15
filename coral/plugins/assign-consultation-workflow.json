@@ -326,6 +326,9 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
                   "semanticName": "Action",
+                  "issueDateNode": "c4413ac8-69b6-11ee-908a-0242ac120002",
+                  "dueDateNode": "06adec44-69b7-11ee-908a-0242ac120002",
+                  "daysToAdd": 21,
                   "nodeOptions": {
                     "8322f9f6-69b5-11ee-93a1-0242ac120002": {
                       "allowInstanceCreation": false
@@ -340,13 +343,14 @@
                     },
                     "c4413ac8-69b6-11ee-908a-0242ac120002": {
                       "config": {
-                        "maxDate": "today"
+                        "maxDate": "today",
+                        "defaultValue": "Date of Data Entry"
                       }
                     }
                   }
                 },
                 "tilesManaged": "one",
-                "componentName": "fetch-latest-tile",
+                "componentName": "update-dates",
                 "uniqueInstanceName": "action"
               }
             ]
