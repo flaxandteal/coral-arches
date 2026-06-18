@@ -214,7 +214,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "bdbe4290-b596-4b0d-99cd-109619a8e3d8",
@@ -268,7 +271,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "13a2c73c-46c3-4c6d-940a-4e843d637bb1",
@@ -292,7 +298,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
@@ -366,7 +375,8 @@
         ],
         "workflowstepclass": "workflow-form-component",
         "hiddenWorkflowButtons": [
-          "save"
+          "save",
+          "undo"
         ]
       },
       {
@@ -406,7 +416,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {
