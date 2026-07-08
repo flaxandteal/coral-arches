@@ -160,6 +160,7 @@ function viewModel(params) {
      */
     nodeConfigs = JSON.parse(JSON.stringify(nodeConfigs));
     for (const [key, value] of Object.entries(nodeConfigs)) {
+      if (typeof value !== 'object' || value === null) continue;
       const result = this.renderNode(value, tileData);
       nodeConfigs[key] = result;
     }
