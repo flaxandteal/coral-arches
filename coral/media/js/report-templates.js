@@ -1,3 +1,6 @@
+import 'reports/default';
+import 'reports/tabbed';
+
 import 'views/components/reports/activity';
 import 'views/components/reports/application-area';
 import 'views/components/reports/archive-source';
