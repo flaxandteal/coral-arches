@@ -534,6 +534,9 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
 
+# Session expires after 8 hours instead of Django's 2-week default
+SESSION_COOKIE_AGE = 60 * 60 * 8  # 8 hours
+
 # Additional cookie security params
 # DJANGO_INSECURE_COOKIES=True disables Secure flag for local HTTP dev.
 # Browsers refuse to transmit Secure cookies over plain HTTP, which manifests as
