@@ -45,7 +45,7 @@ from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
 import alizarin_django
 from alizarin_django.wkrm import get_well_known_resource_model_by_graph_id
-import pytz
+from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
 import os
@@ -138,7 +138,7 @@ class FileTemplateView(View):
 
         self.edit_letter(self.resource, template_dict["provider"], config)
 
-        timezone = pytz.timezone("Europe/London") 
+        timezone = ZoneInfo("Europe/London")
         current_datetime = datetime.now(timezone)
         # Date and time as "DD-MM-YYYY-HH-MM"
         formatted_datetime = current_datetime.strftime("%d-%m-%Y-%H-%M")
