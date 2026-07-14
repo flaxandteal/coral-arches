@@ -6,7 +6,7 @@ on:
       - '**'
   workflow_dispatch:
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v1
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4
   ARCHES_PROJECT: coral
   GCP_AR_REGISTRY: europe-west2-docker.pkg.dev/coral-hed-499310/coral-prd-app
 jobs:
