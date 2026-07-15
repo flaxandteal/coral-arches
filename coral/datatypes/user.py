@@ -8,6 +8,7 @@ import logging
 
 from arches.app.datatypes.base import BaseDataType
 from arches.app.models.models import Widget, Node
+from arches.app.search.search_term import SearchTerm
 from arches.app.models.tile import Tile
 from django.contrib.auth.models import User
 
@@ -39,7 +40,7 @@ class UserDataType(BaseDataType):
     def get_search_terms(self, nodevalue, nodeid=None):
         if nodevalue:
             user = User.objects.get(pk=int(nodevalue))
-            return [user.email]
+            return [SearchTerm(value=user.email)]
         return []
 
     def get_display_value(self, tile, node, **kwargs):

@@ -1,11 +1,10 @@
-define([
-    'knockout',
-    'views/base-manager'
-], function(ko, BaseManagerView) {
-    var helpViewModel = BaseManagerView.extend({
-        initialize: function(options) {
-            BaseManagerView.prototype.initialize.call(this, options);
-        }
-    });
-    return new helpViewModel();
+import ko from 'knockout';
+import BaseManagerView from 'views/base-manager';
+
+var helpViewModel = BaseManagerView.extend({
+    initialize: function(options) {
+        BaseManagerView.prototype.initialize.call(this, options);
+    }
 });
+
+export default new helpViewModel();

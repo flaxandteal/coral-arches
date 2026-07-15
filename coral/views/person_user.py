@@ -6,7 +6,7 @@ from arches.app.views.base import BaseManagerView
 from arches.app.utils.response import JSONResponse
 from arches.app.models.system_settings import settings
 from arches.app.utils.permission_backend import user_can_edit_resource, user_is_resource_editor, user_is_resource_reviewer, user_is_resource_exporter
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 from coral.models.models import RegistrationLink
 
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class PersonUserSignupView(BaseManagerView):
                 "error": "Could not issue a sign-link for the current user to this person"
             })
 
-        from arches_orm.models import Person
+        from alizarin_django.models import Person
 
         groups = []
         # If, for some reason, a user is allowed to create a sign-up links

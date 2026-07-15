@@ -2,7 +2,7 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 from django.utils import timezone
 
 ACTION_NODEGROUP = "a5e15f5c-51a3-11eb-b240-f875a44e0e11"
@@ -51,7 +51,7 @@ details = {
 class NotifyPlanning(BaseFunction):       
 
     def post_save(self, tile, request, context):
-        from arches_orm.models import Person
+        from alizarin_django.models import Person
 
         if context and context.get('escape_function', False):
             return
@@ -185,7 +185,7 @@ class NotifyPlanning(BaseFunction):
                     self.notify_users(assigned_users_list, notification)
 
     def notify_group(self, group_id, last_notified, notification, response_slug):
-        from arches_orm.models import Group, Person
+        from alizarin_django.models import Group, Person
         with admin():
             group = Group.find(group_id)
             persons = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
@@ -203,7 +203,7 @@ class NotifyPlanning(BaseFunction):
                 user_x_notification.save()
 
     def notify_users(self, assigned_users_list, notification):
-        from arches_orm.models import Person
+        from alizarin_django.models import Person
 
         notified_users_list = notification.context.get("last_notified", []) if isinstance(notification.context.get("last_notified"), list) else []
 
@@ -227,7 +227,7 @@ class NotifyPlanning(BaseFunction):
             user_x_notification.save()
 
     def find_user_team(self, user):
-        from arches_orm.models import Group, Person
+        from alizarin_django.models import Group, Person
         hm_teams = [HM_MANAGERS, HM_USER]
         hb_teams = [HB_MANAGERS, HB_USER]
 

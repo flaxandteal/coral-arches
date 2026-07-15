@@ -1,6 +1,7 @@
 from arches.app.datatypes.base import BaseDataType
 from arches.app.models.models import Widget
 from arches.app.models.system_settings import settings
+from arches.app.search.search_term import SearchTerm
 
 tm65point = Widget.objects.get(name="tm65point")
 
@@ -65,4 +66,6 @@ class TM65CentreDataType(BaseDataType):
         document["strings"].append({"string": nodevalue, "nodegroup_id": tile.nodegroup_id})
 
     def get_search_terms(self, nodevalue, nodeid=None):
-        return [nodevalue]
+        if nodevalue:
+            return [SearchTerm(value=nodevalue)]
+        return []

@@ -28,7 +28,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from arches.app.models.models import GraphModel, ResourceInstance, Node
 from arches.app.models.resource import Resource
-from arches_orm.adapter import context_free
+from alizarin_django.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 
 # these tests can be run from the command line via
@@ -286,9 +286,9 @@ class CoralCasbinPermissionTests(ArchesPermissionFrameworkTestCase):
         management.call_command("packages", operation="import_business_data", source=str(test_models_path.parent / "business_data" / "Root Group.json"), yes=True, verbosity=0, overwrite="overwrite")
         management.call_command("packages", operation="import_business_data", source=str(test_models_path.parent / "business_data" / "Root Set.json"), yes=True, verbosity=0, overwrite="overwrite")
 
-        from arches_orm import wkrm
+        from alizarin_django import wkrm
         wkrm.resource_models = {}
-        from arches_orm import models
+        from alizarin_django import models
         models.reload()
 
         import coral.permissions.casbin

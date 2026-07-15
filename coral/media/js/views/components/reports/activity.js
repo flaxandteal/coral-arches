@@ -1,19 +1,18 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/activity.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/description',
-    'views/components/reports/scenes/json',
-    'views/components/reports/scenes/classifications',
-    'views/components/reports/scenes/location',
-    'views/components/reports/scenes/protection'
-], function($, _, ko, arches, resourceUtils, reportUtils, activityTemplate) {
-    return ko.components.register('activity-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import activityTemplate from 'templates/views/components/reports/activity.htm';
+import name from 'views/components/reports/scenes/name';
+import description from 'views/components/reports/scenes/description';
+import json from 'views/components/reports/scenes/json';
+import classifications from 'views/components/reports/scenes/classifications';
+import location from 'views/components/reports/scenes/location';
+import protection from 'views/components/reports/scenes/protection';
+
+export default ko.components.register('activity-report', {
         viewModel: function(params) {
             const self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -171,4 +170,3 @@ define([
         },
         template: activityTemplate
     });
-});

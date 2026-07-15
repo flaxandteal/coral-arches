@@ -11,9 +11,22 @@ coral/uploadedfiles/*
 coral/settings_local.py
 coral/webpack/webpack-stats.json
 coral/webpack/webpack-user-config.js
+webpack/webpack-stats.json
+webpack/webpack-user-config.js
+node_modules
+coverage/
+*.egg-info
+.DS_STORE
 .vscode/
 CACHE
 coral/docx
 .venv/
 loadable/
 .env/
+
+# Arches 8.x frontend configuration
+frontend_configuration
+
+# Packaging
+build/
+dist/

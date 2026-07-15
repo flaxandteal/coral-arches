@@ -1,0 +1,46 @@
+{
+    "name": "coral",
+    "license": "AGPL-3.0-or-later",
+    "scripts": {
+        "build_development": "npm run eslint:check && npm run ts:check && cross-env webpack --config ./webpack/webpack.config.dev.js",
+        "build_production": "npm run eslint:check && npm run ts:check && cross-env webpack --config ./webpack/webpack.config.prod.js",
+        "build_test": "npm run eslint:check && npm run ts:check && cross-env webpack --config ./webpack/webpack.config.dev.js --env test=true",
+        "eslint:check": "eslint **/src --no-error-on-unmatched-pattern",
+        "eslint:fix": "eslint --fix",
+        "eslint:fix:all": "npm run eslint:fix **/src",
+        "eslint:watch": "nodemon --watch . --ext ts,vue --exec npm run --silent eslint:check",
+        "gettext:extract": "vue-gettext-extract",
+        "gettext:compile": "vue-gettext-compile",
+        "prettier:check": "prettier **/src --check",
+        "prettier:fix": "prettier --write",
+        "prettier:fix:all": "npm run prettier:fix **/src",
+        "ts:check": "vue-tsc --noEmit",
+        "ts:watch": "vue-tsc --watch --noEmit",
+        "start": "cross-env webpack serve --config ./webpack/webpack.config.dev.js",
+        "vitest": "vitest --run --coverage"
+    },
+    "dependencies": {
+        "arches": "archesproject/arches#dev/8.1.x",
+        "arches_controlled_lists": "archesproject/arches-controlled-lists#dev/1.1.x",
+        "ckeditor4": "4.20.2",
+        "cytoscape-elk": "^2.2.0",
+        "datatables.net-rowgroup-dt": "^1.4.1",
+        "docx-preview": "^0.3.5",
+        "jquery-validation": "^1.20.0",
+        "native-file-system-adapter": "^3.0.1",
+        "select-woo": "jadu/selectWoo",
+        "web-worker": "^1.2.0"
+    },
+    "devDependencies": {
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/8.1.x"
+    },
+    "nodeModulesPaths": {
+        "native-file-system-adapter": "node_modules/native-file-system-adapter/src/es6.js"
+    },
+    "overrides": {
+        "moment-timezone": "^0.5.45",
+        "nomnom": "npm:@gerhobbelt/nomnom",
+        "rimraf": "^5.0.7",
+        "underscore": "^1.13.6"
+    }
+}

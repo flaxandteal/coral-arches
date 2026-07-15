@@ -47,4 +47,19 @@ try:
     from coral.settings import *
 except ImportError as exc:
     print(exc)
+
+PROJECT_TEST_ROOT = os.path.dirname(__file__)
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    },
+    "user_permission": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "LOCATION": "user_permission_cache",
+    },
+}
+
 ELASTICSEARCH_PREFIX = "test"
+
+TEST_RUNNER = "arches.test.runner.ArchesTestRunner"

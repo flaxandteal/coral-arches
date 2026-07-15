@@ -1,12 +1,11 @@
-define([
-    'knockout', 
-    'utils/report',
-    'arches',
-    'templates/views/components/reports/scenes/json.htm',
-    'viewmodels/widget',
-    'bindings/codemirror'
-], function(ko, reportUtils, arches, jsonTemplate) {
-    return ko.components.register('views/components/reports/scenes/json', {
+import ko from 'knockout';
+import reportUtils from 'utils/report';
+import arches from 'arches';
+import jsonTemplate from 'templates/views/components/reports/scenes/json.htm';
+import widget from 'viewmodels/widget';
+import codemirror from 'bindings/codemirror';
+
+export default ko.components.register('views/components/reports/scenes/json', {
         viewModel: function(params) {
             var self = this;
 
@@ -34,4 +33,3 @@ define([
         },
         template: jsonTemplate
     });
-});

@@ -1,8 +1,10 @@
+import glob
 import os
 import uuid
 from arches.management.commands import utils
 from arches.app.models import models
 from django.core.management.base import BaseCommand, CommandError
+from django.db import connection
 from django.db.utils import IntegrityError
 import json
 import subprocess
@@ -173,6 +175,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options["operation"] == "reload":
             self.reload_plugins_widgets()
+        elif options["operation"] == "reload_reports":
+            self.reload_reports()
 
     def reload_plugins_widgets(self, *args, **options):
         # TODO: Needs to validate the difference beween arches plugins/widgets
@@ -245,3 +249,47 @@ class Command(BaseCommand):
             update_plugin(slug)
 
         print("Plugins and widgets have been reloaded.")
+
+    def reload_reports(self):
+        reports_dir = os.path.join(dirname, "..", "..", "reports")
+        report_files = glob.glob(os.path.join(reports_dir, "*.json"))
+
+        for report_file in report_files:
+            with open(report_file) as f:
+                details = json.load(f)
+
+            template_id = details["templateid"]
+            try:
+                instance = models.ReportTemplate.objects.get(templateid=template_id)
+                instance.name = details["name"]
+                instance.description = details.get("description", "")
+                instance.component = details["component"]
+                instance.componentname = details["componentname"]
+                instance.defaultconfig = details.get("defaultconfig", {})
+                instance.preload_resource_data = details.get("preload_resource_data", True)
+                instance.save()
+                print(f"Updated report template: {details['name']}")
+            except models.ReportTemplate.DoesNotExist:
+                instance = models.ReportTemplate(
+                    templateid=template_id,
+                    name=details["name"],
+                    description=details.get("description", ""),
+                    component=details["component"],
+                    componentname=details["componentname"],
+                    defaultconfig=details.get("defaultconfig", {}),
+                    preload_resource_data=details.get("preload_resource_data", True),
+                )
+                instance.save()
+                print(f"Registered report template: {details['name']}")
+
+        sql_file = os.path.join(dirname, "..", "..", "pkg", "post_sql", "load_report_templates.sql")
+        if os.path.exists(sql_file):
+            with open(sql_file) as f:
+                sql = f.read()
+            with connection.cursor() as cursor:
+                cursor.execute(sql)
+            print("Applied graph-to-template mappings from load_report_templates.sql")
+        else:
+            print(f"Warning: {sql_file} not found, skipping graph template mapping")
+
+        print("Report templates reloaded.")

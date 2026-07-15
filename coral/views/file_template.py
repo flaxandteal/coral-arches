@@ -43,9 +43,9 @@ from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
-import arches_orm
-from arches_orm.wkrm import get_well_known_resource_model_by_graph_id
-import pytz
+import alizarin_django
+from alizarin_django.wkrm import get_well_known_resource_model_by_graph_id
+from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
 import os
@@ -138,7 +138,7 @@ class FileTemplateView(View):
 
         self.edit_letter(self.resource, template_dict["provider"], config)
 
-        timezone = pytz.timezone("Europe/London") 
+        timezone = ZoneInfo("Europe/London")
         current_datetime = datetime.now(timezone)
         # Date and time as "DD-MM-YYYY-HH-MM"
         formatted_datetime = current_datetime.strftime("%d-%m-%Y-%H-%M")
@@ -317,7 +317,7 @@ class FileTemplateView(View):
     def apply_mapping(self, mapping):
         htmlTags = re.compile(r"<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
         for key in mapping:
-            if (isinstance(mapping[key], (arches_orm.view_models.concepts.EmptyConceptValueViewModel))):
+            if (isinstance(mapping[key], (alizarin_django.view_models.concepts.EmptyConceptValueViewModel))):
                 mapping[key] = None
             if (isinstance(mapping[key], (bool))):
                 mapping[key] = str(mapping[key])
@@ -498,7 +498,7 @@ def validate_uuid_string(uuid_string: str) -> UUIDString:
     except ValueError:
         return False
     return str(uuid_obj) == uuid_string
-RelatedResource = NewType("RelatedResource", arches_orm.view_models.node_list.NodeListViewModel)
+RelatedResource = NewType("RelatedResource", alizarin_django.view_models.node_list.NodeListViewModel)
 
 class GenericTemplateProvider:
     def __init__(self, resource_instance: Resource):
@@ -648,17 +648,17 @@ class GenericTemplateProvider:
         for item in mapping.items():
             alias, value = item
 
-            if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
+            if isinstance(value, alizarin_django.view_models.node_list.NodeListViewModel):
                 for node in value:
-                    if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
+                    if isinstance(node, alizarin_django.view_models.semantic.SemanticViewModel):
                         mapping = self.merge_mappings(mapping, self.extract(list(node.items())))
                 # TODO handle node lists that are not semantic e.g bibligraphic source is a resource-instance but has children. Currently we ignore the children 
                 mapping[alias] = None
                 continue
-            if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel, arches_orm.arches_django.datatypes.user.UserViewModel)):
+            if isinstance(value, (alizarin_django.view_models.concepts.EmptyConceptValueViewModel, alizarin_django.arches_django.datatypes.user.UserViewModel)):
                 mapping[alias] = None
                 continue
-            if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):             
+            if isinstance(value, (alizarin_django.view_models.resources.RelatedResourceInstanceListViewModel)):             
                 if "expand" in self.config and alias in self.config["expand"] and len(value) > 0:
                     for related_resource in value:
                         mapping = mapping | self.extract_from_related_resource(alias, related_resource)
@@ -669,16 +669,16 @@ class GenericTemplateProvider:
                         resource_list.append(str(related_resource))
                     mapping[alias] = resource_list
                 continue
-            if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
+            if isinstance(value, (alizarin_django.view_models.concepts.ConceptListValueViewModel)):
                 concept_list = []
                 for datum in value.data:
                     concept_list.append(str(datum))
                 mapping[alias] = concept_list
                 continue
-            if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
+            if isinstance(value, (alizarin_django.view_models.concepts.ConceptValueViewModel)):
                 mapping[alias] = str(value)
                 continue
-            if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
+            if isinstance(value, (alizarin_django.view_models.semantic.SemanticViewModel)):
                 dicted_value = {}
                 for key in list(value.keys()):
                     if key:
@@ -686,7 +686,7 @@ class GenericTemplateProvider:
                 mapping = mapping | self.extract(list(dicted_value.items()))
                 mapping[alias] = None
                 continue
-            if isinstance(value, str) and not isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel, arches_orm.view_models.concepts.ConceptValueViewModel, arches_orm.view_models.string.StringViewModel)):
+            if isinstance(value, str) and not isinstance(value, (alizarin_django.view_models.semantic.SemanticViewModel, alizarin_django.view_models.concepts.ConceptValueViewModel, alizarin_django.view_models.string.StringViewModel)):
                 # Arches ORM doesn't seem to have date datatype
                 try:
                     mapping[alias] = datetime.fromisoformat(value).strftime("%d/%m/%Y")
@@ -711,8 +711,8 @@ class GenericTemplateProvider:
          pass
     
     def get_user(self, mapping:Mapping, alias:Alias) -> Mapping:
-        from arches_orm.models import Person
-        from arches_orm.adapter import admin
+        from alizarin_django.models import Person
+        from alizarin_django.adapter import admin
         try:
             with admin():
                 person = Person.where(user_account=self.config["user"].id).get()
