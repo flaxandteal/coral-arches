@@ -317,6 +317,7 @@ INSTALLED_APPS = (
     "arches_controlled_lists",
     "arches_querysets",
     "arches_component_lab",
+    "arches_modular_reports",
     "arches",
     "arches.app.models",
     "arches.management",
@@ -348,7 +349,7 @@ INSTALLED_APPS += (
 if DEBUG:
     INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
 
-ARCHES_APPLICATIONS = ()
+ARCHES_APPLICATIONS = ("arches_modular_reports",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
