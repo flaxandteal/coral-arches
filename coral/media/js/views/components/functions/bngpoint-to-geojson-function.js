@@ -1,11 +1,11 @@
-define(['knockout',
-    'knockout-mapping',
-    'views/list',
-    'viewmodels/function',
-    'bindings/chosen',
-    'templates/views/components/functions/bngpoint-to-geojson-function.htm',
-], function(ko, koMapping, ListView, FunctionViewModel, chosen, bngpointToGeojsonFunctionTemplate) {
-    return ko.components.register('views/components/functions/bngpoint-to-geojson-function', {
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import ListView from 'views/list';
+import FunctionViewModel from 'viewmodels/function-view-model';
+import chosen from 'bindings/chosen';
+import bngpointToGeojsonFunctionTemplate from 'templates/views/components/functions/bngpoint-to-geojson-function.htm';
+
+export default ko.components.register('views/components/functions/bngpoint-to-geojson-function', {
         viewModel: function(params) {
             FunctionViewModel.apply(this, arguments);
             console.log("Running a sample function")
@@ -73,4 +73,3 @@ define(['knockout',
         },
         template: bngpointToGeojsonFunctionTemplate
     });
-})

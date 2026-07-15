@@ -1,21 +1,20 @@
-define([
-  'knockout',
-  'arches',
-  'viewmodels/openable-workflow',
-  'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/default-card-util',
-  'views/components/workflows/licensing-workflow/licence-initial-step',
-  'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/licence-cover-letter',
-  'views/components/workflows/file-template',
-  'views/components/workflows/licensing-workflow/licence-final-step',
-  'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
-  'views/components/workflows/licensing-workflow/fetch-updated-dates',
-  'views/components/workflows/licensing-workflow/transfer-of-licence',
-  'views/components/workflows/licensing-workflow/transfer-of-licence',
-  'views/components/workflows/fetch-latest-tile'
-], function (ko, arches, OpenableWorkflow, workflowTemplate) {
-  return ko.components.register('licensing-workflow', {
+import ko from 'knockout';
+import arches from 'arches';
+import OpenableWorkflow from 'viewmodels/openable-workflow';
+import workflowTemplate from 'templates/views/components/plugins/default-workflow.htm';
+import defaultCardUtil from 'views/components/workflows/default-card-util';
+import licenceInitialStep from 'views/components/workflows/licensing-workflow/licence-initial-step';
+import relatedDocumentUpload from 'views/components/workflows/related-document-upload';
+import licenceCoverLetter from 'views/components/workflows/licensing-workflow/licence-cover-letter';
+import fileTemplate from 'views/components/workflows/file-template';
+import licenceFinalStep from 'views/components/workflows/licensing-workflow/licence-final-step';
+import fetchGeneratedLicenceNumber from 'views/components/workflows/licensing-workflow/fetch-generated-licence-number';
+import fetchUpdatedDates from 'views/components/workflows/licensing-workflow/fetch-updated-dates';
+import transferOfLicence from 'views/components/workflows/licensing-workflow/transfer-of-licence';
+import transferOfLicence1 from 'views/components/workflows/licensing-workflow/transfer-of-licence';
+import fetchLatestTile from 'views/components/workflows/fetch-latest-tile';
+
+export default ko.components.register('licensing-workflow', {
     viewModel: function (params) {
       this.componentName = 'licensing-workflow';
       this.stepConfig = [
@@ -1123,4 +1122,3 @@ define([
     },
     template: workflowTemplate
   });
-});

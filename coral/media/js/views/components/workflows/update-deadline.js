@@ -1,74 +1,72 @@
-define([
-    'underscore',
-    'knockout',
-    'knockout-mapping',
-    'uuid',
-    'arches',
-    'viewmodels/card-component',
-    'templates/views/components/cards/default.htm',
-  ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
-    function viewModel(params) {
+import _ from 'underscore';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import uuid from 'uuid';
+import arches from 'arches';
+import CardComponentViewModel from 'viewmodels/card-component';
+import componentTemplate from 'templates/views/components/cards/default.htm';
 
-    const AGRICULTURE_DATE_NODEGROUP_ID = "5d6eecde-e217-11ef-803e-0242ac120003"
-    const RESPONSE_DATE_NODE = '798d9d74-e218-11ef-803e-0242ac120003';
-    const DUE_DATE_NODE = '5b6a2ede-e218-11ef-803e-0242ac120003';
-    const DEADLINE_NODE = '9bcf2ec2-018a-4ccc-a895-f45ffc22239e';
-    
-    CardComponentViewModel.apply(this, [params]);
+function viewModel(params) {
 
-      this.fetchTileData = async (resourceId) => {
-        const tilesResponse = await window.fetch(
-          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
-        );
+const AGRICULTURE_DATE_NODEGROUP_ID = "5d6eecde-e217-11ef-803e-0242ac120003"
+const RESPONSE_DATE_NODE = '798d9d74-e218-11ef-803e-0242ac120003';
+const DUE_DATE_NODE = '5b6a2ede-e218-11ef-803e-0242ac120003';
+const DEADLINE_NODE = '9bcf2ec2-018a-4ccc-a895-f45ffc22239e';
 
-        const data = await tilesResponse.json();
+CardComponentViewModel.apply(this, [params]);
 
-        return data.tiles;
-      };
+  this.fetchTileData = async (resourceId) => {
+    const tilesResponse = await window.fetch(
+      arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
+    );
 
-      this.fetchAgriDate = async (resourceId) => {
-        const tilesResponse = await window.fetch(
-          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
-            (AGRICULTURE_DATE_NODEGROUP_ID ? `?nodeid=${AGRICULTURE_DATE_NODEGROUP_ID}` : '')
-        );
+    const data = await tilesResponse.json();
 
-        const data = await tilesResponse.json();
+    return data.tiles;
+  };
 
-        return data.tiles[0];
-      }
+  this.fetchAgriDate = async (resourceId) => {
+    const tilesResponse = await window.fetch(
+      arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+        (AGRICULTURE_DATE_NODEGROUP_ID ? `?nodeid=${AGRICULTURE_DATE_NODEGROUP_ID}` : '')
+    );
 
-      this.withinDeadline = async () => {
-        const dateTiles = await this.fetchAgriDate(this.tile.resourceinstance_id);
+    const data = await tilesResponse.json();
 
-        if (!dateTiles) return false;
+    return data.tiles[0];
+  }
 
-        const responseDate = new Date(dateTiles.data[RESPONSE_DATE_NODE]);
-        const dueDate = new Date(dateTiles.data[DUE_DATE_NODE]);
+  this.withinDeadline = async () => {
+    const dateTiles = await this.fetchAgriDate(this.tile.resourceinstance_id);
 
-        if (RESPONSE_DATE_NODE in dateTiles.data && dateTiles.data[RESPONSE_DATE_NODE] === null) {
-          return false;
-        }
+    if (!dateTiles) return false;
 
-        if (responseDate < dueDate) {
-            return true;   
-        }
+    const responseDate = new Date(dateTiles.data[RESPONSE_DATE_NODE]);
+    const dueDate = new Date(dateTiles.data[DUE_DATE_NODE]);
 
-          return false
-      }
-
-      this.init = async() => {
-        const bool = await this.withinDeadline();
-        this.tile.data[DEADLINE_NODE](bool);
-      }
-      
-      this.init();
-
+    if (RESPONSE_DATE_NODE in dateTiles.data && dateTiles.data[RESPONSE_DATE_NODE] === null) {
+      return false;
     }
 
-    ko.components.register('update-deadline', {
-      viewModel: viewModel,
-      template: componentTemplate
-    });
-  
-    return viewModel;
-  });
+    if (responseDate < dueDate) {
+        return true;   
+    }
+
+      return false
+  }
+
+  this.init = async() => {
+    const bool = await this.withinDeadline();
+    this.tile.data[DEADLINE_NODE](bool);
+  }
+
+  this.init();
+
+}
+
+ko.components.register('update-deadline', {
+  viewModel: viewModel,
+  template: componentTemplate
+});
+
+export default viewModel;

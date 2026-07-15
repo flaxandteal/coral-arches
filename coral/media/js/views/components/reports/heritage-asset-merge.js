@@ -1,14 +1,13 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/heritage-asset-merge.htm',
-    'views/components/reports/scenes/all',
-], function($, _, ko, arches, resourceUtils, reportUtils, heritageAssetMergeReportTemplate) {
-    return ko.components.register('heritage-asset-merge', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import heritageAssetMergeReportTemplate from 'templates/views/components/reports/heritage-asset-merge.htm';
+import all from 'views/components/reports/scenes/all';
+
+export default ko.components.register('heritage-asset-merge', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -86,4 +85,3 @@ define([
         },
         template: heritageAssetMergeReportTemplate
     });
-});

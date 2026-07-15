@@ -1,16 +1,15 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/artefact.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json',
-    'views/components/reports/scenes/archive'
-], function($, _, ko, arches, resourceUtils, reportUtils, artefactReportTemplate) {
-    return ko.components.register('artefact-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import artefactReportTemplate from 'templates/views/components/reports/artefact.htm';
+import name from 'views/components/reports/scenes/name';
+import json from 'views/components/reports/scenes/json';
+import archive from 'views/components/reports/scenes/archive';
+
+export default ko.components.register('artefact-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -225,4 +224,3 @@ define([
         },
         template: artefactReportTemplate
     });
-});

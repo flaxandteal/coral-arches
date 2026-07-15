@@ -12,18 +12,31 @@
         "name": "start-meeting-step",
         "title": "Start Meeting",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Consultation ID", "SMC Reference Number"]],
+                  "labels": [
+                    [
+                      "Consultation ID",
+                      "SMC Reference Number"
+                    ]
+                  ],
                   "prefix": "SMC",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11",
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
                   ],
                   "nodeOptions": {
                     "b37552be-9527-11ea-9213-f875a44e0e11": {
@@ -80,11 +93,11 @@
                     "58a2b98f-a255-11e9-9a30-00224800b26d"
                   ],
                   "nodeOptions": {
-                  "58a2b98f-a255-11e9-9a30-00224800b26d" : {
-                    "searchString": "",
-                    "allowInstanceCreation": false
-                  }
-                },
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
+                      "searchString": "",
+                      "allowInstanceCreation": false
+                    }
+                  },
                   "semanticName": "Heritage Asseets details"
                 },
                 "tilesManaged": "one",
@@ -104,7 +117,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Consultation Name", "Application Reference"]],
+                  "labels": [
+                    [
+                      "Consultation Name",
+                      "Application Reference"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4ad66f55-951f-11ea-b2e2-f875a44e0e11",
@@ -130,7 +148,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Date Received from DfI", "Received Date"]],
+                  "labels": [
+                    [
+                      "Date Received from DfI",
+                      "Received Date"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
@@ -140,8 +163,8 @@
                   ],
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -152,7 +175,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Reason", "Proposal Summary"]],
+                  "labels": [
+                    [
+                      "Reason",
+                      "Proposal Summary"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "c1a49ce2-24cd-11ef-97ad-0242ac130006",
@@ -164,7 +192,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Applicant", "Entered By"]],
+                  "labels": [
+                    [
+                      "Applicant",
+                      "Entered By"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "8780196a-dfda-11ef-a67e-0242ac120006",
@@ -181,7 +214,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "bdbe4290-b596-4b0d-99cd-109619a8e3d8",
@@ -193,10 +229,22 @@
               {
                 "parameters": {
                   "labels": [
-                    ["Agent", "Agent(s)"],
-                    ["Owner", "Owner(s)"],
-                    ["Applicant", "Applicant(s)"],
-                    ["Occupier", "Occupier(s)"]
+                    [
+                      "Agent",
+                      "Agent(s)"
+                    ],
+                    [
+                      "Owner",
+                      "Owner(s)"
+                    ],
+                    [
+                      "Applicant",
+                      "Applicant(s)"
+                    ],
+                    [
+                      "Occupier",
+                      "Occupier(s)"
+                    ]
                   ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
@@ -223,7 +271,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "13a2c73c-46c3-4c6d-940a-4e843d637bb1",
@@ -247,7 +298,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
@@ -261,21 +315,48 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["87e0b839-9391-11ea-8a85-f875a44e0e11", "9162c0a8-184d-11eb-804a-f875a44e0e11"],
+                  "hiddenNodes": [
+                    "87e0b839-9391-11ea-8a85-f875a44e0e11",
+                    "9162c0a8-184d-11eb-804a-f875a44e0e11"
+                  ],
                   "nodegroupid": "8d41e4b4-a250-11e9-993d-00224800b26d",
                   "semanticName": "Correspondence",
                   "letterMetatype": "9162c0a8-184d-11eb-804a-f875a44e0e11",
                   "letterTypeNode": "8d41e4df-a250-11e9-af01-00224800b26d",
                   "letterResourceNode": "87e0b839-9391-11ea-8a85-f875a44e0e11",
                   "letterOptions": [
-                    { "text": "SMC Addendum Letter", "id": "smc-addendum-template.docx" },
-                    { "text": "SMC Provisional Letter", "id": "smc-provisional-template.docx"},
-                    { "text": "SMC Refusal Letter", "id": "smc-refusal-template.docx"},
-                    { "text": "SMC Final Letter", "id": "smc-final-template.docx"},
-                    { "text": "SMC Final No Conditions Letter", "id": "smc-final-no-conditions-template.docx"},
-                    { "text": "SMC Provisional No Conditions Letter", "id": "smc-provisional-no-conditions-template.docx"},
-                    { "text": "SMC-CL Provisional Letter", "id": "smc-cl-provisional-template.docx"},
-                    { "text": "SMC-CL Final Letter", "id": "smc-cl-final-template.docx"}
+                    {
+                      "text": "SMC Addendum Letter",
+                      "id": "smc-addendum-template.docx"
+                    },
+                    {
+                      "text": "SMC Provisional Letter",
+                      "id": "smc-provisional-template.docx"
+                    },
+                    {
+                      "text": "SMC Refusal Letter",
+                      "id": "smc-refusal-template.docx"
+                    },
+                    {
+                      "text": "SMC Final Letter",
+                      "id": "smc-final-template.docx"
+                    },
+                    {
+                      "text": "SMC Final No Conditions Letter",
+                      "id": "smc-final-no-conditions-template.docx"
+                    },
+                    {
+                      "text": "SMC Provisional No Conditions Letter",
+                      "id": "smc-provisional-no-conditions-template.docx"
+                    },
+                    {
+                      "text": "SMC-CL Provisional Letter",
+                      "id": "smc-cl-provisional-template.docx"
+                    },
+                    {
+                      "text": "SMC-CL Final Letter",
+                      "id": "smc-cl-final-template.docx"
+                    }
                   ],
                   "config": {
                     "special": {
@@ -293,7 +374,10 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": ["save"]
+        "hiddenWorkflowButtons": [
+          "save",
+          "undo"
+        ]
       },
       {
         "name": "decision-step",
@@ -319,8 +403,8 @@
                       "allowInstanceCreation": false
                     },
                     "e599c160-1f89-11f0-a917-667c62aab752": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -332,7 +416,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

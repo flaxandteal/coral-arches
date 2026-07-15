@@ -17,15 +17,13 @@ from tempfile import NamedTemporaryFile
 
 from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
-from arches.management.commands.packages import Command as PackageCommand
-
-from coral.permissions.casbin import CasbinPermissionFramework
 
 logging.basicConfig()
 
 
 @shared_task
 def recalculate_permissions_table():
+    from coral.permissions.casbin import CasbinPermissionFramework
     framework = CasbinPermissionFramework()
     enforcer = framework._enforcer
 
@@ -352,6 +350,7 @@ def reset_database(lock_code_enc):
                 return
 
     if in_window:
+        from arches.management.commands.packages import Command as PackageCommand
         command = PackageCommand()
         with NamedTemporaryFile() as tf:
             # This is a workaround for the fact that we cannot pass a flag to

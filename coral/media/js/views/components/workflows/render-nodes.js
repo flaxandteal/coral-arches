@@ -1,14 +1,12 @@
-define([
-  'underscore',
-  'knockout',
-  'templates/views/components/workflows/render-nodes.htm'
-], function (_, ko, renderNodesTemplate) {
-  function viewModel(params) {
-    this.resourceNodes = params.resourceNodes;
-  }
+import _ from 'underscore';
+import ko from 'knockout';
+import renderNodesTemplate from 'templates/views/components/workflows/render-nodes.htm';
 
-  return ko.components.register('render-nodes', {
+function viewModel(params) {
+  this.resourceNodes = params.resourceNodes;
+}
+
+export default ko.components.register('render-nodes', {
     viewModel: viewModel,
     template: renderNodesTemplate
   });
-});

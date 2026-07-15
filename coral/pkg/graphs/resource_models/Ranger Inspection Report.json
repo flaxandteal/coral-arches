@@ -2388,27 +2388,6 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "a33fd6a9-1abb-4a03-8551-bedc33c1b75d",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Reviewed By",
-                        "placeholder": {
-                            "en": ""
-                        }
-                    },
-                    "id": "9fe95b42-ef46-4267-8a10-e13b65f5bcf6",
-                    "label": {
-                        "en": "Reviewed By"
-                    },
-                    "node_id": "20f9b984-2a5e-11f0-8d35-0242ac120006",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "493a99d7-c06e-4c83-aa1e-3251f606850c"
-                },
-                {
                     "card_id": "a3b9fa52-2a57-11f0-8d35-0242ac120006",
                     "config": {
                         "defaultValue": {
@@ -3246,21 +3225,6 @@
                     "sortorder": null,
                     "visible": true,
                     "widget_id": "493a99d7-c06e-4c83-aa1e-3251f606850c"
-                },
-                {
-                    "card_id": "a33fd6a9-1abb-4a03-8551-bedc33c1b75d",
-                    "config": {
-                        "defaultResourceInstance": [],
-                        "label": "Submitted By"
-                    },
-                    "id": "ad79020d-4535-49c2-8d02-8e82bb93fa93",
-                    "label": {
-                        "en": "Submitted By"
-                    },
-                    "node_id": "f82e1ac2-2a5d-11f0-88da-0242ac120006",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "263ba9ef-ee89-47ec-a59c-ae5d08a9ca37",
@@ -8920,12 +8884,50 @@
                 "sortorder": 0,
                 "sourcebranchpublication_id": null
             },
-            "slug": null,
+            "slug": "ranger_inspection_report",
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
-            "version": ""
+            "version": "",
+            "_duplicate_cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "a33fd6a9-1abb-4a03-8551-bedc33c1b75d",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Reviewed By",
+                        "placeholder": {
+                            "en": ""
+                        }
+                    },
+                    "id": "9fe95b42-ef46-4267-8a10-e13b65f5bcf6",
+                    "label": {
+                        "en": "Reviewed By"
+                    },
+                    "node_id": "20f9b984-2a5e-11f0-8d35-0242ac120006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "493a99d7-c06e-4c83-aa1e-3251f606850c"
+                },
+                {
+                    "card_id": "a33fd6a9-1abb-4a03-8551-bedc33c1b75d",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Submitted By"
+                    },
+                    "id": "ad79020d-4535-49c2-8d02-8e82bb93fa93",
+                    "label": {
+                        "en": "Submitted By"
+                    },
+                    "node_id": "f82e1ac2-2a5d-11f0-88da-0242ac120006",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                }
+            ]
         }
     ],
     "metadata": {

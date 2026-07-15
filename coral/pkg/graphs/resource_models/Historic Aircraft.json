@@ -22,7 +22,7 @@
                     "instructions": {
                         "en": null
                     },
-                    "is_editable": true,  
+                    "is_editable": true,
                     "name": {
                         "en": "Spatial Metadata Descriptions"
                     },
@@ -25319,7 +25319,7 @@
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E24_Physical_Human-Made_Thing",
                 "sortorder": 0
             },
-            "slug": null,
+            "slug": "historic_aircraft",
             "subtitle": {
                 "en": "Used to record the details of historic aircraft which are either retained as heritage assets (eg. Museum exhibits or Gate Guardians) or have been identified through the discovery of associated crash sites. A heritage asset record should be created for the crash site where known. "
             },

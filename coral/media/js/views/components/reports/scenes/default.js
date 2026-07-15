@@ -1,13 +1,12 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'templates/views/components/reports/scenes/default.htm',
-    'bindings/datatable',
-    'views/components/reports/scenes/keyvalue'
-], function(_, ko, arches, reportUtils, defaultReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/default', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import defaultReportTemplate from 'templates/views/components/reports/scenes/default.htm';
+import datatable from 'bindings/datatable';
+import keyvalue from 'views/components/reports/scenes/keyvalue';
+
+export default ko.components.register('views/components/reports/scenes/default', {
         // IMPORTANT:  this scene *requires* you to compile your own data. 
         viewModel: function(params) {
             var self = this;
@@ -27,4 +26,3 @@ define([
         },
         template: defaultReportTemplate
     });
-});

@@ -1,17 +1,16 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/bibliographic-source.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/audit',
-    'views/components/reports/scenes/default',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, bibliographicSourceReportTemplate) {
-    return ko.components.register('bibliographic-source-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import bibliographicSourceReportTemplate from 'templates/views/components/reports/bibliographic-source.htm';
+import name from 'views/components/reports/scenes/name';
+import audit from 'views/components/reports/scenes/audit';
+import defaultScene from 'views/components/reports/scenes/default';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('bibliographic-source-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -198,4 +197,3 @@ define([
         },
         template: bibliographicSourceReportTemplate
     });
-});

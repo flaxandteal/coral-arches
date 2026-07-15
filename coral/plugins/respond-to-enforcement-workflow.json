@@ -40,7 +40,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "enforcement-details",
@@ -86,7 +89,9 @@
                 "parameters": {
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["25e2708a-b557-11ee-805b-0242ac120006"],
+                  "hiddenNodes": [
+                    "25e2708a-b557-11ee-805b-0242ac120006"
+                  ],
                   "nodegroupid": "25e2611c-b557-11ee-805b-0242ac120006",
                   "semanticName": "Case References"
                 },
@@ -152,7 +157,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "summary-step",
@@ -171,7 +179,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

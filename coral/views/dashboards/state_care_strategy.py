@@ -1,14 +1,14 @@
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
-from arches_orm.view_models import ConceptListValueViewModel, ConceptValueViewModel
-from arches_orm.adapter import admin 
+from alizarin_django.view_models import ConceptListValueViewModel, ConceptValueViewModel
+from alizarin_django.adapter import admin 
 from typing import List
 from datetime import datetime
 import pdb
 
 class StateCareTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='displayname', sort_order='desc', filter='all'):
-        from arches_orm.models import StateCareCondition, RiskAssessment, RangerInspection, Consultation
+        from alizarin_django.models import StateCareCondition, RiskAssessment, RangerInspection, Consultation
         with admin():
 
             resources = []
@@ -143,7 +143,7 @@ class StateCareTaskStrategy(TaskStrategy):
         return sorted_resources
     
     def get_filter_options(self, groupId=None):
-        from arches_orm.models import Monument
+        from alizarin_django.models import Monument
         with admin():
             """Return the available filter options for the state care tasks."""
 
@@ -180,7 +180,7 @@ class StateCareTaskStrategy(TaskStrategy):
         }
     
     def build_data(self, resource, groupId):
-        from arches_orm.models import StateCareCondition, RiskAssessment, RangerInspection, Consultation
+        from alizarin_django.models import StateCareCondition, RiskAssessment, RangerInspection, Consultation
         data = {}
         if isinstance(resource, StateCareCondition):
             data = self.build_data_state_care(resource)

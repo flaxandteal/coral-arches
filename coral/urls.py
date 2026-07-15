@@ -4,12 +4,13 @@ from django.contrib.staticfiles import views
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
-from arches.app.views.user import UserManagerView
+from two_factor.urls import urlpatterns as tf_urls
+from coral.views.user import UserManagerView
 from coral.views.api_file import TempFileView
 from coral.views.group_manager import GroupManagerView
 from coral.views.person_user import PersonUserSignupView
 from arches.app.views.plugin import PluginView
-from coral.views.auth import PersonSignupView, PersonConfirmSignupView
+from coral.views.auth import PersonSignupView, PersonConfirmSignupView, SetupView, LoginView, Reset2FAView, BackupCodesView
 from coral.views.workflow_builder import WorkflowBuilder, WorkflowBuilderGraphComponents, WorkflowBuilderCardOverride, WorkflowBuilderWorkflowPlugins, WorkflowBuilderPluginExport, WorkflowBuilderUpdateInitWorkflow
 from coral.views.open_workflow import OpenWorkflow
 from coral.views.merge_resources import MergeResourcesView
@@ -30,7 +31,16 @@ uuid_regex = settings.UUID_REGEX
 
 
 urlpatterns = [
+    re_path(r"^auth/", LoginView.as_view(), name="auth"),
+    path('account/two_factor/setup/', SetupView.as_view(), name='two_factor_setup_pending'),
+    path('account/two_factor/reset/', Reset2FAView.as_view(), name='two_factor_reset'),
+    path('account/two_factor/backup-codes/', BackupCodesView.as_view(), name='two_factor_backup_codes'),
+    path('', include(tf_urls)),
     path('', include('arches.urls')),
+    path('', include('arches_controlled_lists.urls')),
+    path('', include('arches_component_lab.urls')),
+    path('', include('arches_modular_reports.urls')),
+    path('', include('arches_search.urls')),
     re_path(r'^user$', UserManagerView.as_view(), name="user_profile_manager"),
     re_path(r'^person/signup-link$', PersonUserSignupView.as_view(), name="person_user_signup"),
     re_path(r'^plugins/group-manager', PluginView.as_view(), name='group-manager'),
@@ -108,14 +118,18 @@ urlpatterns = [
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# if settings.SHOW_LANGUAGE_SWITCH is True:
-#     urlpatterns = i18n_patterns(*urlpatterns)
+urlpatterns.append(path("i18n/", include("django.conf.urls.i18n")))
 
 if settings.DEBUG or settings.SERVE_STATIC:
     urlpatterns += [
         re_path(r'^static/(?P<path>.*)$', views.serve),
     ]
-    if settings.DEBUG:
+    if settings.DEBUG and "debug_toolbar" in settings.INSTALLED_APPS:
         urlpatterns += [
             re_path("__debug__/", include("debug_toolbar.urls")),
         ]
+
+handler400 = "arches.app.views.main.custom_400"
+handler403 = "arches.app.views.main.custom_403"
+handler404 = "arches.app.views.main.custom_404"
+handler500 = "arches.app.views.main.custom_500"

@@ -40,7 +40,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "details-step",
@@ -56,7 +58,7 @@
                   "nodegroupid": "59c1f78a-2a55-11f0-b2d3-0242ac120006",
                   "node": "59c1f78a-2a55-11f0-b2d3-0242ac120006",
                   "nodeOptions": {
-                    "59c1f78a-2a55-11f0-b2d3-0242ac120006" : {
+                    "59c1f78a-2a55-11f0-b2d3-0242ac120006": {
                       "allowInstanceCreation": false
                     }
                   }
@@ -71,7 +73,6 @@
                   "nodegroupid": "fc1e5e88-2a55-11f0-b2d3-0242ac120006",
                   "semanticName": "Details",
                   "resourceid": "['initial-step-step']['835839dd-ec4a-4732-ba9c-a7c6be4ea832'][0]['resourceid']['resourceInstanceId']"
-
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -81,14 +82,19 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "map-step",
         "title": "Map",
         "required": false,
         "saveWithoutProgressing": true,
-        "hiddenWorkflowButtons": ["save", "undo"],
+        "hiddenWorkflowButtons": [
+          "save",
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -140,7 +146,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "documentation-step",
@@ -163,7 +171,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "sign-off-step",
@@ -199,17 +210,19 @@
                         "5b8d8413-ee01-465f-9774-e5b247cd205a",
                         "6ba1b471-6faf-4f96-9179-94b2a1662512"
                       ],
-                      "conflictNode": ["f82e1ac2-2a5d-11f0-88da-0242ac120006"],
+                      "conflictNode": [
+                        "f82e1ac2-2a5d-11f0-88da-0242ac120006"
+                      ],
                       "conflictAllowBlank": false
                     },
                     "e39c76b2-2a5d-11f0-8d35-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "0e7e8de8-2a5e-11f0-8d35-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -222,7 +235,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

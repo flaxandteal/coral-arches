@@ -12,7 +12,9 @@
         "name": "initial-step-step",
         "title": "Initial step",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -76,43 +78,43 @@
                   "nodegroupid": "4f5ec415-993e-11ea-bab0-f875a44e0e11",
                   "nodeOptions": {
                     "a64c82ae-3de4-11ef-8288-0242ac140007": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "6c218875-ee13-11eb-a51c-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "6c218866-ee13-11eb-9911-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a5416b51-f121-11eb-bdde-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a541921e-f121-11eb-b00f-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a5419225-f121-11eb-8224-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a541921f-f121-11eb-be85-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -123,7 +125,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Associated Licences", "Licence Number"]],
+                  "labels": [
+                    [
+                      "Associated Licences",
+                      "Licence Number"
+                    ]
+                  ],
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "879fc326-02f6-11ef-927a-0242ac150006"
@@ -134,7 +141,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Person or Organization", "HED Inspector"]],
+                  "labels": [
+                    [
+                      "Person or Organization",
+                      "HED Inspector"
+                    ]
+                  ],
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
@@ -161,7 +173,9 @@
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4dfe8c68-02f3-11ef-a4eb-0242ac150006",
-                  "hiddenNodes": ["f59b45be-3dd2-11ef-a49f-0242ac140007"]
+                  "hiddenNodes": [
+                    "f59b45be-3dd2-11ef-a49f-0242ac140007"
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -171,7 +185,9 @@
                 "parameters": {
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["a4724977-9937-11ea-a11e-f875a44e0e11"],
+                  "hiddenNodes": [
+                    "a4724977-9937-11ea-a11e-f875a44e0e11"
+                  ],
                   "nodegroupid": "a472226f-9937-11ea-966a-f875a44e0e11",
                   "nodeOptions": {
                     "347f6f46-434e-11ef-a83a-0242ac140007": {
@@ -197,43 +213,43 @@
                   "nodegroupid": "1d4ef3f4-02f4-11ef-927a-0242ac150006",
                   "nodeOptions": {
                     "a64c82ae-3de4-11ef-8288-0242ac140007": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "2a5bc0a5-fe48-11ea-8aeb-f875a44e0e11": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "6c218875-ee13-11eb-a51c-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "6c218866-ee13-11eb-9911-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a5416b51-f121-11eb-bdde-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a541921e-f121-11eb-b00f-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a5419225-f121-11eb-8224-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a541921f-f121-11eb-be85-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -305,7 +321,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

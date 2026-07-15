@@ -1,42 +1,4 @@
-cachetools
-django-storages==1.12
-boto3==1.24.70
-django-storages[google]
-google-auth
-google-cloud-storage
+# Dependencies that cannot be declared in pyproject.toml (git URLs, etc.)
+# All other dependencies are in pyproject.toml
 
-colorama==0.4.5
-tabulate<0.9
-asciitree
-
-starlette<=0.40.0
-typing_extensions
-starlette-graphene3
-starlette-context
-uvicorn<=0.15.0
-click<8
-graphene_file_upload
-aiodataloader<0.3.0
-python-multipart<0.0.18
-semantic_version
-PyJWT
-requests_oauthlib
-python-docx
-django-csp==4.0b7
-
-git+https://github.com/flaxandteal/arches-orm@v0.2.6-emerald+a1
-
-pika
-django-authorization
-casbin-django-orm-adapter
-cachetools
-websockets
-
-geojson
-PyYAML
-anyio>=4.4.0 # not directly required, pinned by Snyk to avoid a vulnerability
-requests>=2.32.2 # not directly required, pinned by Snyk to avoid a vulnerability
-sqlparse>=0.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
-zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
-PyMuPDF
-django-debug-toolbar==5.2.0
+alizarin

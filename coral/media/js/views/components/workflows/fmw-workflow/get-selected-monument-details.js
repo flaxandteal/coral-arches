@@ -1,13 +1,12 @@
-define([
-  'underscore',
-  'knockout',
-  'knockout-mapping',
-  'uuid',
-  'arches',
-  'viewmodels/card-component',
-  'viewmodels/alert',
-  'templates/views/components/workflows/fmw-workflow/get-selected-monument-details.htm'
-], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
+import _ from 'underscore';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import uuid from 'uuid';
+import arches from 'arches';
+import CardComponentViewModel from 'viewmodels/card-component';
+import AlertViewModel from 'viewmodels/alert';
+import template from 'templates/views/components/workflows/fmw-workflow/get-selected-monument-details.htm';
+
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
     this.SYSTEM_REFERENCE_NODEGROUP = '325a2f2f-efe4-11eb-9b0c-a87eeabdefba';
@@ -193,7 +192,7 @@ define([
         }
       }
       await Promise.all(additionalPromises);
-        
+
     this.cards({...this.cards(), [resourceId]: {
               designationType : designationType(),
               monumentName : monumentName(),
@@ -214,5 +213,4 @@ define([
     template: template
   });
 
-  return viewModel;
-});
+export default viewModel;

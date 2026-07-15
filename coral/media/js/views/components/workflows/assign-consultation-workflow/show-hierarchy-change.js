@@ -1,49 +1,37 @@
-define([
-  'underscore',
-  'knockout',
-  'knockout-mapping',
-  'uuid',
-  'arches',
-  'viewmodels/card-component',
-  'viewmodels/alert',
-  'templates/views/components/workflows/assign-consultation-workflow/show-hierarchy-change.htm'
-], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
-  function viewModel(params) {
-    CardComponentViewModel.apply(this, [params]);
+import _ from 'underscore';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import uuid from 'uuid';
+import arches from 'arches';
+import CardComponentViewModel from 'viewmodels/card-component';
+import AlertViewModel from 'viewmodels/alert';
+import template from 'templates/views/components/workflows/assign-consultation-workflow/show-hierarchy-change.htm';
 
-    this.APPLICATION_TYPE_NODEGROUP = '54de6acc-8895-11ea-9067-f875a44e0e11';
+function viewModel(params) {
+  CardComponentViewModel.apply(this, [params]);
 
-    this.hierarchyOptions = ko.observableArray([
-      { text: 'Statutory', id: 'd06d5de0-2881-4d71-89b1-522ebad3088d' },
-      { text: 'Non-statutory', id: 'be6eef20-8bd4-4c64-abb2-418e9024ac14' },
-      { text: 'Please select an Application Type', id: '09646513-78ed-4f20-b9a9-11dc0fdca36b'}
-    ]);
-    this.selectedHierarchy = ko.observable();
+  this.APPLICATION_TYPE_NODEGROUP = '54de6acc-8895-11ea-9067-f875a44e0e11';
 
-    this.configKeys = ko.observable({ placeholder: 0 });
+  this.hierarchyOptions = ko.observableArray([
+    { text: 'Statutory', id: 'd06d5de0-2881-4d71-89b1-522ebad3088d' },
+    { text: 'Non-statutory', id: 'be6eef20-8bd4-4c64-abb2-418e9024ac14' },
+    { text: 'Please select an Application Type', id: '09646513-78ed-4f20-b9a9-11dc0fdca36b'}
+  ]);
+  this.selectedHierarchy = ko.observable();
 
-    this.disabled = ko.observable(true);
+  this.configKeys = ko.observable({ placeholder: 0 });
 
-    this.STATUTORY_VALUES = [
-      '7b87dd7a-7573-4417-9691-0875a783e8c2', // F - Full
-      '32d2e13f-31fb-4031-9bbb-cd159c76a28e', // O - Outline
-      '83fe6c2e-bfbb-4a75-8a46-df8baf05e999' // RM - Reserved Matter
-    ];
+  this.disabled = ko.observable(true);
 
-    this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11'].subscribe((value) => {
-      if (value) {
-        if (this.STATUTORY_VALUES.includes(value)) {
-          this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
-        } else {
-          this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
-        }
-      } else {
-        this.selectedHierarchy('09646513-78ed-4f20-b9a9-11dc0fdca36b');
-      }
-    }, this);
+  this.STATUTORY_VALUES = [
+    '7b87dd7a-7573-4417-9691-0875a783e8c2', // F - Full
+    '32d2e13f-31fb-4031-9bbb-cd159c76a28e', // O - Outline
+    '83fe6c2e-bfbb-4a75-8a46-df8baf05e999' // RM - Reserved Matter
+  ];
 
-    if (this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']()) {
-      if (this.STATUTORY_VALUES.includes(this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']())) {
+  this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11'].subscribe((value) => {
+    if (value) {
+      if (this.STATUTORY_VALUES.includes(value)) {
         this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
       } else {
         this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
@@ -51,12 +39,22 @@ define([
     } else {
       this.selectedHierarchy('09646513-78ed-4f20-b9a9-11dc0fdca36b');
     }
+  }, this);
+
+  if (this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']()) {
+    if (this.STATUTORY_VALUES.includes(this.tile.data['54de6acc-8895-11ea-9067-f875a44e0e11']())) {
+      this.selectedHierarchy('d06d5de0-2881-4d71-89b1-522ebad3088d');
+    } else {
+      this.selectedHierarchy('be6eef20-8bd4-4c64-abb2-418e9024ac14');
+    }
+  } else {
+    this.selectedHierarchy('09646513-78ed-4f20-b9a9-11dc0fdca36b');
   }
+}
 
-  ko.components.register('show-hierarchy-change', {
-    viewModel: viewModel,
-    template: template
-  });
-
-  return viewModel;
+ko.components.register('show-hierarchy-change', {
+  viewModel: viewModel,
+  template: template
 });
+
+export default viewModel;

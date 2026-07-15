@@ -12,7 +12,9 @@
         "name": "initial-step-step",
         "title": "Initial step",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -20,8 +22,14 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11",
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
                   ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
                   "semanticName": "System Reference Numbers",
@@ -84,9 +92,9 @@
                   "semanticName": "DfI Received Date",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
-                    "config":{
-                      "maxDate":"today"
-                    }
+                      "config": {
+                        "maxDate": "today"
+                      }
                     }
                   }
                 },
@@ -179,7 +187,9 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["f279c99d-887e-11ea-9dca-f875a44e0e11"],
+                  "hiddenNodes": [
+                    "f279c99d-887e-11ea-9dca-f875a44e0e11"
+                  ],
                   "nodegroupid": "1b0e15e9-8864-11ea-b5f3-f875a44e0e11",
                   "semanticName": "Proposal"
                 },
@@ -190,7 +200,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "location-details-step",
@@ -236,7 +249,9 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["083f0650-ca61-11ee-afca-0242ac180006"],
+                  "hiddenNodes": [
+                    "083f0650-ca61-11ee-afca-0242ac180006"
+                  ],
                   "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas",
@@ -261,7 +276,9 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["083f146a-ca61-11ee-afca-0242ac180006"],
+                  "hiddenNodes": [
+                    "083f146a-ca61-11ee-afca-0242ac180006"
+                  ],
                   "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
@@ -273,7 +290,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "map-step",
@@ -297,7 +317,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "action-step",
@@ -312,6 +335,9 @@
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
                   "semanticName": "Action",
+                  "issueDateNode": "c4413ac8-69b6-11ee-908a-0242ac120002",
+                  "dueDateNode": "06adec44-69b7-11ee-908a-0242ac120002",
+                  "daysToAdd": 21,
                   "nodeOptions": {
                     "8322f9f6-69b5-11ee-93a1-0242ac120002": {
                       "allowInstanceCreation": false
@@ -320,25 +346,29 @@
                       "allowInstanceCreation": false
                     },
                     "ac905d54-ca65-11ee-b83c-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "c4413ac8-69b6-11ee-908a-0242ac120002": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today",
+                        "defaultValue": "Date of Data Entry"
                       }
                     }
                   }
                 },
                 "tilesManaged": "one",
-                "componentName": "fetch-latest-tile",
+                "componentName": "update-dates",
                 "uniqueInstanceName": "action"
               }
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "response",
@@ -349,35 +379,45 @@
           {
             "componentConfigs": [
               {
-              "parameters": {
-                "graphid": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
-                "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                "hiddenNodes": ["b15ee596-e53d-11ef-8521-0242ac120004"],
-                "nodegroupid": "31e5ece6-5989-11ef-af2d-0242ac120006",
-                "responseFileNode": "5d401df8-5989-11ef-9d18-0242ac120006",
-                "responseTeamNode": "b15ee596-e53d-11ef-8521-0242ac120004",
-                "letterOptions": [
-                    { "text": "DAERA AIL Consultation", "id": "daera-ail-consultation-template.docx"}
+                "parameters": {
+                  "graphid": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                  "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "b15ee596-e53d-11ef-8521-0242ac120004"
                   ],
-                "config": {
-                    "many_tiles": [ "response_summary_value" ],
+                  "nodegroupid": "31e5ece6-5989-11ef-af2d-0242ac120006",
+                  "responseFileNode": "5d401df8-5989-11ef-9d18-0242ac120006",
+                  "responseTeamNode": "b15ee596-e53d-11ef-8521-0242ac120004",
+                  "letterOptions": [
+                    {
+                      "text": "DAERA AIL Consultation",
+                      "id": "daera-ail-consultation-template.docx"
+                    }
+                  ],
+                  "config": {
+                    "many_tiles": [
+                      "response_summary_value"
+                    ],
                     "extract_pdf": true,
                     "special": {
                       "today": "today",
                       "user": "user"
                     }
                   }
-              },
-              "noTileSidebar": true,
-              "tilesManaged": "many",
-              "componentName": "pdf-merger",
-              "uniqueInstanceName": "pdf-merger"
-            }
-          ]
+                },
+                "noTileSidebar": true,
+                "tilesManaged": "many",
+                "componentName": "pdf-merger",
+                "uniqueInstanceName": "pdf-merger"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": ["save"]
+        "hiddenWorkflowButtons": [
+          "save",
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

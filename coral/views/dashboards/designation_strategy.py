@@ -2,11 +2,11 @@ from datetime import datetime
 from dateutil import parser
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
-from arches_orm.view_models import ConceptListValueViewModel, ConceptValueViewModel
+from alizarin_django.view_models import ConceptListValueViewModel, ConceptValueViewModel
 from coral.views.dashboards.sql_query.builder import build_query
 from coral.views.dashboards.sql_query.config.designation_config import DESIGNATION_SQL_QUERY_CONFIG
 from django.db import connection, DatabaseError
-from arches_orm.adapter import admin 
+from alizarin_django.adapter import admin 
 from typing import List
 import pdb
 
@@ -21,7 +21,7 @@ COUNCIL_NODE = "447973ce-d7e2-11ee-a4a1-0242ac120006"
 class DesignationTaskStrategy(TaskStrategy):
     
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter='all'):
-        from arches_orm.models import Monument, MonumentRevision, Consultation
+        from alizarin_django.models import Monument, MonumentRevision, Consultation
         with admin():
 
             resources = []
@@ -103,7 +103,7 @@ class DesignationTaskStrategy(TaskStrategy):
         ]
     
     def get_filter_options(self, groupId=None):
-        from arches_orm.models import Monument
+        from alizarin_django.models import Monument
         with admin():
             """Return the available filter options for the designation tasks."""
             # create the entries for the council filter options
@@ -131,7 +131,7 @@ class DesignationTaskStrategy(TaskStrategy):
         }
     
     def build_data(self, resource, groupId):
-        from arches_orm.models import Monument, MonumentRevision
+        from alizarin_django.models import Monument, MonumentRevision
 
         utilities = Utilities()
 

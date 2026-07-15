@@ -1,15 +1,14 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'geojson-extent',
-    'views/components/cards/select-feature-layers',
-    'views/components/map',
-    'templates/views/components/reports/scenes/map.htm',
-    'bindings/datatable'
-], function(_, ko, arches, reportUtils, geojsonExtent, selectFeatureLayersFactory, MapComponentViewModel, mapReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/map', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import geojsonExtent from 'geojson-extent';
+import selectFeatureLayersFactory from 'views/components/cards/select-feature-layers';
+import MapComponentViewModel from 'views/components/map';
+import mapReportTemplate from 'templates/views/components/reports/scenes/map.htm';
+import datatable from 'bindings/datatable';
+
+export default ko.components.register('views/components/reports/scenes/map', {
         viewModel: function(params) {
             const self = this;
             Object.assign(self, reportUtils);
@@ -136,7 +135,7 @@ define([
                 self.map().fitBounds(geojsonExtent(x));
                 const source = self.map().getSource('selected-geometry')
                 if(source) {
-                    data = x;
+                    source.setData(x);
                 } else {
                     self.map().addSource('selected-geometry', {
                         type: 'geojson', 
@@ -188,4 +187,3 @@ define([
         },
         template: mapReportTemplate
     });
-});

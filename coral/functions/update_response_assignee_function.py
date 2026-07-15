@@ -1,7 +1,7 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
-from arches_orm.models import Group, Person
-from arches_orm.adapter import admin
+from alizarin_django.models import Group, Person
+from alizarin_django.adapter import admin
 import logging
 
 # node groups

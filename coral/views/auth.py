@@ -21,7 +21,7 @@ import logging
 import json
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
-from django.views.generic import View
+from django.views.generic import View, FormView
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils.html import strip_tags
@@ -38,14 +38,351 @@ from coral.utils.forms import CoralUserCreationForm
 from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
-from arches.app.views.auth import *
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 from coral.models.models import RegistrationLink
+from django_otp import user_has_device
+from django_otp.plugins.otp_totp.models import TOTPDevice
+from django_otp.plugins.otp_static.models import StaticDevice, StaticToken
+from django.contrib.auth import authenticate, login as auth_login, logout
+from two_factor.views import SetupView as BaseSetupView, BackupTokensView
+from two_factor.forms import TOTPDeviceForm
+from qrcode.image.svg import SvgPathImage
+import qrcode
 
 logger = logging.getLogger(__name__)
 
+
+class Reset2FAView(View):
+    """View to reset user's 2FA - deletes devices and logs user out"""
+    
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return redirect('auth')
+        
+        TOTPDevice.objects.filter(user=request.user).delete()
+        StaticDevice.objects.filter(user=request.user).delete()
+        
+        logout(request)
+        
+        return redirect('auth')
+
+
+BACKUP_CODE_COUNT = 10
+
+
+class BackupCodesView(BackupTokensView):
+    template_name = 'two_factor_backup_codes.htm'
+    success_url = 'two_factor_backup_codes'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('auth')
+        
+        if not TOTPDevice.objects.filter(user=request.user, confirmed=True).exists():
+             return redirect('user_profile_manager')
+
+        self.device, created = StaticDevice.objects.get_or_create(
+            user=request.user,
+            name='backup',
+        )
+
+        return FormView.dispatch(self, request, *args, **kwargs)
+
+    def form_valid(self, form):
+        self.device.token_set.all().delete()
+        
+        import random
+        import string
+        codes = []
+        for _ in range(BACKUP_CODE_COUNT):
+             code = ''.join(random.choices(string.digits, k=8))
+             StaticToken.objects.create(device=self.device, token=code)
+             codes.append(code)
+        
+        return render(
+            self.request,
+            self.template_name,
+            {
+                'codes': codes,
+                'has_codes': True,
+                'just_generated': True,
+                'remaining_count': len(codes),
+            }
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.device:
+             count = self.device.token_set.count()
+             context['remaining_count'] = count
+             context['has_codes'] = count > 0
+        return context
+
+
+class SetupView(BaseSetupView):    
+    def get(self, request, *args, **kwargs):
+        user_id = request.session.get('2fa_pending_user_id')
+        
+        if not user_id:
+            return redirect('auth')
+        
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            return redirect('auth')
+        
+        timestamp = request.session.get('2fa_timestamp', 0)
+        timeout = getattr(settings, 'TWO_FACTOR_LOGIN_TIMEOUT', 600)
+        if timeout and (time.time() - timestamp) > timeout:
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            return redirect('auth')
+
+        device = TOTPDevice.objects.filter(user=user, confirmed=False).first()
+        if not device:
+            device = TOTPDevice.objects.create(
+                user=user,
+                name='default',
+                confirmed=False
+            )
+
+        otpauth_url = device.config_url
+        
+        img = qrcode.make(otpauth_url, image_factory=SvgPathImage)
+        from io import BytesIO
+        stream = BytesIO()
+        img.save(stream)
+        qr_code_svg = stream.getvalue().decode('utf-8')
+        
+        return render(
+            request,
+            'two_factor_setup.htm',
+            {
+                'device': device,
+                'qr_code': qr_code_svg,
+                'secret_key': device.key,
+                'next': request.session.get('2fa_pending_next', reverse('home')),
+            }
+        )
+    
+    def post(self, request, *args, **kwargs):
+        """Handle OTP verification to complete setup"""
+        user_id = request.session.get('2fa_pending_user_id')
+        
+        if not user_id:
+            return redirect('auth')
+        
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            return redirect('auth')
+        
+        device = TOTPDevice.objects.filter(user=user, confirmed=False).first()
+        if not device:
+            return redirect('auth')
+
+        token = request.POST.get('token', '').strip()
+        
+        if device.verify_token(token):
+            device.confirmed = True
+            device.save()
+            
+            next_url = request.session.get('2fa_pending_next', reverse('home'))
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            
+            return redirect(next_url)
+        
+        otpauth_url = device.config_url
+        img = qrcode.make(otpauth_url, image_factory=SvgPathImage)
+        from io import BytesIO
+        stream = BytesIO()
+        img.save(stream)
+        qr_code_svg = stream.getvalue().decode('utf-8')
+        
+        return render(
+            request,
+            'two_factor_setup.htm',
+            {
+                'device': device,
+                'qr_code': qr_code_svg,
+                'secret_key': device.key,
+                'next': request.session.get('2fa_pending_next', reverse('home')),
+                'error': 'Invalid token. Please try again.',
+            }
+        )
+
+
+@method_decorator(never_cache, name="dispatch")
+class LoginView(View):    
+    def get(self, request):
+        next = request.GET.get("next", reverse("home"))
+        registration_success = request.GET.get("registration_success")
+
+        if request.GET.get("logout", None) is not None:
+            logout(request)
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            return redirect("auth")
+        
+        if request.session.get('2fa_pending_user_id'):
+            return render(
+                request,
+                "two_factor_token.htm",
+                {
+                    "next": request.session.get('2fa_pending_next', next),
+                    "token_error": False,
+                },
+            )
+        
+        return render(
+            request,
+            "login.htm",
+            {
+                "auth_failed": False,
+                "next": next,
+                "registration_success": registration_success,
+                "user_signup_enabled": settings.ENABLE_USER_SIGNUP,
+            },
+        )
+
+    def post(self, request):
+        next = request.POST.get("next", reverse("home"))
+        
+        otp_token = request.POST.get('otp_token', '').strip()
+        if otp_token and request.session.get('2fa_pending_user_id'):
+            logger.info("Processing OTP verification")
+            return self._verify_otp(request, otp_token, next)
+        
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+        
+        logger.info(f"Attempting username/password authentication for user: {username}")
+        
+        if not username or not password:
+            return render(
+                request, 
+                "login.htm", 
+                {"auth_failed": True, "next": next, "user_signup_enabled": settings.ENABLE_USER_SIGNUP}, 
+                status=401
+            )
+        
+        user = authenticate(username=username, password=password)
+        
+        if user is not None and user.is_active:
+            if user_has_device(user):
+                request.session['2fa_pending_user_id'] = user.pk
+                request.session['2fa_pending_next'] = next
+                request.session['2fa_timestamp'] = time.time()
+                
+                return render(
+                    request,
+                    "two_factor_token.htm",
+                    {
+                        "next": next,
+                        "token_error": False,
+                    },
+                )
+            else:
+                request.session['2fa_pending_user_id'] = user.pk
+                request.session['2fa_pending_next'] = next
+                request.session['2fa_timestamp'] = time.time()
+                
+                return redirect('two_factor_setup_pending')
+
+        return render(
+            request, 
+            "login.htm", 
+            {"auth_failed": True, "next": next, "user_signup_enabled": settings.ENABLE_USER_SIGNUP}, 
+            status=401
+        )
+    
+    def _verify_otp(self, request, otp_token, next_url):
+        """Verify OTP token and complete login"""
+        from django.contrib.auth import get_user_model
+        
+        user_id = request.session.get('2fa_pending_user_id')
+        timestamp = request.session.get('2fa_timestamp', 0)
+        
+        if not user_id:
+            return redirect('auth')
+
+        timeout = getattr(settings, 'TWO_FACTOR_LOGIN_TIMEOUT', 600)
+        if timeout and (time.time() - timestamp) > timeout:
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            return render(
+                request,
+                "login.htm",
+                {
+                    "auth_failed": True,
+                    "timeout": True,
+                    "next": next_url,
+                    "user_signup_enabled": settings.ENABLE_USER_SIGNUP,
+                },
+                status=401
+            )
+        
+        User = get_user_model()
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            return redirect("auth")
+
+        device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
+        verified = device and device.verify_token(otp_token)
+        
+        if not verified:
+            # Check backup codes
+            static_device = StaticDevice.objects.filter(user=user).first()
+            if static_device and static_device.verify_token(otp_token):
+                verified = True
+
+        if verified:
+            request.session.pop('2fa_pending_user_id', None)
+            request.session.pop('2fa_pending_next', None)
+            request.session.pop('2fa_timestamp', None)
+            
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            user.password = ""
+            
+            return redirect(next_url)
+
+        return render(
+            request,
+            "two_factor_token.htm",
+            {
+                "next": next_url,
+                "token_error": True,
+            },
+        )
+
+
 def _person_decrypt(person):
-    from arches_orm.models import Person
+    from alizarin_django.models import Person
 
     if not person:
         raise (Exception(("User can only be signed up by linking to a pre-known Person.")))

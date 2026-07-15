@@ -16,15 +16,18 @@
           {
             "componentConfigs": [
               {
-              "parameters": {
+                "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
-                      "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                      "b37552bd-9527-11ea-97f4-f875a44e0e11",
-                      "b37552bd-9527-11ea-97f4-f875a44e0e11",
-                      "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                      "b37552c2-9527-11ea-8356-f875a44e0e11"
-                    ],
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11",
+                    "b37552bf-9527-11ea-9c87-f875a44e0e11",
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
+                  ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
                   "semanticName": "System Reference Numbers",
                   "requiredParentTiles": [
@@ -54,7 +57,9 @@
           "text": "From this page you can begin a new Agriculture & Forestry Consultation.",
           "heading": "Agriculture and Forestry Consultation"
         },
-        "hiddenWorkflowButtons": ["undo"]
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "consultation-step",
@@ -71,11 +76,11 @@
                   "nodegroupid": "9a57f3c4-04b9-11f0-9182-9e7c335817fb",
                   "node": "2b4cfdac-04ba-11f0-9182-9e7c335817fb",
                   "nodeOptions": {
-                  "58a2b98f-a255-11e9-9a30-00224800b26d" : {
-                    "searchString": "",
-                    "allowInstanceCreation": false
-                  }
-                },
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
+                      "searchString": "",
+                      "allowInstanceCreation": false
+                    }
+                  },
                   "semanticName": "Heritage Asseets details"
                 },
                 "tilesManaged": "one",
@@ -110,18 +115,18 @@
                   "daysToAdd": 14,
                   "nodeOptions": {
                     "ea5bb474-e217-11ef-803e-0242ac120003": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "2b82c62c-e218-11ef-803e-0242ac120003": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "798d9d74-e218-11ef-803e-0242ac120003": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -195,7 +200,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "documentation-step",
@@ -215,11 +222,13 @@
                 "componentName": "related-document-upload",
                 "uniqueInstanceName": "3fd33f90-d808-4da7-acbe-8ac520f71ee5"
               }
-          ]
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "letters-step",
@@ -230,36 +239,47 @@
           {
             "componentConfigs": [
               {
-              "parameters": {
-                "graphid": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
-                "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
-                "hiddenNodes": ["b15ee596-e53d-11ef-8521-0242ac120004"],
-                "nodegroupid": "29e3212c-e53d-11ef-93e2-0242ac120004",
-                "semanticName": "agriculture-letter",
-                "letterMetatype": "0c3e516c-e53f-11ef-93e2-0242ac120004",
-                "letterTypeNode": "6d09da12-e53e-11ef-93e2-0242ac120004",
-                "letterResourceNode": "b15ee596-e53d-11ef-8521-0242ac120004",
-                "letterOptions": [
-                    { "text": "Forestry Response Letter", "id": "forestry-consult-response-template.docx" },
-                    { "text": "Daera Consultation Response Letter", "id": "daera-consultation-response-template.docx"}
+                "parameters": {
+                  "graphid": "8d41e4d2-a250-11e9-8fd3-00224800b26d",
+                  "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
+                  "hiddenNodes": [
+                    "b15ee596-e53d-11ef-8521-0242ac120004"
                   ],
-                "config": {
+                  "nodegroupid": "29e3212c-e53d-11ef-93e2-0242ac120004",
+                  "semanticName": "agriculture-letter",
+                  "letterMetatype": "0c3e516c-e53f-11ef-93e2-0242ac120004",
+                  "letterTypeNode": "6d09da12-e53e-11ef-93e2-0242ac120004",
+                  "letterResourceNode": "b15ee596-e53d-11ef-8521-0242ac120004",
+                  "letterOptions": [
+                    {
+                      "text": "Forestry Response Letter",
+                      "id": "forestry-consult-response-template.docx"
+                    },
+                    {
+                      "text": "Daera Consultation Response Letter",
+                      "id": "daera-consultation-response-template.docx"
+                    }
+                  ],
+                  "config": {
                     "special": {
                       "today": "today",
                       "user": "user"
                     }
                   }
-              },
-              "noTileSidebar": true,
-              "tilesManaged": "many",
-              "componentName": "file-template",
-              "uniqueInstanceName": "agriculture-letter"
-            }
-          ]
+                },
+                "noTileSidebar": true,
+                "tilesManaged": "many",
+                "componentName": "file-template",
+                "uniqueInstanceName": "agriculture-letter"
+              }
+            ]
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": ["save"]
+        "hiddenWorkflowButtons": [
+          "save",
+          "undo"
+        ]
       },
       {
         "name": "sign-off-step",
@@ -272,8 +292,7 @@
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
-                  "hiddenNodes": 
-                  [ 
+                  "hiddenNodes": [
                     "998d6728-fb26-11ee-838d-0242ac190006",
                     "d0347d52-fb26-11ee-838d-0242ac190006",
                     "b7fb9270-fb26-11ee-b5d2-0242ac190006",
@@ -288,7 +307,7 @@
                     "366577d4-eedd-11ef-829a-0242ac120006",
                     "93199292-fb24-11ee-838d-0242ac190006",
                     "998d6728-fb26-11ee-838d-0242ac190006",
-                    "ff42f8f2-3e93-11ef-9023-0242ac140007" 
+                    "ff42f8f2-3e93-11ef-9023-0242ac140007"
                   ],
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
@@ -303,8 +322,8 @@
                       "allowInstanceCreation": false
                     },
                     "24d00d86-fb27-11ee-b5d2-0242ac190006": {
-                      "config":{
-                        "maxDate":"today",
+                      "config": {
+                        "maxDate": "today",
                         "label": "Date"
                       }
                     }
@@ -318,7 +337,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

@@ -1,0 +1,80 @@
+<!--
+ARCHES - a program developed to inventory and manage immovable cultural heritage.
+Copyright (C) 2013 J. Paul Getty Trust and World Monuments Fund
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+{% extends "base.htm" %}
+{% load static %}
+{% load i18n %}
+
+{% block loading_mask %}
+{% endblock loading_mask %}
+
+{% block body %}
+
+<div id="container" class="cls-container arches-login">
+
+	<!-- LOGIN FORM -->
+	<div class="cls-content arches-signin">
+		<div class="cls-content-sm panel login-panel" style="width: 350px;">
+			<div class="panel-body">
+				<h3 class="login-panel-header arches-signin">{% trans "Two-Factor Authentication" %}</h3>
+				<p class="arches-signin-subtext">
+					{% trans "Please enter the verification code from your authenticator app or a backup code." %}
+				</p>
+
+				<form id="totp-form" action="?next={{ next }}" method='POST'>
+					{% csrf_token %}
+					<input type="hidden" name="next" value="{{ next }}" />
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon"><i class="fa fa-key"></i></div>
+							<input type="text" 
+								   class="form-control input-lg" 
+								   placeholder="{% trans 'Authentication Code' %}" 
+								   name='otp_token' 
+								   autocomplete="one-time-code"
+								   inputmode="numeric"
+								   pattern="[0-9]*"
+								   maxlength="8"
+								   autofocus>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="arches-signin-btn">
+							<button class="btn btn-primary btn-lg btn-block" type="submit">{% trans "Verify" %}</button>
+						</div>
+					</div>
+					<div class="row" style="padding-top:10px; margin: -20px 0px 5px 0px;">
+						<div style="{% if not token_error %}display:none;{% endif %}" id="token-failed-alert" class="alert alert-danger fade in" role="alert">
+							<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans "Close" %}</span></button>
+							<h4>{% trans "Verification failed" %}</h4>
+							<span>{% trans "Invalid authentication code. Please try again." %}</span>
+						</div>
+					</div>
+				</form>
+				<div class="row account-management">
+					<a href="{% url 'auth' %}?logout=true" class="btn btn-link account-link">{% trans "Cancel and return to login" %}</a>
+				</div>
+			</div>
+
+			<div class="panel-footer">
+				{% trans "Open your authenticator app to get your verification code." %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock body %}

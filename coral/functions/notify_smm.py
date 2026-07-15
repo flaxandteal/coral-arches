@@ -1,5 +1,5 @@
 from arches.app.functions.base import BaseFunction
-from arches_orm.adapter import admin
+from alizarin_django.adapter import admin
 from coral.functions.notifications.notification_manager import NotificationManager
 import logging
 import os

@@ -3,15 +3,15 @@ default: help
 TOOLKIT_REPO = https://github.com/flaxandteal/arches-container-toolkit
 TOOLKIT_FOLDER = docker
 TOOLKIT_RELEASE = main
-ARCHES_PROJECT ?= $(shell ls -1 */__init__.py | head -n 1 | sed 's/\/.*//g')
-ARCHES_BASE = ghcr.io/flaxandteal/arches-base:coral-7.6
+ARCHES_PROJECT ?= coral
+ARCHES_BASE = ghcr.io/flaxandteal/arches-base:docker-8.1.0-release
 ARCHES_PROJECT_ROOT = $(shell pwd)/
 DOCKER_COMPOSE_COMMAND = ARCHES_PROJECT_ROOT=$(ARCHES_PROJECT_ROOT) ARCHES_BASE=$(ARCHES_BASE) ARCHES_PROJECT=$(ARCHES_PROJECT) docker compose --profile api -p $(ARCHES_PROJECT) -f docker/docker-compose.yml
 CMD ?=
 
 create: docker
 	echo $(shell id -u)
-	FORUSER=$(shell id -u) $(DOCKER_COMPOSE_COMMAND) run -e FORUSER=$(shell id -u) --entrypoint /bin/sh arches_base -c ". ../ENV/bin/activate; apt install -y git; pip install 'pyjwt<2.1,>=2.0.0' 'cryptography<3.4.0' --only-binary cryptography --only-binary cffi; cd /local_root; ls -ltr; id -u; arches-project create $(ARCHES_PROJECT) && mv docker Makefile $(ARCHES_PROJECT); ls -ltr; echo \$${FORUSER}; groupadd -g \$${FORUSER} externaluser; useradd -u \$${FORUSER} -g \$${FORUSER} externaluser; chown -R \$${FORUSER}:\$${FORUSER} $(ARCHES_PROJECT); echo \$$?; ls -ltr $(ARCHES_PROJECT)"
+	FORUSER=$(shell id -u) $(DOCKER_COMPOSE_COMMAND) run -e FORUSER=$(shell id -u) --entrypoint /bin/sh arches_base -c ". ../ENV/bin/activate; apt install -y git; pip install 'pyjwt<2.1,>=2.0.0' 'cryptography<3.4.0' --only-binary cryptography --only-binary cffi; cd /local_root; ls -ltr; id -u; arches-admin startproject $(ARCHES_PROJECT) && mv docker Makefile $(ARCHES_PROJECT); ls -ltr; echo \$${FORUSER}; groupadd -g \$${FORUSER} externaluser; useradd -u \$${FORUSER} -g \$${FORUSER} externaluser; chown -R \$${FORUSER}:\$${FORUSER} $(ARCHES_PROJECT); echo \$$?; ls -ltr $(ARCHES_PROJECT)"
 
 cypress.config.js: dl-docker
 	cp docker/tests/cypress.config.js $(ARCHES_PROJECT_ROOT)
@@ -60,21 +60,24 @@ endif
 
 .PHONY: rebuild-images
 rebuild-images: docker
+	@[ -e "../$(ARCHES_PROJECT)" ] || ln -s $(notdir $(CURDIR)) ../$(ARCHES_PROJECT)
 	$(DOCKER_COMPOSE_COMMAND) build
 
 .PHONY: build
 build: docker
+	# Ensure the parent directory has a symlink matching ARCHES_PROJECT for the Docker build context
+	@[ -e "../$(ARCHES_PROJECT)" ] || ln -s $(notdir $(CURDIR)) ../$(ARCHES_PROJECT)
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
 	if [ -z $(ARCHES_PROJECT)/media/node_modules/jquery-validation ]; then rm -rf $(ARCHES_PROJECT)/media/node_modules; fi
 	$(DOCKER_COMPOSE_COMMAND) stop
 	echo "installing yarn"
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_npm_components
 	echo "installing bootstrap"
 	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker bootstrap
 
 	echo "installing past bootstrap"
-	if [ -d $(ARCHES_PROJECT)/pkg ]; then $(TOOLKIT_FOLDER)/act.py . load_package --yes; fi
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_yarn_build_development
+	if [ -d $(ARCHES_PROJECT)/pkg ]; then ARCHES_PROJECT=$(ARCHES_PROJECT) $(TOOLKIT_FOLDER)/act.py . load_package --yes; fi
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker run_npm_build_development
 	$(DOCKER_COMPOSE_COMMAND) stop
 	@echo "IF THIS IS YOUR FIRST TIME RUNNING make build AND YOU HAVE NOT ALREADY, MAKE SURE TO UPDATE urls.py (see make help)"
 
@@ -101,7 +104,7 @@ web: docker
 
 .PHONY: yarn-development
 yarn-development: docker
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_yarn_components
+	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /web_root/entrypoint.sh arches_worker install_npm_components
 
 .PHONY: docker-compose
 docker-compose: docker
@@ -113,7 +116,7 @@ manage: docker
 
 .PHONY: webpack
 webpack: docker
-	$(DOCKER_COMPOSE_COMMAND) run --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd coral; DJANGO_MODE=DEV NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 node --inspect ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js'
+	$(DOCKER_COMPOSE_COMMAND) run -T --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd /web_root/$(ARCHES_PROJECT); DJANGO_MODE=DEV NODE_OPTIONS=--max_old_space_size=8192 npm run build_development < /dev/null'
 
 .PHONY: clean
 clean: docker
