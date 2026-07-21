@@ -21,7 +21,7 @@ classifiers = [
     "Framework :: Django :: 5.2",
 ]
 dependencies = [
-    "arches>=8.1.0,<8.3.0",
+    "arches>=8.1.0,<=8.2.0a4",
     "arches_controlled_lists",
     "cachetools",
     "django-recaptcha>=4.0.0",
