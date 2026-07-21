@@ -193,7 +193,7 @@ LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 FILE_TYPE_CHECKING = None
 FILE_TYPES = ["bmp", "gif", "jpg", "jpeg", "pdf", "png", "psd", "rtf", "tif", "tiff", "xlsx", "csv", "zip"]
 FILENAME_GENERATOR = "arches.app.utils.storage_filename_generator.generate_filename"
-UPLOADED_FILES_DIR = "uploadedfiles"
+UPLOADED_FILES_DIR = os.environ.get("UPLOADED_FILES_DIR", "")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
@@ -303,6 +303,8 @@ DATABASES = {
 
 SEARCH_THUMBNAILS = False
 
+SAVED_SEARCHES = []
+
 INSTALLED_APPS = (
     "csp",
     "webpack_loader",
@@ -392,6 +394,10 @@ CONTENT_SECURITY_POLICY = {
 }
 
 X_FRAME_OPTIONS = 'DENY'
+
+MAPBOX_API_KEY = os.environ.get("MAPBOX_API_KEY", MAPBOX_API_KEY)
+
+USE_LOCAL_STORAGE = os.environ.get("USE_LOCAL_STORAGE", "False").lower() == "true"
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
