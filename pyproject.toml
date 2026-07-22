@@ -37,6 +37,7 @@ dependencies = [
     "colorama>=0.4.5",
     "arches_resource_version_manager @ git+https://github.com/fargeo/arches-resource-version-manager.git@main",
     "arches-search>=0.1.0a7",
+    "arches-modular-reports==1.0.0b9",
     "djangorestframework",
     "tabulate",
     "asciitree",

@@ -71,7 +71,8 @@
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
-                "uniqueInstanceName": "planning-reference"
+                "uniqueInstanceName": "planning-reference",
+                "reindexAfterSave": true
               },
               {
                 "parameters": {
