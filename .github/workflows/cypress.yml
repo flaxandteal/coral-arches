@@ -1,0 +1,114 @@
+name: Cypress E2E
+run-name: Cypress E2E
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+  workflow_dispatch:
+
+env:
+  ARCHES_PROJECT: coral
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4
+  CYPRESS_IMAGE: cypress/included:15.18.1
+  COMPOSE_PROJECT: coral-e2e
+
+jobs:
+  Cypress-E2E:
+    runs-on: [self-hosted]
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
+          path: ${{ env.ARCHES_PROJECT }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set derived environment
+        run: |
+          echo "ARCHES_PROJECT_ROOT=${{ github.workspace }}/${{ env.ARCHES_PROJECT }}/" >> "$GITHUB_ENV"
+          echo "COMPOSE=docker compose -p ${{ env.COMPOSE_PROJECT }} -f ${{ env.ARCHES_PROJECT }}/docker/docker-compose.ci.yml" >> "$GITHUB_ENV"
+
+      - name: Tear down any leftover stack
+        run: $COMPOSE down -v --remove-orphans || true
+
+      - name: Build and start the app stack
+        run: $COMPOSE up -d --build
+
+      - name: Wait for Arches to bootstrap and become healthy
+        run: |
+          cid="$($COMPOSE ps -q arches)"
+          for i in $(seq 1 120); do
+            status="$(docker inspect --format '{{.State.Health.Status}}' "$cid" 2>/dev/null || echo missing)"
+            echo "attempt $i: arches health=$status"
+            if [ "$status" = "healthy" ]; then
+              echo "Arches is healthy"; exit 0
+            fi
+            if [ "$status" = "missing" ]; then
+              echo "arches container is gone"; break
+            fi
+            sleep 15
+          done
+          echo "::error::Arches did not become healthy in time"
+          $COMPOSE logs --no-color arches
+          exit 1
+
+      - name: Seed the admin test 2FA (TOTP) device
+        # ARCHES_PROJECT is expanded inside the arches container (set by compose),
+        # not by the runner shell, so the single quotes are intentional.
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_totp'
+
+      - name: Run Cypress
+        run: |
+          docker run --rm \
+            --network ${{ env.COMPOSE_PROJECT }}_default \
+            -v "${{ github.workspace }}/${{ env.ARCHES_PROJECT }}":/e2e \
+            -w /e2e \
+            -e CYPRESS_BASE_URL=http://arches:8000 \
+            "${{ env.CYPRESS_IMAGE }}" --browser electron
+
+      - name: Fix artifact ownership
+        # The Cypress container runs as root and writes videos/screenshots into the
+        # mounted checkout; hand them back to the runner user so upload + cleanup work.
+        if: always()
+        run: |
+          docker run --rm --entrypoint sh \
+            -v "${{ github.workspace }}/${{ env.ARCHES_PROJECT }}":/e2e \
+            "${{ env.CYPRESS_IMAGE }}" \
+            -c "chown -R $(id -u):$(id -g) /e2e/cypress || true" || true
+
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: ${{ env.ARCHES_PROJECT }}/cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload Cypress videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: ${{ env.ARCHES_PROJECT }}/cypress/videos
+          if-no-files-found: ignore
+
+      - name: Dump Arches logs on failure
+        if: failure()
+        run: $COMPOSE logs --no-color arches || true
+
+      - name: Tear down the app stack
+        if: always()
+        run: $COMPOSE down -v --remove-orphans || true

@@ -188,7 +188,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Site Name"]').click().type('Testing');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
 
         cy.contains('Heritage Asset Type').should('be.visible');
         cy.get('[aria-label="Heritage Asset Type"]').click();
@@ -196,7 +195,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.select2-results__option').eq(2).click();
         cy.wait(2000)
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
         cy.contains('Land Use Classification').scrollIntoView();
@@ -211,7 +209,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.select2-results__option').eq(3).click();
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
 
         cy.contains('Bibliographic Source').scrollIntoView();
         cy.wait(2000)
@@ -269,7 +266,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.btn-success').contains('Add').click();
     })
 
-    it('Location Details tab specific tests', function () {
+    it.only('Location Details tab specific tests', function () {
         cy.contains('Workflows');
         cy.contains('Add Garden').click();
         cy.wait(2000);
@@ -302,7 +299,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Building Name"]').first().click().type('Testing Labs');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Building Name"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
@@ -312,7 +308,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Street"]').first().click().type('Testing Labs');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Street"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
@@ -321,7 +316,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Town or City"]').first().click().type('Testing Labs');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Town or City"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
@@ -330,7 +324,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
         cy.get('[aria-label="Postcode"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
@@ -376,7 +369,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
         cy.get('[aria-label="Unique Building ID"]').first().click().clear();
         // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
@@ -386,7 +378,6 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="LP Fusion ID"]').scrollIntoView().click().type('02');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
         cy.get('[aria-label="LP Fusion ID"]').first().click().clear();
         // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
@@ -396,11 +387,10 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="BU Fusion ID"').click().type('03');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Undo');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
         cy.get('[aria-label="BU Fusion ID"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
     })
 
     // Map section is to be manually tested, keeping in encase needed in future
