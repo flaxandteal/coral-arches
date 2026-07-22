@@ -70,6 +70,19 @@ jobs:
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_totp'
 
+      - name: Export generated frontend configuration for Cypress
+        # tsconfig.json extends ./frontend_configuration/tsconfig-paths.json, which
+        # arches generates at startup INSIDE its container (the dir is gitignored, so
+        # it is absent from the checkout). The Cypress container mounts the host
+        # checkout, so without these files every spec fails to compile with
+        # "File './frontend_configuration/tsconfig-paths.json' not found."
+        run: |
+          cid="$($COMPOSE ps -q arches)"
+          mkdir -p "${ARCHES_PROJECT_ROOT}frontend_configuration"
+          docker cp "$cid:/web_root/${ARCHES_PROJECT}/frontend_configuration/." \
+            "${ARCHES_PROJECT_ROOT}frontend_configuration/"
+          ls -la "${ARCHES_PROJECT_ROOT}frontend_configuration/"
+
       - name: Run Cypress
         run: |
           docker run --rm \
