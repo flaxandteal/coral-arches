@@ -37,7 +37,7 @@ jobs:
       - name: Set derived environment
         run: |
           echo "ARCHES_PROJECT_ROOT=${{ github.workspace }}/${{ env.ARCHES_PROJECT }}/" >> "$GITHUB_ENV"
-          echo "COMPOSE=docker compose -p ${{ env.COMPOSE_PROJECT }} -f ${{ env.ARCHES_PROJECT }}/docker/docker-compose.ci.yml" >> "$GITHUB_ENV"
+          echo "COMPOSE=docker compose -p ${{ env.COMPOSE_PROJECT }} -f ${{ env.ARCHES_PROJECT }}/docker-compose.ci.yml" >> "$GITHUB_ENV"
 
       - name: Tear down any leftover stack
         run: $COMPOSE down -v --remove-orphans || true
