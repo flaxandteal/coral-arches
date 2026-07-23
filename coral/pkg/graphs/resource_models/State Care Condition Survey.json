@@ -614,7 +614,8 @@
                         "label": "Heritage Asset",
                         "placeholder": {
                             "en": ""
-                        }
+                        },
+                        "allowInstanceCreation": false
                     },
                     "id": "84e6b949-65dc-4b9b-aeb7-83427a795a7b",
                     "label": {

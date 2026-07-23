@@ -111,7 +111,12 @@
                   "graphid": "8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "a78e548a-b554-11ee-805b-0242ac120006",
-                  "semanticName": "Associated Resources"
+                  "semanticName": "Associated Resources",
+                  "nodeOptions": {
+                    "a78e548a-b554-11ee-805b-0242ac120006": {
+                      "allowInstanceCreation": false
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
