@@ -64,7 +64,7 @@ dependencies = [
     "PyMuPDF",
     "django-two-factor-auth",
     "qrcode",
-    "alizarin",
+    "arches-querysets>=1.2.0",
 ]
 
 [dependency-groups]

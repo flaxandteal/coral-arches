@@ -1,15 +1,10 @@
 """
 Django AppConfig for alizarin_django.
 
-Replaces arches_orm.arches_django.apps.ArchesORMConfig in coral-arches's
-INSTALLED_APPS.
-
 Responsibilities on `ready()`:
     - Eagerly import the wkrm registry (so settings.WELL_KNOWN_RESOURCE_MODELS
-      is read once and cached). The actual graph registration with alizarin is
-      lazy — it happens the first time a wrapper class is asked for its model.
-    - Optionally warm the alizarin RDM cache from Arches' Concept/Value tables
-      (also lazy — only triggered the first time a concept lookup needs it).
+      is read once and cached). Graph slug resolution is deferred until first
+      use to avoid DB queries during startup.
 """
 
 from __future__ import annotations
@@ -27,9 +22,6 @@ class AlizarinDjangoConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
 
     def ready(self) -> None:
-        # Importing wkrm at ready time validates that
-        # settings.WELL_KNOWN_RESOURCE_MODELS exists and is parseable, but does
-        # NOT touch the DB. Graph registration is deferred until first use.
         try:
             from . import wkrm  # noqa: F401
 
@@ -39,8 +31,6 @@ class AlizarinDjangoConfig(AppConfig):
                 wkrm.wkrm_count(),
             )
         except Exception as exc:  # pragma: no cover
-            # Don't crash app startup if WKRMs are misconfigured — log and let
-            # individual call sites surface the error.
             logger.warning(
                 "alizarin_django: failed to prime WKRM registry: %s", exc
             )

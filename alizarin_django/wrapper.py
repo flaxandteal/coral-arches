@@ -1,19 +1,14 @@
 """
 ResourceModel — base class for every WKRM-generated wrapper.
 
-This is the central piece of the shim. Each WKRM (Person, Group, Monument, …)
-becomes a subclass of ResourceModel with `_graphid` set. The subclass exposes
-arches_orm-style classmethods (`find`, `all`, `where`) and instance methods
-(`save`, `delete`) plus dynamic semantic attribute access via `__getattr__`.
+Each WKRM (Person, Group, Monument, …) becomes a subclass of ResourceModel
+with `_graphid` set. The subclass exposes classmethods (`find`, `all`, `where`)
+and instance methods (`save`, `delete`) plus dynamic semantic attribute access
+via `__getattr__`.
 
-Internally:
-    - Tile/tree conversion uses alizarin's sync Rust functions
-      (alizarin.tiles_to_json_tree, alizarin.json_tree_to_tiles).
-    - Storage is Arches' Django models (Resource, TileModel).
-    - Semantic attribute access walks the JSON tree directly (sync), with view
-      models constructed lazily.
-    - Permissions: respect `alizarin_django.adapter.get_user()` — if the user
-      is None (admin / context_free), all nodegroups are permitted.
+Internally backed by arches-querysets' ResourceTileTree / TileTree. The
+aliased_data tree from arches-querysets is converted to a flat dict that
+_SemanticNode walks for attribute access.
 """
 
 from __future__ import annotations
@@ -26,33 +21,24 @@ from typing import (
     Any,
     ClassVar,
     Dict,
-    Iterable,
     Iterator,
     List,
     Optional,
-    Tuple,
     Type,
 )
 
-import alizarin
-
-from . import adapter, graph_loader
+from . import adapter
 
 logger = logging.getLogger(__name__)
 
 
 def _permitted_nodegroup_ids(user: Optional[Any], graphid: str) -> Optional[List[str]]:
-    """
-    Return the list of nodegroup UUIDs the user is allowed to read for this
-    graph, or None if the user is admin (no filtering).
-    """
     if user is None:
-        return None  # admin / no context — no filter
+        return None
     try:
         from arches.app.utils.permission_backend import get_nodegroups_by_perm
 
         nodegroups = get_nodegroups_by_perm(user, "models.read_nodegroup")
-        # get_nodegroups_by_perm returns NodeGroup model instances
         return [str(ng.nodegroupid) for ng in nodegroups]
     except Exception as exc:
         logger.warning(
@@ -62,44 +48,89 @@ def _permitted_nodegroup_ids(user: Optional[Any], graphid: str) -> Optional[List
         return []
 
 
-def _fetch_tiles_for_resource(
-    resourceinstance_id: str,
-    permitted: Optional[List[str]],
-) -> List[Dict[str, Any]]:
-    """Fetch tiles for one resource, optionally filtered by nodegroup perms."""
-    from arches.app.models.models import TileModel
+def _value_to_concept_vm(val: Any) -> Any:
+    """Wrap an Arches Value model instance as a ConceptValueViewModel."""
+    from .view_models.concepts import ConceptValueViewModel
 
-    qs = TileModel.objects.filter(resourceinstance_id=resourceinstance_id)
-    if permitted is not None:
-        qs = qs.filter(nodegroup_id__in=permitted)
-    return [_tile_row_to_dict(t) for t in qs]
+    return ConceptValueViewModel(
+        concept_value_id=str(val.valueid),
+        text=val.value,
+        language=str(val.language_id) if val.language_id else None,
+        concept_id=str(val.concept_id),
+    )
 
 
-def _tile_row_to_dict(t: Any) -> Dict[str, Any]:
-    """Coerce an Arches TileModel row to alizarin's tile dict shape."""
-    return {
-        "tileid": str(t.tileid),
-        "resourceinstance_id": str(t.resourceinstance_id),
-        "nodegroup_id": str(t.nodegroup_id),
-        "parenttile_id": str(t.parenttile_id) if t.parenttile_id else None,
-        "data": t.data or {},
-        "sortorder": getattr(t, "sortorder", None),
-        "provisionaledits": getattr(t, "provisionaledits", None),
-    }
+def _ri_to_resource_vm(ri: Any) -> Any:
+    """Wrap an Arches ResourceInstance as a ResourceInstanceViewModel."""
+    from .view_models.resources import ResourceInstanceViewModel
+
+    return ResourceInstanceViewModel(
+        resource_id=str(ri.pk),
+        graph_id=str(ri.graph_id),
+        display_value=str(ri.pk),
+        instance=ri,
+    )
+
+
+def _rtt_aliased_data_to_tree(obj: Any) -> Dict[str, Any]:
+    """Convert arches-querysets aliased_data (AliasedData / TileTree) to a flat
+    dict tree that _SemanticNode can walk.
+
+    AliasedData is a SimpleNamespace; child nodegroups appear as TileTree
+    objects (cardinality 1) or lists of TileTree (cardinality n). Leaf values
+    come from arches-querysets' to_python() — Value model instances for
+    concepts, ResourceInstance objects for resource-instance refs — which we
+    wrap in the alizarin_django view-model types so downstream isinstance
+    checks continue to work.
+    """
+    from arches_querysets.models import TileTree
+    from arches.app.models.models import Value, ResourceInstance
+
+    ad = obj
+    if hasattr(obj, "aliased_data"):
+        ad = obj.aliased_data
+    if ad is None:
+        return {}
+
+    result: Dict[str, Any] = {}
+    for key, val in vars(ad).items():
+        if isinstance(val, TileTree):
+            result[key] = _rtt_aliased_data_to_tree(val)
+        elif isinstance(val, Value):
+            result[key] = _value_to_concept_vm(val)
+        elif isinstance(val, ResourceInstance):
+            result[key] = _ri_to_resource_vm(val)
+        elif isinstance(val, list):
+            if val and isinstance(val[0], Value):
+                from .view_models.concepts import ConceptListValueViewModel
+
+                result[key] = ConceptListValueViewModel(
+                    [_value_to_concept_vm(v) for v in val if isinstance(v, Value)]
+                )
+            elif val and isinstance(val[0], ResourceInstance):
+                from .view_models.resources import RelatedResourceInstanceListViewModel
+
+                result[key] = RelatedResourceInstanceListViewModel(
+                    [_ri_to_resource_vm(ri) for ri in val if isinstance(ri, ResourceInstance)]
+                )
+            else:
+                result[key] = [
+                    _rtt_aliased_data_to_tree(item) if isinstance(item, TileTree) else item
+                    for item in val
+                ]
+        else:
+            result[key] = val
+    return result
 
 
 class _SemanticNode:
     """
-    Sync walker over the JSON tree produced by alizarin.tiles_to_json_tree.
+    Sync walker over a dict tree.
 
     Wraps a dict/list at some depth in the tree. Attribute access returns:
         - another _SemanticNode if the key is a nested object
         - a list of _SemanticNode if the key is an array
         - a leaf value (string, number, ConceptValueViewModel-like, …) otherwise
-
-    This is intentionally permissive — coral-arches code uses
-    `utilities.node_check(lambda: …)` to swallow AttributeErrors, so missing
-    nodes raising AttributeError is the right behavior.
     """
 
     __slots__ = ("_data", "_path", "_model_remapping")
@@ -146,10 +177,8 @@ class _SemanticNode:
     def __getattr__(self, name: str) -> Any:
         if name.startswith("_"):
             raise AttributeError(name)
-        # Apply remapping if configured
         actual = self._model_remapping.get(name, name)
         if "." in actual:
-            # Multi-segment alias remap (e.g. "title" -> "title.title_text")
             node: Any = self
             for seg in actual.split("."):
                 node = node._lookup(seg)
@@ -164,7 +193,6 @@ class _SemanticNode:
                 )
             return _wrap_value(self._data[name], f"{self._path}.{name}")
         if isinstance(self._data, list):
-            # Allow attribute access to project across a list of dicts.
             return [_wrap_value(item, f"{self._path}[*]")._lookup(name) for item in self._data]  # type: ignore[union-attr]
         raise AttributeError(name)
 
@@ -172,7 +200,6 @@ class _SemanticNode:
         if isinstance(self._data, (str, int, float, bool)):
             return str(self._data)
         if isinstance(self._data, dict):
-            # Common Arches localized-string shape
             for k in ("en", "value", "@value"):
                 if k in self._data and isinstance(self._data[k], str):
                     return self._data[k]
@@ -182,17 +209,17 @@ class _SemanticNode:
 def _wrap_value(value: Any, path: str) -> Any:
     """Wrap a tree-leaf in a _SemanticNode unless it's a primitive.
 
-    Detects Arches i18n string shape (e.g. {"en": {"value": "foo", "direction": "ltr"}}
-    or {"en": "foo"}) and returns a StringViewModel — a `str` subclass — so the
-    value works in both string contexts (.encode(), concatenation) and i18n
-    contexts (.lang("fr")).
-
-    Also detects resource-instance reference shape (a dict containing
-    "resourceId") and returns a ResourceInstanceViewModel so callers iterating
-    over related-resource lists can use `.id` to get the referenced UUID.
+    Detects Arches i18n string shape and returns a StringViewModel.
+    Also detects resource-instance reference shape and returns a
+    ResourceInstanceViewModel. View-model types already produced by
+    _rtt_aliased_data_to_tree are passed through unchanged.
     """
     if value is None:
         return None
+    from .view_models._base import ViewModel
+
+    if isinstance(value, ViewModel):
+        return value
     if isinstance(value, dict):
         if _is_resource_instance_reference(value):
             from .view_models.resources import ResourceInstanceViewModel
@@ -215,14 +242,6 @@ _LANG_CODE_RE = re.compile(r"^[a-z]{2,3}(-[A-Za-z0-9]{2,8})?$")
 
 
 def _is_i18n_string_shape(data: dict) -> bool:
-    """Recognize Arches localized-string shapes.
-
-    A dict is treated as an i18n string only when every key looks like a
-    language code (e.g. "en", "en-US") and every value is either a string or
-    a dict with a "value" key. This avoids collapsing non-i18n dicts that
-    happen to have a string in their first value (notably resource-instance
-    reference dicts like {"resourceId": "<uuid>"}) into a StringViewModel.
-    """
     if not data:
         return False
     for key in data.keys():
@@ -238,12 +257,6 @@ def _is_i18n_string_shape(data: dict) -> bool:
 
 
 def _is_resource_instance_reference(data: dict) -> bool:
-    """Recognize the resource-instance reference shape produced by alizarin.
-
-    Tile data for resource-instance / resource-instance-list datatypes serializes
-    each reference as a dict containing at least a `resourceId` field (alongside
-    optional `ontologyProperty`, `inverseOntologyProperty`, `resourceXresourceId`).
-    """
     return "resourceId" in data
 
 
@@ -251,18 +264,7 @@ class QueryBuilder:
     """
     Chainable query for a ResourceModel subclass.
 
-    Supports:
-        .where(**filters)        — additional Django-style filters on tile data
-        .order_by(field)         — Django queryset order_by (passes through)
-        .offset(start, count)    — paginated slice, returns a list of instances
-        .count()                 — int total
-        .get()                   — list of instances (use [0] to get first)
-        iter(qb)                 — iterate over instances
-
-    The query runs against `arches.app.models.models.TileModel` filtered by
-    the model's graph_id. Tile filters are translated into JSONB queries on
-    the `data` column where possible; unknown lookups fall back to in-memory
-    filtering after fetch (slow but correct).
+    Backed by arches-querysets' ResourceTileTreeQuerySet.
     """
 
     def __init__(self, model_cls: Type["ResourceModel"]) -> None:
@@ -271,7 +273,6 @@ class QueryBuilder:
         self._order_by: List[str] = []
         self._offset: int = 0
         self._limit: Optional[int] = None
-
 
     def where(self, **kwargs: Any) -> "QueryBuilder":
         new = self._clone()
@@ -297,7 +298,6 @@ class QueryBuilder:
         c._limit = self._limit
         return c
 
-
     def count(self) -> int:
         return len(self._resource_ids())
 
@@ -307,36 +307,29 @@ class QueryBuilder:
     def __iter__(self) -> Iterator["ResourceModel"]:
         ids = self._resource_ids()
         if self._offset:
-            ids = ids[self._offset :]
+            ids = ids[self._offset:]
         if self._limit is not None:
-            ids = ids[: self._limit]
+            ids = ids[:self._limit]
         for rid in ids:
             inst = self._model_cls.find(rid)
             if inst is not None:
                 yield inst
-
 
     def _resource_ids(self) -> List[str]:
         from arches.app.models.models import ResourceInstance
 
         qs = ResourceInstance.objects.filter(graph_id=self._model_cls._graphid)
 
-        # Translate filters. Recognized:
-        #   resourceid__startswith=… → ResourceInstance.name__startswith (best effort)
-        #   <node_alias>=value → JSONB tile.data filter (resolved per-resource below)
         django_filters: Dict[str, Any] = {}
         tile_filters: Dict[str, Any] = {}
         for key, val in self._filters.items():
             if key.startswith("resourceid"):
-                # Map resourceid* lookups onto the descriptor name field which
-                # is what coral-arches actually relies on.
                 django_filters[key.replace("resourceid", "name")] = val
             else:
                 tile_filters[key] = val
         if django_filters:
             qs = qs.filter(**django_filters)
 
-        # Order by — pass through where possible
         if self._order_by:
             try:
                 qs = qs.order_by(*self._order_by)
@@ -348,8 +341,6 @@ class QueryBuilder:
 
         ids = [str(ri["resourceinstanceid"]) for ri in qs.values("resourceinstanceid")]
 
-        # If there are tile filters, we need to fetch each candidate and
-        # check the tree. This is slow but correct.
         if tile_filters:
             kept: List[str] = []
             for rid in ids:
@@ -363,7 +354,6 @@ class QueryBuilder:
 
 
 def _matches_tile_filters(inst: "ResourceModel", filters: Dict[str, Any]) -> bool:
-    """Check that an instance's tree matches every (alias=value) filter."""
     for alias, expected in filters.items():
         try:
             actual = getattr(inst, alias, None)
@@ -371,7 +361,6 @@ def _matches_tile_filters(inst: "ResourceModel", filters: Dict[str, Any]) -> boo
             return False
         if actual is None:
             return False
-        # _SemanticNode comparison via str()
         actual_str = str(actual)
         if str(expected) != actual_str:
             return False
@@ -384,11 +373,11 @@ class _WrapperMeta:
 
         instance._.resource             → underlying Arches Resource Django model
         instance._.values               → raw tree dict
-        instance._._values              → alias for `.values` (arches_orm compat)
+        instance._._values              → alias for `.values`
 
     And on the *class*:
 
-        Model._._node_objects_by_alias() → dict of node alias → static node info
+        Model._._node_objects_by_alias() → dict of node alias → Node model
     """
 
     def __init__(self, owner: Any, is_class: bool) -> None:
@@ -412,17 +401,42 @@ class _WrapperMeta:
         return self.values
 
     def _node_objects_by_alias(self) -> Dict[str, Any]:
-        """Return alizarin StaticNode objects keyed by alias."""
+        """Return Arches Node objects keyed by alias for this graph."""
         cls = self._owner if self._is_class else type(self._owner)
         graphid = cls._graphid
-        graph_loader.register_graph(graphid)
-        # Use alizarin's high-level model wrapper to get the node objects.
-        from alizarin.model_wrapper import ResourceModelWrapper
+        cache = getattr(cls, "_node_alias_cache", None)
+        if cache is not None:
+            return cache
+        from arches.app.models.models import Node
 
-        model = ResourceModelWrapper.from_graph_id(
-            graph_loader.get_alizarin_graph_id(graphid) or graphid
-        )
-        return model.get_node_objects_by_alias()
+        nodes = Node.objects.filter(
+            graph_id=graphid,
+        ).exclude(
+            datatype="semantic",
+        ).exclude(
+            nodegroup=None,
+        ).select_related("nodegroup")
+        result = {}
+        for node in nodes:
+            if node.alias:
+                result[node.alias] = node
+        cls._node_alias_cache = result
+        return result
+
+    def index(self) -> None:
+        """Re-index the resource in Elasticsearch."""
+        from arches.app.models.resource import Resource
+
+        if self._is_class:
+            raise AttributeError("Model._.index() only available on instances")
+        owner = self._owner
+        if not owner.id:
+            return
+        try:
+            r = Resource.objects.get(resourceinstanceid=owner.id)
+            r.index()
+        except Resource.DoesNotExist:
+            pass
 
 
 class ResourceModel:
@@ -437,22 +451,14 @@ class ResourceModel:
     _graphid: ClassVar[str] = ""
     _wkrm: ClassVar[Dict[str, Any]] = {}
 
-
-    # Names that should always be real Python instance attributes rather than
-    # being routed into the semantic tree by __setattr__.
     _REAL_ATTRS: ClassVar[set] = {"id"}
 
     def __init__(self, resource_id: Optional[str] = None) -> None:
-        # Bypass __setattr__ during __init__ so internal state lands as real
-        # attributes regardless of name.
         object.__setattr__(self, "id", str(resource_id) if resource_id else None)
         object.__setattr__(self, "_tree", {})
-        object.__setattr__(self, "_tiles", [])
+        object.__setattr__(self, "_rtt", None)
         object.__setattr__(self, "_dirty", False)
         object.__setattr__(self, "_resource_row", None)
-        # Eagerly create _sem_root over the (initially empty) tree so that
-        # attributes set via __setattr__ are immediately readable through
-        # __getattr__ (which delegates to _sem_root._lookup).
         cls = type(self)
         object.__setattr__(
             self,
@@ -465,21 +471,11 @@ class ResourceModel:
         )
 
     def __setattr__(self, name: str, value: Any) -> None:
-        """
-        Route public attribute writes into the semantic tree so they persist
-        through save(). Names starting with `_` and the explicit `_REAL_ATTRS`
-        set remain real Python attributes.
-
-        Raw strings assigned to string-datatype fields are auto-wrapped in
-        Arches' i18n shape ({lang: {value, direction}}) so alizarin's
-        json_tree_to_tiles produces the right tile data.
-        """
         if name.startswith("_") or name in self._REAL_ATTRS:
             object.__setattr__(self, name, value)
             return
         tree = self.__dict__.get("_tree")
         if tree is None:
-            # Should not happen post-__init__, but stay safe.
             object.__setattr__(self, name, value)
             return
         if isinstance(value, str) and self._is_string_field(name):
@@ -488,26 +484,16 @@ class ResourceModel:
         object.__setattr__(self, "_dirty", True)
 
     def _is_string_field(self, alias: str) -> bool:
-        """Return True if the named field is a string-like datatype in this
-        model's graph. Falls back to False on any introspection failure (so
-        the value is stored as-is)."""
         try:
             cls = type(self)
             cache = cls.__dict__.get("_string_aliases_cache")
             if cache is None:
-                from alizarin.model_wrapper import ResourceModelWrapper
-
-                graph_loader.register_graph(cls._graphid)
-                model = ResourceModelWrapper.from_graph_id(
-                    graph_loader.get_alizarin_graph_id(cls._graphid) or cls._graphid
-                )
-                nodes = model.get_node_objects_by_alias()
+                nodes = cls._._node_objects_by_alias()
                 cache = {
                     a
                     for a, n in nodes.items()
                     if getattr(n, "datatype", "") in ("string", "concept")
                 }
-                # Cache on the class for subsequent calls.
                 setattr(cls, "_string_aliases_cache", cache)
             return alias in cache
         except Exception:
@@ -516,10 +502,7 @@ class ResourceModel:
     def __repr__(self) -> str:  # pragma: no cover
         return f"<{type(self).__name__} id={self.id}>"
 
-
     class _ClassMetaDescriptor:
-        """Returns a _WrapperMeta when accessed on the *class* (not instance)."""
-
         def __get__(self, instance: Any, owner: Type["ResourceModel"]) -> Any:
             if instance is None:
                 return _WrapperMeta(owner, is_class=True)
@@ -527,75 +510,77 @@ class ResourceModel:
 
     _ = _ClassMetaDescriptor()  # type: ignore[assignment]
 
+    @classmethod
+    def _get_graph_slug(cls) -> Optional[str]:
+        """Return the graph slug for this model, looked up from DB."""
+        from . import wkrm
+
+        return wkrm.get_graph_slug(cls._graphid)
 
     @classmethod
     def find(cls, resource_id: Any) -> Optional["ResourceModel"]:
         """Load a single resource instance by ID, or None if not found."""
         if not resource_id:
             return None
-        from arches.app.models.models import ResourceInstance
-
         rid = str(resource_id)
+
+        slug = cls._get_graph_slug()
+        if slug:
+            return cls._find_via_querysets(rid, slug)
+        return cls._find_via_tiles(rid)
+
+    @classmethod
+    def _find_via_querysets(cls, rid: str, slug: str) -> Optional["ResourceModel"]:
+        """Load using arches-querysets ResourceTileTree."""
+        from arches_querysets.models import ResourceTileTree
+
+        try:
+            qs = ResourceTileTree.get_tiles(slug, resource_ids=[rid])
+            rtt = qs.get(pk=rid)
+        except (ResourceTileTree.DoesNotExist, ValueError) as exc:
+            logger.debug("alizarin_django: find via querysets failed for %s: %s", rid, exc)
+            return None
+
+        tree = _rtt_aliased_data_to_tree(rtt)
+
+        inst = cls(resource_id=rid)
+        inst._tree = tree
+        inst._rtt = rtt
+        inst._resource_row = rtt
+        inst._sem_root = _SemanticNode(
+            tree,
+            path=cls.__name__,
+            model_remapping=cls._wkrm.get("remapping", {}),
+        )
+        return inst
+
+    @classmethod
+    def _find_via_tiles(cls, rid: str) -> Optional["ResourceModel"]:
+        """Fallback: load directly from TileModel when no graph slug is available."""
+        from arches.app.models.models import ResourceInstance, TileModel
+
         try:
             ri = ResourceInstance.objects.get(resourceinstanceid=rid)
         except ResourceInstance.DoesNotExist:
             return None
         if str(ri.graph_id) != cls._graphid:
-            # Wrong graph — caller asked for the wrong type
             return None
 
         user = adapter.get_user()
         permitted = _permitted_nodegroup_ids(user, cls._graphid)
-        tiles = _fetch_tiles_for_resource(rid, permitted)
 
-        graph_loader.register_graph(cls._graphid)
-        try:
-            resource_payload = json.dumps(
-                {
-                    "resourceinstanceid": rid,
-                    "graph_id": cls._graphid,
-                    "tiles": tiles,
-                },
-                default=str,
-            )
-            tree_str = alizarin.tiles_to_json_tree(resource_payload)  # type: ignore[misc]
-            tree = json.loads(tree_str) if isinstance(tree_str, str) else tree_str
-        except Exception as exc:
-            logger.warning(
-                "alizarin_django: tiles_to_json_tree failed for %s/%s: %s",
-                cls.__name__,
-                rid,
-                exc,
-            )
-            tree = {}
+        qs = TileModel.objects.filter(resourceinstance_id=rid)
+        if permitted is not None:
+            qs = qs.filter(nodegroup_id__in=permitted)
+        tiles = list(qs)
+
+        tree = _tiles_to_tree(tiles, cls._graphid)
 
         inst = cls(resource_id=rid)
-        inst._tree = tree if isinstance(tree, dict) else {}
-
-        try:
-            from alizarin.model_wrapper import ResourceModelWrapper
-
-            graph_loader.register_graph(cls._graphid)
-            model = ResourceModelWrapper.from_graph_id(
-                graph_loader.get_alizarin_graph_id(cls._graphid) or cls._graphid
-            )
-            nodes_by_alias = model.get_node_objects_by_alias()
-            nodegroups = model.get_nodegroup_objects()
-            for alias, node in nodes_by_alias.items():
-                if alias in inst._tree:
-                    continue
-                is_list_dt = node.datatype.endswith("-list")
-                ng = nodegroups.get(node.nodegroup_id) if node.nodegroup_id else None
-                is_card_n = bool(ng and ng.cardinality == "n")
-                if is_list_dt or is_card_n:
-                    inst._tree[alias] = []
-        except Exception as exc:
-            logger.debug("alizarin_django: list-default prefill skipped: %s", exc)
-
-        inst._tiles = tiles
+        inst._tree = tree
         inst._resource_row = ri
         inst._sem_root = _SemanticNode(
-            inst._tree,
+            tree,
             path=cls.__name__,
             model_remapping=cls._wkrm.get("remapping", {}),
         )
@@ -611,16 +596,8 @@ class ResourceModel:
         """Begin a chainable query."""
         return QueryBuilder(cls).where(**kwargs)
 
-
     def save(self) -> "ResourceModel":
-        """
-        Persist the in-memory tree back to Arches.
-
-        Strategy: convert the tree back to tiles via alizarin.json_tree_to_tiles,
-        then reconcile against existing TileModel rows for this resource (insert,
-        update, delete) inside a transaction. Finally, call Resource.save() to
-        re-index.
-        """
+        """Persist the in-memory tree back to Arches."""
         from arches.app.models.models import ResourceInstance, TileModel
         from arches.app.models.resource import Resource
         from django.db import transaction
@@ -628,43 +605,9 @@ class ResourceModel:
         if self.id is None:
             self.id = str(uuid.uuid4())
 
-        graph_loader.register_graph(self._graphid)
-        try:
-            new_tiles_str = alizarin.json_tree_to_tiles(  # type: ignore[misc]
-                json.dumps(self._tree, default=str),
-                str(self.id),
-                str(self._graphid),
-                strict=False,
-            )
-            payload = (
-                json.loads(new_tiles_str)
-                if isinstance(new_tiles_str, str)
-                else new_tiles_str
-            )
-        except Exception as exc:
-            logger.error(
-                "alizarin_django: json_tree_to_tiles failed for %s/%s: %s",
-                type(self).__name__,
-                self.id,
-                exc,
-            )
-            raise
-
-        # Extract tiles from alizarin's nested response shape:
-        #   {"business_data": {"resources": [{"tiles": [...]}]}}
-        new_tiles: List[Dict[str, Any]] = []
-        if isinstance(payload, list):
-            new_tiles = payload
-        elif isinstance(payload, dict):
-            try:
-                resources = payload["business_data"]["resources"]
-                if isinstance(resources, list) and resources:
-                    new_tiles = resources[0].get("tiles", []) or []
-            except (KeyError, TypeError, IndexError):
-                new_tiles = []
+        new_tiles = _tree_to_tiles(self._tree, str(self.id), self._graphid)
 
         with transaction.atomic():
-            # Ensure ResourceInstance row exists
             try:
                 ri = ResourceInstance.objects.get(resourceinstanceid=self.id)
             except ResourceInstance.DoesNotExist:
@@ -696,12 +639,10 @@ class ResourceModel:
                         sortorder=tile.get("sortorder"),
                     )
 
-            # Delete tiles that no longer exist in the new tree
             for tid, row in existing.items():
                 if tid not in seen:
                     row.delete()
 
-            # Re-index via Arches' Resource wrapper
             try:
                 arches_res = Resource.objects.get(resourceinstanceid=self.id)
                 arches_res.index()
@@ -712,7 +653,7 @@ class ResourceModel:
         return self
 
     def delete(self) -> None:
-        """Delete this resource (cascades to tiles via Arches' Resource model)."""
+        """Delete this resource."""
         from arches.app.models.resource import Resource
 
         if not self.id:
@@ -723,18 +664,7 @@ class ResourceModel:
         except Resource.DoesNotExist:
             return
 
-
     def __getattr__(self, name: str) -> Any:
-        """
-        Delegate unknown attributes to the semantic tree.
-
-        Triggered only when normal lookup fails — `id`, `_tree`, `save`, etc.
-        are real attrs and won't hit this.
-
-        Returns None for unset top-level fields (matching arches_orm semantics
-        where `instance.some_field` is None until populated). Nested lookups
-        through _SemanticNode remain strict.
-        """
         if name.startswith("_"):
             raise AttributeError(name)
         sem = object.__getattribute__(self, "_sem_root")
@@ -746,7 +676,6 @@ class ResourceModel:
             return None
 
     def _get_resource_row(self) -> Any:
-        """Used by `_.resource` — fetch the underlying Arches Resource model."""
         if self._resource_row is not None:
             return self._resource_row
         from arches.app.models.resource import Resource
@@ -758,6 +687,195 @@ class ResourceModel:
         except Resource.DoesNotExist:
             return None
         return self._resource_row
+
+
+def _tiles_to_tree(tiles: List[Any], graphid: str) -> Dict[str, Any]:
+    """Build a flat tree dict from raw TileModel objects.
+
+    Used as fallback when arches-querysets is not available (no graph slug).
+    Groups tile data by node alias using the graph's node definitions.
+    """
+    from arches.app.models.models import Node
+
+    all_nodes = Node.objects.filter(graph_id=graphid).exclude(
+        nodegroup=None
+    ).select_related("nodegroup")
+
+    alias_by_node_id: Dict[str, str] = {}
+    grouping_node_alias: Dict[str, str] = {}
+    nodegroup_cardinality: Dict[str, str] = {}
+
+    for node in all_nodes:
+        nid = str(node.nodeid)
+        ngid = str(node.nodegroup_id)
+        if node.alias:
+            alias_by_node_id[nid] = node.alias
+            if nid == ngid:
+                grouping_node_alias[ngid] = node.alias
+        if ngid not in nodegroup_cardinality:
+            nodegroup_cardinality[ngid] = getattr(node.nodegroup, "cardinality", "1")
+
+    top_tiles = [t for t in tiles if t.parenttile_id is None]
+    child_tiles_by_parent: Dict[str, List[Any]] = {}
+    for t in tiles:
+        if t.parenttile_id:
+            pid = str(t.parenttile_id)
+            child_tiles_by_parent.setdefault(pid, []).append(t)
+
+    def _process_tile(tile: Any) -> Dict[str, Any]:
+        result: Dict[str, Any] = {}
+        data = tile.data or {}
+        for nid_str, val in data.items():
+            alias = alias_by_node_id.get(nid_str)
+            if alias:
+                result[alias] = val
+        for child in child_tiles_by_parent.get(str(tile.tileid), []):
+            child_ngid = str(child.nodegroup_id)
+            child_data = _process_tile(child)
+            ng_alias = grouping_node_alias.get(child_ngid)
+            if not ng_alias:
+                continue
+            if nodegroup_cardinality.get(child_ngid) == "n":
+                result.setdefault(ng_alias, []).append(child_data)
+            else:
+                result[ng_alias] = child_data
+        return result
+
+    tree: Dict[str, Any] = {}
+    for tile in top_tiles:
+        tile_data = _process_tile(tile)
+        ngid = str(tile.nodegroup_id)
+        ng_alias = grouping_node_alias.get(ngid)
+        if ng_alias:
+            if nodegroup_cardinality.get(ngid) == "n":
+                tree.setdefault(ng_alias, []).append(tile_data)
+            else:
+                tree[ng_alias] = tile_data
+        else:
+            tree.update(tile_data)
+    return tree
+
+
+def _vm_to_tile_value(value: Any) -> Any:
+    """Convert view-model types back to raw tile-data format for saving."""
+    from .view_models.concepts import ConceptValueViewModel, ConceptListValueViewModel
+    from .view_models.resources import ResourceInstanceViewModel, RelatedResourceInstanceListViewModel
+
+    if isinstance(value, ConceptListValueViewModel):
+        return [str.__str__(v) if isinstance(v, ConceptValueViewModel) else str(v) for v in value]
+    if isinstance(value, ConceptValueViewModel):
+        return str.__str__(value)
+    if isinstance(value, RelatedResourceInstanceListViewModel):
+        return [
+            {"resourceId": v.id, "ontologyProperty": "", "inverseOntologyProperty": ""}
+            for v in value
+        ]
+    if isinstance(value, ResourceInstanceViewModel):
+        return [{"resourceId": value.id, "ontologyProperty": "", "inverseOntologyProperty": ""}]
+    return value
+
+
+def _tree_to_tiles(
+    tree: Dict[str, Any],
+    resource_id: str,
+    graphid: str,
+) -> List[Dict[str, Any]]:
+    """Convert a flat tree dict back to tile dicts for saving.
+
+    Walks the graph node definitions to map aliases back to node UUIDs and
+    nodegroup UUIDs.
+    """
+    from arches.app.models.models import Node
+
+    nodes = Node.objects.filter(graph_id=graphid).exclude(
+        nodegroup=None
+    ).select_related("nodegroup")
+
+    node_by_alias: Dict[str, Any] = {}
+    grouping_nodes: Dict[str, Any] = {}
+
+    for node in nodes:
+        if node.alias:
+            node_by_alias[node.alias] = node
+        if str(node.nodeid) == str(node.nodegroup_id):
+            grouping_nodes[node.alias] = node if node.alias else None
+
+    tiles: List[Dict[str, Any]] = []
+
+    def _process_level(
+        data: Dict[str, Any],
+        parent_tile_id: Optional[str] = None,
+    ) -> None:
+        by_nodegroup: Dict[str, Dict[str, Any]] = {}
+        child_groups: Dict[str, Any] = {}
+
+        for alias, value in data.items():
+            node = node_by_alias.get(alias)
+            if node is None:
+                continue
+            ngid = str(node.nodegroup_id)
+            nid = str(node.nodeid)
+
+            if nid == ngid and isinstance(value, (dict, list)):
+                child_groups[alias] = value
+                continue
+
+            by_nodegroup.setdefault(ngid, {})[nid] = _vm_to_tile_value(value)
+
+        for ngid, tile_data in by_nodegroup.items():
+            tid = str(uuid.uuid4())
+            tiles.append({
+                "tileid": tid,
+                "resourceinstance_id": resource_id,
+                "nodegroup_id": ngid,
+                "parenttile_id": parent_tile_id,
+                "data": tile_data,
+                "sortorder": 0,
+            })
+
+        for alias, value in child_groups.items():
+            node = node_by_alias.get(alias) or grouping_nodes.get(alias)
+            if node is None:
+                continue
+            ngid = str(node.nodegroup_id)
+
+            items = value if isinstance(value, list) else [value]
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                tid = str(uuid.uuid4())
+                child_tile_data: Dict[str, Any] = {}
+                nested_children: Dict[str, Any] = {}
+                for k, v in item.items():
+                    child_node = node_by_alias.get(k)
+                    if child_node is None:
+                        continue
+                    child_nid = str(child_node.nodeid)
+                    child_ngid = str(child_node.nodegroup_id)
+                    if child_nid == child_ngid and isinstance(v, (dict, list)):
+                        nested_children[k] = v
+                    elif child_ngid == ngid:
+                        child_tile_data[child_nid] = _vm_to_tile_value(v)
+                    else:
+                        child_tile_data[child_nid] = _vm_to_tile_value(v)
+
+                tiles.append({
+                    "tileid": tid,
+                    "resourceinstance_id": resource_id,
+                    "nodegroup_id": ngid,
+                    "parenttile_id": parent_tile_id,
+                    "data": child_tile_data,
+                    "sortorder": 0,
+                })
+
+                for nested_alias, nested_val in nested_children.items():
+                    nested_items = nested_val if isinstance(nested_val, list) else [nested_val]
+                    for ni in nested_items:
+                        if isinstance(ni, dict):
+                            _process_level(ni, parent_tile_id=tid)
+
+    _process_level(tree)
+    return tiles
 
 
 __all__ = [
