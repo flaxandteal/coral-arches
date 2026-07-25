@@ -24,6 +24,11 @@ requests_oauthlib
 python-docx
 django-csp==4.0b7
 
+# arches_modular_reports 2.0.0 (from the base image) renamed its frontend dep
+# arches_component_lab -> arches_vue_components; the base image ships the old
+# name only, so pin the successor here until flaxandteal/arches_base installs it.
+arches_vue_components>=2.0.0,<3.0.0
+
 git+https://github.com/flaxandteal/arches-orm@v0.2.4-emerald
 
 pika
