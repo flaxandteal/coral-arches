@@ -146,7 +146,7 @@ class DesignationTaskStrategy(TaskStrategy):
             'hbnumber': utilities.node_check(lambda: resource.heritage_asset_references.hb_number),
             'smrnumber': utilities.node_check(lambda: resource.heritage_asset_references.smr_number),
             'monumenttype': self.extract_value(utilities.node_check(lambda: resource.construction_phases[0].phase_classification.monument_type)),
-            'inputdatevalue': utilities.node_check(lambda: resource.garden_sign_off.input_date.input_date_value),
+            'inputdatevalue': utilities.node_check(lambda: resource.sign_off.input_date.input_date_value),
             'statutoryconsulteenotificationdatevalue': utilities.node_check(lambda: resource.approvals[0].statutory_consultee_notification_date.statutory_consultee_notification_date_value)
         }
 
