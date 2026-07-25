@@ -1,8 +1,8 @@
 """
 Sync↔async bridge — retained for import compatibility.
 
-Previously bridged alizarin's async API to sync Django code. No longer needed
-since arches-querysets is fully synchronous.
+Previously bridged an async API to sync Django code. No longer needed since
+arches-querysets is fully synchronous.
 """
 
 from __future__ import annotations

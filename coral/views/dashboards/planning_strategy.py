@@ -1,10 +1,10 @@
 from arches.app.models import models
 from arches.app.models.tile import Tile
 from collections import defaultdict
-from alizarin_django.adapter import admin 
+from querysets_shim.adapter import admin 
 from datetime import datetime
 import html
-from alizarin_django.arches_django.query_builder.query_builder import QueryBuilder
+from querysets_shim.arches_django.query_builder.query_builder import QueryBuilder
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
 from coral.utils.user_role import UserRole
@@ -45,8 +45,8 @@ class PlanningTaskStrategy(TaskStrategy):
     _user_role: UserRole = None;
 
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='asc', filter='all'):
-        from alizarin_django.models import Consultation
-        from alizarin_django.models import Group
+        from querysets_shim.models import Consultation
+        from querysets_shim.models import Group
         with admin():      
             self._user_role = UserRole(groupId)
 
@@ -343,7 +343,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
     
     def get_group_members(self, groups: List[str]):
-        from alizarin_django.models import Group
+        from querysets_shim.models import Group
         with admin():
             if (len(groups) == 0): return [];
 

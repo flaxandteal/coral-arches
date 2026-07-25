@@ -1,8 +1,8 @@
 """
 Graph loader — compatibility shim.
 
-Previously loaded graph definitions into alizarin's Rust core. Now a no-op
-since the data layer is backed by arches-querysets.
+Previously loaded graph definitions into a Rust core. Now a no-op since
+the data layer is backed by arches-querysets.
 
 The public API is preserved so existing imports don't break.
 """
@@ -31,13 +31,13 @@ def register_graph(graphid: str) -> str:
     return str(graphid)
 
 
-def get_alizarin_graph_id(graphid: str) -> Optional[str]:
-    """Returns the graphid unchanged (alizarin mapping no longer needed)."""
+def get_graph_id(graphid: str) -> Optional[str]:
+    """Returns the graphid unchanged (legacy mapping no longer needed)."""
     return str(graphid)
 
 
 __all__ = [
     "get_graph_json",
     "register_graph",
-    "get_alizarin_graph_id",
+    "get_graph_id",
 ]

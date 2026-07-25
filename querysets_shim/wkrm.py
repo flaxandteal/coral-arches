@@ -50,7 +50,7 @@ def _build_wrapper_class(wkrm: Dict[str, Any]) -> Type[Any]:
         {
             "_graphid": str(wkrm["graphid"]),
             "_wkrm": dict(wkrm),
-            "__module__": "alizarin_django.models",
+            "__module__": "querysets_shim.models",
             "__qualname__": class_name,
         },
     )
@@ -80,7 +80,7 @@ def _resolve_slugs() -> None:
                 if slug:
                     _slug_by_graph_id[str(graphid)] = slug
         except Exception as exc:
-            logger.warning("alizarin_django: slug lookup failed: %s", exc)
+            logger.warning("querysets_shim: slug lookup failed: %s", exc)
         _slugs_resolved = True
 
 
@@ -106,7 +106,7 @@ def prime_registry() -> None:
 
             defs = list(getattr(settings, "WELL_KNOWN_RESOURCE_MODELS", []))
         except Exception as exc:
-            logger.warning("alizarin_django: cannot read settings: %s", exc)
+            logger.warning("querysets_shim: cannot read settings: %s", exc)
             defs = []
 
         for wkrm in defs:
@@ -114,7 +114,7 @@ def prime_registry() -> None:
                 cls = _build_wrapper_class(wkrm)
             except Exception as exc:  # pragma: no cover
                 logger.warning(
-                    "alizarin_django: failed to build wrapper for %r: %s",
+                    "querysets_shim: failed to build wrapper for %r: %s",
                     wkrm,
                     exc,
                 )

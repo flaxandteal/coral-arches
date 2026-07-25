@@ -42,7 +42,7 @@ def _permitted_nodegroup_ids(user: Optional[Any], graphid: str) -> Optional[List
         return [str(ng.nodegroupid) for ng in nodegroups]
     except Exception as exc:
         logger.warning(
-            "alizarin_django: permission lookup failed (%s) — defaulting to deny",
+            "querysets_shim: permission lookup failed (%s) — defaulting to deny",
             exc,
         )
         return []
@@ -80,7 +80,7 @@ def _rtt_aliased_data_to_tree(obj: Any) -> Dict[str, Any]:
     objects (cardinality 1) or lists of TileTree (cardinality n). Leaf values
     come from arches-querysets' to_python() — Value model instances for
     concepts, ResourceInstance objects for resource-instance refs — which we
-    wrap in the alizarin_django view-model types so downstream isinstance
+    wrap in the querysets_shim view-model types so downstream isinstance
     checks continue to work.
     """
     from arches_querysets.models import TileTree
@@ -538,7 +538,7 @@ class ResourceModel:
             qs = ResourceTileTree.get_tiles(slug, resource_ids=[rid])
             rtt = qs.get(pk=rid)
         except (ResourceTileTree.DoesNotExist, ValueError) as exc:
-            logger.debug("alizarin_django: find via querysets failed for %s: %s", rid, exc)
+            logger.debug("querysets_shim: find via querysets failed for %s: %s", rid, exc)
             return None
 
         tree = _rtt_aliased_data_to_tree(rtt)
@@ -647,7 +647,7 @@ class ResourceModel:
                 arches_res = Resource.objects.get(resourceinstanceid=self.id)
                 arches_res.index()
             except Exception as exc:  # pragma: no cover
-                logger.debug("alizarin_django: post-save reindex skipped: %s", exc)
+                logger.debug("querysets_shim: post-save reindex skipped: %s", exc)
 
         self._dirty = False
         return self

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 
 class ViewModel:
-    """Marker base class for all alizarin_django view models.
+    """Marker base class for all querysets_shim view models.
 
     Matches arches_orm.view_models._base.ViewModel so isinstance checks and
     metaclass behaviour stay compatible with code migrated from arches_orm.

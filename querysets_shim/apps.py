@@ -1,5 +1,5 @@
 """
-Django AppConfig for alizarin_django.
+Django AppConfig for querysets_shim.
 
 Responsibilities on `ready()`:
     - Eagerly import the wkrm registry (so settings.WELL_KNOWN_RESOURCE_MODELS
@@ -16,9 +16,9 @@ from django.apps import AppConfig
 logger = logging.getLogger(__name__)
 
 
-class AlizarinDjangoConfig(AppConfig):
-    name = "alizarin_django"
-    verbose_name = "Alizarin Django ORM"
+class QuerysetsShimConfig(AppConfig):
+    name = "querysets_shim"
+    verbose_name = "Querysets Shim"
     default_auto_field = "django.db.models.BigAutoField"
 
     def ready(self) -> None:
@@ -27,10 +27,10 @@ class AlizarinDjangoConfig(AppConfig):
 
             wkrm.prime_registry()
             logger.info(
-                "alizarin_django: WKRM registry primed (%d models)",
+                "querysets_shim: WKRM registry primed (%d models)",
                 wkrm.wkrm_count(),
             )
         except Exception as exc:  # pragma: no cover
             logger.warning(
-                "alizarin_django: failed to prime WKRM registry: %s", exc
+                "querysets_shim: failed to prime WKRM registry: %s", exc
             )
