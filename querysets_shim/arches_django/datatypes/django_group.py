@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class DjangoGroupViewModel(Group, ViewModel):
     class Meta:
         proxy = True
-        app_label = "alizarin_django"
+        app_label = "querysets_shim"
         db_table = Group.objects.model._meta.db_table
 
     def __bool__(self) -> bool:
@@ -28,5 +28,5 @@ class DjangoGroupViewModel(Group, ViewModel):
 class MissingDjangoGroupViewModel(Group, ViewModel):
     class Meta:
         proxy = True
-        app_label = "alizarin_django"
+        app_label = "querysets_shim"
         db_table = Group.objects.model._meta.db_table

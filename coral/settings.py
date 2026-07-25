@@ -339,7 +339,7 @@ INSTALLED_APPS = (
     "two_factor",
     # "silk",
     "coral",
-    "alizarin_django.apps.AlizarinDjangoConfig",
+    "querysets_shim.apps.QuerysetsShimConfig",
 )
 
 # Placing this last ensures any templates provided by Arches Applications
@@ -373,7 +373,7 @@ MIDDLEWARE = [
     "django_otp.middleware.OTPMiddleware",
     # "coral.middleware.TwoFactorAuthMiddleware",  # DISABLED - 2FA now integrated into LoginView
     # "silk.middleware.SilkyMiddleware",
-    "alizarin_django.middleware.AlizarinDjangoContextMiddleware",
+    "querysets_shim.middleware.QuerysetsShimContextMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
 

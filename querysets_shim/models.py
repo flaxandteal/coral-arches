@@ -1,5 +1,5 @@
 """
-Dynamic module: `from alizarin_django.models import Person, Group, Monument, …`
+Dynamic module: `from querysets_shim.models import Person, Group, Monument, …`
 
 Each name is resolved on first access via the WKRM registry. The returned
 class is a fully-constructed ResourceModel subclass.
@@ -18,7 +18,7 @@ def __getattr__(name: str) -> Any:
     cls = wkrm.attempt_well_known_resource_model(name)
     if cls is None:
         raise AttributeError(
-            f"alizarin_django.models has no resource model named {name!r} — "
+            f"querysets_shim.models has no resource model named {name!r} — "
             f"check coral/wkrm.toml or settings.WELL_KNOWN_RESOURCE_MODELS"
         )
     # Cache on the module so subsequent lookups are direct attribute access

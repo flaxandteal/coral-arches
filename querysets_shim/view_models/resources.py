@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections import UserList
 from typing import Any, Iterable, Optional
 
 from ._base import ViewModel
@@ -38,10 +37,14 @@ class ResourceInstanceViewModel(ViewModel):
         return self._resource_id is not None
 
 
-class RelatedResourceInstanceListViewModel(UserList, ViewModel):
+class RelatedResourceInstanceListViewModel(list, ViewModel):
     """A list of ResourceInstanceViewModel entries."""
 
     def __init__(self, items: Optional[Iterable[Any]] = None) -> None:
-        UserList.__init__(self)
+        list.__init__(self)
         if items:
             self.extend(list(items))
+
+    @property
+    def data(self) -> list:
+        return list(self)
