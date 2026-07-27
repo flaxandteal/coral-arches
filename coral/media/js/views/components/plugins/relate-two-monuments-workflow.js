@@ -51,7 +51,12 @@ export default ko.components.register('relate-two-monuments-workflow', {
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
                     nodegroupid: '055b3e3f-04c7-11eb-8d64-f875a44e0e11',
-                    resourceid: "['target-step']['target-record'][0]['selectedResourceId']"
+                    resourceid: "['target-step']['target-record'][0]['selectedResourceId']",
+                    nodeOptions: {
+                      '055b3e44-04c7-11eb-b131-f875a44e0e11': {
+                        allowInstanceCreation: false
+                      }
+                    }
                   }
                 }
               ]
