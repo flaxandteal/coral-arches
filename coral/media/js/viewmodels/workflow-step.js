@@ -166,9 +166,10 @@ var WorkflowStep = function(config) {
         self.saving(true);
 
         return new Promise(function(resolve, reject) {
+            var components = Object.values(self.workflowComponentAbstractLookup());
             var savePromises = [];
 
-            Object.values(self.workflowComponentAbstractLookup()).forEach(function(workflowComponentAbstract) {
+            components.forEach(function(workflowComponentAbstract) {
                 savePromises.push(new Promise(function(resolve, reject) {
                     workflowComponentAbstract._saveComponent(resolve, reject);
                 }));
@@ -176,15 +177,52 @@ var WorkflowStep = function(config) {
 
             Promise.all(savePromises)
                 .then(function(values) {
-                    resolve(...values);
+                    /*
+                        The cards above are saved concurrently, and Arches recomputes and
+                        re-indexes the resource's primary descriptor on *every* tile save.
+                        When a component drives the resource name via a post_save function
+                        (e.g. the planning reference overriding the CON system reference), a
+                        sibling card can finish last and re-index a stale name. Re-saving any
+                        component flagged `reindexAfterSave` once more — sequentially, after
+                        all siblings have completed — guarantees its name is the final value
+                        written to the index. No-op for steps without a flagged component.
+                    */
+                    return self.reindexFlaggedComponents(components).then(function() {
+                        resolve(...values);
+                    });
                 })
                 .catch(function(error) {
                     reject(error);
                 })
-                .finally(
-                    self.saving(false)
-                );
+                .finally(function() {
+                    self.saving(false);
+                });
         });
+    };
+
+    this.reindexFlaggedComponents = function(components) {
+        var flagged = components.filter(function(component) {
+            return component.componentData && component.componentData.reindexAfterSave;
+        });
+
+        /* chain sequentially so the flagged component's re-index is the final write */
+        return flagged.reduce(function(chain, component) {
+            return chain.then(function() {
+                var tile = component.tile ? ko.unwrap(component.tile) : null;
+
+                /* nothing persisted yet — nothing to re-index */
+                if (!tile || !tile.tileid || typeof tile.save !== 'function') {
+                    return;
+                }
+
+                return new Promise(function(resolve) {
+                    tile.save(
+                        function() { resolve(); },  /* onFail — don't block step completion */
+                        function() { resolve(); }   /* onSuccess */
+                    );
+                });
+            });
+        }, Promise.resolve());
     };
 
     this.undo = function() {
