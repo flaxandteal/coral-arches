@@ -4,6 +4,7 @@ import koMapping from 'knockout-mapping';
 import arches from 'arches';
 import uuid from 'uuid';
 import Cookies from 'js-cookie';
+import queueWorkflowHistory from 'utils/workflow-history-queue';
 import WorkflowComponentAbstract from 'views/components/workflows/workflow-component-abstract';
 import workflowStepTemplate from 'templates/views/components/plugins/workflow-step.htm';
 
@@ -204,30 +205,23 @@ var WorkflowStep = function(config) {
     };
 
     this.setToWorkflowHistory = function(key, value) {
-        const workflowid = self.workflow.id();
-        const workflowHistory = {
-            workflowid,
-            workflowname: self.workflow.plugin.componentname,
-            completed: false,
-            stepdata: {
-                // Django view will patch in this key, keeping existing keys
-                [ko.unwrap(self.name)]: {
-                    [key]: value,
-                    locked: self.locked(),
-                    stepId: self.id(),
+        /* Fires once per component as componentIdLookup fills in, each post
+           carrying the whole lookup and superseding the last — so batching is
+           both cheaper and equivalent. Django patches in these keys, keeping
+           existing ones. */
+        return queueWorkflowHistory(
+            self.workflow.id(),
+            self.workflow.plugin.componentname,
+            {
+                stepdata: {
+                    [ko.unwrap(self.name)]: {
+                        [key]: value,
+                        locked: self.locked(),
+                        stepId: self.id(),
+                    },
                 },
-            },
-        };
-
-        fetch(arches.urls.workflow_history + workflowid, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                "X-CSRFToken": Cookies.get('csrftoken')
-            },
-            body: JSON.stringify(workflowHistory),
-        });
-
+            }
+        );
     };
 
     this.toggleInformationBox = function() {

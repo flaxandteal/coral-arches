@@ -9,7 +9,28 @@ import ProvisionalTileViewModel from 'viewmodels/provisional-tile';
 import AlertViewModel from 'viewmodels/alert';
 import uuid from 'uuid';
 import Cookies from 'js-cookie';
+import queueWorkflowHistory from 'utils/workflow-history-queue';
 import workflowComponentAbstractTemplate from 'templates/views/components/workflows/workflow-component-abstract.htm';
+
+/* In-flight /cards requests, keyed by resource (or graph) id. A coral workflow
+   step renders several components against the same resource, and each used to
+   issue its own identical request — an endpoint that runs a permission check
+   per collector node and serialises every card/node/widget/tile for the graph.
+   Deleted once settled, so nothing is cached across a save. */
+var cardRequests = {};
+
+var fetchCardData = function(id) {
+    if (!(id in cardRequests)) {
+        cardRequests[id] = Promise.resolve(
+            $.getJSON(arches.urls.api_card + id)
+        ).finally(function() {
+            delete cardRequests[id];
+        });
+    }
+    /* Each component mutates this data building its GraphModel/CardViewModels,
+       so subscribers must not share one object. */
+    return cardRequests[id].then(structuredClone);
+};
 
 function NonTileBasedComponent() {
     var self = this;
@@ -109,7 +130,25 @@ function TileBasedComponent() {
             });
         }
 
-        $.getJSON(( arches.urls.api_card + this.getCardResourceIdOrGraphId() ), function(data) {
+        /* initialize() runs again on every step save for components with
+           nothing to save, and /cards is ~1.1MB that costs the single app
+           process ~300ms to serialise — in the same window the tile saves need
+           it. This component's card structure hasn't changed since the first
+           load, and its own tiles can't have (it isn't dirty), so re-use the
+           first response instead of re-fetching it.
+
+           Kept per component rather than in a module-level cache: a component
+           built fresh for a later step must still get current tiles. Stored as
+           a pristine copy because the code below mutates `data` building the
+           GraphModel and CardViewModels. */
+        var cardData = self._pristineCardData
+            ? Promise.resolve(structuredClone(self._pristineCardData))
+            : fetchCardData(this.getCardResourceIdOrGraphId()).then(function(data) {
+                self._pristineCardData = structuredClone(data);
+                return data;
+            });
+
+        cardData.then(function(data) {
             var handlers = {
                 'after-update': [],
                 'tile-reset': []
@@ -848,30 +887,13 @@ function WorkflowComponentAbstract(params) {
     };
 
     this.setToWorkflowHistory = async function(key, value) {
-        const workflowid = self.workflowId;
-        const workflowname = self.workflowName;
-
-        const workflowHistory = {
-            workflowid,
-            workflowname,
-            completed: false,
+        // The Django view patches in these keys, keeping existing ones, so
+        // batching several components' patches into one post is equivalent.
+        await queueWorkflowHistory(self.workflowId, self.workflowName, {
             componentdata: {
-                // Django view will patch in this key, keeping existing keys
-                [self.id()]: {
-                    [key]: value,
-                },
+                [self.id()]: { [key]: value },
             },
-        };
-
-        await fetch(arches.urls.workflow_history + workflowid, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                "X-CSRFToken": Cookies.get('csrftoken')
-            },
-            body: JSON.stringify(workflowHistory),
         });
-
     };
 
     this.getSavedValue = function() {
