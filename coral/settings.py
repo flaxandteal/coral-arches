@@ -657,7 +657,12 @@ CELERY_BEAT_SCHEDULE = {
 # This might be necessary if the worker pool is regulary fully active, with no idle workers, or if
 # you need to run the celery task using solo pool (e.g. on Windows). You may need to provide another
 # way of monitoring celery so you can detect the background task not being available.
-CELERY_CHECK_ONLY_INSPECT_BROKER = False
+# Resource.index() calls check_if_celery_available() on every tile save (because
+# ELASTICSEARCH_CUSTOM_INDEXES is non-empty), and the worker ping blocks for ~1s
+# waiting out its broadcast timeout — measured at 1020ms per save against 2ms for
+# the broker-only check. We always run a worker alongside the broker, so checking
+# the broker is a good enough proxy for "celery is up".
+CELERY_CHECK_ONLY_INSPECT_BROKER = True
 
 CANTALOUPE_DIR = os.path.join(ROOT_DIR, UPLOADED_FILES_DIR)
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
