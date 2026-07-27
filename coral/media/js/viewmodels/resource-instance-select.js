@@ -10,6 +10,7 @@ import resourceReportAbstract from 'views/components/resource-report-abstract';
 import 'views/components/related-instance-creator';
 
 var graphCache = {};
+var graphRequests = {};
 
 /**
 * A viewmodel used for generic alert messages
@@ -91,18 +92,30 @@ var ResourceInstanceSelectViewModel = function(params) {
         if (graphid in self.graphLookup){
             return Promise.resolve(self.graphLookup[graphid]);
         } else {
-            return window.fetch(`${arches.urls.graphs_api}${graphid}?cards=false&exclude=cards,domain_connections,edges,nodegroups,nodes,widgets`)
-                .then(function(response){
-                    if (!response.ok) {
-                        throw new Error(arches.translations.reNetworkReponseError);
-                    }
-                    return response.json();
-                })
-                .then(function(json){
-                    self.graphLookup[graphid] = json.graph;
+            /* Share the in-flight request: a workflow step builds many of
+               these widgets in the same tick, so they all miss graphLookup
+               (only written when the fetch resolves) and stampede the URL. */
+            if (!(graphid in graphRequests)) {
+                graphRequests[graphid] = window.fetch(`${arches.urls.graphs_api}${graphid}?cards=false&exclude=cards,domain_connections,edges,nodegroups,nodes,widgets`)
+                    .then(function(response){
+                        if (!response.ok) {
+                            throw new Error(arches.translations.reNetworkReponseError);
+                        }
+                        return response.json();
+                    })
+                    .then(function(json){
+                        self.graphLookup[graphid] = json.graph;
+                        return json.graph;
+                    })
+                    .finally(function(){
+                        delete graphRequests[graphid];
+                    });
+            }
+            return graphRequests[graphid]
+                .then(function(graph){
                     self.graphLookupKeys(Object.keys(self.graphLookup));
-                    self.graphIds.push(json.graph.graphid);
-                    return json.graph;
+                    self.graphIds.push(graph.graphid);
+                    return graph;
                 });
         }
     };
