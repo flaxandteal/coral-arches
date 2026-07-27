@@ -377,3 +377,21 @@ def reset_database(lock_code_enc):
             settings.CORAL_UPGRADE_WINDOW_FILE
         )
         return
+
+
+@shared_task
+def index_resource_instance(resource_id):
+    """Re-index a whole resource off the request path.
+
+    Dispatched by the Tile.index patch in coral.utils.deferred_tile_index so a
+    tile save doesn't block on Elasticsearch. Several tile saves against one
+    resource each queue their own task; they're idempotent, and the last to run
+    leaves the index correct.
+    """
+
+    try:
+        Resource.objects.get(pk=resource_id).index()
+    except Resource.DoesNotExist:
+        # Deleted between the tile save and this task running; the delete path
+        # removes its documents, so there is nothing to index.
+        pass
