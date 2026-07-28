@@ -266,7 +266,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.btn-success').contains('Add').click();
     })
 
-    it.only('Location Details tab specific tests', function () {
+    it('Location Details tab specific tests', function () {
         cy.contains('Workflows');
         cy.contains('Add Garden').click();
         cy.wait(2000);

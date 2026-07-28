@@ -18,46 +18,33 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.wait(2000);
         cy.contains('Save and Continue').click();
 
-        //Report Tab
+        // Report tab. Its widgets render lazily, so wait for select2 to appear
+        // before touching anything.
+        cy.get('.select2-selection', { timeout: 60000 }).should('exist');
         cy.wait(8000);
-        // SMR number dropdown
-        cy.get(':nth-child(1) > .workflow-component').contains('Add new Relationship').click();
-        cy.wait(3000);
-        cy.get('.select2-results__option').first().click();
 
-        // Land use dropdown
-        cy.get('[aria-label="Land Use"]').scrollIntoView().should('be.visible').click();
-        cy.get('.select2-results__option').first().click();
+        cy.pickRelationshipFirst('SMR Number(s)');
+        cy.wait(1000);
 
-        // Date of vist date selector
-        cy.get('[aria-label="Date of Visit"]').scrollIntoView().should('be.visible').click();
+        cy.pickOptionByLabelPrefix('Land Use');
+        cy.wait(1000);
 
-        // Condition score dropdown
-        cy.get('[aria-label="Condition Score, 1"]').scrollIntoView().should('be.visible').click();
-        cy.get('.select2-results__option').first().click();
+        // Date of Visit is a datepicker — type rather than click the addon.
+        cy.get('[aria-label="Date of Visit"]').filter(':visible').first()
+            .type('28-07-2026{enter}', { force: true });
 
-        // Risk score dropdwon
-        cy.get('[aria-label="Risk Score, 1"]').scrollIntoView().should('be.visible').click();
-        cy.get('.select2-results__option').first().click();
+        // Condition/Risk Score aria-labels embed the current value, so match on
+        // the prefix instead of a hard-coded score.
+        cy.pickOptionByLabelPrefix('Condition Score, ');
+        cy.pickOptionByLabelPrefix('Risk Score, ');
 
-        // Owner dropdown
-        cy.get('[aria-label="Owner(s), Add new Relationship"]').click({ multiple: true });
+        cy.pickRelationshipFirst('Owner(s)');
+        cy.wait(1000);
+        cy.pickRelationshipFirst('Occupier(s)');
+        cy.wait(1000);
+        cy.pickRelationshipFirst('FM Warden(s)');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
-        cy.wait(2000);
-
-        // Occupier dropdown
-        cy.get('[aria-label="Occupier(s), Add new Relationship"]').click({ multiple: true });
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
-
-        // fm warden dropdown
-        cy.wait(2000);
-        cy.get('[aria-label="FM Warden(s), Add new Relationship"]').click({ multiple: true });
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
-        cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click()
+        cy.workflowNext();
 
         cy.wait(4000);
         cy.get('.irish_grid_tm65_ > .row > .form-group > :nth-child(3) > span > ul > :nth-child(1)').click();

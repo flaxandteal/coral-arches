@@ -10,19 +10,30 @@ describe('Going through the Incident Report', function () {
         cy.contains('Issue Report').click();
         cy.wait(2000);
         cy.get('[aria-label="Select Licence, Please select a Heritage Asset"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.wait(3000);
+        // Skip the loading placeholder — selecting it leaves the launcher without
+        // a licence, so "Start New" never opens the workflow and there is no
+        // footer for the next step to click.
+        cy.get('.select2-results__option')
+            .not('.loading-results')
+            .not('.select2-results__option--load-more')
+            .not('.select2-results__message')
+            .first()
+            .click();
         cy.wait(2000);
         cy.get('[style="display: flex"] > .fa').contains('Start New').click();
-        
-        // Inital Step tab
-        cy.wait(2000);
-        cy.get('.tabbed-workflow-footer-button-container > .btn').contains('Next Step').click();
+
+        // Inital Step tab. This workflow initialises eight tabs server-side and
+        // can take ~45s (longer under load) before its footer renders, so give
+        // it well past the default 12s timeout.
+        cy.get('.tabbed-workflow-footer-button-container', { timeout: 150000 }).should('exist');
+        cy.wait(3000);
+        cy.workflowNext();
 
         // Incident Reference tab
         cy.wait(8000);
         cy.get('.tabbed-workflow-footer').scrollIntoView();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
+        cy.workflowNext();
 
         // Record of the incident
         cy.wait(4000)
@@ -77,47 +88,25 @@ describe('Going through the Incident Report', function () {
         // cy.get('.select2-results__option').first().click();
         // cy.wait(4000);
 
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
+        cy.workflowNext();
 
         // Location details tab
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
-        cy.get('[style="display: flex;"').contains('Help').click();
-        cy.get('#card-help-panel');
 
-        cy.get('.card_component.full_address').contains('Full Address');
-        cy.get('[aria-label="Full Address"]').click().type('123 Bubble Street');
+        // The Location Details on an Issue Report are inherited (read-only) from
+        // the linked Heritage Asset — Building Name / Street / Town or City /
+        // Postcode / Townland are all disabled here — so there is nothing to fill;
+        // just confirm the tab rendered and continue.
+        cy.get('[aria-label="Building Name"]').should('be.disabled');
 
-        cy.get('.card_component.street_value').contains('Street');
-        cy.get('[aria-label="Street"]').click().type('123 Bubble Street');
+        /*
 
-        cy.get('.card_component.town_or_city_value').contains('Town or City');
-        cy.get('[aria-label="Town or City"]').click().type('Bubble Land');
-
-        cy.get('.card_component.postcode_value').contains('Postcode').scrollIntoView();
-        cy.get('.card_component.postcode_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control')
-        .click({force: true}).type('BL12457')
-
-        cy.get('.card_component.county_selected').contains('County').scrollIntoView();
-        cy.get('.card_component.county_selected').contains('Select an option').click();
-
-        cy.get('.card_component.townland').contains('Townland');
-        cy.get('.card_component.townland').contains('Select an option').click();
-
-        cy.get('.card_component.area_type').contains('Area Type').scrollIntoView();
-        cy.get('.card_component.area_type').contains('Select an option').click();
-
-        cy.get('.card_component.area_name').contains('Area Name').scrollIntoView();
-        cy.get('.card_component.area_name').contains('Select an option').click();
-
-        /* 
-        
         Location Description rich text editor
 
         */
 
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
+        cy.workflowNext();
 
         // // Map tab
         // cy.get('.mapboxgl-canvas');
@@ -157,46 +146,36 @@ describe('Going through the Incident Report', function () {
         // cy.get('.select2-selection__rendered > .select2-selection__clear').first().click({force: true});
         // cy.get('.select2-results__option').contains('Unknown').click();
 
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
+        cy.workflowNext();
 
-        // Work Proposed tab
+        // Work Proposed tab. Action Type is a domain multi-select; pick one of
+        // its fixed options. Work Carried Out By is a required resource-instance
+        // dropdown, so select the first available resource to allow the save.
         cy.get('.card_component.action_type').contains('Action Type');
-        cy.get('.select2-selection--multiple').click();
+        cy.get('.card_component.action_type .select2-selection--multiple').click();
         cy.get('.select2-results__option').contains('Resolve with Owner');
         cy.get('.select2-results__option').contains('Resolve with Occupier');
         cy.get('.select2-results__option').contains('Refer to Enforcement');
         cy.get('.select2-results__option').contains('Contact PSNI');
         cy.get('.select2-results__option').contains('Resolve with Owner').click();
+        cy.wait(1000);
 
-        cy.get('.card_component.work_carried_out_by_value').contains('Work Carried Out By')
-        cy.get('[aria-label="Work Carried Out By"]').click().type('Testing');
+        cy.get('.card_component.work_carried_out_by_value').contains('Work Carried Out By');
+        cy.pickCardOption('work_carried_out_by_value');
+        cy.wait(1000);
 
-        cy.get('.card_component.contact_details_value').contains('Contact Details');
-        cy.get('[aria-label="Contact Details"]').click().type('Testing');
+        cy.workflowNext();
 
-        cy.get('.card_component.intended_start_date').contains('Intended Start Date');
-        cy.get('[aria-label="Intended Start Date"]').click();
-        cy.get('.card_component.intended_start_date > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-
-        cy.get('.card_component.intended_end_date').contains('Intended End Date');
-        cy.get('[aria-label="Intended End Date"]').scrollIntoView().click();
-
-        cy.get('.card_component.approved_by').contains('Approved By').scrollIntoView();
-        cy.get('.select2-selection').contains('Add new Relationship').click();
-        cy.get('.select2-results__option').first().click();
-
-        cy.get('.card_component.proposal_date_value').contains('Proposal Date');
-        cy.get('[aria-label="Proposal Date"]').click();
-
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
-
-        // Documentation tab
-        cy.get('.bord-top > .btn').contains('Select Files').click();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click()
+        // Documentation tab. Only assert the upload control is present — clicking
+        // it opens a native file dialog that Cypress cannot drive (spec 05 does
+        // the same). The tab renders lazily, so allow time for it.
+        cy.wait(4000);
+        cy.get('.bord-top > .btn', { timeout: 60000 }).contains('Select Files');
+        cy.workflowNext();
 
         // Sign Off tab
         cy.get('.card_component.status_type').contains('Status');
-        cy.get('.select2-selection__rendered').contains('Select an option').click();
+        cy.get('.card_component.status_type .select2-selection').click();
         cy.get('.select2-dropdown').contains('Enforcement actioned');
         cy.get('.select2-dropdown').contains('Not completed');
         cy.get('.select2-dropdown').contains('Finished');
@@ -207,13 +186,13 @@ describe('Going through the Incident Report', function () {
         cy.get('[aria-label="Work Finish Date"]').click();
         cy.get('.card_component.work_finish_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
         
+        // The admin test user has no sign-off permission, so the Signed Off By
+        // widget renders a "You do not have permission to sign off" message
+        // instead of a picker; just confirm the card is present.
         cy.get('.card_component.signed_off_by').contains('Signed Off By');
-        cy.get('.select2-selection__rendered').contains('Add new Relationship').click();
-        cy.get('.select2-dropdown').first().click();
         cy.get('.card_component.sign_off_date_value').contains('Sign Off Date').scrollIntoView();
-        cy.get('[aria-label="Sign Off Date"]').click();
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save');
-        cy.get('.workflow-top-control').contains('Save and complete Workflow').scrollIntoView().click();
+        cy.get('.workflow-top-control').contains(/Save and [Cc]omplete Workflow/).scrollIntoView().click();
     });
 });

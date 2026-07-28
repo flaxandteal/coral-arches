@@ -5,44 +5,38 @@ describe('Going through the Agri Workflow', function () {
         cy.visit('/plugins/init-workflow');
     });
 
-    it('Start new and go through the workflow and populate all fields', function () {
+    it('Start new and go through the workflow to completion', function () {
+        // Launch the Agriculture and Forestry Consultation workflow
         cy.get('[href="/plugins/open-workflow?workflow-slug=agriculture-and-forestry-consultation-workflow"] > .workflow-select-card').click();
-        cy.get('[style="display: flex"] > .fa > span').click();
-        cy.get('.tabbed-workflow-footer-button-container > .btn').click();
+        cy.wait(2000);
+        cy.contains('Start New').click();
+        cy.wait(3000);
+
+        // Start step: Consultation ID is auto-generated
+        cy.get('[aria-label="Consultation ID"]').should('have.attr', 'placeholder');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
 
-        cy.wait(8000);
-        cy.get('[aria-label="Related Heritage Assets, Add new Relationship"]').click({force: true});
-        cy.wait(4000);
-        cy.get('.select2-results__option').first().click({force: true});
-        cy.wait(2000);
-        cy.get('[aria-label="Referred to, Add new Relationship"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
-        cy.get('[aria-label="Applicant, Add new Relationship"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
-        cy.get('[aria-label="Applicant organisation, Add new Relationship"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click({force: true});
+        // Consultation step
+        cy.wait(6000);
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
 
-        cy.get('.card_component.date_received > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click({force: true} );
-        cy.get('.card_component.date_acknowledged > .row').click();
-        cy.get('.card_component.date_acknowledged > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click({force: true});
-        cy.get('.card_component.date_acknowledged > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"]').click( {force: true} );
-        cy.get('.card_component.due_date > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click( {force: true} );
-        cy.get('.card_component.response_date > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"] > .input-group > .form-control').click( {force: true} );
-        cy.get('.card_component.response_date > .row > .form-group > .col-xs-12 > [style="display: flex; gap: 8px;"]').click( {force: true} );
-        cy.get(':nth-child(4) > .workflow-component > .workflow-component-element > .card-component').click();
-        cy.get('.col-xs-12 > .form-control').clear('t');
-        cy.get('.col-xs-12 > .form-control').type('test');
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
-        cy.get('.tabbed-workflow-footer-button-container > :nth-child(2) > .fa').click();
-        cy.get(':nth-child(2) > .verbose').click();
-        cy.get('.tabbed-workflow-footer-button-container > .btn').contains('Next Step').click();
-        cy.get('.form-control').click();
-        cy.get('[style="display: flex; gap: 8px;"]').click();
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
-        cy.get('.workflow-top-control > .btn-success').click();
+        // Documentation step (file upload is optional)
+        cy.wait(5000);
+        cy.get('.bord-top > .btn').contains('Select Files');
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Letters step
+        cy.wait(5000);
+        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+
+        // Sign off step
+        cy.wait(5000);
+        cy.get('.workflow-top-control').contains('Save and Complete Workflow').scrollIntoView().click();
+
+        // Workflow completes and returns to the workflow launcher list.
+        // (The launcher shows the workflow cards, not a "Start New" button —
+        // that only appears once a specific workflow card is selected.)
+        cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
+        cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     });
 });

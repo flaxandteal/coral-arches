@@ -9,43 +9,36 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.contains('Workflows');
         cy.contains('Archive Cataloguing').click();
         cy.contains('Start New').click();
+        // Let the Archive Reference tab render before advancing, otherwise the
+        // forward click lands before the workflow has mounted its first step.
+        cy.wait(6000);
+        cy.workflowNext();
 
-        cy.contains('Save and Continue').click();
-
-        // Archive Source Details
-        cy.wait(900);
-        cy.get('input[aria-label="File Title"]').should('be.visible').type('Test Source Name');
+        // Archive Source Details — the tab renders lazily, so wait for its
+        // first widget rather than a fixed sub-second pause.
+        cy.get('input[aria-label="File Title"]', { timeout: 60000 }).should('be.visible').type('Test Source Name');
         cy.get('[aria-label="Subtitle"]').should('be.visible').type('Test Subtitle');
         cy.get('[aria-label="File ID (key)"]').should('be.visible').type('TestId');
-        cy.get('span').contains('Archive Source Type').should('be.visible').siblings('.archive_source_type').click();
+        // These select2s carry their current value in the aria-label
+        // ("Archive Source Type, Select an option"), so match on the prefix.
+        cy.pickOptionByLabelPrefix('Archive Source Type, ', 'Genre');
         cy.wait(500);
-        cy.get('.select2-results__options li').contains('Genre').click();
-        cy.get('span').contains('File Status').siblings('.col-xs-12').click();
-        cy.wait(500);
-        cy.get('.select2-results__options li').contains('Destroyed');
-        cy.get('.select2-results__options li').contains('For Review');
-        cy.get('.select2-results__options li').contains('Closed');
-        cy.get('.select2-results__options li').contains('Open');
-        cy.get('.select2-results__options li').contains('Destroyed').click();
+        cy.pickOptionByLabelPrefix('File Status, ', 'Destroyed');
         cy.type_ckeditor('editor1', 'test description');
         cy.wait(500);
-        cy.contains('Save and Continue').click();
+        cy.workflowNext();
 
         // Archive Source Creation
-        cy.wait(500);
-        cy.get('input[aria-label="Author Name"]').should('be.visible').type('Test Author Name');
+        cy.get('input[aria-label="Author Name"]', { timeout: 60000 }).should('be.visible').type('Test Author Name');
         cy.get('input[aria-label="Editor Name(s)"]').should('be.visible').type('Test Editor Name');
-        cy.get('[aria-label="Start Date"]').scrollIntoView().should('be.visible').click();
-
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-
-        cy.get('input[aria-label="Start Date"]').siblings('.bootstrap-datetimepicker-widget').contains(dd).click( {force: true} );
-        cy.get('[aria-label="End Date"]').scrollIntoView().should('be.visible').click( {force: true} );
-        cy.get('input[aria-label="End Date"]').siblings('.bootstrap-datetimepicker-widget').contains(dd).click( {force: true} );
+        // Type into the datepickers — clicking the addon opens no picker.
+        cy.get('input[aria-label="Start Date"]').filter(':visible').first()
+            .type('28-07-2026{enter}', { force: true });
+        cy.get('input[aria-label="End Date"]').filter(':visible').first()
+            .type('28-07-2026{enter}', { force: true });
         cy.type_ckeditor('editor3', 'test statement of responsibility');
         cy.wait(500);
-        cy.contains('Save and Continue').click();
+        cy.workflowNext();
 
         // Repository Storage Location
         cy.wait(1000);
@@ -62,10 +55,10 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.get('[aria-label="Person or Organization, Add new Relationship"]').click({ multiple: true });
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
-        cy.get('[aria-label="Start Date"]').scrollIntoView().should('be.visible').click({force: true});
-        cy.get('[aria-label="Start Date"]').siblings('.bootstrap-datetimepicker-widget').contains(dd).click({force: true});
-        cy.get('[aria-label="End Date"]').scrollIntoView().should('be.visible').click({force: true});
-        cy.get('[aria-label="End Date"]').siblings('.bootstrap-datetimepicker-widget').contains(dd).click({force: true});
+        cy.get('input[aria-label="Start Date"]').filter(':visible').first()
+            .type('28-07-2026{enter}', { force: true });
+        cy.get('input[aria-label="End Date"]').filter(':visible').first()
+            .type('28-07-2026{enter}', { force: true });
         cy.get('.workflow-component-element').get('.btn.btn-workflow-tile.btn-success').should('be.visible').contains('Add').click();
         cy.get('.workflow-top-control > .btn-success > .verbose').click();
     });

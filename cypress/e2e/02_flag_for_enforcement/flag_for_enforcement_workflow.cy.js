@@ -21,12 +21,15 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('[aria-label="Case Reference"]').should('be.visible').type('Case Ref');
         cy.wait(2000);
         cy.type_ckeditor('editor2', 'test reason for enforcement');
-        cy.contains('Flagged by').siblings('.row').click();
+        cy.get('[aria-label="Flagged by, Add new Relationship"]').click();
         cy.wait(1000)
-        cy.first().click();
+        cy.get('.select2-results__option').first().click();
 
-        cy.contains('Select resources').siblings('.row').click();
-        cy.get('.select2-results__options li').contains('HA/01').click();
+        cy.get('[aria-label="Select resources, Add new Relationship"]').click();
+        cy.wait(1000);
+        cy.get('.select2-search__field:visible').type('HA/02');
+        cy.wait(1500);
+        cy.get('.select2-results__option').contains('HA/02').click();
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
@@ -44,7 +47,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         today = dd + '-' + mm + '-' + yyyy;
 
         cy.contains('Flagged Date Value:').siblings().should('contain', today);
-        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/01 Testing');
+        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing');
         cy.wait(900);
         cy.contains('Save and Complete Workflow').click();
     });
@@ -107,7 +110,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
-        cy.wait(2000);
+        cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
+        cy.wait(1000);
         cy.type_ckeditor('editor2', 'test reason for enforcement');
         cy.wait(2000);
         cy.contains('Save and Continue').click();
@@ -131,10 +135,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
-        cy.wait(2000);
-        cy.contains('Flagged by').siblings('.row').click();
-        cy.wait(1000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
+        cy.pickRelationshipFirst('Flagged by');
         cy.wait(500);
         cy.contains('Save and Continue').click();
 
@@ -155,9 +157,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
-        cy.wait(2000);
-        cy.contains('Flagged by').siblings('.row').click();
-        cy.contains('Test Organisation').click();
+        cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
+        cy.pickRelationshipByName('Flagged by', 'Test Organisation');
         cy.wait(500);
         cy.contains('Save and Continue').click();
 
@@ -179,14 +180,10 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Save and Continue').click();
 
         // Enforcement Details Tab
+        cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
+        cy.pickRelationshipByName('Flagged by', 'Test Organisation');
         cy.wait(2000);
-        cy.contains('Flagged by').siblings('.row').click();
-        cy.wait(2000);
-        cy.contains('Test Organisation').click();
-        cy.wait(2000);
-        cy.contains('Flagged by').siblings('.row').click();
-        cy.wait(2000);
-        cy.contains('Test Person').click();
+        cy.pickRelationshipByName('Flagged by', 'Test Person');
         cy.wait(500);
         cy.contains('Save and Continue').click();
 
