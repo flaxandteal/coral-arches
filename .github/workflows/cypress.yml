@@ -126,6 +126,44 @@ jobs:
             exit 1
           fi
 
+      - name: Seed the E2E baseline resources
+        run: |
+          python3 -m venv "${RUNNER_TEMP}/seedenv"
+          "${RUNNER_TEMP}/seedenv/bin/pip" install --quiet \
+            -r ${{ env.ARCHES_PROJECT }}/cypress/seed/requirements.txt
+
+          "${RUNNER_TEMP}/seedenv/bin/python" \
+            ${{ env.ARCHES_PROJECT }}/cypress/seed/seed.py \
+            --pkg-dir ${{ env.ARCHES_PROJECT }}/coral/pkg \
+            --graphs "Heritage Asset" -n 6 \
+            --only-aliases monument_name,resourceid,smr_number,ihr_number,hb_number,historic_parks_and_gardens \
+            --overrides ${{ env.ARCHES_PROJECT }}/cypress/seed/coral_e2e_overrides.json \
+            -o "${RUNNER_TEMP}/seeded.json"
+
+          # The CI stack does not bind-mount the checkout into the arches
+          # container (the image COPYs it at build time), so hand the file over.
+          cid="$($COMPOSE ps -q arches)"
+          docker cp "${RUNNER_TEMP}/seeded.json" "$cid:/tmp/seeded.json"
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py packages -o import_business_data -s /tmp/seeded.json -ow overwrite'
+
+      - name: Verify the seeded resources are searchable
+        run: |
+          missing=0
+          for name in "HA/02 Testing" "SMR-TEST-004 Testing"; do
+            hits="$($COMPOSE exec -T arches curl -s \
+              "http://elasticsearch:9200/${ARCHES_PROJECT}_resources/_search" \
+              -H 'Content-Type: application/json' \
+              -d "{\"size\":1,\"query\":{\"nested\":{\"path\":\"displayname\",\"query\":{\"term\":{\"displayname.value\":\"${name}\"}}}}}" \
+              | tr -d '\r' | grep -o '"value":[0-9]*' | head -1 | cut -d: -f2)"
+            echo "ES match_phrase '${name}' -> ${hits:-0} hit(s)"
+            [ "${hits:-0}" -ge 1 ] || missing=1
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::Seeded Heritage Assets are not searchable in Elasticsearch"
+            exit 1
+          fi
+
       - name: Seed the admin test 2FA (TOTP) device
         run: |
           $COMPOSE exec -T arches bash -lc \

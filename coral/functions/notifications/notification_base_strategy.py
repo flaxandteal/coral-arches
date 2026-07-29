@@ -95,6 +95,8 @@ class NotificationStrategy():
         self.notification.context['email'] = user.email
     
     def _build_url(self):
+        if self.request is None:
+            return "/index.htm"
         return self.request.build_absolute_uri(f"/index.htm")
     
     def get_domain_value_string(self, value_id, node_id):

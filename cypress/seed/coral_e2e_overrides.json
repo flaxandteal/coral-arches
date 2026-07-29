@@ -1,0 +1,71 @@
+{
+  "__comment__": [
+    "Per-instance value overrides for seed.py, keyed by graph name then instance index.",
+    "These pin the literals the Cypress specs pick dropdown options by; everything else",
+    "on the resource keeps seed.py's generated filler.",
+    "",
+    "Why the split at instance 4: coral's generate_ha_name_function builds the display",
+    "name as '{smr_number} {site_name}' as soon as ANY reference number is present, and",
+    "only as '{ha_number} {site_name}' when none is. 02_flag_for_enforcement searches for",
+    "'HA/02', so instances 1-3 must carry no reference numbers at all - hence the nulls",
+    "on smr/ihr/hb/historic_parks. 09_state_care's launcher runs an advanced search for a",
+    "non-null SMR Number, so instances 4-6 carry one.",
+    "",
+    "Six instances, not five: arches sets minimumResultsForSearch: 5, below which selectWoo",
+    "renders no search box at all (see cy.select2Search in cypress/support/commands.js).",
+    "",
+    "display_name is deliberately NOT seeded: generate_ha_name_function creates that tile itself on the first save (Tile.get_blank_tile_from_nodegroup_id), so supplying one too gives two tiles for a cardinality-1 nodegroup and the import fails.",
+    "",
+    "monument_name is the CONSTANT 'Testing', not 'Testing {n}'. 02_flag_for_enforcement asserts the exact text of the associated resource: cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing'). A per-instance suffix would render 'HA/02 Testing 2' and fail that equality. This also matches how the display names look in a real coral database."
+  ],
+  "Heritage Asset": [
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/01",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/02",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/03",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/04",
+      "smr_number": "SMR-TEST-004",
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/05",
+      "smr_number": "SMR-TEST-005",
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/06",
+      "smr_number": "SMR-TEST-006",
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    }
+  ]
+}

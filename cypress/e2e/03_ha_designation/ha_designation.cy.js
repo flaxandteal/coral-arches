@@ -10,7 +10,7 @@ describe('Going through the HA Designation Workflow', function () {
         cy.wait(2000);
         cy.get('[aria-label="Select Heritage Asset, Please select a Heritage Asset"]').click();
         cy.wait(2000);
-        cy.get('.select2-search__field').type('Testing');
+        cy.select2Search('Testing');
         cy.wait(3000);
         cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);

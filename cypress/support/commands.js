@@ -17,18 +17,12 @@
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 
 Cypress.Commands.add("login", () => {
-    // Coral forces two-factor auth on every login, and the seeded TOTP device has
-    // replay protection (a code can't be reused within its 30s window). Logging in
-    // on every test would collide, so cache the authenticated session and only run
-    // the real login flow once for the whole suite.
     cy.session('admin', () => {
         cy.visit('/auth/');
 
         cy.get('#username').type('admin');
         cy.get('#password').type('admin{enter}');
 
-        // The admin test account has a TOTP device seeded with a known secret, so
-        // generate the current code and submit it to complete the login.
         cy.get('input[name="otp_token"]').should('be.visible').then(($input) => {
             cy.task('generateOtp').then((otp) => {
                 cy.wrap($input).type(`${otp}{enter}`);
@@ -40,9 +34,6 @@ Cypress.Commands.add("login", () => {
     }, { cacheAcrossSpecs: true });
 });
 
-// Open a single-select select2 inside a specific card_component (concept/domain
-// or resource-instance dropdowns that show "Select an option") and pick an
-// option by index (default the first real option).
 Cypress.Commands.add("pickCardOption", (cardClass, index = 0) => {
     cy.get(`.card_component.${cardClass}`).scrollIntoView();
     cy.get(`.card_component.${cardClass}`).find('.select2-selection').first().click();
@@ -54,16 +45,9 @@ Cypress.Commands.add("pickCardOption", (cardClass, index = 0) => {
         .click();
 });
 
-// Open any select2 whose aria-label STARTS WITH the given prefix and pick an
-// option by index. Use for widgets whose aria-label embeds the current value
-// ("Condition Score, 2") or that sit on a non-".select2-selection" element, so
-// neither a hard-coded full label nor pickCardOption applies.
-// `indexOrText` picks by option text when given a string, else by index.
 Cypress.Commands.add("pickOptionByLabelPrefix", (labelPrefix, indexOrText = 0) => {
     const sel = `[aria-label^="${labelPrefix}"]`;
-    // Scroll before filtering on :visible — select2 renders a zero-size span
-    // until the widget is scrolled into view, so a :visible filter finds
-    // nothing for below-the-fold widgets.
+
     cy.get(sel).first().scrollIntoView();
     cy.get(sel).first().click({ force: true });
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
@@ -77,10 +61,6 @@ Cypress.Commands.add("pickOptionByLabelPrefix", (labelPrefix, indexOrText = 0) =
     }
 });
 
-// Pick an option from a domain/concept select2 identified by its label. These
-// widgets render their aria-label as "<node name>, <current value>", so match on
-// the "<node name>, " prefix rather than a hard-coded current value, then choose
-// the option by (partial) text.
 Cypress.Commands.add("pickDomainByLabel", (labelPrefix, optionText) => {
     const sel = `.select2-selection[aria-label^="${labelPrefix}, "]`;
     cy.get(sel).filter(':visible').first().scrollIntoView();
@@ -93,15 +73,6 @@ Cypress.Commands.add("pickDomainByLabel", (labelPrefix, optionText) => {
         .click();
 });
 
-// Advance a tabbed workflow to the next step. The forward footer button is
-// labelled "Save and Continue" when the current tab has unsaved edits and
-// "Next Step" when it does not, so match either.
-// Match only ENABLED forward buttons: on a tab with no edits the footer renders
-// a greyed-out "Save and Continue" next to the live "Next Step", and clicking
-// the disabled one fails. This must stay a retrying query chain (get/find/
-// contains) rather than a .then() snapshot — some transitions (notably
-// "Initialise Excavation Licence") only enable the button after a slow backend
-// step, so the default 12s timeout is raised here.
 Cypress.Commands.add("workflowNext", (options = {}) => {
     const timeout = options.timeout || 60000;
     cy.get('.tabbed-workflow-footer-button-container', { timeout })
@@ -110,12 +81,6 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
         .click();
 });
 
-// Fill a datepicker widget (`.card_component.<cardClass>.datepicker-widget`).
-// Type into the input rather than clicking the `.input-group-addon.date-icon`
-// calendar addon — the addon opens no picker and leaves the field empty. The
-// widget normalises what it parses to DD-MM-YYYY. Avoid the deep
-// `> .row > .form-group > ...` paths: those inline
-// `style="display: flex; gap: 8px;"` selectors drifted in arches 8.2.
 Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
     cy.get(`.card_component.${cardClass}`).filter(':visible').first().as('dateCard');
     cy.get('@dateCard').scrollIntoView();
@@ -125,31 +90,14 @@ Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
         .should('not.have.value', '');
 });
 
-// Open a resource-instance relationship widget (identified by its "<label>, Add
-// new Relationship" aria-label) and wait for its select2 dropdown to finish its
-// initial load. The widget often sits below the fold, so scroll it into view
-// first — a bare .should('be.visible') fails because select2 renders a
-// zero-size span until scrolled to.
 Cypress.Commands.add("openRelationship", (ariaLabel) => {
-    // The "Add new Relationship" select2 box is labelled "<label>, Add new
-    // Relationship" while empty, but once a relationship has been added its
-    // aria-label collapses to "<label>, " (the add-new box stays, ready for
-    // another). Match on the "<label>, " prefix so the same command works for the
-    // first and any subsequent relationship on a multi-value widget.
-    // Some tabs render more than one widget with the same label (or keep hidden
-    // copies from other tabs in the DOM), so always target the first VISIBLE
-    // matching add-new box.
     const sel = `.select2-selection[aria-label^="${ariaLabel}, "]`;
     const target = () => cy.get(sel).filter(':visible').first();
-    // Scroll the first match into view BEFORE filtering on :visible. select2
-    // renders a zero-size span until the widget is scrolled to, so for a
-    // below-the-fold widget the :visible filter matches nothing at all.
+
     cy.get(sel).first().scrollIntoView();
     cy.wait(300);
     target().scrollIntoView();
-    // The widget's select2 may still be initialising when the tab first renders;
-    // clicking it before it is ready silently does nothing. Give it a moment,
-    // then click and retry until the dropdown actually opens.
+
     cy.wait(600);
     const openOnce = (attempt) => {
         cy.get('body').then(($b) => {
@@ -183,10 +131,6 @@ Cypress.Commands.add("pickRelationshipFirst", (ariaLabel) => {
         .click();
 });
 
-// Select a specific resource by display name from a relationship widget.
-// NOTE: the "Flagged by" actor widget does NOT re-render term-filtered results
-// when you type into its select2 search box (an arches 8.2 widget quirk), so we
-// reach the target by paging through the infinite-scroll list instead of typing.
 Cypress.Commands.add("pickRelationshipByName", (ariaLabel, name, maxScrolls = 15) => {
     cy.openRelationship(ariaLabel);
     const exact = new RegExp('^\\s*' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$');
@@ -213,9 +157,6 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 Cypress.Commands.add("type_ckeditor", (element, content) => {
-    // CKEditor auto-names instances editor1, editor2, ... in global creation order,
-    // which drifts as the workflow renders its tabs. Prefer the requested name, but
-    // fall back to whichever editor is currently visible on screen.
     cy.window().should((win) => {
         expect(win.CKEDITOR, 'CKEDITOR global to exist').to.exist;
         expect(
@@ -234,12 +175,29 @@ Cypress.Commands.add("type_ckeditor", (element, content) => {
         }
         const inst = win.CKEDITOR.instances[name];
         inst.setData(content);
-        // setData alone does not notify the knockout binding; without a
-        // subsequent blur/change the value never reaches the observable and the
-        // tile saves empty. Sync to the underlying element and fire change so the
-        // value persists regardless of what the test does next.
         inst.updateElement();
         inst.fire('change');
     });
 });
   
+Cypress.Commands.add("select2Search", (term) => {
+    cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+    cy.get('.select2-dropdown').then(($dropdown) => {
+        const $field = $dropdown.find('.select2-search__field:visible');
+        if (!$field.length) {
+            cy.log(`select2Search: search box hidden (<5 results), picking "${term}" from the list`);
+            return;
+        }
+        cy.wrap($field.first()).clear();
+        cy.wrap($field.first()).type(term);
+    });
+    // These dropdowns query the server, and selectWoo renders a
+    // `.loading-results` placeholder as a `.select2-results__option` while the
+    // request is in flight. Callers pick an option straight after this command,
+    // so returning while the placeholder is still there makes them match it
+    // instead of a real result ("Expected to find content 'HA/02' within
+    // <li.select2-results__option.loading-results>"). Wait for the results to
+    // settle rather than leaving it to a fixed cy.wait().
+    cy.get('.select2-results__option', { timeout: 20000 })
+        .should('not.have.class', 'loading-results');
+});

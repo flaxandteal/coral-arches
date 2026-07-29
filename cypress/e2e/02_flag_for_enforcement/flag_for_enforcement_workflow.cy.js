@@ -21,13 +21,11 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('[aria-label="Case Reference"]').should('be.visible').type('Case Ref');
         cy.wait(2000);
         cy.type_ckeditor('editor2', 'test reason for enforcement');
-        cy.get('[aria-label="Flagged by, Add new Relationship"]').click();
-        cy.wait(1000)
-        cy.get('.select2-results__option').first().click();
+        cy.pickRelationshipFirst('Flagged by');
 
         cy.get('[aria-label="Select resources, Add new Relationship"]').click();
         cy.wait(1000);
-        cy.get('.select2-search__field:visible').type('HA/02');
+        cy.select2Search('HA/02');
         cy.wait(1500);
         cy.get('.select2-results__option').contains('HA/02').click();
         cy.contains('Save and Continue').click();

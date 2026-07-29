@@ -30,3 +30,7 @@ frontend_configuration
 # Packaging
 build/
 dist/
+
+# generated E2E seed output (see cypress/seed/README.md)
+cypress/seed/.seeded*
+cypress/seed/seeded*.json

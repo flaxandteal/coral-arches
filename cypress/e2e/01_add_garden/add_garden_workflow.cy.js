@@ -171,8 +171,7 @@ describe('Going through the Add Garden Workflow', function () {
         // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.get('.select2-search__field').clear('Testing');
-        cy.get('.select2-search__field').type('Testing');
+        cy.select2Search('Testing');
         cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
@@ -274,8 +273,7 @@ describe('Going through the Add Garden Workflow', function () {
         // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.get('.select2-search__field').clear('Testing');
-        cy.get('.select2-search__field').type('Testing');
+        cy.select2Search('Testing');
         cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
@@ -476,8 +474,7 @@ describe('Going through the Add Garden Workflow', function () {
      // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.get('.select2-search__field').clear('Testing');
-        cy.get('.select2-search__field').type('Testing');
+        cy.select2Search('Testing');
         cy.get('.select2-results__option').contains('Testing').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
