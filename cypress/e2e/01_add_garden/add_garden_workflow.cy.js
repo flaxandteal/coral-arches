@@ -17,7 +17,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2500);
         cy.get('.card_component.resourceid').contains('HA Number').should('be.visible');
         cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-success').contains('Save and Continue').click();
+        cy.workflowNext();
 
         // Heritage Asset Details tab
         cy.contains('Site Name').should('be.visible');
@@ -70,7 +70,7 @@ describe('Going through the Add Garden Workflow', function () {
 
         cy.wait(2500);
 
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
+        cy.workflowNext();
 
         // Location Details tab
         cy.wait(2000);
@@ -103,7 +103,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="BU Fusion ID"').click().type('03');
         cy.wait(2000);
 
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save and Continue').click();
+        cy.workflowNext();
 
         // // Map tab
         // cy.get('.mapboxgl-canvas');
@@ -144,11 +144,11 @@ describe('Going through the Add Garden Workflow', function () {
 
         // cy.get('#formatType')
 
-        cy.get('.btn').contains('Next Step').click();
+        cy.workflowNext();
 
         // Documentation tab
         cy.get('.bord-top > .btn').contains('Select Files').click();
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click()
+        cy.workflowNext();
 
         // Finish tab
         cy.wait(2000);
@@ -171,8 +171,13 @@ describe('Going through the Add Garden Workflow', function () {
         // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.select2Search('Testing');
-        cy.get('.select2-results__option').contains('Testing').click();
+        // 'Garden Test' assets (seeded as HA/07-HA/09) exist purely for these
+        // three "open an existing HA" tests. Driving an asset through this
+        // workflow rewrites its display name, so sharing the 'Testing' assets
+        // with the other specs wiped the names off HA/01-03 and broke
+        // 02_flag_for_enforcement later in the same CI run.
+        cy.select2Search('Garden Test');
+        cy.get('.select2-results__option').contains('Garden Test').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
 
@@ -180,7 +185,10 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2500);
         cy.get('.card_component.resourceid').contains('HA Number').should('be.visible');
         cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-primary').contains('Next Step').click();
+        // The Start step's forward button flips between "Save and Continue"
+        // (.btn-success) and "Next Step" (.btn-primary) depending on whether
+        // generate-ha-number left the tile dirty; workflowNext() takes either.
+        cy.workflowNext();
 
         // Heritage Asset Details tab
         cy.contains('Site Name');
@@ -273,8 +281,13 @@ describe('Going through the Add Garden Workflow', function () {
         // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.select2Search('Testing');
-        cy.get('.select2-results__option').contains('Testing').click();
+        // 'Garden Test' assets (seeded as HA/07-HA/09) exist purely for these
+        // three "open an existing HA" tests. Driving an asset through this
+        // workflow rewrites its display name, so sharing the 'Testing' assets
+        // with the other specs wiped the names off HA/01-03 and broke
+        // 02_flag_for_enforcement later in the same CI run.
+        cy.select2Search('Garden Test');
+        cy.get('.select2-results__option').contains('Garden Test').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
         cy.wait(2000);
@@ -283,7 +296,10 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2500);
         cy.get('.card_component.resourceid').contains('HA Number').should('be.visible');
         cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-primary').contains('Next Step').click();
+        // The Start step's forward button flips between "Save and Continue"
+        // (.btn-success) and "Next Step" (.btn-primary) depending on whether
+        // generate-ha-number left the tile dirty; workflowNext() takes either.
+        cy.workflowNext();
 
         // Heritage Asset Details tab
         cy.wait(2000);
@@ -474,8 +490,13 @@ describe('Going through the Add Garden Workflow', function () {
      // Add Garden 1st page
         cy.get('[aria-label="Start new or please select from below"]').click();
         cy.wait(2000);
-        cy.select2Search('Testing');
-        cy.get('.select2-results__option').contains('Testing').click();
+        // 'Garden Test' assets (seeded as HA/07-HA/09) exist purely for these
+        // three "open an existing HA" tests. Driving an asset through this
+        // workflow rewrites its display name, so sharing the 'Testing' assets
+        // with the other specs wiped the names off HA/01-03 and broke
+        // 02_flag_for_enforcement later in the same CI run.
+        cy.select2Search('Garden Test');
+        cy.get('.select2-results__option').contains('Garden Test').click();
         cy.wait(2000);
         cy.get('.btn-primary').contains('Open Selected').click();
         cy.wait(2000);
@@ -484,7 +505,10 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2500);
         cy.get('.card_component.resourceid').contains('HA Number');
         cy.get('.form-control').should('be.disabled');
-        cy.get('.btn-primary').contains('Next Step').click();
+        // The Start step's forward button flips between "Save and Continue"
+        // (.btn-success) and "Next Step" (.btn-primary) depending on whether
+        // generate-ha-number left the tile dirty; workflowNext() takes either.
+        cy.workflowNext();
 
         // Heritage Asset Details tab
         cy.wait(2000);

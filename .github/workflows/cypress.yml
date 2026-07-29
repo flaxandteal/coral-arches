@@ -135,7 +135,7 @@ jobs:
           "${RUNNER_TEMP}/seedenv/bin/python" \
             ${{ env.ARCHES_PROJECT }}/cypress/seed/seed.py \
             --pkg-dir ${{ env.ARCHES_PROJECT }}/coral/pkg \
-            --graphs "Heritage Asset" -n 6 \
+            --graphs "Heritage Asset" -n 9 \
             --only-aliases monument_name,resourceid,smr_number,ihr_number,hb_number,historic_parks_and_gardens \
             --overrides ${{ env.ARCHES_PROJECT }}/cypress/seed/coral_e2e_overrides.json \
             -o "${RUNNER_TEMP}/seeded.json"
@@ -150,7 +150,7 @@ jobs:
       - name: Verify the seeded resources are searchable
         run: |
           missing=0
-          for name in "HA/02 Testing" "SMR-TEST-004 Testing"; do
+          for name in "HA/02 Testing" "SMR-TEST-004 Testing" "HA/07 Garden Test"; do
             hits="$($COMPOSE exec -T arches curl -s \
               "http://elasticsearch:9200/${ARCHES_PROJECT}_resources/_search" \
               -H 'Content-Type: application/json' \
@@ -163,6 +163,11 @@ jobs:
             echo "::error::Seeded Heritage Assets are not searchable in Elasticsearch"
             exit 1
           fi
+
+      - name: Seed an Issue Report to open
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_issue_report'
 
       - name: Seed the admin test 2FA (TOTP) device
         run: |
@@ -212,7 +217,11 @@ jobs:
 
       - name: Dump Arches logs on failure
         if: failure()
-        run: $COMPOSE logs --no-color arches || true
+        run: |
+          $COMPOSE logs --no-color arches || true
+          echo "::group::celery worker"
+          $COMPOSE logs --no-color --tail 300 arches_worker || true
+          echo "::endgroup::"
 
       - name: Tear down the app stack
         if: always()

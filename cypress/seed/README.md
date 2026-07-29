@@ -15,7 +15,7 @@ python3 -m venv .venv && ./.venv/bin/pip install -r cypress/seed/requirements.tx
 
 ./.venv/bin/python cypress/seed/seed.py \
   --pkg-dir coral/pkg \
-  --graphs "Heritage Asset" -n 6 \
+  --graphs "Heritage Asset" -n 9 \
   --only-aliases monument_name,resourceid,smr_number,ihr_number,hb_number,historic_parks_and_gardens \
   --overrides cypress/seed/coral_e2e_overrides.json \
   -o seeded.json
@@ -31,10 +31,13 @@ python manage.py packages -o import_business_data -s /path/to/seeded.json -ow ov
 
 Each one is load-bearing; they were added because the plain run failed.
 
-**`-n 6`** — Arches sets `minimumResultsForSearch: 5` on every select2Query binding
+**`-n 9`** — Arches sets `minimumResultsForSearch: 5` on every select2Query binding
 (`arches/app/media/js/bindings/select2-query.js`). Below that, selectWoo adds
 `select2-search--hide` (`display: none`) to the search box and `cy.type()` fails with
-"element is not visible". Six keeps the search path exercised.
+"element is not visible", so the count has to stay above five. Instances 7–9 are the
+"Garden Test" assets `01_add_garden`'s three *open an existing HA* tests drive; they
+have their own so that rewriting a display name mid-workflow cannot strand the
+"Testing" assets the later specs assert on — the whole suite shares one database.
 
 **`--overrides`** — `gen_value()` produces generic filler (`Sample monument name 1`).
 The specs pick dropdown options by literal text, so Site Name and HA Number have to be
@@ -68,8 +71,9 @@ which would otherwise never be visible:
 |---|---|---|---|---|
 | 1–3 | Testing | HA/01–03 | — | `HA/01 Testing` … |
 | 4–6 | Testing | HA/04–06 | SMR-TEST-004… | `SMR-TEST-004 Testing` … |
+| 7–9 | Garden Test | HA/07–09 | — | `HA/07 Garden Test` … |
 
-Verified against a live database: all six import cleanly, the descriptor and the
+Verified against a live database: they import cleanly, the descriptor and the
 `display_name` node both come out as above, and the resources are indexed into
 Elasticsearch (which is what the launchers query — `09_state_care` runs an advanced
 search for a non-null SMR Number).
@@ -77,7 +81,7 @@ search for a non-null SMR Number).
 ## Caveats
 
 - **HA Numbers must be unique.** `coral/utils/ha_number.py:validate_id` enforces it and
-  `ha_number_function` raises on a clash. `HA/01`–`HA/06` are free on a fresh CI
+  `ha_number_function` raises on a clash. `HA/01`–`HA/09` are free on a fresh CI
   database, but a development database will usually already hold them — pick a spare
   range (`HA/91`+) when seeding locally.
 - **Re-running is not idempotent.** Resource ids are UUID5-derived, so a second import

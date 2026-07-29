@@ -130,6 +130,8 @@ services:
           condition: service_healthy
         elasticsearch:
           condition: service_healthy
+        rabbitmq:
+          condition: service_started
         cantaloupe:
           condition: service_started
       healthcheck:
@@ -138,3 +140,56 @@ services:
         timeout: 10s
         retries: 200
         start_period: 60s
+
+    arches_worker:
+      user: root
+      restart: unless-stopped
+      build:
+        context: ${ARCHES_PROJECT_ROOT}./..
+        dockerfile: ${ARCHES_PROJECT_ROOT}./docker/Dockerfile
+        args:
+          - ARCHES_PROJECT=$ARCHES_PROJECT
+          - ARCHES_BASE=$ARCHES_BASE
+          - EDITABLE_BASE=False
+          - USE_LOCAL_APPS=false
+      command: run_celery
+      environment:
+        - ARCHES_PROJECT=$ARCHES_PROJECT
+        # The web app owns the bootstrap; the worker must never re-run it.
+        - ALLOW_BOOTSTRAP=False
+        - INSTALL_CORAL_PACKAGE=False
+        - INSTALL_DEFAULT_GRAPHS=False
+        - INSTALL_DEFAULT_CONCEPTS=False
+        - DJANGO_INSECURE_COOKIES=True
+        - PGUSERNAME=postgres
+        - PGPASSWORD=postgres
+        - PGDBNAME=arches
+        - PGHOST=db
+        - PGPORT=5432
+        - ESHOST=elasticsearch
+        - ESPORT=9200
+        - RABBITMQ_USER=rabbitmq
+        - RABBITMQ_PASS=rabbitmq
+        - RABBITMQ_HOST=rabbitmq
+        - CELERY_BROKER_URL=amqp://rabbitmq:rabbitmq@rabbitmq
+        - CANTALOUPE_HOST=cantaloupe
+        - CANTALOUPE_PORT=8182
+        - DJANGO_MODE=DEV
+        - DJANGO_DEBUG=True
+        - DOMAIN_NAMES=localhost
+        - COMPRESS_OFFLINE=False
+        - COMPRESS_ENABLED=False
+        - STATIC_URL=/static/
+        - STATIC_ROOT=/static_root
+        - WEB_ROOT=/web_root
+        - PYTHONUNBUFFERED=1
+        - TZ=PST
+      depends_on:
+        db:
+          condition: service_healthy
+        elasticsearch:
+          condition: service_healthy
+        rabbitmq:
+          condition: service_started
+        arches:
+          condition: service_started

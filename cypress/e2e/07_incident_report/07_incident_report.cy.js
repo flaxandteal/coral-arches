@@ -11,17 +11,25 @@ describe('Going through the Incident Report', function () {
         cy.wait(2000);
         cy.get('[aria-label="Select Licence, Please select a Heritage Asset"]').click();
         cy.wait(3000);
-        // Skip the loading placeholder — selecting it leaves the launcher without
-        // a licence, so "Start New" never opens the workflow and there is no
-        // footer for the next step to click.
+        // Pick a specific asset, not just the first option: the launcher only
+        // offers Issue Reports that already exist on the selected Heritage Asset,
+        // and HA/03 is the one `manage.py seed_test_issue_report` puts one on.
+        cy.select2Search('HA/03');
+        cy.wait(2000);
         cy.get('.select2-results__option')
             .not('.loading-results')
             .not('.select2-results__option--load-more')
             .not('.select2-results__message')
-            .first()
+            .contains('HA/03')
             .click();
+        cy.wait(3000);
+        // There is no "Start New" here. coral/plugins/open-issue-report-workflow.json
+        // sets disableStartNew on the workflow, and the template only renders that
+        // button under `if: !workflow().disableStartNew` — so an Issue Report can
+        // only be OPENED, never started, from this launcher.
+        cy.pickDomainByLabel('Selected Issue Report', 'ISSUE-TEST-001');
         cy.wait(2000);
-        cy.get('[style="display: flex"] > .fa').contains('Start New').click();
+        cy.get('.btn-primary').contains('Open Selected').click();
 
         // Inital Step tab. This workflow initialises eight tabs server-side and
         // can take ~45s (longer under load) before its footer renders, so give

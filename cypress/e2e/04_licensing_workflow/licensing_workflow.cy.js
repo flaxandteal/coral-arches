@@ -6,15 +6,17 @@ describe('Going through the licensing Workflow', function () {
     });
 
     // Launch the licensing workflow and advance to the Application Details tab.
-    // After "Start New" the workflow now has an "Initialise Excavation Licence"
-    // tab (info-only, initialisation can take up to a minute) that must be
-    // stepped past before the form fields appear.
+    // "Start New" drops straight onto step 1 of 11, "Initialise Excavation
+    // Licence" (info-only), so there is exactly ONE forward step to take before
+    // the Application Details fields appear. Stepping twice here used to fire
+    // licence-initial-step's save a second time before the first had finished,
+    // which 500s on POST /api/tiles (the tile ids are still being allocated),
+    // raises "Something went wrong ... during initialization" and lands the
+    // workflow on Location Details (3/11) with no planning_reference card.
     function startLicensing() {
         cy.get('[href="/plugins/open-workflow?workflow-slug=licensing-workflow"] > .workflow-select-card > .workflow-select-wf-circle').click();
         cy.wait(2000);
         cy.get('[style="display: flex"] > .fa > span').click();
-        cy.wait(4000);
-        cy.workflowNext();                        // Start -> Initialise
         cy.wait(4000);
         // Initialisation runs server-side and can take a couple of minutes on a
         // loaded machine; its forward button stays disabled until it finishes.

@@ -16,7 +16,9 @@
     "",
     "display_name is deliberately NOT seeded: generate_ha_name_function creates that tile itself on the first save (Tile.get_blank_tile_from_nodegroup_id), so supplying one too gives two tiles for a cardinality-1 nodegroup and the import fails.",
     "",
-    "monument_name is the CONSTANT 'Testing', not 'Testing {n}'. 02_flag_for_enforcement asserts the exact text of the associated resource: cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing'). A per-instance suffix would render 'HA/02 Testing 2' and fail that equality. This also matches how the display names look in a real coral database."
+    "monument_name is the CONSTANT 'Testing', not 'Testing {n}'. 02_flag_for_enforcement asserts the exact text of the associated resource: cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing'). A per-instance suffix would render 'HA/02 Testing 2' and fail that equality. This also matches how the display names look in a real coral database.",
+    "",
+    "Instances 7-9 are named 'Garden Test', not 'Testing', and exist ONLY for 01_add_garden's three 'open an existing HA' tests. Those tests drive an existing Heritage Asset through the Add Garden workflow, and merely opening it rewrites its display name - if the test then fails part way through, the asset is left with a BLANK name. When they shared the 'Testing' assets they silently wiped the names off HA/01-03, and 02_flag_for_enforcement (which runs later in the same CI run) then found an unnamed option instead of 'HA/02 Testing'. Keeping them on their own assets, matched by a search term the other specs do not use, restores isolation. Note the whole suite runs against ONE database in CI, so anything a spec mutates is visible to every spec after it."
   ],
   "Heritage Asset": [
     {
@@ -63,6 +65,30 @@
       "monument_name": "Testing",
       "resourceid": "HA/06",
       "smr_number": "SMR-TEST-006",
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Garden Test",
+      "resourceid": "HA/07",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Garden Test",
+      "resourceid": "HA/08",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null
+    },
+    {
+      "monument_name": "Garden Test",
+      "resourceid": "HA/09",
+      "smr_number": null,
       "ihr_number": null,
       "hb_number": null,
       "historic_parks_and_gardens": null

@@ -75,10 +75,34 @@ Cypress.Commands.add("pickDomainByLabel", (labelPrefix, optionText) => {
 
 Cypress.Commands.add("workflowNext", (options = {}) => {
     const timeout = options.timeout || 60000;
-    cy.get('.tabbed-workflow-footer-button-container', { timeout })
-        .find('button:not([disabled])', { timeout })
-        .contains(/Save and Continue|Next Step/, { timeout })
-        .click();
+    // The footer's step counter ("3 / 11"). Reading it either side of the click
+    // makes this command WAIT for the step to actually change instead of
+    // returning as soon as the button is clicked. Clicking "Save and Continue"
+    // on a slow step leaves the same button on screen while the save is in
+    // flight, so a following workflowNext() used to re-click it — running the
+    // step's save twice and advancing two tabs. That is what left the licensing
+    // workflow on Location Details (3/11) with a "Something went wrong" alert
+    // instead of on Application Details.
+    // Note the ':not(.disabled)' as well as ':not([disabled])': the "Next Step"
+    // button is greyed out with a css class, not the disabled attribute.
+    const stepIndex = () =>
+        cy.get('.step-counter span', { timeout }).first().invoke('text')
+            .then((text) => parseInt(text.trim(), 10));
+
+    stepIndex().then((from) => {
+        cy.get('.tabbed-workflow-footer-button-container', { timeout })
+            .find('button:not([disabled]):not(.disabled)', { timeout })
+            .contains(/Save and Continue|Next Step/, { timeout })
+            .click();
+        cy.get('.step-counter span', { timeout })
+            .first()
+            .should(($el) => {
+                expect(
+                    parseInt($el.text().trim(), 10),
+                    'workflow advanced past step ' + from
+                ).to.be.greaterThan(from);
+            });
+    });
 });
 
 Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
@@ -180,6 +204,34 @@ Cypress.Commands.add("type_ckeditor", (element, content) => {
     });
 });
   
+// Type into the CKEditor belonging to a specific rich-text card. The widget
+// replaces its <textarea> with a CKEditor iframe, so the textarea reports as
+// not visible and cy.type() cannot be used; the editor has to be driven through
+// the CKEDITOR API. A step can hold several editors (the Agri consultation step
+// has two - Comments and CM Reference Description), and they are named
+// editor1/editor2 in DOM order, so resolve the instance from the card rather
+// than guessing the name.
+Cypress.Commands.add("typeRichText", (cardClass, content) => {
+    cy.get(`.card_component.${cardClass}`).should('exist');
+    cy.window().should((win) => {
+        expect(win.CKEDITOR, 'CKEDITOR global to exist').to.exist;
+        expect(
+            Object.keys(win.CKEDITOR.instances).length,
+            'at least one CKEDITOR instance'
+        ).to.be.greaterThan(0);
+    }).then((win) => {
+        const name = Object.keys(win.CKEDITOR.instances).find((n) => {
+            const el = win.CKEDITOR.instances[n]?.container?.$;
+            return el && el.closest(`.card_component.${cardClass}`);
+        });
+        expect(name, `CKEDITOR instance inside .card_component.${cardClass}`).to.exist;
+        const inst = win.CKEDITOR.instances[name];
+        inst.setData(content);
+        inst.updateElement();
+        inst.fire('change');
+    });
+});
+
 Cypress.Commands.add("select2Search", (term) => {
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
     cy.get('.select2-dropdown').then(($dropdown) => {
