@@ -1,5 +1,5 @@
 """
-Permission/user context for alizarin_django.
+Permission/user context for querysets_shim.
 
 Mirrors arches_orm.adapter:
     - admin() context manager — sets the active user to None (bypass perms)
@@ -27,7 +27,7 @@ class _Unset:
 
 _UNSET: Any = _Unset()
 
-_user_var: ContextVar[Any] = ContextVar("alizarin_django_user", default=_UNSET)
+_user_var: ContextVar[Any] = ContextVar("querysets_shim_user", default=_UNSET)
 
 
 def get_user() -> Optional[Any]:
@@ -100,7 +100,7 @@ def context(user: Optional[Any] = None) -> Iterator[None]:
     """
     Push an explicit user onto the context stack.
 
-    Used by AlizarinDjangoContextMiddleware to wrap each request.
+    Used by QuerysetsShimContextMiddleware to wrap each request.
     """
     token = _user_var.set(user)
     try:

@@ -2,7 +2,7 @@ from datetime import date
 import random
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
-from alizarin_django.models import Person, Group
+from querysets_shim.models import Person, Group
 
 SYSTEM_REF_NODEGROUP = "ba39c036-b551-11ee-94ee-0242ac120006"
 SYSTEM_REF_RESOURCE_ID_NODE = "ba3a083e-b551-11ee-94ee-0242ac120006"

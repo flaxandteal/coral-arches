@@ -21,7 +21,7 @@ classifiers = [
     "Framework :: Django :: 5.2",
 ]
 dependencies = [
-    "arches>=8.1.0,<8.3.0",
+    "arches>=8.1.0,<=8.2.0a4",
     "arches_controlled_lists",
     "cachetools",
     "django-recaptcha>=4.0.0",
@@ -64,7 +64,11 @@ dependencies = [
     "PyMuPDF",
     "django-two-factor-auth",
     "qrcode",
-    "alizarin",
+    "arches-querysets>=1.2.0",
+    # arches_modular_reports 2.x renamed its frontend dep arches_component_lab
+    # -> arches_vue_components; pin the successor so webpack can resolve its
+    # @/arches_vue_components/* imports (the base image ships the old name only).
+    "arches_vue_components>=2.0.0,<3.0.0",
 ]
 
 [dependency-groups]

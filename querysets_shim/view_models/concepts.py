@@ -8,7 +8,6 @@ available if code actually needs to dereference IDs.
 
 from __future__ import annotations
 
-from collections import UserList
 from typing import Any, Iterable, Optional
 
 from ._base import ViewModel
@@ -110,7 +109,7 @@ class ConceptValueViewModel(str, CollectionChild, ViewModel):
         return self._text
 
 
-class ConceptListValueViewModel(UserList, ViewModel, CollectionChild):
+class ConceptListValueViewModel(list, ViewModel, CollectionChild):
     """Wraps a list of concept values."""
 
     def __init__(
@@ -118,11 +117,15 @@ class ConceptListValueViewModel(UserList, ViewModel, CollectionChild):
         items: Optional[Iterable[Any]] = None,
         collection_id: Optional[str] = None,
     ) -> None:
-        UserList.__init__(self)
+        list.__init__(self)
         self._collection_id = collection_id
         if items:
             for item in items:
                 self.append(item)
+
+    @property
+    def data(self) -> list:
+        return list(self)
 
     def append(self, item: Any) -> None:
         if not isinstance(item, ConceptValueViewModel):
