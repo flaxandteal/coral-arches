@@ -115,6 +115,17 @@ jobs:
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py createcachetable'
 
+      - name: Activate the resource models
+        run: |
+          activated="$($COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py shell -c "from arches.app.models.models import GraphModel; print(GraphModel.objects.filter(isresource=True, draft=None, publication__isnull=False).update(is_active=True))"' \
+            | tr -d '\r' | tail -1)"
+          echo "activated ${activated} graph(s)"
+          if ! [ "${activated:-0}" -ge 1 ] 2>/dev/null; then
+            echo "::error::No resource models were activated — tile saves will fail with 'Verify model status is active'"
+            exit 1
+          fi
+
       - name: Seed the admin test 2FA (TOTP) device
         run: |
           $COMPOSE exec -T arches bash -lc \
