@@ -63,6 +63,33 @@ jobs:
           $COMPOSE logs --no-color arches
           exit 1
 
+      - name: Verify the resolved Arches dependency set
+        run: |
+          pkgs="$($COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && pip list --format=freeze' | tr -d '\r')"
+          echo "$pkgs" | grep -iE '^arches' || true
+
+          ver() { echo "$pkgs" | grep -iE "^$1==" | head -1 | cut -d= -f3; }
+
+          rc=0
+          arches_v="$(ver arches)"
+          mr_v="$(ver 'arches[-_]modular[-_]reports')"
+          vc_v="$(ver 'arches[-_]vue[-_]components')"
+
+          case "$arches_v" in
+            8.*) ;;
+            *) echo "::error::arches resolved to '$arches_v', expected 8.x"; rc=1 ;;
+          esac
+          if [ "$mr_v" != "1.0.0b9" ]; then
+            echo "::error::arches-modular-reports resolved to '$mr_v', expected 1.0.0b9"
+            rc=1
+          fi
+          if [ -n "$vc_v" ]; then
+            echo "::error::arches-vue-components ($vc_v) is installed; it cannot coexist with arches-component-lab (duplicate WidgetMapping -> fields.E304)"
+            rc=1
+          fi
+          exit $rc
+
       - name: Build the webpack bundle
         run: |
           $COMPOSE exec -T arches bash -lc \
