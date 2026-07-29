@@ -63,19 +63,37 @@ jobs:
           $COMPOSE logs --no-color arches
           exit 1
 
+      - name: Build the webpack bundle
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            'cd /web_root/${ARCHES_PROJECT} && npx cross-env webpack --config ./webpack/webpack.config.dev.js'
+
+      - name: Verify the login page renders
+        run: |
+          for i in $(seq 1 20); do
+            code="$($COMPOSE exec -T arches \
+              curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/auth/ || echo 000)"
+            echo "attempt $i: GET /auth/ -> $code"
+            if [ "$code" = "200" ]; then
+              echo "/auth/ renders"; exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::/auth/ never returned 200 — the frontend bundle is likely missing or broken"
+          $COMPOSE logs --no-color --tail 300 arches
+          exit 1
+
+      - name: Create the DatabaseCache tables
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py createcachetable'
+
       - name: Seed the admin test 2FA (TOTP) device
-        # ARCHES_PROJECT is expanded inside the arches container (set by compose),
-        # not by the runner shell, so the single quotes are intentional.
         run: |
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_totp'
 
       - name: Export generated frontend configuration for Cypress
-        # tsconfig.json extends ./frontend_configuration/tsconfig-paths.json, which
-        # arches generates at startup INSIDE its container (the dir is gitignored, so
-        # it is absent from the checkout). The Cypress container mounts the host
-        # checkout, so without these files every spec fails to compile with
-        # "File './frontend_configuration/tsconfig-paths.json' not found."
         run: |
           cid="$($COMPOSE ps -q arches)"
           mkdir -p "${ARCHES_PROJECT_ROOT}frontend_configuration"
@@ -93,8 +111,6 @@ jobs:
             "${{ env.CYPRESS_IMAGE }}" --browser electron
 
       - name: Fix artifact ownership
-        # The Cypress container runs as root and writes videos/screenshots into the
-        # mounted checkout; hand them back to the runner user so upload + cleanup work.
         if: always()
         run: |
           docker run --rm --entrypoint sh \
