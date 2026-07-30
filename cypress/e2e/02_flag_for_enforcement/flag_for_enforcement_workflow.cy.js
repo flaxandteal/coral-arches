@@ -5,6 +5,16 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.visit('/plugins/init-workflow');
     });
 
+    // dd-mm-yyyy, the format the date widgets render and the summary step shows.
+    const todayString = () => {
+        const today = new Date();
+        return [
+            String(today.getDate()).padStart(2, '0'),
+            String(today.getMonth() + 1).padStart(2, '0'),
+            today.getFullYear(),
+        ].join('-');
+    };
+
     it('Go through the workflow and populate all fields', function () {
         cy.contains('Workflows');
         cy.contains('Flag for Enforcement').click();
@@ -23,6 +33,16 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.type_ckeditor('editor2', 'test reason for enforcement');
         cy.pickRelationshipFirst('Flagged by');
 
+        // Flagged Date has to be typed in. Nothing defaults it — the constants
+        // in coral/functions/notify_enforcement.py are unused — so leaving it
+        // blank made the summary step below render "Flagged Date: No data
+        // provided for this input" and the assertion never found
+        // "Flagged Date Value:".
+        cy.get('input[aria-label^="Flagged Date"]').filter(':visible').first()
+            .type(`${todayString()}{enter}`, { force: true });
+        cy.get('input[aria-label^="Flagged Date"]').filter(':visible').first()
+            .should('have.value', todayString());
+
         cy.get('[aria-label="Select resources, Add new Relationship"]').click();
         cy.wait(1000);
         cy.select2Search('HA/02');
@@ -37,14 +57,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Case Reference Number:').siblings().should('have.text', 'Case Ref');
         cy.contains('Description:').siblings().should('have.text', 'test reason for enforcement');
 
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-
-        today = dd + '-' + mm + '-' + yyyy;
-
-        cy.contains('Flagged Date Value:').siblings().should('contain', today);
+        cy.contains('Flagged Date Value:').siblings().should('contain', todayString());
         cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing');
         cy.wait(900);
         cy.contains('Save and Complete Workflow').click();

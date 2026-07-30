@@ -86,7 +86,7 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
     // Note the ':not(.disabled)' as well as ':not([disabled])': the "Next Step"
     // button is greyed out with a css class, not the disabled attribute.
     const stepIndex = () =>
-        cy.get('.step-counter span', { timeout }).first().invoke('text')
+        cy.get('.step-counter span', { timeout }).first({ timeout }).invoke('text')
             .then((text) => parseInt(text.trim(), 10));
 
     stepIndex().then((from) => {
@@ -94,8 +94,15 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
             .find('button:not([disabled]):not(.disabled)', { timeout })
             .contains(/Save and Continue|Next Step/, { timeout })
             .click();
+        // `.first()` must carry the timeout too. An assertion retries for the
+        // timeout of the query it is chained to, not the one before it, so
+        // `get({timeout: 240000}).first().should(...)` only ever retried for
+        // defaultCommandTimeout (12s) and every slow step failed with
+        // "workflow advanced past step N: expected N to be above N" while its
+        // save was still in flight. That is what failed all three licensing
+        // tests in CI, where the step-1 save takes ~13s.
         cy.get('.step-counter span', { timeout })
-            .first()
+            .first({ timeout })
             .should(($el) => {
                 expect(
                     parseInt($el.text().trim(), 10),
@@ -112,6 +119,30 @@ Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
         .type(`${date}{enter}`, { force: true });
     cy.get('@dateCard').find('input.form-control').filter(':visible').first()
         .should('not.have.value', '');
+});
+
+// Type into a card's text widget. Prefer this over the recorder-generated
+// `.card_component.x > .row > .form-group > [style="…"] > .col-xs-12 >
+// .form-control` chains — those inline-style hops have all drifted on arches
+// 8.2 and match nothing.
+Cypress.Commands.add("typeInCard", (cardClass, text) => {
+    const input = () =>
+        cy.get(`.card_component.${cardClass} input.form-control`).filter(':visible').first();
+    input().scrollIntoView();
+    input().clear({ force: true });
+    input().type(text, { force: true });
+    input().should('have.value', text);
+});
+
+// Set a radio-boolean card to its true value. The widget renders the state on
+// the <label> (aria-checked / .active) and every radio input on the page shares
+// name="stat-w-label", so the input is never reliably :checked. The true label
+// is the first of the two.
+Cypress.Commands.add("setBooleanTrue", (cardClass) => {
+    const card = `.card_component.${cardClass}`;
+    cy.get(`${card} label[role="radio"]`).filter(':visible').first().scrollIntoView();
+    cy.get(`${card} label[role="radio"]`).filter(':visible').first().click({ force: true });
+    cy.get(`${card} label[aria-checked="true"]`).should('have.length', 1);
 });
 
 Cypress.Commands.add("openRelationship", (ariaLabel) => {

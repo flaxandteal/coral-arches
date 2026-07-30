@@ -18,9 +18,14 @@ describe('Going through the licensing Workflow', function () {
         cy.wait(2000);
         cy.get('[style="display: flex"] > .fa > span').click();
         cy.wait(4000);
-        // Initialisation runs server-side and can take a couple of minutes on a
-        // loaded machine; its forward button stays disabled until it finishes.
-        cy.workflowNext({ timeout: 240000 });     // Initialise -> Application Details
+        // Initialisation runs server-side and gets slower as licences
+        // accumulate, so it can take minutes on a loaded machine or a
+        // long-lived database; its forward button stays disabled until it
+        // finishes. On a fresh CI database it takes ~13s, but the tests below
+        // run after this spec's first test has created a whole licence, so give
+        // it plenty of room. If it still times out here, suspect the
+        // environment (memory, accumulated Licence resources), not the spec.
+        cy.workflowNext({ timeout: 360000 });     // Initialise -> Application Details
         cy.get('.card_component.planning_reference', { timeout: 90000 }).should('exist');
         cy.wait(2000);
     }
@@ -28,10 +33,8 @@ describe('Going through the licensing Workflow', function () {
     it('Run through all licensing workflow fields', function () {
         startLicensing();
 
-        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('t');
-        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('test ref');
-        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('c');
-        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('cm num');
+        cy.typeInCard('planning_reference', 'test ref');
+        cy.typeInCard('cm_reference_number', 'cm num');
         cy.pickRelationshipFirst('Applicant');
         cy.wait(1000);
         cy.pickRelationshipFirst('Nominated Excavation Director(s)');
@@ -54,16 +57,19 @@ describe('Going through the licensing Workflow', function () {
         // cy.wait(2000);
         // cy.get('.select2-results__option').first().click();
         cy.get('[type="radio"]').first().click({force: true});
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click({force: true});
+        // Use workflowNext() rather than clicking the footer selector directly:
+        // it waits for the step counter to change, so the next tab's cards are
+        // guaranteed to be on screen. The raw click returned while the
+        // Application Details save was still in flight and the spec then looked
+        // for Location Details cards on a page still showing 2/11.
+        cy.workflowNext();          // Application Details -> Location Details
+        cy.wait(4000);
 
-        cy.get('.card_component.building_name_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('t');
-        cy.get('.card_component.building_name_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('test building');
-        cy.get('.card_component.street_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('s');
-        cy.get('.card_component.street_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('street');
-        cy.get('.card_component.town_or_city_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('c');
-        cy.get('.card_component.town_or_city_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('city');
-        cy.get('.card_component.postcode_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('b');
-        cy.get('.card_component.postcode_value > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('bt561ag');
+        // Location Details address fields.
+        cy.typeInCard('building_name_value', 'test building');
+        cy.typeInCard('street_value', 'street');
+        cy.typeInCard('town_or_city_value', 'city');
+        cy.typeInCard('postcode_value', 'bt561ag');
         cy.get('.council').filter(':visible').first().scrollIntoView();
         cy.get('.council').filter(':visible').first().find('.select2-selection').first().click();
         cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
@@ -73,16 +79,20 @@ describe('Going through the licensing Workflow', function () {
         cy.get('#coordinatePoint').type('J1025169962');
         cy.type_ckeditor('editor7', 'test, Description');
 
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
-        cy.get(':nth-child(2) > .verbose').click();
-        cy.get('.card_component.application_form > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click({force: true});
-        cy.get('.card_component.pow > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click({force: true});
-        cy.get('.card_component.council_letter > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click({force: true});
-        cy.get('.card_component.developer_funding_form > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click({force: true});
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click({force: true});
-        cy.get('.col-xs-12 > .form-control').clear('t');
-        cy.get('.col-xs-12 > .form-control').type('test');
-        cy.get('.tabbed-workflow-footer-button-container > :nth-child(2)').click({force: true});
+        cy.workflowNext();          // Location Details   -> Geospatial Details
+        cy.wait(4000);
+        cy.workflowNext();          // Geospatial Details -> Additional Files
+        cy.wait(4000);
+        cy.setBooleanTrue('application_form');
+        cy.setBooleanTrue('pow');
+        cy.setBooleanTrue('council_letter');
+        cy.setBooleanTrue('developer_funding_form');
+        cy.workflowNext();          // Additional Files   -> Communications
+        cy.wait(4000);
+        cy.get('.col-xs-12 > .form-control').filter(':visible').first().clear({force: true});
+        cy.get('.col-xs-12 > .form-control').filter(':visible').first().type('test', {force: true});
+        cy.workflowNext();          // Communications     -> Record Decision
+        cy.wait(4000);
 
         cy.get('[aria-label="Cur Grade E Decision, Grant licence"]').click();
         cy.wait(2000);
@@ -100,8 +110,10 @@ describe('Going through the licensing Workflow', function () {
 
         // No issue_date widget on this workflow — Record Decision ends at the
         // decision notes, then the (card-less) Letter tab, then Amendments.
-        cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click({force: true});
-        cy.get(':nth-child(2) > .verbose').click({force: true});
+        cy.workflowNext();          // Record Decision    -> Letter
+        cy.wait(4000);
+        cy.workflowNext();          // Letter             -> Amendments
+        cy.wait(6000);
 
         cy.pickRelationshipFirst('Transfer of Licence');
         cy.wait(1000);
@@ -124,10 +136,11 @@ describe('Going through the licensing Workflow', function () {
         cy.wait(1000);
 
         cy.fillDate('issued_date_value');
-        cy.get('.tabbed-workflow-footer-button-container').contains(/Save and Continue|Next Step/).should('be.visible').click({force: true});
+        cy.workflowNext();          // Amendments         -> Final Report
+        cy.wait(4000);
 
-        cy.get('.col-xs-12 > .form-control').clear('t');
-        cy.get('.col-xs-12 > .form-control').type('test');
+        cy.get('.col-xs-12 > .form-control').filter(':visible').first().clear({force: true});
+        cy.get('.col-xs-12 > .form-control').filter(':visible').first().type('test', {force: true});
         cy.fillDate('report_submitted');
         cy.get(':nth-child(1) > .workflow-component > .workflow-component-element').click({force: true});
         // Classification Type defaults to "Unclassified", so pick by card
@@ -164,10 +177,8 @@ describe('Going through the licensing Workflow', function () {
     it('Should transfer licence', function () {
         startLicensing();
 
-        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('t');
-        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('test ref');
-        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('c');
-        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('cm num');
+        cy.typeInCard('planning_reference', 'test ref');
+        cy.typeInCard('cm_reference_number', 'cm num');
         cy.pickRelationshipByName('Applicant', 'John Smith');
         cy.wait(1000);
         cy.pickRelationshipByName('Nominated Excavation Director(s)', 'John Smith');
@@ -210,10 +221,8 @@ describe('Going through the licensing Workflow', function () {
     it('Should extend licence', function () {
         startLicensing();
 
-        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('t');
-        cy.get('.card_component.planning_reference > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('test ref');
-        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').clear('c');
-        cy.get('.card_component.cm_reference_number > .row > .form-group > [style="max-width: 600px; position: relative"] > .col-xs-12 > .form-control').type('cm num');
+        cy.typeInCard('planning_reference', 'test ref');
+        cy.typeInCard('cm_reference_number', 'cm num');
         cy.pickRelationshipByName('Applicant', 'John Smith');
         cy.pickRelationshipByName('Nominated Excavation Director(s)', 'John Smith');
         cy.get('[aria-label="Employing Body/Bodies, Add new Relationship"]').click();

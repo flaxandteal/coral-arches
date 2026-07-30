@@ -24,6 +24,13 @@ module.exports = {
   e2e: {
     chromeWebSecurity: false,
     experimentalStudio: true,
+    // The licensing spec now waits for each slow step to actually commit, so a
+    // single test can hold the browser for five-plus minutes and the Electron
+    // renderer runs out of heap ("We detected that the Electron Renderer
+    // process just crashed"), taking the rest of the spec's tests with it.
+    // This is Cypress's own remedy for that crash — it drops snapshots for
+    // completed tests instead of keeping every one in memory.
+    experimentalMemoryManagement: true,
     baseUrl: "http://localhost:8000",
     defaultCommandTimeout: 12000,
     pageLoadTimeout: 90000,
