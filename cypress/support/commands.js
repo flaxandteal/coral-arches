@@ -75,16 +75,7 @@ Cypress.Commands.add("pickDomainByLabel", (labelPrefix, optionText) => {
 
 Cypress.Commands.add("workflowNext", (options = {}) => {
     const timeout = options.timeout || 60000;
-    // The footer's step counter ("3 / 11"). Reading it either side of the click
-    // makes this command WAIT for the step to actually change instead of
-    // returning as soon as the button is clicked. Clicking "Save and Continue"
-    // on a slow step leaves the same button on screen while the save is in
-    // flight, so a following workflowNext() used to re-click it — running the
-    // step's save twice and advancing two tabs. That is what left the licensing
-    // workflow on Location Details (3/11) with a "Something went wrong" alert
-    // instead of on Application Details.
-    // Note the ':not(.disabled)' as well as ':not([disabled])': the "Next Step"
-    // button is greyed out with a css class, not the disabled attribute.
+
     const stepIndex = () =>
         cy.get('.step-counter span', { timeout }).first({ timeout }).invoke('text')
             .then((text) => parseInt(text.trim(), 10));
@@ -94,13 +85,7 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
             .find('button:not([disabled]):not(.disabled)', { timeout })
             .contains(/Save and Continue|Next Step/, { timeout })
             .click();
-        // `.first()` must carry the timeout too. An assertion retries for the
-        // timeout of the query it is chained to, not the one before it, so
-        // `get({timeout: 240000}).first().should(...)` only ever retried for
-        // defaultCommandTimeout (12s) and every slow step failed with
-        // "workflow advanced past step N: expected N to be above N" while its
-        // save was still in flight. That is what failed all three licensing
-        // tests in CI, where the step-1 save takes ~13s.
+
         cy.get('.step-counter span', { timeout })
             .first({ timeout })
             .should(($el) => {
@@ -121,10 +106,7 @@ Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
         .should('not.have.value', '');
 });
 
-// Type into a card's text widget. Prefer this over the recorder-generated
-// `.card_component.x > .row > .form-group > [style="…"] > .col-xs-12 >
-// .form-control` chains — those inline-style hops have all drifted on arches
-// 8.2 and match nothing.
+
 Cypress.Commands.add("typeInCard", (cardClass, text) => {
     const input = () =>
         cy.get(`.card_component.${cardClass} input.form-control`).filter(':visible').first();
@@ -134,10 +116,6 @@ Cypress.Commands.add("typeInCard", (cardClass, text) => {
     input().should('have.value', text);
 });
 
-// Set a radio-boolean card to its true value. The widget renders the state on
-// the <label> (aria-checked / .active) and every radio input on the page shares
-// name="stat-w-label", so the input is never reliably :checked. The true label
-// is the first of the two.
 Cypress.Commands.add("setBooleanTrue", (cardClass) => {
     const card = `.card_component.${cardClass}`;
     cy.get(`${card} label[role="radio"]`).filter(':visible').first().scrollIntoView();
@@ -168,8 +146,7 @@ Cypress.Commands.add("openRelationship", (ariaLabel) => {
     };
     openOnce(0);
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
-    // Wait for the first page of results to actually render, otherwise a
-    // subsequent interaction can race the async load.
+
     cy.get('.select2-results__option')
         .not('.loading-results')
         .not('.select2-results__option--load-more')
@@ -235,13 +212,6 @@ Cypress.Commands.add("type_ckeditor", (element, content) => {
     });
 });
   
-// Type into the CKEditor belonging to a specific rich-text card. The widget
-// replaces its <textarea> with a CKEditor iframe, so the textarea reports as
-// not visible and cy.type() cannot be used; the editor has to be driven through
-// the CKEDITOR API. A step can hold several editors (the Agri consultation step
-// has two - Comments and CM Reference Description), and they are named
-// editor1/editor2 in DOM order, so resolve the instance from the card rather
-// than guessing the name.
 Cypress.Commands.add("typeRichText", (cardClass, content) => {
     cy.get(`.card_component.${cardClass}`).should('exist');
     cy.window().should((win) => {
@@ -274,13 +244,11 @@ Cypress.Commands.add("select2Search", (term) => {
         cy.wrap($field.first()).clear();
         cy.wrap($field.first()).type(term);
     });
-    // These dropdowns query the server, and selectWoo renders a
-    // `.loading-results` placeholder as a `.select2-results__option` while the
-    // request is in flight. Callers pick an option straight after this command,
-    // so returning while the placeholder is still there makes them match it
-    // instead of a real result ("Expected to find content 'HA/02' within
-    // <li.select2-results__option.loading-results>"). Wait for the results to
-    // settle rather than leaving it to a fixed cy.wait().
-    cy.get('.select2-results__option', { timeout: 20000 })
-        .should('not.have.class', 'loading-results');
+
+    cy.get(
+        '.select2-results__option:not(.loading-results)' +
+        ':not(.select2-results__option--load-more)' +
+        ':not(.select2-results__message)',
+        { timeout: 20000 }
+    ).should('have.length.greaterThan', 0);
 });
