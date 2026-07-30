@@ -51,7 +51,16 @@ describe('Going through the HA Designation Workflow', function () {
         const pickRevision = (attempt = 0) => {
             openLauncherAndSelectHa();
             cy.get(REVISION_SELECT, { timeout: 60000 }).click();
-            cy.wait(3000);
+            // The dropdown queries the server when it opens. $b.find() below is a
+            // ONE-SHOT probe that never retries, so a plain cy.wait() reported
+            // "no revisions" whenever the response took longer than the pause -
+            // the CI run at 14:55 polled 13 times and every revision search
+            // returned a hit the whole time. Wait for the dropdown to open and
+            // for its in-flight request to settle, so the probe sees real state.
+            cy.get('.select2-dropdown', { timeout: 30000 }).should('be.visible');
+            cy.get('.select2-results__option.loading-results', { timeout: 30000 })
+                .should('not.exist');
+            cy.wait(1000);
             cy.get('body').then(($b) => {
                 if ($b.find(REAL_OPTION).length) {
                     cy.get(REAL_OPTION).first().click();
