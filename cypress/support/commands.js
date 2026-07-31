@@ -34,6 +34,42 @@ Cypress.Commands.add("login", () => {
     }, { cacheAcrossSpecs: true });
 });
 
+// Log in as the non-superuser seeded into a given coral Group, e.g.
+//   cy.loginAs('HB Planning Users')
+// `admin` is a superuser and short-circuits every permission check, so it is
+// useless for asserting that a workflow is hidden or a save is refused — use
+// this instead. The accounts come from `manage.py seed_test_permissions`, which
+// also writes the fixture read here; see cypress/seed/README.md.
+Cypress.Commands.add("loginAs", (groupName) => {
+    cy.fixture('permission_users').then((seed) => {
+        const username = seed.users[groupName];
+        if (!username) {
+            throw new Error(
+                `No E2E login is seeded for group "${groupName}". ` +
+                `Seeded groups: ${Object.keys(seed.users).join(', ')}`
+            );
+        }
+
+        // One device per user, so distinct users never trip each other's TOTP
+        // replay protection — but a single user logging in twice inside one
+        // 30s step does, hence the cached session.
+        cy.session(username, () => {
+            cy.visit('/auth/');
+
+            cy.get('#username').type(username);
+            cy.get('#password').type(`${seed.password}{enter}`);
+
+            cy.get('input[name="otp_token"]').should('be.visible').then(($input) => {
+                cy.task('generateOtp').then((otp) => {
+                    cy.wrap($input).type(`${otp}{enter}`);
+                });
+            });
+
+            cy.location('pathname', { timeout: 20000 }).should('not.include', '/auth');
+        }, { cacheAcrossSpecs: true });
+    });
+});
+
 Cypress.Commands.add("pickCardOption", (cardClass, index = 0) => {
     cy.get(`.card_component.${cardClass}`).scrollIntoView();
     cy.get(`.card_component.${cardClass}`).find('.select2-selection').first().click();

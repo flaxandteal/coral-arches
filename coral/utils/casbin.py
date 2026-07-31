@@ -49,6 +49,13 @@ def _build_search_from_parameters(parameters):
                 search_results_object,
                 permitted_nodegroups=permitted_nodegroups,
                 include_provisional=None,
+                # Without this every filter falls back to its own default —
+                # "[]" for resource-type-filter — so the logical set's member
+                # definition was never actually applied, and the empty list left
+                # arches' resource_type_filter reading its loop variable after a
+                # loop that never ran (UnboundLocalError). Matches how arches'
+                # own StandardSearchView invokes the filters.
+                querystring=querystring,
             )
 
     return search_results_object["query"]
@@ -127,7 +134,16 @@ class SetApplicator:
         plugins.update({str(plugin.slug): plugin for plugin in plugins.values()})
         arches_plugins = ArchesPlugin.all()
         for ap in arches_plugins:
-            if ap.plugin_identifier and ap.id != _consistent_hash(ap.plugin_identifier):
+            # Compared as strings: _consistent_hash returns a uuid.UUID while
+            # ap.id is a str, so the bare `!=` was always true and every plugin
+            # was deleted and recreated on every run. Deleting a plugin also
+            # strips it from the "Arches Plugins" tile of every Group that
+            # referenced it, so the churn silently wiped workflow permissions —
+            # which stayed invisible only while plugin_identifier itself read
+            # back as None and short-circuited this check.
+            if ap.plugin_identifier and str(ap.id) != str(
+                _consistent_hash(ap.plugin_identifier)
+            ):
                 print("Found a plugin with an incorrect identifier - removing", ap.plugin_identifier, ap.id)
                 ap.delete()
         arches_plugins = ArchesPlugin.all()
