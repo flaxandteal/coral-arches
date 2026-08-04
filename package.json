@@ -21,8 +21,9 @@
     },
     "dependencies": {
         "arches": "archesproject/arches#dev/8.2.x",
-        "arches_controlled_lists": "archesproject/arches-controlled-lists#dev/1.1.x",
-        "arches_modular_reports": "archesproject/arches-modular-reports#dev/1.1.x",
+        "arches_controlled_lists": "archesproject/arches-controlled-lists#1.2.0",
+        "arches_modular_reports": "archesproject/arches-modular-reports#2.0.0",
+        "arches_vue_components": "archesproject/arches-vue-components#2.0.2",
         "ckeditor4": "4.20.2",
         "cytoscape-elk": "^2.2.0",
         "datatables.net-rowgroup-dt": "^1.4.1",
