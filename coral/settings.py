@@ -356,6 +356,7 @@ ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
