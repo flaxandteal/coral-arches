@@ -22,7 +22,7 @@ classifiers = [
 ]
 dependencies = [
     "arches>=8.1.0,<=8.2.0a4",
-    "arches_controlled_lists",
+    "arches_controlled_lists<1.2.0",
     "cachetools",
     "django-recaptcha>=4.0.0",
     "django-hosts>=6.0",
