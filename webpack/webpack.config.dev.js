@@ -38,7 +38,7 @@ module.exports = () => {
                         config: [__filename],
                     },
                 },
-                devtool: 'inline-source-map',
+                devtool: 'source-map',
                 target: 'web',
                 devServer: {
                     historyApiFallback: true,
