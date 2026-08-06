@@ -118,6 +118,10 @@ manage: docker
 webpack: docker
 	$(DOCKER_COMPOSE_COMMAND) run -T --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd /web_root/$(ARCHES_PROJECT); DJANGO_MODE=DEV NODE_OPTIONS=--max_old_space_size=8192 npm run build_development < /dev/null'
 
+.PHONY: webpack-prod
+webpack-prod: docker
+	$(DOCKER_COMPOSE_COMMAND) run -T --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd /web_root/$(ARCHES_PROJECT); DJANGO_MODE=DEV NODE_OPTIONS=--max_old_space_size=8192 npm run build_production < /dev/null'
+
 .PHONY: clean
 clean: docker
 	@echo -n "This will remove all database and elasticsearch data, are you sure? [y/N] " && read confirmation && [ $${confirmation:-N} = y ]
