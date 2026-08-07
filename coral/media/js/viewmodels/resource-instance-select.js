@@ -407,7 +407,12 @@ var ResourceInstanceSelectViewModel = function(params) {
                 return self.url();
             },
             dataType: 'json',
-            quietMillis: 250,
+            // select-woo (a select2 v4 fork) reads `delay`, not the old
+            // select2 v3 `quietMillis` name; without a real `delay` here
+            // every keystroke fires its own request and aborts the last one,
+            // which can pile up requests faster than the server drains them
+            // under load and make the final, correct search take too long.
+            delay: 250,
             data: function(requestParams) {
                 let term = requestParams.term || '';
                 let page = requestParams.page || 1;
