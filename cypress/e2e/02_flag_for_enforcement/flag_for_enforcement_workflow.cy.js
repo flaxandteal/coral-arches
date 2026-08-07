@@ -76,9 +76,12 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
         
         // Enforcement Details Tab
-        cy.wait(900);
-        cy.contains('Save and Continue').click();
-        
+        // Nothing is filled in on this step, so it stays unmodified and the
+        // footer button reads "Next Step" rather than "Save and Continue" —
+        // see coral/templates/views/components/plugins/workflow.htm.
+        cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
+        cy.workflowNext();
+
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().invoke('text').as('enforcementId')
