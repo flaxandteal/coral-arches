@@ -75,17 +75,18 @@ jobs:
           arches_v="$(ver arches)"
           mr_v="$(ver 'arches[-_]modular[-_]reports')"
           vc_v="$(ver 'arches[-_]vue[-_]components')"
+          cl_v="$(ver 'arches[-_]component[-_]lab')"
 
           case "$arches_v" in
             8.*) ;;
             *) echo "::error::arches resolved to '$arches_v', expected 8.x"; rc=1 ;;
           esac
-          if [ "$mr_v" != "1.0.0b9" ]; then
-            echo "::error::arches-modular-reports resolved to '$mr_v', expected 1.0.0b9"
+          if [ "$mr_v" != "2.0.0" ]; then
+            echo "::error::arches-modular-reports resolved to '$mr_v', expected 2.0.0"
             rc=1
           fi
-          if [ -n "$vc_v" ]; then
-            echo "::error::arches-vue-components ($vc_v) is installed; it cannot coexist with arches-component-lab (duplicate WidgetMapping -> fields.E304)"
+          if [ -n "$vc_v" ] && [ -n "$cl_v" ]; then
+            echo "::error::arches-vue-components ($vc_v) and arches-component-lab ($cl_v) are both installed; they cannot coexist (duplicate WidgetMapping -> fields.E304)"
             rc=1
           fi
           exit $rc
