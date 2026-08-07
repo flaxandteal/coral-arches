@@ -105,7 +105,7 @@ class NotifyEnforcement(BaseFunction):
             # just skip per-user delivery rather than failing the tile save.
             return
 
-        persons = [Person.find(member.id) for member in enforcement_group.members if isinstance(member, Person)]
+        persons = [Person.find(member.id) for member in (enforcement_group.members or []) if isinstance(member, Person)]
 
         for person in persons:
             user = person.user_account
