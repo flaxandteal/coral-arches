@@ -147,10 +147,31 @@ jobs:
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py packages -o import_business_data -s /tmp/seeded.json -ow overwrite'
 
+      - name: Seed a citation (Bibliographic Source) resource
+        run: |
+          # Add Garden's Heritage Asset Details tab picks a citation from a
+          # resource-instance-list search with no typed query. With zero
+          # Bibliographic Source resources in the DB, that search returns no
+          # results and the first select2 option becomes Arches' "create a
+          # new related resource inline" affordance instead of an existing
+          # citation, so the Source Number/Page(s)/etc. fields never appear.
+          "${RUNNER_TEMP}/seedenv/bin/python" \
+            ${{ env.ARCHES_PROJECT }}/cypress/seed/seed.py \
+            --pkg-dir ${{ env.ARCHES_PROJECT }}/coral/pkg \
+            --graphs "Bibliographic Source" -n 1 \
+            --only-aliases bibliographic_source_name \
+            --overrides ${{ env.ARCHES_PROJECT }}/cypress/seed/coral_e2e_bibliographic_source_overrides.json \
+            -o "${RUNNER_TEMP}/seeded_biblio.json"
+
+          cid="$($COMPOSE ps -q arches)"
+          docker cp "${RUNNER_TEMP}/seeded_biblio.json" "$cid:/tmp/seeded_biblio.json"
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py packages -o import_business_data -s /tmp/seeded_biblio.json -ow overwrite'
+
       - name: Verify the seeded resources are searchable
         run: |
           missing=0
-          for name in "HA/02 Testing" "SMR-TEST-004 Testing" "HA/07 Garden Test"; do
+          for name in "HA/02 Testing" "SMR-TEST-004 Testing" "HA/07 Garden Test" "Test Bibliographic Source"; do
             hits="$($COMPOSE exec -T arches curl -s \
               "http://elasticsearch:9200/${ARCHES_PROJECT}_resources/_search" \
               -H 'Content-Type: application/json' \
