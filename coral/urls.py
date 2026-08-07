@@ -38,7 +38,7 @@ urlpatterns = [
     path('', include(tf_urls)),
     path('', include('arches.urls')),
     path('', include('arches_controlled_lists.urls')),
-    path('', include('arches_component_lab.urls')),
+    path('', include('arches_vue_components.urls')),
     path('', include('arches_modular_reports.urls')),
     path('', include('arches_search.urls')),
     re_path(r'^user$', UserManagerView.as_view(), name="user_profile_manager"),

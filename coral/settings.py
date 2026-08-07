@@ -318,7 +318,7 @@ INSTALLED_APPS = (
     "django_hosts",
     "arches_controlled_lists",
     "arches_querysets",
-    "arches_component_lab",
+    "arches_vue_components",
     "arches_modular_reports",
     "arches_search",
     "arches",
@@ -356,6 +356,7 @@ ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -657,7 +658,7 @@ CELERY_BEAT_SCHEDULE = {
 # This might be necessary if the worker pool is regulary fully active, with no idle workers, or if
 # you need to run the celery task using solo pool (e.g. on Windows). You may need to provide another
 # way of monitoring celery so you can detect the background task not being available.
-CELERY_CHECK_ONLY_INSPECT_BROKER = False
+CELERY_CHECK_ONLY_INSPECT_BROKER = True
 
 CANTALOUPE_DIR = os.path.join(ROOT_DIR, UPLOADED_FILES_DIR)
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
