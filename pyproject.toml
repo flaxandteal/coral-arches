@@ -24,6 +24,8 @@ dependencies = [
     "arches==8.2.0a8",
     "Django<6.1",
     "arches_controlled_lists>=1.3.0a1",
+    "arches_modular_reports>=2.0.0",
+    "arches_vue_components>=2.0.2",
     "cachetools",
     "django-recaptcha>=4.0.0",
     "django-hosts>=6.0",
