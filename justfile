@@ -2,7 +2,7 @@
 TOOLKIT_FOLDER := "docker"
 # set TOOLKIT_RELEASE := main
 ARCHES_PROJECT := `ls -1 */__init__.py | head -n 1 | sed 's/\/.*//g'`
-ARCHES_BASE := "ghcr.io/flaxandteal/arches-base:docker-8.1.0-release"
+ARCHES_BASE := "ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1"
 ARCHES_PROJECT_ROOT := `pwd`
 VENV := "../ENV"
 

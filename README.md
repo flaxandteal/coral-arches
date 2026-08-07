@@ -170,7 +170,7 @@ If updating the arches version there are several places to update the version nu
 ### Local
 You need to update the Make file within the project, not in the docker submodule
 
-`ARCHES_BASE = ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4`
+`ARCHES_BASE = ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1`
 
 This line can be changed to use the appropriate base image.
 
@@ -183,7 +183,7 @@ The `pyproject.toml` also needs to be updated so that you are pinned to the exac
 
 ```
 dependencies = [
-    "arches>=8.1.0,<=8.2.0a4"
+    "arches>=8.1.0,<=8.2.0a8"
 ]
 ```
 
@@ -198,7 +198,7 @@ The final place to update is within the github actions. These control the builds
 Both `project.yml` and `release.yml` need the `ARCHES_BASE` updated to match the above.
 
 ```
-ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4
+ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1
 ```
 
 ### Contribution 
