@@ -8,10 +8,10 @@ import componentTemplate from 'templates/views/components/workflows/assign-consu
 
 function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
-    this.RELATED_HERITAGE_NODE_ID = params.related_heritage_node_id ?? 'bc64746e-cf4a-11ef-997c-0242ac120007';
+    this.RELATED_HERITAGE_NODE_ID = params.related_heritage_node_id ?? 'fa23f9ec-2c03-5e94-9e00-d45a26a117b1';
     this.GEO_NODE_ID = params.geo_node_id ?? '87d3872b-f44f-11eb-bd0c-a87eeabdefba'; // Geometry node of the related heritage asset graph
     this.GEO_COORDS_NODE_ID = params.geo_coords_node_id ?? "87d3d7dc-f44f-11eb-bee9-a87eeabdefba"; // Co-ordinates node id for the related heritage asset graph
-    this.GEO_COORDS_INPUT_NODE = params.geo_coords_input_node ?? '083f3c7e-ca61-11ee-afca-0242ac180006'; // Node id for the graph that is displaying the map
+    this.GEO_COORDS_INPUT_NODE = params.geo_coords_input_node ?? '0c6cc29b-ad46-5833-a7d0-c231fcfb0cbd'; // Node id for the graph that is displaying the map
     this.tileId = this.tile.tileid;
     this.resourceId = this.tile.resourceinstance_id;
     this.shouldRender = ko.observable(false);

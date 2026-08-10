@@ -10,8 +10,8 @@ import template from 'templates/views/components/workflows/get-selected-monument
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
 
-  this.HERRITAGE_ASSET_REFERENCES_NODEGROUP = 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
-  this.SMR_NUMBER_NODE = '158e1ed2-3aae-11ef-a2d0-0242ac120003';
+  this.HERRITAGE_ASSET_REFERENCES_NODEGROUP = 'ebd91984-e3fd-5dcd-b8e0-42d63cda77fc'
+  this.SMR_NUMBER_NODE = 'd146451b-9140-5f81-b3de-9005acc01e28';
 
   this.DESIGNATIONS_NODEGROUP = '6af2a0cb-efc5-11eb-8436-a87eeabdefba';
   this.DESIGNATIONS_TYPE_NODE = '6af2a0ce-efc5-11eb-88d1-a87eeabdefba';
@@ -19,30 +19,30 @@ function viewModel(params) {
   this.MONUMENT_NAMES_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11';
   this.MONUMENT_NAMES_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11';
 
-  this.CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006';
-  this.CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006';
+  this.CM_REFERENCE_NODEGROUP = 'c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1';
+  this.CM_REFERENCE_NODE = '9c4a43d9-a689-5ba2-bed5-4fbbd6ad47e6';
 
   this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba';
-  this.TOWNLAND_NODEGROUP = '919bcb94-345c-11ef-a5b7-0242ac120003';
-  this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
+  this.TOWNLAND_NODEGROUP = 'ffaf4062-be4a-52e6-ace8-7e29014f96bc';
+  this.TOWNLAND_NODE = 'b7ffd24b-2db2-5d8c-8d18-17870c566fea';
   this.COUNTY_NODE = "87d3ff32-f44f-11eb-aa82-a87eeabdefba";
 
-  this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
-  this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
+  this.BFILE_NODEGROUP = "34e9c49c-5523-598a-98a2-32224336d197";
+  this.BFILE_NODE = "0d0b653a-03e2-5a35-9ed4-9219b0681dd0";
 
   this.CONSTRUCTION_NODEGROUP = "77e8f287-efdc-11eb-a790-a87eeabdefba";
   this.HA_TYPE_NODE = "77e90834-efdc-11eb-b2b9-a87eeabdefba";
 
   this.haRefStrings = {
-    '158e1ed2-3aae-11ef-a2d0-0242ac120003': 'SMR Number',
-    '250002fe-3aae-11ef-91fd-0242ac120003': 'HB Number',
-    '1de9abf0-3aae-11ef-91fd-0242ac120003': 'IHR Number',
-    '2c2d02fc-3aae-11ef-91fd-0242ac120003': 'Historic Parks and Gardens Number'
+    'd146451b-9140-5f81-b3de-9005acc01e28': 'SMR Number',
+    '4b9883ef-9aad-559a-bd84-e4bb7b94a358': 'HB Number',
+    '0b14fb28-961e-5817-9cac-c61073b58981': 'IHR Number',
+    '1edc61a9-b64b-51ae-9077-536908761903': 'Historic Parks and Gardens Number'
   }
 
-  const MONUMENT_COUNT_NODE = "dc809034-04ba-11f0-8d60-9e7c335817fb";
-  const SCHEDULED_MONUMENT_COUNT_NODE = "49d44590-04bb-11f0-8d60-9e7c335817fb";
-  const HA_NODE = "2b4cfdac-04ba-11f0-9182-9e7c335817fb";
+  const MONUMENT_COUNT_NODE = "a7d5d94e-1094-568a-ab49-bdd9362a1485";
+  const SCHEDULED_MONUMENT_COUNT_NODE = "4cbfed23-7989-500c-9a0f-c63307d15beb";
+  const HA_NODE = "0f74af35-a8d7-5a12-953a-1773d3981fec";
 
   this.labels = params.labels || [];
 
@@ -126,7 +126,7 @@ function viewModel(params) {
 
   // check the HA recommend for scheduled monument - only present if revision merged in
   this.returnScheduledMonumentCount = async(resourceId) => {
-    const RECOMMENDED_DESIGNATION_NODE = "74ef37e0-37b5-11ef-9263-0242ac150006"
+    const RECOMMENDED_DESIGNATION_NODE = "5aa9d22a-29c6-5de0-8119-84ee1e93081f"
     const SCHEDULED_MONUMENT_CONCEPT = "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9"
     const tileData = await this.fetchTileData(resourceId, RECOMMENDED_DESIGNATION_NODE);
     for(const tile of tileData){

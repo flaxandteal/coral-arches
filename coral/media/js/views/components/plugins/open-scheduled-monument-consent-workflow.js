@@ -15,7 +15,7 @@ const openWorkflowViewModel = function (params) {
 
   this.configKeys = ko.observable({ placeholder: 0 });
 
-  this.smrSearchString = `/search/resources?advanced-search=[{"op":"and","2c2d02fc-3aae-11ef-91fd-0242ac120003":{"op":"~","lang":"en","val":""},"1de9abf0-3aae-11ef-91fd-0242ac120003":{"op":"~","lang":"en","val":""},"158e1ed2-3aae-11ef-a2d0-0242ac120003":{"op":"not_null","lang":"en","val":""},"250002fe-3aae-11ef-91fd-0242ac120003":{"op":"~","lang":"en","val":""}}]`;
+  this.smrSearchString = `/search/resources?advanced-search=[{"op":"and","1edc61a9-b64b-51ae-9077-536908761903":{"op":"~","lang":"en","val":""},"0b14fb28-961e-5817-9cac-c61073b58981":{"op":"~","lang":"en","val":""},"d146451b-9140-5f81-b3de-9005acc01e28":{"op":"not_null","lang":"en","val":""},"4b9883ef-9aad-559a-bd84-e4bb7b94a358":{"op":"~","lang":"en","val":""}}]`;
 
   this.addtionalConfigData = ko.observable({
     parentTileIds: {},

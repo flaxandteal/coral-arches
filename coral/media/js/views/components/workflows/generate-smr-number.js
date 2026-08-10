@@ -8,8 +8,8 @@ import template from 'templates/views/components/workflows/generate-smr-number.h
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
-  this.NISMR_NUMBERING_TYPE_NODE_ID = '86c19e92-3ea7-11ef-818b-0242ac140006';
-  this.GENERATED_SMR_NODE_ID = 'b46b5bba-3ec2-11ef-bb61-0242ac140006';
+  this.NISMR_NUMBERING_TYPE_NODE_ID = 'a7742f3d-197d-5fcb-9fde-4179a7e28d5b';
+  this.GENERATED_SMR_NODE_ID = '039aaf6d-59d4-57a9-bf87-245ec8913130';
 
   this.setGeneratedSmrValue = (value) => {
     const localisedValue = {

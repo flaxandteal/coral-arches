@@ -6,10 +6,10 @@ from coral.utils.garden_number import GardenNumber
 from arches.app.models import models
 
 
-HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
+HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
 COUNTY_NODEGROUP_ID = "87d3ff2a-f44f-11eb-9951-a87eeabdefba"
 ADDRESS_NODEGROUP_ID = "87d39b25-f44f-11eb-95e5-a87eeabdefba"
-GARDEN_NUMBER_NODE_ID = "2c2d02fc-3aae-11ef-91fd-0242ac120003"
+GARDEN_NUMBER_NODE_ID = "1edc61a9-b64b-51ae-9077-536908761903"
 COUNTY_NODE_ID = "87d3ff32-f44f-11eb-aa82-a87eeabdefba"
 
 

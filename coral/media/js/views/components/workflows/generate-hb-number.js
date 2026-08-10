@@ -8,8 +8,8 @@ import template from 'templates/views/components/workflows/generate-hb-number.ht
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
-  this.WARDS_AND_DISTRICTS_TYPE_NODE_ID = 'de6b6af0-44e3-11ef-9114-0242ac120006';
-  this.GENERATED_HB_NODE_ID = '19bd9ac4-44e4-11ef-9114-0242ac120006';
+  this.WARDS_AND_DISTRICTS_TYPE_NODE_ID = 'dc49f08f-a4c5-5e23-bfa6-0587c085535d';
+  this.GENERATED_HB_NODE_ID = '8009174e-67df-51b7-83ee-17db75100a08';
 
   this.generateOption = ko.observable(true)
   this.configKeys = ko.observable({ placeholder: 0 });

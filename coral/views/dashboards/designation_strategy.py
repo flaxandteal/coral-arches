@@ -16,7 +16,7 @@ DESIGNATIONS_GROUP = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
 APPROVED = "294f38d0-e391-4f7d-af83-72fbf7fcdfcb"
 PROVISIONAL = "7f81d135-45ac-483f-96f4-2fa8ca882d79"
 
-COUNCIL_NODE = "447973ce-d7e2-11ee-a4a1-0242ac120006"
+COUNCIL_NODE = "f4087433-b7b1-52fd-a1e7-f2f7cb36ef8c"
 
 class DesignationTaskStrategy(TaskStrategy):
     
