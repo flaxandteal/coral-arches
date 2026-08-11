@@ -323,7 +323,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "irish-grid-reference-step",
@@ -350,7 +353,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "map-step",
@@ -373,7 +379,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "documentation-step",
@@ -396,7 +405,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "sign-off-step",
@@ -456,7 +468,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

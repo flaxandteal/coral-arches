@@ -9731,28 +9731,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "bd872503-740b-49b0-8fee-c6945af69f4d",
-                    "config": {
-                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Reference Number Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "9ab85ccf-8611-4230-ab05-28d76f3b8365",
-                    "label": {
-                        "en": "Reference Number Type"
-                    },
-                    "node_id": "e41184a9-2c34-4ef1-8802-1523a648488e",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
                     "card_id": "458dcc3f-5b44-4a08-852b-2dacb074f26d",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
@@ -10653,35 +10631,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "e6181b8e-1d2e-4096-ab15-d188838538e0",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Works to be carried out",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%%"
-                    },
-                    "id": "af0e04e4-dc58-4172-955a-a302e9faa348",
-                    "label": {
-                        "en": "Works to be carried out"
-                    },
-                    "node_id": "5fb85574-2d64-11ef-bbfd-0242ac120006",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000005"
-                },
-                {
                     "card_id": "a5e565d4-c31f-4c2c-8e12-ac7d74fa6efd",
                     "config": {
                         "defaultValue": "c2051d53-40e7-4a2d-a4b4-02a31da37fd1",
@@ -10701,28 +10650,6 @@
                     "node_id": "92b24b99-ec2a-44d9-83a3-72424b1f3fbd",
                     "sortorder": 33,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "bd872503-740b-49b0-8fee-c6945af69f4d",
-                    "config": {
-                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Reference Number Metatype",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Select an option"
-                        }
-                    },
-                    "id": "afaa1e72-5fd8-4eae-969e-6add63aca3ad",
-                    "label": {
-                        "en": "Reference Number Metatype"
-                    },
-                    "node_id": "c1f2c099-50e3-4514-bb9b-b513d768737a",
-                    "sortorder": null,
-                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
@@ -11380,35 +11307,6 @@
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "bd872503-740b-49b0-8fee-c6945af69f4d",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Reference Number",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%%"
-                    },
-                    "id": "bee97a78-5c86-469f-9185-9c8069a44682",
-                    "label": {
-                        "en": "Reference Number"
-                    },
-                    "node_id": "e6add81a-7beb-45e8-bff7-898194bcf7c5",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "bef0c53c-dbc8-11ee-b0db-0242ac120006",
@@ -24493,7 +24391,7 @@
                 {
                     "alias": "area_type",
                     "config": {
-                        "rdmCollection": "eda531bb-050b-4f12-2421-1c50fcdcf11a"
+                        "rdmCollection": "59a0a035-bbd0-4e5e-9528-862790edc610"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -27325,7 +27223,7 @@
                 {
                     "alias": "area_name_type",
                     "config": {
-                        "rdmCollection": "dabd4def-631e-e295-acec-136522543ea0"
+                        "rdmCollection": "acb5feaf-e491-4e53-bff2-2801167fd65a"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -39542,7 +39440,111 @@
                 "en": "Used to record built works, human-made structures and human-modified features. These can range from a single post box to a palace complex. The use of Heritage Asset or Area will be a question of granularity. "
             },
             "template_id": "523a5a7f-006b-4caf-a801-a1621967a88b",
-            "version": ""
+            "version": "",
+            "_duplicate_cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "bd872503-740b-49b0-8fee-c6945af69f4d",
+                    "config": {
+                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Reference Number Type",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "9ab85ccf-8611-4230-ab05-28d76f3b8365",
+                    "label": {
+                        "en": "Reference Number Type"
+                    },
+                    "node_id": "e41184a9-2c34-4ef1-8802-1523a648488e",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "e6181b8e-1d2e-4096-ab15-d188838538e0",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Works to be carried out",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "af0e04e4-dc58-4172-955a-a302e9faa348",
+                    "label": {
+                        "en": "Works to be carried out"
+                    },
+                    "node_id": "5fb85574-2d64-11ef-bbfd-0242ac120006",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000005"
+                },
+                {
+                    "card_id": "bd872503-740b-49b0-8fee-c6945af69f4d",
+                    "config": {
+                        "defaultValue": "7346be23-bff6-42dc-91d0-7c5182aa0031",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Reference Number Metatype",
+                        "options": [],
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
+                    },
+                    "id": "afaa1e72-5fd8-4eae-969e-6add63aca3ad",
+                    "label": {
+                        "en": "Reference Number Metatype"
+                    },
+                    "node_id": "c1f2c099-50e3-4514-bb9b-b513d768737a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "bd872503-740b-49b0-8fee-c6945af69f4d",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Reference Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%%"
+                    },
+                    "id": "bee97a78-5c86-469f-9185-9c8069a44682",
+                    "label": {
+                        "en": "Reference Number"
+                    },
+                    "node_id": "e6add81a-7beb-45e8-bff7-898194bcf7c5",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                }
+            ]
         }
     ],
     "metadata": {

@@ -1,9 +1,9 @@
 """
 Well-Known Resource Model registry.
 
-Mirrors `arches_orm.wkrm`. Reads `settings.WELL_KNOWN_RESOURCE_MODELS` (a list
-of dicts loaded from coral/wkrm.toml) and dynamically builds a ResourceModel
-subclass for each entry.
+Reads `settings.WELL_KNOWN_RESOURCE_MODELS` (a list of dicts loaded from
+coral/wkrm.toml) and dynamically builds a ResourceModel subclass for each
+entry.
 
 Public API:
     prime_registry()
@@ -11,6 +11,7 @@ Public API:
     get_well_known_resource_model_by_graph_id(graphid)
     attempt_well_known_resource_model(key)
     get_resource_models_for_adapter(adapter_key)
+    get_graph_slug(graphid)
 """
 
 from __future__ import annotations
@@ -24,9 +25,11 @@ logger = logging.getLogger(__name__)
 
 _lock = threading.Lock()
 _primed = False
+_slugs_resolved = False
 _by_class_name: Dict[str, Any] = {}
 _by_class_class_name: Dict[str, Any] = {}  # CamelCased model_name (e.g. "LogicalSet")
 _by_graph_id: Dict[str, Any] = {}
+_slug_by_graph_id: Dict[str, str] = {}
 _wkrm_defs: List[Dict[str, Any]] = []
 
 
@@ -47,11 +50,44 @@ def _build_wrapper_class(wkrm: Dict[str, Any]) -> Type[Any]:
         {
             "_graphid": str(wkrm["graphid"]),
             "_wkrm": dict(wkrm),
-            "__module__": "alizarin_django.models",
+            "__module__": "querysets_shim.models",
             "__qualname__": class_name,
         },
     )
     return cls
+
+
+def _resolve_slugs() -> None:
+    """Look up graph slugs from the DB for all registered graph IDs.
+
+    Called lazily on first slug access rather than at prime_registry() time,
+    because the DB may not be fully available during AppConfig.ready().
+    """
+    global _slugs_resolved
+    if _slugs_resolved:
+        return
+    with _lock:
+        if _slugs_resolved:
+            return
+        try:
+            from arches.app.models.models import GraphModel
+
+            graph_ids = list(_by_graph_id.keys())
+            graphs = GraphModel.objects.filter(
+                graphid__in=graph_ids
+            ).values_list("graphid", "slug")
+            for graphid, slug in graphs:
+                if slug:
+                    _slug_by_graph_id[str(graphid)] = slug
+        except Exception as exc:
+            logger.warning("querysets_shim: slug lookup failed: %s", exc)
+        _slugs_resolved = True
+
+
+def get_graph_slug(graphid: str) -> Optional[str]:
+    """Return the Arches graph slug for a given graph UUID, or None."""
+    _resolve_slugs()
+    return _slug_by_graph_id.get(str(graphid))
 
 
 def prime_registry() -> None:
@@ -70,7 +106,7 @@ def prime_registry() -> None:
 
             defs = list(getattr(settings, "WELL_KNOWN_RESOURCE_MODELS", []))
         except Exception as exc:
-            logger.warning("alizarin_django: cannot read settings: %s", exc)
+            logger.warning("querysets_shim: cannot read settings: %s", exc)
             defs = []
 
         for wkrm in defs:
@@ -78,13 +114,12 @@ def prime_registry() -> None:
                 cls = _build_wrapper_class(wkrm)
             except Exception as exc:  # pragma: no cover
                 logger.warning(
-                    "alizarin_django: failed to build wrapper for %r: %s",
+                    "querysets_shim: failed to build wrapper for %r: %s",
                     wkrm,
                     exc,
                 )
                 continue
             _wkrm_defs.append(wkrm)
-            # Index under both the spaced model_name and CamelCased class name
             model_name = wkrm.get("model_name", "")
             _by_class_name[model_name] = cls
             _by_class_class_name[cls.__name__] = cls
@@ -142,4 +177,5 @@ __all__ = [
     "get_well_known_resource_model_by_graph_id",
     "attempt_well_known_resource_model",
     "get_resource_models_for_adapter",
+    "get_graph_slug",
 ]

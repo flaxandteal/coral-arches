@@ -24,7 +24,12 @@
                     "161be232-3f61-11ef-b90f-0242ac140006",
                     "7c87629a-3f60-11ef-b90f-0242ac140006"
                   ],
-                  "labels": [["Display Name", "Heritage Asset"]],
+                  "labels": [
+                    [
+                      "Display Name",
+                      "Heritage Asset"
+                    ]
+                  ],
                   "nodegroupid": "423d8a10-3f60-11ef-b9b0-0242ac140006",
                   "semanticName": "System Reference Numbers",
                   "requiredParentTiles": [
@@ -46,7 +51,10 @@
                   ],
                   "nodegroupid": "bcf507be-3ea8-11ef-8377-0242ac140006",
                   "labels": [
-                    ["Generated SMR", "SMR Number"]
+                    [
+                      "Generated SMR",
+                      "SMR Number"
+                    ]
                   ]
                 },
                 "tilesManaged": "one",
@@ -56,7 +64,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "heritage-asset-details-step",
@@ -75,7 +86,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "address-step",
@@ -121,7 +135,9 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["425b6c5f-7b32-4cd6-8597-0f605cc8992b"],
+                  "hiddenNodes": [
+                    "425b6c5f-7b32-4cd6-8597-0f605cc8992b"
+                  ],
                   "nodegroupid": "cc176b79-d9d3-4aab-bbd5-f604a73cae34",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas",
@@ -158,7 +174,9 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["4680d6d9-9167-4607-bf72-9d4fb708c74d"],
+                  "hiddenNodes": [
+                    "4680d6d9-9167-4607-bf72-9d4fb708c74d"
+                  ],
                   "nodegroupid": "d11ce538-6681-42a1-9f75-b671c352e185",
                   "parenttileid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
@@ -170,7 +188,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "map-step",
@@ -194,7 +215,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "assessment-step",
@@ -259,7 +283,12 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "94c6fd66-19fa-4261-8728-35a67a88b96b",
-                  "labels": [["CM Reference", "Records NI"]],
+                  "labels": [
+                    [
+                      "CM Reference",
+                      "Records NI"
+                    ]
+                  ],
                   "semanticName": "Record NI"
                 },
                 "tilesManaged": "one",
@@ -280,7 +309,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "relevant-parties-step",
@@ -308,7 +340,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "documentation-step",
@@ -332,7 +367,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "letters-step",
@@ -356,7 +394,9 @@
                   "letterTypeNode": "51f2fcd0-ad90-11ef-a1bd-0242ac140006",
                   "letterResourceNode": "25f41196-ad90-11ef-a1bd-0242ac140006",
                   "config": {
-                    "expand": ["owner"],
+                    "expand": [
+                      "owner"
+                    ],
                     "special": {
                       "today": "today",
                       "user": "user"
@@ -372,7 +412,10 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": ["save"]
+        "hiddenWorkflowButtons": [
+          "save",
+          "undo"
+        ]
       },
       {
         "name": "approvals-step",
@@ -386,7 +429,9 @@
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "nodegroupid": "3c51740c-dbd0-11ee-8835-0242ac120006",
                   "resourceid": "['start-step']['d4cffd08-58c6-46f2-8ef7-08a7af8ae7f5'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["99605e36-3924-11ef-82af-0242ac150006"],
+                  "hiddenNodes": [
+                    "99605e36-3924-11ef-82af-0242ac150006"
+                  ],
                   "semanticName": "Approvals",
                   "nodeOptions": {
                     "3b267ffe-dbd1-11ee-b0db-0242ac120006": {
@@ -408,49 +453,51 @@
                         "7679f42b-56ad-4b18-8b2c-cc6de1b16537",
                         "e778f4a1-97c6-446f-b1c4-418a81c3212e"
                       ],
-                      "conflictNode": ["3b267ffe-dbd1-11ee-b0db-0242ac120006"],
+                      "conflictNode": [
+                        "3b267ffe-dbd1-11ee-b0db-0242ac120006"
+                      ],
                       "conflictAllowBlank": false
                     },
                     "36b51a2b-baf3-4dc4-b714-08bc58fcaac8": {
-                       "config":{
-                         "maxDate":"today"
-                       }
-                     },
+                      "config": {
+                        "maxDate": "today"
+                      }
+                    },
                     "36b51a2b-2fad-45fb-9e93-088016aa0fc9": {
-                       "config":{
-                         "maxDate":"today"
-                       }
-                     },
+                      "config": {
+                        "maxDate": "today"
+                      }
+                    },
                     "0cd0998c-dbd6-11ee-b0db-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "af5fd406-dbd1-11ee-b0db-0242ac120006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "cffa2fc8-3797-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "d70da550-3798-11ef-a167-0242ac150006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a20d4124-3795-11ef-9263-0242ac150006": {
-                      "config":{
-                        "maxDate":"today",
+                      "config": {
+                        "maxDate": "today",
                         "label": "Owner Notified Date"
                       }
                     },
                     "59935456-379a-11ef-9263-0242ac150006": {
                       "label": "Director Sign Off Date",
-                      "config":{
-                        "maxDate":"today",
+                      "config": {
+                        "maxDate": "today",
                         "label": "Director Sign Off Date"
                       }
                     }
@@ -463,7 +510,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "apply-revision",
@@ -496,7 +546,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

@@ -695,35 +695,6 @@
                     "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000015"
-                },
-                {
-                    "card_id": "02e69755-bfa3-4589-8d80-6a828f14e2d0",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Notes",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "f7e21411-dbac-4189-ac96-baea3fceb7ab",
-                    "label": {
-                        "en": "Notes"
-                    },
-                    "node_id": "ff232bf6-532b-11ef-9d2a-0242ac120006",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 }
             ],
             "color": null,
@@ -2054,7 +2025,38 @@
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
-            "version": ""
+            "version": "",
+            "_duplicate_cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "02e69755-bfa3-4589-8d80-6a828f14e2d0",
+                    "config": {
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Notes",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "f7e21411-dbac-4189-ac96-baea3fceb7ab",
+                    "label": {
+                        "en": "Notes"
+                    },
+                    "node_id": "ff232bf6-532b-11ef-9d2a-0242ac120006",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                }
+            ]
         }
     ],
     "metadata": {

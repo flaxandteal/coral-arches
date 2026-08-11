@@ -8,8 +8,8 @@ from arches.app.search.search_engine_factory import SearchEngineFactory
 from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.models.models import Plugin
 from arches.app.models.resource import Resource
-from alizarin_django.models import Set, LogicalSet, ArchesPlugin
-from alizarin_django.adapter import context_free
+from querysets_shim.models import Set, LogicalSet, ArchesPlugin
+from querysets_shim.adapter import context_free
 
 
 def _build_search_from_parameters(parameters):
@@ -147,7 +147,7 @@ class SetApplicator:
             try:
                 ap._.index()
             except AttributeError:
-                # alizarin_django's _WrapperMeta doesn't expose .index() yet.
+                # querysets_shim's _WrapperMeta doesn't expose .index() yet.
                 # The save() call should trigger Arches's normal indexing path.
                 pass
 

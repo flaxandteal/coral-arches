@@ -135,7 +135,7 @@ export default ko.components.register('views/components/reports/scenes/map', {
                 self.map().fitBounds(geojsonExtent(x));
                 const source = self.map().getSource('selected-geometry')
                 if(source) {
-                    data = x;
+                    source.setData(x);
                 } else {
                     self.map().addSource('selected-geometry', {
                         type: 'geojson', 

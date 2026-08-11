@@ -193,7 +193,7 @@ LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 FILE_TYPE_CHECKING = None
 FILE_TYPES = ["bmp", "gif", "jpg", "jpeg", "pdf", "png", "psd", "rtf", "tif", "tiff", "xlsx", "csv", "zip"]
 FILENAME_GENERATOR = "arches.app.utils.storage_filename_generator.generate_filename"
-UPLOADED_FILES_DIR = "uploadedfiles"
+UPLOADED_FILES_DIR = os.environ.get("UPLOADED_FILES_DIR", "")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
@@ -303,6 +303,8 @@ DATABASES = {
 
 SEARCH_THUMBNAILS = False
 
+SAVED_SEARCHES = []
+
 INSTALLED_APPS = (
     "csp",
     "webpack_loader",
@@ -312,10 +314,13 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "django.contrib.postgres",
     "django_hosts",
     "arches_controlled_lists",
     "arches_querysets",
-    "arches_component_lab",
+    "arches_vue_components",
+    "arches_modular_reports",
+    "arches_search",
     "arches",
     "arches.app.models",
     "arches.management",
@@ -334,7 +339,7 @@ INSTALLED_APPS = (
     "two_factor",
     # "silk",
     "coral",
-    "alizarin_django.apps.AlizarinDjangoConfig",
+    "querysets_shim.apps.QuerysetsShimConfig",
 )
 
 # Placing this last ensures any templates provided by Arches Applications
@@ -347,10 +352,11 @@ INSTALLED_APPS += (
 if DEBUG:
     INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
 
-ARCHES_APPLICATIONS = ()
+ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -368,7 +374,7 @@ MIDDLEWARE = [
     "django_otp.middleware.OTPMiddleware",
     # "coral.middleware.TwoFactorAuthMiddleware",  # DISABLED - 2FA now integrated into LoginView
     # "silk.middleware.SilkyMiddleware",
-    "alizarin_django.middleware.AlizarinDjangoContextMiddleware",
+    "querysets_shim.middleware.QuerysetsShimContextMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
@@ -389,6 +395,10 @@ CONTENT_SECURITY_POLICY = {
 }
 
 X_FRAME_OPTIONS = 'DENY'
+
+MAPBOX_API_KEY = os.environ.get("MAPBOX_API_KEY", MAPBOX_API_KEY)
+
+USE_LOCAL_STORAGE = os.environ.get("USE_LOCAL_STORAGE", "False").lower() == "true"
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -534,6 +544,9 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
 
+# Session expires after 8 hours instead of Django's 2-week default
+SESSION_COOKIE_AGE = 60 * 60 * 8  # 8 hours
+
 # Additional cookie security params
 # DJANGO_INSECURE_COOKIES=True disables Secure flag for local HTTP dev.
 # Browsers refuse to transmit Secure cookies over plain HTTP, which manifests as
@@ -645,7 +658,7 @@ CELERY_BEAT_SCHEDULE = {
 # This might be necessary if the worker pool is regulary fully active, with no idle workers, or if
 # you need to run the celery task using solo pool (e.g. on Windows). You may need to provide another
 # way of monitoring celery so you can detect the background task not being available.
-CELERY_CHECK_ONLY_INSPECT_BROKER = False
+CELERY_CHECK_ONLY_INSPECT_BROKER = True
 
 CANTALOUPE_DIR = os.path.join(ROOT_DIR, UPLOADED_FILES_DIR)
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"

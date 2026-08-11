@@ -345,6 +345,7 @@ module.exports = () => {
             ],
             resolve: {
                 modules: [Path.resolve(__dirname, PROJECT_RELATIVE_NODE_MODULES_PATH)],
+                extensions: ['.js', '.json', '.wasm', '.ts'],
                 alias: {
                     ...javascriptRelativeFilepathToAbsoluteFilepathLookup,
                     ...templateFilepathLookup,

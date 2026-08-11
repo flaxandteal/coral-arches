@@ -12,7 +12,9 @@
         "name": "initial-step-step",
         "title": "Initial Step",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -80,11 +82,11 @@
                     "c3a76082-2a5e-11f0-9637-62d3208fcf53"
                   ],
                   "nodeOptions": {
-                  "c3a76082-2a5e-11f0-9637-62d3208fcf53" : {
-                    "searchString": "",
-                    "allowInstanceCreation": false
-                  }
-                },
+                    "c3a76082-2a5e-11f0-9637-62d3208fcf53": {
+                      "searchString": "",
+                      "allowInstanceCreation": false
+                    }
+                  },
                   "semanticName": "Heritage Asseets details"
                 },
                 "tilesManaged": "one",
@@ -106,14 +108,19 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "map-step",
         "title": "Map",
         "required": false,
         "saveWithoutProgressing": true,
-        "hiddenWorkflowButtons": ["undo", "save"],
+        "hiddenWorkflowButtons": [
+          "undo",
+          "save"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -165,7 +172,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "documentation-step",
@@ -188,7 +197,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "sign-off-step",
@@ -205,27 +217,29 @@
                   "nodegroupid": "2f3f5dc8-2a63-11f0-b5c0-62d3208fcf53",
                   "semanticName": "Sign Off",
                   "nodeOptions": {
-                      "d9394d68-2a66-11f0-b5c0-62d3208fcf53": {
-                        "component": "user-to-model-select",
-                        "signOffGroups": [
-                          "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
-                          "5b8d8413-ee01-465f-9774-e5b247cd205a",
-                          "6ba1b471-6faf-4f96-9179-94b2a1662512"
-                        ],
-                        "allowInstanceCreation": false
-                      },
-                      "b4bec684-2a66-11f0-9637-62d3208fcf53": {
-                        "component": "user-to-model-select",
-                        "signOffGroups": [
-                          "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
-                          "5b8d8413-ee01-465f-9774-e5b247cd205a",
-                          "6ba1b471-6faf-4f96-9179-94b2a1662512"
-                        ],
-                        "conflictNode": ["d9394d68-2a66-11f0-b5c0-62d3208fcf53"],
-                        "conflictAllowBlank": false,
-                        "allowInstanceCreation": false
-                      }
+                    "d9394d68-2a66-11f0-b5c0-62d3208fcf53": {
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                      ],
+                      "allowInstanceCreation": false
+                    },
+                    "b4bec684-2a66-11f0-9637-62d3208fcf53": {
+                      "component": "user-to-model-select",
+                      "signOffGroups": [
+                        "2a8353fc-5dd3-4838-ae58-b1d7a4eeb36b",
+                        "5b8d8413-ee01-465f-9774-e5b247cd205a",
+                        "6ba1b471-6faf-4f96-9179-94b2a1662512"
+                      ],
+                      "conflictNode": [
+                        "d9394d68-2a66-11f0-b5c0-62d3208fcf53"
+                      ],
+                      "conflictAllowBlank": false,
+                      "allowInstanceCreation": false
                     }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -235,7 +249,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

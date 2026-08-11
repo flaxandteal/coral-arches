@@ -163,6 +163,43 @@ Initializes the permission table, it allows all of the users within the system t
 make manage CMD="print_permissions_table"
 ```
 
+## Updating Arches Versions
+
+If updating the arches version there are several places to update the version number to ensure arches is synced locally and in the build.
+
+### Local
+You need to update the Make file within the project, not in the docker submodule
+
+`ARCHES_BASE = ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1`
+
+This line can be changed to use the appropriate base image.
+
+The base images are created by Flax and Teal and use an arches base version with additional patches applied to work with our container set up.
+
+Changing this ensures when `make build` is ran, the correct base image is used to build arches
+
+### pyproject.toml
+The `pyproject.toml` also needs to be updated so that you are pinned to the exact version needed
+
+```
+dependencies = [
+    "arches>=8.1.0,<=8.2.0a8"
+]
+```
+
+This can be set to a range or an exact version.
+Here we have pinned to an upper limit that matches our base image. If this is set higher, on a build the latest version will be pulled and may not match our base image.
+
+This step is important, we do not want to drift from the base image version. This will not be immediately apparent as arches will still run.
+
+### Github Action
+The final place to update is within the github actions. These control the builds that are pushed to the environments.
+
+Both `project.yml` and `release.yml` need the `ARCHES_BASE` updated to match the above.
+
+```
+ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1
+```
 
 ### Contribution 
 

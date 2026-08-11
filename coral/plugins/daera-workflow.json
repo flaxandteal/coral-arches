@@ -197,7 +197,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "documentation-step",
@@ -221,7 +223,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "letters-step",
@@ -266,7 +270,8 @@
         ],
         "workflowstepclass": "workflow-form-component",
         "hiddenWorkflowButtons": [
-          "save"
+          "save",
+          "undo"
         ]
       },
       {
@@ -325,7 +330,9 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": []
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

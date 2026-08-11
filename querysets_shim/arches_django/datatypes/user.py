@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class UserViewModel(User, ViewModel):
     class Meta:
         proxy = True
-        app_label = "alizarin_django"
+        app_label = "querysets_shim"
         db_table = User.objects.model._meta.db_table
 
     def __bool__(self) -> bool:

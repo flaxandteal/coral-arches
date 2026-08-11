@@ -4,9 +4,9 @@ TOOLKIT_REPO = https://github.com/flaxandteal/arches-container-toolkit
 TOOLKIT_FOLDER = docker
 TOOLKIT_RELEASE = main
 ARCHES_PROJECT ?= coral
-ARCHES_BASE = ghcr.io/flaxandteal/arches-base:docker-8.1.0-release
+ARCHES_BASE = ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1
 ARCHES_PROJECT_ROOT = $(shell pwd)/
-DOCKER_COMPOSE_COMMAND = ARCHES_PROJECT_ROOT=$(ARCHES_PROJECT_ROOT) ARCHES_BASE=$(ARCHES_BASE) ARCHES_PROJECT=$(ARCHES_PROJECT) docker compose --profile api -p $(ARCHES_PROJECT) -f docker/docker-compose.yml
+DOCKER_COMPOSE_COMMAND =ARCHES_PROJECT_ROOT=$(ARCHES_PROJECT_ROOT) ARCHES_BASE=$(ARCHES_BASE) ARCHES_PROJECT=$(ARCHES_PROJECT) docker compose -p $(ARCHES_PROJECT) -f docker/docker-compose.yml
 CMD ?=
 
 create: docker
@@ -60,10 +60,13 @@ endif
 
 .PHONY: rebuild-images
 rebuild-images: docker
+	@[ -e "../$(ARCHES_PROJECT)" ] || ln -s $(notdir $(CURDIR)) ../$(ARCHES_PROJECT)
 	$(DOCKER_COMPOSE_COMMAND) build
 
 .PHONY: build
 build: docker
+	# Ensure the parent directory has a symlink matching ARCHES_PROJECT for the Docker build context
+	@[ -e "../$(ARCHES_PROJECT)" ] || ln -s $(notdir $(CURDIR)) ../$(ARCHES_PROJECT)
 	# We need to have certain node modules, so if the additional ones are missing, clean the folder to ensure boostrap does so.
 	if [ -z $(ARCHES_PROJECT)/media/node_modules/jquery-validation ]; then rm -rf $(ARCHES_PROJECT)/media/node_modules; fi
 	$(DOCKER_COMPOSE_COMMAND) stop
@@ -114,6 +117,10 @@ manage: docker
 .PHONY: webpack
 webpack: docker
 	$(DOCKER_COMPOSE_COMMAND) run -T --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd /web_root/$(ARCHES_PROJECT); DJANGO_MODE=DEV NODE_OPTIONS=--max_old_space_size=8192 npm run build_development < /dev/null'
+
+.PHONY: webpack-prod
+webpack-prod: docker
+	$(DOCKER_COMPOSE_COMMAND) run -T --entrypoint /bin/bash arches_worker -c '. ../ENV/bin/activate; cd /web_root/$(ARCHES_PROJECT); DJANGO_MODE=DEV NODE_OPTIONS=--max_old_space_size=8192 npm run build_production < /dev/null'
 
 .PHONY: clean
 clean: docker

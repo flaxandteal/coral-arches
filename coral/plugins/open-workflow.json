@@ -71,7 +71,8 @@
       {
         "slug": "issue-report-workflow",
         "name": "Issue Report",
-        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"]
+        "graphIds": ["076f9381-7b00-11e9-8d6b-80000b44d1d9"],
+        "disableStartNew": true
       },
       {
         "slug": "heritage-asset-designation-workflow",

@@ -20,19 +20,23 @@
         "vitest": "vitest --run --coverage"
     },
     "dependencies": {
-        "arches": "archesproject/arches#dev/8.1.x",
-        "arches_controlled_lists": "archesproject/arches-controlled-lists#dev/1.1.x",
+        "arches": "archesproject/arches#dev/8.2.x",
+        "arches_controlled_lists": "archesproject/arches-controlled-lists#1.2.0",
+        "arches_modular_reports": "archesproject/arches-modular-reports#2.0.0",
+        "arches_vue_components": "archesproject/arches-vue-components#2.0.2",
         "ckeditor4": "4.20.2",
         "cytoscape-elk": "^2.2.0",
         "datatables.net-rowgroup-dt": "^1.4.1",
         "docx-preview": "^0.3.5",
         "jquery-validation": "^1.20.0",
+        "maplibre-gl": "^4.7.1",
         "native-file-system-adapter": "^3.0.1",
+        "pinia": "^3.0.4",
         "select-woo": "jadu/selectWoo",
         "web-worker": "^1.2.0"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/8.1.x"
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/8.2.x"
     },
     "nodeModulesPaths": {
         "native-file-system-adapter": "node_modules/native-file-system-adapter/src/es6.js"

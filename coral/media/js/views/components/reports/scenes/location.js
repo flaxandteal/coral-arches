@@ -145,16 +145,16 @@ export default ko.components.register('views/components/reports/scenes/location'
             // utitility function - checks whether at least one observable (or array object)
             // has a set value (used to determine whether a section is visible)
             self.observableValueSet = (...observables) => {
-                for (observable of observables) {
+                for (const observable of observables) {
                     if (ko.isObservable(observable)) {
-                        observableValue = ko.unwrap(observable);
+                        const observableValue = ko.unwrap(observable);
                         if (observableValue && observableValue != "--") {
                             return true;
                         }
                     } else if (typeof observable === "object" && observable !== null) {
-                        for (key of Object.keys(observable)) {
+                        for (const key of Object.keys(observable)) {
                             if (ko.isObservable(observable[key])) {
-                                observableValue = ko.unwrap(observable[key]);
+                                const observableValue = ko.unwrap(observable[key]);
                                 if (observableValue && observableValue != "--") {
                                     return true;
                                 }
