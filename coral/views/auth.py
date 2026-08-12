@@ -301,12 +301,15 @@ class LoginView(View):
                         "token_error": False,
                     },
                 )
-            else:
+            elif getattr(settings, 'FORCE_TWO_FACTOR_AUTHENTICATION', False):
                 request.session['2fa_pending_user_id'] = user.pk
                 request.session['2fa_pending_next'] = next
                 request.session['2fa_timestamp'] = time.time()
-                
+
                 return redirect('two_factor_setup_pending')
+            else:
+                auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                return redirect(next)
 
         return render(
             request, 
