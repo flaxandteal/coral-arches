@@ -98,3 +98,32 @@ feat(archive-catalogue-workflow): add new step and nodegroups
 ### Widgets, Datatypes, Functions
 
 Each of these are the same as workflows and graph models they all contain some form of configuration data and when that's changed needs to manually updated into the database. Or a full database reset if your working locally.
+
+## The changelog
+
+Every PR writes its own changelog entry, in the same commit as the code. This is not
+generated for you — CI fails the PR if `CHANGELOG.md` is untouched. If a PR genuinely
+warrants no entry, apply the `no-changelog` label to skip the check.
+
+Add one bullet per change under `## Unreleased` → `### Changes`, ending with the PR
+number:
+
+```
+- fix(consultation): planning ref no longer lost on save (#832)
+```
+
+Use `### Notes` for anything a reader of the release needs beyond the change itself —
+in particular the manual database updates described above. Name the model, workflow,
+widget or function that has to be updated by hand.
+
+`## Unreleased` is the only section you edit. Cutting a release archives it to
+`changelogs/vX.Y.Z.md` and empties it again — see `README.versioning.md`.
+
+## Branch flow
+
+Branch off `dev`, PR back into `dev`. Releases are cut from `dev` and PR'd into
+`main`; nothing is merged straight into `main`.
+
+```
+feat/my-thing ──PR──> dev ──./release──> release/vX.Y.Z ──PR──> main
+```
