@@ -1,0 +1,23 @@
+name: Changelog
+run-name: Changelog entry check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  changelog:
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'no-changelog') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: CHANGELOG.md must be updated
+        run: |
+          if git diff --name-only "origin/${{ github.base_ref }}...HEAD" | grep -qx CHANGELOG.md; then
+            echo "✅ CHANGELOG.md updated"
+          else
+            echo "::error file=CHANGELOG.md::Add an entry under '## Unreleased' -> '### Changes', or apply the 'no-changelog' label"
+            exit 1
+          fi
