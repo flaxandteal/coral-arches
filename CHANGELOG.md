@@ -23,6 +23,19 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(reload): `coral reload` no longer deletes widgets it does not own — it guarded
+  deletion with a hardcoded list of Arches 7 core widgets, so it silently removed
+  `reference-select-widget`, after which every graph import dropped the widget
+  assignment for all `reference` nodes (#839)
+- fix(reload): plugins, widgets and report templates now upsert on their own id, so an
+  edit to an existing extension is actually applied — widgets were previously only
+  written when absent, and plugins were matched on a name that never compared equal
+  because `Plugin.name` is i18n in Arches 8 (#839)
+- fix(workflows): SMR number generator reads the selected NISMR Numbering as a
+  `reference` value rather than a concept valueid, and no longer assumes its tile entry
+  is a knockout observable (#839)
+- chore(workflows): remap Add Monument to the rebuilt Heritage Asset graph, along with
+  the SMR/HB/garden/IHR number functions and HA name generation (#839)
 - chore(release): changelog is now written by PR authors, not generated — removed the
   changelog bot and its 250-line script
 - chore(release): version lives only in `pyproject.toml`; `./release` cuts a release
