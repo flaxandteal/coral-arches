@@ -39,7 +39,7 @@ export default ko.components.register('heritage-asset-report', {
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('all');
 
-            self.issueNodeGroups = ['d3ff3fe6-d62b-11ee-9454-0242ac180006'];
+            self.issueNodeGroups = ['7f835acf-5601-5dae-ac0f-6f030fc50ee7'];
 
             self.nameDataConfig = {
                 name: 'heritage asset',
