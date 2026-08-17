@@ -46,6 +46,21 @@ class HbNumberFunction(BaseFunction):
         references_tile.data[HB_NUMBER_NODE_ID] = id
         references_tile.save(request=request)      
 
+    def ward_district_label(self, value):
+        """Wards and Districts is a `reference` (controlled list) node, so its tile
+        value is a list of items carrying their own labels. Older tiles hold a
+        concept valueid."""
+        if isinstance(value, list):
+            labels = value[0].get("labels", []) if value else []
+            preferred = next(
+                (label for label in labels if label.get("valuetype_id") == "prefLabel"),
+                None,
+            )
+            return (preferred or (labels[0] if labels else {})).get("value")
+
+        concept_value = models.Value.objects.filter(valueid=value).first()
+        return concept_value.value if concept_value else None
+
     def is_last_char_letter(self, value):
         if isinstance(value, dict):
             string = value.get('en', {}).get('value', None)
@@ -70,10 +85,10 @@ class HbNumberFunction(BaseFunction):
 
             raise ValueError('This HB Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
         else:
-            ward_district_text = models.Value.objects.filter(
-                valueid=tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
-            ).first()
-            
+            ward_district_text = self.ward_district_label(
+                tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
+            )
+
             if not ward_district_text and not id_number:
                 # Clear HB Number
                 self.update_ha_references(resource_instance_id, "", request)
@@ -82,7 +97,7 @@ class HbNumberFunction(BaseFunction):
             if not ward_district_text and id_number:
                 raise ValueError('No selected Ward and District Numbering selected but a generated ID was provided.')
 
-            hn = HbNumber(ward_distict_text=ward_district_text.value)
+            hn = HbNumber(ward_distict_text=ward_district_text)
 
             if hn.validate_id(id_number, resource_instance_id=resource_instance_id):
                 print("HB Number is valid: ", id_number)

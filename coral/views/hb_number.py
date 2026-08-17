@@ -8,8 +8,8 @@ from arches.app.models import models
 import re
 
 
-HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
-HB_NUMBER_NODE_ID = "250002fe-3aae-11ef-91fd-0242ac120003"
+HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
+HB_NUMBER_NODE_ID = "4b9883ef-9aad-559a-bd84-e4bb7b94a358"
 
 
 class HbNumberView(View):
@@ -52,11 +52,19 @@ class HbNumberView(View):
             hb_number = hns.append_id_suffix(resource_instance_id)
 
         else:
-            selected_ward_district_id = data.get("selectedWardDistrictId")
-            ward_district_text = models.Value.objects.filter(
-                valueid=selected_ward_district_id
-            ).first()
-            hn = HbNumber(ward_distict_text=ward_district_text.value)
+            # Wards and Districts is a `reference` (controlled list) node, so the
+            # client sends the item's prefLabel directly. Older callers sent a
+            # concept valueid.
+            ward_district_text = data.get("selectedWardDistrictLabel")
+            if not ward_district_text:
+                value = models.Value.objects.filter(
+                    valueid=data.get("selectedWardDistrictId")
+                ).first()
+                if not value:
+                    raise ValueError("No Ward and District Numbering was selected")
+                ward_district_text = value.value
+
+            hn = HbNumber(ward_distict_text=ward_district_text)
             hb_number = hn.generate_id_number(resource_instance_id)
 
         return JSONResponse({"message": "Generated ID", "hbNumber": hb_number})

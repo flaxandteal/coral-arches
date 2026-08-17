@@ -22,12 +22,14 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
-
 - fix(functions): revert the Heritage Asset node/nodegroup ids in the HA name,
   SMR/HB/IHR/garden number functions and their utils back to the ids that
   actually exist in the current `Heritage Asset` graph - #839 (5dc648ed) swapped
   them for a set that doesn't exist in any published graph, so every resource
   save that touched those functions raised `NodeGroup.DoesNotExist` (#840)
+- fix(workflows): HB number has been updated to generate correctly from the referece data type (#841)
+- chore(workflows): `add-building` updated to use the new v8 graph ids (#841)
+- fix(reload): `coral reload_functions` has been added to the script to allow function config to be reloaded without removing the functions from the graphs (#841)
 - fix(reload): `coral reload` no longer deletes widgets it does not own — it guarded
   deletion with a hardcoded list of Arches 7 core widgets, so it silently removed
   `reference-select-widget`, after which every graph import dropped the widget
