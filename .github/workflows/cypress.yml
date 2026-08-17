@@ -265,8 +265,8 @@ jobs:
           path: ${{ env.ARCHES_PROJECT }}/cypress/videos
           if-no-files-found: ignore
 
-      - name: Dump Arches logs on failure
-        if: failure()
+      - name: Dump Arches logs on failure or cancellation
+        if: failure() || cancelled()
         run: |
           $COMPOSE logs --no-color arches || true
           echo "::group::celery worker"
