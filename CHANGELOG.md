@@ -23,6 +23,9 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(workflows): HB number has been updated to generate correctly from the referece data type (#841)
+- chore(workflows): `add-building` updated to use the new v8 graph ids (#841)
+- fix(reload): `coral reload_functions` has been added to the script to allow function config to be reloaded without removing the functions from the graphs (#841)
 - fix(reload): `coral reload` no longer deletes widgets it does not own — it guarded
   deletion with a hardcoded list of Arches 7 core widgets, so it silently removed
   `reference-select-widget`, after which every graph import dropped the widget

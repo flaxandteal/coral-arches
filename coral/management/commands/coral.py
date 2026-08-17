@@ -4,6 +4,7 @@ import os
 import uuid
 
 from arches.app.models import models
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.db import connection
 
@@ -53,6 +54,41 @@ class Command(BaseCommand):
             self.reload_plugins_widgets()
         elif options["operation"] == "reload_reports":
             self.reload_reports()
+        elif options["operation"] == "reload_functions":
+            self.reload_functions()
+
+    def reload_functions(self):
+        """
+        Upsert each coral function, then re-point its graph registrations at the
+        nodegroups the code declares.
+
+        `fn -o register` only rewrites functions.defaultconfig, but Arches
+        dispatches on functions_x_graphs.config (tile.py:833), so the two drift.
+        Registrations are re-pointed, never removed — `fn -o unregister` would
+        delete every graph link with the function.
+        """
+        for path in sorted(glob.glob(coral_dir("functions", "*.py"))):
+            if os.path.basename(path) == "__init__.py":
+                continue
+            try:
+                call_command("fn", "register", source=path)
+            except Exception as e:
+                print(f"Skipping {os.path.basename(path)}: {e}")
+
+        for fxg in models.FunctionXGraph.objects.select_related("function"):
+            declared = (fxg.function.defaultconfig or {}).get("triggering_nodegroups")
+            registered = (fxg.config or {}).get("triggering_nodegroups")
+
+            # An empty list means "fire on every nodegroup" (tile.py:836), so a
+            # function declaring no triggers keeps what it was registered with.
+            if not declared or declared == registered:
+                continue
+
+            fxg.config["triggering_nodegroups"] = declared
+            fxg.save()
+            print(f"{fxg.function.name}: {registered} -> {declared}")
+
+        print("Functions reloaded.")
 
     def reload_plugins_widgets(self, *args, **options):
         reload_extensions(
