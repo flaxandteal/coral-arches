@@ -31,6 +31,5 @@ frontend_configuration
 build/
 dist/
 
-# generated E2E seed output (see cypress/seed/README.md)
-cypress/seed/.seeded*
-cypress/seed/seeded*.json
+# Written by CI on non-main builds, read by settings.py for the displayed version
+coral/BUILD

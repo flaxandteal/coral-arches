@@ -28,6 +28,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
           path: ${{ env.ARCHES_PROJECT }}
+      - name: Stamp build commit (non-main only)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          # Read by coral/settings.py -> shows as v8.1.0+dev.<sha> on the home page.
+          echo "dev.${GITHUB_SHA::8}" > ${{ env.ARCHES_PROJECT }}/coral/BUILD
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
