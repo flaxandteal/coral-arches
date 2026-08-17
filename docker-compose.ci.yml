@@ -7,7 +7,7 @@
 #
 # Unlike docker/docker-compose.yml (local dev), this file:
 #   - bootstraps the coral package + data on first boot
-#     (ALLOW_BOOTSTRAP + INSTALL_CORAL_PACKAGE), so a fresh runner has data;
+#     (ALLOW_BOOTSTRAP + INSTALL_PACKAGE), so a fresh runner has data;
 #   - runs with DJANGO_INSECURE_COOKIES=True so session/CSRF cookies are not
 #     dropped over plain http://localhost:8000 (see coral/settings.py:544-554);
 #   - does NOT mount sibling ../arches / ../arches_apps editable checkouts —
@@ -95,7 +95,7 @@ services:
         - ARCHES_PROJECT=$ARCHES_PROJECT
         # --- CI bootstrap: build a fresh DB with the coral package + data ---
         - ALLOW_BOOTSTRAP=True
-        - INSTALL_CORAL_PACKAGE=True
+        - INSTALL_PACKAGE=True
         - INSTALL_DEFAULT_GRAPHS=False
         - INSTALL_DEFAULT_CONCEPTS=False
         # --- the cookie fix: cookies must not be Secure over http:// in CI ---
@@ -157,7 +157,7 @@ services:
         - ARCHES_PROJECT=$ARCHES_PROJECT
         # The web app owns the bootstrap; the worker must never re-run it.
         - ALLOW_BOOTSTRAP=False
-        - INSTALL_CORAL_PACKAGE=False
+        - INSTALL_PACKAGE=False
         - INSTALL_DEFAULT_GRAPHS=False
         - INSTALL_DEFAULT_CONCEPTS=False
         - DJANGO_INSECURE_COOKIES=True
