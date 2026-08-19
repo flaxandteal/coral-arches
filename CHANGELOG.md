@@ -23,6 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(workflows): HB number suffix generation now guards against unselected label
 - fix(workflows): HB number has been updated to generate correctly from the referece data type (#841)
 - chore(workflows): `add-building` updated to use the new v8 graph ids (#841)
 - fix(reload): `coral reload_functions` has been added to the script to allow function config to be reloaded without removing the functions from the graphs (#841)
