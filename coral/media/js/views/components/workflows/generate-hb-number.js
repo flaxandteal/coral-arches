@@ -21,7 +21,8 @@ function viewModel(params) {
   this.wardDistrictUri = (value) => ko.unwrap(ko.unwrap(value)?.[0]?.uri) || '';
 
   this.wardDistrictPrefLabel = (value) => {
-    const labels = koMapping.toJS(ko.unwrap(ko.unwrap(value)?.[0]?.labels)) || [];
+    const rawLabels = ko.unwrap(ko.unwrap(value)?.[0]?.labels);
+    const labels = rawLabels ? koMapping.toJS(rawLabels) : [];
     const preferred = labels.find(
       (label) =>
         label.language_id === arches.activeLanguage && label.valuetype_id === 'prefLabel'
