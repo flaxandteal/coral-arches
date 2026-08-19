@@ -4,8 +4,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
-GARDEN_NUMBER_NODE_ID = "1edc61a9-b64b-51ae-9077-536908761903"
+HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
+GARDEN_NUMBER_NODE_ID = "2c2d02fc-3aae-11ef-91fd-0242ac120003"
 
 
 class GardenNumber:

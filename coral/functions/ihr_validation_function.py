@@ -7,8 +7,8 @@ import pdb
 
 logger = logging.getLogger(__name__)
 
-HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
-IHR_NUMBER_NODE_ID = "0b14fb28-961e-5817-9cac-c61073b58981"
+HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
+IHR_NUMBER_NODE_ID = "1de9abf0-3aae-11ef-91fd-0242ac120003"
 
 details = {
     "functionid": "ea081ee0-6796-480c-bba4-2b8daaac660f",
