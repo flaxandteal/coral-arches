@@ -10,7 +10,219 @@ env:
   ARCHES_PROJECT: coral
   GCP_AR_REGISTRY: europe-west2-docker.pkg.dev/coral-hed-499310/coral-prd-app
 jobs:
+  ZAP-Baseline-Scan:
+    # Gates the push to the production branch. Job-level `if` can't read the
+    # `env` context, so `refs/heads/<branch>` below must be kept in sync by
+    # hand with whichever branch Flux's ImagePolicy in coral-fluxcd-prod is
+    # currently tracking (feat/coral-arches-v8-upgrade at time of writing).
+    if: github.ref == 'refs/heads/feat/coral-arches-v8-upgrade'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
+          path: ${{ env.ARCHES_PROJECT }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set derived environment
+        run: |
+          echo "ARCHES_PROJECT_ROOT=${{ github.workspace }}/${{ env.ARCHES_PROJECT }}/" >> "$GITHUB_ENV"
+          echo "COMPOSE=docker compose -p coral-zap -f ${{ github.workspace }}/zap-compose.yml" >> "$GITHUB_ENV"
+
+      - name: Generate a self-contained stack for the scan
+        # Deliberately not docker-compose.ci.yml (that file only exists on the
+        # Cypress branch): this job must work standalone on any branch, so it
+        # builds its own minimal stack from the docker/ submodule, which is
+        # always present.
+        run: |
+          cat > "${{ github.workspace }}/zap-compose.yml" <<'EOF'
+          services:
+            cantaloupe:
+              image: uclalibrary/cantaloupe:5.0.3-0
+
+            db:
+              image: ghcr.io/flaxandteal/arches-postgis:docker-8.1
+              volumes:
+                - ${ARCHES_PROJECT_ROOT}./docker/init-unix.sql:/docker-entrypoint-initdb.d/init.sql
+              environment:
+                - POSTGRES_USER=postgres
+                - POSTGRES_PASSWORD=postgres
+                - POSTGRES_DB=postgres
+                - TZ=PST
+              healthcheck:
+                test: ["CMD-SHELL", "pg_isready -U postgres"]
+                interval: 5s
+                timeout: 5s
+                retries: 20
+
+            elasticsearch:
+              image: elasticsearch:9.0.4
+              ulimits:
+                memlock:
+                  soft: -1
+                  hard: -1
+              environment:
+                - TZ=PST
+                - discovery.type=single-node
+                - discovery.seed_hosts=[]
+                - xpack.security.enabled=false
+                - xpack.ml.enabled=false
+                - xpack.watcher.enabled=false
+                - xpack.monitoring.collection.enabled=false
+                - bootstrap.memory_lock=true
+                - cluster.routing.allocation.disk.threshold_enabled=false
+                - action.auto_create_index=true
+                - "ES_JAVA_OPTS=-Xms1g -Xmx1g -XX:+UseG1GC -XX:InitiatingHeapOccupancyPercent=75"
+              healthcheck:
+                test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health?wait_for_status=yellow || exit 1"]
+                interval: 10s
+                timeout: 10s
+                retries: 30
+                start_period: 30s
+
+            rabbitmq:
+              image: rabbitmq:3-management
+              environment:
+                - RABBITMQ_DEFAULT_USER=rabbitmq
+                - RABBITMQ_DEFAULT_PASS=rabbitmq
+                - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbitmq deprecated_features.permit.transient_nonexcl_queues true
+
+            arches:
+              user: root
+              build:
+                context: ${ARCHES_PROJECT_ROOT}./..
+                dockerfile: ${ARCHES_PROJECT_ROOT}./docker/Dockerfile
+                args:
+                  - ARCHES_PROJECT=$ARCHES_PROJECT
+                  - ARCHES_BASE=$ARCHES_BASE
+                  - EDITABLE_BASE=False
+                  - USE_LOCAL_APPS=false
+              command: run_arches
+              environment:
+                - ARCHES_PROJECT=$ARCHES_PROJECT
+                - ALLOW_BOOTSTRAP=True
+                - INSTALL_PACKAGE=True
+                - INSTALL_DEFAULT_GRAPHS=False
+                - INSTALL_DEFAULT_CONCEPTS=False
+                - DJANGO_INSECURE_COOKIES=True
+                - PGUSERNAME=postgres
+                - PGPASSWORD=postgres
+                - PGDBNAME=arches
+                - PGHOST=db
+                - PGPORT=5432
+                - ESHOST=elasticsearch
+                - ESPORT=9200
+                - RABBITMQ_USER=rabbitmq
+                - RABBITMQ_PASS=rabbitmq
+                - RABBITMQ_HOST=rabbitmq
+                - CELERY_BROKER_URL=amqp://rabbitmq:rabbitmq@rabbitmq
+                - CANTALOUPE_HOST=cantaloupe
+                - CANTALOUPE_PORT=8182
+                - DJANGO_MODE=DEV
+                - DJANGO_DEBUG=True
+                - DOMAIN_NAMES=localhost
+                - COMPRESS_OFFLINE=False
+                - COMPRESS_ENABLED=False
+                - STATIC_URL=/static/
+                - STATIC_ROOT=/static_root
+                - WEB_ROOT=/web_root
+                - PYTHONUNBUFFERED=1
+                - TZ=PST
+              ports:
+                - '8000:8000'
+              depends_on:
+                db:
+                  condition: service_healthy
+                elasticsearch:
+                  condition: service_healthy
+                rabbitmq:
+                  condition: service_started
+                cantaloupe:
+                  condition: service_started
+              healthcheck:
+                test: ["CMD-SHELL", "curl -sf http://localhost:8000/templates/views/components/language-switcher.htm || exit 1"]
+                interval: 15s
+                timeout: 10s
+                retries: 200
+                start_period: 60s
+          EOF
+
+      - name: Tear down any leftover stack
+        run: $COMPOSE down -v --remove-orphans || true
+
+      - name: Build and start the app stack
+        run: $COMPOSE up -d --build
+
+      - name: Wait for Arches to bootstrap and become healthy
+        run: |
+          cid="$($COMPOSE ps -q arches)"
+          for i in $(seq 1 120); do
+            status="$(docker inspect --format '{{.State.Health.Status}}' "$cid" 2>/dev/null || echo missing)"
+            echo "attempt $i: arches health=$status"
+            if [ "$status" = "healthy" ]; then
+              echo "Arches is healthy"; exit 0
+            fi
+            if [ "$status" = "missing" ]; then
+              echo "arches container is gone"; break
+            fi
+            sleep 15
+          done
+          echo "::error::Arches did not become healthy in time"
+          $COMPOSE logs --no-color arches
+          exit 1
+
+      - name: Run OWASP ZAP baseline scan
+        run: |
+          mkdir -p "${{ github.workspace }}/zap-report"
+          docker run --rm \
+            --network coral-zap_default \
+            -v "${{ github.workspace }}/zap-report":/zap/wrk:rw \
+            -t zaproxy/zap-stable zap-baseline.py \
+              -t http://arches:8000 \
+              -J report.json -w report.md -r report.html \
+          || true
+
+      - name: Fail on High-risk findings
+        run: |
+          report="${{ github.workspace }}/zap-report/report.json"
+          jq -r '.site[].alerts[] | select((.riskcode | tonumber) >= 3) | "::error::[High] \(.name) - \(.count) instance(s)"' "$report"
+          high=$(jq '[.site[].alerts[] | select((.riskcode | tonumber) >= 3)] | length' "$report")
+          echo "High-risk findings: $high"
+          if [ "$high" -gt 0 ]; then
+            echo "::error::ZAP baseline scan found $high High-risk finding(s); failing the build."
+            exit 1
+          fi
+
+      - name: Upload ZAP report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-baseline-report
+          path: zap-report/
+          if-no-files-found: ignore
+
+      - name: Dump Arches logs on failure or cancellation
+        if: failure() || cancelled()
+        run: $COMPOSE logs --no-color arches || true
+
+      - name: Tear down the app stack
+        if: always()
+        run: $COMPOSE down -v --remove-orphans || true
+
   Build-Arches:
+    needs: [ZAP-Baseline-Scan]
+    if: always() && (needs.ZAP-Baseline-Scan.result == 'success' || needs.ZAP-Baseline-Scan.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,6 +240,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
           path: ${{ env.ARCHES_PROJECT }}
+      - name: Stamp build commit (non-main only)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          # Read by coral/settings.py -> shows as v8.1.0+dev.<sha> on the home page.
+          echo "dev.${GITHUB_SHA::8}" > ${{ env.ARCHES_PROJECT }}/coral/BUILD
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
