@@ -37,8 +37,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): SMR number generator reads the selected NISMR Numbering as a
   `reference` value rather than a concept valueid, and no longer assumes its tile entry
   is a knockout observable (#839)
-- chore(workflows): remap Add Monument to the rebuilt Heritage Asset graph, along with
-  the SMR/HB/garden/IHR number functions and HA name generation (#839)
 - chore(release): changelog is now written by PR authors, not generated — removed the
   changelog bot and its 250-line script
 - chore(release): version lives only in `pyproject.toml`; `./release` cuts a release
