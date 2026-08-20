@@ -5,7 +5,7 @@ from coral.functions.notifications.notification_base_strategy import Notificatio
 
 
 # node groups
-SIGN_OFF = "3897b87a-1902-11ef-aa9f-0242ac150006"
+SIGN_OFF = "a62658ef-bb95-5dc5-a43f-77118dc1806c"
 HA_REF = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
 
 #nodes

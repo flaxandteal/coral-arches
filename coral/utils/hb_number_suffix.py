@@ -30,7 +30,8 @@ class HbNumberSuffix:
     
     def increment_letter(self, suffix, attempts):
         if not suffix:
-            return 'A'
+            # attempts starts at 1, so the first try is 'A'
+            return chr(ord('A') + attempts - 1)
         if 'Z' in suffix:
             return 'A' * (len(suffix[0]) + 1)   
         return chr(ord(suffix[0]) + attempts) * len(suffix)
@@ -48,7 +49,7 @@ class HbNumberSuffix:
             ).order_by("-timestamp")            
 
             if resource_instance_id:
-                query_result.exclude(resourceinstanceid=resource_instance_id)
+                query_result = query_result.exclude(resourceinstanceid=resource_instance_id)
             latest_id_number_tile = query_result.first()
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
@@ -105,13 +106,12 @@ class HbNumberSuffix:
             print(f"Failed getting the previously used ID number: {e}")
             return retry()
 
-        if latest_suffix:
-            # Offset attempts so it starts at 1 and will try to generate
-            # new increments for the total amount of allow attempts
-            next_suffix = self.increment_letter(latest_suffix['suffix'], attempts)
-        else:
-            #return the suffix
-            next_suffix = self.increment_letter(latest_suffix['suffix'], attempts)
+        # Offset attempts so it starts at 1 and will try to generate
+        # new increments for the total amount of allowed attempts. No previous
+        # suffix means this is the first one appended to that HB number.
+        next_suffix = self.increment_letter(
+            latest_suffix['suffix'] if latest_suffix else '', attempts
+        )
 
         if len(next_suffix) > 1:
             new_id_number = self.hb_number.strip() + next_suffix
