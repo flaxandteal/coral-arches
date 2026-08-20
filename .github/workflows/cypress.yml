@@ -41,11 +41,11 @@ jobs:
           path: coral-graphs
 
       - name: Build the Arches package from coral-graphs
+        working-directory: coral-graphs
         run: |
-          python3 -m venv coral-graphs/.venv
-          coral-graphs/.venv/bin/pip install --quiet -r coral-graphs/requirements.txt
-          coral-graphs/.venv/bin/python coral-graphs/run.py \
-            --pkg-dir coral-graphs/arches-her/arches_her/pkg
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet -r requirements.txt
+          .venv/bin/python run.py --pkg-dir arches-her/arches_her/pkg
 
       - name: Install the built package as coral/pkg
         run: |
