@@ -187,6 +187,7 @@ jobs:
           mkdir -p "${{ github.workspace }}/zap-report"
           docker run --rm \
             --network coral-zap_default \
+            --user root \
             -v "${{ github.workspace }}/zap-report":/zap/wrk:rw \
             -t zaproxy/zap-stable zap-baseline.py \
               -t http://arches:8000 \
