@@ -12,6 +12,7 @@ env:
   ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4
   CYPRESS_IMAGE: cypress/included:15.18.1
   COMPOSE_PROJECT: coral-e2e
+  CORAL_GRAPHS_REF: v2
 
 jobs:
   Cypress-E2E:
@@ -26,6 +27,30 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
           path: ${{ env.ARCHES_PROJECT }}
+
+      # coral-graphs is a separate private repo (flaxandteal/coral-graphs),
+      # so GITHUB_TOKEN (scoped to this repo) cannot clone it - needs a PAT
+      # with read access, stored as the CORAL_GRAPHS_PAT secret.
+      - name: Check out coral-graphs (${{ env.CORAL_GRAPHS_REF }})
+        uses: actions/checkout@v3
+        with:
+          repository: flaxandteal/coral-graphs
+          ref: ${{ env.CORAL_GRAPHS_REF }}
+          token: ${{ secrets.CORAL_GRAPHS_PAT }}
+          submodules: 'true'
+          path: coral-graphs
+
+      - name: Build the Arches package from coral-graphs
+        run: |
+          python3 -m venv coral-graphs/.venv
+          coral-graphs/.venv/bin/pip install --quiet -r coral-graphs/requirements.txt
+          coral-graphs/.venv/bin/python coral-graphs/run.py \
+            --pkg-dir coral-graphs/arches-her/arches_her/pkg
+
+      - name: Install the built package as coral/pkg
+        run: |
+          rm -rf ${{ env.ARCHES_PROJECT }}/coral/pkg
+          cp -R coral-graphs/output ${{ env.ARCHES_PROJECT }}/coral/pkg
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
