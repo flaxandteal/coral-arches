@@ -51,7 +51,7 @@ GROUP_DJANGO_GROUP_NODE = "5acdfb22-1135-11ef-a3bd-0242ac170006"
 PERSON_GRAPH = "22477f01-1a44-11e9-b0a9-000d3ab1e588"
 PERSON_NAME_NODEGROUP = "4110f741-1a44-11e9-885e-000d3ab1e588"
 PERSON_FULL_NAME_NODE = "5f8ded26-7ef9-11ea-8e29-f875a44e0e11"
-PERSON_USER_ACCOUNT_NODE = "b1f5c336-6a0e-11ee-b748-0242ac140009"
+PERSON_USER_ACCOUNT_NODE = "1a7225e3-5838-5840-b1e5-bfb2c66cc2e8"
 
 # Same RFC 6238 test key seed_test_totp gives admin, so cypress.config.js's
 # single `generateOtp` task works for every seeded account.
