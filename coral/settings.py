@@ -336,6 +336,7 @@ INSTALLED_APPS = (
     "arches_vue_components",
     "arches_modular_reports",
     "arches_search",
+    "arches_json_importer",
     "arches",
     "arches.app.models",
     "arches.management",
@@ -367,7 +368,7 @@ INSTALLED_APPS += (
 if DEBUG:
     INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
 
-ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search",)
+ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search", "arches_json_importer",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",

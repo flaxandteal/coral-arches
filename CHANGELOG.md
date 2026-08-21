@@ -23,6 +23,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- feat(etl): install `arches-json-importer`, the bulk Arches JSON import module, as an
+  Arches application — adds an *Import Arches JSON* option to the Bulk Data Manager (#TBC)
 - fix(workflows): reinstate the v8 Heritage Asset node ids across the SMR/HB/garden/IHR
   number functions and views, HA name generation, notifications, the workflow components
   and the workflow plugin definitions — the ids previously in use are no longer nodes on
