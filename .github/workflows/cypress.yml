@@ -152,6 +152,32 @@ jobs:
             exit 1
           fi
 
+      - name: Seed the RBAC groups and a login per group
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py seed_test_permissions'
+
+      - name: Verify the seeded logins reach the Casbin policy table
+        run: |
+          # Queried straight from postgres rather than through manage.py shell:
+          # the policy rows are the whole point of the seed, and this avoids
+          # nesting a third level of quoting inside `exec -T ... bash -lc '...'`.
+          policies="$($COMPOSE exec -T db psql -U postgres -d arches -tAc \
+            "SELECT count(*) FROM casbin_rule WHERE ptype = 'g' AND v0 LIKE 'u:%'" \
+            | tr -d '\r' | tail -1)"
+          echo "user -> group grouping policies: ${policies}"
+          if ! [ "${policies:-0}" -ge 1 ] 2>/dev/null; then
+            echo "::error::No user grouping policies were written — the seeded logins have no permissions"
+            exit 1
+          fi
+
+      # Heritage Asset seeding runs after RBAC group seeding: some HA fields
+      # (council/sign-off relations) default to Group resources that
+      # coral/pkg/business_data doesn't ship (only Enforcement/Excavation/
+      # Planning/Root) - seed_test_permissions creates the rest. Seeding HA
+      # first leaves those relation targets missing, which async index_resource
+      # Celery tasks then fail against once the tile is re-saved after the
+      # target resource-instance later appears (TileModel.DoesNotExist).
       - name: Seed the E2E baseline resources
         run: |
           python3 -m venv "${RUNNER_TEMP}/seedenv"
@@ -220,25 +246,6 @@ jobs:
         run: |
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_totp'
-
-      - name: Seed the RBAC groups and a login per group
-        run: |
-          $COMPOSE exec -T arches bash -lc \
-            '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py seed_test_permissions'
-
-      - name: Verify the seeded logins reach the Casbin policy table
-        run: |
-          # Queried straight from postgres rather than through manage.py shell:
-          # the policy rows are the whole point of the seed, and this avoids
-          # nesting a third level of quoting inside `exec -T ... bash -lc '...'`.
-          policies="$($COMPOSE exec -T db psql -U postgres -d arches -tAc \
-            "SELECT count(*) FROM casbin_rule WHERE ptype = 'g' AND v0 LIKE 'u:%'" \
-            | tr -d '\r' | tail -1)"
-          echo "user -> group grouping policies: ${policies}"
-          if ! [ "${policies:-0}" -ge 1 ] 2>/dev/null; then
-            echo "::error::No user grouping policies were written — the seeded logins have no permissions"
-            exit 1
-          fi
 
       - name: Export the seeded login map for Cypress
         run: |
