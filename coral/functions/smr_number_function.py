@@ -4,8 +4,8 @@ from arches.app.models.tile import Tile
 from arches.app.models import models
 from coral.utils.smr_number import SmrNumber
 
-HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
-SMR_NUMBER_NODE_ID = "158e1ed2-3aae-11ef-a2d0-0242ac120003"
+HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
+SMR_NUMBER_NODE_ID = "d146451b-9140-5f81-b3de-9005acc01e28"
 
 NISMR_NUMBERING_NODEGROUP_ID = "a7742f3d-197d-5fcb-9fde-4179a7e28d5b"
 NISMR_NUMBERING_TYPE_NODE_ID = "a7742f3d-197d-5fcb-9fde-4179a7e28d5b"

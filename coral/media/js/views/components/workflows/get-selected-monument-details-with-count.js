@@ -10,8 +10,8 @@ import template from 'templates/views/components/workflows/get-selected-monument
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
 
-  this.HERRITAGE_ASSET_REFERENCES_NODEGROUP = 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
-  this.SMR_NUMBER_NODE = '158e1ed2-3aae-11ef-a2d0-0242ac120003';
+  this.HERRITAGE_ASSET_REFERENCES_NODEGROUP = 'ebd91984-e3fd-5dcd-b8e0-42d63cda77fc'
+  this.SMR_NUMBER_NODE = 'd146451b-9140-5f81-b3de-9005acc01e28';
 
   this.DESIGNATIONS_NODEGROUP = '6af2a0cb-efc5-11eb-8436-a87eeabdefba';
   this.DESIGNATIONS_TYPE_NODE = '6af2a0ce-efc5-11eb-88d1-a87eeabdefba';
@@ -34,10 +34,10 @@ function viewModel(params) {
   this.HA_TYPE_NODE = "77e90834-efdc-11eb-b2b9-a87eeabdefba";
 
   this.haRefStrings = {
-    '158e1ed2-3aae-11ef-a2d0-0242ac120003': 'SMR Number',
-    '250002fe-3aae-11ef-91fd-0242ac120003': 'HB Number',
-    '1de9abf0-3aae-11ef-91fd-0242ac120003': 'IHR Number',
-    '2c2d02fc-3aae-11ef-91fd-0242ac120003': 'Historic Parks and Gardens Number'
+    'd146451b-9140-5f81-b3de-9005acc01e28': 'SMR Number',
+    '4b9883ef-9aad-559a-bd84-e4bb7b94a358': 'HB Number',
+    '0b14fb28-961e-5817-9cac-c61073b58981': 'IHR Number',
+    '1edc61a9-b64b-51ae-9077-536908761903': 'Historic Parks and Gardens Number'
   }
 
   const MONUMENT_COUNT_NODE = "dc809034-04ba-11f0-8d60-9e7c335817fb";

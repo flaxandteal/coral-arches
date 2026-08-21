@@ -14,8 +14,8 @@ function viewModel(params) {
   "325a430a-efe4-11eb-810b-a87eeabdefba";
 
     this.HERRITAGE_ASSET_REFERENCES_NODEGROUP =
-  "e71df5cc-3aad-11ef-a2d0-0242ac120003";
-    this.SMR_NUMBER_NODE = "158e1ed2-3aae-11ef-a2d0-0242ac120003";
+  "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc";
+    this.SMR_NUMBER_NODE = "d146451b-9140-5f81-b3de-9005acc01e28";
 
     this.MONUMENT_NAMES_NODEGROUP = "676d47f9-9c1c-11ea-9aa0-f875a44e0e11";
     this.MONUMENT_NAMES_NODE = "676d47ff-9c1c-11ea-b07f-f875a44e0e11";
@@ -31,10 +31,10 @@ function viewModel(params) {
     this.MONUMENT_TYPE_NODEGROUP = "77e90834-efdc-11eb-b2b9-a87eeabdefba";
 
     this.haRefStrings = {
-        "158e1ed2-3aae-11ef-a2d0-0242ac120003": "SMR Number",
-        "250002fe-3aae-11ef-91fd-0242ac120003": "HB Number",
-        "1de9abf0-3aae-11ef-91fd-0242ac120003": "IHR Number",
-        "2c2d02fc-3aae-11ef-91fd-0242ac120003":
+        "d146451b-9140-5f81-b3de-9005acc01e28": "SMR Number",
+        "4b9883ef-9aad-559a-bd84-e4bb7b94a358": "HB Number",
+        "0b14fb28-961e-5817-9cac-c61073b58981": "IHR Number",
+        "1edc61a9-b64b-51ae-9077-536908761903":
     "Historic Parks and Gardens Number",
     };
 

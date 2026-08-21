@@ -23,6 +23,10 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(workflows): reinstate the v8 Heritage Asset node ids across the SMR/HB/garden/IHR
+  number functions and views, HA name generation, notifications, the workflow components
+  and the workflow plugin definitions — the ids previously in use are no longer nodes on
+  the rebuilt graph (#TBC)
 - fix(workflows): HB number has been updated to generate correctly from the referece data type (#841)
 - chore(workflows): `add-building` updated to use the new v8 graph ids (#841)
 - fix(reload): `coral reload_functions` has been added to the script to allow function config to be reloaded without removing the functions from the graphs (#841)
@@ -37,6 +41,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): SMR number generator reads the selected NISMR Numbering as a
   `reference` value rather than a concept valueid, and no longer assumes its tile entry
   is a knockout observable (#839)
+- chore(workflows): remap Add Monument to the rebuilt Heritage Asset graph, along with
+  the SMR/HB/garden/IHR number functions and HA name generation (#839)
 - chore(release): changelog is now written by PR authors, not generated — removed the
   changelog bot and its 250-line script
 - chore(release): version lives only in `pyproject.toml`; `./release` cuts a release
