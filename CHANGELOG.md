@@ -45,6 +45,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   e.g. `v8.2.0+dev.ab12cd34`
 - fix(search): stop advance search loading the graphs on the search page. Lazy load once the tab is selected (#829) 
 - fix(dashboard): fix the infinite spinner if no config is found and show no tasks available (#822)
+- fix(auth): add middleware for cookies (#834)
 
 ### Notes
 
