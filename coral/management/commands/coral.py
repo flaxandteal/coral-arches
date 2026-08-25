@@ -1,171 +1,48 @@
 import glob
+import json
 import os
 import uuid
-from arches.management.commands import utils
+
 from arches.app.models import models
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management import call_command
+from django.core.management.base import BaseCommand
 from django.db import connection
-from django.db.utils import IntegrityError
-import json
-import subprocess
 
 dirname = os.path.dirname(__file__)
 
 
-def call_command(command, message=None, show_output=False):
-    try:
-        result = subprocess.run(
-            command,
-            shell=True,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
+def coral_dir(*parts):
+    return os.path.join(dirname, "..", "..", *parts)
+
+
+def reload_extensions(subdir, model, id_field, fields):
+    """
+    Upsert every JSON file in coral/<subdir>/ into the database, keyed on the id
+    declared in the file itself.
+
+    Local-development refresh only: it registers what is new and updates what has
+    changed. It never deletes. A row absent from coral's manifest may belong to
+    Arches core or to an installed Arches application, and nothing records which
+    rows coral registered, so "absent from my manifest" cannot mean "delete it".
+    Retire a coral plugin or widget by removing its row by hand.
+    """
+    for path in sorted(glob.glob(coral_dir(subdir, "*.json"))):
+        filename = os.path.basename(path)
+        with open(path) as f:
+            details = json.load(f)
+
+        try:
+            extension_id = str(uuid.UUID(str(details.get(id_field))))
+        except (TypeError, ValueError):
+            print(f"Skipping {subdir}/{filename}: no valid {id_field}")
+            continue
+
+        _, created = model.objects.update_or_create(
+            **{id_field: extension_id},
+            defaults={field: details[field] for field in fields if field in details},
         )
-
-        output = result.stdout
-        error = result.stderr
-
-        if show_output:
-            print("Output:", output)
-        if error:
-            print("Error:", error)
-        if message:
-            print(message)
-
-        return output
-
-    except subprocess.CalledProcessError as e:
-        print(f"Command failed with exit code {e.returncode}: {e.stderr}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-
-def get_available_plugins():
-    folder_path = os.path.join(dirname, "..", "..", "plugins")
-    available_plugins = []
-    names_to_slugs = {}
-
-    for filename in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, filename)
-        if os.path.isfile(file_path) and filename.endswith(".json"):
-            with open(file_path, "r") as json_file:
-                json_data = json.load(json_file)
-                if "name" in json_data:
-                    available_plugins.append(str(json_data["name"]))
-                    names_to_slugs[str(json_data["name"])] = json_data["slug"]
-
-    return available_plugins, names_to_slugs
-
-
-def get_available_widgets():
-    folder_path = os.path.join(dirname, "..", "..", "widgets")
-    available_widgets = []
-
-    for filename in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, filename)
-        if os.path.isfile(file_path) and filename.endswith(".json"):
-            with open(file_path, "r") as json_file:
-                json_data = json.load(json_file)
-                if "name" in json_data:
-                    available_widgets.append(str(json_data["name"]))
-
-    return available_widgets
-
-
-def register_plugin(slug):
-    print("Registering plugin: ", slug)
-    source = os.path.join(dirname, "..", "..", "plugins", f"{slug}.json")
-    details = {}
-
-    with open(source) as f:
-        details = json.load(f)
-
-    try:
-        uuid.UUID(details["pluginid"])
-    except:
-        details["pluginid"] = str(uuid.uuid4())
-        print("Registering plugin with pluginid: {}".format(details["pluginid"]))
-
-    instance = models.Plugin(
-        pluginid=details["pluginid"],
-        name=details["name"],
-        icon=details["icon"],
-        component=details["component"],
-        componentname=details["componentname"],
-        config=details["config"],
-        slug=details["slug"],
-        sortorder=details["sortorder"],
-    )
-
-    instance.save()
-    print("Registered plugin: ", slug)
-
-
-def unregister_plugin(name):
-    print("Unregistering plugin: ", name)
-    try:
-        instance = models.Plugin.objects.get(name=name)
-        instance.delete()
-    except Exception as e:
-        print(e)
-    print("Unregistered plugin: ", name)
-
-
-def update_plugin(slug):
-    print(f"Updating: {slug}")
-    source = os.path.join(dirname, "..", "..", "plugins", f"{slug}.json")
-    import json
-
-    details = {}
-
-    with open(source) as f:
-        details = json.load(f)
-
-    instance = models.Plugin.objects.get(name=details["name"])
-    instance.icon = details["icon"]
-    instance.component = details["component"]
-    instance.componentname = details["componentname"]
-    instance.config = details["config"]
-    instance.save()
-    print(f"Updated: {slug}")
-
-
-def register_widget(slug):
-    print("Registering widget: ", slug)
-    source = os.path.join(dirname, "..", "..", "widgets", f"{slug}.json")
-    details = {}
-
-    with open(source) as f:
-        details = json.load(f)
-
-    try:
-        uuid.UUID(details["widgetid"])
-    except:
-        details["widgetid"] = str(uuid.uuid4())
-        print("Registering widget with widgetid: {}".format(details["widgetid"]))
-
-    instance = models.Widget(
-        widgetid=details["widgetid"],
-        name=details["name"],
-        datatype=details["datatype"],
-        helptext=details["helptext"],
-        defaultconfig=details["defaultconfig"],
-        component=details["component"],
-    )
-
-    instance.save()
-    print("Registered widget: ", slug)
-
-
-def unregister_widget(name):
-    print("Unregistering widget: ", name)
-    try:
-        instances = models.Widget.objects.filter(name=name)
-        instances[0].delete()
-    except Exception as e:
-        print(e)
-    print("Unregistered widget: ", name)
+        action = "Registered" if created else "Updated"
+        print(f"{action} {subdir}/{filename}")
 
 
 class Command(BaseCommand):
@@ -177,112 +54,73 @@ class Command(BaseCommand):
             self.reload_plugins_widgets()
         elif options["operation"] == "reload_reports":
             self.reload_reports()
+        elif options["operation"] == "reload_functions":
+            self.reload_functions()
+
+    def reload_functions(self):
+        """
+        Upsert each coral function, then re-point its graph registrations at the
+        nodegroups the code declares.
+
+        `fn -o register` only rewrites functions.defaultconfig, but Arches
+        dispatches on functions_x_graphs.config (tile.py:833), so the two drift.
+        Registrations are re-pointed, never removed — `fn -o unregister` would
+        delete every graph link with the function.
+        """
+        for path in sorted(glob.glob(coral_dir("functions", "*.py"))):
+            if os.path.basename(path) == "__init__.py":
+                continue
+            try:
+                call_command("fn", "register", source=path)
+            except Exception as e:
+                print(f"Skipping {os.path.basename(path)}: {e}")
+
+        for fxg in models.FunctionXGraph.objects.select_related("function"):
+            declared = (fxg.function.defaultconfig or {}).get("triggering_nodegroups")
+            registered = (fxg.config or {}).get("triggering_nodegroups")
+
+            # An empty list means "fire on every nodegroup" (tile.py:836), so a
+            # function declaring no triggers keeps what it was registered with.
+            if not declared or declared == registered:
+                continue
+
+            fxg.config["triggering_nodegroups"] = declared
+            fxg.save()
+            print(f"{fxg.function.name}: {registered} -> {declared}")
+
+        print("Functions reloaded.")
 
     def reload_plugins_widgets(self, *args, **options):
-        # TODO: Needs to validate the difference beween arches plugins/widgets
-        # to avoid using an array of arches plugins/widgets in special cases
-
-        registered_plugins = []
-        registered_widgets = []
-        try:
-            registered_plugins = [
-                str(instance.name) for instance in models.Plugin.objects.all()
-            ]
-            registered_widgets = [
-                str(instance.name) for instance in models.Widget.objects.all()
-            ]
-        except Exception as e:
-            raise e
-
-        available_plugins, names_to_slugs = get_available_plugins()
-        all_plugins = list(set(registered_plugins + available_plugins))
-
-        available_widgets = get_available_widgets()
-        all_widgets = list(set(registered_widgets + available_widgets))
-
-        special_plugin_cases = ["Bulk Data Manager", "Image Service Manager"]
-        for plugin in all_plugins:
-            if plugin in special_plugin_cases:
-                continue
-            if plugin not in registered_plugins:
-                register_plugin(names_to_slugs[plugin])
-                continue
-            if plugin not in available_plugins:
-                unregister_plugin(plugin)
-                continue
-
-        special_widget_cases = [
-            "file-widget",
-            "resource-instance-select-widget",
-            "concept-multiselect-widget",
-            "rich-text-widget",
-            "resource-instance-multiselect-widget",
-            "domain-multiselect-widget",
-            "concept-radio-widget",
-            "domain-select-widget",
-            "concept-checkbox-widget",
-            "radio-boolean-widget",
-            "datepicker-widget",
-            "domain-checkbox-widget",
-            "iiif-widget",
-            "concept-select-widget",
-            "text-widget",
-            "node-value-select",
-            "domain-radio-widget",
-            "number-widget",
-            "urldatatype",
-            "edtf-widget",
-            "map-widget",
-            "switch-widget",
-        ]
-        for widget in all_widgets:
-            if widget in special_widget_cases:
-                continue
-            if widget not in registered_widgets:
-                register_widget(widget)
-                continue
-            if widget not in available_widgets:
-                unregister_widget(widget)
-                continue
-
-        for slug in names_to_slugs.values():
-            update_plugin(slug)
-
+        reload_extensions(
+            "plugins",
+            models.Plugin,
+            "pluginid",
+            ["name", "icon", "component", "componentname", "config", "slug", "sortorder"],
+        )
+        reload_extensions(
+            "widgets",
+            models.Widget,
+            "widgetid",
+            ["name", "datatype", "helptext", "defaultconfig", "component"],
+        )
         print("Plugins and widgets have been reloaded.")
 
     def reload_reports(self):
-        reports_dir = os.path.join(dirname, "..", "..", "reports")
-        report_files = glob.glob(os.path.join(reports_dir, "*.json"))
+        reload_extensions(
+            "reports",
+            models.ReportTemplate,
+            "templateid",
+            [
+                "name",
+                "description",
+                "component",
+                "componentname",
+                "defaultconfig",
+                "preload_resource_data",
+            ],
+        )
 
-        for report_file in report_files:
-            with open(report_file) as f:
-                details = json.load(f)
-
-            template_id = details["templateid"]
-            try:
-                instance = models.ReportTemplate.objects.get(templateid=template_id)
-                instance.name = details["name"]
-                instance.description = details.get("description", "")
-                instance.component = details["component"]
-                instance.componentname = details["componentname"]
-                instance.defaultconfig = details.get("defaultconfig", {})
-                instance.preload_resource_data = details.get("preload_resource_data", True)
-                instance.save()
-                print(f"Updated report template: {details['name']}")
-            except models.ReportTemplate.DoesNotExist:
-                instance = models.ReportTemplate(
-                    templateid=template_id,
-                    name=details["name"],
-                    description=details.get("description", ""),
-                    component=details["component"],
-                    componentname=details["componentname"],
-                    defaultconfig=details.get("defaultconfig", {}),
-                    preload_resource_data=details.get("preload_resource_data", True),
-                )
-                instance.save()
-                print(f"Registered report template: {details['name']}")
-
-        sql_file = os.path.join(dirname, "..", "..", "pkg", "post_sql", "load_report_templates.sql")
+        sql_file = coral_dir("pkg", "post_sql", "load_report_templates.sql")
         if os.path.exists(sql_file):
             with open(sql_file) as f:
                 sql = f.read()

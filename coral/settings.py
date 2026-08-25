@@ -111,7 +111,22 @@ except ImportError:
         ]
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=8, minor=1, patch=0)
+
+# Version comes from pyproject.toml, and is bumped only at release by ./release.
+# CI writes coral/BUILD on non-main builds only, so dev shows v8.1.0+dev.ab12cd34
+# (same version line, built from that commit) while prod shows a clean v8.1.0.
+_pyproject = Path(__file__).resolve().parent.parent / "pyproject.toml"
+if _pyproject.exists():
+    _version = tomllib.loads(_pyproject.read_text())["project"]["version"]
+else:
+    from importlib.metadata import version as _dist_version
+
+    _version = _dist_version("coral-arches")
+
+_build = Path(__file__).resolve().parent / "BUILD"
+APP_VERSION = semantic_version.Version(
+    f"{_version}+{_build.read_text().strip()}" if _build.exists() else _version
+)
 
 TIME_ZONE = "Europe/London"
 USE_TZ = True
@@ -318,7 +333,7 @@ INSTALLED_APPS = (
     "django_hosts",
     "arches_controlled_lists",
     "arches_querysets",
-    "arches_component_lab",
+    "arches_vue_components",
     "arches_modular_reports",
     "arches_search",
     "arches",
@@ -356,6 +371,7 @@ ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -657,7 +673,7 @@ CELERY_BEAT_SCHEDULE = {
 # This might be necessary if the worker pool is regulary fully active, with no idle workers, or if
 # you need to run the celery task using solo pool (e.g. on Windows). You may need to provide another
 # way of monitoring celery so you can detect the background task not being available.
-CELERY_CHECK_ONLY_INSPECT_BROKER = False
+CELERY_CHECK_ONLY_INSPECT_BROKER = True
 
 CANTALOUPE_DIR = os.path.join(ROOT_DIR, UPLOADED_FILES_DIR)
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"

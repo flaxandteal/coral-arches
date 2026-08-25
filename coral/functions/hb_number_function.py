@@ -10,9 +10,9 @@ import re
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
 HB_NUMBER_NODE_ID = "250002fe-3aae-11ef-91fd-0242ac120003"
 
-WARDS_AND_DISTRICTS_NODEGROUP_ID = "de6b6af0-44e3-11ef-9114-0242ac120006"
+WARDS_AND_DISTRICTS_NODEGROUP_ID = "dc49f08f-a4c5-5e23-bfa6-0587c085535d"
 WARDS_AND_DISTRICTS_TYPE_NODE_ID = WARDS_AND_DISTRICTS_NODEGROUP_ID
-GENERATED_HB_NODE_ID = "19bd9ac4-44e4-11ef-9114-0242ac120006"
+GENERATED_HB_NODE_ID = "8009174e-67df-51b7-83ee-17db75100a08"
 
 details = {
     "functionid": "23d758a1-cc04-414d-bb4d-49f2d5c82930",
@@ -46,6 +46,21 @@ class HbNumberFunction(BaseFunction):
         references_tile.data[HB_NUMBER_NODE_ID] = id
         references_tile.save(request=request)      
 
+    def ward_district_label(self, value):
+        """Wards and Districts is a `reference` (controlled list) node, so its tile
+        value is a list of items carrying their own labels. Older tiles hold a
+        concept valueid."""
+        if isinstance(value, list):
+            labels = value[0].get("labels", []) if value else []
+            preferred = next(
+                (label for label in labels if label.get("valuetype_id") == "prefLabel"),
+                None,
+            )
+            return (preferred or (labels[0] if labels else {})).get("value")
+
+        concept_value = models.Value.objects.filter(valueid=value).first()
+        return concept_value.value if concept_value else None
+
     def is_last_char_letter(self, value):
         if isinstance(value, dict):
             string = value.get('en', {}).get('value', None)
@@ -70,10 +85,10 @@ class HbNumberFunction(BaseFunction):
 
             raise ValueError('This HB Number has already been generated. This is a rare case where 2 people have generated the same number at the same time. Please click "generate" to receive a new number.')
         else:
-            ward_district_text = models.Value.objects.filter(
-                valueid=tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
-            ).first()
-            
+            ward_district_text = self.ward_district_label(
+                tile.data.get(WARDS_AND_DISTRICTS_TYPE_NODE_ID, None)
+            )
+
             if not ward_district_text and not id_number:
                 # Clear HB Number
                 self.update_ha_references(resource_instance_id, "", request)
@@ -82,7 +97,7 @@ class HbNumberFunction(BaseFunction):
             if not ward_district_text and id_number:
                 raise ValueError('No selected Ward and District Numbering selected but a generated ID was provided.')
 
-            hn = HbNumber(ward_distict_text=ward_district_text.value)
+            hn = HbNumber(ward_distict_text=ward_district_text)
 
             if hn.validate_id(id_number, resource_instance_id=resource_instance_id):
                 print("HB Number is valid: ", id_number)
