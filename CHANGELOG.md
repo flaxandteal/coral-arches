@@ -23,6 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(workflows): HB number suffix generation now guards against unselected label
 - feat(etl): install `arches-json-importer`, the bulk Arches JSON import module, as an
   Arches application — adds an *Import Arches JSON* option to the Bulk Data Manager (#TBC)
 - fix(workflows): reinstate the v8 Heritage Asset node ids across the SMR/HB/garden/IHR

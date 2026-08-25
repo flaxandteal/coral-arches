@@ -1,37 +1,28 @@
 {
     "graph": [
         {
-            "author": "",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
                     "cardid": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
-                            "constraintid": "81ae8490-1b0b-4860-ba1d-21b4de72e90b",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
+                    "constraints": [],
                     "description": {
                         "en": ""
                     },
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Bibliographic Source Citation"
                     },
@@ -44,12 +35,25 @@
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "a0e096e2-f5ae-4579-950d-3040714713b4",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "a0e096e2-f5ae-4579-950d-3040714713b4",
+                                        "language_id": "en",
+                                        "list_item_id": "5662d9b7-6185-4216-90f0-1379cebb9d1e",
+                                        "value": "Name Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/5662d9b7-6185-4216-90f0-1379cebb9d1e"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Source Number Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -61,7 +65,7 @@
                     "node_id": "ef38c182-9924-11ea-81da-f875a44e0e11",
                     "sortorder": 3,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
@@ -95,12 +99,25 @@
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "51796e90-9ef1-44ec-a967-81b077983768",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "51796e90-9ef1-44ec-a967-81b077983768",
+                                        "language_id": "en",
+                                        "list_item_id": "17f46d60-ba10-4881-a83c-1c35af090b66",
+                                        "value": "Bibliographic Source Name",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "3e545767-c46c-4fe7-8754-c24528ba0842",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/17f46d60-ba10-4881-a83c-1c35af090b66"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Source Number Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -112,7 +129,7 @@
                     "node_id": "ef38c184-9924-11ea-bdc4-f875a44e0e11",
                     "sortorder": 2,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
@@ -146,12 +163,25 @@
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "f8062103-0421-41ec-a1c6-2927ea4414dc",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "f8062103-0421-41ec-a1c6-2927ea4414dc",
+                                        "language_id": "en",
+                                        "list_item_id": "7bf9b506-9406-4b48-ba4d-e09a952be401",
+                                        "value": "Source Plates",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "3efb92ea-ae58-42a3-8374-db3653c36c9f",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/7bf9b506-9406-4b48-ba4d-e09a952be401"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Plates Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -163,17 +193,30 @@
                     "node_id": "ef38c194-9924-11ea-98f7-f875a44e0e11",
                     "sortorder": 11,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "daa4cddc-8636-4842-b836-eb2e10aabe18",
+                                        "language_id": "en",
+                                        "list_item_id": "f1cbae8f-0090-47dc-8252-ee533a2deb29",
+                                        "value": "Notes",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/f1cbae8f-0090-47dc-8252-ee533a2deb29"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Source Comment Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -185,17 +228,30 @@
                     "node_id": "ef38c18e-9924-11ea-be7e-f875a44e0e11",
                     "sortorder": 14,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "5e878125-f49a-438e-9256-10d36a39d4a9",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "5e878125-f49a-438e-9256-10d36a39d4a9",
+                                        "language_id": "en",
+                                        "list_item_id": "2dbdb8f3-b444-426b-b5f0-ddb769736b94",
+                                        "value": "Source Pages",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "3efb92ea-ae58-42a3-8374-db3653c36c9f",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/2dbdb8f3-b444-426b-b5f0-ddb769736b94"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Pages Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -207,7 +263,7 @@
                     "node_id": "ef38c18c-9924-11ea-ab4a-f875a44e0e11",
                     "sortorder": 5,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
@@ -320,12 +376,25 @@
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "bdb339b0-0f97-43f7-859b-3a03f6e60ea1",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "bdb339b0-0f97-43f7-859b-3a03f6e60ea1",
+                                        "language_id": "en",
+                                        "list_item_id": "e1b2fafb-cf3f-4a67-b480-a0f6014d760f",
+                                        "value": "Source Figures",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "3efb92ea-ae58-42a3-8374-db3653c36c9f",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/e1b2fafb-cf3f-4a67-b480-a0f6014d760f"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Figures Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -337,17 +406,30 @@
                     "node_id": "ef38c191-9924-11ea-beda-f875a44e0e11",
                     "sortorder": 8,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "6fbe3775-e51d-4f90-af53-5695dd204c9a",
+                                        "language_id": "en",
+                                        "list_item_id": "58283be2-b1d1-4e00-83f2-af87ca292738",
+                                        "value": "Description Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/58283be2-b1d1-4e00-83f2-af87ca292738"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Source Comment Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -359,17 +441,30 @@
                     "node_id": "ef38c187-9924-11ea-b8bc-f875a44e0e11",
                     "sortorder": 15,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+                                        "language_id": "en",
+                                        "list_item_id": "e1590cf5-4b63-4b2c-b7a3-1e249eba26aa",
+                                        "value": "Information Object Part Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/e1590cf5-4b63-4b2c-b7a3-1e249eba26aa"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Pages Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -381,17 +476,30 @@
                     "node_id": "ef38c188-9924-11ea-8720-f875a44e0e11",
                     "sortorder": 6,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+                                        "language_id": "en",
+                                        "list_item_id": "e1590cf5-4b63-4b2c-b7a3-1e249eba26aa",
+                                        "value": "Information Object Part Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/e1590cf5-4b63-4b2c-b7a3-1e249eba26aa"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Plates metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -403,17 +511,30 @@
                     "node_id": "ef38c189-9924-11ea-ad5f-f875a44e0e11",
                     "sortorder": 12,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ef38c181-9924-11ea-bd04-f875a44e0e11",
                     "config": {
-                        "defaultValue": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9d51623c-3994-4074-9ed9-2abf04330ae6",
+                                        "language_id": "en",
+                                        "list_item_id": "e1590cf5-4b63-4b2c-b7a3-1e249eba26aa",
+                                        "value": "Information Object Part Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/e1590cf5-4b63-4b2c-b7a3-1e249eba26aa"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Figures Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -425,7 +546,7 @@
                     "node_id": "ef38c195-9924-11ea-bb26-f875a44e0e11",
                     "sortorder": 9,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 }
             ],
             "color": null,
@@ -619,8 +740,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-book",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -629,6 +754,7 @@
             "nodegroups": [
                 {
                     "cardinality": "n",
+                    "grouping_node_id": "ef38c17f-9924-11ea-9abc-f875a44e0e11",
                     "legacygroupid": null,
                     "nodegroupid": "ef38c17f-9924-11ea-9abc-f875a44e0e11",
                     "parentnodegroup_id": null
@@ -657,6 +783,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -665,20 +792,23 @@
                     "nodeid": "ef38c17f-9924-11ea-9abc-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "source_number_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -687,7 +817,8 @@
                     "nodeid": "ef38c182-9924-11ea-81da-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "source_number_value",
@@ -699,6 +830,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -707,20 +839,23 @@
                     "nodeid": "ef38c183-9924-11ea-b77a-f875a44e0e11",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "source_number_type",
                     "config": {
-                        "rdmCollection": "3e545767-c46c-4fe7-8754-c24528ba0842"
+                        "controlledList": "3e545767-c46c-4fe7-8754-c24528ba0842",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -729,7 +864,8 @@
                     "nodeid": "ef38c184-9924-11ea-bdc4-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "source_number",
@@ -741,6 +877,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -749,7 +886,8 @@
                     "nodeid": "ef38c185-9924-11ea-800c-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "comment",
@@ -761,6 +899,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -769,20 +908,23 @@
                     "nodeid": "ef38c186-9924-11ea-86f3-f875a44e0e11",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "source_comment_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -791,20 +933,23 @@
                     "nodeid": "ef38c187-9924-11ea-b8bc-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "pages_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -813,20 +958,23 @@
                     "nodeid": "ef38c188-9924-11ea-8720-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "plates_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -835,7 +983,8 @@
                     "nodeid": "ef38c189-9924-11ea-ad5f-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "pages",
@@ -847,6 +996,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -855,7 +1005,8 @@
                     "nodeid": "ef38c18a-9924-11ea-9a65-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "page_s_",
@@ -867,6 +1018,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -875,20 +1027,23 @@
                     "nodeid": "ef38c18b-9924-11ea-9656-f875a44e0e11",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "pages_type",
                     "config": {
-                        "rdmCollection": "3efb92ea-ae58-42a3-8374-db3653c36c9f"
+                        "controlledList": "3efb92ea-ae58-42a3-8374-db3653c36c9f",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -897,7 +1052,8 @@
                     "nodeid": "ef38c18c-9924-11ea-ab4a-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "source_comment",
@@ -909,6 +1065,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -917,23 +1074,23 @@
                     "nodeid": "ef38c18d-9924-11ea-969a-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "source_comment_type",
                     "config": {
-                        "activateMax": false,
-                        "maxFileSize": null,
-                        "maxFiles": 1,
-                        "rdmCollection": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
+                        "controlledList": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -942,7 +1099,8 @@
                     "nodeid": "ef38c18e-9924-11ea-be7e-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "figures",
@@ -954,6 +1112,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -962,7 +1121,8 @@
                     "nodeid": "ef38c18f-9924-11ea-9272-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "figs_",
@@ -974,6 +1134,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -982,20 +1143,23 @@
                     "nodeid": "ef38c190-9924-11ea-8a1d-f875a44e0e11",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "figures_type",
                     "config": {
-                        "rdmCollection": "3efb92ea-ae58-42a3-8374-db3653c36c9f"
+                        "controlledList": "3efb92ea-ae58-42a3-8374-db3653c36c9f",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1004,7 +1168,8 @@
                     "nodeid": "ef38c191-9924-11ea-beda-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "plates",
@@ -1016,6 +1181,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1024,7 +1190,8 @@
                     "nodeid": "ef38c192-9924-11ea-9890-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P106_is_composed_of",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "plate_s_",
@@ -1036,6 +1203,7 @@
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1044,20 +1212,23 @@
                     "nodeid": "ef38c193-9924-11ea-ad1f-f875a44e0e11",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "plates_type",
                     "config": {
-                        "rdmCollection": "3efb92ea-ae58-42a3-8374-db3653c36c9f"
+                        "controlledList": "3efb92ea-ae58-42a3-8374-db3653c36c9f",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1066,20 +1237,23 @@
                     "nodeid": "ef38c194-9924-11ea-98f7-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "figures_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1088,16 +1262,17 @@
                     "nodeid": "ef38c195-9924-11ea-bb26-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
-                "notes": null,
-                "publicationid": "9f59d2d8-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:46.948",
-                "user_id": 1
+                "most_recent_edit_id": null,
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "3369dc92-c20b-489e-90db-5b8e17d4db2c",
+                "published_time": "2025-10-22T19:30:35.301+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -1123,6 +1298,7 @@
                 "graph_id": "ef38c17e-9924-11ea-a5ee-f875a44e0e11",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -1130,13 +1306,17 @@
                 "nodegroup_id": "ef38c17f-9924-11ea-9abc-f875a44e0e11",
                 "nodeid": "ef38c17f-9924-11ea-9abc-f875a44e0e11",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "bibliographic_source_citation",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
+            "user_permissions": {},
             "version": ""
         }
     ]
