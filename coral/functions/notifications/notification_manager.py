@@ -1,8 +1,8 @@
 from coral.functions.notifications.notification_base_strategy import NotificationStrategy
-from alizarin_django.adapter import admin
+from querysets_shim.adapter import admin
 class NotificationManager():
     def __init__(self, tile, strategy_registry, request):
-        from alizarin_django.models import Person
+        from querysets_shim.models import Person
         with admin():
             if not strategy_registry:
                 raise ValueError("A strategy register must be provided")

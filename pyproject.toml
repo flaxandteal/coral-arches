@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "coral-arches"
-version = "8.0.0"
+version = "8.2.0"
 readme = "README.md"
 license = "AGPL-3.0-or-later"
 requires-python = ">=3.11"
@@ -21,8 +21,9 @@ classifiers = [
     "Framework :: Django :: 5.2",
 ]
 dependencies = [
-    "arches>=8.1.0,<8.3.0",
-    "arches_controlled_lists",
+    "arches==8.2.0a8",
+    "Django<6.1",
+    "arches_controlled_lists>=1.3.0a1",
     "cachetools",
     "django-recaptcha>=4.0.0",
     "django-hosts>=6.0",
@@ -36,7 +37,7 @@ dependencies = [
     "google-cloud-storage",
     "colorama>=0.4.5",
     "arches_resource_version_manager @ git+https://github.com/fargeo/arches-resource-version-manager.git@main",
-    "arches-search>=0.1.0a7",
+    "arches-search>=0.1.0a12",
     "djangorestframework",
     "tabulate",
     "asciitree",
@@ -64,7 +65,11 @@ dependencies = [
     "PyMuPDF",
     "django-two-factor-auth",
     "qrcode",
-    "alizarin",
+    "arches-querysets>=1.2.0",
+    # arches_modular_reports 2.x renamed its frontend dep arches_component_lab
+    # -> arches_vue_components; pin the successor so webpack can resolve its
+    # @/arches_vue_components/* imports (the base image ships the old name only).
+    "arches_vue_components>=2.0.0,<3.0.0",
 ]
 
 [dependency-groups]

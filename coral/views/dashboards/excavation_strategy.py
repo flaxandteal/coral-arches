@@ -2,7 +2,7 @@ from arches.app.models.tile import Resource
 from datetime import datetime
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
-from alizarin_django.arches_django.query_builder.query_builder import QueryBuilder
+from querysets_shim.arches_django.query_builder.query_builder import QueryBuilder
 import copy
 
 EXCAVATION_ADMIN_GROUP = "4fbe3955-ccd3-4c5b-927e-71672c61f298"
@@ -12,7 +12,7 @@ EXCAVATION_CUR_E = "214900b1-1359-404d-bba0-7dbd5f8486ef"
 
 class ExcavationTaskStrategy(TaskStrategy):
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceinstance__createdtime', sort_order='desc', filter='all'):
-        from alizarin_django.models import License
+        from querysets_shim.models import License
 
         licencesDefaultWhereConditions = { 'resourceid__startswith': 'EL/' }
         queryBuilder = License.where(**licencesDefaultWhereConditions)
@@ -134,7 +134,7 @@ class ExcavationTaskStrategy(TaskStrategy):
         ]
     
     def build_data(self, licence, groupId):
-        from alizarin_django.models import License
+        from querysets_shim.models import License
         utilities = Utilities()
 
         resource_instance = Resource.objects.get(resourceinstanceid = licence.id)

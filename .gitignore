@@ -30,3 +30,6 @@ frontend_configuration
 # Packaging
 build/
 dist/
+
+# Written by CI on non-main builds, read by settings.py for the displayed version
+coral/BUILD

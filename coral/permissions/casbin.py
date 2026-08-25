@@ -40,10 +40,10 @@ try:
 except ImportError:
     class UnindexedError(Exception):
         pass
-from alizarin_django.models import Person, Organization, Set, LogicalSet, Group, ArchesPlugin
-from alizarin_django.view_models import ResourceInstanceViewModel
-from alizarin_django.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
-from alizarin_django.adapter import context_free
+from querysets_shim.models import Person, Organization, Set, LogicalSet, Group, ArchesPlugin
+from querysets_shim.view_models import ResourceInstanceViewModel
+from querysets_shim.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
+from querysets_shim.adapter import context_free
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from django.core.cache import cache
 

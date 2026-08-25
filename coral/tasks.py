@@ -51,17 +51,20 @@ def merge_resources_task(
         merge_tracker_resource_id,
         overwrite_multiple_tiles,
     )
-    deleted_tile = Tile.objects.filter(
+    deleted_tiles = Tile.objects.filter(
                 resourceinstance_id=merge_resource_id,
                 nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2",
-            ).first()
-    if not deleted_tile:
+            )
+    if deleted_tiles.exists():
+        for tile in deleted_tiles:
+            tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+            tile.save()
+    else:
         deleted_tile = Tile.get_blank_tile_from_nodegroup_id(
                 nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2", resourceid=merge_resource_id
             )
-
-    deleted_tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
-    deleted_tile.save()
+        deleted_tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+        deleted_tile.save()
 
 @shared_task
 def remap_monument_to_revision(user_id, target_resource_id):

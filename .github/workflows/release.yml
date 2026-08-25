@@ -4,7 +4,7 @@ on:
   push:
     tags: [ 'v*.*.*-RELEASE' ]
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:coral-7.6
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1
   ARCHES_PROJECT: coral
 jobs:
   Build-Arches:

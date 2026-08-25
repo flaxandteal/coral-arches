@@ -1,16 +1,16 @@
 from arches.app.functions.base import BaseFunction
-from alizarin_django.adapter import admin
+from querysets_shim.adapter import admin
 from coral.functions.notifications.notification_manager import NotificationManager
 from coral.functions.notifications.notification_base_strategy import NotificationStrategy
 
 
 # node groups
-SIGN_OFF = "3897b87a-1902-11ef-aa9f-0242ac150006"
+SIGN_OFF = "a62658ef-bb95-5dc5-a43f-77118dc1806c"
 HA_REF = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
 
 #nodes
-INPUT_BY = "1200e850-1905-11ef-aa9f-0242ac150006"
-APPROVED_BY = "9382b7b4-1905-11ef-aa9f-0242ac150006"
+INPUT_BY = "03eba000-9002-55f3-ad1e-1ed20ef76948"
+APPROVED_BY = "7b352e87-7ec0-5259-a3e3-1d0475464adc"
 
 # groups
 RANDDUSERS = "7e044ca4-96cd-4550-8f0c-a2c860f99f6b"
