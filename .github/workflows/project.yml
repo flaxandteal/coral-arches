@@ -6,7 +6,7 @@ on:
       - '**'
   workflow_dispatch:
 env:
-  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1
   ARCHES_PROJECT: coral
   GCP_AR_REGISTRY: europe-west2-docker.pkg.dev/coral-hed-499310/coral-prd-app
 jobs:
@@ -28,6 +28,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: 'true'
           path: ${{ env.ARCHES_PROJECT }}
+      - name: Stamp build commit (non-main only)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          # Read by coral/settings.py -> shows as v8.1.0+dev.<sha> on the home page.
+          echo "dev.${GITHUB_SHA::8}" > ${{ env.ARCHES_PROJECT }}/coral/BUILD
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
@@ -150,7 +155,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             ARCHES_DYNAMIC_IMAGE=${{ needs['Build-Arches'].outputs.image }}
-            ARCHES_ENVIRONMENT=development
+            ARCHES_ENVIRONMENT=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
             ARCHES_BASE=${{ env.ARCHES_BASE }}
             ARCHES_PROJECT=${{ env.ARCHES_PROJECT }}
             ARCHES_NAMESPACE_FOR_DATA_EXPORT=http://localhost:8000/

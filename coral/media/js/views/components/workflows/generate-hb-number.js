@@ -8,8 +8,26 @@ import template from 'templates/views/components/workflows/generate-hb-number.ht
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
-  this.WARDS_AND_DISTRICTS_TYPE_NODE_ID = 'de6b6af0-44e3-11ef-9114-0242ac120006';
-  this.GENERATED_HB_NODE_ID = '19bd9ac4-44e4-11ef-9114-0242ac120006';
+  this.WARDS_AND_DISTRICTS_TYPE_NODE_ID = 'dc49f08f-a4c5-5e23-bfa6-0587c085535d';
+  this.GENERATED_HB_NODE_ID = '8009174e-67df-51b7-83ee-17db75100a08';
+
+  if (!ko.isObservable(this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID])) {
+    this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID] = ko.observable(
+      this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID] ?? null
+    );
+  }
+  this.wardDistrictType = this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID];
+
+  this.wardDistrictUri = (value) => ko.unwrap(ko.unwrap(value)?.[0]?.uri) || '';
+
+  this.wardDistrictPrefLabel = (value) => {
+    const labels = koMapping.toJS(ko.unwrap(ko.unwrap(value)?.[0]?.labels)) || [];
+    const preferred = labels.find(
+      (label) =>
+        label.language_id === arches.activeLanguage && label.valuetype_id === 'prefLabel'
+    );
+    return (preferred || labels[0])?.value || '';
+  };
 
   this.generateOption = ko.observable(true)
   this.configKeys = ko.observable({ placeholder: 0 });
@@ -62,44 +80,37 @@ function viewModel(params) {
   };
 
   this.generatedNumber = ko.observable(this.getValue());
-  this.wardDistrictTypeValue = ko.observable();
-  this.initialSelected = null;
+  this.initialSelected = this.wardDistrictType();
+  this.initialSelectedUri = this.wardDistrictUri(this.initialSelected);
+
+  /* Label of the currently selected list item, e.g. "Aghanloo (02/11)". */
+  this.wardDistrictTypeValue = ko.pureComputed(() =>
+    this.wardDistrictPrefLabel(this.wardDistrictType())
+  );
 
   this.resetChanges = () => {
-    this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID](this.initialSelected);
-    this.generateHbNumber();
+    this.wardDistrictType(this.initialSelected);
+    this.newHbNumber();
   };
 
-  this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID].subscribe(async (value) => {
+  this.wardDistrictType.subscribe((value) => {
     if (!value) {
       this.setValue('');
       return;
     }
-    if (value === this.initialSelected) {
+    if (this.wardDistrictUri(value) === this.initialSelectedUri) {
       this.setValue(this.generatedNumber());
       return;
     }
-    if (value !== this.initialSelected) {
-      this.setValue('');
-    }
-    const response = await $.ajax({
-      type: 'GET',
-      url: arches.urls.concept_value + `?valueid=${value}`,
-      dataType: 'json',
-      context: this,
-      error: (response, status, error) => {
-        console.log(response, status, error);
-      }
-    });
-    this.wardDistrictTypeValue(response.value);
+    this.setValue('');
   }, this);
 
   this.newHbNumber = async () => {
-    if (!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()) return;
+    if (!this.wardDistrictType()) return;
     params.pageVm.loading(true);
     const data = {
       resourceInstanceId: this.tile.resourceinstance_id,
-      selectedWardDistrictId: this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID](),
+      selectedWardDistrictLabel: this.wardDistrictTypeValue(),
       method: 'new'
     };
     const response = await $.ajax({
@@ -138,12 +149,11 @@ function viewModel(params) {
     params.pageVm.loading(false);
   };
 
-  this.initialSelected = this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]();
   this.setValue(this.getValue());
 
   this.hasSelected = ko.computed(() => {
     if(this.generateOption()){
-      return!!this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]()
+      return!!this.wardDistrictType()
     }
     else{
       if(!this.selectedHB()){
@@ -154,17 +164,14 @@ function viewModel(params) {
   }, this);
 
   this.hasChanged = ko.computed(() => {
-    if (!this.initialSelected) return false;
-    return this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]() !== this.initialSelected;
-  });
+    if (!this.initialSelectedUri) return false;
+    return this.wardDistrictUri(this.wardDistrictType()) !== this.initialSelectedUri;
+  }, this);
 
   this.hasGeneratedNew = ko.computed(() => {
     if (!this.getValue() || !this.wardDistrictTypeValue()) return false;
     const wardDistrictId = this.wardDistrictTypeValue().match(/\((\d+\/\d+)\)/)?.[1]; // Parse "Word (51/90)" = "51/90"
-    return (
-      this.tile.data[this.WARDS_AND_DISTRICTS_TYPE_NODE_ID]() &&
-      this.getValue().includes(wardDistrictId)
-    );
+    return !!this.wardDistrictType() && !!wardDistrictId && this.getValue().includes(wardDistrictId);
   }, this);
 }
 

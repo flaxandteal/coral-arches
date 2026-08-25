@@ -1,78 +1,23 @@
-# PR - [Your PR Title]
+## What
 
-## Description of the Issue
-[Provide a brief description of the issue this PR addresses]
+[What does this change, and why? What problem or task does it close?]
 
-**Related Task:** [Link to task/issue]
+**Related task:** [link]
 
----
+## How
 
-## Changes Proposed
-- [List the changes you're proposing]
-- [Be specific and concise]
+[How does it work — the approach, anything a reviewer would not guess from the diff]
 
-### Types of Changes
-- [ ] Model Changes
-- [ ] Added Functions
-- [ ] Added Concepts
-- [ ] Workflows Updated
-- [ ] Reports Updated
-- [ ] Added/Updated Dependencies
-- [ ] Features Added
-- [ ] Bug Fix
+## Changelog
 
----
+- [ ] I have added an entry under `## Unreleased` → `### Changes` in `CHANGELOG.md`
 
-### Model Changes
-- (Add details here if this change type is checked)
+If this PR needs no entry, apply the `no-changelog` label.
 
----
+Anything a deploy cannot migrate on its own — graph models, workflows, concepts,
+functions, widgets, datatypes, reports — goes under `### Notes` too, naming the
+thing that has to be updated by hand.
 
-### Added Functions
-- (Add details here if this change type is checked)
+## Testing
 
----
-
-### Added Concepts
-- (Add details here if this change type is checked)
-
----
-
-### Workflows Updated
-- (Add details here if this change type is checked)
-
----
-
-### Reports Updated
-- (Add details here if this change type is checked)
-
----
-
-### Added/Updated Dependencies
-- (Add details here if this change type is checked)
-
----
-
-### Features Added
-- (Add details here if this change type is checked)
-
----
-
-### Bug Fix
-- (Add details here if this change type is checked)
-
----
-
-## Commands
-```
-# Add any commands that should be run to test these changes
-```
-
-## Tests
-- [Describe the tests you've added or run]
-- [Include steps to verify the changes]
-
----
-
-## Additional Notes
-[Any additional information that might be helpful]
+[How did you verify this? Steps for a reviewer to repeat.]
