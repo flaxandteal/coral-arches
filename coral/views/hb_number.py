@@ -52,11 +52,19 @@ class HbNumberView(View):
             hb_number = hns.append_id_suffix(resource_instance_id)
 
         else:
-            selected_ward_district_id = data.get("selectedWardDistrictId")
-            ward_district_text = models.Value.objects.filter(
-                valueid=selected_ward_district_id
-            ).first()
-            hn = HbNumber(ward_distict_text=ward_district_text.value)
+            # Wards and Districts is a `reference` (controlled list) node, so the
+            # client sends the item's prefLabel directly. Older callers sent a
+            # concept valueid.
+            ward_district_text = data.get("selectedWardDistrictLabel")
+            if not ward_district_text:
+                value = models.Value.objects.filter(
+                    valueid=data.get("selectedWardDistrictId")
+                ).first()
+                if not value:
+                    raise ValueError("No Ward and District Numbering was selected")
+                ward_district_text = value.value
+
+            hn = HbNumber(ward_distict_text=ward_district_text)
             hb_number = hn.generate_id_number(resource_instance_id)
 
         return JSONResponse({"message": "Generated ID", "hbNumber": hb_number})
