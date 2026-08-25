@@ -43,6 +43,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   branch and PRs it into main
 - chore(release): non-main builds show the commit they came from on the home page,
   e.g. `v8.2.0+dev.ab12cd34`
+- fix(search): stop advance search loading the graphs on the search page. Lazy load once the tab is selected (#829) 
 
 ### Notes
 
