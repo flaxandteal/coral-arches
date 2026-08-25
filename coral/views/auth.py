@@ -26,7 +26,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
-from django.utils.http import urlencode
+from django.utils.http import urlencode, url_has_allowed_host_and_scheme
 from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
 from django.contrib.auth.models import Group
@@ -231,9 +231,18 @@ class SetupView(BaseSetupView):
 
 
 @method_decorator(never_cache, name="dispatch")
-class LoginView(View):    
+class LoginView(View):
+    def _get_safe_next_url(self, request, next_url):
+        if next_url and url_has_allowed_host_and_scheme(
+            url=next_url,
+            allowed_hosts={request.get_host()},
+            require_https=request.is_secure(),
+        ):
+            return next_url
+        return reverse("home")
+
     def get(self, request):
-        next = request.GET.get("next", reverse("home"))
+        next = self._get_safe_next_url(request, request.GET.get("next", reverse("home")))
         registration_success = request.GET.get("registration_success")
 
         if request.GET.get("logout", None) is not None:
@@ -265,7 +274,7 @@ class LoginView(View):
         )
 
     def post(self, request):
-        next = request.POST.get("next", reverse("home"))
+        next = self._get_safe_next_url(request, request.POST.get("next", reverse("home")))
         
         otp_token = request.POST.get('otp_token', '').strip()
         if otp_token and request.session.get('2fa_pending_user_id'):
@@ -301,12 +310,15 @@ class LoginView(View):
                         "token_error": False,
                     },
                 )
-            else:
+            elif getattr(settings, 'FORCE_TWO_FACTOR_AUTHENTICATION', False):
                 request.session['2fa_pending_user_id'] = user.pk
                 request.session['2fa_pending_next'] = next
                 request.session['2fa_timestamp'] = time.time()
-                
+
                 return redirect('two_factor_setup_pending')
+            else:
+                auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                return redirect(next)
 
         return render(
             request, 
