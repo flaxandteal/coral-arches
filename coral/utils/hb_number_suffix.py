@@ -3,8 +3,8 @@ from arches.app.models.models import EditLog
 import re
 
 
-HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
-HB_NUMBER_NODE_ID = "250002fe-3aae-11ef-91fd-0242ac120003"
+HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
+HB_NUMBER_NODE_ID = "4b9883ef-9aad-559a-bd84-e4bb7b94a358"
 
 # get the latest id number - get list find the most recent suffix using the id number
 # generate the next suffix
@@ -30,8 +30,7 @@ class HbNumberSuffix:
     
     def increment_letter(self, suffix, attempts):
         if not suffix:
-            # attempts starts at 1, so the first try is 'A'
-            return chr(ord('A') + attempts - 1)
+            return 'A'
         if 'Z' in suffix:
             return 'A' * (len(suffix[0]) + 1)   
         return chr(ord(suffix[0]) + attempts) * len(suffix)
@@ -49,7 +48,7 @@ class HbNumberSuffix:
             ).order_by("-timestamp")            
 
             if resource_instance_id:
-                query_result = query_result.exclude(resourceinstanceid=resource_instance_id)
+                query_result.exclude(resourceinstanceid=resource_instance_id)
             latest_id_number_tile = query_result.first()
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
@@ -106,12 +105,13 @@ class HbNumberSuffix:
             print(f"Failed getting the previously used ID number: {e}")
             return retry()
 
-        # Offset attempts so it starts at 1 and will try to generate
-        # new increments for the total amount of allowed attempts. No previous
-        # suffix means this is the first one appended to that HB number.
-        next_suffix = self.increment_letter(
-            latest_suffix['suffix'] if latest_suffix else '', attempts
-        )
+        if latest_suffix:
+            # Offset attempts so it starts at 1 and will try to generate
+            # new increments for the total amount of allow attempts
+            next_suffix = self.increment_letter(latest_suffix['suffix'], attempts)
+        else:
+            #return the suffix
+            next_suffix = self.increment_letter(latest_suffix['suffix'], attempts)
 
         if len(next_suffix) > 1:
             new_id_number = self.hb_number.strip() + next_suffix
