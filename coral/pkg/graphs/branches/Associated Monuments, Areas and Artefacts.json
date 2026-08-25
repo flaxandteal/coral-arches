@@ -1,39 +1,30 @@
 {
     "graph": [
         {
-            "author": "",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
                     "cardid": "9f374ba7-04c6-11eb-a85f-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "9f374ba7-04c6-11eb-a85f-f875a44e0e11",
-                            "constraintid": "53059983-b24f-450d-b348-baea58af997f",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
+                    "constraints": [],
                     "description": {
                         "en": ""
                     },
                     "graph_id": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
-                        "en": "Associated Heritage Assets, Areas and Artefacts"
+                        "en": "Associated Monuments, Areas and Artefacts"
                     },
                     "nodegroup_id": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                     "sortorder": 14,
@@ -48,14 +39,14 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Heritage Asset, Area or Artefact",
+                        "label": "Monument, Area or Artefact",
                         "placeholder": {
                             "en": ""
                         }
                     },
                     "id": "9f374bab-04c6-11eb-8016-f875a44e0e11",
                     "label": {
-                        "en": "Heritage Asset, Area or Artefact"
+                        "en": "Monument, Area or Artefact"
                     },
                     "node_id": "9f374baa-04c6-11eb-b040-f875a44e0e11",
                     "sortorder": 0,
@@ -70,7 +61,6 @@
                             "placeholder"
                         ],
                         "label": "Association Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -82,17 +72,30 @@
                     "node_id": "9f374ba8-04c6-11eb-b801-f875a44e0e11",
                     "sortorder": 1,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "9f374ba7-04c6-11eb-a85f-f875a44e0e11",
                     "config": {
-                        "defaultValue": "d3b75e3a-638e-490e-8d1b-bbb5c504ce94",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "d3b75e3a-638e-490e-8d1b-bbb5c504ce94",
+                                        "language_id": "en",
+                                        "list_item_id": "f3b6d13e-5f5a-454a-88d2-d39831c3f3d6",
+                                        "value": "Association Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/f3b6d13e-5f5a-454a-88d2-d39831c3f3d6"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Association Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -104,7 +107,7 @@
                     "node_id": "9f374ba9-04c6-11eb-a6ca-f875a44e0e11",
                     "sortorder": 2,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 }
             ],
             "color": null,
@@ -180,16 +183,21 @@
             ],
             "functions_x_graphs": [],
             "graphid": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-bank",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
-                "en": "Associated Heritage Assets, Areas and Artefacts"
+                "en": "Associated Monuments, Areas and Artefacts"
             },
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                     "legacygroupid": null,
                     "nodegroupid": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                     "parentnodegroup_id": null
@@ -206,28 +214,34 @@
                     "graph_id": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
-                    "name": "Associated Heritage Assets, Areas and Artefacts",
+                    "name": "Associated Monuments, Areas and Artefacts",
                     "nodegroup_id": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                     "nodeid": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "association_type",
                     "config": {
-                        "rdmCollection": "93362f59-3658-47d8-8781-253fcf06374e"
+                        "controlledList": "93362f59-3658-47d8-8781-253fcf06374e",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
-                    "description": "",
+                    "datatype": "reference",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -236,20 +250,23 @@
                     "nodeid": "9f374ba8-04c6-11eb-b801-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "association_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -258,7 +275,8 @@
                     "nodeid": "9f374ba9-04c6-11eb-a6ca-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "monument_area_or_artefact",
@@ -266,17 +284,20 @@
                         "graphs": [
                             {
                                 "graphid": "343cc20c-2c5a-11e8-90fa-0242ac120005",
-                                "name": "Artefact"
+                                "name": "Artefact",
+                                "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
-                                "name": "Heritage Asset"
+                                "name": "Monument",
+                                "useOntologyRelationship": true
                             },
                             {
                                 "graphid": "979aaf0b-7042-11ea-9674-287fcf6a5e72",
                                 "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P53i_is_former_or_current_location_of",
                                 "name": "Area",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location"
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P53_has_former_or_current_location",
+                                "useOntologyRelationship": true
                             }
                         ],
                         "searchDsl": "",
@@ -289,24 +310,26 @@
                     "graph_id": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Heritage Asset, Area or Artefact",
+                    "name": "Monument, Area or Artefact",
                     "nodegroup_id": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                     "nodeid": "9f374baa-04c6-11eb-b040-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P140_assigned_attribute_to",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
-                "notes": null,
-                "publicationid": "a280d1f0-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:52.237",
-                "user_id": 1
+                "most_recent_edit_id": null,
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "3b0de7e9-0d5f-4833-ab19-5bff325c4cdf",
+                "published_time": "2025-10-22T19:28:13.745+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -320,20 +343,25 @@
                 "graph_id": "9f363a6e-04c6-11eb-8274-f875a44e0e11",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
-                "name": "Associated Heritage Assets, Areas and Artefacts",
+                "name": "Associated Monuments, Areas and Artefacts",
                 "nodegroup_id": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                 "nodeid": "9f36616e-04c6-11eb-9650-f875a44e0e11",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E13_Attribute_Assignment",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
-            "slug": "associated_heritage_assets_areas_and_artefacts",
+            "slug": "associated_monuments_areas_and_artefacts",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000002",
+            "user_permissions": {},
             "version": ""
         }
     ]

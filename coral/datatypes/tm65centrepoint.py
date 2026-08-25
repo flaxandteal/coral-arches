@@ -20,7 +20,12 @@ details = {
 
 
 class TM65CentreDataType(BaseDataType):
-    def validate(self, value, row_number=None, source=None, node=None, nodeid=None, strict=False, request=None):
+    def validate(self, value, row_number=None, source=None, node=None, nodeid=None, strict=False, request=None, **kwargs):
+        # Arches 8 keeps Node.config in an I18n_JSONField, so a node with no
+        # config round-trips as {"en": ""} (I18n_JSON._parse: value is None ->
+        # ret[lang] = ""). Callers that splat the config in as kwargs hand us
+        # language keys; core's BaseDataType.validate ends in **kwargs for that
+        # reason, so match it rather than stripping the config.
         errors = []
         gridSquareArray = [
             "A",

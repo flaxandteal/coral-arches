@@ -7,9 +7,7 @@
                     "active": true,
                     "cardid": "92221635-49e0-485c-aab7-a517d84cb8b1",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": null,
                     "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
                     "helpenabled": false,
@@ -34,7 +32,6 @@
                     "active": true,
                     "cardid": "d71a9cde-9f89-4768-97db-85d7e1c79b1d",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [
                         {
                             "card_id": "d71a9cde-9f89-4768-97db-85d7e1c79b1d",
@@ -45,7 +42,6 @@
                             "uniquetoallinstances": true
                         }
                     ],
-                    "cssclass": null,
                     "description": null,
                     "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
                     "helpenabled": false,
@@ -70,9 +66,7 @@
                     "active": true,
                     "cardid": "f573d147-86ad-438a-b434-4f86fd55cce2",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": null,
                     "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
                     "helpenabled": false,
@@ -547,7 +541,9 @@
                         "en": ""
                     },
                     "datatype": "semantic",
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
@@ -570,7 +566,7 @@
                 "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
                 "notes": null,
                 "publicationid": "06640308-3497-11ef-9c38-0242ac150006",
-                "published_time": "2024-06-27T15:07:52.369"
+                "published_time": "2024-06-27T15:07:52.369+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -580,7 +576,9 @@
                     "en": ""
                 },
                 "datatype": "semantic",
-                "description": "",
+                "description": {
+                    "en": ""
+                },
                 "exportable": false,
                 "fieldname": null,
                 "graph_id": "b16832e8-dfc9-4fc8-9c07-0c0b980ed220",
@@ -593,6 +591,7 @@
                 "nodegroup_id": null,
                 "nodeid": "bd768bae-6f41-11ee-9192-0242ac140008",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E78_Collection",
+                "parentproperty": null,
                 "sortorder": 0,
                 "sourcebranchpublication_id": null
             },
@@ -601,13 +600,8 @@
                 "en": "Nestable collection of subject resources on which actors may have permissions."
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
-            "version": ""
+            "version": "",
+            "is_active": true
         }
-    ],
-    "metadata": {
-        "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "4d3c9cc22 2024-06-25 15:54:29 +0100",
-        "os": "Linux",
-        "os version": "5.10.0-23-amd64"
-    }
+    ]
 }
