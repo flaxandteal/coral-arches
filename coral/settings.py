@@ -111,7 +111,22 @@ except ImportError:
         ]
 
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=8, minor=1, patch=0)
+
+# Version comes from pyproject.toml, and is bumped only at release by ./release.
+# CI writes coral/BUILD on non-main builds only, so dev shows v8.1.0+dev.ab12cd34
+# (same version line, built from that commit) while prod shows a clean v8.1.0.
+_pyproject = Path(__file__).resolve().parent.parent / "pyproject.toml"
+if _pyproject.exists():
+    _version = tomllib.loads(_pyproject.read_text())["project"]["version"]
+else:
+    from importlib.metadata import version as _dist_version
+
+    _version = _dist_version("coral-arches")
+
+_build = Path(__file__).resolve().parent / "BUILD"
+APP_VERSION = semantic_version.Version(
+    f"{_version}+{_build.read_text().strip()}" if _build.exists() else _version
+)
 
 TIME_ZONE = "Europe/London"
 USE_TZ = True
@@ -321,6 +336,7 @@ INSTALLED_APPS = (
     "arches_vue_components",
     "arches_modular_reports",
     "arches_search",
+    "arches_json_importer",
     "arches",
     "arches.app.models",
     "arches.management",
@@ -352,7 +368,7 @@ INSTALLED_APPS += (
 if DEBUG:
     INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
 
-ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search",)
+ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search", "arches_json_importer",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
@@ -371,6 +387,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
+    "coral.middleware.GateCookieMiddleware",
     "django_otp.middleware.OTPMiddleware",
     # "coral.middleware.TwoFactorAuthMiddleware",  # DISABLED - 2FA now integrated into LoginView
     # "silk.middleware.SilkyMiddleware",
@@ -540,6 +557,8 @@ RATE_LIMIT = "5/m"
 
 # Sets default max upload size to 15MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
+
+GATEWAY_GATE_SECRET = os.environ.get("GATEWAY_GATE_SECRET", "")
 
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'

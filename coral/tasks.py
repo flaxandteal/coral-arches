@@ -158,7 +158,7 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
         )
         result = rr.remap_resources(user)
 
-        DISPLAY_NAME_NODEGROUP_ID = "ce85b994-3f5f-11ef-b9b0-0242ac140006"
+        DISPLAY_NAME_NODEGROUP_ID = "0efb4349-fded-583a-a8af-08d6c0781e40"
         DISPLAY_NAME_NODE_ID = DISPLAY_NAME_NODEGROUP_ID
 
         display_name_tile = Tile.objects.filter(

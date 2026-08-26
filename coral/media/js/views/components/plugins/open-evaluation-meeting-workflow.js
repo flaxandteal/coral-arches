@@ -13,7 +13,7 @@ const openWorkflowViewModel = function (params) {
   this.selectedEvaluationMeeting = ko.observable();
   this.selectedBuilding = ko.observable();
 
-  this.buildingString = `/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"2c2d02fc-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"158e1ed2-3aae-11ef-a2d0-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"1de9abf0-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"250002fe-3aae-11ef-91fd-0242ac120003\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]`
+  this.buildingString = `/search/resources?advanced-search=[{\"op\"%3A\"and\"%2C\"1edc61a9-b64b-51ae-9077-536908761903\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"d146451b-9140-5f81-b3de-9005acc01e28\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"0b14fb28-961e-5817-9cac-c61073b58981\"%3A{\"op\"%3A\"~\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}%2C\"4b9883ef-9aad-559a-bd84-e4bb7b94a358\"%3A{\"op\"%3A\"not_null\"%2C\"lang\"%3A\"en\"%2C\"val\"%3A\"\"}}]`
 
   this.configKeys = ko.observable({ placeholder: 0 });
 

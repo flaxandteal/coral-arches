@@ -1,30 +1,28 @@
 {
     "graph": [
         {
-            "author": "",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
                     "cardid": "1f29ee7d-025c-11eb-a00b-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": ""
                     },
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Consultation Dates"
                     },
@@ -37,12 +35,25 @@
                 {
                     "card_id": "1f29ee7d-025c-11eb-a00b-f875a44e0e11",
                     "config": {
-                        "defaultValue": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "0493601e-3491-40a7-a651-6fd8d9dbdce5",
+                                        "language_id": "en",
+                                        "list_item_id": "b2f1cccc-65b7-4633-847f-ec9b09ef07f0",
+                                        "value": "On",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "366686d6-deb0-4245-81a3-f94d791a388c",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/b2f1cccc-65b7-4633-847f-ec9b09ef07f0"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Target Date Qualifier",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -54,7 +65,7 @@
                     "node_id": "1f29ee84-025c-11eb-b736-f875a44e0e11",
                     "sortorder": 2,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "1f29ee7d-025c-11eb-a00b-f875a44e0e11",
@@ -139,12 +150,25 @@
                 {
                     "card_id": "1f29ee7d-025c-11eb-a00b-f875a44e0e11",
                     "config": {
-                        "defaultValue": "a6dfc54c-a130-4ab9-ab29-ec659f8158a9",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "a6dfc54c-a130-4ab9-ab29-ec659f8158a9",
+                                        "language_id": "en",
+                                        "list_item_id": "29b0400e-07ff-44cb-91c9-de7fb6c949b2",
+                                        "value": "Throughout",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "366686d6-deb0-4245-81a3-f94d791a388c",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/29b0400e-07ff-44cb-91c9-de7fb6c949b2"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Consultation Date Qualifier",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -156,7 +180,7 @@
                     "node_id": "1f29ee7e-025c-11eb-a740-f875a44e0e11",
                     "sortorder": 1,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 }
             ],
             "color": "rgba(224,47,47,0.67)",
@@ -281,8 +305,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-briefcase",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -291,6 +319,7 @@
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "1f29ee7b-025c-11eb-8f7a-f875a44e0e11",
                     "legacygroupid": null,
                     "nodegroupid": "1f29ee7b-025c-11eb-8f7a-f875a44e0e11",
                     "parentnodegroup_id": null
@@ -307,6 +336,7 @@
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -315,20 +345,23 @@
                     "nodeid": "1f29ee7b-025c-11eb-8f7a-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "consultation_date_qualifier",
                     "config": {
-                        "rdmCollection": "366686d6-deb0-4245-81a3-f94d791a388c"
+                        "controlledList": "366686d6-deb0-4245-81a3-f94d791a388c",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -337,7 +370,8 @@
                     "nodeid": "1f29ee7e-025c-11eb-a740-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "completion_date",
@@ -351,6 +385,7 @@
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -359,7 +394,8 @@
                     "nodeid": "1f29ee7f-025c-11eb-981f-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "log_date",
@@ -373,6 +409,7 @@
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -381,7 +418,8 @@
                     "nodeid": "1f29ee80-025c-11eb-a334-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "target_date",
@@ -393,6 +431,7 @@
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -401,7 +440,8 @@
                     "nodeid": "1f29ee81-025c-11eb-8419-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P86i_contains",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "target_date_start",
@@ -415,6 +455,7 @@
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -423,7 +464,8 @@
                     "nodeid": "1f29ee82-025c-11eb-b4a3-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "target_date_end_",
@@ -437,6 +479,7 @@
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -445,20 +488,23 @@
                     "nodeid": "1f29ee83-025c-11eb-8029-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "target_date_qualifier",
                     "config": {
-                        "rdmCollection": "366686d6-deb0-4245-81a3-f94d791a388c"
+                        "controlledList": "366686d6-deb0-4245-81a3-f94d791a388c",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -467,16 +513,17 @@
                     "nodeid": "1f29ee84-025c-11eb-b736-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
-                "notes": null,
-                "publicationid": "9be9aa42-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:41.180",
-                "user_id": 1
+                "most_recent_edit_id": null,
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "787ea5ca-3047-4753-b145-af25edaea937",
+                "published_time": "2025-10-22T19:35:17.087+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -490,6 +537,7 @@
                 "graph_id": "1f29ee7a-025c-11eb-89d0-f875a44e0e11",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -497,13 +545,17 @@
                 "nodegroup_id": "1f29ee7b-025c-11eb-8f7a-f875a44e0e11",
                 "nodeid": "1f29ee7b-025c-11eb-8f7a-f875a44e0e11",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "consultation_dates",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000004",
+            "user_permissions": {},
             "version": ""
         }
     ]

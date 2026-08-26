@@ -1,30 +1,28 @@
 {
     "graph": [
         {
-            "author": "",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
                     "cardid": "23510fa4-9aa7-11ea-89a2-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": ""
                     },
                     "graph_id": "2350e86e-9aa7-11ea-9e8f-f875a44e0e11",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
                         "en": "Records the type of the resource model for interoperability purposes only."
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Resource Model Type"
                     },
@@ -37,12 +35,25 @@
                 {
                     "card_id": "23510fa4-9aa7-11ea-89a2-f875a44e0e11",
                     "config": {
-                        "defaultValue": "43a9df96-0233-4fb3-b3af-c904f20dec6d",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "43a9df96-0233-4fb3-b3af-c904f20dec6d",
+                                        "language_id": "en",
+                                        "list_item_id": "368d43d0-3c4d-4df2-b1cb-f1587b02e6a2",
+                                        "value": "Person",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "49b0d419-7425-4beb-8460-9b87e320ea05",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/368d43d0-3c4d-4df2-b1cb-f1587b02e6a2"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Resource Model Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -54,17 +65,30 @@
                     "node_id": "23510fa2-9aa7-11ea-bae4-f875a44e0e11",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "23510fa4-9aa7-11ea-89a2-f875a44e0e11",
                     "config": {
-                        "defaultValue": "3dcc94f2-fe86-4286-b87f-047f13c8355a",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "3dcc94f2-fe86-4286-b87f-047f13c8355a",
+                                        "language_id": "en",
+                                        "list_item_id": "c7927fc6-e1f6-4a96-ad3c-5949144b6f91",
+                                        "value": "Resource Model Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/c7927fc6-e1f6-4a96-ad3c-5949144b6f91"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Resource Model Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -76,7 +100,7 @@
                     "node_id": "23510fa5-9aa7-11ea-b260-f875a44e0e11",
                     "sortorder": 1,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 }
             ],
             "color": null,
@@ -103,8 +127,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "2350e86e-9aa7-11ea-9e8f-f875a44e0e11",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-user",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -113,6 +141,7 @@
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "23510fa2-9aa7-11ea-bae4-f875a44e0e11",
                     "legacygroupid": null,
                     "nodegroupid": "23510fa2-9aa7-11ea-bae4-f875a44e0e11",
                     "parentnodegroup_id": null
@@ -122,37 +151,44 @@
                 {
                     "alias": "resource_model_type",
                     "config": {
-                        "rdmCollection": "49b0d419-7425-4beb-8460-9b87e320ea05"
+                        "controlledList": "49b0d419-7425-4beb-8460-9b87e320ea05",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
-                    "description": "",
+                    "datatype": "reference",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "2350e86e-9aa7-11ea-9e8f-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
-                    "issearchable": true,
+                    "issearchable": false,
                     "istopnode": true,
                     "name": "Resource Model Type",
                     "nodegroup_id": "23510fa2-9aa7-11ea-bae4-f875a44e0e11",
                     "nodeid": "23510fa2-9aa7-11ea-bae4-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "resource_model_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "2350e86e-9aa7-11ea-9e8f-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -161,45 +197,54 @@
                     "nodeid": "23510fa5-9aa7-11ea-b260-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "2350e86e-9aa7-11ea-9e8f-f875a44e0e11",
-                "notes": null,
-                "publicationid": "9e3d361a-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:45.083",
-                "user_id": 1
+                "most_recent_edit_id": null,
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "2f9e747f-0ccf-4ef2-905c-b8dddfa96e15",
+                "published_time": "2025-10-23T01:42:32.646+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "resource_model_type",
                 "config": {
-                    "rdmCollection": "49b0d419-7425-4beb-8460-9b87e320ea05"
+                    "controlledList": "49b0d419-7425-4beb-8460-9b87e320ea05",
+                    "multiValue": false
                 },
-                "datatype": "concept",
-                "description": "",
+                "datatype": "reference",
+                "description": {
+                    "en": ""
+                },
                 "exportable": false,
                 "fieldname": null,
                 "graph_id": "2350e86e-9aa7-11ea-9e8f-f875a44e0e11",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
-                "issearchable": true,
+                "issearchable": false,
                 "istopnode": true,
                 "name": "Resource Model Type",
                 "nodegroup_id": "23510fa2-9aa7-11ea-bae4-f875a44e0e11",
                 "nodeid": "23510fa2-9aa7-11ea-bae4-f875a44e0e11",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "resource_model_type",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000003",
+            "user_permissions": {},
             "version": ""
         }
     ]

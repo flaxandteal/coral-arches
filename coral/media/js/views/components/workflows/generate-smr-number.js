@@ -8,8 +8,26 @@ import template from 'templates/views/components/workflows/generate-smr-number.h
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
-  this.NISMR_NUMBERING_TYPE_NODE_ID = '86c19e92-3ea7-11ef-818b-0242ac140006';
-  this.GENERATED_SMR_NODE_ID = 'b46b5bba-3ec2-11ef-bb61-0242ac140006';
+  this.NISMR_NUMBERING_TYPE_NODE_ID = 'a7742f3d-197d-5fcb-9fde-4179a7e28d5b';
+  this.GENERATED_SMR_NODE_ID = '039aaf6d-59d4-57a9-bf87-245ec8913130';
+
+  if (!ko.isObservable(this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID])) {
+    this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID] = ko.observable(
+      this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID] ?? null
+    );
+  }
+  this.nismrType = this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID];
+
+  this.nismrUri = (value) => ko.unwrap(ko.unwrap(value)?.[0]?.uri) || '';
+
+  this.nismrPrefLabel = (value) => {
+    const labels = koMapping.toJS(ko.unwrap(ko.unwrap(value)?.[0]?.labels)) || [];
+    const preferred = labels.find(
+      (label) =>
+        label.language_id === arches.activeLanguage && label.valuetype_id === 'prefLabel'
+    );
+    return (preferred || labels[0])?.value || '';
+  };
 
   this.setGeneratedSmrValue = (value) => {
     const localisedValue = {
@@ -33,44 +51,35 @@ function viewModel(params) {
   };
 
   this.smrNumber = ko.observable(this.getValue());
-  this.nismrTypeValue = ko.observable();
-  this.initialSelectedNismr = null;
+  this.initialSelectedNismr = this.nismrType();
+  this.initialSelectedNismrUri = this.nismrUri(this.initialSelectedNismr);
+
+  /* Label of the currently selected list item, e.g. the map sheet "J10". */
+  this.nismrTypeValue = ko.pureComputed(() => this.nismrPrefLabel(this.nismrType()));
 
   this.resetNismrType = () => {
-    this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID](this.initialSelectedNismr);
+    this.nismrType(this.initialSelectedNismr);
     this.generateSmrNumber();
   };
 
-  this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID].subscribe(async (value) => {
+  this.nismrType.subscribe((value) => {
     if (!value) {
       this.setGeneratedSmrValue('');
       return;
     }
-    if (value === this.initialSelectedNismr) {
+    if (this.nismrUri(value) === this.initialSelectedNismrUri) {
       this.setGeneratedSmrValue(this.smrNumber());
       return;
     }
-    if (value !== this.initialSelectedNismr) {
-      this.setGeneratedSmrValue('');
-    }
-    const response = await $.ajax({
-      type: 'GET',
-      url: arches.urls.concept_value + `?valueid=${value}`,
-      dataType: 'json',
-      context: this,
-      error: (response, status, error) => {
-        console.log(response, status, error);
-      }
-    });
-    this.nismrTypeValue(response.value);
+    this.setGeneratedSmrValue('');
   }, this);
 
   this.generateSmrNumber = async () => {
-    if (!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]()) return;
+    if (!this.nismrType()) return;
     params.pageVm.loading(true);
     const data = {
       resourceInstanceId: this.tile.resourceinstance_id,
-      selectedNismrId: this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]()
+      selectedNismrLabel: this.nismrTypeValue()
     };
     const response = await $.ajax({
       type: 'POST',
@@ -86,24 +95,20 @@ function viewModel(params) {
     params.pageVm.loading(false);
   };
 
-  this.initialSelectedNismr = this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
   this.setGeneratedSmrValue(this.getValue());
 
   this.hasSelectedNismr = ko.computed(() => {
-    return !!this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]();
+    return !!this.nismrType();
   }, this);
 
   this.hasChangedNismrType = ko.computed(() => {
-    if (!this.initialSelectedNismr) return false;
-    return this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() !== this.initialSelectedNismr;
-  });
+    if (!this.initialSelectedNismrUri) return false;
+    return this.nismrUri(this.nismrType()) !== this.initialSelectedNismrUri;
+  }, this);
 
   this.hasGeneratedNew = ko.computed(() => {
     if (!this.getValue() || !this.nismrTypeValue()) return false;
-    return (
-      this.tile.data[this.NISMR_NUMBERING_TYPE_NODE_ID]() &&
-      this.getValue().startsWith(this.nismrTypeValue())
-    );
+    return !!this.nismrType() && this.getValue().startsWith(this.nismrTypeValue());
   }, this);
 }
 

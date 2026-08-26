@@ -1,6 +1,5 @@
 update graphs set templateid = 'eeb7054c-df37-45d1-8f09-39abb582077e' where graphid = 'b9e0701e-5463-11e9-b5f5-000d3ab1e588'; -- Activity
 update graphs set templateid = '9ed340ba-88c6-4982-9487-c3aae4b14d16' where graphid = '42ce82f6-83bf-11ea-b1e8-f875a44e0e11'; -- Application Area
-update graphs set templateid = '75e5968a-72cf-4a07-8e0d-1cc3e81d34c8' where graphid = 'b07cfa6f-894d-11ea-82aa-f875a44e0e11'; -- Archive Source
 update graphs set templateid = 'b32fc2f2-5570-46c2-8d1e-09ca54c750ab' where graphid = '343cc20c-2c5a-11e8-90fa-0242ac120005'; -- Artefact
 update graphs set templateid = '44fdae23-7883-4d5c-88fa-7498b6fc898d' where graphid = '24d7b54f-5464-11e9-a86b-000d3ab1e588'; -- Bibliographic Source
 update graphs set templateid = '465443ea-0e01-4895-a9cf-5144b02213da' where graphid = '8d41e49e-a250-11e9-9eab-00224800b26d'; -- Consultation
@@ -15,5 +14,3 @@ update graphs set templateid = '407019fd-69e4-4aa4-a054-1466acaf8687' where grap
 update graphs set templateid = '4c2ed0b0-c278-49e2-9ddf-ba44aa77a6f3' where graphid = 'f9045867-8861-11ea-b06f-f875a44e0e11'; -- Period
 update graphs set templateid = '9e9f8e55-3ea9-4bd3-8b11-c1a519fbcfcc' where graphid = '22477f01-1a44-11e9-b0a9-000d3ab1e588'; -- Person
 update graphs set templateid = '6b183add-a159-4d2b-a6b0-3f426d8c08a1' where graphid = '78b32d8c-b6f2-11ea-af42-f875a44e0e11'; -- Place
-update graphs set templateid = '7027c51b-0083-489f-80cf-b12d856b239f' where graphid = 'cc5da227-24e7-4088-bb83-a564c4331efd'; -- Licence
-update graphs set templateid = '60766385-68a0-4c63-b702-f5b30e4732fa' where graphid = 'c0098070-d052-4449-982b-952507306c03'; -- State Care

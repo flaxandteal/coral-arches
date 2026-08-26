@@ -1,22 +1,13 @@
 {
     "graph": [
         {
-            "author": "",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
                     "cardid": "ec89fcf4-9923-11ea-8632-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "ec89fcf4-9923-11ea-8632-f875a44e0e11",
-                            "constraintid": "2c67c59d-9499-4252-8503-009c30743af8",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
+                    "constraints": [],
                     "description": {
                         "en": ""
                     },
@@ -31,7 +22,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Birth"
                     },
@@ -73,12 +64,25 @@
                 {
                     "card_id": "ec89fcf4-9923-11ea-8632-f875a44e0e11",
                     "config": {
-                        "defaultValue": "a0e096e2-f5ae-4579-950d-3040714713b4",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "a0e096e2-f5ae-4579-950d-3040714713b4",
+                                        "language_id": "en",
+                                        "list_item_id": "5662d9b7-6185-4216-90f0-1379cebb9d1e",
+                                        "value": "Name Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/5662d9b7-6185-4216-90f0-1379cebb9d1e"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Birthplace Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -90,7 +94,7 @@
                     "node_id": "ec89fcf6-9923-11ea-8f71-f875a44e0e11",
                     "sortorder": 3,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ec89fcf4-9923-11ea-8632-f875a44e0e11",
@@ -121,10 +125,15 @@
                     "card_id": "ec89fcf4-9923-11ea-8632-f875a44e0e11",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Birthplace",
                         "maxLength": null,
                         "options": [],
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "width": "100%"
                     },
                     "id": "ec89fd0f-9923-11ea-bcf0-f875a44e0e11",
@@ -139,12 +148,25 @@
                 {
                     "card_id": "ec89fcf4-9923-11ea-8632-f875a44e0e11",
                     "config": {
-                        "defaultValue": "0cd76d41-21d5-47df-be1c-6ed597cea59f",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "0cd76d41-21d5-47df-be1c-6ed597cea59f",
+                                        "language_id": "en",
+                                        "list_item_id": "3c207277-1f75-435c-a71d-c0c1e0e75ecb",
+                                        "value": "Birth Placename",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "3e545767-c46c-4fe7-8754-c24528ba0842",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/3c207277-1f75-435c-a71d-c0c1e0e75ecb"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Birthplace Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -156,7 +178,7 @@
                     "node_id": "ec89fd02-9923-11ea-98e5-f875a44e0e11",
                     "sortorder": 2,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 }
             ],
             "color": null,
@@ -255,8 +277,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-user",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -265,6 +291,7 @@
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "ec89d5f1-9923-11ea-9f9c-f875a44e0e11",
                     "legacygroupid": null,
                     "nodegroupid": "ec89d5f1-9923-11ea-9f9c-f875a44e0e11",
                     "parentnodegroup_id": null
@@ -277,12 +304,15 @@
                         "fillColor": "rgba(233,112,111,0.8)"
                     },
                     "datatype": "semantic",
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -291,7 +321,8 @@
                     "nodeid": "ec89d5f1-9923-11ea-9f9c-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E67_Birth",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "mother",
@@ -306,12 +337,15 @@
                         "searchString": ""
                     },
                     "datatype": "resource-instance",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -320,20 +354,23 @@
                     "nodeid": "ec89fcf5-9923-11ea-a194-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P96_by_mother",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "birthplace_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -342,7 +379,8 @@
                     "nodeid": "ec89fcf6-9923-11ea-8f71-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "father",
@@ -357,12 +395,15 @@
                         "searchString": ""
                     },
                     "datatype": "resource-instance",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -371,7 +412,8 @@
                     "nodeid": "ec89fcf8-9923-11ea-9cd9-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P97_from_father",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "date_of_birth",
@@ -385,12 +427,15 @@
                         "multiplier_if_uncertain": 1
                     },
                     "datatype": "edtf",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -399,18 +444,22 @@
                     "nodeid": "ec89fcf9-9923-11ea-a46d-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "place_of_birth",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -419,18 +468,22 @@
                     "nodeid": "ec89fcfb-9923-11ea-9f97-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "birthplace",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -439,18 +492,22 @@
                     "nodeid": "ec89fcfd-9923-11ea-89c2-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E41_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "birth_time_span",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -459,20 +516,23 @@
                     "nodeid": "ec89fd01-9923-11ea-9fcf-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "birthplace_type",
                     "config": {
-                        "rdmCollection": "3e545767-c46c-4fe7-8754-c24528ba0842"
+                        "controlledList": "3e545767-c46c-4fe7-8754-c24528ba0842",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -481,7 +541,8 @@
                     "nodeid": "ec89fd02-9923-11ea-98e5-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "birth_place",
@@ -493,6 +554,7 @@
                     "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -501,16 +563,17 @@
                     "nodeid": "ec89fd04-9923-11ea-8e44-f875a44e0e11",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
-                "notes": null,
-                "publicationid": "9f47801a-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:46.828",
-                "user_id": 1
+                "most_recent_edit_id": null,
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "59c3a124-3c7b-42aa-ba2b-dfecb2c0af51",
+                "published_time": "2025-10-22T19:31:47.899+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -520,12 +583,15 @@
                     "fillColor": "rgba(233,112,111,0.8)"
                 },
                 "datatype": "semantic",
-                "description": "",
+                "description": {
+                    "en": ""
+                },
                 "exportable": false,
                 "fieldname": "",
                 "graph_id": "ec89d5f0-9923-11ea-9ddc-f875a44e0e11",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -533,13 +599,17 @@
                 "nodegroup_id": "ec89d5f1-9923-11ea-9f9c-f875a44e0e11",
                 "nodeid": "ec89d5f1-9923-11ea-9f9c-f875a44e0e11",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E67_Birth",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "birth",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000003",
+            "user_permissions": {},
             "version": ""
         }
     ]

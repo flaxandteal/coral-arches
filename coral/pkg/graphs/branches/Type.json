@@ -1,30 +1,22 @@
 {
     "graph": [
         {
-            "author": " Phil",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
                     "cardid": "e806b718-8482-11ea-8c13-f875a44e0e11",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "Allows a concept collection to be typed. Useful for data sharing."
                     },
                     "graph_id": "e8036dc7-8482-11ea-bbe5-f875a44e0e11",
                     "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
-                    "instructions": {
-                        "en": null
-                    },
-                    "is_editable": true,
+                    "helptext": {},
+                    "helptitle": {},
+                    "instructions": {},
+                    "is_editable": null,
                     "name": {
                         "en": "Type"
                     },
@@ -54,8 +46,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "e8036dc7-8482-11ea-bbe5-f875a44e0e11",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-bookmark",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -64,6 +60,7 @@
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "e8036dc6-8482-11ea-a944-f875a44e0e11",
                     "legacygroupid": null,
                     "nodegroupid": "e8036dc6-8482-11ea-a944-f875a44e0e11",
                     "parentnodegroup_id": null
@@ -73,15 +70,19 @@
                 {
                     "alias": "type",
                     "config": {
-                        "rdmCollection": null
+                        "controlledList": "fcbe3306-b7a1-53b6-ad81-10f8bcdac939",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
-                    "description": "",
+                    "datatype": "reference",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "e8036dc7-8482-11ea-bbe5-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -90,20 +91,22 @@
                     "nodeid": "e8036dc6-8482-11ea-a944-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "e8036dc7-8482-11ea-bbe5-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -112,16 +115,16 @@
                     "nodeid": "fdb87610-8482-11ea-9727-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "e8036dc7-8482-11ea-bbe5-f875a44e0e11",
                 "notes": null,
-                "publicationid": "a21af83a-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:51.570",
-                "user_id": 1
+                "publicationid": "7715a1c3-6972-5536-a21f-06aa30a30ce3",
+                "published_time": "2026-08-25T10:49:25.633+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -131,12 +134,15 @@
                     "rdmCollection": null
                 },
                 "datatype": "concept",
-                "description": "",
+                "description": {
+                    "en": ""
+                },
                 "exportable": false,
                 "fieldname": null,
                 "graph_id": "e8036dc7-8482-11ea-bbe5-f875a44e0e11",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -144,13 +150,17 @@
                 "nodegroup_id": "e8036dc6-8482-11ea-a944-f875a44e0e11",
                 "nodeid": "e8036dc6-8482-11ea-a944-f875a44e0e11",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "type",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
+            "user_permissions": {},
             "version": ""
         }
     ]
