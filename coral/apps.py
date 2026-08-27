@@ -4,3 +4,8 @@ from django.apps import AppConfig
 class CoralConfig(AppConfig):
     name = "coral"
     is_arches_application = True
+    def ready(self):
+        # Prune empty sections from the arches_search result drop-down.
+        if getattr(settings, "CORAL_PRUNE_EMPTY_REPORT_SECTIONS", True):
+            from coral.perf import report_config
+            report_config.apply()
