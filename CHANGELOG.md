@@ -23,4 +23,19 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- feat(search): SimpleSearch filters are authored in the repo — `search_config` generates
+  them per graph, `load-filters` seeds the rows, `gaps` reports what cannot render (#849)
+- feat(search): search results render their cards again — `generate-cards` / `load-cards`
+  author the result row and drop-down configs, without which every result was blank (#849)
+- fix(search): reference nodes on huge controlled lists are no longer offered as filters —
+  9,635 checkboxes for Administrative Area. Still filterable in AdvancedSearch (#849)
+- fix(search): drop-down no longer shows empty sections — a Heritage Asset goes from 53 to
+  around 14 (#849)
+- perf(search): `load-cards --prune-empty` drops never-filled columns — Heritage Asset's
+  drop-down from 187 columns to 121 (#849)
+
 ### Notes
+
+- Nothing seeds the search configs automatically. After deploying #849 run
+  `search_config load-filters` and `search_config load-cards`, or filters and cards will
+  not appear. `--prune-empty` needs representative data to be meaningful
