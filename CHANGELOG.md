@@ -33,9 +33,20 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   around 14 (#849)
 - perf(search): `load-cards --prune-empty` drops never-filled columns — Heritage Asset's
   drop-down from 187 columns to 121 (#849)
+- feat(search): resource descriptors are indexed into the term index, so resources
+  identified by a primary reference number can be found by typing it (#850)
+- feat(search): results are ranked by descriptor match, exact first — arches_search has no
+  relevance ordering, so they were coming back in resource id order (#850)
+- perf(search): result type counts run as one SQL group by instead of a two hop traversal
+  per graph — a term matching 27 resources took 74s (#850)
 
 ### Notes
 
 - Nothing seeds the search configs automatically. After deploying #849 run
   `search_config load-filters` and `search_config load-cards`, or filters and cards will
   not appear. `--prune-empty` needs representative data to be meaningful
+- Result type chip counts no longer include resources reached only by relationship, so
+  they get smaller, but they now agree with the total which they never did before. Set
+  `CORAL_FAST_RESOURCE_TYPE_COUNTS = False` to restore the old behaviour
+- Run `manage.py index_descriptors` after a full arches_search reindex to rebuild the
+  descriptor terms
