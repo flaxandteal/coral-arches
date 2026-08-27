@@ -292,6 +292,14 @@ class Command(BaseCommand):
 
                 document = json.loads(path.read_text())
                 nodes = document.get("nodes", [])
+                # Unlike backend-only nodes, which AttributeFilters.vue drops for
+                # want of a widget, a large-list node IS `reference` and renders -
+                # ReferenceFilter fetches the whole controlled list ?flat=true and
+                # gives it a Checkbox each. Loading these ships a browser hang, so
+                # they go regardless of --renderable-only. Remove once a typeahead
+                # widget lands upstream (the searchable endpoint already exists:
+                # arches_controlled_lists filtered_controlled_list?term=).
+                nodes = [n for n in nodes if n.get("support") != SUPPORT_LARGE_LIST]
                 if options["renderable_only"]:
                     nodes = [n for n in nodes if n.get("support") == SUPPORT_RENDERABLE]
 
