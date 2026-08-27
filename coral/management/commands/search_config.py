@@ -143,8 +143,8 @@ class Command(BaseCommand):
             "--prune-empty",
             action="store_true",
             help=(
-                "generate-cards: drop columns that hold no value in any tile of a "
-                "nodegroup that has tiles. Run against representative data."
+                "load-cards: drop columns that hold no value in any tile of a "
+                "nodegroup that has tiles, in THIS environment's database."
             ),
         )
 
@@ -381,7 +381,7 @@ class Command(BaseCommand):
 
     # -- result cards ----------------------------------------------------
 
-    def top_level_cards(self, graph, prune_empty=False):
+    def top_level_cards(self, graph):
         """Top-level cards and their data nodes, in display order."""
         cards = (
             models.CardModel.objects.filter(
@@ -413,11 +413,7 @@ class Command(BaseCommand):
             )
             for suffix in EXCLUDE_ALIAS_SUFFIXES:
                 queryset = queryset.exclude(alias__endswith=suffix)
-            rows = list(queryset.values_list("alias", "nodeid"))
-            if prune_empty:
-                aliases = self.populated_aliases(card.nodegroup_id, rows)
-            else:
-                aliases = [alias for alias, _ in rows]
+            aliases = list(queryset.values_list("alias", flat=True))
             if aliases:
                 yield card, grouping_node.alias, aliases
 
@@ -439,9 +435,7 @@ class Command(BaseCommand):
                         "node_aliases": aliases,
                     },
                 }
-                for card, nodegroup_alias, aliases in self.top_level_cards(
-                    graph, options["prune_empty"]
-                )
+                for card, nodegroup_alias, aliases in self.top_level_cards(graph)
             ]
 
             document = {
@@ -479,6 +473,42 @@ class Command(BaseCommand):
             self.style.SUCCESS(f"\nwrote {written} file(s) to {CARD_CONFIG_DIR}")
         )
 
+    def prune_sections(self, graph, config):
+        """The expanded config with columns - then sections - that hold no data
+        in this database removed.
+
+        Fill rates are a property of an environment, not of the graph, so they
+        are applied on the way in rather than baked into the repo file. The file
+        stays the superset every environment starts from; each one hides what it
+        has never used.
+        """
+        nodeids = dict(
+            models.Node.objects.filter(graph_id=graph.graphid)
+            .exclude(alias__isnull=True)
+            .values_list("alias", "nodeid")
+        )
+
+        components = []
+        for component in config.get("components", []):
+            section = component.get("config", {})
+            nodegroup_id = nodeids.get(section.get("nodegroup_alias"))
+            if nodegroup_id is None:
+                components.append(component)
+                continue
+
+            rows = [
+                (alias, nodeids[alias])
+                for alias in section.get("node_aliases", [])
+                if alias in nodeids
+            ]
+            aliases = self.populated_aliases(nodegroup_id, rows)
+            if aliases:
+                components.append(
+                    {**component, "config": {**section, "node_aliases": aliases}}
+                )
+
+        return {**config, "components": components}
+
     def load_cards(self, options):
         from arches_modular_reports.models import ReportConfig
 
@@ -489,9 +519,28 @@ class Command(BaseCommand):
                 if not path.exists():
                     continue
                 document = json.loads(path.read_text())
-                for slug, config in document.get("configs", {}).items():
+                configs = document.get("configs", {})
+
+                if options["prune_empty"] and EXPANDED_SLUG in configs:
+                    before = configs[EXPANDED_SLUG]
+                    after = self.prune_sections(graph, before)
+                    configs = {**configs, EXPANDED_SLUG: after}
+                    self.stdout.write(
+                        f"  {graph.slug:<32} "
+                        f"{self._columns(before):4d} -> {self._columns(after):4d} column(s), "
+                        f"{len(before['components']):3d} -> "
+                        f"{len(after['components']):3d} section(s)"
+                    )
+
+                for slug, config in configs.items():
                     ReportConfig.objects.update_or_create(
                         graph_id=graph.graphid, slug=slug, defaults={"config": config}
                     )
                     loaded += 1
         self.stdout.write(self.style.SUCCESS(f"loaded {loaded} report config(s)"))
+
+    def _columns(self, config):
+        return sum(
+            len(component.get("config", {}).get("node_aliases", []))
+            for component in config.get("components", [])
+        )
