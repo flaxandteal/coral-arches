@@ -3,10 +3,10 @@ from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from arches.app.models import models
 
-COMPOSITE_SCORE_NODEGROUP_ID = "eabbfd96-0c4f-11ef-a9bf-0242ac140006"
+COMPOSITE_SCORE_NODEGROUP_ID = "b218c165-a03e-5bae-ac5a-8422a91af211"
 CONDITION_SCORE_NODE_ID = "73679068-0c52-11ef-a9bf-0242ac140006"
 RISK_SCORE_NODE_ID = "094eb7ce-0c52-11ef-8f48-0242ac140006"
-TOTAL_SCORE_NODE_ID = "a1daff8e-0c52-11ef-a9bf-0242ac140006"
+TOTAL_SCORE_NODE_ID = "dabcfb5c-a7d0-5224-b824-da3ab24c7d00"
 
 SCORE_LOOKUP = {
     "d81fa421-35f3-4f30-95fa-c042f424c83a": 1,

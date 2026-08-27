@@ -23,4 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(functions): update retired v8 node ids in functions (#854)
+
 ### Notes
