@@ -605,6 +605,13 @@ CACHES = {
     }
 }
 
+# -- arches_search integration (see coral/perf/) ----------------------------
+
+# Prune DataSections with no data for the resource being viewed out of the
+# arches_search result drop-down. The config endpoint already receives the
+# resourceId; without this every graph card renders and DataSection shows
+# "No data found." rather than hiding. See coral/perf/report_config.py.
+CORAL_PRUNE_EMPTY_REPORT_SECTIONS = True
 # Hide nodes and cards in a report that have no data
 HIDE_EMPTY_NODES_IN_REPORT = True
 
